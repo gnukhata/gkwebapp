@@ -525,84 +525,40 @@
 		</div>
 	      {% endif %}
 	    </div>
-	    <div class="col-sm-12" style="margin-top: 0.5cm">
-	      <div class="col-sm-8">
-		<div class="row">
-		  <div class="form-group form-inline col-sm-4">
-		    <label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
-		    <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+	    <div class ="row col-sm-12">
+	      <div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;">
+		<h4>Bank Details:</h4>
+		  <div class="row col-sm-12">
+		    <div class="form-group form-inline">
+		      <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
+		      <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7"></input>
+		    </div>
 		  </div>
-		</div>
-		<div class="row gstfield">
-		  <div class="form-group sgstfield form-inline col-sm-4">
-		    <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
-		    <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  <div class="row col-sm-12">
+		    <div class="form-group form-inline">
+		      <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
+		      <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7" name="bankname" ></input>
+		    </div>
 		  </div>
-		  <div class="form-group sgstfield form-inline col-sm-4">
-		    <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
-		    <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  <br>
+		  <div class="row col-sm-12">
+		    <div class="form-group form-inline">
+		      <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+		      <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7" ></input>
+		    </div>
 		  </div>
-		  <div class="form-group igstfield form-inline col-sm-4">
-		    <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-		    <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		  <div class="row col-sm-12">
+		    <div class="form-group form-inline">
+		      <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
+		      <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
+		    </div>
 		  </div>
-		  <div class="form-group form-inline col-sm-4">
-		    <label for="totalinvcess" style="font-size:130% !important;">{% trans %}Total CESS{% endtrans %} :</label>
-		    <label id="totalinvcess" style="font-size:130% !important; font-weight:normal !important"></label>
-		  </div>
-		</div>
-		<div class="row vatfield">
-		  <div class="form-group form-inline col-sm-4">
-		    <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
-		    <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important"></label>
-		  </div>
-		</div>
 	      </div>
-	      <div class="col-sm-4">
-		<div class="row">
-		  <div class="form-group form-inline">
-		    <label for="totalinvdiscount" style="font-size:130% !important;">{% trans %}Total Discount{% endtrans %} :</label>
-		    <label id="totalinvdiscount" style="font-size:130% !important; font-weight:normal !important"></label>
-		  </div>
-		</div>
-		<div class="row">
-		  <div class="form-group form-inline">
-		    <label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
-		    <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"></label>
-		  </div>
-		</div>
-	      </div>
-	    </div>
-	    <div class="col-sm-12">
-	      <h4>Bank Details:</h4>
-	      <div class="col-sm-6 nopadding">
-		<div class="row">
-		  <div class="form-group form-inline col-sm-6 nopadding">
-		    <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-		    <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7 nopadding"></input>
-		  </div>
-		  <div class="form-group form-inline col-sm-6 nopadding">
-		    <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
-		    <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7 nopadding" name="bankname" ></input>
-		  </div>
-		</div>
-		<br>
-		<div class="row">
-		  <div class="form-group form-inline col-sm-6 nopadding">
-		    <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
-		    <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7 nopadding" ></input>
-		  </div>
-		  <div class="form-group form-inline col-sm-6 nopadding">
-		    <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
-		    <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7 nopadding" name="ifsc" ></input>
-		  </div>
-		</div>
-	      </div>
-	      <div class="col-sm-6 borderdiv">
-		<div class="row">
-		  <div class="form-inline form-group col-sm-6 nopadding">
+	      <div class="col-sm-4" style="margin-top:1.1cm;">
+		<div class="row col-sm-12">
+		  <div class="form-inline form-group">
 		    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
-		    <select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm nopadding">
+		    <select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm">
 		      <option value="Road">{% trans %}Road{% endtrans %}</option>
 		      <option value="Rail">{% trans %}Rail{% endtrans %}</option>
 		      <option value="Air">{% trans %}Air{% endtrans %}</option>
@@ -610,12 +566,14 @@
 		      <option value="Other">{% trans %}Other{% endtrans %}</option>
 		    </select>
 		  </div>
-		  <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
+		</div>
+		<div class="row col-sm-12">
+		  <div class="form-inline form-group" id="vehiclenodiv" hidden>
 		    <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
-		    <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm nopadding" name="vehicleno"></input>
+		    <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm" name="vehicleno"></input>
 		  </div>
 		</div>
-		<div class="row">
+		<div class="row col-sm-12">
 		  <div class="col-sm-12">
 		    <div class="alert alert-danger" id="supply-date-alert" aria-live="rude" role="alert" hidden>
 
@@ -630,9 +588,9 @@
 		      <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
 		    </div>
 		  </div>
-		  <div class="form-group form-inline col-sm-6 nopadding">
+		  <div class="form-group form-inline">
 		    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
-		    <div class="form-group col-sm-7 nopadding">
+		    <div class="form-group col-sm-7">
 		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date">
 
 		      <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month">
@@ -640,21 +598,106 @@
 		      <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year">
   		    </div>
 		  </div>
+		</div>
 
-		  <div class="form-group form-inline col-sm-6 nopadding reversepurchase" hidden>
+		<div  class="row col-sm-12">
+		  <div class="form-group form-inline reversepurchase" hidden>
 		    <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
 		    {#<input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>#}
-		    <div class="form-group">
+		    <div class="form-group col-sm-7 nopadding">
 		      <div class="radio">
-        		<label><input type="radio" class="iib lastfield" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
+        		<label><input type="radio" class="iib lastfield form-control input-sm nopadding" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
         	      </div>
 		      <div class="radio">
-        		<label><input type="radio" class="iib" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
+        		<label><input type="radio" class="iib form-control input-sm nopadding" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
         	      </div>
 		    </div>
 		    
 		  </div>
 		</div>
+	      </div>
+	      <div class="col-sm-4" style="margin-top:0.7cm;">
+		<div class="row hborderdiv">
+		  <div class="form-group form-inline">
+		    <div class="col-sm-6">
+		      <label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv gstfield sgstfield">
+		  <div class="form-group sgstfield form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv gstfield sgstfield">
+		  <div class="form-group sgstfield form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv gstfield igstfield">
+		  <div class="form-group igstfield form-inline">
+		    <div class="col-sm-6">
+		      <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv gstfield">
+		  <div class="form-group form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalinvcess" style="font-size:130% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalinvcess" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv vatfield">
+		  <div class="form-group form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv">
+		  <div class="form-group form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalinvdiscount" style="font-size:130% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalinvdiscount" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div class="row hborderdiv" style="border-bottom-style:solid;">
+		  <div class="form-group form-inline">
+		    <div class="col-sm-6">
+		      <label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+	      </div>
 	      </div>
 	    </div>
 	  </form>

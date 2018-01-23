@@ -347,26 +347,28 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
-	if($("#consigneename").val() != ""){
-	  if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".igstfield").css('border','');
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".sgstfield").css('border','');
-	    $(".igstfield").show();
-	}  
-	} else {
-	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".igstfield").css('border','');
-	    $(".sgstfield").show();
+	if ($("#taxapplicable").val() == 7){
+	    if($("#consigneename").val() != ""){
+		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
 	    } else {
-		$(".sgstfield").hide();
-		$(".sgstfield").css('border','');
-		$(".igstfield").show();
+		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		} else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
 	    }
 	}
 	
@@ -549,13 +551,15 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".igstfield").show();
+	if ($("#taxapplicable").val() == 7) {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
@@ -583,14 +587,15 @@ $(document).ready(function() {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
 	    } else {$("#gstin").text("");}
-	    
-	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		$(".igstfield").hide();
-		$(".sgstfield").show();
-	    }
-	    else {
-		$(".sgstfield").hide();
-		$(".igstfield").show();
+	    if ($("#taxapplicable").val() == 7){
+		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".igstfield").show();
+		}
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
