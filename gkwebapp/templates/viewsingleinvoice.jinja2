@@ -438,8 +438,8 @@
 	      </div>
 	  </div>
 	  {% if gkresult["taxflag"] == 7 %}
-	    <div class="row hborderdiv">
-	      {% if gkresult["taxname"]=='SGST' %}
+	    {% if gkresult["taxname"]=='SGST' %}
+	      <div class="row hborderdiv">
 		  <div class="col-sm-6">
 		    <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
 		  </div>
