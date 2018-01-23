@@ -112,7 +112,11 @@ $(document).ready(function() {
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalinvtax").text(parseFloat(totalcgst + totalsgst + totaligst + totalcess).toFixed(2));
+	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
+	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -151,14 +155,17 @@ $(document).ready(function() {
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
-      $(".tinfield").show();
+	$(".tinfield").show();
+	$(".gstfield").hide();
     } else {
-      $(".gstinfield").show();
+	$(".gstinfield").show();
+	$(".vatfield").hide();
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -337,26 +344,28 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
-	if($("#consigneename").val() != ""){
-	  if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".igstfield").css('border','');
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".sgstfield").css('border','');
-	    $(".igstfield").show();
-	}  
-	} else {
-	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".igstfield").css('border','');
-	    $(".sgstfield").show();
+	if ($("#taxapplicable").val() == 7){
+	    if($("#consigneename").val() != ""){
+		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
 	    } else {
-		$(".sgstfield").hide();
-		$(".sgstfield").css('border','');
-		$(".igstfield").show();
+		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		} else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
 	    }
 	}
 	
@@ -539,13 +548,15 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".igstfield").show();
+	if ($("#taxapplicable").val() == 7) {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
@@ -574,13 +585,15 @@ $(document).ready(function() {
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
 	    } else {$("#gstin").text("");}
 	    
-	    if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		$(".igstfield").hide();
-		$(".sgstfield").show();
-	    }
-	    else {
-		$(".sgstfield").hide();
-		$(".igstfield").show();
+	    if ($("#taxapplicable").val() == 7){
+		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".igstfield").show();
+		}
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
@@ -1473,10 +1486,12 @@ $(document).ready(function() {
 	var destinationstate = "";
 	var sourcestate = "";
 
-	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
-        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
-        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
-	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
+	if(editflag == false){
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
+	}
 	
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
@@ -2308,6 +2323,8 @@ if (event.which == 13) {
 					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
 					$('.invoice_product_cgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
+				    $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
+				    $('.invoice_product_cessamount:eq(' + curindex + ')').val(parseFloat(value.cess).toFixed(2));
 				    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				    $('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
@@ -2326,6 +2343,11 @@ if (event.which == 13) {
 				$("#totaligst_product_gst").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalcess_product_gst").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
 				$("#total_product_gst").text(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
+				$("#totalsgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+				$("#totalcgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+				$("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
+				$(".vatfied").hide();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
 				// Loading tax and product details when VAT is applied.
@@ -2358,6 +2380,8 @@ if (event.which == 13) {
 				$("#taxablevaluetotal_product_vat").val(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totaltax").val(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#total_product_vat").text(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
+				$("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+				$(".gstfield").hide();
 			    }
 			    // Loading consignee ddetails if any.
 			    if (resp.invoicedata.consignee.consigneename) {
@@ -2384,7 +2408,7 @@ if (event.which == 13) {
 			    // Loading bank details and other information.
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
-			    $("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
 			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
 			    $("#branch").val(resp.invoicedata.bankdetails.branch);
