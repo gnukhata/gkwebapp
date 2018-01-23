@@ -243,6 +243,7 @@
 	</tfoot>
 
       </table>
+    </div>
   {% else %}
       <div class="col-md-12">
 	<div class="col-md-3">
@@ -340,6 +341,7 @@
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    <td colspan="2" class="text-right taxwrap">{{ gkresult["totalcessamt"] }}</td>
+		  </tr>
 		</tfoot>
 	      </table>
 	    </div>
@@ -368,114 +370,140 @@
 	</div>
   {% endif %}
       </div>
-      <div class="col-sm-12" style="margin-top: 0.5cm">
-	<div class="col-sm-8">
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-4">
-	      <label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
-	      <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxablevalue"] }}</label>
-	    </div>
-	  </div>
-	  {% if gkresult["taxflag"] == 7 %}
-	    <div class="row gstfield">
-	      {% if gkresult["taxname"]=='SGST' %}
-		<div class="form-group sgstfield form-inline col-sm-4">
-		  <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
-		  <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
-		</div>
-		<div class="form-group sgstfield form-inline col-sm-4">
-		  <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
-		  <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
-		</div>
-	      {% endif %}
-	      {% if gkresult["taxname"]=='IGST' %}
-		<div class="form-group igstfield form-inline col-sm-4">
-		  <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-		  <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
-		</div>
-	      {% endif %}
-	      <div class="form-group form-inline col-sm-4">
-		<label for="totalinvcess" style="font-size:130% !important;">{% trans %}Total CESS{% endtrans %} :</label>
-		<label id="totalinvcess" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totalcessamt"] }}</label>
-	      </div>
-	    </div>
-	    {% else %}
-	  <div class="row vatfield">
-	    <div class="form-group form-inline col-sm-4">
-	      <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
-	      <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
-	    </div>
-	  </div>
-	  {% endif %}
-	</div>
-	<div class="col-sm-4">
-	  <div class="row">
+      <div class="row col-sm-12">
+	<div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;">
+	  <h4>Bank Details:</h4>
+	  <div class="row col-sm-12">
 	    <div class="form-group form-inline">
-	      <label for="totalinvdiscount" style="font-size:130% !important;">{% trans %}Total Discount{% endtrans %} :</label>
-	      <label id="totalinvdiscount" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaldiscount"] }}</label>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="form-group form-inline">
-		<label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
-		<label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["invoicetotal"] }}</label>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-      <div class="col-sm-12">
-	<h4>Bank Details:</h4>
-	<div class="col-sm-6 nopadding">
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
+	      <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
 	      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
 	    </div>
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
+	  </div>
+	  <div class="row col-sm-12">
+	    <div class="form-group form-inline ">
+	      <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
 	      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>
-	  <br>
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+	  <div class="row col-sm-12">
+	    <div class="form-group form-inline ">
+	      <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
 	      {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
 	    </div>
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
+	  </div>
+	  <div class="row col-sm-12">
+	    <div class="form-group form-inline ">
+	      <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
 	      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>
 	</div>
-	<div class="col-sm-6 borderdiv">
-	  <div class="row">
-	    <div class="form-inline form-group col-sm-6 nopadding">
-	      <label for="transportationmode" class="col-sm-7" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
+	<div class="col-sm-4" style="margin-top:1.1cm;">
+	  <div class="row col-sm-12">
+	    <div class="form-inline form-group">
+	      <label for="transportationmode" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
 	      {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
 	    </div>
-	    {% if gkresult["vehicleno"] %}
-	      <div class="form-inline form-group col-sm-6 nopadding" id="vehiclenodiv" hidden>
-		<label for="inv" class="col-sm-7">{% trans %}Vehicle No.{% endtrans %} :</label>
+	  </div>
+	  {% if gkresult["vehicleno"] %}
+	    <div class="row col-sm-12">
+	      <div class="form-inline form-group" id="vehiclenodiv" hidden>
+		<label for="inv">{% trans %}Vehicle No.{% endtrans %} :</label>
 		{{ gkresult["vehicleno"] }}
 	      </div>
-	    {% endif %}
-	  </div>
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="supply_date" class="col-sm-7">{% trans %}Date of Supply{% endtrans %}:</label>
-	      <div class="form-group nopadding">
-		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
-  	      </div>
 	    </div>
-	    {% if gkresult["inoutflag"] == 9 %}
-	      <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="inv" class="col-sm-7">{% trans %}Reverse Charge{% endtrans %}:</label>
+	    {% endif %}
+	  <div class="row col-sm-12">
+	    <div class="form-group form-inline">
+	      <label for="supply_date">{% trans %}Date of Supply{% endtrans %}:</label>
+		{% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
+	    </div>
+	  </div>
+	  {% if gkresult["inoutflag"] == 9 %}
+	    <div class="row col-sm-12">
+	      <div class="form-group form-inline">
+		<label for="inv">{% trans %}Reverse Charge{% endtrans %}:</label>
 		{% if gkresult["reversecharge"]|int == 1 %}Y{% endif %}
 	      </div>
-	   {% endif %}
+	    </div>
+	  {% endif %}
+	</div>
+	<div class="col-sm-4" style="margin-top:0.7cm;">
+	  <div class="row hborderdiv">
+	      <div class="col-sm-6">
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="taxableamount" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxablevalue"] }}</label>
+	      </div>
+	  </div>
+	  {% if gkresult["taxflag"] == 7 %}
+	    <div class="row hborderdiv">
+	      {% if gkresult["taxname"]=='SGST' %}
+		  <div class="col-sm-6">
+		    <label for="totalsgtax" style="font-size:130% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right"
+		    <label id="totalsgtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		  </div>
+	    </div>
+	    <div class="row hborderdiv">
+		<div class="col-sm-6">
+		  <label for="totalcgtax" style="font-size:130% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalcgtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		</div>
+	    </div>
+	      {% endif %}
+	      {% if gkresult["taxname"]=='IGST' %}
+		<div class="row hborderdiv">
+		  <div class="col-sm-6">
+		    <label for="totaligtax" style="font-size:130% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right">
+		    <label id="totaligtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		  </div>
+		</div>
+	      {% endif %}
+	      <div class="row hborderdiv">
+		  <div class="col-sm-6">
+		    <label for="totalinvcess" style="font-size:130% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right">
+		    <label id="totalinvcess" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totalcessamt"] }}</label>
+		  </div>
+	      </div>
+	  {% else %}
+	      <div class="row hborderdiv vatfield">
+		  <div class="col-sm-6">
+		    <label for="totalinvtax" style="font-size:130% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right"
+		    <label id="totalinvtax" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		  </div>
+	      </div>
+	  {% endif %}
+	  <div class="row hborderdiv">
+	      <div class="col-sm-6">
+		<label for="totalinvdiscount" style="font-size:130% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvdiscount" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["totaldiscount"] }}</label>
+	      </div>
+	  </div>
+	  <div class="row hborderdiv" style="border-bottom-style:solid;">
+	      <div class="col-sm-6">
+		<label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["invoicetotal"] }}</label>
+	      </div>
 	  </div>
 	</div>
+      </div>
+    </div>
+      </div>
       </div>
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>
