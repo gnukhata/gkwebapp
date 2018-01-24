@@ -42,7 +42,7 @@ $(document).ready(function() {
   });
 
   $("#invback").click(function(event) {
-      if ($("#latable").length == 0) {
+      if ($("#latable").length == 0 && $("#invoice_div").length == 0) {
 	$("#invoice").click();
       }
       else {
