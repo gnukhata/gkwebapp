@@ -4,10 +4,13 @@
     <div class="panel shadow deliverychallan_edit_panel">
       <div class="panel-body">
         <div class="container-fluid row">
-
+	  
           <div class="form-group col-md-5">
             <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
-            <select class="form-control input-sm" id="deliverychallan_edit_list">
+	    {%if numberofdeliverynote <= 0 %}
+	      <label class="text-danger">No Delivery Note Found!</label>
+	    {%else%}
+	      <select class="form-control input-sm" id="deliverychallan_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
               <optgroup label="Delivery In" id="delin">
                 {% for dc in delchals %}
@@ -23,9 +26,10 @@
                 {% endif %}
                 {% endfor %}
               </optgroup>
-            </select>
-
+              </select>
+	    {%endif%}
           </div>
+	 
         </div>
         <div class="col-md-5 deliverychallan_edit_div" hidden>
           <div class="form-group">
