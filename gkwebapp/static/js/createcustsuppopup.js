@@ -152,9 +152,9 @@ $("#add_state").keydown(function(event) {
 	    event.preventDefault();
 	    //Validation for PAN inside GSTIN.
 	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="") {
-		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#gstin-improper-alert").hide();
+		$("#improper-gstin-alert").alert();
+		$("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#improper-gstin-alert").hide();
 		});
 		$(this).focus().select();
 	    }
@@ -171,9 +171,9 @@ $("#add_state").keydown(function(event) {
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
+  		$("#improper-gstin-alert").alert();
+		$("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#improper-gstin-alert").hide();
   		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
@@ -200,9 +200,9 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       else {
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
+  		$("#improper-gstin-alert").alert();
+		$("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#improper-gstin-alert").hide();
   		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
@@ -443,22 +443,23 @@ else{
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	  var gstin1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#gstin-improper-alert").hide();
+	    $("#improper-gstin-alert").alert();
+	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#improper-gstin-alert").hide();
 		$(".gstin").focus();
 	    });
 	    allow = 0;
 	    return false;
 	}
-	else if(panno1 !="" && $(".gstin").val() ==""){
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#gstin-improper-alert").hide();
+	else if(panno1 !="" && gstin1 ==""){
+	    $("#improper-gstin-alert").alert();
+	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#improper-gstin-alert").hide();
 		$(".gstin").focus();
 	    });
 	    allow = 0;
@@ -466,9 +467,9 @@ else{
 	}
 	else if(gstinstring != ""){
 	    if(gstinstring.length != 15){
-		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#gstin-improper-alert").hide();
+		$("#improper-gstin-alert").alert();
+		$("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#improper-gstin-alert").hide();
 		    $(".gstin").focus();
 		});
 		allow = 0;
