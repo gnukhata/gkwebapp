@@ -33,6 +33,7 @@ Contributors:
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
     var gstinstring = "";
+    $("#add_cussup").change();
     // append remove button to all gstin field added.
     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
@@ -54,7 +55,18 @@ $(document).ready(function() {
         event.preventDefault();
           $("#add_cussup_name").focus().select();
         }
-      });
+  });
+  $("#add_cussup").change(function(event) {
+	event.preventDefault();
+	if($("#add_cussup option:selected").val() == '3'){
+	    //console.log(custsuprole);
+	    $("#bankdetails").hide();
+	} else {
+	    //console.log(custsuprole);
+	    $("#bankdetails").show();
+	}
+    });
+
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {

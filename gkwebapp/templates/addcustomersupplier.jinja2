@@ -186,23 +186,24 @@
 	    </div>
 	    <small id="textareahelp" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save Button</small>
 	  </div>
-	  <h4>Bank Details :</h4>
+	  <div id="bankdetails">
+	  <label>Bank Details :</label>
 	  <div class="panel panel-default">
             <table id="bankdetailstable" class="table table-condensed table-bordered" >
               <tbody>
 		<tr>
-		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
 
-		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
 		</tr>
 		<tr>
 
-		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
-		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
+		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
 		</tr>
@@ -211,6 +212,7 @@
             </table>
 
           </div>
+	  </div>
 	  {% endif %}
 	  {% if vatorgstflag == '22' %}
 	    <div class="form-group">
@@ -286,31 +288,32 @@
 
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
           </div>
-	  <h4>Bank Details :</h4>
+	  <div id="bankdetails">
+	    <label> Bank Details :</label>
 	  <div class="panel panel-default">
             <table id="bankdetailstable" class="table table-condensed table-bordered" >
               <tbody>
 		<tr>
-		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
 
-		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
 		</tr>
 		<tr>
 
-		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
+		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
-		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
+		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
 		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
 		</tr>
 
               </tbody>
             </table>
-
           </div>
+	  </div>
 	  {% endif %}
 	  <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
         </div>
