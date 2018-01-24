@@ -295,15 +295,125 @@
             <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 	    {% if userrole|int != 3 %}
               <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-	  </div>
-	  {% endif %}
-	</div>
-    </div>
-  </div>
-  <div id="addgodownpopup">
 
-  </div>
-  <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+
+	      <td>
+		<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	      </td>
+	        </div> 
+	    {% endif %}
+        </div>
+      </div>
+    </div>
+    <div id="addgodownpopup">
+     </div>
+
+    #for adding stock to existing Product#
+    
+    <div id="addstockmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+	<div class="modal-content">
+          <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-title">
+	      {% trans %}Add stock to existing product{% endtrans %} :
+            </div>
+          </div>
+          <div class="modal-body">
+            <div class="alert alert-danger" id="Product-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select Product!{% endtrans %}
+	    </div>
+            <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+      	      {% trans %}Please enter proper HSN code!{% endtrans %}
+	    </div>
+            <div class="alert alert-danger" id="stock-improper-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Improper HSN code!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="stock-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please Enter Opening Stock.{% endtrans %}
+	    </div>
+          <div class="panel">
+	      <div class="panel-body gstinclass">
+		<table id="stocktable" class="table table-condensed table-bordered fixed-table">
+		  <thead class="bg-primary input-sm">
+		    <tr>
+		      <th class="col-xs-4 text-center">{% trans %}Product{% endtrans %}</th>
+                      <th class="col-xs-2 text-center">{% trans %}HSN code{% endtrans %}</th>
+		      <th class="col-xs-4 text-center">{% trans %}Stock{% endtrans %}</th>
+		      
+		    </tr>
+		  </thead>
+		  <tbody>
+		    {% if gkresult["stock"] %}
+		      {% for stock in gkresult["stock"] %}
+			{% set stockstr = gkresult["stock"][stock]%}
+			<tr>
+			  <td class="col-xs-4">
+			    <select Productid="{{ stock }}" class="form-control input-sm stockproduct">
+			      <option value="" disabled hidden selected>Select Product</option>
+			      {% for Product in products %}
+				{% for key, value in Product.items() %}
+				  <option value="{{value}}" productid="{{key}}">{{value}}</option>
+				{% endfor %}
+			      {% endfor %}
+			    </select>
+			  </td>
+			  <td class="col-xs-2">
+			    <div class="form-inline nopadding">
+			      <div class="form-group nopadding">
+				<input type="text" class="form-control input-sm nopadding statecode" size="6" maxlength="2" value="{{ Stockstr }}" disabled >				
+				
+			      </div>
+			    </div>
+			  </td>
+			    </tr>
+		      {% endfor %}
+		    {% else %}
+		      <tr>
+			<td class="col-xs-4">
+			  <select class="form-control input-sm gstinstate">
+			    <option value="" disabled hidden selected>Select Product</option>
+			    {% for Product in products%}
+			      {% for key, value in Product.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			      {% endfor %}
+			    {% endfor %}
+			  </select>
+			</td>
+			<td class="col-xs-2">
+			  <div class="form-inline nopadding">
+			    <div class="form-group nopadding">
+			      <input type="text" class="form-control input-sm nopadding Productcode" size="6" maxlength="2" disabled >
+			      
+			    </div>
+			  </div>
+			</td>
+			<td class="col-xs-4">
+			  <input type="text" class="form-control input-sm nopadding panno" size="2" maxlength="10">
+			</td>
+		      </tr>
+		    {% endif %}
+		  </tbody>
+		</table>
+		<div>
+		  <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                </div>
+	      </div>
+              
+	    </div>
+
+	    <div class="panel-footer">
+	      <div class="container-fluid">
+		<button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+
+#end of adding stock#
+
+    <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
   <div class="modal-dialog bgcolor " >
     <div class="modal-content ">
       <div class="modal-header">
