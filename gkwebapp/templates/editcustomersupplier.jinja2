@@ -203,7 +203,6 @@
                   <td class="col-xs-4">
 		    <div class="form-inline nopadding">
 		      <div class="form-group nopadding">
-			<!-- <input class="form-control input-sm gstin" maxlength="15">-->
 			<input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
 			<input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
 			<input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
@@ -216,6 +215,33 @@
               </tbody>
             </table>
           </div>
+	  <div id="bankdetails">
+	    <label>Bank Details :</label>
+	    <div class="panel panel-default">
+              <table id="bankdetailstable" class="table table-condensed table-bordered" >
+		<tbody>
+		  <tr>
+		    <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
+
+		    <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
+		  </tr>
+		  <tr>
+
+		    <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
+
+		    <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
+
+		  </tr>
+
+		</tbody>
+              </table>
+
+            </div>
+	  </div>
 	  {% endif %}
 
 	  {% if vatorgstflag == '22' %}
