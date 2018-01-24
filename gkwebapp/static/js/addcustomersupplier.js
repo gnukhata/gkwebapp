@@ -32,8 +32,19 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-    var gstinstring = "";
+    $("#add_cussup").change(function(event) {
+	event.preventDefault();
+	if($("#add_cussup option:selected").val() == '3'){
+	    //console.log(custsuprole);
+	    $("#bankdetails").hide();
+	} else {
+	    //console.log(custsuprole);
+	    $("#bankdetails").show();
+	}
+    });
     $("#add_cussup").change();
+    var gstinstring = "";
+
     // append remove button to all gstin field added.
     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
@@ -56,16 +67,6 @@ $(document).ready(function() {
           $("#add_cussup_name").focus().select();
         }
   });
-  $("#add_cussup").change(function(event) {
-	event.preventDefault();
-	if($("#add_cussup option:selected").val() == '3'){
-	    //console.log(custsuprole);
-	    $("#bankdetails").hide();
-	} else {
-	    //console.log(custsuprole);
-	    $("#bankdetails").show();
-	}
-    });
 
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
@@ -418,6 +419,7 @@ else{
     else {
       groupcode = $("#credgroupcode").val();
     }
+	
     //validations to check if none of the required fields are left blank
 	    
     if ($.trim($("#add_cussup option:selected").val())=="") {
@@ -512,25 +514,39 @@ if($("#vatorgstflag").val() == '22'){
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
       }
+    var bankdetails = {}; //for bank details
+    bankdetails["accountno"] = $.trim($("#accountno").val());
+    bankdetails["bankname"] = $.trim($("#bankname").val());
+    bankdetails["ifsc"] = $.trim($("#ifsc").val());
+    bankdetails["branchname"] = $.trim($("#branchname").val());
+
+	var form_data = new FormData();
+	form_data.append("custname", $("#add_cussup_name").val());
+	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
+	form_data.append("custphone", $("#add_cussup_phone").val());
+	form_data.append("custemail", $("#add_cussup_email").val());
+	form_data.append("custfax", $("#add_cussup_fax").val());
+	form_data.append("custpan", $("#add_cussup_pan").val());
+	form_data.append("custtan", custtan);
+	form_data.append("gstin", JSON.stringify(gobj));
+	form_data.append("state", $("#add_state").val());
+	form_data.append("csflag", $("#add_cussup option:selected").val());
+	if ($("#add_cussup option:selected").val() == "19"){
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
 	    var csflag = $("#add_cussup option:selected").val();
 	  $.ajax({
 	      url: '/customersuppliers?action=save',
 	      type: 'POST',
+	      global: false,
+              contentType: false,
+              cache: false,
+              processData: false,
 	      dataType: 'json',
 	      async : false,
-	      data: {"custname": $("#add_cussup_name").val(),
-		     "custaddr": $.trim($("#add_cussup_address").val()),
-		     "custphone": $("#add_cussup_phone").val(),
-		     "custemail": $("#add_cussup_email").val(),
-		     "custfax": $("#add_cussup_fax").val(),
-		     "custpan": $("#add_cussup_pan").val(),
-		     "custtan": custtan,
-		     "gstin": JSON.stringify(gobj),
-		     "state" : $("#add_state").val(),
-		     "csflag": $("#add_cussup option:selected").val()
-		    },
+	      data: form_data,
 	      beforeSend: function(xhr)
 	      {
 		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
