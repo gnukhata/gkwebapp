@@ -215,31 +215,25 @@
               </tbody>
             </table>
           </div>
-	  <div id="bankdetails">
+	  <div id="edit_bankdetails" class="hidden-load" hidden>
 	    <label>Bank Details :</label>
 	    <div class="panel panel-default">
               <table id="bankdetailstable" class="table table-condensed table-bordered" >
 		<tbody>
 		  <tr>
 		    <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
-		    <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
-
+		    <td colspan="2"><input type="text" id="edit_accountno" class="form-control input-sm" name="accountno" ></input></td>
 		    <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
-		    <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
+		    <td colspan="2"><input type="text" id="edit_bankname" class="form-control input-sm" name="bankname" ></input></td>
 		  </tr>
 		  <tr>
-
 		    <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
-		    <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
+		    <td colspan="2"><input type="text" id="edit_branchname" class="form-control input-sm" name="ifsc" ></input></td>
 		    <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
-		    <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
+		    <td colspan="2"><input type="text" id="edit_ifsc" class="form-control input-sm" name="ifsc" ></input></td>
 		  </tr>
-
 		</tbody>
               </table>
-
             </div>
 	  </div>
 	  {% endif %}
@@ -315,13 +309,30 @@
             <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
             <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
           </div>
-
-
-	    {% endif  %}
-
+	  <div id="edit_bankdetails" class="hidden-load" hidden>
+	    <label>Bank Details :</label>
+	    <div class="panel panel-default">
+              <table id="bankdetailstable" class="table table-condensed table-bordered" >
+		<tbody>
+		  <tr>
+		    <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="edit_accountno" class="form-control input-sm" name="accountno" ></input></td>
+		    <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="edit_bankname" class="form-control input-sm" name="bankname" ></input></td>
+		  </tr>
+		  <tr>
+		    <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="edit_branchname" class="form-control input-sm" name="ifsc" ></input></td>
+		    <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
+		    <td colspan="2"><input type="text" id="edit_ifsc" class="form-control input-sm" name="ifsc" ></input></td>
+		  </tr>
+		</tbody>
+              </table>
+            </div>
+	  </div>
+	 {% endif  %}
         </div>
       </div>
-
 
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="cussup_edit_save" data-toggle="tooltip" data-placement="top" accesskey="v" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}"><i class="fa fa-floppy-o" aria-hidden="true"></i>{% trans %} Sa<u>v</u>e{% endtrans %}</button>
@@ -349,7 +360,6 @@
 	</div><!-- /.modal-dialog -->
       </div>
     </div><!-- /.modal -->
-
 
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcustomersupplier.js')}}"></script>

@@ -35,10 +35,8 @@ $(document).ready(function() {
     $("#add_cussup").change(function(event) {
 	event.preventDefault();
 	if($("#add_cussup option:selected").val() == '3'){
-	    //console.log(custsuprole);
 	    $("#bankdetails").hide();
 	} else {
-	    //console.log(custsuprole);
 	    $("#bankdetails").show();
 	}
     });

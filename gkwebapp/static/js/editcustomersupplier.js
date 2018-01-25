@@ -34,51 +34,66 @@ $(document).ready(function() {
   $("#edit_cussup_list").focus();
     $(".panel-footer").hide();
     
-    var gstinstring = "";
-    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+     var gstinstring = ""; //for concatination of 'gstin'.
+     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
-    
-  $("#edit_cussup_list").change(function(event) {
-    $.ajax({
-      url: '/customersuppliers?action=get',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"custid": $("#edit_cussup_list option:selected").val()},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      var result = resp["gkresult"];
-	$(".hidden-load").show();
-      $("#edit_cussup").val(result["csflag"]);
-	if(result["csflag"] == 3){
-
-    	  $("#edit_cussup").val("Customer");
-      }
-      else {
-    	  $("#edit_cussup").val("Supplier");
-      }
-      $("#edit_cussup").prop("disabled", true);
-      $("#edit_cussup_name").val(result["custname"]);
-      $("#edit_cussup_name").prop("disabled", true);
-      $("#edit_cussup_email").val(result["custemail"]);
-      $("#edit_cussup_email").prop("disabled", true);
-      $("#edit_cussup_phone").val(result["custphone"]);
-      $("#edit_cussup_phone").prop("disabled", true);
-      $("#edit_cussup_address").val(result["custaddr"]);
-      $("#edit_cussup_address").prop("disabled", true);
-      $("#edit_state").val(result["state"]);
-      $("#edit_state").prop("disabled", true);
-      $("#edit_cussup_fax").val(result["custfax"]);
-      $("#edit_cussup_fax").prop("disabled", true);
-      $("#edit_cussup_pan").val(result["custpan"]);
-      $("#edit_cussup_pan").prop("disabled", true);
-      $("#edit_cussup_tan").val(result["custtan"]);
+   
+    $("#edit_cussup_list").change(function(event) {
+	if($("#edit_cussup_list option:selected").val() == '3'){
+	    $("#edit_bankdetails").hide();
+	} else {
+	    $("#edit_bankdetails").show();
+	}
+	$.ajax({
+	    url: '/customersuppliers?action=get',
+	    type: 'POST',
+	    dataType: 'json',
+	    async : false,
+	    data: {"custid": $("#edit_cussup_list option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp) {
+		var result = resp["gkresult"];
+		$(".hidden-load").show();
+		$("#edit_cussup").val(result["csflag"]);
+		if(result["csflag"] == 3){
+		    $("#edit_cussup").val("Customer");
+		}
+		else {
+    		    $("#edit_cussup").val("Supplier");
+		}
+	$("#edit_cussup").prop("disabled", true);
+	$("#edit_cussup_name").val(result["custname"]);
+	$("#edit_cussup_name").prop("disabled", true);
+	$("#edit_cussup_email").val(result["custemail"]);
+	$("#edit_cussup_email").prop("disabled", true);
+	$("#edit_cussup_phone").val(result["custphone"]);
+	$("#edit_cussup_phone").prop("disabled", true);
+	$("#edit_cussup_address").val(result["custaddr"]);
+	$("#edit_cussup_address").prop("disabled", true);
+	$("#edit_state").val(result["state"]);
+	$("#edit_state").prop("disabled", true);
+	$("#edit_cussup_fax").val(result["custfax"]);
+	$("#edit_cussup_fax").prop("disabled", true);
+	$("#edit_cussup_pan").val(result["custpan"]);
+	$("#edit_cussup_pan").prop("disabled", true);
+	$("#edit_cussup_tan").val(result["custtan"]);
+>>>>>>> Bank Details fields designing changed.
 	$("#edit_cussup_tan").prop("disabled", true);
+	//fetching bank details	
+	$("#edit_accountno").val(result["bankdetails"]["accountno"]);
+	$("#edit_accountno").prop("disabled", true);
+	$("#edit_bankname").val(result["bankdetails"]["bankname"]);
+	$("#edit_bankname").prop("disabled", true);
+	$("#edit_branchname").val(result["bankdetails"]["branchname"]);
+	$("#edit_branchname").prop("disabled", true);
+	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
+	$("#edit_ifsc").prop("disabled", true);
+	
 	var rowhtml = $('#gstintable tbody tr:first').html();
 	$('#gstintable tbody').empty();
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
@@ -112,7 +127,9 @@ $(document).ready(function() {
       console.log("complete");
     });
 
-  });
+    });
+    $("#edit_cussup_list").change();
+    
   $("#edit_cussup_list").keydown(function(event) {
 
     if (event.which==13) {

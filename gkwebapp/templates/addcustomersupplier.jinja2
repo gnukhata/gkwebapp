@@ -90,22 +90,22 @@
               <option value="19" id=sel_supplier>Supplier</option>
             </select>
           </div>
-          <div class="form-group">
-            <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
-            <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
-          </div>
+	  <div class="row">
+	    <div class="form-group col-sm-6">
+              <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
+              <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
+            </div>
+	    <div class="form-group col-sm-6">
+	      <label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
+	      <input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
+            </div>
+	  </div>
 	  {% if vatorgstflag == '29' or vatorgstflag == '7' %}
             <div class="row">
-	      <div class="form-group col-sm-6">
-		<label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
-		<input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
-              </div>
               <div class="form-group col-sm-6">
 		<label for="add_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
               </div>
-	    </div>
-            <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
 		<select class="form-control input-sm add-state" id="add_state" accesskey="">
@@ -117,6 +117,8 @@
 		  {% endfor %}
 		</select>
               </div>
+	    </div>
+            <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="add_cussup_address"> Address:
 		</label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
@@ -124,27 +126,27 @@
 		<textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
 		<small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
               </div>
-	    </div>
-	    <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
               </div>
+	    </div>
+	    <div class="row">
               <div class="form-group col-sm-6">
 		<label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
               </div>
+	      {% if vatorgstflag != '7' %}
+		<div class="form-group col-sm-6">
+		  <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+		  <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
+		</div>
+
+	      {% endif %}
 	    </div>
         </div>
         <div class="col-md-6">
 	  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
-	  {% if vatorgstflag != '7' %}
-	    <div class="form-group">
-              <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
-            </div>
-
-	  {% endif %}
 	  <div class="form-group"  id ="gstin">
             <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label>
 	    <div class ="panel panel-default">
@@ -171,7 +173,6 @@
                     <td class="col-xs-4">
 		      <div class="form-inline nopadding">
 			<div class="form-group nopadding">
-			<!-- <input class="form-control input-sm gstin" maxlength="15">-->
 			  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
 			  <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
 			  <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
@@ -187,46 +188,36 @@
 	    <small id="textareahelp" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save Button</small>
 	  </div>
 	  <div id="bankdetails">
-	  <label>Bank Details :</label>
-	  <div class="panel panel-default">
-            <table id="bankdetailstable" class="table table-condensed table-bordered" >
-              <tbody>
-		<tr>
-		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
-
-		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
-		</tr>
-		<tr>
-
-		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-		</tr>
-
-              </tbody>
-            </table>
-
-          </div>
+	    <label><h4>Bank Details :</h4></label>
+	      <div class="row">
+		<div class="form-group col-sm-6">
+		  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		  <input type="text" id="accountno" class="form-control input-sm"></input>
+		</div>
+		<div class="form-group col-sm-6">
+		  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		  <input type="text" id="bankname" class="form-control input-sm" name="bankname" ></input>
+		</div>
+	      </div>
+	      <div class="row">
+		<div class="form-group col-sm-6">
+		  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		  <input type="text" id="branchname" class="form-control input-sm" ></input>
+		</div>
+		<div class="form-group col-sm-6">
+		  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		  <input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
+		</div>
+	      </div>
 	  </div>
 	  {% endif %}
 	  {% if vatorgstflag == '22' %}
 	  <div class="row">
-	    <div class="form-group col-sm-6">
-	      <label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
-	      <input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
-            </div>
             <div class="form-group col-sm-6">
 	      <label for="add_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
 	      <input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
             </div>
-	</div>
-	    <div class="row">
-            <div class="form-group col-sm-6">
+	    <div class="form-group col-sm-6">
 	      <label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
 	      <select class="form-control input-sm add-state" id="add_state" accesskey="">
                 <option value="">Select State</option>
@@ -268,22 +259,24 @@
                 <option value="West Bengal" stateid="41">West Bengal</option>
               </select>
             </div>
+	</div>
+	    <div class="row">
 	    <div class="form-group col-sm-6">
               <label for="add_cussup_address"> Address:</label>
 	      <label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
               <textarea class="form-control" rows="3" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
               <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
             </div>
+	    <div class="form-group col-sm-6">
+              <label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
+              <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
+            </div>
 	    </div>
         </div>
         <div class="col-md-6">
           <div class="form-group">
-            <label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
-	    <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
-            <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
-          </div>
-          <div class="form-group">
             <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
+	    <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
             <input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
           </div>
 
@@ -293,30 +286,27 @@
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
           </div>
 	  <div id="bankdetails">
-	    <label> Bank Details :</label>
-	  <div class="panel panel-default">
-            <table id="bankdetailstable" class="table table-condensed table-bordered" >
-              <tbody>
-		<tr>
-		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel">{% trans %}Account No.:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
-
-		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel">{% trans %}Bank Name:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
-		</tr>
-		<tr>
-
-		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel">{% trans %}Branch Name:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel">{% trans %}IFSC code:{% endtrans %}</label></td>
-		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-		</tr>
-
-              </tbody>
-            </table>
-          </div>
+	    <label><h4>Bank Details :</h4></label>
+	    <div class="row">
+	      <div class="form-group col-sm-6">
+		<label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		<input type="text" id="accountno" class="form-control input-sm"></input>
+	      </div>
+	      <div class="form-group col-sm-6">
+		<label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		<input type="text" id="bankname" class="form-control input-sm" name="bankname" ></input>
+	      </div>
+	    </div>
+	    <div class="row">
+	      <div class="form-group col-sm-6">
+		<label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		<input type="text" id="branchname" class="form-control input-sm" ></input>
+	      </div>
+	      <div class="form-group col-sm-6">
+		<label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		<input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
+	      </div>
+	    </div>
 	  </div>
 	  {% endif %}
 	  <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
