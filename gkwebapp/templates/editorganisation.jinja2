@@ -51,7 +51,7 @@
 
 				<div class="alert alert-danger" id="connectionfailed"  aria-live="rude" role="alert" hidden>
 
-				  {% trans %}Connection Failed.{% endtrans %}
+ 				  {% trans %}Connection Failed.{% endtrans %}
 				</div>			
 				
 				<div class="col-xs-12 from-group">
@@ -252,6 +252,14 @@
 					    </td>
 					      </tr>
 					  {% endif %}
+					  <tr>
+					    <td>
+					      <label for="orgbankdetails" id="orgbkdel" class="bankdel">{% trans %}Bank Details{% endtrans %} :</label>
+					    </td>
+					    <td>
+					      <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Bank Details{% endtrans %}</button>
+					    </td>
+					  </tr>
 				      </tbody>
 				    </table>
 				  </div>
@@ -392,14 +400,81 @@
 		      {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
 		    </div>
 		  </div>
+	    </div>
+	  </div>
+	</div>
+
+	{#end GSTIN#}	
+	<div style="padding-top:15px" class="mainbox col-md-2"></div>
+      </div>
+
+
+      
+      {# bank details #}
+
+      <div id="addbankdel" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+            <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      <div class="modal-title">
+		{% trans %}BANK DETAILS{% endtrans %} :
+	      </div>
+            </div>
+            <div class="modal-body">
+		  <table id="banktable" class="table fixed-table">
+			<tbody>
+			  <tr>
+			    <td class="col-xs-6">
+		              <label for="bankaccount number" id="accno">{% trans %}Account Number{% endtrans %} :</label>
+			    </td>
+			    <td class="col-xs-6">
+			      <input  type="text" id="accno1" class="form-control input-sm" name="bankaccountno" style="width: 100%"></input>
+			    </td>
+			  </tr>
+                          <tr>
+			    <td>
+		              <label for="bankbranch name" id="branchnm">{% trans %}Branch Number{% endtrans %} :</label>
+			    </td>
+			    <td>
+			      <input type="text" id="branchnm1" class="form-control input-sm" name="branchname" style="width: 100%"></input>
+			    </td>
+			  </tr>
+                          <tr>
+			    <td>
+		              <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
+			    </td>
+			    <td>
+			      <input type="text" id="banknm1" class="form-control input-sm" name="bankname" style="width: 100%"></input>
+			         </td>
+                          </tr>
+			  <tr>
+			    <td>
+		              <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>
+			    </td>
+			    <td>
+			      <input type="text" id="ifsc1" class="form-control input-sm" name="bankifsc" style="width: 100%"></input>
+			    </td>
+			  </tr>
+			</tbody>
+		  </table>
+
+		  <div>
+		    <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                  </div>
+		<div class="panel-footer">
+		<div class="container-fluid">
+		  <button class="btn btn-success btn-sm" id="gstin_done1" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
 		</div>
 	      </div>
 	    </div>
-
-	{#end GSTIN#}
+	  </div>
+	</div>
+	<div style="padding-top:15px" class="mainbox col-md-2"></div>
+      </div>
 	
-      <div style="padding-top:15px" class="mainbox col-md-2"></div>
-    </div>
+	{# end bank details #}
+      
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>
 </body>

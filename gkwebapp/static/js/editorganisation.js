@@ -113,6 +113,11 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	$("#gstintable tbody tr:first td:eq(0) select").focus();
     });
 
+    $('#addbankdel').on('shown.bs.modal', function() {
+	//$("#banktable tbody tr:first td:eq(1) select").focus();
+	$("#accno1").focus();
+    });
+
 
 $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
@@ -383,7 +388,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           event.preventDefault();
           $("#fcraregmonth").focus().select();
         }
-  });
+     });
+
+    
 
     // Validation for PAN
     $("#orgpan").keydown(function(event) {
@@ -479,6 +486,41 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           $("#orgemail").focus().select();
         }
      });
+
+
+
+    $("#accno1").keydown(function(event) {
+	if (event.which==13) {
+	    $("#branchnm1").focus().select();
+	}
+    });  
+
+
+    $("#branchnm1").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#banknm1").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#accno1").focus().select();
+	}});
+
+
+    $("#banknm1").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#ifsc1").focus().select();
+    }
+    });
+
+    $("#ifsc1").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#gstin_done1").focus().select();
+    }
+    });
+    
 
     $("#orgmvat").keydown(function(event) {
     if (event.which==13) {
