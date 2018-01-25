@@ -32,7 +32,13 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-  var gstinstring = "";
+    var gstinstring = "";
+    // append remove button to all gstin field added.
+    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
+	$("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+    }
+    
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
       if (event.which==13) {
@@ -155,27 +161,29 @@ $("#add_state").keydown(function(event) {
 	
     });
 
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
     //Keydown event on gstin's panno 
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
-	if (event.which == 13) {
+	panno = $(this).val();
+	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
-	    if($(this).val() != '') {
-		$(this).next('input').focus().select();
-	
-	    }
-	    else {
-		$("#panno-blank-alert").alert();
-                $("#panno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#panno-blank-alert").hide();
-  		$(this).focus().select();
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="" ) {
+		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-alert").hide();
 		});
+		$(this).focus().select();
+	    }
+	    else{
+		$(this).next('input').focus().select();
 		return false;
 	    }
 	}
     });
-    
+
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
 	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
@@ -187,25 +195,28 @@ $("#add_state").keydown(function(event) {
   		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
 		});
   		return false;
-            }
+          }
   }
 
     });
-
-$(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
-{
-    var curindex1 = $(this).closest('tr').index();
+    
+    $(document).off("keydown",".gstin").on("keydown",".gstin",function(event){
+	var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
-  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+ var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+	panno = $(this).val();
   if (event.which==13) {
       event.preventDefault();
-    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
-      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-    }
+      gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+	  $("#cussup_save").focus();
+      }
+      else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
+	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
       else {
-	  gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -215,12 +226,9 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 		});
   		return false;
             }
-  }
+	}
 	  if (numberofstates > 0) {
-        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-              if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
+              $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -258,8 +266,11 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 });
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+      $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
+	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+      $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });
@@ -352,7 +363,7 @@ else{
    }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_pan").focus().select();
+      $("#add_cussup_an").focus().select();
     }
     });
   $("#add_cussup_reset").click(function(event) {
@@ -370,10 +381,25 @@ else{
     $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
-      var allow = 1;
-    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
+	var allow = 1;
+	var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
-    var groupcode = -1;
+	var groupcode = -1;
+	var cuss_pan = $("#add_cussup_pan").val();
+        var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var curindex1 = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+    
+	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
+	    return false;
+	}
+
     if (custsupdata == '3'){
       groupcode = $("#debtgroupcode").val();
     }
@@ -381,12 +407,13 @@ else{
       groupcode = $("#credgroupcode").val();
     }
     //validations to check if none of the required fields are left blank
+	    
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#cussup-blank-alert").hide();
       });
-      $("#add_cussup").focus();
+      $(".gstinstate").focus();
       return false;
     }
 
@@ -431,18 +458,40 @@ if($("#vatorgstflag").val() == '22'){
     var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
+	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	if(gstinstring != ''){
-  	    if(gstinstring.length !=15){
-  		$("#gstin-improper-alert").alert();
+
+	//Validation for GSTIN on save button 
+	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    if(gstinstring.length != 15){
+		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
-  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		    $("#gstin-improper-alert").hide();
+		    $(".gstin").focus();
 		});
-  		return false;
-          }
-  }
+		allow = 0;
+		return false;
+	    }
+	}
 
         gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }

@@ -42,6 +42,13 @@
 				  {% trans %}Please enter proper PAN!{% endtrans %}
 
 				</div>
+
+				<div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+
+				  {% trans %}Improper GSTIN!{% endtrans %}
+
+				</div>
+
 				<div class="alert alert-danger" id="connectionfailed"  aria-live="rude" role="alert" hidden>
 
 				  {% trans %}Connection Failed.{% endtrans %}
@@ -300,7 +307,7 @@
               <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
       		{% trans %}Please enter proper GSTIN!{% endtrans %}
 	      </div>
-              <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+              <div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
 		{% trans %}Improper GSTIN!{% endtrans %}
 	      </div>
 	      <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -382,6 +389,7 @@
 		  <div class="panel-footer">
 		    <div class="container-fluid">
 		      <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+		      {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
 		    </div>
 		  </div>
 		</div>
