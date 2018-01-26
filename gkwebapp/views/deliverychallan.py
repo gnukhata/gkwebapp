@@ -44,11 +44,7 @@ from odslib import ODS
 @view_config(route_name="deliverychallan",renderer="gkwebapp:templates/deliverychallan.jinja2")
 def showdeliverychallan(request):
     header={"gktoken":request.headers["gktoken"]}
-    delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
-    return {"numberofproducts":len(delchals.json()["gkresult"]),"status":True}
-
-
-
+    return {"status":True}
 @view_config(route_name="deliverychallan",request_param="action=showadd",renderer="gkwebapp:templates/adddeliverychallan.jinja2")
 def showadddeliverychallan(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -77,8 +73,8 @@ def showeditdeliverychallan(request):
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"]}
-
+    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofdeliverynote":len(delchals.json()["gkresult"]),"status":True}
+       
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
 def showeditpopupdeliverychallan(request):
     header={"gktoken":request.headers["gktoken"]}
