@@ -2348,6 +2348,7 @@ if (event.which == 13) {
 				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
 				$(".vatfied").hide();
+				$(".gstfield").show();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
 				// Loading tax and product details when VAT is applied.
@@ -2382,6 +2383,7 @@ if (event.which == 13) {
 				$("#total_product_vat").text(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
 				$("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$(".gstfield").hide();
+				$(".vatfield").show();
 			    }
 			    // Loading consignee ddetails if any.
 			    if (resp.invoicedata.consignee.consigneename) {

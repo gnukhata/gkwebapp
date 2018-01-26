@@ -82,11 +82,11 @@ Contributors:
     }
   );
   });
-  $("#invoice_view_sale").click(function() {// calls view invoice page.
+  $("#invoice_view_sale").click(function(event) {// calls view invoice page.
     $.ajax(
 	{
 	    type: "POST",
-	    url: "/invoice?action=showsale",
+	    url: "/invoice?action=showeditinv&status=out", 
 	    global: false,
 	    async: false,
 	    data: {"inputdate": wholedate},
@@ -97,16 +97,17 @@ Contributors:
       },
     success: function(resp)
     {
-      $("#invoice_div").html(resp);
+	$("#invoice_div").html(resp);
+	return false;
     }
     }
-  );
+    );
   });
-  $("#invoice_view_purchase").click(function() {// calls view invoice page.
+    $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
     $.ajax(
 	{
 	    type: "POST",
-	    url: "/invoice?action=showpurchase",
+	    url: "/invoice?action=showeditinv&status=in",
 	    global: false,
 	    async: false,
 	    data: {"inputdate": wholedate},
@@ -117,10 +118,11 @@ Contributors:
       },
     success: function(resp)
     {
-      $("#invoice_div").html(resp);
+	$("#invoice_div").html(resp);
+	return false;
     }
     }
-  );
+    );
   });
   $("#invoice_record").click();// loads record invoice page by default.
 return false;
