@@ -2708,6 +2708,7 @@ if (event.which == 13) {
 				    $("#invload").html("");
 				    $("#invload").html(resp);
 				    $("#backbutton").attr("inoutflag", inoutflag);
+				    $("#editbutton").attr("invid",invid);
 				    if (inoutflag == '9') {
 					$("#printbutton").hide();
 				    }

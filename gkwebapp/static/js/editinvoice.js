@@ -2222,7 +2222,7 @@ if (event.which == 13) {
 			    }
 			    // Hides print button in purchase.
 			    if ($("#status").val() == '9') {
-				$("#invoice_editprint").hide();
+				$("#invoice_edtprint").hide();
 			    }
 			    else {
 				$("#invoice_editprint").show();
@@ -2439,7 +2439,6 @@ if (event.which == 13) {
 	    $("#invdetailsdiv").hide();
 	}
     });
-
     // Click event for invoice edit button.
     $("#invoice_edit").click(function(event){
 	editflag = false;
@@ -2963,19 +2962,30 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-			let originvid = $("#invselect option:selected").val();
-                        if ($("#status").val() == '9') {
-                            $("#invoice_view_purchase").click();
-                        } else {
-                            $("#invoice_view_sale").click();
-                        }
-			$("#invselect").val(originvid).change();
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-                        $("#success-alert").alert();
-                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
-                        });
-                        return false;
+			if ($("#listdiv").is(":hidden")) {
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                            $("#success-alert").alert();
+                            $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#listdiv").show();
+				$("#invoice").click();
+				$("#success-alert").hide();
+                            });
+			}
+			else{
+			    let originvid = $("#invselect option:selected").val();
+                            if ($("#status").val() == '9') {
+				$("#invoice_view_purchase").click();
+                            } else {
+				$("#invoice_view_sale").click();
+                            }
+			    $("#invselect").val(originvid).change();
+                            $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                            $("#success-alert").alert();
+                            $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#success-alert").hide();
+                            });
+			}
+			return false;
                     } else if (resp["gkstatus"] == 1) {
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#invoice_challanno").focus();
@@ -3014,12 +3024,17 @@ if (event.which == 13) {
   });
   $(document).off('click', '#invoice_reset').on('click', '#invoice_reset', function(event) {
     event.preventDefault();
-    /* Act on the event */
-    if ($("#status").val() == '9') {
-	$("#invoice_view_purchase").click();
-    } else {
-      $("#invoice_view_sale").click();
-    }
+      /* Act on the event */
+      if ($("#listdiv").is(":hidden")) {
+	  $("#editbutton").click();
+      }
+      else{
+	  if ($("#status").val() == '9') {
+	      $("#invoice_view_purchase").click();
+	  } else {
+	      $("#invoice_view_sale").click();
+	  }
+      }
   });
     
     $("#viewattach").click(function(event) {
