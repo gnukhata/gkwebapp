@@ -34,17 +34,12 @@ $(document).ready(function() {
   $("#edit_cussup_list").focus();
     $(".panel-footer").hide();
     
-     var gstinstring = ""; //for concatination of 'gstin'.
+    var gstinstring = ""; //for concatination of 'gstin'.
      for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
-   
+   var custsupdata = $("#edit_cussup").val();
     $("#edit_cussup_list").change(function(event) {
-	if($("#edit_cussup_list option:selected").val() == '3'){
-	    $("#edit_bankdetails").hide();
-	} else {
-	    $("#edit_bankdetails").show();
-	}
 	$.ajax({
 	    url: '/customersuppliers?action=get',
 	    type: 'POST',
@@ -62,9 +57,11 @@ $(document).ready(function() {
 		$("#edit_cussup").val(result["csflag"]);
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
+		    $("#edit_bankdetails").hide();
 		}
 		else {
     		    $("#edit_cussup").val("Supplier");
+		    $("#edit_bankdetails").show();
 		}
 	$("#edit_cussup").prop("disabled", true);
 	$("#edit_cussup_name").val(result["custname"]);
@@ -82,7 +79,6 @@ $(document).ready(function() {
 	$("#edit_cussup_pan").val(result["custpan"]);
 	$("#edit_cussup_pan").prop("disabled", true);
 	$("#edit_cussup_tan").val(result["custtan"]);
->>>>>>> Bank Details fields designing changed.
 	$("#edit_cussup_tan").prop("disabled", true);
 	//fetching bank details	
 	$("#edit_accountno").val(result["bankdetails"]["accountno"]);
@@ -117,7 +113,7 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
-      $("#edit_cussup_btn").show();
+		$("#edit_cussup_btn").show();
 
     })
     .fail(function() {
@@ -128,7 +124,6 @@ $(document).ready(function() {
     });
 
     });
-    $("#edit_cussup_list").change();
     
   $("#edit_cussup_list").keydown(function(event) {
 
@@ -475,7 +470,11 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
       $(".gstinstate, .panno, .gstin").prop("disabled",false);
-    $("#edit_state").prop("disabled", false);
+      $("#edit_state").prop("disabled", false);
+      $("#edit_accountno").prop("disabled", false);
+      $("#edit_bankname").prop("disabled", false);
+      $("#edit_branchname").prop("disabled", false);
+      $("#edit_ifsc").prop("disabled", false);
   });
   $(document).keyup(function(event) {
       if(event.which == 45) {
@@ -578,25 +577,38 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if ($("#edit_cussup_tan").length > 0){
 	  custtan = $("#edit_cussup_tan").val();
       }
+	var bankdetails = {}; //for bank details
+	bankdetails["accountno"] = $.trim($("#edit_accountno").val());
+	bankdetails["bankname"] = $.trim($("#edit_bankname").val());
+	bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
+	bankdetails["branchname"] = $.trim($("#edit_branchname").val());
+	var form_data = new FormData();
+	form_data.append("custid", $("#edit_cussup_list option:selected").val());
+	form_data.append("custname", $("#edit_cussup_name").val());
+	form_data.append("custaddr", $.trim($("#edit_cussup_address").val()));
+	form_data.append("custphone", $("#edit_cussup_phone").val());
+	form_data.append("custemail", $("#edit_cussup_email").val());
+	form_data.append("custfax", $("#edit_cussup_fax").val());
+	form_data.append("custpan", $("#edit_cussup_pan").val());
+	form_data.append("custtan", custtan);
+	form_data.append("gstin", JSON.stringify(gobj));
+	form_data.append("state", $("#edit_state").val());
+	form_data.append("oldcustname", $("#edit_cussup_list option:selected").text());
+	if ($("#edit_cussup").val() == "19"){
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
+	form_data.append("custsup", $("#edit_cussup").val());
 	if(allow == 1){
 	    $.ajax({
                 url: '/customersuppliers?action=edit',
                 type: 'POST',
+		global: false,
+                contentType: false,
+                cache: false,
+                processData: false,
                 dataType: 'json',
                 async : false,
-                data: {"custid": $("#edit_cussup_list option:selected").val(),
-                       "custname": $("#edit_cussup_name").val(),
-                       "custaddr": $.trim($("#edit_cussup_address").val()),
-                       "custphone": $("#edit_cussup_phone").val(),
-                       "custemail": $("#edit_cussup_email").val(),
-                       "custfax": $("#edit_cussup_fax").val(),
-                       "custpan": $("#edit_cussup_pan").val(),
-                       "custtan": custtan,
-                       "gstin": JSON.stringify(gobj),
-                       "state"  : $("#edit_state").val(),
-                       "oldcustname" : $("#edit_cussup_list option:selected").text(),
-                       "custsup":$("#edit_cussup").val()
-                      },
+                data: form_data,
                 beforeSend: function(xhr)
                 {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -623,7 +635,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 
                     }
                     if(resp["gkstatus"] == 1){
-                        if (custsupdat == '3') {
+                        if (custsupdata == '3') {
                             $("#edit_cussup_name").focus();
                             $("#cus-duplicate-alert").alert();
                             $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){

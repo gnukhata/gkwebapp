@@ -513,10 +513,10 @@ if($("#vatorgstflag").val() == '22'){
 	  custtan = $("#add_cussup_tan").val();
       }
     var bankdetails = {}; //for bank details
-    bankdetails["accountno"] = $.trim($("#accountno").val());
-    bankdetails["bankname"] = $.trim($("#bankname").val());
-    bankdetails["ifsc"] = $.trim($("#ifsc").val());
-    bankdetails["branchname"] = $.trim($("#branchname").val());
+    bankdetails["accountno"] = $.trim($("#edit_accountno").val());
+    bankdetails["bankname"] = $.trim($("#edit_bankname").val());
+    bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
+    bankdetails["branchname"] = $.trim($("#edit_branchname").val());
 
 	var form_data = new FormData();
 	form_data.append("custname", $("#add_cussup_name").val());

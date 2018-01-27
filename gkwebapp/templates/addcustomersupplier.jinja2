@@ -132,10 +132,12 @@
               </div>
 	    </div>
 	    <div class="row">
-              <div class="form-group col-sm-6">
+	      {% if vatorgstflag == '29'%}
+		<div class="form-group col-sm-6">
 		<label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
-              </div>
+		</div>
+	      {% endif %}
 	      {% if vatorgstflag != '7' %}
 		<div class="form-group col-sm-6">
 		  <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
@@ -144,6 +146,12 @@
 
 	      {% endif %}
 	    </div>
+	    {% if vatorgstflag == '7'%}
+	      <div class="form-group">
+		<label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
+		<input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
+	      </div>
+	    {%endif%}
         </div>
         <div class="col-md-6">
 	  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
