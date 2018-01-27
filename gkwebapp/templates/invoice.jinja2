@@ -91,12 +91,13 @@
 	</div>
       </div>
     </div>
-    <div class="col-sm-3 col-sm-offset-3" id="buttondiv">
-      <button type="button" class="btn btn-sm btn-primary pull-right" id="backbutton" accesskey="b" style="margin-left:10px;">{% trans %}<u>B</u>ack{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-danger pull-right" id="printbutton" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    <div class="col-sm-3 col-sm-offset-4" id="buttondiv">
+      <button type="button" class="btn btn-sm btn-danger pull-right" id="backbutton" accesskey="b" style="margin-left:10px;"><i class="fa fa-arrow-left" style="margin-left:10px;" aria-hidden="true"></i>{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button id="editbutton" class="btn btn-info btn-sm pull-right" accesskey="e" style="margin-left:10px;"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-left:10px;"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary pull-right" id="printbutton" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-left:10px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
     </div>
   </div>
 
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/invoice.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/invoice.js')}}"></script>
 </body>
 </html>

@@ -2685,11 +2685,7 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-                        if ($("#status").val() == '9') {
-                            $("#invoice_record").click();
-                        } else {
-                            $("#invoice_create").click();
-                        }
+			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2711,7 +2707,7 @@ if (event.which == 13) {
 				.done(function(resp) {
 				    $("#invload").html("");
 				    $("#invload").html(resp);
-				    $('#listdiv').hide();
+				    $("#backbutton").attr("inoutflag", inoutflag);
 				    if (inoutflag == '9') {
 					$("#printbutton").hide();
 				    }
@@ -2719,7 +2715,9 @@ if (event.which == 13) {
 					$("#printbutton").show();
 					$("#printbutton").attr("invid",invid);
 				    }
+				    $("#listdiv").hide();
 				    $("#viewinvdiv").show();
+				    $('#invoice_div').html("");
 				});
                         });
                         return false;
@@ -2774,6 +2772,12 @@ if (event.which == 13) {
 	$("#viewinvdiv").hide();
 	$('#listdiv').show();
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	if ($("#backbutton").attr("inoutflag") == '9') {
+	    $("#invoice_record").click();
+
+	} else {
+	    $("#invoice_create").click();
+	}
 	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     });
     $("#printbutton").click(function(event) {
