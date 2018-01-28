@@ -58,7 +58,7 @@ def showcreatetransfernote(request):
 def showreceivedtransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
                 transfernote = requests.get("http://127.0.0.1:6543/transfernote?tn=all",headers=header)
-                return {"transfernote":transfernote.json()["gkresult"]}
+                return {"transfernote":transfernote.json()["gkresult"],"transfernote1":len(transfernote.json()["gkresult"]),"status":True}
 
 @view_config(route_name="transfernotes",request_param="action=viewlist",renderer="gkwebapp:templates/viewlistoftransfernotes.jinja2")
 def viewlistoftransfernotes(request):
