@@ -67,7 +67,11 @@
           <form class="form-horizontal" >
 	    <div class="col-md-12">
 	      <div class="col-md-4">
-		<h4>Details of Invoice: </h4>
+		{% if gkstatus=="in" %}
+		  {% trans %}<h4>Details of Purchase Invoice: </h4>{% endtrans %}
+		{% else %}
+		  {% trans %}<h4>Details of Sale Invoice: </h4>{% endtrans %}
+		{% endif %}
 		<div class="form-group form-inline" id="deliverynoterow">
 		  <label class="col-sm-4 fsize" for="invoice_deliverynote">{% trans %}Deli. Note No.{% endtrans %} :</label>
 		  <select class="form-control input-sm col-sm-8"  id="invoice_deliverynote">
@@ -115,8 +119,8 @@
 		</div>
 		{% if resultgstvat != '22' %}
 		  <div class="form-group form-inline invoice_issuer" hidden>
-		  <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-		  <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
+		    <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+		    <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
 		  </div>
 		{% endif %}
 		<div class="form-group form-inline invoice_issuer" hidden>
@@ -528,31 +532,31 @@
 	    <div class ="row col-sm-12">
 	      <div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;">
 		<h4>Bank Details:</h4>
-		  <div class="row col-sm-12">
-		    <div class="form-group form-inline">
-		      <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-		      <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7"></input>
-		    </div>
+		<div class="row col-sm-12">
+		  <div class="form-group form-inline">
+		    <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
+		    <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7"></input>
 		  </div>
-		  <div class="row col-sm-12">
-		    <div class="form-group form-inline">
-		      <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
-		      <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7" name="bankname" ></input>
-		    </div>
+		</div>
+		<div class="row col-sm-12">
+		  <div class="form-group form-inline">
+		    <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
+		    <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7" name="bankname" ></input>
 		  </div>
-		  <br>
-		  <div class="row col-sm-12">
-		    <div class="form-group form-inline">
-		      <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
-		      <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7" ></input>
-		    </div>
+		</div>
+		<br>
+		<div class="row col-sm-12">
+		  <div class="form-group form-inline">
+		    <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+		    <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7" ></input>
 		  </div>
-		  <div class="row col-sm-12">
-		    <div class="form-group form-inline">
-		      <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
-		      <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
-		    </div>
+		</div>
+		<div class="row col-sm-12">
+		  <div class="form-group form-inline">
+		    <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
+		    <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
 		  </div>
+		</div>
 	      </div>
 	      <div class="col-sm-4" style="margin-top:1.1cm;">
 		<div class="row col-sm-12">
@@ -698,61 +702,61 @@
 		  </div>
 		</div>
 	      </div>
-	      </div>
 	    </div>
+	</div>
 	  </form>
-	</div>
-      </div>
-      <div class="panel-footer ">
-        <div class="container-fluid">
-	  <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
-
-	    {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
-	  </div>
-          <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-          <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
-          {% if gkstatus=="out" %}
-	    <!-- <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
-	    <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
-          {% else %}
-	    <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
-          {% endif %}
-	  <label class="btn btn-primary btn-sm" for="my-file-selector">
-	    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-	    <i class="fa fa-paperclip" aria-hidden="true"></i>
-	    {% trans %}Attac<u>h</u>{% endtrans %}
-	  </label>
-	  <span class='label label-info' id="upload-file-info"></span>
-	  <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
-        </div>
       </div>
     </div>
-    <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-        <div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
+    <div class="panel-footer ">
+      <div class="container-fluid">
+	<div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
 
-              <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-              <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-            </div>
-	  </div>
+	  {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
+	</div>
+        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+        {% if gkstatus=="out" %}
+	  <!-- <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
+	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
+        {% else %}
+	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
+        {% endif %}
+	<label class="btn btn-primary btn-sm" for="my-file-selector">
+	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+	  <i class="fa fa-paperclip" aria-hidden="true"></i>
+	  {% trans %}Attac<u>h</u>{% endtrans %}
+	</label>
+	<span class='label label-info' id="upload-file-info"></span>
+	<small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
+      </div>
+    </div>
+  </div>
+  <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-sm vertical-align-center">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{% trans %}Are you sure?{% endtrans %}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+            <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+          </div>
 	</div>
       </div>
     </div>
+  </div>
 
 
 
 
 
-    <div id="viewcustsup"></div>
-    <input type="hidden" id="selectedcustsup" value="">
+  <div id="viewcustsup"></div>
+  <input type="hidden" id="selectedcustsup" value="">
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addinvoice.js')}}"></script>
 </body>
 	</html>

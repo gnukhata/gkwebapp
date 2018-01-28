@@ -79,7 +79,11 @@
 		  <form class="form-horizontal" >
 		    <div class="col-md-12">
 		      <div class="col-md-4">
-			<h4>Details of Invoice: </h4>
+			{% if status=="in" %}
+			  {% trans %}<h4>Details of Purchase Invoice: </h4>{% endtrans %}
+			{% else %}
+			  {% trans %}<h4>Details of Sale Invoice: </h4>{% endtrans %}
+			{% endif %}
 			<div class="form-group form-inline" id="deliverynoterow">
 			  <label class="col-sm-4 fsize" for="invoice_deliverynote">{% trans %}Deli. Note No.{% endtrans %} :</label>
 			  <select class="form-control firstfield input-sm col-sm-8"  id="invoice_deliverynote">
