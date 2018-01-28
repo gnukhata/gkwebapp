@@ -154,6 +154,7 @@ Contributors:
             .done(function(resp) {
                 console.log("success");
                 $('#invload').html(resp);
+		$(".editblank").addClass("noborder nopadding");
 		$('#invload').show();
 		$("#invselectdiv").hide();
 		$("#invselect").val($("#editbutton").attr("invid")).change();

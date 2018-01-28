@@ -131,3 +131,6 @@
  label {
      font-size:95% !important; 
  }
+ .noborder {
+     border-style: none !important;
+ }
