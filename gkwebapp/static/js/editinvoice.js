@@ -2967,6 +2967,7 @@ if (event.which == 13) {
                             $("#success-alert").alert();
                             $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#listdiv").show();
+				$("#invoice").attr("status", $("#status").val());
 				$("#invoice").click();
 				$("#success-alert").hide();
                             });

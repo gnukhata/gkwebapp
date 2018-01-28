@@ -166,6 +166,12 @@ Contributors:
                 console.log("complete");
             });
     });
-  $("#invoice_record").click();// loads record invoice page by default.
+    if ($("#invoice").attr("status") == "9") {
+	$("#invoice_record").click();// loads record purchase invoice page by default.
+    }
+    else{
+	$("#invoice_create").click();// loads create sale invoice page by default.
+	$("#invoice").attr("status", 9);
+    }
 return false;
 });
