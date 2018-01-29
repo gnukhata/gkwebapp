@@ -295,23 +295,23 @@
             <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 	    {% if userrole|int != 3 %}
               <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-
-
-	      {%if userrole ==3%}
-		  <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
-		  </td>
-		  {% endif %}
-		</tr>
-	      </td>
-	  </div> 
+	      
 	    {% endif %}
+	    {%if userrole|int==3%}
+	      <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	      </td>
+	    {% endif %}
+		      </tr>
+			</td>
+	  </div> 
+	  
         </div>
       </div>
     </div> 
     <div id="addgodownpopup">
-     </div>
+    </div>
 
-    #for adding stock to existing Product#
+    <!--  for adding stock to existing Product-->
     
     <div id="addstockmodal" class="modal fade" tabindex="-1" role="dialog">
       <div class="modal-dialog">
@@ -340,63 +340,42 @@
 		<table id="stocktable" class="table table-condensed table-bordered fixed-table">
 		  <thead class="bg-primary input-sm">
 		    <tr>
-		      <th class="col-xs-4 text-center">{% trans %}Product{% endtrans %}</th>
+		      <th class="col-xs-6 text-center">{% trans %}Product{% endtrans %}</th>
                       <th class="col-xs-2 text-center">{% trans %}HSN code{% endtrans %}</th>
 		      <th class="col-xs-3 text-center">{% trans %}Stock{% endtrans %}</th>
-		      
+		      <th class="col-xs-1">
+		      </th>
 		    </tr>
 		  </thead>
 		  <tbody>
-		    {% if gkresult["stock"] %}
-		      {% for stock in gkresult["stock"] %}
-			{% set stockstr = gkresult["stock"][stock]%}
-			<tr>
-			  <td class="col-xs-4">
-			    <select Productid="{{ stock }}" class="form-control input-sm stockproduct">
-			      <option value="" disabled hidden selected>Select Product</option>
-			      {% for Product in products %}
-				{% for key, value in Product.items() %}
-				  <option value="{{value}}" productid="{{key}}">{{value}}</option>
-				{% endfor %}
-			      {% endfor %}
-			    </select>
-			  </td>
-			  <td class="col-xs-2">
-			    <div class="form-inline nopadding">
-			      <div class="form-group nopadding">
-				<input type="text" class="form-control input-sm nopadding statecode" size="6" maxlength="2" value="{{ Stockstr }}" disabled >				
-				
-			      </div>
-			    </div>
-			  </td>
-			    </tr>
-		      {% endfor %}
-		    {% else %}
-		      <tr>
-			<td class="col-xs-4">
-			  <select class="form-control input-sm gstinstate">
-			    <option value="" disabled hidden selected>Select Product</option>
-			    {% for Product in products%}
-			      {% for key, value in Product.items() %}
-				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			      {% endfor %}
-			    {% endfor %}
-			  </select>
-			</td>
-			<td class="col-xs-2">
-			  <div class="form-inline nopadding">
-			    <div class="form-group nopadding">
-			      <input type="text" class="form-control input-sm nopadding Productcode" size="6" maxlength="2" disabled >
-			      
-			    </div>
+		    <tr>
+		      <td class="col-xs-6">
+			<select class="form-control input-sm prodstock">
+			  <option value="" disabled hidden selected>Select Product</option>
+			  {% for product in products%}
+			    <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+			  {% endfor %}
+			</select>
+		      </td>
+		      <td class="col-xs-2">
+			<label class="invoice_product_hsncode text-center"></label>
+		      </td>
+		      <td class="col-xs-3">
+			<div class="form-inline nopadding">
+			  <div class="form-group nopadding">
+			    <div class="input-group">
+			      <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+			      <span class="input-group-addon input-sm" id="unitaddon"></span>
+			    </div>			    
 			  </div>
-			</td>
-			<td class="col-xs-3">
-			  <input type="text" class="form-control input-sm text-right numtype" name="stock" id="addstockmodal" value="0.00" aria-describedby="unitaddon"  type="text">
-			    
-			</td>
-			</tr>
-		    {% endif %}
+			</div>
+		      </td>
+		      
+		      <td class="col-xs-1">
+			<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+		</td>
+
+		    </tr>
 		  </tbody>
 		</table>
 		<div>

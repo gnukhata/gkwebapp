@@ -1207,6 +1207,32 @@ $("#addgodown").click(function() {
   );
 });
 
+    $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
+	 $.ajax({
+      url: '/product?type=hsnuom',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+	     data: {"productcode": $(this).val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp)   /*This function will return spec name of the product*/
+    {
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+      
+  });
+  
 
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();

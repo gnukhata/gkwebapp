@@ -64,7 +64,16 @@ def addproducttab(request):
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
+    products=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
+    print products.json()["gkresult"]
+    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"],"products":products.json()["gkresult"]}
+
+@view_config(route_name="product",request_param="type=hsnuom", renderer="json")
+def gethsnuom(request):
+    header={"gktoken":request.headers["gktoken"]}
+    print request.params["productcode"]
+    result = requests.get("http://127.0.0.1:6543/products?type=hsnuom&productcode=%d"%(int(request.params["productcode"])), headers=header)
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/addproductspecs.jinja2")
 def getcatspecs(request):
