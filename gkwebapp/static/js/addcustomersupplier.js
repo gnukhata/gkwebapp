@@ -222,7 +222,11 @@ $("#add_state").keydown(function(event) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
-	  $("#cussup_save").focus();
+	  if($("#add_cussup").val() == '19'){
+	      $("#accountno").focus();
+	  } else {
+	      $("#cussup_save").focus();
+	  }
       }
       else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -272,9 +276,59 @@ $("#add_state").keydown(function(event) {
   }
   else if (event.which==27) {
     event.preventDefault();
-    $("#cussup_save").focus();
+      //$("#cussup_save").focus();
+      if($("#add_cussup").val() == '19'){
+	  $("#accountno").focus();
+      } else {
+	  $("#cussup_save").focus();
+      }
   }
-});
+ });
+
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#bankname").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#").focus().select();
+	}
+
+    });
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#branchname").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#accountno").focus().select();
+	}
+
+    });
+    $("#branchname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#ifsc").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#bankname").focus().select();
+	}
+
+    });
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#cussup_save").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#branchname").focus().select();
+	}
+
+    });
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified

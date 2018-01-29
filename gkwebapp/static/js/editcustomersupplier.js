@@ -594,7 +594,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#edit_state").val());
 	form_data.append("oldcustname", $("#edit_cussup_list option:selected").text());
-	if ($("#edit_cussup").val() == "19"){
+	if ($("#edit_cussup").val("Supplier")){
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
 	form_data.append("custsup", $("#edit_cussup").val());
