@@ -285,6 +285,7 @@ $("#add_state").keydown(function(event) {
   }
  });
 
+    // Keyevents for bank details
     $("#accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
@@ -299,7 +300,26 @@ $("#add_state").keydown(function(event) {
     $("#bankname").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
-	    $("#branchname").focus();
+	    if ($("#accountno").val() != "" && $("#bankname").val() == "" ) {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#bankname").focus();
+		});
+		return false;
+	    } else {
+		$('#branchname').focus();
+	    }
+	    if ($("#accountno").val() == "" && $("#bankname").val() != "" ) {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#bankname").focus();
+		return false;
+	    } else {
+		$('#branchname').focus();
+	    }
 	}
 	else if (event.which==38){
 	    event.preventDefault();
@@ -673,6 +693,7 @@ if($("#vatorgstflag").val() == '22'){
 	      .always(function() {
 		  console.log("complete");
 	      });
-      }
-  });
+	}
+	$("#add_cussup").change();
+    });
 });
