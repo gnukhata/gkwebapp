@@ -54,6 +54,8 @@ def showeditcashmemo(request):
 def showsinglecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+    print "cash memo data"
+    print invoicedata.json()["gkresult"]
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
 
@@ -71,8 +73,7 @@ def getproducts(request):
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
 def savecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-
-    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"orgstategstin":request.params["orgstategstin"]}
+    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"orgstategstin":request.params["orgstategstin"],"paymentmode":request.params["paymentmode"]}
 
     if request.params.has_key("discount"):
         cashmemodata["discount"]=json.loads(request.params["discount"])

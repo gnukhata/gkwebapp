@@ -1220,7 +1220,15 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
-        form_data.append("bankdetails", JSON.stringify(bankdetails));
+             if ($("#chkcash").is(":checked")) {
+		form_data.append("paymentmode",3);
+
+             } else {
+		form_data.append("bankdetails", JSON.stringify(bankdetails));
+		form_data.append("paymentmode",2);
+            }
+      
+        
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {

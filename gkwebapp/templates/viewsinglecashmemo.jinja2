@@ -223,7 +223,7 @@
 	  <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
 	</div>
       </div>
-      {% if gkresult["bankdetails"]["accountno"] != "" %}
+      {% if gkresult["paymentmode"] == 2 or gkresult["bankdetails"]["accountno"] != "" %}
 	<div class="col-sm-12">
 	<h4>Bank Details :</h4>
 	<div class="col-sm-6 nopadding">
