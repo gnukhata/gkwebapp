@@ -111,9 +111,11 @@ margin-bottom: 0px;
             {% trans %}Product name cannot be blank.{% endtrans %}
           </div>
           <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
-
             {% trans %}HSN No. cannot be blank.{% endtrans %}
           </div>
+	  <div class="alert alert-danger" id="hsnno-must-be-positive"  aria-live="rude" role="alert" hidden>
+	    {% trans %}HSN No.Cannot be zero.{% endtrans %}
+	  </div>
           <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
