@@ -43,12 +43,16 @@
       <div class="panel-body">
         <form>
           <div class="form-group">
+	    {% if unitofmeasurement1 <=0 %}
+	      <lable class="text-danger">Unit of Measurement Not Found</lable>
+	      {% else %}
             <label for="unit_edit_list" id="edit_list">{% trans %}List of Units :{% endtrans %}</label>
             <select class="form-control input-sm" id="unit_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
               {% for unitofmeasurement in gkresult %}
               <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
               {% endfor %}
+	      {%endif%}
             </select>
           </div>
           <div id="unit_edit_innerdiv" style="padding-left:10px;padding-right:10px;" hidden>

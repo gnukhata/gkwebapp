@@ -48,7 +48,7 @@ def showaddunit(request):
 def showeditunit(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+	return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"unitofmeasurement1":len(result.json()["gkresult"]),"status":True}
 
 
 @view_config(route_name="unitofmeasurements",request_param="action=getunit",renderer="json")
