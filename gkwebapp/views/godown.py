@@ -90,13 +90,14 @@ def addmultigodowns(request):
 
 @view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
 def showeditgodown(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	goddata=[]
-	for record in result.json()["gkresult"]:
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    print len(result.json()["gkresult"])
+    goddata=[]
+    for record in result.json()["gkresult"]:
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
-	return {"gkresult":goddata}
+    return {"gkresult":goddata,"numberofgodown1":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=getallgodowns", renderer="json")
 def getallgodowns(request):
