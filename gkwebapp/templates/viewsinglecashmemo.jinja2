@@ -223,7 +223,8 @@
 	  <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
 	</div>
       </div>
-      <div class="col-sm-12">
+      {% if gkresult["bankdetails"]["accountno"] != "" %}
+	<div class="col-sm-12">
 	<h4>Bank Details :</h4>
 	<div class="col-sm-6 nopadding">
 	  <div class="row">
@@ -248,5 +249,6 @@
 	    </div>
 	  </div>
 	</div>
-      </div>
+	</div>
+      {% else %}CASH RECEIVED{% endif %}
 </form>

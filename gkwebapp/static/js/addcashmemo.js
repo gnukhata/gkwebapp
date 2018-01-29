@@ -1787,7 +1787,16 @@ $(document).off("keyup").on("keyup", function(event) {
         }
 
       });
+   $("input[name='chkpaymentmode']").click(function () {
+            if ($("#chkcash").is(":checked")) {
+                $("#cash").show();
+		$("#bank").hide();
 
-
-
+            } else {
+                $("#cash").hide();
+		$("#bank").show();
+            }
+        });
+    
 });
+
