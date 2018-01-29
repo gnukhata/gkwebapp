@@ -54,12 +54,16 @@
           <div class="container-fluid row">
             <div class="col-md-6 selcat">
               <div class="form-group">
-                <label for="category_edit_list" id="category_edit_list_lbl">{% trans %}List of Categories :{% endtrans %}</label>
+		{% if category <=0 %}
+		  <lable class="text-danger">No Category Found</lable>
+		  {% else %}
+                  <label for="category_edit_list" id="category_edit_list_lbl">{% trans %}List of Categories :{% endtrans %}</label>
                 <select class="form-control input-sm" id="category_edit_list">
                   <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
                   {% for categories in gkresult %}
                   <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                   {% endfor %}
+		  {% endif %}
                 </select>
               </div>
             </div>

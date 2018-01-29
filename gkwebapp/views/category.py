@@ -60,7 +60,7 @@ def showeditcategory(request):
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"]}
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"],"category":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="category",request_param="action=getspecs",renderer="json")
 def getspecs(request):
