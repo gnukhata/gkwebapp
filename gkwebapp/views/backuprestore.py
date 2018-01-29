@@ -90,12 +90,16 @@ def tallyImport(request):
         groups = gsResult.json()["gkresult"]
         curgrpid = None
         parentgroupid = None
+        parentgroup = ""
+        openingBl = 0.00
         for accRow in accountList:
             if accRow[0].value == None:
                 continue
             if accRow[0].font.b:
                 curgrpid = groups[accRow[0].value.strip()]
                 parentgroupid = groups[accRow[0].value.strip()]
+                parentgroup = accRow[0].value.strip()
+                print parentgroup
                 continue
             if accRow[0].font.b == False and accRow[0].font.i == False:
                 if groups.has_key(accRow[0].value):
@@ -107,13 +111,28 @@ def tallyImport(request):
 
                 if len(accRow)>2:
                     if accRow[1].value==None and accRow[2].value==None:
-                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
                         continue
+                    # checking if opening Balance is not in Debit column. i.e. column no. 2 (B).
+                    #It means value is in credit column 
                     if accRow[1].value==None:
-                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[2].value}),headers=header)
+                        openingBl = accRow[2].value
+                        #Check parent group so that opening balance type (cr/dr) can be determined.
+                        if parentgroup == 'Current Assets' or parentgroup == 'Fixed Assets' or parentgroup == 'Investments' or parentgroup == 'Loans(Asset)' or parentgroup == 'Miscellaneous Expenses(Asset)':
+                            print "This is Parent Group %s"%parentgroup
+                            openingBl = float(-openingBl)
+                            print "Hence Opening Balnce %d"%openingBl
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
                         continue
+                    # checking if opening Balance is not in Credit column. i.e. column no. 2 (A).
+                    #It means value is in debit column 
                     if accRow[2].value==None:
-                        newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header)
+                        openingBl = accRow[1].value
+                        if parentgroup == 'Corpus' or parentgroup == 'Capital' or parentgroup == 'Current Liabilities' or parentgroup == 'Loans(Liabilities)' or parentgroup == "Reserves":
+                            print "This is Parent Group %s"%parentgroup
+                            openingBl = float(-openingBl)
+                            print "Hence Opening Balnce %d"%openingBl
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
                         continue
 
                 if len(accRow)==2:
