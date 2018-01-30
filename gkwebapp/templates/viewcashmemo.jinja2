@@ -19,14 +19,18 @@
       <div class="panel-body">
         <div class="container-fluid row">
           <div class="form-group col-md-6">
-            <label for="invoice_all_no">
-              {% trans %}Cash Memo{% endtrans %} :
-            </label>
-            <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+            {%if cashmemo <=0%}
+	      <label class="text-danger">Cash Memo Not Found!</label>
+	    {%else%}
+	      <label for="invoice_all_no">
+		{% trans %}Cash Memo{% endtrans %} :
+              </label>
+	      <select class="form-control input-sm" id="invoice_all_no" accesskey="">
               <option value="" disabled hidden selected>{% trans %}Select Cash Memo{% endtrans %}</option>
               {% for invoice in gkresult %}
               <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
               {% endfor %}
+	      {%endif%}
             </select>
           </div>
         </div>
