@@ -293,7 +293,11 @@ $("#add_state").keydown(function(event) {
 	}
 	else if (event.which==38){
 	    event.preventDefault();
-	    $("#").focus().select();
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
 	}
 
     });
@@ -481,24 +485,25 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     if (event.which==13) {
 	event.preventDefault();
 	if($("#vatorgstflag").val() == '22'){
-	    	if ($.trim($("#add_cussup_tan").val())=="") {
-            $("#tin-blank-alert").alert();
-            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#tin-blank-alert").hide();
-            });
-            $("#add_cussup_tan").focus();
-            return false;
-        }
-          $("#cussup_save").focus();
-}
-else{
-	$(".gstinstate:first").focus();
- }
-
+	    if ($.trim($("#add_cussup_tan").val())=="") {
+		$("#tin-blank-alert").alert();
+		$("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tin-blank-alert").hide();
+		});
+		$("#add_cussup_tan").focus();
+		return false;
+            } else if($("#add_cussup").val() == '19'){
+		$("#accountno").focus();
+	    } else {
+	      $("#cussup_save").focus();
+	  }
+	} else{
+	    $(".gstinstate:first").focus();
+	}
    }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_an").focus().select();
+      $("#add_cussup_pan").focus().select();
     }
     });
   $("#add_cussup_reset").click(function(event) {
@@ -665,7 +670,7 @@ if($("#vatorgstflag").val() == '22'){
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup option:selected").val());
 	if ($("#add_cussup option:selected").val() == "19"){
-	    if (bankdetails["accountno"] != "") {
+	    if (bankdetails["accountno"]) {
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 	    }
 	}
