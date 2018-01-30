@@ -64,10 +64,10 @@
 
             <form>
               <div class="form-group">
+		<label for="rec_tn_list">{% trans %}Select Transfer Note:{% endtrans %}</label>
 		{% if transfernote <=0 %}		
 		  <label class="text-danger">No Transfer Note Found!</label>
-		{%else%}  
-		<label for="rec_tn_list">{% trans %}Select Transfer Note:{% endtrans %}</label>
+		   {%else%}
                 <select class="form-control input-sm " id="rec_tn_list" accesskey="">
                   <option value="" disabled hidden selected>Select Transfer Note</option>
                   {% for tn in transfernote %}
