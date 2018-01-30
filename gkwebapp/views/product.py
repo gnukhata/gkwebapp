@@ -44,8 +44,7 @@ from odslib import ODS
 def showproducttab(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products",headers=header)
-    return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
-
+    return{"numberofproducts":len(result.json()["gkresult"])}
 @view_config(route_name="product",request_param="type=addtabvat", renderer="gkwebapp:templates/addproductvat.jinja2")
 def addProductTabVat(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -281,7 +280,7 @@ def editproducttab(request):
     result = requests.get("http://127.0.0.1:6543/products",headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
-    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "userrole":userrole.json()["gkresult"]}
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "userrole":userrole.json()["gkresult"],"numberofproducts":len(result.json()["gkresult"])}
 
 @view_config(route_name="product",request_param="type=edittabvat", renderer="gkwebapp:templates/editproductvat.jinja2")
 def editProductTabVat(request):
