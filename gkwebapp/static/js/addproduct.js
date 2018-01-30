@@ -36,7 +36,8 @@
 
 $(document).ready(function() {
 $(".serviceclass").hide();
-$(".productclass").hide();
+    $(".productclass").hide();
+    var stkhtml = $('#stocktable tbody tr:first').html();  
   $(".common").hide();
   var godownflag = 0;
     $('.modal-backdrop').remove();
@@ -1208,7 +1209,7 @@ $("#addgodown").click(function() {
 });
 
     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
-	var curindex= $(this).index();
+	let curindex= $(this).closest('tr').index();
 	$.ajax({
       url: '/product?type=hsnuom',
       type: 'POST',
@@ -1227,8 +1228,6 @@ $("#addgodown").click(function() {
 	      $('.unitname:eq('+ curindex +')').text(resp.gkresult.unitname);
 	      $('.add_product_hsncode:eq('+ curindex +')').html(resp.gkresult.gscode);
 	      
-	      
-	      curindex=curindex+1;
     })
     .fail(function() {
       console.log("error");
@@ -1241,6 +1240,33 @@ $("#addgodown").click(function() {
   });
   
 
+
+
+    $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	console.log(curindex);
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $('.open_stock:eq('+ curindex +')').focus().select();
+	}
+    });
+
+
+
+    $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
+	let curindex = $(this).closest('tr').index();
+	let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $('#stocktable tbody').append('<tr>' + stkhtml + '</tr>');
+	}
+    });
+
+
+    
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
   /* Act on the event */
