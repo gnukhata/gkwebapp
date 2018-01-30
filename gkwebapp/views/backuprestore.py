@@ -98,7 +98,6 @@ def tallyImport(request):
             curgrpid = groups[accRow[0].value.strip()]
             parentgroupid = groups[accRow[0].value.strip()]
             parentgroup = accRow[0].value.strip()
-            print parentgroup
             continue
         if accRow[0].font.b == False and accRow[0].font.i == False:
             if groups.has_key(accRow[0].value):
