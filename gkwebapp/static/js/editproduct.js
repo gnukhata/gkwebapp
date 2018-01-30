@@ -222,6 +222,14 @@ $(document).ready(function() {
 		});
 		return false;
 	    }
+	if ($("#gscode").val()=="") {
+    $("#hsnno-blank-alert").alert();
+    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#hsnno-blank-alert").hide();
+  });
+    $("#gscode").focus();
+    return false;
+  }
       if($("#gsflag").val()=='7'){
    $("#edituom").focus();
 }
@@ -1203,6 +1211,14 @@ $(document).ready(function() {
           });
           return false;
       }
+      if ($("#gscode").val()=="") {
+    $("#hsnno-blank-alert").alert();
+    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#hsnno-blank-alert").hide();
+  });
+    $("#gscode").focus();
+    return false;
+  }
     var specs = {};      /*This is spec dictionary having spcode as a key and specval as its value*/
     $("#spec_table tbody tr").each(function(){
       if ($(".spec_value",this).hasClass('datevalue')) {
