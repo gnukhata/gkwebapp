@@ -315,7 +315,7 @@ $("#add_state").keydown(function(event) {
 		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#accountno-blank-alert").hide();
 		});
-		$("#bankname").focus();
+		$("#accountno").focus();
 		return false;
 	    } else {
 		$('#branchname').focus();
@@ -330,7 +330,23 @@ $("#add_state").keydown(function(event) {
     $("#branchname").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
-	    $("#ifsc").focus();
+	    if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#branchname").focus();
+		});
+		return false;
+	    } else if($("#accounno").val() == "" || $("#bankname").val() == "" && $("#branchname").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#accountno").focus();
+		});
+		return false;
+	    } else {
+		$("#ifsc").focus();
+	    }
 	}
 	else if (event.which==38){
 	    event.preventDefault();
@@ -341,7 +357,23 @@ $("#add_state").keydown(function(event) {
     $("#ifsc").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
-	    $("#cussup_save").focus();
+	    if ($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {
+		$("#ifsc-blank-alert").alert();
+		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert").hide();
+		    $("#ifsc").focus();
+		});
+		return false;
+	    } else if(($("#accounno").val() == "" || $("#bankname").val() == "" || $("#branchname").val() == "") && $("#ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#accountno").focus();
+		});
+		return false;
+	    } else {
+		$("#cussup_save").focus();
+	    } 
 	}
 	else if (event.which==38){
 	    event.preventDefault();
@@ -491,7 +523,18 @@ else{
     else {
       groupcode = $("#credgroupcode").val();
     }
-	
+	// Validation for bank details
+	if ($("#accountno").val() == "" && $("#bankname").val() == "" && $("#branchname").val() == "" && $("#ifsc").val() == ""){
+	    $("#cussup_save").focus();
+	}
+	else if ($("#accountno").val() == "" || $("#bankname").val() == "" || $("#branchname").val() == "" || $("#ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	    return false;
+	}
     //validations to check if none of the required fields are left blank
 	    
     if ($.trim($("#add_cussup option:selected").val())=="") {
@@ -587,10 +630,10 @@ if($("#vatorgstflag").val() == '22'){
 	  custtan = $("#add_cussup_tan").val();
       }
     var bankdetails = {}; //for bank details
-    bankdetails["accountno"] = $.trim($("#edit_accountno").val());
-    bankdetails["bankname"] = $.trim($("#edit_bankname").val());
-    bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
-    bankdetails["branchname"] = $.trim($("#edit_branchname").val());
+    bankdetails["accountno"] = $.trim($("#accountno").val());
+    bankdetails["bankname"] = $.trim($("#bankname").val());
+    bankdetails["ifsc"] = $.trim($("#ifsc").val());
+    bankdetails["branchname"] = $.trim($("#branchname").val());
 
 	var form_data = new FormData();
 	form_data.append("custname", $("#add_cussup_name").val());
@@ -604,6 +647,7 @@ if($("#vatorgstflag").val() == '22'){
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup option:selected").val());
 	if ($("#add_cussup option:selected").val() == "19"){
+	    console.log(JSON.stringify(bankdetails));
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
     // ajax call for saving the customer/supplier

@@ -81,6 +81,18 @@
 
       {% trans %}Please enter Bank Name.{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter Branch Name.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please enter IFSC Code.{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+    </div>
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
