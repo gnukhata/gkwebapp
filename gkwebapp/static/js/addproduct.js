@@ -1208,7 +1208,8 @@ $("#addgodown").click(function() {
 });
 
     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
-	 $.ajax({
+	var curindex= $(this).index();
+	$.ajax({
       url: '/product?type=hsnuom',
       type: 'POST',
       global: false,
@@ -1221,7 +1222,13 @@ $("#addgodown").click(function() {
       }
     })
     .done(function(resp)   /*This function will return spec name of the product*/
-    {
+	  {
+	      	      
+	      $('.unitname:eq('+ curindex +')').text(resp.gkresult.unitname);
+	      $('.add_product_hsncode:eq('+ curindex +')').html(resp.gkresult.gscode);
+	      
+	      
+	      curindex=curindex+1;
     })
     .fail(function() {
       console.log("error");
