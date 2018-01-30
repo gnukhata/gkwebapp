@@ -30,18 +30,18 @@
 			</div>
 
 			<div class="col-xs-12">
-				<div class="form-group">
-				  <label for="editgoddet">{% trans %}List of Godowns{% endtrans %} :</label>
-				  {% if numberofgodown <=0 %}
-				    <label class="text-danger">Godown Not Found!</label>
-				    {% else %}
-				    <select class = "form-control input-sm" id="editgoddet">
+			  <div class="form-group">
+			    {% if numberofgodown <=0 %}
+			      <label class="text-danger">Godown Not Found!</label>
+			    {% else %}
+			      <label for="editgoddet">{% trans %}List of Godowns{% endtrans %} :</label>
+			      <select class = "form-control input-sm" id="editgoddet">
 						<option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
 						{% for gods in gkresult %}
 						<option value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</option>
 						{% endfor %}
-				  {% endif %}
-					</select>
+			    {% endif %}
+			      </select>
 				</div>
 			</div>
 				<div class="col-sm-6 editgodownform" hidden>
