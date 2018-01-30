@@ -97,7 +97,7 @@ def showeditgodown(request):
     for record in result.json()["gkresult"]:
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
-    return {"gkresult":goddata,"numberofgodown1":len(result.json()["gkresult"]),"status":True}
+    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=getallgodowns", renderer="json")
 def getallgodowns(request):
