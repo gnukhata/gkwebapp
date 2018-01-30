@@ -82,11 +82,11 @@ Contributors:
     }
   );
   });
-  $("#invoice_view_sale").click(function() {// calls view invoice page.
+  $("#invoice_view_sale").click(function(event) {// calls view invoice page.
     $.ajax(
 	{
 	    type: "POST",
-	    url: "/invoice?action=showsale",
+	    url: "/invoice?action=showeditinv&status=out", 
 	    global: false,
 	    async: false,
 	    data: {"inputdate": wholedate},
@@ -97,16 +97,17 @@ Contributors:
       },
     success: function(resp)
     {
-      $("#invoice_div").html(resp);
+	$("#invoice_div").html(resp);
+	return false;
     }
     }
-  );
+    );
   });
-  $("#invoice_view_purchase").click(function() {// calls view invoice page.
+    $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
     $.ajax(
 	{
 	    type: "POST",
-	    url: "/invoice?action=showpurchase",
+	    url: "/invoice?action=showeditinv&status=in",
 	    global: false,
 	    async: false,
 	    data: {"inputdate": wholedate},
@@ -117,11 +118,61 @@ Contributors:
       },
     success: function(resp)
     {
-      $("#invoice_div").html(resp);
+	$("#invoice_div").html(resp);
+	return false;
     }
     }
-  );
-  });
-  $("#invoice_record").click();// loads record invoice page by default.
+    );
+    });
+    $("#editbutton").click(function(event) {
+	$("#buttondiv, #invload").hide();
+	var url = "/invoice?action=showeditinv&status=out";
+	if ($("#backbutton").attr("inoutflag") == '9') {
+	    url = "/invoice?action=showeditinv&status=in";
+	}
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth();
+	month += 1;
+	var date = today.getDate();
+	if (month < 10) {
+	    month = "0" + month;
+	}
+	if(date < 10) {
+	    date = "0" + date;
+	}
+	var wholedate = year + "-" + month + "-" + date;
+        $.ajax({
+	    url: url,
+	    type: 'POST',
+            dataType: 'html',
+	    data: {"invid":$("#editbutton").attr("invid"), "inputdate": wholedate},
+            beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#invload').html(resp);
+		$(".editblank").addClass("noborder nopadding");
+		$('#invload').show();
+		$("#invselectdiv").hide();
+		$("#invselect").val($("#editbutton").attr("invid")).change();
+		$("#invoice_edit").click();
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
+    if ($("#invoice").attr("status") == "9") {
+	$("#invoice_record").click();// loads record purchase invoice page by default.
+    }
+    else{
+	$("#invoice_create").click();// loads create sale invoice page by default.
+	$("#invoice").attr("status", 9);
+    }
 return false;
 });

@@ -119,6 +119,18 @@
      border-left-style:solid;
      border-width: 1px;
  }
+ .rborderdiv {
+     border-right-style:solid;
+     border-width: 1px;
+ }
+ .hborderdiv {
+     border-top-style:solid;
+     padding-top: 10px;
+     border-width: 1px;
+ }
  label {
      font-size:95% !important; 
+ }
+ .noborder {
+     border-style: none !important;
  }

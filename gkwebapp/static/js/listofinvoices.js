@@ -90,7 +90,7 @@ $(document).ready(function() {
                 datatype: "text/html",
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                },
+                }
             })
             .done(function(resp) {
                 $("#info").html(resp);
