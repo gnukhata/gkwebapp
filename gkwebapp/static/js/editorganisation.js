@@ -390,7 +390,23 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
      });
 
-    
+    $(document).off("click","#bankdel_done1").on("click","#bankdel_done1",function(event){
+	if($("#accno1").val()=="" && $("#branchnm1").val()=="" && $("#banknm1").val()=="" && $("#ifsc1").val()=="" )
+	{
+	    $("#bankdel_done1").focus();
+	    $("#bankdel_done1").click(function(event){		      
+		$('#addbankdel').modal('hide');
+	    });			      			     
+	}
+	else if($("#accno1").val()=="" || $("#branchnm1").val()=="" || $("#banknm1").val()=="" || $("#ifsc1").val()=="" ){
+	    $("#bankdetails-improper-modal").alert();
+		$("#bankdetails-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#bankdetails-improper-modal").hide();
+		    $("#accno1").focus();
+		});
+	}
+	
+    });
 
     // Validation for PAN
     $("#orgpan").keydown(function(event) {
@@ -512,15 +528,28 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       event.preventDefault();
       $("#ifsc1").focus().select();
     }
-    });
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#branchnm1").focus().select();
+	}});
+    
 
     $("#ifsc1").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#gstin_done1").focus().select();
+      $("#bankdel_done1").focus().select();
     }
-    });
-    
+    if (event.which==38) {
+	 event.preventDefault();
+	 $("#banknm1").focus().select();
+	}});
+   
+
+    $("#bankdel_done1").keydown(function(event) {
+    if (event.which==38) {
+      event.preventDefault();
+	$("#ifsc1").focus().select();
+    }});
 
     $("#orgmvat").keydown(function(event) {
     if (event.which==13) {
