@@ -1207,6 +1207,17 @@ $("#addgodown").click(function() {
     }
   );
 });
+    $(document).off("click",".product_del").on("click", ".product_del", function() {
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();//closest method gives the closest element specified
+	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+	    }
+	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
+	});
+	$('#stocktable tbody tr:last td:eq(0) select').select();
+    });
+ 
 
 
      //For shifting focus of addstock button to select godown button of pop up window
