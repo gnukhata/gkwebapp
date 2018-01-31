@@ -150,8 +150,12 @@ $("#add_state").keydown(function(event) {
       }
   }
   else if (event.which==27) {
-    event.preventDefault();
-    $("#cussup_save").focus();
+      event.preventDefault();
+      if($("#add_cussup").val() == '19'){
+	  $("#accountno").focus();
+      } else {
+	  $("#cussup_save").focus();
+      }
   }
 });
     //Change event on GSTIN State
