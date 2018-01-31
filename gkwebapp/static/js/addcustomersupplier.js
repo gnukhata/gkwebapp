@@ -724,14 +724,7 @@ if($("#vatorgstflag").val() == '22'){
       var custtan  = "";
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
-      }
-	var bankdetails = {}; //for bank details
-	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
-	    bankdetails["accountno"] = $.trim($("#accountno").val());
-	    bankdetails["bankname"] = $.trim($("#bankname").val());
-	    bankdetails["ifsc"] = $.trim($("#ifsc").val());
-	    bankdetails["branchname"] = $.trim($("#branchname").val());   
-	} 
+      } 
 	var form_data = new FormData();
 	form_data.append("custname", $("#add_cussup_name").val());
 	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
@@ -744,9 +737,14 @@ if($("#vatorgstflag").val() == '22'){
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup option:selected").val());
 	if ($("#add_cussup option:selected").val() == "19"){
-	    if (bankdetails["accountno"]) {
-		form_data.append("bankdetails", JSON.stringify(bankdetails));
-	    }
+	    var bankdetails = {}; //for bank details
+	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
+	    bankdetails["accountno"] = $.trim($("#accountno").val());
+	    bankdetails["bankname"] = $.trim($("#bankname").val());
+	    bankdetails["ifsc"] = $.trim($("#ifsc").val());
+	    bankdetails["branchname"] = $.trim($("#branchname").val());
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
 	}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
