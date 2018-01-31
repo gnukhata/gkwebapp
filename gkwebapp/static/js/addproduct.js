@@ -180,6 +180,16 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
   newuom =0;
 });
 
+    $("#openingstock").keydown(function(event){
+	if(event.which==27){
+	    event.preventDefault();
+	    $("#apsubmit").focus().select();
+	}}
+			      );
+			      
+
+
+    
 $("#additem").keydown(function(event) {
   if(event.which == 13) {
     if ($.trim($("#additem").val())=="") {
