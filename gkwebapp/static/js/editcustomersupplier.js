@@ -58,10 +58,14 @@ $(document).ready(function() {
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
 		    $("#edit_bankdetails").hide();
+		    $(".custlbl").show();
+		    $(".suplbl").hide();
 		}
 		else {
     		    $("#edit_cussup").val("Supplier");
 		    $("#edit_bankdetails").show();
+		    $(".suplbl").show();
+		    $(".custlbl").hide();
 		}
 	$("#edit_cussup").prop("disabled", true);
 	$("#edit_cussup_name").val(result["custname"]);
@@ -688,10 +692,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	      gstinstring =	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
-	      // Validation for GSTIN on Save Button.
+	  // Validation for GSTIN on Save Button.
 	      if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#gstin-improper-alert").alert();
+		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
 		$(".gstin").focus();
 	    });
@@ -726,10 +730,12 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  custtan = $("#edit_cussup_tan").val();
       }
 	var bankdetails = {}; //for bank details
-	bankdetails["accountno"] = $.trim($("#edit_accountno").val());
-	bankdetails["bankname"] = $.trim($("#edit_bankname").val());
-	bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
-	bankdetails["branchname"] = $.trim($("#edit_branchname").val());
+	if ($.trim($("#edit_accountno").val()) != "" && $.trim($("#edit_bankname").val()) !="" && $.trim($("#edit_ifsc").val()) !="" && $.trim($("#edit_branchname").val()) !="") {
+	    bankdetails["accountno"] = $.trim($("#edit_accountno").val());
+	    bankdetails["bankname"] = $.trim($("#edit_bankname").val());
+	    bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
+	    bankdetails["branchname"] = $.trim($("#edit_branchname").val());
+	}
 	var form_data = new FormData();
 	form_data.append("custid", $("#edit_cussup_list option:selected").val());
 	form_data.append("custname", $("#edit_cussup_name").val());
@@ -742,8 +748,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#edit_state").val());
 	form_data.append("oldcustname", $("#edit_cussup_list option:selected").text());
-	if ($("#edit_cussup").val("Supplier")){
-	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	if ($("#edit_cussup").val() == "Supplier" ){
+	    if (bankdetails["accountno"]) {
+		form_data.append("bankdetails", JSON.stringify(bankdetails));
+	    }
 	}
 	form_data.append("custsup", $("#edit_cussup").val());
 	if(allow == 1){

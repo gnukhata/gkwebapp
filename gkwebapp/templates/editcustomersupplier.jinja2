@@ -146,7 +146,8 @@
               <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
             </div>
 	    <div class="form-group col-sm-6 hidden-load" hidden>
-              <label for="edit_cussup_name">{% trans %}New Name of Customer / Supplier :{% endtrans %}</label><label for="edit_cussup_name" style="color:red;font-size: 120%;">*</label>
+              <label for="edit_cussup_name" class="custlbl">{% trans %}New Name of Customer :{% endtrans %}</label><label for="edit_cussup_name" class="custlbl" style="color:red;font-size: 120%;">*</label>
+	      <label for="edit_sup_name" class="suplbl">{% trans %}New Name of Supplier :{% endtrans %}</label><label for="edit_cussup_name" class="suplbl" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
             </div>
 	  </div>
