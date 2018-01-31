@@ -216,6 +216,12 @@ $("#godownflag").keydown(function(event){
     $("#product_tax_table tbody tr:last td:eq(2) input").focus();
   }
 });
+    $("#openingstock").keydown(function(event){
+       if(event.which==27){
+	event.preventDefault();
+	$("#apsubmit").focus().select();
+       }
+});
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
   if (event.which==13) {
     event.preventDefault();
