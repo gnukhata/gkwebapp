@@ -42,8 +42,7 @@ from odslib import ODS
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	return {"numberofgodown":len(result.json()["gkresult"]),"status":True}
+	return {"status":True}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
@@ -90,13 +89,13 @@ def addmultigodowns(request):
 
 @view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
 def showeditgodown(request):
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-	goddata=[]
-	for record in result.json()["gkresult"]:
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    goddata=[]
+    for record in result.json()["gkresult"]:
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
-	return {"gkresult":goddata}
+    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=getallgodowns", renderer="json")
 def getallgodowns(request):
