@@ -43,6 +43,12 @@
 
 				</div>
 
+				<div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+
+				  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+
+				</div>
+
 				<div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
 
 				  {% trans %}Improper GSTIN!{% endtrans %}
@@ -53,13 +59,6 @@
 
  				  {% trans %}Connection Failed.{% endtrans %}
 				</div>
-
-
-
-                           
-
-
-				
 				
 				<div class="col-xs-12 from-group">
 				  <center>
@@ -71,96 +70,96 @@
 
 
 				      </div>
-				    </center>
-				    </div>
-				  </div>
-				  <center>
-				<label class="btn btn-primary btn-sm" for="my-file-selector">
-				  <input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
-				  {% trans %}Upload L<u>o</u>go{% endtrans %}
-				</label>
-				<span class='label label-info' id="upload-file-info"></span>
 				  </center>
+				    </div>
+				</div>
+				<center>
+				  <label class="btn btn-primary btn-sm" for="my-file-selector">
+				    <input name="img"  class="input-sm" accesskey="o" id="my-file-selector" type="file" accept="image/*" style="display:none;" onchange="$('#upload-file-info').html('New Logo selected');" >
+				    {% trans %}Upload L<u>o</u>go{% endtrans %}
+				  </label>
+				  <span class='label label-info' id="upload-file-info"></span>
+				</center>
 				<form id="editorganisationform" method="post" class="form-inline">
 				  <div class="col-xs-6 from-group" >
 				    <input type="text" id="orgtype" hidden value="{{gkresult["orgtype"]}}" style="width: 100%"></input>
 				    <table class="table">
 				      <tbody>
 					{% if gkresult["orgtype"]=="Not For Profit" %}
-					<tr>
+					  <tr>
 					    <td>
 					      <label for="registrationnumber" id="regno">{% trans %}Registration Number{% endtrans %} :</label>
 					    </td>
 					    <td>
 					      <input type="text" id="orgregno" class="form-control input-sm" name="registrationnumber" value="{{gkresult["orgregno"]}}" style="width: 100%"></input>
 					    </td>
+					  </tr>
+					  <tr>
+					    <td>
+					      <label for="fcrano" id="fcranumber">{% trans %}FCRA Registration Number{% endtrans %} :</label>
+					    </td>
+					    <td>
+					      <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" style="width: 100%"></input>
+					    </td>
+					  </tr>
+					{% endif %}
+					<tr>
+					  <td>
+					    <label for="organisationaddress" id="orgaddress">{% trans %}Address{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgaddr" class="form-control input-sm" name="organisationaddress" value="{{gkresult["orgaddr"]}}" style="width: 100%"></input>
+					  </td>
 					</tr>
 					<tr>
 					  <td>
-					    <label for="fcrano" id="fcranumber">{% trans %}FCRA Registration Number{% endtrans %} :</label>
+					    <label for="organisationcity" id="orgCity">{% trans %}City{% endtrans %} :</label>
 					  </td>
 					  <td>
-					    <input type="text" id="orgfcrano" class="form-control input-sm" name="fcranumber" value="{{gkresult["orgfcrano"]}}" style="width: 100%"></input>
+					    <input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
 					  </td>
 					</tr>
-					  {% endif %}
-					  <tr>
-					    <td>
-					      <label for="organisationaddress" id="orgaddress">{% trans %}Address{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgaddr" class="form-control input-sm" name="organisationaddress" value="{{gkresult["orgaddr"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationcity" id="orgCity">{% trans %}City{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgcity" class="form-control input-sm" name="organisationcity" value="{{gkresult["orgcity"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationstate" id="orgState">{% trans %}State{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
-					      <select id="orgstate" class="form-control input-sm col-sm-8" style="width: 100%">
-						<option value="" hidden disabled selected>Select State</option>
-						{% for state in states %}
-						  {% for key, value in state.items() %}
-						    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-						  {% endfor %}
+					<tr>
+					  <td>
+					    <label for="organisationstate" id="orgState">{% trans %}State{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
+					    <select id="orgstate" class="form-control input-sm col-sm-8" style="width: 100%">
+					      <option value="" hidden disabled selected>Select State</option>
+					      {% for state in states %}
+						{% for key, value in state.items() %}
+						  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 						{% endfor %}
-					      </select>
-					      
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationcountry" id="orgCountry">{% trans %}Country{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="organisationpincode" id="orgpostalcode">{% trans %}Postal Code{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
-					  <tr>
-					    <td>
-					      <label for="telephonenumber" id="telno">{% trans %}Contact Number{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
-					    </td>
-					  </tr>
+					      {% endfor %}
+					    </select>
+					    
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationcountry" id="orgCountry">{% trans %}Country{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgcountry" class="form-control input-sm" name="organisationcountry" value="{{gkresult["orgcountry"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationpincode" id="orgpostalcode">{% trans %}Postal Code{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgpincode" class="form-control input-sm" name="organisationpincode" value="{{gkresult["orgpincode"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="telephonenumber" id="telno">{% trans %}Contact Number{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
 				      </tbody>
 				    </table>
 				  </div>
@@ -231,42 +230,42 @@
 					    <input type="text" id="orgpan" class="form-control input-sm" name="organisationpannumber" value="{{gkresult["orgpan"]}}" style="width: 100%" maxlength="10"></input>
 					  </td>
 					</tr>
-					  {% if vatorgstflag=='22' or vatorgstflag=='29' %}
-					    <tr>
-					      <td>
+					{% if vatorgstflag=='22' or vatorgstflag=='29' %}
+					  <tr>
+					    <td>
 					      <label for="organisationmvat" id="orgvatno" class="tinfield">{% trans %}VAT Number{% endtrans %} :</label>
 					    </td>
 					    <td>
 					      <input type="text" id="orgmvat" class="form-control input-sm tinfield" name="organisationmvat" value="{{gkresult["orgmvat"]}}" style="width: 100%"></input>
 					    </td>
-					    </tr>
-					    <tr>
-					      <td>
-						<label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
-					      </td>
-					      <td>
-						<input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
-					      </td>
-					    </tr>
-					  {% endif %}
-					  {% if vatorgstflag=='7' or vatorgstflag=='29' %}
-					      <tr>
-						<td>
-						  <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSTIN{% endtrans %} :</label>
+					  </tr>
+					  <tr>
+					    <td>
+					      <label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
+					    </td>
+					    <td>
+					      <input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+					    </td>
+					  </tr>
+					{% endif %}
+					{% if vatorgstflag=='7' or vatorgstflag=='29' %}
+					  <tr>
+					    <td>
+					      <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSTIN{% endtrans %} :</label>
 					    </td>
 					    <td>
 					      <button class="btn btn-primary btn-sm gstinfield" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
 					    </td>
-					      </tr>
-					  {% endif %}
-					  <tr>
-					    <td>
-					      <label for="orgbankdetails" id="orgbkdel" class="bankdel">{% trans %}Bank Details{% endtrans %} :</label>
-					    </td>
-					    <td>
-					      <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Bank Details{% endtrans %}</button>
-					    </td>
 					  </tr>
+					{% endif %}
+					<tr>
+					  <td>
+					    <label for="orgbankdetails" id="orgbkdel" class="bankdel">{% trans %}Bank Details{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Bank Details{% endtrans %}</button>
+					  </td>
+					</tr>
 				      </tbody>
 				    </table>
 				  </div>
@@ -331,17 +330,17 @@
               <div class="panel">
 		<div class="panel-body gstinclass">
 		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-			<thead class="bg-primary input-sm">
-			  <tr>
-			    <th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
-			    <th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
-			    <th class="col-xs-1"></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  {% if gkresult["gstin"] %}
-			  {% for gstin in gkresult["gstin"] %}
-			    {% set gstinstr = gkresult["gstin"][gstin]%}
+		    <thead class="bg-primary input-sm">
+		      <tr>
+			<th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+		      </tr>
+		    </thead>
+		    <tbody>
+		      {% if gkresult["gstin"] %}
+			{% for gstin in gkresult["gstin"] %}
+			  {% set gstinstr = gkresult["gstin"][gstin]%}
 			  <tr>
 			    <td class="col-xs-6">
 			      <select stateid="{{ gstin }}" class="form-control input-sm gstinstate">
@@ -365,48 +364,48 @@
 			    <td class="col-xs-1">
 			    </td>
 			  </tr>
-			  {% endfor %}
-			  {% else %}
-			  <tr>
-			    <td class="col-xs-6">
-			      <select class="form-control input-sm gstinstate">
-				<option value="" disabled hidden selected>Select State</option>
-				{% for state in states %}
-				  {% for key, value in state.items() %}
-				    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-				  {% endfor %}
+			{% endfor %}
+		      {% else %}
+			<tr>
+			  <td class="col-xs-6">
+			    <select class="form-control input-sm gstinstate">
+			      <option value="" disabled hidden selected>Select State</option>
+			      {% for state in states %}
+				{% for key, value in state.items() %}
+				  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 				{% endfor %}
-			      </select>
-			    </td>
-			    <td class="col-xs-5">
-			      <div class="form-inline nopadding">
-				<div class="form-group nopadding">
-				  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
-				  <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
-				  <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
-				</div>
+			      {% endfor %}
+			    </select>
+			  </td>
+			  <td class="col-xs-5">
+			    <div class="form-inline nopadding">
+			      <div class="form-group nopadding">
+				<input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+				<input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+				<input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
 			      </div>
-			    </td>
-			    <td class="col-xs-1">
-			      
-			    </td>
-			  </tr>
-			  {% endif %}
-			</tbody>
-		      </table>
-		      <div>
-			<small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                      </div>
-		    </div>
-                    
-		  </div>
+			    </div>
+			  </td>
+			  <td class="col-xs-1">
+			    
+			  </td>
+			</tr>
+		      {% endif %}
+		    </tbody>
+		  </table>
+		  <div>
+		    <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                  </div>
+		</div>
+                
+	      </div>
 
-		  <div class="panel-footer">
-		    <div class="container-fluid">
-		      <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
-		      {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
-		    </div>
-		  </div>
+	      <div class="panel-footer">
+		<div class="container-fluid">
+		  <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+		  {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
+		</div>
+	      </div>
 	    </div>
 	  </div>
 	</div>
@@ -430,8 +429,49 @@
             </div>
             <div class="modal-body">
 	      <div class="alert alert-danger" id="bankdetails-improper-modal"  aria-live="rude" role="alert" hidden>
-		{% trans %}Please fill all the fields of Bank Details{% endtrans %}
+		{% trans %}Please fill all the fields of Bank Details.{% endtrans %}
 	      </div>
+
+              <div class="alert alert-danger" id="bankname-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter the Bank Name.{% endtrans %}
+	      </div>
+
+	      <div class="alert alert-danger" id="accno-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter an account  number.{% endtrans %}
+	      </div>
+
+
+	      <div class="alert alert-danger" id="both-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter an Account Number and the Bank Name{% endtrans %}
+	      </div>
+
+
+	      <div class="alert alert-danger" id="branchname-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter the Branch Name.{% endtrans %}
+	      </div>
+
+
+	      <div class="alert alert-danger" id="both1-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter Account Number, Bank Name and the Branch Name.{% endtrans %}
+	      </div>
+
+
+	      <div class="alert alert-danger" id="both2-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter the Bank Name and Branch Name{% endtrans %}
+	      </div>
+
+	      <div class="alert alert-danger" id="both3-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter an Account Number and Branch Name{% endtrans %}
+	      </div>
+
+
+	      <div class="alert alert-danger" id="ifsc-improper-modal"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please enter an IFSC Code{% endtrans %}
+	      </div>
+
+
+	      
+	      
 		  <table id="banktable" class="table fixed-table">
 			<tbody>
 			  <tr>
@@ -442,22 +482,29 @@
 			      <input  type="text" id="accno1" class="form-control input-sm bankdel" name="bankaccountno" style="width: 100%"></input>
 			    </td>
 			  </tr>
-                          <tr>
-			    <td>
-		              <label for="bankbranch name" id="branchnm">{% trans %}Branch Number{% endtrans %} :</label>
-			    </td>
-			    <td>
-			      <input type="text" id="branchnm1" class="form-control input-sm bankdel" name="branchname" style="width: 100%"></input>
-			    </td>
-			  </tr>
+
+
                           <tr>
 			    <td>
 		              <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
 			    </td>
 			    <td>
 			      <input type="text" id="banknm1" class="form-control input-sm bankdel" name="bankname" style="width: 100%"></input>
-			         </td>
+			    </td>
                           </tr>
+
+
+
+
+			  <tr>
+			    <td>
+		              <label for="bankbranch name" id="branchnm">{% trans %}Branch Name{% endtrans %} :</label>
+			    </td>
+			    <td>
+			      <input type="text" id="branchnm1" class="form-control input-sm bankdel" name="branchname" style="width: 100%"></input>
+			    </td>
+			  </tr>
+                          
 			  <tr>
 			    <td>
 		              <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>

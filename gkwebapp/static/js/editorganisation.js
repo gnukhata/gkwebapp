@@ -393,7 +393,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $(document).off("click","#bankdel_done1").on("click","#bankdel_done1",function(event){
 	if($("#accno1").val()=="" && $("#branchnm1").val()=="" && $("#banknm1").val()=="" && $("#ifsc1").val()=="" )
 	{
-	    $("#bankdel_done1").focus();
+	    
 	    $("#bankdel_done1").click(function(event){		      
 		$('#addbankdel').modal('hide');
 	    });			      			     
@@ -404,6 +404,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
                     $("#bankdetails-improper-modal").hide();
 		    $("#accno1").focus();
 		});
+	}
+
+
+		if($("#accno1").val()!="" && $("#branchnm1").val()!="" && $("#banknm1").val()!="" && $("#ifsc1").val()!="" )
+	{
+	    
+	    $("#bankdel_done1").click(function(event){		      
+		$('#addbankdel').modal('hide');
+	    });			      			     
 	}
 	
     });
@@ -503,46 +512,185 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
      });
 
-
+      //Keydown EVENT for BANK DETAILS
 
     $("#accno1").keydown(function(event) {
 	if (event.which==13) {
-	    $("#branchnm1").focus().select();
+	    $("#banknm1").focus().select();
 	}
     });  
 
 
-    $("#branchnm1").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#banknm1").focus().select();
+    $("#banknm1").keydown(function(event) {
+	if (event.which==13) {
+
+         if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())!="") {
+            $("#accno-improper-modal").alert();
+            $("#accno-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accno-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+         }
+
+         else if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())=="") {
+            $("#bankname-improper-modal").alert();
+            $("#bankname-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-improper-modal").hide();
+            });
+            $("#banknm1").focus();
+            return false;
+          }
+	    
+	    event.preventDefault();
+      $("#branchnm1").focus().select();
     }
 	if (event.which==38) {
 	 event.preventDefault();
 	 $("#accno1").focus().select();
-	}});
+	};
+    });
 
 
-    $("#banknm1").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+    $("#branchnm1").keydown(function(event) {
+	if (event.which==13) {
+          if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())!="" ) {
+            $("#both-improper-modal").alert();
+            $("#both-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#both-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false; 
+          }
+
+	    if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())!="" ) {
+            $("#bankname-improper-modal").alert();
+            $("#bankname-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-improper-modal").hide();
+            });
+            $("#banknm1").focus();
+            return false;
+          }
+
+
+
+	     if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())!="" ) {
+            $("#accno-improper-modal").alert();
+            $("#accno-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accno-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+          }
+
+
+
+	if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())=="" ) {
+            $("#branchname-improper-modal").alert();
+            $("#branchname-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branchname-improper-modal").hide();
+            });
+            $("#branchnm1").focus();
+            return false;
+          }    
+	    
+	    event.preventDefault();
       $("#ifsc1").focus().select();
     }
 	if (event.which==38) {
 	 event.preventDefault();
-	 $("#branchnm1").focus().select();
-	}});
+	 $("#banknm1").focus().select();
+	};
+    });
     
 
     $("#ifsc1").keydown(function(event) {
-    if (event.which==13) {
+	if (event.which==13) {
+
+         if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())=="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#both1-improper-modal").alert();
+            $("#both1-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#both1-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+         }
+
+
+	   if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())=="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#both2-improper-modal").alert();
+            $("#both2-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#both2-improper-modal").hide();
+            });
+            $("#banknm1").focus();
+            return false;
+           }
+
+
+	    if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())=="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#both3-improper-modal").alert();
+            $("#both3-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#both3-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+          } 
+
+           if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())!="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#both-improper-modal").alert();
+            $("#both-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#both-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+          } 
+
+            if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())!="" && $.trim($("#ifsc1").val())=="" ) {
+            $("#ifsc-improper-modal").alert();
+            $("#ifsc-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#ifsc-improper-modal").hide();
+            });
+            $("#ifsc1").focus();
+            return false;
+            }
+
+	    if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())=="" && $.trim($("#branchnm1").val())!="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#bankname-improper-modal").alert();
+            $("#bankname-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-improper-modal").hide();
+            });
+            $("#banknm1").focus();
+            return false;
+          } 
+
+           if ($.trim($("#accno1").val())!="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())=="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#branchname-improper-modal").alert();
+            $("#branchname-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branchname-improper-modal").hide();
+            });
+            $("#branchnm1").focus();
+            return false;
+           }
+
+
+	    if ($.trim($("#accno1").val())=="" && $.trim($("#banknm1").val())!="" && $.trim($("#branchnm1").val())!="" && $.trim($("#ifsc1").val())!="" ) {
+            $("#accno-improper-modal").alert();
+            $("#accno-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accno-improper-modal").hide();
+            });
+            $("#accno1").focus();
+            return false;
+          }
+
+	    
       event.preventDefault();
       $("#bankdel_done1").focus().select();
     }
     if (event.which==38) {
 	 event.preventDefault();
-	 $("#banknm1").focus().select();
-	}});
+	 $("#branchnm1").focus().select();
+       };
+    });
    
 
     $("#bankdel_done1").keydown(function(event) {
@@ -654,6 +802,18 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     var regno="";
     var fcrano="";
 
+    //validation for bank details  
+    if(!($("#accno1").val()=="" && $("#branchnm1").val()=="" && $("#banknm1").val()=="" && $("#ifsc1").val()=="")){
+        if($("#accno1").val()=="" || $("#branchnm1").val()=="" || $("#banknm1").val()=="" || $("#ifsc1").val()=="" ) {
+		$("#allbank-blank-alert").alert();
+		$("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#allbank-blank-alert").hide();
+		});
+		$("#orgbankdel").focus();
+		return false;
+	     }
+	 }
+    
     if($("#orgtype").val()=="Not For Profit")
     {
 
