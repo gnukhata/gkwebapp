@@ -658,6 +658,19 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#edit_cussup_address").focus();
       return false;
     }
+
+        // Validation for bank details
+	if (!($("#edit_accountno").val() == "" && $("#edit_bankname").val() == "" && $("#edit_branchname").val() == "" && $("#edit_ifsc").val() == "")){
+	   if ($("#edit_accountno").val() == "" || $("#edit_bankname").val() == "" || $("#edit_branchname").val() == "" || $("#edit_ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#edit_accountno").focus();
+	       return false;
+	   }
+	}
+	
 	
   /*    if ($.trim($("#edit_cussup_tan").val())==""){
       $("#both-blank-alert").alert();

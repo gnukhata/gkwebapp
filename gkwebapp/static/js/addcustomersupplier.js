@@ -628,8 +628,8 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		$("#allbank-blank-alert").hide();
 	    });
 	    $("#accountno").focus();
-	    return false;
-	}
+	       return false;
+	   }
 	}
     //validations to check if none of the required fields are left blank
 	    
