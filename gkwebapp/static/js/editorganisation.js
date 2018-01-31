@@ -800,9 +800,24 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     var regdate="";
     var fcraregdate="";
     var regno="";
-    var fcrano="";
+      var fcrano="";
 
-    //validation for bank details  
+      var bankdetails={};
+     
+      if($("#accno1").val()!="" && $("#branchnm1").val()!="" && $("#banknm1").val()!="" && $("#ifsc1").val()!="")
+      {
+      bankdetails["accountno"]=$("#accno1").val();
+      bankdetails["bankname"]=$("#banknm1").val();
+      bankdetails["branchname"]=$("#branchnm1").val();
+      bankdetails["ifsc"]=$("#ifsc1").val();
+      	  console.log(bankdetails);
+      }
+      else 
+      {
+	  console.log("restricted bcoz no data ");
+      }
+
+    //validation for   
     if(!($("#accno1").val()=="" && $("#branchnm1").val()=="" && $("#banknm1").val()=="" && $("#ifsc1").val()=="")){
         if($("#accno1").val()=="" || $("#branchnm1").val()=="" || $("#banknm1").val()=="" || $("#ifsc1").val()=="" ) {
 		$("#allbank-blank-alert").alert();
@@ -908,8 +923,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     form_data.append("orgpan",$("#orgpan").val());
     form_data.append("orgmvat",$("#orgmvat").val());
     form_data.append("orgstax",$("#orgstax").val());    
-    form_data.append("gstin",JSON.stringify(gobj)); //for gstin     
-    form_data.append("orgregno",regno);
+    form_data.append("gstin",JSON.stringify(gobj)); //for gstin
+    if(bankdetails['accountno']) {
+	  form_data.append("bankdetails",JSON.stringify(bankdetails));
+      }
+	  form_data.append("orgregno",regno);
     form_data.append("orgregdate",regdate);
     form_data.append( "orgfcrano",fcrano);
     form_data.append("orgfcradate",fcraregdate);

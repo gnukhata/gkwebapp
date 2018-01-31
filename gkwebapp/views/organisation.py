@@ -88,6 +88,8 @@ def editOrganisation(request):
     header={"gktoken":request.headers["gktoken"]}
 
     gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
+    if request.params.has_key("bankdetails"):
+        gkdata["bankdetails"]=request.params["bankdetails"];
     filelogo={}
     try:
         if request.POST['logo'].file:
