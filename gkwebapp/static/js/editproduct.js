@@ -255,10 +255,13 @@ $(document).ready(function() {
     else if (event.which==173) {
       event.preventDefault();
     }
+      else if(event.which == 27){
+	 event.preventDefault();
+	 $("#epsubmit").focus().select();
+	}
     /* Act on the event */
   });
-
-  $(document).on('keydown', '.editgodown_ob', function(event){
+   $(document).on('keydown', '.editgodown_ob', function(event){
     if (event.which == 13) {
       var n = $(".editgodown_ob").index(this);
       var m = n+1;
