@@ -238,7 +238,6 @@ $(document).ready(function() {
               $("#subunit-alert").alert();
               $("#subunit-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#subunit-alert").hide();
-                $("a[href ='#unit_edit']").click();
               });
               return false;
             }
