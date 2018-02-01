@@ -108,6 +108,26 @@ th {
                 {% trans %}Improper GSTIN!{% endtrans %}
 
               </div>
+	      <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter Account No.{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter Bank Name.{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter Branch Name.{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please enter IFSC Code.{% endtrans %}
+	      </div>
+	      <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		{% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+	      </div>
 	      <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
 	      <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
 	      <div class="panel shadow customersupplier_panel">
@@ -253,6 +273,29 @@ th {
 		    <div class="form-group">
 		      <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
 		      <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
+		    </div>
+		    <div id="bankdetails">
+		      <label><h4>Bank Details :</h4></label>
+		      <div class="row">
+			<div class="form-group col-sm-6">
+			  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+			  <input type="text" id="accountno" class="form-control input-sm"></input>
+			</div>
+			<div class="form-group col-sm-6">
+			  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+			  <input type="text" id="bankname" class="form-control input-sm" name="bankname" ></input>
+			</div>
+		      </div>
+		      <div class="row">
+			<div class="form-group col-sm-6">
+			  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+			  <input type="text" id="branchname" class="form-control input-sm" ></input>
+			</div>
+			<div class="form-group col-sm-6">
+			  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+			  <input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
+			</div>
+		      </div>
 		    </div>
 		    {% endif %}
 

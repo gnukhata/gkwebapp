@@ -729,13 +729,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if ($("#edit_cussup_tan").length > 0){
 	  custtan = $("#edit_cussup_tan").val();
       }
-	/**var bankdetails = {}; //for bank details
-	if ($.trim($("#edit_accountno").val()) != "" && $.trim($("#edit_bankname").val()) !="" && $.trim($("#edit_ifsc").val()) !="" && $.trim($("#edit_branchname").val()) !="") {
-	    bankdetails["accountno"] = $.trim($("#edit_accountno").val());
-	    bankdetails["bankname"] = $.trim($("#edit_bankname").val());
-	    bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
-	    bankdetails["branchname"] = $.trim($("#edit_branchname").val());
-	}**/
 	var form_data = new FormData();
 	form_data.append("custid", $("#edit_cussup_list option:selected").val());
 	form_data.append("custname", $("#edit_cussup_name").val());

@@ -279,8 +279,7 @@ $("#add_state").keydown(function(event) {
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-    event.preventDefault();
-      //$("#cussup_save").focus();
+      event.preventDefault();
       if($("#add_cussup").val() == '19'){
 	  $("#accountno").focus();
       } else {
