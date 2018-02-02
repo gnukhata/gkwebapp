@@ -731,7 +731,7 @@ else{
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup option:selected").val());
 	if ($("#status").val() == "9"){
-	    var bankdetails = {}; //for bank details
+	    var bankdetails = {}; //dictionary for bank details
 	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
 	    bankdetails["accountno"] = $.trim($("#accountno").val());
 	    bankdetails["bankname"] = $.trim($("#bankname").val());

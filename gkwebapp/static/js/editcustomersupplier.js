@@ -174,7 +174,7 @@ $(document).ready(function() {
   $("#edit_cussup_phone").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#edit_state").focus().select();
+      $("#edit_cussup_address").focus().select();
     }
     if (event.which==38){
       event.preventDefault();
@@ -193,21 +193,21 @@ $(document).ready(function() {
         $("#edit_state").focus();
         return false;
       }
-      $("#edit_cussup_address").focus().select();
+      $("#edit_cussup_fax").focus().select();
     }
     if (event.which==38 && $("#edit_state option:selected").index()==0) {
       event.preventDefault();
-      $("#edit_cussup_phone").focus().select();
+      $("#edit_cussup_address").focus().select();
     }
   });
-  var delta = 500;
-  var lastKeypressTime = 0;
+  //var delta = 500;
+  //var lastKeypressTime = 0;
   $("#edit_cussup_address").keydown(function(event) {
-    if (event.which==13)
-    {
-      var thisKeypressTime = new Date();
-      if ( thisKeypressTime - lastKeypressTime <= delta )
-      {if ($.trim($("#edit_cussup_address").val())=="") {
+    if (event.which==13) {
+      //var thisKeypressTime = new Date();
+	//if ( thisKeypressTime - lastKeypressTime <= delta ){
+	
+	if ($.trim($("#edit_cussup_address").val())=="") {
           $("#address-blank-alert").alert();
           $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#address-blank-alert").hide();
@@ -215,16 +215,16 @@ $(document).ready(function() {
           $("#edit_cussup_address").focus();
           return false;
         }
-        $("#edit_cussup_fax").focus();
+        $("#edit_state").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
-        thisKeypressTime = 0;
-      }
-      lastKeypressTime = thisKeypressTime;
+        //thisKeypressTime = 0;
+      //}
+      //lastKeypressTime = thisKeypressTime;
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#edit_state").focus();
+      $("#edit_cussup_phone").focus();
     }
   });
   $("#edit_cussup_fax").keydown(function(event) {
@@ -234,7 +234,7 @@ $(document).ready(function() {
     }
     if (event.which==38){
       event.preventDefault();
-      $("#edit_cussup_address").focus().select();
+      $("#edit_state").focus().select();
     }
   });
     
