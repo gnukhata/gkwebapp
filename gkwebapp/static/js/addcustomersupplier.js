@@ -396,7 +396,7 @@ $("#add_state").keydown(function(event) {
 		    $("#branchname").focus();
 		});
 		return false;
-	    } else {
+		}else {
 		$("#cussup_save").focus();
 	    } 
 	}
