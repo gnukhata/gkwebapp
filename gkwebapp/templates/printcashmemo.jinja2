@@ -281,50 +281,55 @@
     </div>
     <br>
     <br>
+    {% if gkresult["paymentmode"] == 2 %}
     <div class="row">
-      <div class="col-xs-6 nopadding">
-	<table class="table table-bordered table-condensed">
-	  <thead>
-	    <tr>
-	      <th colspan="4">
-		Bank Details
-	      </th>
-	    </tr>
-	  </thead>
-	  <tbody>
-	    <tr>
-	      <td>
-		<label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
-	      </td>
-	      <td>
-		{% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
-	      </td>
-	      <td>
-		<label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-	      </td>
-	      <td>
-		{% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
-	      </td>
-	    </tr>
-	    <tr>
-	      <td>
-		<label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
-	      </td>
-	      <td>
-		{% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
-	      </td>
-	      <td>
-		<label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
-	      </td>
-	      <td>
-		{% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
-	      </td>
-	    </tr>
-	  </tbody>
-	</table>
-      </div>
-
+	<div class="col-xs-6 nopadding">
+	  <table class="table table-bordered table-condensed">
+	    <thead>
+	      <tr>
+		<th colspan="4">
+		  Bank Details
+		</th>
+	      </tr>
+	    </thead>
+	    <tbody>
+	      <tr>
+		<td>
+		  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		</td>
+		<td>
+		  {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
+		</td>
+		<td>
+		  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		</td>
+		<td>
+		  {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
+		</td>
+	      </tr>
+	      <tr>
+		<td>
+		  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		</td>
+		<td>
+		  {% if gkresult["bankdetails"]["branchname"] %}{{ gkresult["bankdetails"]["branchname"] }}{% else %}N/A{% endif %}
+		</td>
+		<td>
+		  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		</td>
+		<td>
+		  {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
+		</td>
+	      </tr>
+	    </tbody>
+	  </table>
+	</div>
     </div>
+    {% else %}
+    <div class="row">
+      <strong>CASH RECEIVED</strong>
+    </div>
+    {% endif %}
     <br>
     <div class="row">
       <div class="col-xs-6">

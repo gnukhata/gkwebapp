@@ -54,8 +54,6 @@ def showeditcashmemo(request):
 def showsinglecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    print "cash memo data"
-    print invoicedata.json()["gkresult"]
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
 
@@ -79,7 +77,6 @@ def savecashmemo(request):
         cashmemodata["discount"]=json.loads(request.params["discount"])
     if request.params.has_key("bankdetails"):
         cashmemodata["bankdetails"]=json.loads(request.params["bankdetails"])
-
     stock = json.loads(request.params["stock"])
     invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 
