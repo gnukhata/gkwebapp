@@ -469,10 +469,33 @@ $("#add_state").keydown(function(event) {
 	    $("#ifsc-blank-alert").alert();
 	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#ifsc-blank-alert").hide();
-		$("#ifsc").focus();
 	    });
+	    $("#ifsc").focus();
 	    return false;
-	}
+	} else if($("#accountno").val() == "" && $("#ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+	    $("#accountno").focus();
+	    return false;
+	} else if($("#bankname").val() == "" && $("#ifsc").val() != ""){
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	} else if($("#branchname").val() == "" && $("#ifsc").val() != ""){
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#branchname").focus();
+	    return false;
+	} else {
+	    $("#cussup_save").focus();
+	} 
     });	
 
     
