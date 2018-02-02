@@ -378,6 +378,96 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	}
 
     });
+
+    //change event for bank details
+    $("#bankname").change(function(event) {
+	event.preventDefault();
+	if ($("#accountno").val() == "" && $("#bankname").val() != "" ) {
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	    return false;
+	}
+	else if ($("#accountno").val() != "" && $("#bankname").val() == "" ) {
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	}
+	else {
+	    $('#branchname').focus();
+	}
+	
+    });
+
+    $("#branchname").change(function(event) {
+	event.preventDefault();
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {//not working
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#branchname").focus();
+	    return false;
+	} else if($("#accountno").val() == "" && $("#branchname").val() != ""){ //working
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	    return false;
+	}else if($("#bankname").val() == "" && $("#branchname").val() != ""){ //working
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	    }
+	else {
+	    $("#ifsc").focus();
+	}
+	
+    });
+
+    $("#ifsc").change(function(event) {
+	event.preventDefault();
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {//not working
+	    $("#ifsc-blank-alert").alert();
+	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#ifsc-blank-alert").hide();
+	    });
+	    $("#ifsc").focus();
+	    return false;
+	} else if($("#accountno").val() == "" && $("#ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+	    $("#accountno").focus();
+	    return false;
+	} else if($("#bankname").val() == "" && $("#ifsc").val() != ""){
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	} else if($("#branchname").val() == "" && $("#ifsc").val() != ""){
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#branchname").focus();
+	    return false;
+	} else {
+	    $("#cussup_save").focus();
+	} 
+    });
     
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
