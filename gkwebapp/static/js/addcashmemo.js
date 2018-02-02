@@ -1220,6 +1220,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
+	//code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
              if ($("#chkcash").is(":checked")) {
 		form_data.append("paymentmode",3);
 
@@ -1795,6 +1796,7 @@ $(document).off("keyup").on("keyup", function(event) {
         }
 
       });
+    //code for radio buttons to show and hide "bankdetails fields" and "cash received"
    $("input[name='chkpaymentmode']").click(function () {
             if ($("#chkcash").is(":checked")) {
                 $("#cash").show();
