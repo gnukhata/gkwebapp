@@ -261,8 +261,7 @@ $(".search").children(".form-control").keyup(function(event){
 		var orgtype = sessionStorage.getItem('orgt');
 		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
 		var xhr = new XMLHttpRequest();
-		console.log(unbdelstring);
-		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
+		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.getItem('year1') + '&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 
@@ -272,9 +271,9 @@ $(".search").children(".form-control").keyup(function(event){
     // get binary data as a response
     	var blob = this.response;
 	 		var url = window.URL.createObjectURL(blob);
-			window.location.assign(url)
+	    window.location.assign(url);
   	}
-	};
+		};
 
 	xhr.send();
 

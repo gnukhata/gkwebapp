@@ -222,7 +222,7 @@ def unbillspreadsheet(request):
     ods.content.mergeCells(0,1,merge,1)
     sheet.getCell(0,1).stringValue(headingtext).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
     ods.content.mergeCells(0,2,6,1)
-    sheet.getCell(0,2).stringValue("As on Date: "+inputdate).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
+    sheet.getCell(0,2).stringValue("As on Date: "+new_inputdate).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
     if request.params["del_unbilled_type"] == "9":
         sheet.setSheetName("Deliveries In")
         sheet.getCell(0,1).stringValue("Deliveries In").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
