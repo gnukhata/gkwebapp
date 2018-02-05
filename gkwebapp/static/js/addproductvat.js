@@ -216,6 +216,7 @@ $("#godownflag").keydown(function(event){
     $("#product_tax_table tbody tr:last td:eq(2) input").focus();
   }
 });
+    
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
   if (event.which==13) {
     event.preventDefault();
@@ -771,6 +772,10 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
   else if (event.which == 173) {
     event.preventDefault();
   }
+   else if(event.which==27){
+	event.preventDefault();
+	$("#apsubmit").focus().select();
+       } 
 });
 /* -----------------------Godown Key events start here----------------------------------------- */
 $(document).off("change",".godown_name").on("change",".godown_name",function(event)

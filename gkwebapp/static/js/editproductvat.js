@@ -187,6 +187,10 @@ $(document).ready(function() {
     else if (event.which==173) {
       event.preventDefault();
     }
+      else if (event.which==27) {
+	  event.preventDefault();
+	  $("#epsubmit").focus().select();
+      }
     /* Act on the event */
   });
 

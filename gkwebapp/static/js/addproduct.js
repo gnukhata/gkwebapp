@@ -179,7 +179,7 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
   /* Act on the event */
   newuom =0;
 });
-
+    
 $("#additem").keydown(function(event) {
   if(event.which == 13) {
     if ($.trim($("#additem").val())=="") {
@@ -248,7 +248,17 @@ $("#addproddesc").keydown(function(event) {
       }
   }
 });
-
+    $("#hsnno").change(function(event){
+	if(parseInt($("#hsnno").val()) <= 0)
+	    {
+	       	$("#hsnno-must-be-positive").alert();
+		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#hsnno-must-be-positive").hide();
+		    $("#hsnno").focus().select();
+		});
+		return false;
+	    }
+    });
 $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
@@ -268,6 +278,15 @@ $("#hsnno").keydown(function(event) {
     }
       return false;
     }
+      if(parseInt($("#hsnno").val()) <= 0)
+	    {
+	       	$("#hsnno-must-be-positive").alert();
+		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#hsnno-must-be-positive").hide();
+		    $("#hsnno").focus().select();
+		});
+		return false;
+	    }
       if ($("#additem option:selected").val()=='7'){
     $("#adduom").focus();
     }
@@ -902,6 +921,10 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
   else if (event.which == 173) {
     event.preventDefault();
   }
+  else 	if(event.which==27){
+	 event.preventDefault();
+	 $("#apsubmit").focus().select();
+       	}
 });
 /* -----------------------Godown Key events start here----------------------------------------- */
 $(document).off("change",".godown_name").on("change",".godown_name",function(event)
@@ -1144,6 +1167,16 @@ if($("#additem option:selected").val()=='7'){
     $("#hsnno").focus();
     return false;
   }
+    if(parseInt($("#hsnno").val()) <= 0)
+           {
+               $("#hsnno-must-be-positive").alert();
+               $("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+                   $("#hsnno-must-be-positive").hide();
+                   $("#hsnno").focus().select();
+               });
+               return false;
+           }
+    
   if ($("#adduom option:selected").val()=="")
   {
     $('.modal-backdrop').remove();

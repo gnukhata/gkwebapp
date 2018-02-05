@@ -122,6 +122,17 @@ $(document).ready(function() {
       }
     
   });
+     $("#gscode").change(function(event){
+	if(parseInt($("#gscode").val()) <= 0)
+	    {
+	       	$("#hsnno-must-be-positive").alert();
+		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#hsnno-must-be-positive").hide();
+		    $("#gscode").focus().select();
+		});
+		return false;
+	    }
+    });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
       e.preventDefault();
@@ -198,9 +209,27 @@ $(document).ready(function() {
       $("#prodselect").focus();
     }
   });
+    
     $(document).on('keydown', '#gscode', function(event) {
     if (event.which==13) {
-      event.preventDefault();
+	event.preventDefault();
+	if(parseInt($("#gscode").val()) <= 0)
+	    {
+	       	$("#hsnno-must-be-positive").alert();
+		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#hsnno-must-be-positive").hide();
+		    $("#gscode").focus().select();
+		});
+		return false;
+	    }
+	if ($("#gscode").val()=="") {
+    $("#hsnno-blank-alert").alert();
+    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#hsnno-blank-alert").hide();
+  });
+    $("#gscode").focus();
+    return false;
+  }
       if($("#gsflag").val()=='7'){
    $("#edituom").focus();
 }
@@ -226,10 +255,13 @@ $(document).ready(function() {
     else if (event.which==173) {
       event.preventDefault();
     }
+      else if(event.which == 27){
+	 event.preventDefault();
+	 $("#epsubmit").focus().select();
+	}
     /* Act on the event */
   });
-
-  $(document).on('keydown', '.editgodown_ob', function(event){
+   $(document).on('keydown', '.editgodown_ob', function(event){
     if (event.which == 13) {
       var n = $(".editgodown_ob").index(this);
       var m = n+1;
@@ -1174,7 +1206,22 @@ $(document).ready(function() {
     $("#product_edit_tax_table tbody tr:eq(0) td:eq(0) select").focus();
     return false;
   }*/
-  ///
+      if(parseInt($("#gscode").val()) <= 0) {
+	  $("#hsnno-must-be-positive").alert();
+          $("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#hsnno-must-be-positive").hide();
+               $("#gscode").focus().select();
+          });
+          return false;
+      }
+      if ($("#gscode").val()=="") {
+    $("#hsnno-blank-alert").alert();
+    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#hsnno-blank-alert").hide();
+  });
+    $("#gscode").focus();
+    return false;
+  }
     var specs = {};      /*This is spec dictionary having spcode as a key and specval as its value*/
     $("#spec_table tbody tr").each(function(){
       if ($(".spec_value",this).hasClass('datevalue')) {
