@@ -282,10 +282,13 @@
                 <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label=""> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
               </div>
 
+	    <small class="form-text text-muted common">Press 'Enter' key to shift focus to Save button. Press 'Esc' key to Cancel.</small><br>
+
             </div>
 
-            <button type="button" class="btn btn-success" id ="orgprefsave" accesskey="s"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
-	    <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no" accesskey="a"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}C<u>a</u>ncel{% endtrans %}</button>
+           
+ <button type="button" class="btn btn-success" id ="orgprefsave"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+	    <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Cancel{% endtrans %}</button>
 	  </div>
 
 	</div>
