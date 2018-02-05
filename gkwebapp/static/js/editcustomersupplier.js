@@ -60,9 +60,11 @@ $(document).ready(function() {
 		    $("#edit_bankdetails").hide();
 		    $(".custlbl").show();
 		    $(".suplbl").hide();
+		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"auto"});
 		}
 		else {
     		    $("#edit_cussup").val("Supplier");
+		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"scroll"});
 		    $("#edit_bankdetails").show();
 		    $(".suplbl").show();
 		    $(".custlbl").hide();

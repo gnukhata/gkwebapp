@@ -1,144 +1,150 @@
-<body>
-  <input type="hidden" id="vatorgstflag" name="vatorgstflag" value= "{{vatorgstflag}}"></input>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit Customer and Supplier{% endtrans %}</title>
+  </head>
 
-      {% trans %}Supplier details saved with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
+  <body>
+    <input type="hidden" id="vatorgstflag" name="vatorgstflag" value= "{{vatorgstflag}}"></input>
+    <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+      <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer details saved with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="sup-edit-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier details saved with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier details edited with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-edit-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer details saved with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="sup-edit-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer details edited with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier details edited with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-edit-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer Already Exist!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer details edited with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier Already Exist!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer Already Exist!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-delsuccess-alert"  aria-live="rude" role="alert" hidden>
-      <a href="" class="close" aria-label="close">&times;</a>
-      {% trans %}Customer deleted successfully with its Account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="sup-delsuccess-alert"  aria-live="rude" role="alert" hidden>
-      <a href="" class="close" aria-label="close">&times;</a>
-      {% trans %}Supplier deleted successfully with its Account.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="cus-failure-alert"  aria-live="rude" role="alert" hidden>
-      {% trans %}This customer cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="sup-failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier Already Exist!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
-    </div>
+	{% trans %}Something went wrong!{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-delsuccess-alert"  aria-live="rude" role="alert" hidden>
+	<a href="" class="close" aria-label="close">&times;</a>
+	{% trans %}Customer deleted successfully with its Account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="sup-delsuccess-alert"  aria-live="rude" role="alert" hidden>
+	<a href="" class="close" aria-label="close">&times;</a>
+	{% trans %}Supplier deleted successfully with its Account.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="cus-failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}This customer cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="sup-failure-alert"  aria-live="rude" role="alert" hidden>
 
-    <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
+      </div>
 
-      {% trans %}Please Enter name!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+      <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please select State!{% endtrans %}
+	{% trans %}Please Enter name!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
-    <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please select State!{% endtrans %}
 
-      {% trans %}Please Enter address!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
+      <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please Enter TIN!{% endtrans %}
-    </div>
+	{% trans %}Please Enter address!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please Enter TIN!{% endtrans %}
+      </div>
 
-      {% trans %}Improper GSTIN!{% endtrans %}
+      <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
+	{% trans %}Improper GSTIN!{% endtrans %}
 
-    <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
+      </div>
 
-      {% trans %}Please enter proper PAN!{% endtrans %}
+      <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
+	{% trans %}Please enter proper PAN!{% endtrans %}
 
-    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
 
-      {% trans %}Please enter proper GSTIN!{% endtrans %}
+      <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
+	{% trans %}Please enter proper GSTIN!{% endtrans %}
 
-    <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
 
-      {% trans %}Please enter TIN / GSTIN!{% endtrans %}
+      <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
-    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter TIN / GSTIN!{% endtrans %}
 
-      {% trans %}Please Enter GSTIN.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
+      <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please select a state.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please Enter GSTIN.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter Account No.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please select a state.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter Bank Name.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Account No.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter Branch Name.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Bank Name.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please enter IFSC Code.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Branch Name.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
-    </div>
-    <div class="panel shadow usomersupplier_panel">
-      <div class="panel-body ">
-        <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter IFSC Code.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
 
-          <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-        </div>
-        <div class="container-fluid row">
-          <div class="form-group col-md-6">
-            <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
-            <select class="form-control input-sm" id="edit_cussup_list" >
-              <option value="" disabled hidden selected>Select Customer/Supplier</option>
-              <optgroup label="Customers" id="custgroup">
-                {% for customer in customers %}
-                  <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-                {% endfor %}
-              </optgroup>
-              <optgroup label="Suppliers" id="supgroup">
-                {% for supplier in suppliers %}
-                  <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                {% endfor %}
-              </optgroup>
-            </select>
+	{% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+      </div>
+      <div class="panel shadow usomersupplier_panel">
+	<div class="panel-body ">
+          <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
           </div>
-        </div>
-
+          <div class="container-fluid row">
+            <div class="form-group col-md-6">
+              <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
+              <select class="form-control input-sm" id="edit_cussup_list" >
+		<option value="" disabled hidden selected>Select Customer/Supplier</option>
+		<optgroup label="Customers" id="custgroup">
+                  {% for customer in customers %}
+                    <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+                  {% endfor %}
+		</optgroup>
+		<optgroup label="Suppliers" id="supgroup">
+                  {% for supplier in suppliers %}
+                    <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+                  {% endfor %}
+		</optgroup>
+              </select>
+            </div>
+          </div>
+	  <div id="scrollbar" class="hidden-load" hidden>
         <div class="col-md-6">
 	  <div class="row">
 	    <div class="form-group col-sm-6 hidden-load" hidden>
@@ -348,8 +354,9 @@
 	      </div>
 	    </div>
 	  </div>
-	 {% endif  %}
+	  {% endif  %}
         </div>
+	</div>
       </div>
 
       <div class="panel-footer">
@@ -382,3 +389,4 @@
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcustomersupplier.js')}}"></script>
 </body>
+</html>
