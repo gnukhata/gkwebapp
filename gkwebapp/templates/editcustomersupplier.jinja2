@@ -128,7 +128,10 @@
           </div>
           <div class="container-fluid row">
             <div class="form-group col-md-6">
-              <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
+	      {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
+		<label class="text-danger">No Customer/Supplier Found!</label>
+	      {%else%}
+		<label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
               <select class="form-control input-sm" id="edit_cussup_list" >
 		<option value="" disabled hidden selected>Select Customer/Supplier</option>
 		<optgroup label="Customers" id="custgroup">
@@ -142,6 +145,7 @@
                   {% endfor %}
 		</optgroup>
               </select>
+	      {%endif%}
             </div>
           </div>
 	  <div id="scrollbar" class="hidden-load" hidden>

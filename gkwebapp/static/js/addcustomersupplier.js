@@ -36,8 +36,12 @@ $(document).ready(function() {
 	event.preventDefault();
 	if($("#add_cussup option:selected").val() == '3'){
 	    $("#bankdetails").hide();
+	    $(".custlbl").show();
+	    $(".suplbl").hide();
 	} else {
 	    $("#bankdetails").show();
+	    $(".custlbl").hide();
+	    $(".suplbl").show();
 	}
     });
     $("#add_cussup").change();
@@ -418,7 +422,6 @@ $("#add_state").keydown(function(event) {
 	    $("#accountno").focus();
 	    return false;
 	}
-	// not working
 	else if ($("#accountno").val() != "" && $("#bankname").val() == "" ) {
 	    $("#bankname-blank-alert").alert();
 	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -435,21 +438,21 @@ $("#add_state").keydown(function(event) {
 
     $("#branchname").change(function(event) {
 	event.preventDefault();
-	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {//not working
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {
 	    $("#branchname-blank-alert").alert();
 	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#branchname-blank-alert").hide();
 	    });
 	    $("#branchname").focus();
 	    return false;
-	} else if($("#accountno").val() == "" && $("#branchname").val() != ""){ //working
+	} else if($("#accountno").val() == "" && $("#branchname").val() != ""){ 
 	    $("#accountno-blank-alert").alert();
 	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#accountno-blank-alert").hide();
 	    });
 	    $("#accountno").focus();
 	    return false;
-	}else if($("#bankname").val() == "" && $("#branchname").val() != ""){ //working
+	}else if($("#bankname").val() == "" && $("#branchname").val() != ""){ 
 	    $("#bankname-blank-alert").alert();
 	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#bankname-blank-alert").hide();
@@ -465,7 +468,7 @@ $("#add_state").keydown(function(event) {
 
     $("#ifsc").change(function(event) {
 	event.preventDefault();
-	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {//not working
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {
 	    $("#ifsc-blank-alert").alert();
 	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#ifsc-blank-alert").hide();

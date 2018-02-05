@@ -617,14 +617,14 @@ $(document).ready(function() {
 	    });
 	    $("#edit_branchname").focus();
 	    return false;
-	} else if($("#edit_accountno").val() == "" && $("#edit_branchname").val() != ""){ //working
+	} else if($("#edit_accountno").val() == "" && $("#edit_branchname").val() != ""){ 
 	    $("#accountno-blank-alert").alert();
 	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#accountno-blank-alert").hide();
 	    });
 	    $("#edit_accountno").focus();
 	    return false;
-	}else if($("#bankname").val() == "" && $("#edit_branchname").val() != ""){ //working
+	}else if($("#bankname").val() == "" && $("#edit_branchname").val() != ""){ 
 	    $("#bankname-blank-alert").alert();
 	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#bankname-blank-alert").hide();
