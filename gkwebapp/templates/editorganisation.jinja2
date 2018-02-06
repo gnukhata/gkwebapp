@@ -1,4 +1,4 @@
-ge<!doctype html>
+<!doctype html>
 <html lang="en">
   <head>
     <meta charset="UTF-8">
@@ -473,44 +473,41 @@ ge<!doctype html>
 	      
 	      
 		  <table id="banktable" class="table fixed-table">
-			<tbody>
-			  <tr>
+		    <tbody>
+                 	<tr>
 			    <td class="col-xs-6">
 		              <label for="bankaccount number" id="accno">{% trans %}Account Number{% endtrans %} :</label>
 			    </td>
 			    <td class="col-xs-6">
-			      <input  type="text" id="accno1" class="form-control input-sm bankdel" name="bankaccountno" style="width: 100%"></input>
+			      <input  type="text" id="accno1" class="form-control input-sm bankdel" name="bankaccountno" value="{{gkresult["bankdetails"]["accountno"]}}" style="width: 100%"></input>
 			    </td>
-			  </tr>
+			</tr>
 
 
-                          <tr>
-			    <td>
-		              <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
-			    </td>
-			    <td>
-			      <input type="text" id="banknm1" class="form-control input-sm bankdel" name="bankname" style="width: 100%"></input>
-			    </td>
-                          </tr>
+                        <tr>
+			  <td>
+		            <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
+			  </td>
+			  <td>
+			    <input type="text" id="banknm1" class="form-control input-sm bankdel" name="bankname" value="{{gkresult["bankdetails"]["bankname"]}}" style="width: 100%"></input>
+			  </td>
+                        </tr>
 
-
-
-
-			  <tr>
-			    <td>
-		              <label for="bankbranch name" id="branchnm">{% trans %}Branch Name{% endtrans %} :</label>
-			    </td>
-			    <td>
-			      <input type="text" id="branchnm1" class="form-control input-sm bankdel" name="branchname" style="width: 100%"></input>
-			    </td>
-			  </tr>
-                          
-			  <tr>
-			    <td>
-		              <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>
-			    </td>
-			    <td>
-			      <input type="text" id="ifsc1" class="form-control input-sm bankdel" name="bankifsc" style="width: 100%"></input>
+			<tr>
+			  <td>
+		            <label for="bankbranch name" id="branchnm">{% trans %}Branch Name{% endtrans %} :</label>
+			  </td>
+			  <td>
+			    <input type="text" id="branchnm1" class="form-control input-sm bankdel" name="branchname" value="{{gkresult["bankdetails"]["branchname"]}}" style="width: 100%"></input>
+			  </td>
+			</tr>
+                        
+			<tr>
+			  <td>
+		            <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>
+			  </td>
+			  <td>
+			    <input type="text" id="ifsc1" class="form-control input-sm bankdel" name="bankifsc" value="{{gkresult["bankdetails"]["ifsc"]}}" style="width: 100%"></input>
 			    </td>
 			  </tr>
 			</tbody>

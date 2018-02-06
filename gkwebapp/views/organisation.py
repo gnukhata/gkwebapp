@@ -60,6 +60,7 @@ def showeditOrg(request):
     result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    
     return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
@@ -89,8 +90,7 @@ def editOrganisation(request):
 
     gkdata= {"orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"]}
     if request.params.has_key("bankdetails"):
-        print request.params["bankdetails"]
-        gkdata["bankdetails"]=request.params["bankdetails"];
+        gkdata["bankdetails"]=json.loads(request.params["bankdetails"])
         
     filelogo={}
     try:
@@ -107,7 +107,6 @@ def editOrganisation(request):
             gkdata["logo"]=filelogo
     except:
         print "no file found "
-
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
 

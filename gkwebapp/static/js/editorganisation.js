@@ -931,7 +931,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
          bankdetails["bankname"]=$.trim($("#banknm1").val());
          bankdetails["branchname"]=$.trim($("#branchnm1").val());
           bankdetails["ifsc"]=$.trim($("#ifsc1").val());
-	  console.log(JSON.stringify(bankdetails));
+	  
 	  form_data.append("bankdetails",JSON.stringify(bankdetails));
       }
 	  form_data.append("orgregno",regno);
@@ -992,7 +992,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           beforeSend: function(xhr) {
               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
           },
-          data: {},
+          data: {}
       })
       .done(function(resp) {
             var imagesrc = "data:image/png;base64,"+resp["logo"];
