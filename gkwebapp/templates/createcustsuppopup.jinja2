@@ -32,6 +32,9 @@ th {
     <div class="modal-dialog modal-sm">
       <div class="modal-content">
         <div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
           {% if gkstatus=="in" %}
             <h5 class="modal-title">Create Supplier</h5>
           {%else%}
@@ -232,7 +235,7 @@ th {
 			</tbody>
 			</table>
 		      </div>
-		      <small id="textareahelp" class="form-text text-muted">Press Tab key from GSTIN field to shift focus to Save Button</small>
+		      <small id="textareahelplbl" class="form-text text-muted">Press Tab key from GSTIN field to shift focus to Save Button</small>
 		    </div>
 		    <div id="bankdetails">
 		      <label><h4>Bank Details :</h4></label>

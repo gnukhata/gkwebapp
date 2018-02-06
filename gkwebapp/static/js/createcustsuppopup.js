@@ -38,9 +38,11 @@ $(document).ready(function() {
 
   // Bankdetails will be hidden for Customer
   if($('#status').val()=='9'){
-       $("#bankdetails").show();
+      $("#bankdetails").show();
+      $("#textareahelplbl").hide();
   } else {
-       $("#bankdetails").hide();
+      $("#bankdetails").hide();
+      $("#textareahelplbl").show();
   }
 
   $("#add_cussup_name").keydown(function(event) {
