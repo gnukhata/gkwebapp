@@ -291,14 +291,14 @@
                   </th>
 		</tr>
               </thead>
-              {% if invoicedata!= 0 %}
+              {% if invoicedata!= 0 %}  
 		<tbody style="height: 20%;">
               {% else %}
 		  <tbody style="height: 20%;">
               {% endif %}
               <tr>
                 <td class="col-xs-1">
-                  <select class="form-control input-sm crdr" disabled>
+                  <select class="form-control input-sm crdr">
                     <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
                     <option value="Cr">{% trans %}Cr{% endtrans %}</option>
                   </select>
@@ -325,7 +325,7 @@
               </tr>
               <tr>
                 <td class="col-xs-1">
-                  <select class="form-control input-sm crdr" disabled>
+                  <select class="form-control input-sm crdr">
                     <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
                     <option value="Dr">{% trans %}Dr{% endtrans %}</option>
                   </select>
