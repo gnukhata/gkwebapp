@@ -1208,6 +1208,13 @@ $("#addgodown").click(function() {
   );
 });
 
+    //For shifting focus of addstock button to select godown button of pop up window
+
+    /*$('#addstockmodal').on('shown.bs.modal', function() {
+	$("#godown_name").focus();
+    });*/
+
+    
     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
 	let curindex= $(this).closest('tr').index();
 	$.ajax({
@@ -1306,7 +1313,13 @@ $("#addgodown").click(function() {
 	$('#stocktable tbody tr:last td:eq(0) select').select();
     });
 
+    $("#godown_name").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $(".prodstock").focus().select();
+        }
 
+    });
     $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
     let curindex = $(this).closest('tr').index();
     let nextindex = curindex + 1;
