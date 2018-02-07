@@ -479,7 +479,7 @@
 		              <label for="bankaccount number" id="accno">{% trans %}Account Number{% endtrans %} :</label>
 			    </td>
 			    <td class="col-xs-6">
-			      <input  type="text" id="accno1" class="form-control input-sm bankdel" name="bankaccountno" value="{{gkresult["bankdetails"]["accountno"]}}" style="width: 100%"></input>
+			      <input  type="text" id="accnum" class="form-control input-sm bankdel" name="bankaccountno" value="{{gkresult["bankdetails"]["accountno"]}}" style="width: 100%"></input>
 			    </td>
 			</tr>
 
@@ -489,7 +489,7 @@
 		            <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
 			  </td>
 			  <td>
-			    <input type="text" id="banknm1" class="form-control input-sm bankdel" name="bankname" value="{{gkresult["bankdetails"]["bankname"]}}" style="width: 100%"></input>
+			    <input type="text" id="bank_name" class="form-control input-sm bankdel" name="bankname" value="{{gkresult["bankdetails"]["bankname"]}}" style="width: 100%"></input>
 			  </td>
                         </tr>
 
@@ -498,7 +498,7 @@
 		            <label for="bankbranch name" id="branchnm">{% trans %}Branch Name{% endtrans %} :</label>
 			  </td>
 			  <td>
-			    <input type="text" id="branchnm1" class="form-control input-sm bankdel" name="branchname" value="{{gkresult["bankdetails"]["branchname"]}}" style="width: 100%"></input>
+			    <input type="text" id="branch_name" class="form-control input-sm bankdel" name="branchname" value="{{gkresult["bankdetails"]["branchname"]}}" style="width: 100%"></input>
 			  </td>
 			</tr>
                         
@@ -507,7 +507,7 @@
 		            <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>
 			  </td>
 			  <td>
-			    <input type="text" id="ifsc1" class="form-control input-sm bankdel" name="bankifsc" value="{{gkresult["bankdetails"]["ifsc"]}}" style="width: 100%"></input>
+			    <input type="text" id="ifsc_code" class="form-control input-sm bankdel" name="bankifsc" value="{{gkresult["bankdetails"]["ifsc"]}}" style="width: 100%"></input>
 			    </td>
 			  </tr>
 			</tbody>
