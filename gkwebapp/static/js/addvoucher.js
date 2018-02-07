@@ -912,7 +912,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -988,7 +988,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1111,7 +1111,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1191,7 +1191,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
