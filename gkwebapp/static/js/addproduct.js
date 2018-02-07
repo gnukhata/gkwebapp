@@ -1235,11 +1235,76 @@ $("#addgodown").click(function() {
     .always(function() {
       console.log("complete");
     });
+    });
 
-      
-  });
-  
 
+
+
+    $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
+	console.log("hello");
+	var gobj = {}; 
+	$("#stocktable tbody tr").each(function(){
+	    if ($.trim($(".prodstock",this).val())!="") {
+		if ($.trim($(".open_stock",this).val())!="" ) {
+		    gobj[$(".prodstock",this).val()] = $(".open_stock",this).val(); 
+		}
+	    }
+	});
+	var goid=$("#godown_name option:selected").attr("value");
+	$.ajax({
+            type: "POST",
+            url: "/product?type=stockproduct",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"goid":goid, "productdetails":JSON.stringify(gobj)},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+                $("#godown").click();
+                $("#success-alert").alert();
+                $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#success-alert").hide();
+                });
+
+              }
+              else if(resp["gkstatus"]==1)
+              {
+                $("#duplicate-alert").alert();
+                $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#duplicate-alert").hide();
+                });
+                $("#godownname").focus().select();
+              }
+              else
+              {
+                $("#failure-alert").alert();
+                $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#failure-alert").hide();
+                });
+                $("#godownname").focus().select();
+              }
+            }
+
+          });
+    });
+
+    
+    $(document).off("click",".product_del").on("click", ".product_del", function() {
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();//closest method gives the closest element specified
+	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+	    }
+	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
+	});
+	$('#stocktable tbody tr:last td:eq(0) select').select();
+    });
 
 
     $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
@@ -1251,6 +1316,7 @@ $("#addgodown").click(function() {
 	    event.preventDefault();
 	    $('.open_stock:eq('+ curindex +')').focus().select();
 	}
+	return false;
     });
 
 
