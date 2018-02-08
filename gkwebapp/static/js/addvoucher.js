@@ -573,8 +573,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
     var crdrchgamt = $('#vtable tbody tr:eq('+curindex+') input:enabled').val();
     $('#vtable tbody tr:eq('+curindex+') input:enabled').val(""); // blanks out the text box which is enabled in the current row.
-    $('#vtable tbody tr:eq('+curindex+') input:disabled').val(crdrchgamt); // sets the text of the text box to 0.00 which is disabled in the current row.
-    $('#vtable tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; }); // toggles the property of the input boxes, i.e if the the box is enabled, it will be changed to disabled and vice versa.
+    $('#vtable tbody tr:eq('+curindex+') input.cramt:disabled, #vtable tbody tr:eq('+curindex+') input.dramt:disabled').val(crdrchgamt); // sets the text of the text box to 0.00 which is disabled in the current row.
+    $('#vtable tbody tr:eq('+curindex+') input.cramt, #vtable tbody tr:eq('+curindex+') input.dramt').prop('disabled', function(i, v) { return !v; }); // toggles the property of the input boxes, i.e if the the box is enabled, it will be changed to disabled and vice versa.
 
     // the following lines will get the accounts depending on the type of the voucher and the current value of the crdr select box.
     if($(this).val()=="Cr"){
@@ -865,10 +865,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               crsum += +$(this).val();
               $('#vtable tfoot tr:last td:eq(3) input').val(parseFloat(crsum).toFixed(2));
             });
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').select().focus();
           }
         }
         else {
@@ -912,7 +912,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -941,10 +941,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               drsum += +$(this).val();
               $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').select().focus();
           }
         }
         else {
@@ -988,7 +988,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1025,7 +1025,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
       curindex=null;
       lastindex=null;
-       $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+       $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
     }
     if (event.which==13 && outfocus) {
       outfocus=false;
@@ -1064,10 +1064,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               crsum += +$(this).val();
               $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
             });
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').select().focus();
           }
         }
         else {
@@ -1111,7 +1111,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1144,10 +1144,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               drsum += +$(this).val();
               $('#vtable tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
             });
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
           }
           else{
-            $('#vtable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+            $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').select().focus();
           }
         }
         else {
@@ -1191,7 +1191,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
-              $('#vtable tbody tr:last td:eq(1) select').focus();
+              $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
