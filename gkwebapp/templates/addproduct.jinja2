@@ -323,6 +323,21 @@
             </div>
           </div>
           <div class="modal-body">
+	    <div class="alert alert-danger" id="emptygodownalert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select the godown!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="emptyproductalert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select the product!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="emptyopstkalert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter the Opening stock!{% endtrans %}
+	    </div>
+	    <div class="alert alert-success" id="stocksuccess"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Stock saved successfully!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="stockfailure"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Saving stock details failed!{% endtrans %}
+	    </div>
 	    <div class="alert alert-danger" id="Product-blank-alert"  aria-live="rude" role="alert" hidden>
 	      {% trans %}Please select Product!{% endtrans %}
 	    </div>
@@ -396,6 +411,7 @@
 	    <div class="panel-footer">
 	      <div class="container-fluid">
 		<button class="btn btn-success btn-sm" id="stock_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+		<button id="stockreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 	      </div>
 	    </div>
 	  </div>
@@ -429,3 +445,4 @@
       </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>
+

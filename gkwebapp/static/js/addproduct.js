@@ -1208,11 +1208,19 @@ $("#addgodown").click(function() {
   );
 });
 
-    //For shifting focus of addstock button to select godown button of pop up window
 
-    /*$('#addstockmodal').on('shown.bs.modal', function() {
-	$("#godown_name").focus();
-    });*/
+     //For shifting focus of addstock button to select godown button of pop up window
+
+
+    $('#addstockmodal').on('shown.bs.modal', function() {
+    $("#godown_name").focus();
+    });
+
+    $('#addstockmodal').on('shown.bs.modal', function() {
+	$("#stocktable tbody").html("");
+	$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+        $("#godown_name").val("").focus();
+    });
 
     
     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
@@ -1249,8 +1257,36 @@ $("#addgodown").click(function() {
 
     $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
 	console.log("hello");
-	var gobj = {}; 
+	var gobj = {};
+	var stockallow = 1;
+	 if ($.trim($("#godown_name").val())=="") {
+		stockallow = 0;
+		$("#emptygodownalert").alert();
+  	        $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptygodownalert").hide();
+  	        });
+  	        $("#godown_name").focus();
+  	        return false;
+  	    }
 	$("#stocktable tbody tr").each(function(){
+	    if ($.trim($(".prodstock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyproductalert").alert();
+  	        $("#emptyproductalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyproductalert").hide();
+  	        });
+  	        $(".prodstock",this).focus();
+  	        return false;
+  	    }
+	    if ($.trim($(".open_stock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyopstkalert").alert();
+  	        $("#emptyopstkalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyopstkalert").hide();
+  	        });
+  	        $(".open_stock",this).focus();
+  	        return false;
+  	      }
 	    if ($.trim($(".prodstock",this).val())!="") {
 		if ($.trim($(".open_stock",this).val())!="" ) {
 		    gobj[$(".prodstock",this).val()] = $(".open_stock",this).val(); 
@@ -1258,7 +1294,8 @@ $("#addgodown").click(function() {
 	    }
 	});
 	var goid=$("#godown_name option:selected").attr("value");
-	$.ajax({
+	if (stockallow == 1){
+	    $.ajax({
             type: "POST",
             url: "/product?type=stockproduct",
             global: false,
@@ -1273,10 +1310,9 @@ $("#addgodown").click(function() {
             {
               if(resp["gkstatus"]==0)
               {
-                $("#godown").click();
-                $("#success-alert").alert();
-                $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#success-alert").hide();
+                $("#stocksuccess").alert();
+                $("#stocksuccess").fadeTo(2250, 500).slideUp(500, function(){
+                $("#stocksuccess").hide();
                 });
 
               }
@@ -1299,6 +1335,7 @@ $("#addgodown").click(function() {
             }
 
           });
+	}
     });
 
     
@@ -1597,5 +1634,13 @@ $(document).on('click', '#apreset', function(event) {
   event.preventDefault();
   /* Act on the event */
   $("#addproduct").click();
+});
+    
+$(document).on('click', '#stockreset', function(event) {
+  event.preventDefault();
+    $("#stocktable tbody").html("");
+    $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+    $("#godown_name").val("").focus();
+
 });
 });
