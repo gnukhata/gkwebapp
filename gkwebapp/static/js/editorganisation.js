@@ -114,6 +114,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	$("#gstintable tbody tr:first td:eq(0) select").focus();
     });
 
+    // add bankdetails modal
     $('#addbankdel').on('shown.bs.modal', function() {
 	//$("#banktable tbody tr:first td:eq(1) select").focus();
 	$("#accnum").focus();
@@ -270,7 +271,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
             return false;
           }
 	else{
-	    $("#bankdel_done1").focus();
+	    $("#bankdel_done").focus();
 	}
 	    });
 
@@ -470,11 +471,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         }
      });
 
-    $(document).off("click","#bankdel_done1").on("click","#bankdel_done1",function(event){
+    //validation for done button of bankdetails field.
+    $(document).off("click","#bankdel_done").on("click","#bankdel_done",function(event){
 	if($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="" )
 	{
 	    
-	    $("#bankdel_done1").click(function(event){		      
+	    $("#bankdel_done").click(function(event){		      
 		$('#addbankdel').modal('hide');
 	    });			      			     
 	}
@@ -490,7 +492,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		if($("#accnum").val()!="" && $("#branch_name").val()!="" && $("#bank_name").val()!="" && $("#ifsc_code").val()!="" )
 	{
 	    
-	    $("#bankdel_done1").click(function(event){		      
+	    $("#bankdel_done").click(function(event){		      
 		$('#addbankdel').modal('hide');
 	    });			      			     
 	}
@@ -693,7 +695,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
             return false;
             }
       event.preventDefault();
-      $("#bankdel_done1").focus().select();
+      $("#bankdel_done").focus().select();
     }
     if (event.which==38) {
 	 event.preventDefault();
@@ -702,7 +704,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     });
    
 
-    $("#bankdel_done1").keydown(function(event) {
+    $("#bankdel_done").keydown(function(event) {
 
      
     if (event.which==13) {
@@ -818,7 +820,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     var regno="";
     var fcrano="";
 
-    //validation for bankdetails   
+    //validation for bankdetails on save button.  
     if(!($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="")){
         if($("#accnum").val()=="" || $("#branch_name").val()=="" || $("#bank_name").val()=="" || $("#ifsc_code").val()=="" ) {
 		$("#allbank-blank-alert").alert();
@@ -933,7 +935,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           bankdetails["ifsc"]=$.trim($("#ifsc_code").val());
 	  
 	  form_data.append("bankdetails",JSON.stringify(bankdetails));
-      }
+      } //For bank details
 	  form_data.append("orgregno",regno);
     form_data.append("orgregdate",regdate);
     form_data.append( "orgfcrano",fcrano);
