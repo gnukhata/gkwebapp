@@ -36,6 +36,15 @@ $(document).ready(function() {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
 
+  // Bankdetails will be hidden for Customer
+  if($('#status').val()=='9'){
+      $("#bankdetails").show();
+      $("#textareahelplbl").hide();
+  } else {
+      $("#bankdetails").hide();
+      $("#textareahelplbl").show();
+  }
+
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {
@@ -165,7 +174,6 @@ $("#add_state").keydown(function(event) {
 	}
     });
 
-
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
@@ -192,7 +200,11 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       event.preventDefault();
       gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
-	  $("#cussup_save").focus();
+	  if($('#status').val()=='9'){
+	      $("#cust_accountno").focus();
+	  } else {
+	      $("#cussup_save").focus();
+	  }
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -245,10 +257,220 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-    event.preventDefault();
-    $("#cussup_save").focus();
+      event.preventDefault();
+      $("#cussup_save").focus();
   }
 });
+
+    // Keydown events for bank details
+    $("#cust_accountno").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#cust_bankname").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
+
+    });
+    $("#cust_bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#cust_accountno").val() != "" && $("#cust_bankname").val() == "" ) {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#cust_bankname").focus();
+		});
+		return false;
+	    } else if ($("#cust_accountno").val() == "" && $("#cust_bankname").val() != "" ) {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#cust_accountno").focus();
+		return false;
+	    } else {
+		$('#cust_branchname').focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#cust_accountno").focus().select();
+	}
+
+    });
+    $("#cust_branchname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() == "") {
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#cust_branchname").focus();
+		});
+		return false;
+	    } else if($("#cust_accountno").val() == "" && $("#cust_branchname").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#cust_accountno").focus();
+		});
+		return false;
+	    }else if($("#cust_bankname").val() == "" && $("#cust_branchname").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#cust_bankname").focus();
+		});
+		return false;
+	    } else {
+		$("#cust_ifsc").focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#cust_bankname").focus().select();
+	}
+
+    });
+    $("#cust_ifsc").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() != "" && $("#cust_ifsc").val() == "") {
+		$("#ifsc-blank-alert").alert();
+		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert").hide();
+		    $("#cust_ifsc").focus();
+		});
+		return false;
+	    } else if($("#cust_accountno").val() == "" && $("#cust_ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#cust_accountno").focus();
+		});
+		return false;
+	    } else if($("#cust_bankname").val() == "" && $("#cust_ifsc").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#cust_bankname").focus();
+		});
+		return false;
+	    } else if($("#cust_branchname").val() == "" && $("#cust_ifsc").val() != ""){
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#cust_branchname").focus();
+		});
+		return false;
+	    } else {
+		$("#cussup_save").focus();
+	    } 
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#cust_branchname").focus().select();
+	}
+
+    });
+
+    //change event for bank details
+    $("#cust_bankname").change(function(event) {
+	event.preventDefault();
+	if ($("#cust_accountno").val() == "" && $("#cust_bankname").val() != "" ) {
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+		$("#cust_accountno").focus();
+	    });
+	    return false;
+	}
+	else if ($("#cust_accountno").val() != "" && $("#cust_bankname").val() == "" ) {
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+		$("#cust_bankname").focus();
+	    });
+	    return false;
+	}
+	else {
+	    $('#cust_branchname').focus();
+	}
+	
+    });
+
+    $("#cust_branchname").change(function(event) {
+	event.preventDefault();
+	if($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() == "") {//not working
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+		$("#cust_branchname").focus();
+	    });
+	    return false;
+	} else if($("#cust_accountno").val() == "" && $("#cust_branchname").val() != ""){ //working
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+		$("#cust_accountno").focus();
+	    });
+	    return false;
+	}else if($("#cust_bankname").val() == "" && $("#cust_branchname").val() != ""){ //working
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+		$("#cust_bankname").focus();
+	    });
+	    return false;
+	    }
+	else {
+	    $("#cust_ifsc").focus();
+	}
+	
+    });
+
+    $("#cust_ifsc").change(function(event) {
+	event.preventDefault();
+	if($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() != "" && $("#cust_ifsc").val() == "") {
+	    $("#ifsc-blank-alert").alert();
+	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#ifsc-blank-alert").hide();
+		$("#cust_ifsc").focus();
+	    });
+	    return false;
+	} else if($("#cust_accountno").val() == "" && $("#cust_ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#cust_accountno").focus();
+		});
+	    return false;
+	} else if($("#cust_bankname").val() == "" && $("#cust_ifsc").val() != ""){
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+		$("#cust_bankname").focus();
+	    });
+	    return false;
+	} else if($("#cust_branchname").val() == "" && $("#cust_ifsc").val() != ""){
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+		$("#cust_branchname").focus();
+	    });
+	    return false;
+	} else {
+	    $("#cussup_save").focus();
+	} 
+    });
+    
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
@@ -439,6 +661,19 @@ else{
       $("#add_cussup_address").focus();
       return false;
     }
+
+      // Validation for bank details
+	if (!($("#cust_accountno").val() == "" && $("#cust_bankname").val() == "" && $("#cust_branchname").val() == "" && $("#cust_ifsc").val() == "")){
+	   if ($("#cust_accountno").val() == "" || $("#cust_bankname").val() == "" || $("#cust_branchname").val() == "" || $("#cust_ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#cust_accountno").focus();
+	       return false;
+	   }
+	}
+      
       var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
@@ -485,24 +720,41 @@ else{
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
       }
+
+      var form_data = new FormData();
+	form_data.append("custname", $("#add_cussup_name").val());
+	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
+	form_data.append("custphone", $("#add_cussup_phone").val());
+	form_data.append("custemail", $("#add_cussup_email").val());
+	form_data.append("custfax", $("#add_cussup_fax").val());
+	form_data.append("custpan", $("#add_cussup_pan").val());
+	form_data.append("custtan", custtan);
+	form_data.append("gstin", JSON.stringify(gobj));
+	form_data.append("state", $("#add_state").val());
+	form_data.append("csflag", $("#add_cussup option:selected").val());
+	if ($("#status").val() == "9"){
+	    var bankdetails = {}; //dictionary for bank details
+	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
+	    bankdetails["accountno"] = $.trim($("#accountno").val());
+	    bankdetails["bankname"] = $.trim($("#bankname").val());
+	    bankdetails["ifsc"] = $.trim($("#ifsc").val());
+	    bankdetails["branchname"] = $.trim($("#branchname").val());
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
+	}
+        form_data.append("csflag", custsupval);
       // ajax call for saving the customer/supplier
       if(allow == 1){
       $.ajax({
 	  url: '/customersuppliers?action=save',
 	  type: 'POST',
+	  global: false,
+          contentType: false,
+          cache: false,
+          processData: false,
 	  dataType: 'json',
 	  async : false,
-	  data: {"custname": $("#add_cussup_name").val(),
-		 "custaddr": $.trim($("#add_cussup_address").val()),
-		 "custphone": $("#add_cussup_phone").val(),
-		 "custemail": $("#add_cussup_email").val(),
-		 "custfax": $("#add_cussup_fax").val(),
-		 "custpan": $("#add_cussup_pan").val(),
-		 "custtan": custtan,
-		 "gstin": JSON.stringify(gobj),
-		 "state" : $("#add_state").val(),
-		 "csflag": custsupval
-		},
+	  data: form_data,
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header

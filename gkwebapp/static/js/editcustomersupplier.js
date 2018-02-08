@@ -34,51 +34,68 @@ $(document).ready(function() {
   $("#edit_cussup_list").focus();
     $(".panel-footer").hide();
     
-    var gstinstring = "";
-    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+    var gstinstring = ""; //for concatination of 'gstin'.
+     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
-    
-  $("#edit_cussup_list").change(function(event) {
-    $.ajax({
-      url: '/customersuppliers?action=get',
-      type: 'POST',
-      dataType: 'json',
-      async : false,
-      data: {"custid": $("#edit_cussup_list option:selected").val()},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-    .done(function(resp) {
-      var result = resp["gkresult"];
-	$(".hidden-load").show();
-      $("#edit_cussup").val(result["csflag"]);
-	if(result["csflag"] == 3){
-
-    	  $("#edit_cussup").val("Customer");
-      }
-      else {
-    	  $("#edit_cussup").val("Supplier");
-      }
-      $("#edit_cussup").prop("disabled", true);
-      $("#edit_cussup_name").val(result["custname"]);
-      $("#edit_cussup_name").prop("disabled", true);
-      $("#edit_cussup_email").val(result["custemail"]);
-      $("#edit_cussup_email").prop("disabled", true);
-      $("#edit_cussup_phone").val(result["custphone"]);
-      $("#edit_cussup_phone").prop("disabled", true);
-      $("#edit_cussup_address").val(result["custaddr"]);
-      $("#edit_cussup_address").prop("disabled", true);
-      $("#edit_state").val(result["state"]);
-      $("#edit_state").prop("disabled", true);
-      $("#edit_cussup_fax").val(result["custfax"]);
-      $("#edit_cussup_fax").prop("disabled", true);
-      $("#edit_cussup_pan").val(result["custpan"]);
-      $("#edit_cussup_pan").prop("disabled", true);
-      $("#edit_cussup_tan").val(result["custtan"]);
+   var custsupdata = $("#edit_cussup").val();
+    $("#edit_cussup_list").change(function(event) {
+	$.ajax({
+	    url: '/customersuppliers?action=get',
+	    type: 'POST',
+	    dataType: 'json',
+	    async : false,
+	    data: {"custid": $("#edit_cussup_list option:selected").val()},
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp) {
+		var result = resp["gkresult"];
+		$(".hidden-load").show();
+		$("#edit_cussup").val(result["csflag"]);
+		if(result["csflag"] == 3){
+		    $("#edit_cussup").val("Customer");
+		    $("#edit_bankdetails").hide();
+		    $(".custlbl").show();
+		    $(".suplbl").hide();
+		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"auto"});
+		}
+		else {
+    		    $("#edit_cussup").val("Supplier");
+		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"scroll"});
+		    $("#edit_bankdetails").show();
+		    $(".suplbl").show();
+		    $(".custlbl").hide();
+		}
+	$("#edit_cussup").prop("disabled", true);
+	$("#edit_cussup_name").val(result["custname"]);
+	$("#edit_cussup_name").prop("disabled", true);
+	$("#edit_cussup_email").val(result["custemail"]);
+	$("#edit_cussup_email").prop("disabled", true);
+	$("#edit_cussup_phone").val(result["custphone"]);
+	$("#edit_cussup_phone").prop("disabled", true);
+	$("#edit_cussup_address").val(result["custaddr"]);
+	$("#edit_cussup_address").prop("disabled", true);
+	$("#edit_state").val(result["state"]);
+	$("#edit_state").prop("disabled", true);
+	$("#edit_cussup_fax").val(result["custfax"]);
+	$("#edit_cussup_fax").prop("disabled", true);
+	$("#edit_cussup_pan").val(result["custpan"]);
+	$("#edit_cussup_pan").prop("disabled", true);
+	$("#edit_cussup_tan").val(result["custtan"]);
 	$("#edit_cussup_tan").prop("disabled", true);
+	//fetching bank details	
+	$("#edit_accountno").val(result["bankdetails"]["accountno"]);
+	$("#edit_accountno").prop("disabled", true);
+	$("#edit_bankname").val(result["bankdetails"]["bankname"]);
+	$("#edit_bankname").prop("disabled", true);
+	$("#edit_branchname").val(result["bankdetails"]["branchname"]);
+	$("#edit_branchname").prop("disabled", true);
+	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
+	$("#edit_ifsc").prop("disabled", true);
+	
 	var rowhtml = $('#gstintable tbody tr:first').html();
 	$('#gstintable tbody').empty();
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
@@ -102,6 +119,7 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
+      $("#textareahelp1").hide();
       $("#edit_cussup_btn").show();
 
     })
@@ -112,7 +130,8 @@ $(document).ready(function() {
       console.log("complete");
     });
 
-  });
+    });
+    
   $("#edit_cussup_list").keydown(function(event) {
 
     if (event.which==13) {
@@ -187,11 +206,11 @@ $(document).ready(function() {
   var delta = 500;
   var lastKeypressTime = 0;
   $("#edit_cussup_address").keydown(function(event) {
-    if (event.which==13)
-    {
+    if (event.which==13) {
       var thisKeypressTime = new Date();
-      if ( thisKeypressTime - lastKeypressTime <= delta )
-      {if ($.trim($("#edit_cussup_address").val())=="") {
+	if ( thisKeypressTime - lastKeypressTime <= delta ){
+	
+	if ($.trim($("#edit_cussup_address").val())=="") {
           $("#address-blank-alert").alert();
           $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#address-blank-alert").hide();
@@ -261,7 +280,11 @@ $(document).ready(function() {
             return false;
         }}
           if($("#vatorgstflag").val() == '22'){
-	      $("#cussup_edit_save").focus();
+	      if($("#edit_cussup").val() == 'Supplier'){
+		  $("#edit_accountno").focus();
+	      } else {
+		  $("#cussup_edit_save").focus();
+	      }
 	  }
 	  else{
           $(".gstinstate:first").focus();
@@ -300,8 +323,12 @@ $(document).ready(function() {
       }
   }
   else if (event.which==27) {
-    event.preventDefault();
-    $("#cussup_edit_save").focus();
+      event.preventDefault();
+      if ($("#edit_cussup").val() == "Supplier") {
+	  $("#edit_accountno").focus();
+      } else {
+	  $("#cussup_edit_save").focus();
+      }
   }
 });
 
@@ -372,7 +399,11 @@ $(document).ready(function() {
   if (event.which==13 /*|| event.which==9*/) {
       event.preventDefault();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
-	  $("#cussup_edit_save").focus();
+	  if ($("#edit_cussup").val() == "Supplier"){
+	      $("#edit_accountno").focus();
+	  } else {
+	      $("#cussup_edit_save").focus();
+	  }
       }
       else if ($(".gstin").val()=="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -427,9 +458,222 @@ $(document).ready(function() {
   }
   else if (event.which==27) {
     event.preventDefault();
-    $("#cussup_edit_save").focus();
+      if ($("#edit_cussup").val() == "Supplier") {
+	  $("#edit_accountno").focus();
+      } else {
+	  $("#cussup_edit_save").focus();
+      }
   }
 });
+
+    // Keydown events for bank details
+    $("#edit_accountno").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#edit_bankname").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#edit_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
+
+    });
+    $("#edit_bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#edit_accountno").val() != "" && $("#edit_bankname").val() == "" ) {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#edit_bankname").focus();
+		});
+		return false;
+	    } else if ($("#edit_accountno").val() == "" && $("#edit_bankname").val() != "" ) {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#edit_accountno").focus();
+		return false;
+	    } else {
+		$('#edit_branchname').focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#edit_accountno").focus().select();
+	}
+
+    });
+    $("#edit_branchname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if($("#edit_accounno").val() != "" && $("#edit_bankname").val() != "" && $("#edit_branchname").val() == "") {
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#edit_branchname").focus();
+		});
+		return false;
+	    } else if($("#edit_accountno").val() == "" && $("#edit_branchname").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#edit_accountno").focus();
+		});
+		return false;
+	    }else if($("#edit_bankname").val() == "" && $("#edit_branchname").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#edit_bankname").focus();
+		});
+		return false;
+	    } else {
+		$("#edit_ifsc").focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#edit_bankname").focus().select();
+	}
+
+    });
+    $("#edit_ifsc").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#edit_accounno").val() != "" && $("#edit_bankname").val() != "" && $("#edit_branchname").val() != "" && $("#edit_ifsc").val() == "") {
+		$("#ifsc-blank-alert").alert();
+		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert").hide();
+		    $("#edit_ifsc").focus();
+		});
+		return false;
+	    } else if($("#edit_accountno").val() == "" && $("#edit_ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#edit_accountno").focus();
+		});
+		return false;
+	    } else if($("#edit_bankname").val() == "" && $("#edit_ifsc").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#edit_bankname").focus();
+		});
+		return false;
+	    } else if($("#edit_branchname").val() == "" && $("#edit_ifsc").val() != ""){
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#edit_branchname").focus();
+		});
+		return false;
+	    } else {
+		$("#cussup_edit_save").focus();
+	    } 
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#edit_branchname").focus().select();
+	}
+    });
+
+    //change event for bank details
+    $("#edit_bankname").change(function(event) {
+	event.preventDefault();
+	if ($("#edit_accountno").val() == "" && $("#edit_bankname").val() != "" ) {
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#edit_accountno").focus();
+	    return false;
+	}
+	else if ($("#edit_accountno").val() != "" && $("#edit_bankname").val() == "" ) {
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#edit_bankname").focus();
+	    return false;
+	}
+	else {
+	    $('#edit_branchname').focus();
+	}
+	
+    });
+
+    $("#edit_branchname").change(function(event) {
+	event.preventDefault();
+	if($("#edit_accounno").val() != "" && $("#edit_bankname").val() != "" && $("#edit_branchname").val() == "") {
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#edit_branchname").focus();
+	    return false;
+	} else if($("#edit_accountno").val() == "" && $("#edit_branchname").val() != ""){ 
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#edit_accountno").focus();
+	    return false;
+	}else if($("#bankname").val() == "" && $("#edit_branchname").val() != ""){ 
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#edit_bankname").focus();
+	    return false;
+	    }
+	else {
+	    $("#edit_ifsc").focus();
+	}
+	
+    });
+
+    $("#edit_ifsc").change(function(event) {
+	event.preventDefault();
+	if($("#edit_accounno").val() != "" && $("#edit_bankname").val() != "" && $("#edit_branchname").val() != "" && $("#edit_ifsc").val() == "") {
+	    $("#ifsc-blank-alert").alert();
+	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#ifsc-blank-alert").hide();
+	    });
+	    $("#edit_ifsc").focus();
+	    return false;
+	} else if($("#edit_accountno").val() == "" && $("#edit_ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+	    $("#edit_accountno").focus();
+	    return false;
+	} else if($("#edit_bankname").val() == "" && $("#edit_ifsc").val() != ""){
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#edit_bankname").focus();
+	    return false;
+	} else if($("#edit_branchname").val() == "" && $("#edit_ifsc").val() != ""){
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#edit_branchname").focus();
+	    return false;
+	} else {
+	    $("#cussup_edit_save").focus();
+	} 
+    });
+    
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
@@ -448,6 +692,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#edit_cussup_btn").click(function(event) {
     $("#edit_cussup_btn").hide();
     $("#cussup_edit_save").show();
+    $("#textareahelp1").show();
     $("#edit_cussup").prop("disabled", true);
     $("#edit_cussup_list").focus().select();
     $("#edit_cussup_name").prop("disabled", false);
@@ -458,7 +703,11 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
       $(".gstinstate, .panno, .gstin").prop("disabled",false);
-    $("#edit_state").prop("disabled", false);
+      $("#edit_state").prop("disabled", false);
+      $("#edit_accountno").prop("disabled", false);
+      $("#edit_bankname").prop("disabled", false);
+      $("#edit_branchname").prop("disabled", false);
+      $("#edit_ifsc").prop("disabled", false);
   });
   $(document).keyup(function(event) {
       if(event.which == 45) {
@@ -507,6 +756,19 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $("#edit_cussup_address").focus();
       return false;
     }
+
+        // Validation for bank details
+	if (!($("#edit_accountno").val() == "" && $("#edit_bankname").val() == "" && $("#edit_branchname").val() == "" && $("#edit_ifsc").val() == "")){
+	   if ($("#edit_accountno").val() == "" || $("#edit_bankname").val() == "" || $("#edit_branchname").val() == "" || $("#edit_ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#edit_accountno").focus();
+	       return false;
+	   }
+	}
+	
 	
   /*    if ($.trim($("#edit_cussup_tan").val())==""){
       $("#both-blank-alert").alert();
@@ -524,10 +786,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	      gstinstring =	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
-	      // Validation for GSTIN on Save Button.
+	  // Validation for GSTIN on Save Button.
 	      if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
-	    $("#gstin-improper-alert").alert();
-	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#gstin-improper-alert").alert();
+		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
 		$(".gstin").focus();
 	    });
@@ -561,25 +823,40 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if ($("#edit_cussup_tan").length > 0){
 	  custtan = $("#edit_cussup_tan").val();
       }
+	var form_data = new FormData();
+	form_data.append("custid", $("#edit_cussup_list option:selected").val());
+	form_data.append("custname", $("#edit_cussup_name").val());
+	form_data.append("custaddr", $.trim($("#edit_cussup_address").val()));
+	form_data.append("custphone", $("#edit_cussup_phone").val());
+	form_data.append("custemail", $("#edit_cussup_email").val());
+	form_data.append("custfax", $("#edit_cussup_fax").val());
+	form_data.append("custpan", $("#edit_cussup_pan").val());
+	form_data.append("custtan", custtan);
+	form_data.append("gstin", JSON.stringify(gobj));
+	form_data.append("state", $("#edit_state").val());
+	form_data.append("oldcustname", $("#edit_cussup_list option:selected").text());
+	if ($("#edit_cussup").val() == "Supplier"){
+	    var bankdetails = {}; //for bank details
+	if ($.trim($("#edit_accountno").val()) != "" && $.trim($("#edit_bankname").val()) !="" && $.trim($("#edit_ifsc").val()) !="" && $.trim($("#edit_branchname").val()) !=""){
+	     bankdetails["accountno"] = $.trim($("#edit_accountno").val());
+	    bankdetails["bankname"] = $.trim($("#edit_bankname").val());
+	    bankdetails["ifsc"] = $.trim($("#edit_ifsc").val());
+	    bankdetails["branchname"] = $.trim($("#edit_branchname").val());
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
+	}
+	form_data.append("custsup", $("#edit_cussup").val());
 	if(allow == 1){
 	    $.ajax({
                 url: '/customersuppliers?action=edit',
                 type: 'POST',
+		global: false,
+                contentType: false,
+                cache: false,
+                processData: false,
                 dataType: 'json',
                 async : false,
-                data: {"custid": $("#edit_cussup_list option:selected").val(),
-                       "custname": $("#edit_cussup_name").val(),
-                       "custaddr": $.trim($("#edit_cussup_address").val()),
-                       "custphone": $("#edit_cussup_phone").val(),
-                       "custemail": $("#edit_cussup_email").val(),
-                       "custfax": $("#edit_cussup_fax").val(),
-                       "custpan": $("#edit_cussup_pan").val(),
-                       "custtan": custtan,
-                       "gstin": JSON.stringify(gobj),
-                       "state"  : $("#edit_state").val(),
-                       "oldcustname" : $("#edit_cussup_list option:selected").text(),
-                       "custsup":$("#edit_cussup").val()
-                      },
+                data: form_data,
                 beforeSend: function(xhr)
                 {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -606,7 +883,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 
                     }
                     if(resp["gkstatus"] == 1){
-                        if (custsupdat == '3') {
+                        if (custsupdata == '3') {
                             $("#edit_cussup_name").focus();
                             $("#cus-duplicate-alert").alert();
                             $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
