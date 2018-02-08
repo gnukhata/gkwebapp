@@ -1220,11 +1220,13 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
-	//code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
-             if ($("#chkcash").is(":checked")) {
-		form_data.append("paymentmode",3);
+	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+        if ($("#chkcash").is(":checked")) {
+	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+		form_data.append("paymentmode",3);   
 
-             } else {
+        } else {
+	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
@@ -1796,13 +1798,16 @@ $(document).off("keyup").on("keyup", function(event) {
         }
 
       });
-    //code for radio buttons to show and hide "bankdetails fields" and "cash received"
-   $("input[name='chkpaymentmode']").click(function () {
-            if ($("#chkcash").is(":checked")) {
+    //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
+    $("input[name='chkpaymentmode']").click(function () {
+	//Checking which radio button is selected.
+        if ($("#chkcash").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
                 $("#cash").show();
 		$("#bank").hide();
 
-            } else {
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
                 $("#cash").hide();
 		$("#bank").show();
             }
