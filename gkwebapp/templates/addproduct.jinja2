@@ -13,17 +13,15 @@
 	    {% else %}
 		<div class="row" hidden id="serviceproductdiv">
 	    {% endif %}
-              <div class="form-group col-sm-11 pd">
+	    <div class="form-group col-sm-11 pd">
 
-		<label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
-		
-		
-		<select name="gsflag" class="form-control input-sm" id="additem" accesskey="">
-                  <option value="7" id=sel_product>Product</option>
-                  <option value="19" id=sel_service>Service</option>
-		</select>
+	      <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
+	      <select name="gsflag" class="form-control input-sm" id="additem">
+                <option value="7">Product</option>
+                <option value="19">Service</option>
+	      </select>
 
-              </div>
+	    </div>
             </div>
             <div class="row productclass">
 
@@ -250,9 +248,9 @@
 		  </div>
 		  <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
 		  {% else %}
-		    <input type="checkbox" name="godownflag" id="godownflag" value=1>
+		    <input type="hidden" name="godownflag" id="godownflag" value="1">
       </input>
-      <input type="text" id="godownpresence" value="0" hidden="">
+      <input type="text" id="godownpresence" value="1" hidden>
       <div  id="openingstockdiv" class="form-group col-sm-12">
 		  {% endif %}
 		    <div class="panel">

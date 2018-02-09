@@ -343,16 +343,16 @@ $("#openingstock").focus(function(event) {
 $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
     if (event.which == 13) {
 	if ($("#adduom option:selected").val()==""){
-	     $("#uomblank-alert").alert();
-    $("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#uomblank-alert").hide();
-    });
+	    $("#uomblank-alert").alert();
+	    $("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#uomblank-alert").hide();
+	    });
 	    $("#adduom").focus();
 	}
-    else if (specspresent == 1) {
-      event.preventDefault();
-      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
-    }
+	else if (specspresent == 1) {
+	    event.preventDefault();
+	    $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	}
 
 	else {
 	    if ($("#product_tax_table tbody").length > 0) {
@@ -360,23 +360,27 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
 	    }
 	    else{
 		if ($("#additem option:selected").val()=='7'){
-
-      if ($("#godownpresence").val()==0) {
-        $("#openingstock").focus().select();
-      }
-      if ($("#godownpresence").val()==1)
-      {
-        $("#godownflag").focus().select();
-      }
-      if(sessionStorage.invflag==0){
-        $("#apsubmit").focus();
-      }
-    }
-    else{
-      $("#apsubmit").focus();
-    }
+		    if ($("#godownpresence").val()==0) {
+			$("#openingstock").focus().select();
+		    }
+		    else
+		    {
+			if ($("#godownflag").is(":hidden")) {
+			    $(".godown_name:first").focus();
+			}
+			else{
+			    $("#godownflag").focus().select();
+			}
+		    }
+		    if(sessionStorage.invflag==0){
+			$("#apsubmit").focus();
+		    }
+		}
+		else{
+		    $("#apsubmit").focus();
+		}
 	    }
-    }
+	}
   }
   else if (event.which==32)
   {
@@ -949,7 +953,10 @@ $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event
   var previndex = curindex-1;
   if (event.which==188 && event.shiftKey)
   {
-    if (curindex==0) {
+      if (curindex==0) {
+	  if($("#godownflag").is(":hidden")){
+	      $("#adduom").focus();
+	  }
       $("#godownflag").focus().select();
     }
     if(previndex>-1 && curindex != 0)
