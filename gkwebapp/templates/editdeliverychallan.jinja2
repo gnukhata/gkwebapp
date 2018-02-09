@@ -1,15 +1,13 @@
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-
     <div class="panel shadow deliverychallan_edit_panel">
       <div class="panel-body">
         <div class="container-fluid row">
-	  
-          <div class="form-group col-md-5">
-            <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
-	    {%if numberofdeliverynote <= 0 %}
-	      <label class="text-danger">No Delivery Note Found!</label>
-	    {%else%}
+	  <div class="form-group col-md-5">
+	    {%if numberofdeliverynote == 0 %}
+	    <label class="text-danger">No Delivery Note Found!</label>
+	  {%else%}
+	    <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
 	      <select class="form-control input-sm" id="deliverychallan_edit_list">
               <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
               <optgroup label="Delivery In" id="delin">
