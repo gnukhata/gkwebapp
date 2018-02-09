@@ -122,6 +122,7 @@
             <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
           </div>
           <div class="container-fluid row">
+	    
             <div class="form-group col-md-6">
 	      {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
 		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
@@ -141,7 +142,8 @@
 		  </optgroup>
 		</select>
 	      {%endif%}
-            </div>
+           
+	    </div>
           </div>
 	  <div id="scrollbar" class="hidden-load" hidden>
             <div class="col-md-6">
@@ -206,7 +208,8 @@
 	      {% endif %}
 	      <div class="form-group hidden-load" hidden>
 		<label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		<table id="gstintable" class="table table-condensed table-bordered fixed-table">
+		<div class ="panel panel-default">
+		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 		  <thead class="bg-primary input-sm">
                     <tr>
                       <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
@@ -239,10 +242,11 @@
                       </td>
                     </tr>
 		  </tbody>
-		</table>
+		  </table>
+		</div>
               </div>
 	      <div id="edit_bankdetails" class="hidden-load" hidden>
-		<label><h4>Bank Details :</h4></label>
+		  <label><h4>Bank Details :</h4></label>
 		<div class="row">
 		  <div class="form-group col-sm-6">
 		    <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
