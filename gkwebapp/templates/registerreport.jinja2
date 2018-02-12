@@ -168,8 +168,6 @@
             0.00
           {% endif %}
           </td>
-          {% endfor %}
-          {% for tax in taxcolumns %}
           <td class="dtwrap ralign">
           {% if tax in totalrow["taxamount"] %}
             {{totalrow['taxamount'][tax]}}
