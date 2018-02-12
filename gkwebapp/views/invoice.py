@@ -427,7 +427,6 @@ def registerspreadsheet(request):
         sheet.getColumn(i).setWidth("4cm")
         sheet.getCell(i-1,3).stringValue("Net @" + taxc ).setBold(True).setAlignHorizontal("right")
         i += 1
-    for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
         sheet.getCell(i-1,3).stringValue(taxc).setBold(True).setAlignHorizontal("right")
         i += 1
@@ -452,7 +451,6 @@ def registerspreadsheet(request):
             else:
                 sheet.getCell(i,row).stringValue("0.00").setAlignHorizontal("right")
             i += 1
-        for taxc in taxcolumns:
             if taxc in invoice["taxamount"]:
                 sheet.getCell(i,row).stringValue(invoice["taxamount"][taxc]).setAlignHorizontal("right")
             else:
@@ -470,7 +468,6 @@ def registerspreadsheet(request):
         else:
             sheet.getCell(i,row).stringValue("0.00").setBold(True).setAlignHorizontal("right")
         i += 1
-    for taxc in taxcolumns:
         if taxc in totalrow["taxamount"]:
             sheet.getCell(i,row).stringValue(totalrow["taxamount"][taxc]).setBold(True).setAlignHorizontal("right")
         else:
