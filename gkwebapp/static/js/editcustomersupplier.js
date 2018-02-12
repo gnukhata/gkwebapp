@@ -61,6 +61,8 @@ $(document).ready(function() {
 		    $(".custlbl").show();
 		    $(".suplbl").hide();
 		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"auto"});
+		    $("#textareahelp3").hide();
+		    $("#textareahelp2").show();
 		}
 		else {
     		    $("#edit_cussup").val("Supplier");
@@ -68,16 +70,18 @@ $(document).ready(function() {
 		    $("#edit_bankdetails").show();
 		    $(".suplbl").show();
 		    $(".custlbl").hide();
+		    $("#textareahelp3").show();
+		    $("#textareahelp2").hide();
 		}
 	$("#edit_cussup").prop("disabled", true);
 	$("#edit_cussup_name").val(result["custname"]);
 	$("#edit_cussup_name").prop("disabled", true);
-	$("#edit_cussup_email").val(result["custemail"]);
+	$("#edit_cussup_email").val(result["custemail"]);   
 	$("#edit_cussup_email").prop("disabled", true);
 	$("#edit_cussup_phone").val(result["custphone"]);
 	$("#edit_cussup_phone").prop("disabled", true);
 	$("#edit_cussup_address").val(result["custaddr"]);
-	$("#edit_cussup_address").prop("disabled", true);
+	$("#edit_cussup_address").prop("disabled", true);   
 	$("#edit_state").val(result["state"]);
 	$("#edit_state").prop("disabled", true);
 	$("#edit_cussup_fax").val(result["custfax"]);
@@ -119,7 +123,6 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
-      $("#textareahelp1").hide();
       $("#edit_cussup_btn").show();
 
     })
@@ -405,7 +408,7 @@ $(document).ready(function() {
 	      $("#cussup_edit_save").focus();
 	  }
       }
-      else if ($(".gstin").val()=="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
+      else if ($(".gstin").val()!="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
       else {

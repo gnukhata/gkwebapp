@@ -208,7 +208,7 @@
 	      {% endif %}
 	      <div class="form-group hidden-load" hidden>
 		<label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		<div class ="panel panel-default">
+		<div class ="panel panel-default"> 
 		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 		  <thead class="bg-primary input-sm">
                     <tr>
@@ -245,8 +245,11 @@
 		  </table>
 		</div>
               </div>
+	      <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small><br>
+	      <small id="textareahelp2" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save button.</small>
+	      <small id="textareahelp3" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Account No.</small> 
 	      <div id="edit_bankdetails" class="hidden-load" hidden>
-		  <label><h4>Bank Details :</h4></label>
+		<label><h4>Bank Details :</h4></label>
 		<div class="row">
 		  <div class="form-group col-sm-6">
 		    <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
@@ -269,7 +272,7 @@
 		</div>
 	      </div>
 	      {% endif %}
-	      <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
+	     
 	      {% if vatorgstflag == '22' %}
 		<div class="row">
 		  <div class="form-group col-sm-6 hidden-load" hidden>

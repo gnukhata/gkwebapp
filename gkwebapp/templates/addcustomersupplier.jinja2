@@ -200,10 +200,15 @@
 	      </table>
 	    </div>
 	    <small id="textareahelp" class="form-text text-muted custlbl">Press Esc key from any field in the table to shift focus to Save Button.</small>
-	    <small id="textareahelp" class="form-text text-muted suplbl">Press Esc key from any field in the table to shift focus to Account No.</small>
+	    <small id="textareahelp" class="form-text text-muted suplbl">Press Esc key from any field in the table to shift focus to Bank Details.</small>
+	    <br> <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small></br>
 	  </div>
 	  <div id="bankdetails">
-	    <label><h4>Bank Details :</h4></label>
+	    <input type="checkbox" value=0 id="checkbnk">
+  </input>
+  <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+            <div id="bankdiv" hidden>
+	      <label><h4>Bank Details :</h4></label>
 	      <div class="row">
 		<div class="form-group col-sm-6">
 		  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
@@ -224,6 +229,8 @@
 		  <input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
 		</div>
 	      </div>
+	    </div>
+	   
 	  </div>
 	  {% endif %}
 	  {% if vatorgstflag == '22' %}
@@ -325,7 +332,7 @@
 	    </div>
 	  </div>
 	  {% endif %}
-	  <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
+	 
         </div>
       </div>
       <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
