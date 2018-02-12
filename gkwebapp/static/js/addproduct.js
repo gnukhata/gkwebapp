@@ -340,7 +340,9 @@ $("#openingstock").focus(function(event) {
   }
 });
 
-$(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+// Keydown event for add unit of measurement.
+    $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+	// Event for 'Enter' key.
     if (event.which == 13) {
 	if ($("#adduom option:selected").val()==""){
 	    $("#uomblank-alert").alert();
@@ -365,6 +367,7 @@ $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
 		    }
 		    else
 		    {
+			//If godownflag is hidden, i.e when user is godownkeeper focus shifts to godown name.
 			if ($("#godownflag").is(":hidden")) {
 			    $(".godown_name:first").focus();
 			}
@@ -426,8 +429,10 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
     }
 
 });
+    //Events for field to add new unit of measurement.
 $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
-  /* Act on the event */
+    /* Act on the event */
+    //Events triggered when Escape key is pressed.
   if (event.which==27)
   {
     event.preventDefault();
@@ -435,6 +440,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     $(".newuom").hide();
     $("#adduom").focus();
   }
+    // Events triggered when Enter key is pressed.
   if (event.which==13)
   {
 
@@ -474,8 +480,47 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
           }
 
+	    //Added uom is selected.
             $("#adduom option").filter(function(i,e){return $(e).text()==unitname;}).prop('selected', true);
-          $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	    //If specs are present focus shifts to specs.
+	    if (specspresent == 1) {
+	    event.preventDefault();
+	    $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	}
+
+	    else {
+		// If Tax is present focus shifts to Tax.
+	    if ($("#product_tax_table tbody").length > 0) {
+		$("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	    }
+		else{
+		    //Events triggered in case of Goods.
+		if ($("#additem option:selected").val()=='7'){
+		    if ($("#godownpresence").val()==0) {
+			$("#openingstock").focus().select();
+		    }
+		    else
+		    {
+			//If godownflag is hidden, i.e when user is godownkeeper focus shifts to godown name.
+			if ($("#godownflag").is(":hidden")) {
+			    $(".godown_name:first").focus();
+			}
+			//Else it shifts to godown flag.
+			else{
+			    $("#godownflag").focus().select();
+			}
+		    }
+		    //If inventory is not enabled focus 
+		    if(sessionStorage.invflag==0){
+			$("#apsubmit").focus();
+		    }
+		}
+		    //In case of Service focus shifts to Save button.
+		else{
+		    $("#apsubmit").focus();
+		}
+	    }
+	}
         }
       })
       .fail(function() {
@@ -946,14 +991,17 @@ $(document).off("change",".godown_name").on("change",".godown_name",function(eve
   selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex+') td:eq(0) select').val();
 });
 
+// Key Up event for godown name.
 $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event)
 {
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
-  var previndex = curindex-1;
+    var previndex = curindex-1;
+    //Events that are triggered when Shift Key and '<' key are triggered.
   if (event.which==188 && event.shiftKey)
   {
       if (curindex==0) {
+	  //When godownflag is hidden focus shifts to adduom.
 	  if($("#godownflag").is(":hidden")){
 	      $("#adduom").focus();
 	  }
@@ -961,7 +1009,7 @@ $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event
     }
     if(previndex>-1 && curindex != 0)
     {
-      event.preventDefault();
+	event.preventDefault();
       $('#godown_ob_table tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
     }
   }
