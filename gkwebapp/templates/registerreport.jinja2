@@ -98,8 +98,6 @@
           <th class="dtwrap ralign">{% trans %}TAX Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
             <th class="dtwrap ralign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
-          {% endfor %}
-          {% for tax in taxcolumns %}
             <th class="dtwrap ralign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
           {% endfor %}
         </tr>
