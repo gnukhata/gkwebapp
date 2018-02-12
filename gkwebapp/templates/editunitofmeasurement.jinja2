@@ -44,7 +44,7 @@
         <form>
           <div class="form-group">
 	    {% if unitofmeasurement1 ==0 %}
-	      <lable class="text-danger">No Unit of Measurement Found</lable>
+	      <label class="text-danger">{% trans %}No Unit of Measurement Found!{% endtrans %}</label>
 	      {% else %}
             <label for="unit_edit_list" id="edit_list">{% trans %}List of Units :{% endtrans %}</label>
             <select class="form-control input-sm" id="unit_edit_list">

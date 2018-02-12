@@ -5,29 +5,29 @@
         <div class="container-fluid row">
 	  <div class="form-group col-md-5">
 	    {%if numberofdeliverynote == 0 %}
-	    <label class="text-danger">No Delivery Note Found!</label>
-	  {%else%}
-	    <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
+	      <label class="text-danger">{% trans %}No Delivery Note Found!{% endtrans %}</label>
+	    {%else%}
+	      <label for="deliverychallan_edit_list">{% trans %}Delivery Note{% endtrans %} :</label>
 	      <select class="form-control input-sm" id="deliverychallan_edit_list">
-              <option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
-              <optgroup label="Delivery In" id="delin">
-                {% for dc in delchals %}
-                {% if dc['csflag'] == 19 %}
-                  <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
-                {% endif %}
-                {% endfor %}
-              </optgroup>
-              <optgroup label="Delivery Out" id="delout">
-                {% for dc in delchals %}
-                {% if dc['csflag'] == 3 %}
-                  <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
-                {% endif %}
-                {% endfor %}
-              </optgroup>
+		<option value="" disabled selected hidden>{% trans %}Select Delivery Note{% endtrans %}</option>
+		<optgroup label="Delivery In" id="delin">
+                  {% for dc in delchals %}
+                    {% if dc['csflag'] == 19 %}
+                      <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
+                    {% endif %}
+                  {% endfor %}
+		</optgroup>
+		<optgroup label="Delivery Out" id="delout">
+                  {% for dc in delchals %}
+                    {% if dc['csflag'] == 3 %}
+                      <option value="{{dc['dcid']}}">{{dc["dcno"]}}, {{dc["custname"]}}</option>
+                    {% endif %}
+                  {% endfor %}
+		</optgroup>
               </select>
 	    {%endif%}
           </div>
-	 
+	  
         </div>
         <div class="col-md-5 deliverychallan_edit_div" hidden>
           <div class="form-group">
@@ -35,22 +35,22 @@
             <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
           </div>
 	  <div class="row">
-          <div class="form-group col-sm-6">
-            <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
-            <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
-          </div>
+            <div class="form-group col-sm-6">
+              <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
+              <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
+            </div>
             <div class="form-group col-sm-6">
               <label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %} :</label>
               <div class="form-inline">
-                  <div class="form-group">
-                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_edit_month" accesskey="v">
-                  </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v">
-                  </div>
+                <div class="form-group">
+                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date" accesskey="v">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_edit_month" accesskey="v">
+                </div>
+                <div class="form-group">
+                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v">
+                </div>
               </div>
             </div>
 	  </div>
@@ -81,42 +81,42 @@
 	  <div class="row">
             <div class="form-group col-sm-6">
 	      {% if godowns %}
-              <label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
-              <label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
-              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
-                <option value=""  selected>{% trans %}None{% endtrans %}</option>
-                {% for godown in godowns %}
-                  <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                {% endfor %}
-              </select>
+		<label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
+		<label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
+		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
+                  <option value=""  selected>{% trans %}None{% endtrans %}</option>
+                  {% for godown in godowns %}
+                    <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                  {% endfor %}
+		</select>
 	      {% endif %}
             </div>
 	    {% if godowns %}
-            <div class="form-group col-sm-6">
-              <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
-              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                <option value="16">{% trans %}Purchase{% endtrans %}</option>
-                <option value="4">{% trans %}Sale{% endtrans %}</option>
-                <option value="1">{% trans %}Approval{% endtrans %}</option>
-                <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                <option value="19">{% trans %}Sample{% endtrans %}</option>
-                <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-              </select>
-            </label>
-            </div>
+              <div class="form-group col-sm-6">
+		<label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                  <option value="4">{% trans %}Sale{% endtrans %}</option>
+                  <option value="1">{% trans %}Approval{% endtrans %}</option>
+                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                  <option value="19">{% trans %}Sample{% endtrans %}</option>
+                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+		</select>
+              </label>
+              </div>
 	    {% else %}
-	    <div class="form-group col-sm-12">
-              <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
-              <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                <option value="16">{% trans %}Purchase{% endtrans %}</option>
-                <option value="4">{% trans %}Sale{% endtrans %}</option>
-                <option value="1">{% trans %}Approval{% endtrans %}</option>
-                <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                <option value="19">{% trans %}Sample{% endtrans %}</option>
-                <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-              </select>
-            </label>
-            </div>
+	      <div class="form-group col-sm-12">
+		<label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                  <option value="4">{% trans %}Sale{% endtrans %}</option>
+                  <option value="1">{% trans %}Approval{% endtrans %}</option>
+                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                  <option value="19">{% trans %}Sample{% endtrans %}</option>
+                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+		</select>
+              </label>
+              </div>
 	    {% endif %}
 	  </div>
 	  <div class="row">
@@ -136,21 +136,21 @@
             </label>
 	    <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneeaddr" placeholder="" accesskey="">
 	  </div>
-          </div>
-          <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
-            <div class="row">
+        </div>
+        <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
+          <div class="row">
             <div class="panel">
-            <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
-              <thead class="bg-primary">
-                <tr>
-                  <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
-                  <th class="col-xs-4 text-center">{% trans %}Quantity{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-              </tbody>
-            </table>
+              <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
+		<thead class="bg-primary">
+                  <tr>
+                    <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
+                    <th class="col-xs-4 text-center">{% trans %}Quantity{% endtrans %}</th>
+                    <th class="col-xs-1"></th>
+                  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+              </table>
             </div>
             <div class="col-md-6">
               <label for="deliverychallan_edit_noofpackages">{% trans %}Number of Packages{% endtrans %} :</label>
@@ -170,21 +170,21 @@
               <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
               <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" placeholder="Enter designation">
             </div>
-	    </div>
-	    <br><br>
-	    <div class="row">
-	      <div class="panel-footer" hidden>
-		<div class="float-right" style="text-align: right;border-radius: 5px 5px 5px 5px !important;">
-		  <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-		  <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
-		</div>
-	      </div>  
-	    </div>
-          </div>
+	  </div>
+	  <br><br>
+	  <div class="row">
+	    <div class="panel-footer" hidden>
+	      <div class="float-right" style="text-align: right;border-radius: 5px 5px 5px 5px !important;">
+		<button id="deliverychallan_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+		<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+	      </div>
+	    </div>  
+	  </div>
+        </div>
       </div>
     </div>
 
 
   </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editdeliverychallan.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editdeliverychallan.js')}}"></script>
 </body>

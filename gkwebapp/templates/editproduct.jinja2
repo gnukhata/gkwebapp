@@ -10,16 +10,16 @@
 	    <div class="form-group  col-sm-6">
               <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
 	       	{% if numberofproducts ==0 %}
-		  <label class="text-danger">No Product/Service Found!</label>
+		  <label class="text-danger">{% trans %}No Product/Service Found!{% endtrans %}</label>
 		{% else %}
 		  <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products / Services {% endtrans %} :</label>
 		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
-		  <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
-		  {% for prod in gkresult %}
-		    <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
-		  {% endfor %}
-		  {%endif%}
-		</select>
+		    <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
+		    {% for prod in gkresult %}
+		      <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
+		    {% endfor %}
+		{%endif%}
+		  </select>
 	      </div>
 
 	    </div>
@@ -40,7 +40,7 @@
           <button id="epreset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
 	  {% if userrole|int != 3 %}
             <button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none;"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-	    {% endif %}
+	  {% endif %}
 	</div>
 
       </div>

@@ -47,7 +47,6 @@
 
       <div class="panel-body">
         <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-
           <label for="vno">{% trans %}Category name cannot be left blank!{% endtrans %}</label>
         </div>
         <form>
@@ -55,7 +54,7 @@
             <div class="col-md-6 selcat">
               <div class="form-group">
 		{% if category ==0 %}
-		  <lable class="text-danger">No Category Found!</lable>
+		  <label class="text-danger">{% trans %}No Category Found!{% endtrans %}</label>
 		  {% else %}
                   <label for="category_edit_list" id="category_edit_list_lbl">{% trans %}List of Categories :{% endtrans %}</label>
                 <select class="form-control input-sm" id="category_edit_list">
