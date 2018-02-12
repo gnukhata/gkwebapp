@@ -177,16 +177,21 @@ $("#openingstock").focus(function(event) {
   }
 });
 
-$(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-  if (event.which == 13) {
+ // Events for Unit of Measurement field.
+    $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+	// Events that happen when Enter key is pressed.
+	if (event.which == 13) {
+	    // When specs are present focus shifts to specs table.
     if (!$("#specdiv").is(":hidden")) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-    else {
+	    else {
+		// If Tax is present focus shifts to Tax table.
 	if ($("#product_tax_table").length > 0) {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
 	}
-	else{
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
 	    $(".godown_name:first").focus();
 	}
     }
@@ -279,8 +284,20 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
           }
 
-          $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-          $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+            $("#adduom option").filter(function(i,e){return $(e).text()==unitname;}).prop('selected', true);
+          if (!$("#specdiv").is(":hidden")) {
+      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+    }
+	    else {
+		// If Tax is present focus shifts to Tax table.
+	if ($("#product_tax_table").length > 0) {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	}
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+	    $(".godown_name:first").focus();
+	}
+    }
         }
       })
       .fail(function() {
