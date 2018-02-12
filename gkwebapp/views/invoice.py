@@ -425,11 +425,11 @@ def registerspreadsheet(request):
     i = 9
     for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue("Net @" + taxc + "%").setBold(True).setAlignHorizontal("right")
+        sheet.getCell(i-1,3).stringValue("Net @" + taxc ).setBold(True).setAlignHorizontal("right")
         i += 1
     for taxc in taxcolumns:
         sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue(taxc + "% TAX").setBold(True).setAlignHorizontal("right")
+        sheet.getCell(i-1,3).stringValue(taxc).setBold(True).setAlignHorizontal("right")
         i += 1
     row = 4
     for invoice in result:
