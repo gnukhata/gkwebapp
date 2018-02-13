@@ -510,8 +510,12 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
 		    $("#invoice_customerstate").change();
+		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]);
+		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);
+		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);
+		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -1669,7 +1673,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1743,7 +1747,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1844,7 +1848,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1913,7 +1917,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -2063,7 +2067,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
 });
 
@@ -2631,7 +2635,16 @@ if (event.which == 13) {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-    form_data.append("bankdetails", JSON.stringify(bankdetails));
+    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+        if ($("#chkcash").is(":checked")) {
+	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+		form_data.append("paymentmode",3);   
+
+        } else {
+	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+		form_data.append("bankdetails", JSON.stringify(bankdetails));
+		form_data.append("paymentmode",2);
+            }
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
@@ -2804,4 +2817,31 @@ if (event.which == 13) {
                 console.log("complete");
             });
     });
+
+    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+        if(event.which==13){
+        $("#accountno").focus();
+        }
+    });
+    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
+        if(event.which==13){
+        $("#invoice_save").focus();
+        }
+    });
+
+     //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
+    $("input[name='chkpaymentmode']").click(function () {
+	//Checking which radio button is selected.
+        if ($("#chkbank").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+                $("#bank").show();
+		$("#cash").hide();
+
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#bank").hide();
+		$("#cash").show();
+            }
+        });
+    
 });

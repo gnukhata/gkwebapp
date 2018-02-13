@@ -1823,7 +1823,6 @@ $(document).off("keyup").on("keyup", function(event) {
         if(event.which==13){
         $("#invoice_save").focus();
         }
-
       });
       $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
         if(event.which==13){
