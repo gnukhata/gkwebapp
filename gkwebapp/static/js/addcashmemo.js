@@ -1008,6 +1008,7 @@ $(document).off("keyup").on("keyup", function(event) {
     return false;
   }
 });
+    console.log($("#status").val());
     $("#invoice_save").click(function(event) {
         // validations start below
         event.stopPropagation();
@@ -1073,6 +1074,7 @@ $(document).off("keyup").on("keyup", function(event) {
         var discount = {};
         var bankdetails = {};
 	var invoicetotal;
+	var inoutflag = $("#status").val();
           bankdetails["accountno"] = $("#accountno").val();
           bankdetails["bankname"] = $("#bankname").val();
           bankdetails["ifsc"] = $("#ifsc").val();
@@ -1220,6 +1222,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
+	form_data.append("inoutflag",inoutflag);
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
@@ -1230,8 +1233,6 @@ $(document).off("keyup").on("keyup", function(event) {
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-      
-        
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {

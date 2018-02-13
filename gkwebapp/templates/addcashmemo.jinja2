@@ -57,6 +57,11 @@
               {% endif %}
             </label>
           </div>
+	  {% if gkstatus=="in" %}
+	    <input type="hidden" id="status" value="9">
+	  {% else %}
+	    <input type="hidden" id="status" value="15">
+	  {% endif %}
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
