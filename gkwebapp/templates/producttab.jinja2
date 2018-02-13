@@ -59,9 +59,7 @@ margin-bottom: 0px;
 
         <ul class="nav nav-pills nav-tabs " role="tablist">
           <li class="active nopadding" id="addproduct" role="presentation"><a id="addProduct" data-toggle="pill" href="" accesskey="1">{% trans %}Create Product / Service{% endtrans %}</a></li>
-          {% if numberofproducts > 0 %}
-            <li class="nopadding" id="editproduct" role="presentation"><a id="editProduct" data-toggle="pill" href="" accesskey="2">{% trans %}Edit Product / Service{% endtrans %}</a></li>
-          {% endif %}
+          <li class="nopadding" id="editproduct" role="presentation"><a id="editProduct" data-toggle="pill" href="" accesskey="2">{% trans %}Edit Product / Service{% endtrans %}</a></li>
         </ul>
         <div class='tab-content '>
           <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>

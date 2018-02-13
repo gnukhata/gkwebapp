@@ -19,25 +19,31 @@
       <div class="panel-body">
         <div class="container-fluid row">
           <div class="form-group col-md-6">
-            <label for="invoice_all_no">
-              {% trans %}Cash Memo{% endtrans %} :
-            </label>
-            <select class="form-control input-sm" id="invoice_all_no" accesskey="">
-              <option value="" disabled hidden selected>{% trans %}Select Cash Memo{% endtrans %}</option>
-              {% for invoice in gkresult %}
-              <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
-              {% endfor %}
-            </select>
+            {%if cashmemo == 0%}
+	      <label class="text-danger">{% trans %}No Cash Memo Found!{% endtrans %}</label>
+	    {%else%}
+	      <label for="invoice_all_no">
+		{% trans %}Cash Memo{% endtrans %} :
+              </label>
+	      <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+		<option value="" disabled hidden selected>{% trans %}Select Cash Memo{% endtrans %}</option>
+		{% for invoice in gkresult %}
+		  <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
+		{% endfor %}
+	    {%endif%}
+              </select>
           </div>
         </div>
         <div id="viewcashmemodiv">
         </div>
       </div>
-      <div class="panel-footer" id="viewinvfooter">
+      {% if cashmemo >0 %}
+	<div class="panel-footer" id="viewinvfooter" hidden>
         <div class="container-fluid btndisablediv">
           <button id="cashmemo_print" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
         </div>
       </div>
+      {%endif%}
   </div>
 </div>
 

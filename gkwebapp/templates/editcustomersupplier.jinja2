@@ -97,23 +97,18 @@
 	{% trans %}Please Enter GSTIN.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
-
 	{% trans %}Please select a state.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
-
 	{% trans %}Please enter Account No.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
-
 	{% trans %}Please enter Bank Name.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
-
 	{% trans %}Please enter Branch Name.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
-
 	{% trans %}Please enter IFSC Code.{% endtrans %}
       </div>
       <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -129,7 +124,7 @@
           <div class="container-fluid row">
             <div class="form-group col-md-6">
 	      {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
-		<label class="text-danger">No Customer/Supplier Found!</label>
+		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
 	      {%else%}
 		<label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
 		<select class="form-control input-sm" id="edit_cussup_list" >
@@ -392,5 +387,5 @@
 
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcustomersupplier.js')}}"></script>
-</body>
+  </body>
 </html>

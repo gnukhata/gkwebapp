@@ -29,6 +29,7 @@ $(document).ready(function() {
                 .done(function(resp) {
                       $("#viewcashmemodiv").html(resp);
                     console.log("success");
+		    $("#viewinvfooter").show();
                     $("#cashmemo_print").show();
                 })
                 .fail(function() {
