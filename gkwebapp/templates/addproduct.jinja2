@@ -323,6 +323,9 @@
             </div>
           </div>
           <div class="modal-body">
+	    <div class="alert alert-danger" id="uniquestockalert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Stock already exists!{% endtrans %}
+	    </div>
 	    <div class="alert alert-danger" id="emptygodownalert"  aria-live="rude" role="alert" hidden>
 	      {% trans %}Please select the godown!{% endtrans %}
 	    </div>
