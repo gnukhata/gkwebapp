@@ -475,10 +475,10 @@ $(document).ready(function() {
       } else if (event.which == 190 && event.ctrlKey) {
   	event.preventDefault();
         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
+      }	else if (event.which == 27) {
+	  event.preventDefault();
+  	  $("#chkcash").focus().click();
       }
-      else if (event.which == 27) {
-  	  $("#accountno").focus().select();
-        }
     });
 
     $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
@@ -613,7 +613,7 @@ $(document).ready(function() {
       }
 	else if (event.which == 27) {
 	  $("#accountno").focus().select();
-      }
+	}
     });
 
     $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
@@ -992,7 +992,7 @@ else {
   }
   else if (previndex == -1) {
 if ($("#taxapplicable").val() == 7) {
-    $(".invoice_product_discount_gst:last").focus().select();
+    $("#chkcash").focus().select();
 }
 else {
     $(".invoice_product_discount_vat:last").focus().select();
@@ -1566,7 +1566,7 @@ $(document).off("keyup").on("keyup", function(event) {
         event.preventDefault();
       }
       else if (event.which == 27) {
-  	  $("#accountno").focus().select();
+  	  $("#chkcash").focus().click();
         }
     });
 
@@ -1630,7 +1630,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
       } else if (event.which == 27) {
         event.preventDefault();
-        $("#accountno").focus().select();
+        $("#chkcash").focus().click();
       }
     });
 
@@ -1675,7 +1675,7 @@ $(document).off("keyup").on("keyup", function(event) {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkcash").focus().click();
       }
   });
 
@@ -1788,7 +1788,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
         } else if (event.which == 27) {
           event.preventDefault();
-          $("#accountno").focus().select();
+          $("#chkcash").focus().click();
         }
     });
 
@@ -1798,6 +1798,20 @@ $(document).off("keyup").on("keyup", function(event) {
         }
 
       });
+      $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
+        if(event.which==13){
+        $("#invoice_save").focus();
+        }
+
+      });
+
+      $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+        if(event.which==13){
+            $("#accountno").focus().select();
+        }
+
+      });
+
     //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
     $("input[name='chkpaymentmode']").click(function () {
 	//Checking which radio button is selected.

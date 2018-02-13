@@ -375,15 +375,22 @@
 	      </div>
 	    </div>
 	  {% endif %}
-	      </div>  
-	      <div class="row col-md-12">
-		<h4>Payment Details : <span for="chkYes"><input type="radio" id="chkcash" name="chkpaymentmode" checked />Cash</span>
-		  <span for="chkNo"><input type="radio" id="chkbank" name="chkpaymentmode" />Bank</span>
+	      </div> 
+	      <div class="row">
+		<div class="form-inline col-sm-6"> 
+		  <label for="inv">{% trans %}Payment Details{% endtrans %}:</label>
+		  <div class="radio">
+        	    <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkcash" aria-label="" checked>&nbsp{% trans %}Cash{% endtrans %}.</label>
+        	  </div>
+		  <div class="radio">
+        	    <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkbank" aria-label="">&nbsp {% trans %}Bank{% endtrans %}.</label>
+        	  </div>
+		</div>
 	      </div>
-              <div class="col-md-6 row " id="bank" style="display: none"></h4>
+              <div class="col-md-6 row " id="bank" style="display: none">
             <table class="table  table-condensed table-bordered ">
               <tbody>
-		<h4>Bank Details :</h4>
+		<label>Bank Details :</label>
 		<tr>
 		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
 		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
@@ -399,15 +406,15 @@
 		</tr>
               </tbody>
             </table>
-            </div>
-	    <div class ="col-md-6 row " >
-	      <br> <br>
-	      <label for="cashmemo total"><h4>{% trans %}Total amount{% endtrans %} :</h4></label>
-	      <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></label>
+              </div>
+	      <div class="row">
+		<div class ="col-md-3 pull-right " >
+		  <label style="font-size:120% !important;" for="cashmemo total">{% trans %}Total Amount{% endtrans %} :</label>		  <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></label>
+		</div>
+		<div class="col-md-9" style='display:none align:right;' id="cash">
+		  <label style="font-size:120% !important">CASH RECEIVED</label>
 	    </div>
-	    <div class="col-md-12 row" style='display:none align:right;' id="cash">
-              <h5>CASH RECEIVED</h5>
-	    </div>
+	      </div>
 	    
 	    <!--
 		 <div class="col-md-6" >
@@ -424,7 +431,7 @@
 
 		 </div> -->
       </div>
-		      </div>
+		      
 
     <div class="panel-footer">
       <div class="container-fluid">
