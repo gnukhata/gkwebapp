@@ -18,6 +18,18 @@
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
+	  <div class="col-md-2">
+	    <label for="selectuser">{% trans %}Select Type of Cash Memo{% endtrans %} :</label>
+	    <div class="radio">
+	      <label><input type="radio" class="iib" name="iib" id="all" aria-label="" value="" checked>&nbsp {% trans %}All Cash Memo{% endtrans %}.</label>
+	    </div>
+	    <div class="radio">
+	      <label><input type="radio" class="iib" name="iib" id="reccashmemo" aria-label="" value="0" >&nbsp {% trans %}Recorded Cash Memo{% endtrans %}.</label>
+            </div>
+	    <div class="radio">
+              <label><input type="radio" class="iib" name="iib" id="createcashmemo" aria-label="" value="1">&nbsp {% trans %}Created Cash Memo{% endtrans %}.</label>
+            </div>	  
+	  </div>
           <div class="form-group col-md-6">
             {%if cashmemo == 0%}
 	      <label class="text-danger">{% trans %}No Cash Memo Found!{% endtrans %}</label>
@@ -28,7 +40,7 @@
 	      <select class="form-control input-sm" id="invoice_all_no" accesskey="">
 		<option value="" disabled hidden selected>{% trans %}Select Cash Memo{% endtrans %}</option>
 		{% for invoice in gkresult %}
-		  <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
+		  <option value="{{invoice['invid']}}" inout="{{invoice["inoutflag"]}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
 		{% endfor %}
 	    {%endif%}
               </select>
