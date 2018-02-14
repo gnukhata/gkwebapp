@@ -1355,6 +1355,8 @@ $("#addgodown").click(function() {
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
 	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+	
+       
 	    }
 	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
 	});
@@ -1379,22 +1381,27 @@ $("#addgodown").click(function() {
 	}
 	return false;
     });
+    
 
     $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
 	let curindex = $(this).closest('tr').index();
 	var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
 	let nextindex = curindex + 1;
 	let previndex = curindex - 1;
-	if (event.which == 13)
+	if (event.which == 13){
 	    event.preventDefault();
-	if (selectedpro==""){
-	    $("#Product-blank-alert").alert();
-	    $("#Product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#Product-blank-alert").hide();
-	    });
-	    return false;
+	    if (selectedpro==""){
+		$("#Product-blank-alert").alert();
+		$("#Product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#Product-blank-alert").hide();
+		});
+		return false;
+	    }
+	    $('#stocktable tbody').append('<tr>' + stkhtml + '</tr>');
+	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
+	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+	    $('.prodstock:eq('+ nextindex +')').focus().select();
 	}
-	$('#stocktable tbody').append('<tr>' + stkhtml + '</tr>');	
   });
 
 
