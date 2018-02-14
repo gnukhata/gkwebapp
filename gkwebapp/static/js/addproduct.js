@@ -1207,6 +1207,7 @@ $("#addgodown").click(function() {
     }
   );
 });
+/* -----------------------AddStock Key events start here----------------------------------------- */
     $(document).off("click",".product_del").on("click", ".product_del", function() {
 	$(this).closest('tr').fadeOut(200, function(){
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
@@ -1349,7 +1350,7 @@ $("#addgodown").click(function() {
 	}
     });
 
-    
+/*Event for deleting a particular row*/    
     $(document).off("click",".product_del").on("click", ".product_del", function() {
 	$(this).closest('tr').fadeOut(200, function(){
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
@@ -1370,6 +1371,9 @@ $("#addgodown").click(function() {
         }
 
     });
+
+    /*Event for validation of shifting focus*/
+
     $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
     let curindex = $(this).closest('tr').index();
     let nextindex = curindex + 1;
@@ -1381,8 +1385,8 @@ $("#addgodown").click(function() {
 	}
 	return false;
     });
-    
 
+    
     $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
 	let curindex = $(this).closest('tr').index();
 	var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
@@ -1397,7 +1401,7 @@ $("#addgodown").click(function() {
 		});
 		return false;
 	    }
-	    $('#stocktable tbody').append('<tr>' + stkhtml + '</tr>');
+	    $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
 	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
 	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
 	    $('.prodstock:eq('+ nextindex +')').focus().select();
