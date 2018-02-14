@@ -101,7 +101,12 @@ if($("#additem").is(':visible'))
 	$("#additem").focus();
   }
     else{
-	$("#addproddesc").focus();
+	if($("#addcatselect").length == 0){
+	    $("#addproddesc").focus();
+	}
+	else {
+	    $("#addcatselect").focus();
+	}
     }
 
   $("#godownflag").click(function(e){

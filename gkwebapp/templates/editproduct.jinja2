@@ -12,7 +12,11 @@
 	       	{% if numberofproducts ==0 %}
 		  <label class="text-danger">{% trans %}No Product/Service Found!{% endtrans %}</label>
 		{% else %}
-		  <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products / Services {% endtrans %} :</label>
+		  {% if userrole|int != 3 %}
+		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products / Services {% endtrans %} :</label>
+		  {% else %}
+		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
+		  {%endif%}
 		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
 		    <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
 		    {% for prod in gkresult %}
