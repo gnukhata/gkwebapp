@@ -512,10 +512,10 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
 		    $("#invoice_customerstate").change();
-		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]);
-		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);
-		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);
-		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);
+		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -2825,7 +2825,7 @@ if (event.which == 13) {
     });
     $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
         if(event.which==13){
-        $("#invoice_save").focus();
+        $("#transportationmode").focus();
         }
     });
 
