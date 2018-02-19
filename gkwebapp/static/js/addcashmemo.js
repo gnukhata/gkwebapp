@@ -35,6 +35,14 @@ $(document).ready(function() {
     $('.modal-backdrop').remove(); //Removes backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number'); // Focus shift from fields among date field.
     $("#invoice_challanno").focus(); // Focus on the cashmemo no. when the page loads.
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+	$(".tinfield").show();
+	$(".gstfield").hide();
+    } else {
+	$(".gstinfield").show();
+	$(".vatfield").hide();
+    }
 
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
