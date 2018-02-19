@@ -192,20 +192,27 @@
 		</div>
               </div>
             {% else %}
-              <div class="form-group col-sm-12">
-                <input type="checkbox" name="godownflag" id="godownflag" value=0>
+              {% if userrole|int != 3 %}
+		<div class="form-group col-sm-12">
+                  <input type="checkbox" name="godownflag" id="godownflag" value=0>
 		</input>
 		<input type="text" id="godownpresence" value="1" hidden="">
 		<label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-              </div>
-              <div id="nogodown" class="form-group pds col-sm-6">
-		<label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-		<div class="input-group">
-                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                  <span class="input-group-addon input-sm" id="unitaddon"></span>
 		</div>
-              </div>
-              <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+		<div id="nogodown" class="form-group pds col-sm-6 noinventory">
+		  <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+		  <div class="input-group">
+                    <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                    <span class="input-group-addon input-sm" id="unitaddon"></span>
+		  </div>
+		</div>
+		<div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+	      {% else %}
+		  <input type="hidden" name="godownflag" id="godownflag" value="1">
+		</input>
+		<input type="text" id="godownpresence" value="1" hidden>
+		<div  id="openingstockdiv" class="form-group col-sm-12">
+	      {% endif %}
 		<div class="panel">
                   <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
                     <thead class="bg-primary input-sm">

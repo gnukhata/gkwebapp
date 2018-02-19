@@ -63,11 +63,13 @@ if (sessionStorage.invflag=='1' ){
     event.preventDefault();
     $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
-  $("#addcatselect").focus();
     if($("#addcatselect").length == 0)
   {
     $("#addproddesc").focus();
   }
+    else{
+	$("#addcatselect").focus();
+    }
   $("#openingstock").numeric();
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -175,17 +177,22 @@ $("#openingstock").focus(function(event) {
   }
 });
 
-$(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-  if (event.which == 13) {
+ // Events for Unit of Measurement field.
+    $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+	// Events that happen when Enter key is pressed.
+	if (event.which == 13) {
+	    // When specs are present focus shifts to specs table.
     if (!$("#specdiv").is(":hidden")) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-    else {
+	    else {
+		// If Tax is present focus shifts to Tax table.
 	if ($("#product_tax_table").length > 0) {
 	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
 	}
-	else{
-	    $("#godownflag").focus();
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+	    $(".godown_name:first").focus();
 	}
     }
   }
@@ -277,8 +284,20 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
           }
 
-          $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-          $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+            $("#adduom option").filter(function(i,e){return $(e).text()==unitname;}).prop('selected', true);
+          if (!$("#specdiv").is(":hidden")) {
+      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+    }
+	    else {
+		// If Tax is present focus shifts to Tax table.
+	if ($("#product_tax_table").length > 0) {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	}
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+	    $(".godown_name:first").focus();
+	}
+    }
         }
       })
       .fail(function() {
@@ -794,7 +813,12 @@ $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event
   if (event.which==188 && event.shiftKey)
   {
     if (curindex==0) {
-      $("#godownflag").focus().select();
+      if($("#godownflag").is(":hidden")){
+	      $("#adduom").focus();
+	  }
+	else{
+	    $("#godownflag").focus().select();
+    }
     }
     if(previndex>-1 && curindex != 0)
     {
@@ -998,9 +1022,9 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   if ($("#addproddesc").val()=="")
   {
     $('.modal-backdrop').remove();
-    $("#blank-alert").alert();
-    $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#blank-alert").hide();
+    $("#product-blank-alert").alert();
+    $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#product-blank-alert").hide();
     });
     $("#addproddesc").focus();
     $("#addproddesc").select();
