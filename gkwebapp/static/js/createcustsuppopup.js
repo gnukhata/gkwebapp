@@ -61,16 +61,25 @@ $(document).ready(function() {
   });
      $("#checkbnkpop").click(function(e){
     if ($(this).is(":checked")) {
-      checkbnkpop = 1;
       $("#checkbnkpop").val(1);
       $("#bnkdetails").show();
     }
     else {
-      checkbnkpop = 0;
       $("#checkbnkpop").val(0);
       $("#bnkdetails").hide();
      
     }
+     });
+    $("#checkbnkpop").keydown(function(e){
+	if (e.which == 13) {
+	    e.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#cust_accountno").focus();
+	    }
+	    else {
+		$("#cussup_save").focus();
+	    }
+	}
   });
   $("#add_cussup_email").keydown(function(event) {
     if (event.which==13) {
