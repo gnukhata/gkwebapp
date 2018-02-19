@@ -99,6 +99,11 @@ $(document).ready(function() {
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -216,7 +221,9 @@ $(document).ready(function() {
         $("#taxapplicable").val("7");
               $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 	      $("#vathelp").hide();
-        $("#gstproducttable").show();  //Shows GST Product table.
+              $("#gstproducttable").show();  //Shows GST Product table.
+	      $(".vatfield").hide();
+	      $(".gstfield").show();
           }
           else {
         $("#taxapplicabletext").text("VAT");
@@ -225,6 +232,8 @@ $(document).ready(function() {
 	      $(".gstinfield").hide();
               $("#invoice_product_table_vat").show();
 	      $("#vathelp").show();
+	      $(".vatfield").show();
+	      $(".gstfield").hide();
           }
       }
     });
