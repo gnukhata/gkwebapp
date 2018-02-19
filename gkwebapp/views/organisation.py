@@ -28,6 +28,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 'Prajkta Patkar' <prajakta@dff.orgaddr.in>
+"Nitesh Chaughule" <nitesh@disroot.org>
 
 """
 
@@ -67,7 +68,14 @@ def showeditOrg(request):
 def getorgdata(request):
     header={"gktoken":request.headers["gktoken"]}
     orgdata = requests.get("http://127.0.0.1:6543/organisations?osg=true&statecode=%d"%(int(request.params["gstinstate"])), headers=header)
-    return {"gkstatus": orgdata.json()["gkstatus"],"gkresult": orgdata.json()["gkresult"]}
+    orgdetails = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(request.params["gstinstate"])), headers=header)
+    return {"gkstatus": orgdata.json()["gkstatus"],"gkresult": orgdata.json()["gkresult"], "orgdetails": orgdetails.json()["gkdata"]}
+
+@view_config(route_name="existingorg", request_param="type=getaddress", renderer="json")
+def getorgaddress(request):
+    header={"gktoken":request.headers["gktoken"]}
+    orgdetails = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(request.params["invstate"])), headers=header)
+    return {"gkstatus": orgdetails.json()["gkstatus"], "orgdetails": orgdetails.json()["gkdata"]}
 
 @view_config(route_name="editorganisation", request_param="edit=inventoryactivate",  renderer="json")
 def inventoryActivate(request):
