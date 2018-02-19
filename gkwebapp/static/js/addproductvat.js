@@ -33,6 +33,8 @@
 */
 
 $(document).ready(function() {
+    var stkhtml = $('#stocktable tbody tr:first').html();  
+
 
 if (sessionStorage.invflag==0){
   $(".noinventory").hide();
@@ -111,6 +113,19 @@ $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event
 
 });
 
+    $("#adduom").change(function(event) {
+  if ($("#adduom option:selected").val()!='') {
+    $("#unitaddon").html($("#adduom option:selected").text());
+  }
+});
+
+$("#openingstock").focus(function(event) {
+  if ($("#adduom option:selected").val()!='') {
+    $("#unitaddon").html($("#adduom option:selected").text());
+  }
+});
+    
+
 $(document).off('keyup').on('keyup',function(event)
 {
   /* Act on the event */
@@ -164,7 +179,7 @@ $("#addproddesc").keydown(function(event) {
   }
 });
 
-
+/*opening stock events in addstock popup*/
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
     $("#unitaddon").html($("#adduom option:selected").text());
@@ -316,6 +331,193 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   }
 
 });
+/*-------------------------------------Add Stock key events starts here-------------------------------------------------------------*/
+         //For shifting focus of addstock button to select godown button of pop up window
+
+    
+    $('#addstockmodal').on('shown.bs.modal', function() {
+    $("#godown_name").focus();
+    });
+
+    $('#addstockmodal').on('shown.bs.modal', function() {
+	$("#stocktable tbody").html("");
+	$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+        $("#godown_name").val("").focus();
+    });
+
+
+     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
+	let curindex= $(this).closest('tr').index();
+	$.ajax({
+      url: '/product?type=hsnuom',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+	     data: {"productcode": $(this).val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp)   /*This function will return spec name of the product*/
+	  {
+	      	      
+	      $('.unitname:eq('+ curindex +')').text(resp.gkresult.unitname);
+	      $('.add_product_hsncode:eq('+ curindex +')').html(resp.gkresult.gscode);
+	      
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    });
+
+    $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
+	var gobj = {};
+	var stockallow = 1;
+	 if ($.trim($("#godown_name").val())=="") {
+		stockallow = 0;
+		$("#emptygodownalert").alert();
+  	        $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptygodownalert").hide();
+  	        });
+  	        $("#godown_name").focus();
+  	        return false;
+  	    }
+	$("#stocktable tbody tr").each(function(){
+	    if ($.trim($(".prodstock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyproductalert").alert();
+  	        $("#emptyproductalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyproductalert").hide();
+  	        });
+  	        $(".prodstock",this).focus();
+  	        return false;
+  	    }
+	    if ($.trim($(".open_stock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyopstkalert").alert();
+  	        $("#emptyopstkalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyopstkalert").hide();
+  	        });
+  	        $(".open_stock",this).focus();
+  	        return false;
+  	      }
+	    if ($.trim($(".prodstock",this).val())!="") {
+		if ($.trim($(".open_stock",this).val())!="" ) {
+		    gobj[$(".prodstock",this).val()] = $(".open_stock",this).val(); 
+		}
+	    }
+	});
+	var goid=$("#godown_name option:selected").attr("value");
+	if (stockallow == 1){
+	    $.ajax({
+            type: "POST",
+            url: "/product?type=stockproduct",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"goid":goid, "productdetails":JSON.stringify(gobj)},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+                $("#stocksuccess").alert();
+                $("#stocksuccess").fadeTo(2250, 500).slideUp(500, function(){
+                $("#stocksuccess").hide();
+                });
+
+              }
+              else if(resp["gkstatus"]==1)
+              {
+                $("#uniquestockalert").alert();
+                $("#uniquestockalert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#uniquestockalert").hide();
+                });
+                $("#openingstock").focus().select();
+              }
+              else
+              {
+                $("#failure-alert").alert();
+                $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#failure-alert").hide();
+                });
+                $("#godownname").focus().select();
+              }
+            }
+
+          });
+	}
+    });
+
+/*Event for deleting a particular row*/    
+    $(document).off("click",".product_del").on("click", ".product_del", function() {
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();//closest method gives the closest element specified
+	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+	
+       
+	    }
+	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
+	});
+	$('#stocktable tbody tr:last td:eq(0) select').select();
+    });
+
+    $("#godown_name").keydown(function(event) {
+        if (event.which == 13) {
+            event.preventDefault();
+            $(".prodstock").focus().select();
+        }
+
+    });
+
+    /*Event for validation of shifting focus*/
+
+    $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	console.log(curindex);
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $('.open_stock:eq('+ curindex +')').focus().select();
+	}
+	return false;
+    });
+
+    
+    $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
+	let curindex = $(this).closest('tr').index();
+	var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
+	let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	if (event.which == 13){
+	    event.preventDefault();
+	    if (selectedpro==""){
+		$("#Product-blank-alert").alert();
+		$("#Product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#Product-blank-alert").hide();
+		});
+		return false;
+	    }
+	    $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
+	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
+	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+	    $('.prodstock:eq('+ nextindex +')').focus().select();
+	}
+  });
+
+
+    
+
 
 $("#addcatselect").change(function(event) {
   /* Act on the event */
@@ -795,7 +997,7 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
 	event.preventDefault();
 	$("#apsubmit").focus().select();
        } 
-});
+});    
 /* -----------------------Godown Key events start here----------------------------------------- */
 $(document).off("change",".godown_name").on("change",".godown_name",function(event)
 {
@@ -1013,8 +1215,10 @@ $("#addgodown").click(function() {
       }
     }
   );
+   
 });
 
+    
 
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
@@ -1184,4 +1388,14 @@ $(document).on('click', '#apreset', function(event) {
   /* Act on the event */
   $("#addproduct").click();
 });
+    
+$(document).on('click', '#stockreset', function(event) {
+  event.preventDefault();
+    $("#stocktable tbody").html("");
+    $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+    $("#godown_name").val("").focus();
 });
+
+});
+
+

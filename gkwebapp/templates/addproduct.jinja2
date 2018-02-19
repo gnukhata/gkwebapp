@@ -324,7 +324,8 @@
           </div>
           <div class="modal-body">
 	    <div class="alert alert-danger" id="uniquestockalert"  aria-live="rude" role="alert" hidden>
-	      {% trans %}Stock already exists!{% endtrans %}
+	      {% trans %}Stock already exists!{% endtrans %}<br>
+	      {% trans %}Go to Edit Product to update Opening Stock.{% endtrans %}
 	    </div>
 	    <div class="alert alert-danger" id="emptygodownalert"  aria-live="rude" role="alert" hidden>
 	      {% trans %}Please select the godown!{% endtrans %}
@@ -343,12 +344,6 @@
 	    </div>
 	    <div class="alert alert-danger" id="Product-blank-alert"  aria-live="rude" role="alert" hidden>
 	      {% trans %}Please select Product!{% endtrans %}
-	    </div>
-            <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
-      	      {% trans %}Please enter proper HSN code!{% endtrans %}
-	    </div>
-            <div class="alert alert-danger" id="stock-improper-alert"  aria-live="rude" role="alert" hidden>
-	      {% trans %}Improper HSN code!{% endtrans %}
 	    </div>
 	    <div class="alert alert-danger" id="stock-blank-alert"  aria-live="rude" role="alert" hidden>
 	      {% trans %}Please Enter Opening Stock.{% endtrans %}

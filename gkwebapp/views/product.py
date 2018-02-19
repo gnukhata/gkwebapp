@@ -54,7 +54,8 @@ def addProductTabVat(request):
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
+    products=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
+    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"], "products":products.json()["gkresult"]}
 
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")

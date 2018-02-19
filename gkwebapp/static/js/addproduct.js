@@ -32,6 +32,7 @@
   "Sachin Patil" <sachin619patil@rediffmail.com>
 
 */
+     
 
 
 $(document).ready(function() {
@@ -1264,9 +1265,6 @@ $("#addgodown").click(function() {
     });
     });
 
-
-
-
     $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
 	console.log("hello");
 	var gobj = {};
@@ -1614,7 +1612,8 @@ else{
 
     }
   })
-  .done(function(resp) {
+	.done(function(resp) {
+	    
     if (resp["gkstatus"] ==0) {
 
 	//$("#addproduct").click();
@@ -1624,18 +1623,18 @@ else{
       else{
         $("#productinmaster").click();
       }
-      $('.modal-backdrop').remove();
+	$('.modal-backdrop').remove();
       $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#addproduct-success-alert").hide();
 
       });
-
+    
     }
     else if (resp["gkstatus"] ==1)
     {
 	$('.modal-backdrop').remove();
-
+        
 	if ($("#additem option:selected").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
