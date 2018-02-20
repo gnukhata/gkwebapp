@@ -309,8 +309,10 @@
 	    
           </div>
 	  <div id="bankdetails">
-	    <label><h4>Bank Details :</h4></label>
-	    <div class="row">
+	    <input type="checkbox" value=0 id="checkbnk"></input>
+	    <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+	    <div  id="bankdiv" hidden>
+	      <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
 		<input type="text" id="accountno" class="form-control input-sm"></input>
@@ -329,6 +331,7 @@
 		<label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
 		<input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
 	      </div>
+	    </div>
 	    </div>
 	  </div>
 	  {% endif %}

@@ -286,8 +286,10 @@ th {
 		      <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
 		      <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
 		    </div>
-		    <div id="bankdetails">
-		      <label><h4>Bank Details :</h4></label>
+		    <input type="checkbox" value=0 id="checkbnkpop">
+	    </input>
+	    <label class="" for="bnkdetails">{% trans %}Bank Details{% endtrans %}</label>
+		    <div id="bnkdetails" hidden>
 		      <div class="row">
 			<div class="form-group col-sm-6">
 			  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>

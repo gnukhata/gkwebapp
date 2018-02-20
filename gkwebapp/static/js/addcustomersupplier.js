@@ -180,6 +180,13 @@ $("#add_state").keydown(function(event) {
 	    event.preventDefault();
 	    $("#accountno").focus().select();
 	}
+	else if(event.which == 38){
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
     });
 
     
@@ -321,11 +328,7 @@ $("#add_state").keydown(function(event) {
 	}
 	else if (event.which==38){
 	    event.preventDefault();
-	    if ($("#vatorgstflag").val() == '22'){
-		$("#add_cussup_tan").focus();
-	    } else {
-		$(".gstin").focus().select();
-	    }
+	    $("#checkbnk").focus();
 	}
 
     });
@@ -613,7 +616,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		$("#add_cussup_tan").focus();
 		return false;
             } else if($("#add_cussup").val() == '19'){
-		$("#accountno").focus();
+		$("#checkbnk").focus();
 	    } else {
 	      $("#cussup_save").focus();
 	  }

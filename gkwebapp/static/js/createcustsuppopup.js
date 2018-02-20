@@ -80,6 +80,13 @@ $(document).ready(function() {
 		$("#cussup_save").focus();
 	    }
 	}
+	else if(e.which == 38){
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
   });
   $("#add_cussup_email").keydown(function(event) {
     if (event.which==13) {
@@ -292,11 +299,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	}
 	else if (event.which==38){
 	    event.preventDefault();
-	    if ($("#vatorgstflag").val() == '22'){
-		$("#add_cussup_tan").focus();
-	    } else {
-		$(".gstin").focus().select();
-	    }
+	    $("#checkbnkpop").focus();
 	}
 
     });
@@ -611,7 +614,7 @@ else{
             return false;
 		}
            else if($("#add_cussup").val() == '19'){
-		$("#accountno").focus();
+		$("#checkbnkpop").focus();
 	    } else {
 	      $("#cussup_save").focus();
 	  }
