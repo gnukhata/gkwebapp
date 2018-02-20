@@ -51,7 +51,7 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
-    var gstins = {};
+    var gstins = {};    
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -3136,13 +3136,39 @@ if (event.which == 13) {
         if ($("#chkbank").is(":checked")) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
                 $("#bank").show();
-		$("#cash").hide();
-
+	        $("#cash").hide();
         } else {
 	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
                 $("#bank").hide();
 		$("#cash").show();
             }
         });
-    
+    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
+    if ($("#status").val() == '15') {      //checking whether it is sale invoice or not (15 = sale invoice).
+	$("#chkbank").click(function(event) {
+            $.ajax({
+                url: '/editorganisation?action=orgbankdetails',
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+		.done(function(resp) {
+                    console.log("success");
+                    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
+
+		})
+		.fail(function() {
+                    console.log("error");
+		})
+		.always(function() {
+                    console.log("complete");
+		});
+	});
+
+    }
 });
