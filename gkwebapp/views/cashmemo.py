@@ -48,7 +48,7 @@ def showaddcashmemo(request):
 def showeditcashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
     #create
-    result = requests.get("http://127.0.0.1:6543/invoice?cash=all", headers=header)
+    result = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=15", headers=header)
     #record
     recordcash = requests.get("http://127.0.0.1:6543/invoice?cash=record", headers=header)
     return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"record":recordcash.json()["gkresult"],"cashmemo":len(result.json()["gkresult"]),"status":True}

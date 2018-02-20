@@ -274,11 +274,89 @@
 	  </tfoot>
 	</table>
       </div>
-    {% endif %}
-    <div class="row pull-right">
-      <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Amount{% endtrans %} :</label>
-      <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
+{% endif %}
+<div class="row col-sm-12">
+  <div class ="col-sm-4 pull-right" >
+    <div class="row">
+      <div class="form-inline">
+	<div class="col-sm-6">
+	  <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+	</div>
+	<div class="col-sm-6 text-right">
+	  <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxablevalue"] }}</label>
+	</div>
+      </div>
     </div>
+    {% if gkresult["taxflag"] == 7 %}
+      {% if gkresult["taxname"]=='SGST' %}
+	<div class="row hborderdiv gstfield sgstfield">
+	  <div class="sgstfield form-inline">
+	    <div class="col-sm-6">
+	      <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+	    </div>
+	    <div class="col-sm-6 text-right">
+	      <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+	    </div>
+	  </div>
+	</div>
+	<div class="row hborderdiv gstfield sgstfield">
+	  <div class="sgstfield form-inline">
+	    <div class="col-sm-6">
+	      <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+	    </div>
+	    <div class="col-sm-6 text-right">
+	      <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+	    </div>
+	  </div>
+	</div>
+      {% endif %}
+      <div class="row hborderdiv gstfield">
+	<div class="form-inline">
+	  <div class="col-sm-6">
+	    <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+	  </div>
+	  <div class="col-sm-6 text-right">
+	    <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totalcessamt"] }}</label>
+	  </div>
+	</div>
+      </div>
+    {% else %}
+      <div class="row hborderdiv vatfield">
+	<div class="form-inline">
+	  <div class="col-sm-6">
+	    <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+	  </div>
+	  <div class="col-sm-6 text-right">
+	    <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+	  </div>
+	</div>
+      </div>
+    {% endif %}
+    <div class="row hborderdiv">
+      <div class="form-inline">
+	<div class="col-sm-6">
+	  <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+	</div>
+	<div class="col-sm-6 text-right">
+	  <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaldiscount"] }}</label>
+	</div>
+      </div>
+    </div>
+    <div class="row hborderdiv" style="border-bottom-style:solid;">
+      <div class="form-inline">
+	<div class="col-sm-6">
+	  <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	</div>
+	<div class="col-sm-6 text-right">
+	  <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["invoicetotal"] }}</label>
+	</div>
+      </div>
+    </div>
+  </div>
+<!-- <div class="row pull-right">
+     <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Amount{% endtrans %} :</label>
+     <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
+     </div> -->
     <!-- code for show or hide bankdetails based on paymentmode,if paymentmode is 2 then show bankdetails or if paymentmode is 3 then show "Cash received"-->
     {% if gkresult["paymentmode"] == 2 %}
     <div class="row">
@@ -324,6 +402,7 @@
 	  </table>
 	</div>
     </div>
+</div>
     {% else %}
     <div class="row">
       <strong>CASH RECEIVED</strong>
