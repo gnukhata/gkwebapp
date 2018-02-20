@@ -207,42 +207,42 @@
 		  <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
 		</div>
 	      {% endif %}
-	      <div class="form-group hidden-load" hidden>
+	      <div class="form-group hidden-load" hidden style="padding-bottom:0px !important; margin-bottom:0px !important;">
 		<label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		<div class ="panel panel-default"> 
+		<div class ="panel panel-default" style="padding-bottom:0px !important; margin-bottom:0px !important;"> 
 		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-		  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
-                      <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-		  </thead>
-		  <tbody>
-                    <tr>
-                      <td class="col-xs-7">
-			<select class="form-control input-sm gstinstate">
-			  <option value="" disabled hidden selected>Select State</option>
-			  {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+		    </thead>
+		    <tbody>
+                      <tr>
+			<td class="col-xs-7">
+			  <select class="form-control input-sm gstinstate">
+			    <option value="" disabled hidden selected>Select State</option>
+			    {% for state in states %}
+			      {% for key, value in state.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			      {% endfor %}
 			    {% endfor %}
-			  {% endfor %}
-			</select>
-                      </td>
-                      <td class="col-xs-4">
-			<div class="form-inline nopadding">
-			  <div class="form-group nopadding">
-			    <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
-			    <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
-			    <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+			  </select>
+			</td>
+			<td class="col-xs-4">
+			  <div class="form-inline nopadding">
+			    <div class="form-group nopadding">
+			      <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+			      <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+			      <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+			    </div>
 			  </div>
-			</div>
-                      </td>
-                      <td class="col-xs-1">
-                      </td>
-                    </tr>
-		  </tbody>
+			</td>
+			<td class="col-xs-1">
+			</td>
+                      </tr>
+		    </tbody>
 		  </table>
 		</div>
               </div>
@@ -254,26 +254,26 @@
     </input>
     <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
 		</div>
-		<label id="bankdetailslabel"><h4>Bank Details :</h4></label>
+		<label id="bankdetailslabel">Bank Details :</label>
 		<div id="bankdetailsdiv" hidden>
 		  <div class="row">
-		  <div class="form-group col-sm-6">
-		    <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
-		    <input type="text" id="edit_accountno" class="form-control input-sm"></input>
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="accountno" class="bankclass">{% trans %}Account No.{% endtrans %} :</label>
+		      <input type="text" id="edit_accountno" class="form-control input-sm pull-right"></input>
+		    </div>
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="bankname" class="bankclass">{% trans %}Bank Name{% endtrans %} :</label>
+		      <input type="text" id="edit_bankname" class="form-control input-sm pull-right" name="bankname" ></input>
+		    </div>
 		  </div>
-		  <div class="form-group col-sm-6">
-		    <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-		    <input type="text" id="edit_bankname" class="form-control input-sm" name="bankname" ></input>
-		  </div>
-		</div>
-		<div class="row">
-		  <div class="form-group col-sm-6">
-		    <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
-		    <input type="text" id="edit_branchname" class="form-control input-sm" ></input>
-		  </div>
-		  <div class="form-group col-sm-6">
-		    <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
-		    <input type="text" id="edit_ifsc" class="form-control input-sm" name="ifsc" ></input>
+		  <div class="row">
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="branch" class="bankclass">{% trans %}Branch Name{% endtrans %} :</label>
+		      <input type="text" id="edit_branchname" class="form-control input-sm pull-right" ></input>
+		    </div>
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="ifsc" class="bankclass">{% trans %}IFSC code{% endtrans %} :</label>
+		      <input type="text" id="edit_ifsc" class="form-control input-sm pull-right" name="ifsc" ></input>
 		  </div>
 		</div>
 		</div>
