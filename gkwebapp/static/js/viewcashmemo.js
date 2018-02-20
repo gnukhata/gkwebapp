@@ -1,7 +1,6 @@
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
-    //$("#invoice_all_no").focus();
     $("#recordradio").focus();
     $("#createselectdiv").hide();
     $("#cashmemo_print").hide();
@@ -54,6 +53,7 @@ $(document).ready(function() {
                     $("#viewcashmemodiv").html(resp);
                     console.log("success");
 		    $("#viewinvfooter").show();
+		    $("#cashmemo_print").show();
                 })
                 .fail(function() {
                     console.log("error");
@@ -88,6 +88,8 @@ $(document).ready(function() {
                 .done(function(resp) {
                       $("#viewcashmemodiv").html(resp);
                     console.log("success");
+		    $("#viewinvfooter").hide();
+		    $("#cashmemo_print").hide();
                 })
                 .fail(function() {
                     console.log("error");
