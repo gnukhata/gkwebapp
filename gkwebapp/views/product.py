@@ -76,17 +76,12 @@ def gethsnuom(request):
     result = requests.get("http://127.0.0.1:6543/products?type=hsnuom&productcode=%d"%(int(request.params["productcode"])), headers=header)
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
-
 @view_config(route_name="product",request_param="type=stockproduct", renderer="json")
 def productstock(request):
     header = {"gktoken":request.headers["gktoken"]}
     gkdata = {"goid":request.params["goid"],"productdetails":json.loads(request.params["productdetails"])}
-    print gkdata
     result = requests.post("http://127.0.0.1:6543/products?type=addstock",data=json.dumps(gkdata), headers=header)
-    print result.json()["gkstatus"]
     return {"gkstatus": result.json()["gkstatus"]}
-
-
 
 @view_config(route_name="product",request_param="type=specs", renderer="gkwebapp:templates/addproductspecs.jinja2")
 def getcatspecs(request):
