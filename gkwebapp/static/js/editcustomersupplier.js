@@ -68,6 +68,16 @@ $(document).ready(function() {
     		    $("#edit_cussup").val("Supplier");
 		    $("#scrollbar").css({ "display":"block","height": "calc(100vh - 19em)","overflow-y":"scroll"});
 		    $("#edit_bankdetails").show();
+		    if (result["bankdetails"]["accountno"]) {
+			$("#bankcheckboxdiv").hide();
+			$("#bankdetailslabel").show();
+			$("#bankdetailsdiv").show();
+		    }
+		    else{
+			$("#bankcheckboxdiv").show();
+			$("#bankdetailslabel").hide();
+			$("#bankdetailsdiv").hide();
+		    }
 		    $(".suplbl").show();
 		    $(".custlbl").hide();
 		    $("#textareahelp3").show();
@@ -470,6 +480,28 @@ $(document).ready(function() {
 });
 
     // Keydown events for bank details
+    $("#checkbnk").click(function(e){
+    if ($(this).is(":checked")) {
+      $("#checkbnk").val(1);
+      $("#bankdetailsdiv").show();
+    }
+    else {
+      $("#checkbnk").val(0);
+      $("#bankdetailsdiv").hide();
+     
+    }
+    });
+    $("#checkbnk").keydown(function(e){
+	if (e.which == 13) {
+	    e.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#edit_accountno").focus();
+	    }
+	    else {
+		$("#cussup_edit_save").focus();
+	    }
+	}
+  });
     $("#edit_accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();

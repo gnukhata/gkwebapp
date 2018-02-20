@@ -249,8 +249,14 @@
 	      <small id="textareahelp2" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save button.</small>
 	      <small id="textareahelp3" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Account No.</small> 
 	      <div id="edit_bankdetails" class="hidden-load" hidden>
-		<label><h4>Bank Details :</h4></label>
-		<div class="row">
+		<div id="bankcheckboxdiv" hidden>
+		  <input type="checkbox" value=0 id="checkbnk">
+    </input>
+    <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+		</div>
+		<label id="bankdetailslabel"><h4>Bank Details :</h4></label>
+		<div id="bankdetailsdiv" hidden>
+		  <div class="row">
 		  <div class="form-group col-sm-6">
 		    <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
 		    <input type="text" id="edit_accountno" class="form-control input-sm"></input>
@@ -269,6 +275,7 @@
 		    <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
 		    <input type="text" id="edit_ifsc" class="form-control input-sm" name="ifsc" ></input>
 		  </div>
+		</div>
 		</div>
 	      </div>
 	      {% endif %}
