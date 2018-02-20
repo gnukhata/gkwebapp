@@ -394,7 +394,8 @@ $(document).ready(function() {
 		    console.log("success");
 		    if(invstate == resp["orgdetails"]["orgstate"]){
 			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
-		    }
+			$("#originaddress").prop("disabled", true);
+		    }else{$("#originaddress").prop("disabled", false);}
          	}
             })
             .fail(function() {
@@ -438,6 +439,9 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
+		if($("#originaddress").is(":disabled")){
+		    $("#invoice_issuer_name").focus().select();
+		}
 		$("#originaddress").focus().select();
 	    }
 	    else {
@@ -491,6 +495,9 @@ $(document).ready(function() {
 	    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
+	    if($("#originaddress").is(":disabled")){
+		$("#invoicestate").focus();
+	    }
 	    $("#originaddress").focus().select();  //Focus shifts to address.
 	}
     });
@@ -2605,6 +2612,7 @@ if (event.which == 13) {
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .delchalfield, .supplydate").prop("disabled", true);
 	}
+	$("#originaddress").prop("disabled",true);
 	if ($("#taxapplicable").val() == 7) {
 	    $(".product_name_gst").each(function(index){
 		if ($(".product_name_gst:eq(" + index + ") option:selected").attr("gsflag") != 7) {  // If an item is not a product
