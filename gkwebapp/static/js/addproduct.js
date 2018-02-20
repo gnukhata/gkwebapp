@@ -1661,7 +1661,7 @@ $(document).on('click', '#apreset', function(event) {
   /* Act on the event */
   $("#addproduct").click();
 });
-    
+    /*code for reseting the fields*/
 $(document).on('click', '#stockreset', function(event) {
   event.preventDefault();
     $("#stocktable tbody").html("");
