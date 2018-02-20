@@ -609,8 +609,12 @@ else{
             });
             $("#add_cussup_tan").focus();
             return false;
-        }
-          $("#cussup_save").focus();
+		}
+           else if($("#add_cussup").val() == '19'){
+		$("#accountno").focus();
+	    } else {
+	      $("#cussup_save").focus();
+	  }
 }
 else{
 	$(".gstinstate:first").focus();
@@ -753,7 +757,7 @@ else{
 	form_data.append("custtan", custtan);
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#add_state").val());
-	form_data.append("csflag", $("#add_cussup option:selected").val());
+	form_data.append("csflag", $("#add_cussup").val());
 	if ($("#status").val() == "9"){
 	    var bankdetails = {}; //dictionary for bank details
 	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
@@ -784,7 +788,7 @@ else{
       })
     .done(function(resp) {
 	if(resp["gkstatus"] == 0){
-	    allow ==0;
+	    allow =0;
         $.ajax(
           {
 

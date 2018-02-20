@@ -37,8 +37,10 @@ th {
 	  </button>
           {% if gkstatus=="in" %}
             <h5 class="modal-title">Create Supplier</h5>
+	    <input type="hidden" id="add_cussup" value="19" hidden>
           {%else%}
             <h5 class="modal-title">Create Customer</h5>
+	    <input type="hidden" id="add_cussup" value="3" hidden>
           {%endif%}
 	</div>
         <div class="container">
