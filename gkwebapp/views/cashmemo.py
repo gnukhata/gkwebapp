@@ -47,10 +47,10 @@ def showaddcashmemo(request):
 @view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
 def showeditcashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    #create
+    #For Getting Created Cash Memo.
     result = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=15", headers=header)
-    #record
-    recordcash = requests.get("http://127.0.0.1:6543/invoice?cash=record", headers=header)
+    #For Getting Recorded Cash Memo.
+    recordcash = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=9", headers=header)
     return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"record":recordcash.json()["gkresult"],"cashmemo":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="cashmemos",request_param="action=showcashmemo",renderer="gkwebapp:templates/viewsinglecashmemo.jinja2")

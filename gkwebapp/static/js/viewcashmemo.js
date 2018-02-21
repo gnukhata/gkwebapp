@@ -1,19 +1,19 @@
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
-    $("#recordradio").focus();
     $("#createselectdiv").hide();
     $("#cashmemo_print").hide();
-
-    $(document).off('change', '.cashmemo').on('change', '.cashmemo', function(event) {
-	    if($("#recordradio").is(":checked")){
-		$("#recordselectdiv").show();
-		$("#createselectdiv").hide();
-	    }
-	    else if ($("#createradio").is(":checked")) {
-		$("#recordselectdiv").hide();
-		$("#createselectdiv").show();
-	    }
+    $("#recordradio").click().focus();
+    
+    $(document).off("click", '.cashmemo').on("click", '.cashmemo', function(event) {
+	if($("#recordradio").is(":checked")){
+	    $("#recordselectdiv").show();
+	    $("#createselectdiv").hide();
+	}
+	else if ($("#createradio").is(":checked")) {
+	    $("#recordselectdiv").hide();
+	    $("#createselectdiv").show();
+	}
     });
     $(document).off('keydown', '.cashmemo').on('keydown', '.cashmemo', function(event) {
 	if (event.which == 13) {
