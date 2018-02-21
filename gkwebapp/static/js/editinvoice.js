@@ -45,6 +45,7 @@ $(document).ready(function() {
     var consigneeflag = false;
     var editflag = false;
     var delchalproducts = [];
+    var paymentmod = {};     //Store the paymentmode.
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -2415,10 +2416,21 @@ if (event.which == 13) {
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
-			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
-			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
-			    $("#branch").val(resp.invoicedata.bankdetails.branch);
-			    $("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
+			    paymentmod = resp.invoicedata.paymentmode; 
+			    // If paymentmode is 2(i.e. bank) then load bankdetails.
+			    if (resp.invoicedata.paymentmode == "2") {
+				$("#accountno").val(resp.invoicedata.bankdetails.accountno);
+				$("#bankname").val(resp.invoicedata.bankdetails.bankname);
+				$("#branch").val(resp.invoicedata.bankdetails.branch);
+				$("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
+				$("#chkbank").prop('checked', true);  
+				$("#chkcash").prop('checked', false);
+				$('#chkbank').trigger('click');    //trigger click event on bank radio button
+			    } else {
+				$("#chkcash").prop('checked', true);
+				$("#chkbank").prop('checked', false);
+				$('#chkcash').trigger('click');    //trigger click event on cash radio button
+			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
 			    $("#vehicleno").val(resp.invoicedata.vehicleno);
 			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
@@ -3129,7 +3141,6 @@ if (event.which == 13) {
         $("#transportationmode").focus();
         }
     });
-
      //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
     $("input[name='chkpaymentmode']").click(function () {
 	//Checking which radio button is selected.
@@ -3137,6 +3148,7 @@ if (event.which == 13) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
                 $("#bank").show();
 	        $("#cash").hide();
+	        $("#invoice_customer").trigger("change");    //Calling change event on onclick of bank to load bankdetails.
         } else {
 	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
                 $("#bank").hide();
@@ -3144,7 +3156,7 @@ if (event.which == 13) {
             }
         });
     //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
-    if ($("#status").val() == '15') {      //checking whether it is sale invoice or not (15 = sale invoice).
+    if ($("#status").val() == '15') {      //Checking whether it is sale invoice or not (15 = sale invoice).
 	$("#chkbank").click(function(event) {
             $.ajax({
                 url: '/editorganisation?action=orgbankdetails',
@@ -3156,10 +3168,10 @@ if (event.which == 13) {
             })
 		.done(function(resp) {
                     console.log("success");
-                    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
-		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
-		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
-		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
+                    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisations is loaded.
+		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //Branchname of organisations is loaded.
+		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //Ifsc code of organisations is loaded.
+		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //Branchname of organisations is loaded.
 
 		})
 		.fail(function() {
