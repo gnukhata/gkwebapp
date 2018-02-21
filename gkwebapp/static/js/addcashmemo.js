@@ -898,6 +898,7 @@ $(document).off("keydown", ".invoice_product_tax_rate_vat").on("keydown", ".invo
 
   if (event.which == 27) {
     event.preventDefault();
+      $("#chkcash").focus().click();
 calculatevataxamt(curindex1);
   } else if (event.which == 13) {
 event.preventDefault();
@@ -932,6 +933,7 @@ $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
     }
+      else{$("#chkcash").focus().click();}
   } else if (event.which == 190 && event.shiftKey) {
     event.preventDefault();
     $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(4) input').focus().select();
@@ -1788,6 +1790,7 @@ $(document).off("keyup").on("keyup", function(event) {
           $("#invoicestate").change();
           $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
       }
+	else{$("#chkcash").click().focus();}
     }
         else if (event.which == 190 && event.shiftKey) {
           event.preventDefault();
