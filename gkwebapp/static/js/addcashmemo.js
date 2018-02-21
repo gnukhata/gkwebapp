@@ -147,6 +147,9 @@ $(document).ready(function() {
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     $(".invstate").show();

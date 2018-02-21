@@ -275,7 +275,7 @@
 	</table>
       </div>
 {% endif %}
-<div class="row col-sm-12">
+<div class="row">
   <div class ="col-sm-4 pull-right" >
     <div class="row">
       <div class="form-inline">
@@ -353,13 +353,9 @@
       </div>
     </div>
   </div>
-<!-- <div class="row pull-right">
-     <label for="totalinvoicevalue" style="font-size:120%">{% trans %}Total Amount{% endtrans %} :</label>
-     <label id="totalinvoicevalue">{{ gkresult["invoicetotal"] }}</label>
-     </div> -->
+  
     <!-- code for show or hide bankdetails based on paymentmode,if paymentmode is 2 then show bankdetails or if paymentmode is 3 then show "Cash received"-->
     {% if gkresult["paymentmode"] == 2 %}
-    <div class="row">
 	<div class="col-xs-6 nopadding">
 	  <table class="table table-bordered table-condensed">
 	    <thead>
@@ -401,13 +397,10 @@
 	    </tbody>
 	  </table>
 	</div>
-    </div>
-</div>
     {% else %}
-    <div class="row">
-      <strong>CASH RECEIVED</strong>
-    </div>
+	<strong>CASH RECEIVED</strong>
     {% endif %}
+</div>
     <br>
     <div class="row">
       <div class="col-xs-6">
