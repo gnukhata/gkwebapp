@@ -1096,6 +1096,7 @@ $(document).off("keyup").on("keyup", function(event) {
         var discount = {};
         var bankdetails = {};
 	var invoicetotal;
+	//'inoutflag' will sent 9 for 'Record' and 15 for 'Create' cash memo.
 	var inoutflag = $("#status").val();
           bankdetails["accountno"] = $("#accountno").val();
           bankdetails["bankname"] = $("#bankname").val();

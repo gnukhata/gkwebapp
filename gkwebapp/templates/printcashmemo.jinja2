@@ -205,26 +205,26 @@
 	<table id="invoice_product_table_gst" class="table table-condensed table-bordered">
 	  <thead class="bg-primary">
 	    <tr>
-	      <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
-	      <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
-	      <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-	      <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
-	      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
-	      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
-	      <th colspan="2" class="text-center">{% trans %}CESS{% endtrans %}</th>
+	      <th rowspan="2" class="mdwrap text-center"><small>{% trans %}Product{% endtrans %}</small></th>
+	      <th rowspan="2" class="smwrap text-center"><small>{% trans %}HSN/ ACS{% endtrans %}</small></th>
+	      <th rowspan="2" class="qtywrap text-center"><small>{% trans %}Billed Qty{% endtrans %}</small></th>
+	      <th rowspan="2" class="qtywrap text-center"><small>{% trans %}Free Qty{% endtrans %}</small></th>
+	      <th rowspan="2" class="smwrap text-center"><small>{% trans %}Rate{% endtrans %}</small></th>
+	      <th rowspan="2" class="smwrap text-center"><small>{% trans %}Discount Amount{% endtrans %}</small></th>
+	      <th rowspan="2" class="smwrap text-center"><small>{% trans %}Taxable Value {% endtrans %}</small></th>
+	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center"><small>{% trans %}CGST{% endtrans %}</small></th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center"><small>{% trans %}SGST/UTGST{% endtrans %}</small></th>{% endif %}
+	      <th colspan="2" class="text-center"><small>{% trans %}CESS{% endtrans %}</small></th>
 	      <th rowspan="2" class="text-center">Total</th>
 	    </tr>
 
 	    <tr>
-	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap">{% trans %}Rate{% endtrans %} %</th>{% endif %}
-	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center">{% trans %}Amount{% endtrans %}</th>{% endif %}
-	      <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
-              <th class="text-center">{% trans %}Amount{% endtrans %}</th>
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap"><small>{% trans %}Rate{% endtrans %} %</small></th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center"><small>{% trans %}Amount{% endtrans %}</small></th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center" style="white-space: nowrap"><small>{% trans %}Rate{% endtrans %} %</small></th>{% endif %}
+	      {% if gkresult["taxname"]=='SGST' %}<th class="text-center"><small>{% trans %}Amount{% endtrans %}</small></th>{% endif %}
+	      <th class="text-center"><small>{% trans %}Rate{% endtrans %} %</small></th>
+              <th class="text-center"><small>{% trans %}Amount{% endtrans %}</small></th>
 	    </tr>
 	  </thead>
 	  <tbody>

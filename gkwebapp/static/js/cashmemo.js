@@ -27,6 +27,7 @@
 
 $(document).ready(function() {
 
+    //This ajax will call 'Record Cash Memo' Tab with 'status'='in'.
     $("#cashmemo_record").click(function() {
     $.ajax(
     {
@@ -48,7 +49,7 @@ $(document).ready(function() {
   );
   });
     
-
+  //This ajax will call 'Create cash memo' Tab with 'status'='out'.
   $("#cashmemo_create").click(function() {
     $.ajax(
     {

@@ -51,7 +51,7 @@ def showeditcashmemo(request):
     result = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=15", headers=header)
     #For Getting Recorded Cash Memo.
     recordcash = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=9", headers=header)
-    return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"record":recordcash.json()["gkresult"],"cashmemo":len(result.json()["gkresult"]),"status":True}
+    return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"record":recordcash.json()["gkresult"],"createcash":len(result.json()["gkresult"]),"recordcash":len(recordcash.json()["gkresult"]),"status":True}
 
 @view_config(route_name="cashmemos",request_param="action=showcashmemo",renderer="gkwebapp:templates/viewsinglecashmemo.jinja2")
 def showsinglecashmemo(request):
