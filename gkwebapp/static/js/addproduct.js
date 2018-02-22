@@ -1209,8 +1209,7 @@ $("#addgodown").click(function() {
   );
 });
 /* -----------------------AddStock Key events start here----------------------------------------- */
-    
-     //For shifting focus of addstock button to select godown button of pop up window
+    /*For rendering of addstock popup window*/
     $('#addstockmodal').on('shown.bs.modal', function() {
 	$.ajax({
 	    url: '/product?type=stkmodal&tax=gst',
@@ -1226,8 +1225,8 @@ $("#addgodown").click(function() {
 	    .done(function(resp) {
 		$('#gststkmodal').html(resp);
 		stkhtml = $('#stocktable tbody tr:first').html();
-	 $("#godown_name").focus();
-         $("#godown_name").val("").focus();
+		$("#godown_name").focus();/*For shifting focus of addstock button to select godown button of pop up window*/
+		$("#godown_name").val("").focus();
 
      })
      .fail(function() {
