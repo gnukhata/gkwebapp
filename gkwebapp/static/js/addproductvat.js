@@ -336,14 +336,31 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
     
     $('#addstockmodal').on('shown.bs.modal', function() {
-    $("#godown_name").focus();
-    });
+	$.ajax({
+	    url: '/product?type=stkmodal&tax=vat',
+            type: "POST",
+            datatype: 'text/html',
+            global: false,
+            async: false,
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+	})
+	    .done(function(resp) {
+		$('#vatstkmodal').html(resp);
+		stkhtml = $('#stocktable tbody tr:first').html();
+	 $("#godown_name").focus();
+         $("#godown_name").val("").focus();
 
-    $('#addstockmodal').on('shown.bs.modal', function() {
-	$("#stocktable tbody").html("");
-	$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
-        $("#godown_name").val("").focus();
-    });
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+            });
 
 
      $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
@@ -471,10 +488,10 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 	$('#stocktable tbody tr:last td:eq(0) select').select();
     });
 
-    $("#godown_name").keydown(function(event) {
+    $(document).off("keydown", "#godown_name").on("keydown", "#godown_name", function(event){
         if (event.which == 13) {
             event.preventDefault();
-            $(".prodstock").focus().select();
+            $(".prodstock:first").focus().select();
         }
 
     });

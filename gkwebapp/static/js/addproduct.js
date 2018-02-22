@@ -38,7 +38,7 @@
 $(document).ready(function() {
 $(".serviceclass").hide();
     $(".productclass").hide();
-    var stkhtml = $('#stocktable tbody tr:first').html();  
+    var stkhtml;  
   $(".common").hide();
   var godownflag = 0;
     $('.modal-backdrop').remove();
@@ -1042,7 +1042,7 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
   }
   else if (event.which==13) {
     event.preventDefault();
-    $('#godown_ob_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      $('#godown_ob_table tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
   }
 });
 
@@ -1209,31 +1209,34 @@ $("#addgodown").click(function() {
   );
 });
 /* -----------------------AddStock Key events start here----------------------------------------- */
-    $(document).off("click",".product_del").on("click", ".product_del", function() {
-	$(this).closest('tr').fadeOut(200, function(){
-	    $(this).closest('tr').remove();//closest method gives the closest element specified
-	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
-		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
-	    }
-	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
-	});
-	$('#stocktable tbody tr:last td:eq(0) select').select();
-    });
- 
-
-
+    
      //For shifting focus of addstock button to select godown button of pop up window
-
-
     $('#addstockmodal').on('shown.bs.modal', function() {
-    $("#godown_name").focus();
-    });
+	$.ajax({
+	    url: '/product?type=stkmodal&tax=gst',
+            type: "POST",
+            datatype: 'text/html',
+            global: false,
+            async: false,
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+	})
+	    .done(function(resp) {
+		$('#gststkmodal').html(resp);
+		stkhtml = $('#stocktable tbody tr:first').html();
+	 $("#godown_name").focus();
+         $("#godown_name").val("").focus();
 
-    $('#addstockmodal').on('shown.bs.modal', function() {
-	$("#stocktable tbody").html("");
-	$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
-        $("#godown_name").val("").focus();
-    });
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+            });
 
     
     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
@@ -1348,24 +1351,23 @@ $("#addgodown").click(function() {
 	}
     });
 
+
 /*Event for deleting a particular row*/    
     $(document).off("click",".product_del").on("click", ".product_del", function() {
 	$(this).closest('tr').fadeOut(200, function(){
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
 	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
-	
-       
 	    }
 	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
 	});
 	$('#stocktable tbody tr:last td:eq(0) select').select();
     });
 
-    $("#godown_name").keydown(function(event) {
+    $(document).off("keydown", "#godown_name").on("keydown", "#godown_name", function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            $(".prodstock").focus().select();
+            $(".prodstock:first").focus().select();
         }
 
     });
@@ -1402,6 +1404,7 @@ $("#addgodown").click(function() {
 	    $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
 	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
 	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(1) label').text("");
 	    $('.prodstock:eq('+ nextindex +')').focus().select();
 	}
   });

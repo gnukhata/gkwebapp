@@ -46,17 +46,24 @@ def showproducttab(request):
     result = requests.get("http://127.0.0.1:6543/products",headers=header)
     return{"numberofproducts":len(result.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="product",request_param="type=stkmodal", renderer="gkwebapp:templates/addstockgstpopup.jinja2")
+def addstkgstpopup(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    productdetails=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
+    return{"products":productdetails.json()["gkresult"],"godown":result2.json()["gkresult"], "tax":request.params["tax"]}
+    
+
 @view_config(route_name="product",request_param="type=addtabvat", renderer="gkwebapp:templates/addproductvat.jinja2")
 def addProductTabVat(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
-    products=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"], "products":products.json()["gkresult"]}
-
+    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
 
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproducttab(request):
@@ -67,8 +74,7 @@ def addproducttab(request):
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
-    products=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"],"products":products.json()["gkresult"]}
+    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
 
 @view_config(route_name="product",request_param="type=hsnuom", renderer="json")
 def gethsnuom(request):
