@@ -5,16 +5,37 @@ $(document).ready(function() {
     $("#cashmemo_print").hide();
     $("#recordradio").click().focus();
     
-    $(document).off("click", '.cashmemo').on("click", '.cashmemo', function(event) {
+    //click event for Record and Create radio buttons.
+    $(document).off("change", '.cashmemo').on("change", '.cashmemo', function(event) {
 	if($("#recordradio").is(":checked")){
 	    $("#recordselectdiv").show();
 	    $("#createselectdiv").hide();
-	}
-	else if ($("#createradio").is(":checked")) {
+
+	}else if ($("#createradio").is(":checked")) {
 	    $("#recordselectdiv").hide();
 	    $("#createselectdiv").show();
 	}
     });
+
+    //Focus in event for 'Record' radio button.
+    $(document).off('focusin', '#recordradio').on('focusin', '#recordradio', function(event) {
+	event.preventDefault();
+	$("#viewcashmemodiv").html("");
+	$("#record_all_no option:first").prop("selected",true);
+	$("#record_no_all").change();
+    });
+
+    //Focus in event for 'Create' radio button.
+    $(document).off('focusin', '#createradio').on('focusin', '#createradio', function(event) {
+	event.preventDefault();
+	$("#viewcashmemodiv").html("");
+	$("#cashmemo_print").hide();
+	$("#viewinvfooter").hide(); 
+	$("#invoice_all_no option:first").prop("selected",true);
+	$("#invoice_no_all").change();
+    });
+    
+    //Keydown event for 'record' and 'create' radio button.
     $(document).off('keydown', '.cashmemo').on('keydown', '.cashmemo', function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -30,9 +51,10 @@ $(document).ready(function() {
     
   $("#invoice_all_no").change(function(event) {
         /*
-        Getting complete information for the selected cash memo using its id.
+        Getting complete information for the selected 'create cash memo' using its id.
         Display details in the corresponding fields.
-*/
+	Only 'create cash memos' can 'Print'. 
+	*/
         var invid = $("#invoice_all_no option:selected").val();
         console.log("inv selected"+invid);
         if (invid != "") {
@@ -64,10 +86,9 @@ $(document).ready(function() {
         }
   });
 
-  //  
       $("#record_all_no").change(function(event) {
         
-        //Getting complete information for the selected cash memo using its id.
+        //Getting complete information for the selected 'Record cash memo' using its id.
         //Display details in the corresponding fields.
         var invid = $("#record_all_no option:selected").val();
         console.log("inv selected"+invid);
@@ -86,7 +107,7 @@ $(document).ready(function() {
                     }
                 })
                 .done(function(resp) {
-                      $("#viewcashmemodiv").html(resp);
+                    $("#viewcashmemodiv").html(resp);
                     console.log("success");
 		    $("#viewinvfooter").hide();
 		    $("#cashmemo_print").hide();
@@ -99,7 +120,6 @@ $(document).ready(function() {
                 });
         }
     });
-//
 
     $("#cashmemo_print").click(function(event) {
         $.ajax({
