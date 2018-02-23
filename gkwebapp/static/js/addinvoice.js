@@ -1058,7 +1058,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1131,7 +1131,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1223,7 +1223,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1286,7 +1286,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1350,7 +1350,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1407,6 +1407,7 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
+	$("#chkbank").focus().click();
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
