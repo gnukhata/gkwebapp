@@ -1464,7 +1464,7 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	  }
       else {
-          $("#accountno").focus().select();
+          $("#chkbank").focus().click();
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
