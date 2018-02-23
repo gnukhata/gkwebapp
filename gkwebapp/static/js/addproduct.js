@@ -1227,7 +1227,6 @@ $("#addgodown").click(function() {
 		stkhtml = $('#stocktable tbody tr:first').html();
 		$("#godown_name").focus();/*For shifting focus of addstock button to select godown button of pop up window*/
 		$("#godown_name").val("").focus();
-
      })
      .fail(function() {
        console.log("error");
@@ -1237,8 +1236,7 @@ $("#addgodown").click(function() {
      });
             });
 
-    
-    $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
+        $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
 	let curindex= $(this).closest('tr').index();
 	$.ajax({
       url: '/product?type=hsnuom',
@@ -1257,7 +1255,6 @@ $("#addgodown").click(function() {
 	      	      
 	      $('.unitname:eq('+ curindex +')').text(resp.gkresult.unitname);
 	      $('.add_product_hsncode:eq('+ curindex +')').html(resp.gkresult.gscode);
-	      
     })
     .fail(function() {
       console.log("error");
@@ -1268,7 +1265,6 @@ $("#addgodown").click(function() {
     });
 
     $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
-	console.log("hello");
 	var gobj = {};
 	var stockallow = 1;
 	 if ($.trim($("#godown_name").val())=="") {
@@ -1278,8 +1274,8 @@ $("#addgodown").click(function() {
   	          $("#emptygodownalert").hide();
   	        });
   	        $("#godown_name").focus();
-  	        return false;
-  	    }
+  	     return false;
+	 }
 	$("#stocktable tbody tr").each(function(){
 	    if ($.trim($(".prodstock",this).val())=="") {
 		stockallow = 0;
@@ -1304,7 +1300,9 @@ $("#addgodown").click(function() {
 		    gobj[$(".prodstock",this).val()] = $(".open_stock",this).val(); 
 		}
 	    }
+	    
 	});
+	console.log(gobj);
 	var goid=$("#godown_name option:selected").attr("value");
 	if (stockallow == 1){
 	    $.ajax({
@@ -1324,18 +1322,42 @@ $("#addgodown").click(function() {
               {
                 $("#stocksuccess").alert();
                 $("#stocksuccess").fadeTo(2250, 500).slideUp(500, function(){
-                $("#stocksuccess").hide();
-                });
-
+                    $("#stocksuccess").hide();
+		    $("#gststkmodal").html("");/*To refresh the modal after saving one or more selected products*/
+            /*For the rendering of modal after refreshing it*/
+		    $.ajax({
+			url: '/product?type=stkmodal&tax=gst',
+                        type: "POST",
+                        datatype: 'text/html',
+                        global: false,
+                        async: false,
+			beforeSend: function(xhr)
+			{
+			    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			}
+		    })
+			.done(function(resp) {
+	         	$('#gststkmodal').html(resp);
+		        stkhtml = $('#stocktable tbody tr:first').html();
+		        $("#godown_name").focus();/*For shifting focus of addstock button to select godown button of pop up window*/
+		            $("#godown_name").val("").focus();
+			})
+			.fail(function() {
+			    console.log("error");
+			})
+			.always(function() {
+			    console.log("complete");
+			});
+		});
               }
-              else if(resp["gkstatus"]==1)
-              {
-                $("#uniquestockalert").alert();
-                $("#uniquestockalert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#uniquestockalert").hide();
-                });
-                $("#openingstock").focus().select();
-              }
+		else if(resp["gkstatus"]==1)
+		{
+		        $("#uniquestockalert").alert();
+                        $("#uniquestockalert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#uniquestockalert").hide();
+			});
+		    $("#openingstock").focus().select();
+		}
               else
               {
                 $("#failure-alert").alert();
@@ -1626,12 +1648,10 @@ else{
         $("#productinmaster").click();
       }
 	$('.modal-backdrop').remove();
-      $("#addproduct-success-alert").alert();
-      $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#addproduct-success-alert").hide();
-
-      });
-    
+	$("#addproduct-success-alert").alert();
+	$("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#addproduct-success-alert").hide();
+	});
     }
     else if (resp["gkstatus"] ==1)
     {
@@ -1669,6 +1689,5 @@ $(document).on('click', '#stockreset', function(event) {
     $("#stocktable tbody").html("");
     $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
     $("#godown_name").val("").focus();
-
 });
 });

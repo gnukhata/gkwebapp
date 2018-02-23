@@ -336,6 +336,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
     
     $('#addstockmodal').on('shown.bs.modal', function() {
+
 	$.ajax({
 	    url: '/product?type=stkmodal&tax=vat',
             type: "POST",
@@ -448,8 +449,35 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
               {
                 $("#stocksuccess").alert();
                 $("#stocksuccess").fadeTo(2250, 500).slideUp(500, function(){
-                $("#stocksuccess").hide();
-                });
+                    $("#stocksuccess").hide();
+		    $("#vatstkmodal").html("");/*To refresh the modal after saving one or more selected products*/
+		    /*For the rendering of modal after refreshing it*/
+            $.ajax({
+	    url: '/product?type=stkmodal&tax=vat',
+            type: "POST",
+            datatype: 'text/html',
+            global: false,
+            async: false,
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+	})
+	    .done(function(resp) {
+		$('#vatstkmodal').html(resp);
+		stkhtml = $('#stocktable tbody tr:first').html();
+	       $("#godown_name").focus();
+               $("#godown_name").val("").focus();
+
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+            });
+
 
               }
               else if(resp["gkstatus"]==1)

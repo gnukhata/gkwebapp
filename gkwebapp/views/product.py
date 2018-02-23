@@ -86,6 +86,7 @@ def gethsnuom(request):
 def productstock(request):
     header = {"gktoken":request.headers["gktoken"]}
     gkdata = {"goid":request.params["goid"],"productdetails":json.loads(request.params["productdetails"])}
+    print request.params["productdetails"]
     result = requests.post("http://127.0.0.1:6543/products?type=addstock",data=json.dumps(gkdata), headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
