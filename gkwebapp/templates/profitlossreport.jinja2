@@ -96,7 +96,7 @@
               {% if rcrecord['accountcode']!="" %}
               <a class="rcaccname" href="#">{{rcrecord['accountname']}}</a>
               {% else %}
-              <a class="rcaccname" href="#" style="text-decoration: none;">{{rcrecord['accountname']}}</a>
+              <a class="rcaccname" href="#" >{{rcrecord['accountname']}}</a>
               {% endif %}
             </td>
             {% if rcrecord["amount"]=="." %}
@@ -136,7 +136,7 @@
               {% if pyrecord['accountcode']!="" %}
               <a class="pyaccname" href="#">{{pyrecord['accountname']}}</a>
               {% else %}
-              <a class="pyaccname" href="#" style="text-decoration: none;">{{pyrecord['accountname']}}</a>
+              <a class="pyaccname" href="#" >{{pyrecord['accountname']}}</a>
               {% endif %}
             </td>
             {% if pyrecord["amount"]=="." %}
