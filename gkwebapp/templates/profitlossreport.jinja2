@@ -93,11 +93,15 @@
               {{rcrecord['toby']}}
             </td>
             <td class="col-xs-9">
-              {% if rcrecord['accountcode']!="" or rcrecord['accountname'] != "TOTAL" %}
+	      {%if rcrecord['accountname'] == "DIRECT EXPENSE" or rcrecord['accountname'] == "INDIRECT EXPENSE" %}
+		<a class="rcaccname groupname" href="#">{{rcrecord['accountname']}}</a>
+	      {% endif %}
+	      {%if rcrecord['accountcode']!=""%}
 		<a class="rcaccname" href="#">{{rcrecord['accountname']}}</a>
-              {% else %}
+	      {% endif %}
+	      {% if (rcrecord['accountcode']=="") and (rcrecord['accountname'] != "DIRECT EXPENSE" and rcrecord['accountname'] != "INDIRECT EXPENSE")  %}
 		<a class="rcaccname" href="#" style="text-decoration: none;" >{{rcrecord['accountname']}}</a>
-              {% endif %}
+	      {% endif %}
             </td>
             {% if rcrecord["amount"]=="." %}
               <td class="col-xs-2 ralign">&nbsp</td>
@@ -133,11 +137,13 @@
 		{{pyrecord['toby']}}
               </td>
               <td class="col-xs-9">
-		{% if pyrecord['accountcode']!="" or pyrecord['accountname'] != "TOTAL"%}
-              <a class="pyaccname" href="#">{{pyrecord['accountname']}}</a>
-              {% else %}
-              <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
-              {% endif %}
+
+		
+		<!--   {% if pyrecord['accountcode']!="" or pyrecord['accountname'] != "TOTAL"%}
+		     <a class="pyaccname" href="#">{{pyrecord['accountname']}}</a>
+		     {% else %}
+		     <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
+		     {% endif %}  -->
             </td>
             {% if pyrecord["amount"]=="." %}
             <td class="col-xs-2 ralign">&nbsp</td>
