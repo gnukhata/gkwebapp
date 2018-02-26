@@ -511,13 +511,13 @@
     <div class="panel-footer">
       <div class="container-fluid">
 
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true" accesskey="e"></i> R<u>e</u>set{% endtrans %}</button>
         <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
       </div>
     </div>
 
-  </div>
+    </div>
 
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
@@ -531,8 +531,8 @@
                 <p>{% trans %}Are you sure?{% endtrans %}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
+                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
