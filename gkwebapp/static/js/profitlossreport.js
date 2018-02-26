@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -29,13 +29,16 @@ Contributors:
 $(document).ready(function() {
   oninvoice = 0;
   $(".fixed-table-loading").remove();
-  $('.modal-backdrop').remove();
+    $('.modal-backdrop').remove();
+    
+    $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
+    
   $("#msspinmodal").modal("hide");
-  $("#realprintpnl").hide();
+  $("#realprintpnl").hide();  
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-  var rcindex = 0
-  var pyindex = 0
+    var rcindex = 0;
+    var pyindex = 0;
 
 // Add and remove selected class to the row on focus and blur respectively for expensetbl.
   $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
