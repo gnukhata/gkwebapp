@@ -27,14 +27,14 @@ Contributors:
 */
 // This script is for the profit and loss report.
 $(document).ready(function() {
-  oninvoice = 0;
+  var oninvoice = 0;
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
     
     $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
-    
+    $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
   $("#msspinmodal").modal("hide");
-  $("#realprintpnl").hide();  
+    $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
     var rcindex = 0;
@@ -52,7 +52,8 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-  var previndex;
+    var previndex;
+    var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
