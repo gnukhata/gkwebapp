@@ -137,13 +137,15 @@
 		{{pyrecord['toby']}}
               </td>
               <td class="col-xs-9">
-
-		
-		<!--   {% if pyrecord['accountcode']!="" or pyrecord['accountname'] != "TOTAL"%}
-		     <a class="pyaccname" href="#">{{pyrecord['accountname']}}</a>
-		     {% else %}
-		     <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
-		     {% endif %}  -->
+		{%if pyrecord['accountname'] == "DIRECT INCOME" or pyrecord['accountname'] == "INDIRECT INCOME" %}
+		  <a class="pyaccname groupname" href="#">{{pyrecord['accountname']}}</a>
+		{% endif %}
+		{%if pyrecord['accountcode']!=""%}
+		  <a class="pyaccname" href="#">{{pyrecord['accountname']}}</a>
+		{% endif %}
+		{% if (pyrecord['accountcode']=="") and (pyrecord['accountname'] != "DIRECT INCOME" and pyrecord['accountname'] != "INDIRECT INCOME")  %}
+		  <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
+		{% endif %}
             </td>
             {% if pyrecord["amount"]=="." %}
             <td class="col-xs-2 ralign">&nbsp</td>
