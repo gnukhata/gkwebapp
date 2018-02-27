@@ -141,6 +141,14 @@ $(document).ready(function() {
         }
       );
     }
+      /*
+	We need to find out if the row contains groups or not.
+	We have given classes to these rows - degroup for Direct Expense, iegroup for Indirect Expense, digroup for Direct Income, digroup for Direct Income and iigroup for Indirect Income.
+	jQuery has hasClass method that lets one select all elements with a class.
+	Then we use slice function to select elements in a range.
+	The limits are from next row to the row before the total is displayed. Upper limit is not included.
+	Then we toggle the selected elements.
+       */
       if ($(this).find("a").hasClass("degroup")) {
 	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
       }
@@ -247,9 +255,11 @@ $(document).ready(function() {
         }
       );
     }
-      if ($(this).find("a").hasClass("digroup")) {;
+      //For documentation refer line number 144
+      if ($(this).find("a").hasClass("digroup")) {
 	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
-						 }
+      }
+	//Formula for setting limits is a bit different because Gross Profit B/F is displayed in the beginning.
       if ($(this).find("a").hasClass("iigroup")) {
 	  $('#incometbl tbody tr').slice(curindex + 2, indirectintlindex).toggle();
       }
