@@ -23,6 +23,7 @@ $(document).ready(function() {
 	$("#viewcashmemodiv").html("");
 	$("#record_all_no option:first").prop("selected",true);
 	$("#record_no_all").change();
+	$("#viewinvfooter").hide(); 
     });
 
     //Focus in event for 'Create' radio button.
