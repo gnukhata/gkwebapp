@@ -54,6 +54,7 @@ $(document).ready(function() {
   var nextindex;
     var previndex;
     var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
+    var directintlindex = $('#incometbl tbody tr:visible').eq(2).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
@@ -111,7 +112,8 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
+      var acccode = $(this).attr('data-value');
+      let curindex = $(this).index();
     if (acccode!="")
     {
      var todatearray = $("#ledtodate").val().split("-");
@@ -138,7 +140,7 @@ $(document).ready(function() {
       );
     }
       if ($(this).find("a").hasClass("degroup")) {
-	  $('#expensetbl tbody tr').slice(1, directEttlindex -1).toggle();
+	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
       }
   });
 
@@ -213,11 +215,10 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
-    if (acccode=="")
+      var acccode = $(this).attr('data-value');
+      let curindex = $(this).index();
+    if (acccode!="")
     {
-        return false;
-    }
     var todatearray = $("#ledtodate").val().split("-");
     var fromdatearray = $("#ledfromdate").val().split("-");
     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
@@ -240,9 +241,10 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
+    }
+      if ($(this).find("a").hasClass("digroup")) {;
+	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
+      }
   });
 
 // Functions to clear search fields.
