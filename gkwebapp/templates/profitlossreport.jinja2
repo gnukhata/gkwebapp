@@ -148,10 +148,10 @@
 		{{pyrecord['toby']}}
               </td>
               <td class="col-xs-9">
-		{%if pyrecord['accountname'] == "DIRECT INCOME" %}
+		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "DIRECT INCOME" %}
 		  <a class="pyaccname digroup" href="#">{{pyrecord['accountname']}}</a>
 		{% endif %}
-		{%if pyrecord['accountname'] == "INDIRECT INCOME" %}
+		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "INDIRECT INCOME" %}
 		  <a class="pyaccname iigroup" href="#">{{pyrecord['accountname']}}</a>
 		{% endif %}
 		{%if pyrecord['accountcode']!=""%}

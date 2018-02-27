@@ -55,6 +55,8 @@ $(document).ready(function() {
     var previndex;
     var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
     var directintlindex = $('#incometbl tbody tr:visible').eq(2).index();
+    var indirectintlindex = $('#incometbl tbody tr:visible').eq(4).index();
+    var indirectEttlindex = $('#expensetbl tbody tr:visible').eq(5).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
@@ -141,6 +143,9 @@ $(document).ready(function() {
     }
       if ($(this).find("a").hasClass("degroup")) {
 	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
+      }
+      if ($(this).find("a").hasClass("iegroup")) {
+	  $('#expensetbl tbody tr').slice(curindex + 1, indirectEttlindex -1).toggle();
       }
   });
 
@@ -244,6 +249,9 @@ $(document).ready(function() {
     }
       if ($(this).find("a").hasClass("digroup")) {;
 	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
+						 }
+      if ($(this).find("a").hasClass("iigroup")) {
+	  $('#incometbl tbody tr').slice(curindex + 2, indirectintlindex).toggle();
       }
   });
 
