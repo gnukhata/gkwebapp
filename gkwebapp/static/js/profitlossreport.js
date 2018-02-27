@@ -112,10 +112,8 @@ $(document).ready(function() {
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
     var acccode = $(this).attr('data-value');
-    if (acccode=="")
+    if (acccode!="")
     {
-        return false;
-    }
      var todatearray = $("#ledtodate").val().split("-");
      var fromdatearray = $("#ledfromdate").val().split("-");
      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
@@ -138,9 +136,10 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
+    }
+      if ($(this).find("a").hasClass("degroup")) {
+	  $('#expensetbl tbody tr').slice(1, directEttlindex -1).toggle();
+      }
   });
 
 // Add and remove selected class to the row on focus and blur respectively for incometbl.
