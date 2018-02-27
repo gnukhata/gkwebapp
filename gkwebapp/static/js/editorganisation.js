@@ -1011,4 +1011,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       });
   }
   });
+
+    $(document).off("keyup").on("keyup", function(event) {
+      if (event.which == 45) {
+	event.preventDefault();
+	    $("#submit").click();
+      }
+  });
 });
