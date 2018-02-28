@@ -1,0 +1,25 @@
+<html>
+  <br>
+  <br>
+  {% if drcrflagstatus == '3' %}
+    print Credit
+  {% else %}
+    print Debit
+  {% endif %}
+  <br>
+ </html>
+<!DOCTYPE html>
+<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}DrCrNote{% endtrans %}</title>
+<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
+<body>
+  <div class="panel invoice_panel shadow">
+    <div class="panel-body">
+      <div class="container-fluid row">
+	<div class="row" id="invselectdiv">
+	  <div class="col-sm-4 form-group">
+	    <label for="caseselect" id="selectcase" style="font-size:100% !important;">{% trans %}Select Case{% endtrans %} :</label>
+            <select class = "form-control input-sm wide" name = "productcode" id="caseselect" >
+              <option value="" disabled selected hidden>{% trans %}Select Case{% endtrans %}</option>
+            </select>
+	  </div>
+	</div>
