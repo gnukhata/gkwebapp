@@ -60,7 +60,7 @@ $("#createorg").load("/createorg");
   })
   .fail(function() {
     console.log("error");
-  })
+   })
   .always(function() {
     console.log("complete");
   });
