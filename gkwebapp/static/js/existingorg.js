@@ -26,7 +26,6 @@ Contributors:
 
 $(document).ready(function()
 {
-  $("#org-name").focus();
   var orgobj = {};
   $("#finalyears").keydown( function(e) {
 
@@ -37,7 +36,7 @@ $(document).ready(function()
     }
   });
 
-  $("#org-name").bind("change keyup focusin", function(){
+  $("#org-name").change(function(){
     //Creating an object to store organisation name and type
     orgobj.orgname = $("#org-name option:selected").data("orgname");
     orgobj.orgtype = $("#org-name option:selected").data("orgtype");
@@ -50,16 +49,62 @@ $(document).ready(function()
         async: false,
         dataType: "json",
         success: function(jsonObj) {
-          ListofYears = jsonObj["gkresult"],
+            let ListofYears = jsonObj["gkresult"];
           $('#finalyears').empty();
           for (i in ListofYears ) {
             $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
           }
+	    var numofyears =  $("#finalyears option:visible").length;
+	    if (numoforg == 1){ //for setting focus to the "next" button if there is only one organisation present
+		if(numofyears==1)
+		{
+		    $("#callLogin").focus();
+		}
+		else //set focus to organisation name if there are more than one organisations
+		{
+		    $("#finalyars").focus();
+		}
+	    }
         }
-
       });
     }
   });
+    
+    //If only one organisation and only one financial year is present, it will get selected by default and focus will be shifted to the "next" button
+
+  var numoforg = $("#org-name option:visible").length;
+    if(numoforg==1)
+    {
+        $("#org-name option").eq(1).prop("selected", true);
+	$("#org-name").change();//event calling
+    }
+    else
+    {
+	$("#org-name").focus();
+    }
+
+      
+$("#selectnav").click(function(event){
+    event.preventDefault();
+    var numoforg = $("#org-name option").length;
+    console.log(numoforg);
+    var numofyears =  $("#finalyears option").length;
+    console.log(numofyears);
+    if (numoforg == 2){ //for setting focus to the "next" button if there is only one organisation present
+	if(numofyears==1)
+	{
+	    console.log("first");
+	    setTimeout( function() { $("#callLogin").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
+	}
+
+    }
+    else //set focus to organisation name if there are more than one organisations
+    {
+	    setTimeout( function() { $("#org-name").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
+	}
+    
+});
+    
   $("#callLogin").click(function(event){
     event.preventDefault();
     if ($.trim($("#org-name").val())=="") {
