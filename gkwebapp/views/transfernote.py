@@ -47,7 +47,7 @@ def showtransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=showadd",renderer="gkwebapp:templates/createtransfernote.jinja2")
 def showcreatetransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
-                products = requests.get("http://127.0.0.1:6543/products", headers=header)
+                products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
                 godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
                 fromgodowns = requests.get("http://127.0.0.1:6543/godown?value=1", headers=header)
                 return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"fromgodowns":fromgodowns.json()["gkresult"]}
