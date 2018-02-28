@@ -40,73 +40,75 @@ import calendar
 
 @view_config(route_name = "printprofitandloss", renderer = "")
 def printprofitandloss(request):
-	calculateto = request.params["calculateto"]
-	orgtype = request.params["orgtype"]
-	header={"gktoken":request.headers["gktoken"]}
-	fyend = str(request.params["fyend"])
-	result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
-	expense = result.json()["expense"]
-	income = result.json()["income"]
-	fystart = str(request.params["fystart"]);
-	orgname = str(request.params["orgname"])
-	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+    calculateto = request.params["calculateto"]
+    orgtype = request.params["orgtype"]
+    header={"gktoken":request.headers["gktoken"]}
+    fyend = str(request.params["fyend"])
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    expense = result.json()["expense"]
+    income = result.json()["income"]
+    fystart = str(request.params["fystart"]);
+    orgname = str(request.params["orgname"])
+    calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
 
-	ods = ODS()
-	sheet = ods.content.getSheet(0)
-	sheet.getRow(0).setHeight("23pt")
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-	ods.content.mergeCells(0,0,6,1)
-	sheet.getRow(1).setHeight("18pt")
-	if orgtype=="Profit Making":
-		sheet.setSheetName("Profit & Loss")
-		sheet.getCell(0,1).stringValue("Profit & Loss ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-	if orgtype=="Not For Profit":
-		sheet.setSheetName("Income & Expenditure")
-		sheet.getCell(0,1).stringValue("Income & Expenditure ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-	ods.content.mergeCells(0,1,6,1)
-	sheet.getColumn(0).setWidth("1cm")
-	sheet.getColumn(1).setWidth("8cm")
-	sheet.getColumn(2).setWidth("3cm")
-	sheet.getColumn(3).setWidth("1cm")
-	sheet.getColumn(4).setWidth("8cm")
-	sheet.getColumn(5).setWidth("3cm")
-	sheet.getCell(1,2).stringValue("Particulars").setBold(True)
-	sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-	sheet.getCell(4,2).stringValue("Particulars").setBold(True)
-	sheet.getCell(5,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-	row = 3
-	for account in expense:
-		sheet.getCell(0, row).stringValue(account["toby"])
-		sheet.getCell(1, row).stringValue(account["accountname"])
-		sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
-		row += 1
+    ods = ODS()
+    sheet = ods.content.getSheet(0)
+    sheet.getRow(0).setHeight("23pt")
+    sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
+    ods.content.mergeCells(0,0,6,1)
+    sheet.getRow(1).setHeight("18pt")
+    if orgtype=="Profit Making":
+        sheet.setSheetName("Profit & Loss")
+        sheet.getCell(0,1).stringValue("Profit & Loss ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+    if orgtype=="Not For Profit":
+        sheet.setSheetName("Income & Expenditure")
+        sheet.getCell(0,1).stringValue("Income & Expenditure ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
+    ods.content.mergeCells(0,1,6,1)
+    sheet.getColumn(0).setWidth("1cm")
+    sheet.getColumn(1).setWidth("8cm")
+    sheet.getColumn(2).setWidth("3cm")
+    sheet.getColumn(3).setWidth("1cm")
+    sheet.getColumn(4).setWidth("8cm")
+    sheet.getColumn(5).setWidth("3cm")
+    sheet.getCell(1,2).stringValue("Particulars").setBold(True)
+    sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+    sheet.getCell(4,2).stringValue("Particulars").setBold(True)
+    sheet.getCell(5,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
+    row = 3
+    for account in expense:
+        sheet.getCell(0, row).stringValue(account["toby"])
+        sheet.getCell(1, row).stringValue(account["accountname"])
+        sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
+        row += 1
 
-	row = 3
-	for account in income:
-		sheet.getCell(3, row).stringValue(account["toby"])
-		sheet.getCell(4, row).stringValue(account["accountname"])
-		sheet.getCell(5, row).stringValue(account["amount"]).setAlignHorizontal("right")
-		row += 1
+    row = 3
+    for account in income:
+        sheet.getCell(3, row).stringValue(account["toby"])
+        sheet.getCell(4, row).stringValue(account["accountname"])
+        sheet.getCell(5, row).stringValue(account["amount"]).setAlignHorizontal("right")
+        row += 1
 
-	ods.save("response.ods")
-	repFile = open("response.ods")
-	rep = repFile.read()
-	repFile.close()
-	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-	os.remove("response.ods")
-	return Response(rep, headerlist=headerList.items())
+    ods.save("response.ods")
+    repFile = open("response.ods")
+    rep = repFile.read()
+    repFile.close()
+    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
+    os.remove("response.ods")
+    return Response(rep, headerlist=headerList.items())
 
 
 @view_config(route_name="showprofitloss", renderer="gkwebapp:templates/viewprofitloss.jinja2")
 def showprofitloss(request):
-	orgtype = request.params["orgtype"]
-	return {"gkstatus":0,"orgtype":orgtype}
+    orgtype = request.params["orgtype"]
+    return {"gkstatus":0,"orgtype":orgtype}
 
 @view_config(route_name="showprofitlossreport")
 def showprofitlossreport(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	orgtype = request.params["orgtype"]
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
-	return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"expense":result.json()["expense"],"income":result.json()["income"],"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    orgtype = request.params["orgtype"]
+    header={"gktoken":request.headers["gktoken"]}
+
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+ 
+    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"expense":result.json()["expense"],"income":result.json()["income"],"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)

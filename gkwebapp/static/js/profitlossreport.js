@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,15 +27,18 @@ Contributors:
 */
 // This script is for the profit and loss report.
 $(document).ready(function() {
-  oninvoice = 0;
+  var oninvoice = 0;
   $(".fixed-table-loading").remove();
-  $('.modal-backdrop').remove();
+    $('.modal-backdrop').remove();
+    
+    $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
+    $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
   $("#msspinmodal").modal("hide");
-  $("#realprintpnl").hide();
+    $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
   $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-  var rcindex = 0
-  var pyindex = 0
+    var rcindex = 0;
+    var pyindex = 0;
 
 // Add and remove selected class to the row on focus and blur respectively for expensetbl.
   $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
@@ -49,7 +52,11 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-  var previndex;
+    var previndex;
+    var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
+    var directintlindex = $('#incometbl tbody tr:visible').eq(2).index();
+    var indirectintlindex = $('#incometbl tbody tr:visible').eq(4).index();
+    var indirectEttlindex = $('#expensetbl tbody tr:visible').eq(5).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
@@ -107,11 +114,10 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
-    if (acccode=="")
+      var acccode = $(this).attr('data-value');
+      let curindex = $(this).index();
+    if (acccode!="")
     {
-        return false;
-    }
      var todatearray = $("#ledtodate").val().split("-");
      var fromdatearray = $("#ledfromdate").val().split("-");
      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
@@ -134,9 +140,21 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
+    }
+      /*
+	We need to find out if the row contains groups or not.
+	We have given classes to these rows - degroup for Direct Expense, iegroup for Indirect Expense, digroup for Direct Income, digroup for Direct Income and iigroup for Indirect Income.
+	jQuery has hasClass method that lets one select all elements with a class.
+	Then we use slice function to select elements in a range.
+	The limits are from next row to the row before the total is displayed. Upper limit is not included.
+	Then we toggle the selected elements.
+       */
+      if ($(this).find("a").hasClass("degroup")) {
+	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
+      }
+      if ($(this).find("a").hasClass("iegroup")) {
+	  $('#expensetbl tbody tr').slice(curindex + 1, indirectEttlindex -1).toggle();
+      }
   });
 
 // Add and remove selected class to the row on focus and blur respectively for incometbl.
@@ -210,11 +228,10 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
-    if (acccode=="")
+      var acccode = $(this).attr('data-value');
+      let curindex = $(this).index();
+    if (acccode!="")
     {
-        return false;
-    }
     var todatearray = $("#ledtodate").val().split("-");
     var fromdatearray = $("#ledfromdate").val().split("-");
     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
@@ -237,9 +254,15 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
+    }
+      //For documentation refer line number 144
+      if ($(this).find("a").hasClass("digroup")) {
+	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
+      }
+	//Formula for setting limits is a bit different because Gross Profit B/F is displayed in the beginning.
+      if ($(this).find("a").hasClass("iigroup")) {
+	  $('#incometbl tbody tr').slice(curindex + 2, indirectintlindex).toggle();
+      }
   });
 
 // Functions to clear search fields.
