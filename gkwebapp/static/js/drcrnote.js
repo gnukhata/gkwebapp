@@ -1,6 +1,8 @@
 $(document).ready(function() {
+    $("#creditnote_create").click();
     // This script is for base page of drcrnote.
     $("#creditnote_create").click(function() { // calls create credit note page.
+	console.log("Hello");
 	$.ajax(
 	    {
 		type: "POST",
@@ -12,6 +14,7 @@ $(document).ready(function() {
 		success: function(resp)
 		{
 		    $("#drcrnote_div").html(resp);
+		    
 		}
 	    }
 	);
@@ -31,10 +34,6 @@ $(document).ready(function() {
 		}
 	    }
 	);
-    }); 
-
-
-
-
-    
+    });
+    $("#creditnote_create").click();
 });

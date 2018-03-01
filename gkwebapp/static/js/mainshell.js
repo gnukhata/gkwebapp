@@ -1822,6 +1822,7 @@ $('#show_unbilled_deliveries').click(function (e) {
 
 $('#drcrnote').click(function (e) {// calls base drcrnote page.
     $("#info").load("/drcrnote");
+    $("#drcrnote_div").show();
 });
     
      
