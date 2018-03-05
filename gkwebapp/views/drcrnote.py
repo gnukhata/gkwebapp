@@ -22,6 +22,7 @@ def showaddcreditnote(request):
     else:
         invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
         print "Purchase4"
-        print invoices.json()["gkresult"]       
-    return {"drcrflag": request.params["drcrflag"],"invoices":invoices.json()["gkresult"]}
+        print invoices.json()["gkresult"]
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"drcrflag": request.params["drcrflag"],"invoices":invoices.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
 
