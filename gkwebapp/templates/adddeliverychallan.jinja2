@@ -575,22 +575,6 @@
   		    </div>
 		  </div>
 		</div>
-
-		<div  class="row col-sm-12">
-		  <div class="form-group form-inline reversepurchase" hidden>
-		    <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
-		    {#<input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>#}
-		    <div class="form-group col-sm-7 nopadding">
-		      <div class="radio">
-        		<label><input type="radio" class="iib lastfield form-control input-sm nopadding" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
-        	      </div>
-		      <div class="radio">
-        		<label><input type="radio" class="iib form-control input-sm nopadding" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
-        	      </div>
-		    </div>
-		    
-		  </div>
-		</div>
 	      </div>
 	      <div class="col-sm-2">
 	      </div>
@@ -687,13 +671,13 @@
 
 	  {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	</div>
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+        <button id="deliverychallan_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
         {% if gkstatus=="out" %}
-	  <!-- <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
-	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
+	  <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button>
+	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
         {% else %}
-	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
+	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
         {% endif %}
 	<label class="btn btn-primary btn-sm" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
