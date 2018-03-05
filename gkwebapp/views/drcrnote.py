@@ -14,13 +14,14 @@ def showdrcrnote(request):
     return {"status":True}
 @view_config(route_name="drcrnote",request_param="action=add",renderer="gkwebapp:templates/adddrcrnote.jinja2")
 def showaddcreditnote(request):
-    #header={"gktoken":request.headers["gktoken"]}
-    #states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    if request.params["drcrflag"] =='3':
-        print "\n credit= "
-        print request.params["drcrflag"]
+    header={"gktoken":request.headers["gktoken"]}
+    if request.params["drcrflag"]=='3':
+        invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
+        print "Sale3"
+        print invoices.json()["gkresult"]
     else:
-        print "\n debit= "
-        print request.params["drcrflag"]        
-    return {"drcrflagstatus": request.params["drcrflag"],"status":True}
+        invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
+        print "Purchase4"
+        print invoices.json()["gkresult"]       
+    return {"drcrflag": request.params["drcrflag"],"invoices":invoices.json()["gkresult"]}
 
