@@ -62,7 +62,8 @@ def showadddeliverychallan(request):
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
     result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
-    return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"purchaseorders":podata.json()["gkresult"], "lastdelchaldata":lastdelchaldata.json()["gkresult"], "numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"numberofgodowns":len(godowns.json()["gkresult"]),"states": states.json()["gkresult"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"purchaseorders":podata.json()["gkresult"], "lastdelchaldata":lastdelchaldata.json()["gkresult"], "numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"numberofgodowns":len(godowns.json()["gkresult"]),"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):
