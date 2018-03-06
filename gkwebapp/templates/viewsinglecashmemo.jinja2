@@ -1,18 +1,30 @@
+<head>
+  <style>
+   .cashborder{
+       border: 1px solid;
+       width:100%;
+       height:100%;
+       display:block;
+       overflow:hidden;
+   }
+  </style>
+</head>
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
-<form class="form-inline" >
+<form class="form-inline cashborder">
+  <br>
   <div class="col-sm-12">
     <div class="form-group form-inline col-sm-3 nopadding">
-<label class="normal"for="bankname">{% trans %}Cash Memo No{% endtrans %} : </label>
-{{ gkresult["invoiceno"] }}
+      <label class="normal"for="bankname">{% trans %}Cash Memo No{% endtrans %} : </label>
+      {{ gkresult["invoiceno"] }}
     </div>
     <div class="form-group form-inline col-sm-3 nopadding">
-<label for="instrument_date" class="normal">{% trans %}Date{% endtrans %} : </label>
-{{ gkresult["invoicedate"] }}
+      <label for="instrument_date" class="normal">{% trans %}Date{% endtrans %} : </label>
+      {{ gkresult["invoicedate"] }}
     </div>
     <div class="form-group form-inline col-sm-3 nopadding">
-<label>{% trans %}State{% endtrans %} : </label>
+      <label>{% trans %}State{% endtrans %} : </label>
 
-  {{ gkresult["sourcestate"] }}
+      {{ gkresult["sourcestate"] }}
     </div>
     <div class="col-sm-3">
       <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
@@ -78,8 +90,8 @@
 	      <td class="smvwrap text-right">
 		{{ gkresult["invcontents"][product]["totalAmount"] }}
 	      </td>
-	  </tr>
-	    {% endfor %}
+	    </tr>
+	  {% endfor %}
 	</tbody>
 	<tfoot>
 	  <tr>
@@ -174,8 +186,8 @@
 		      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
 		      <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cessrate"] }}</td>
                       <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cess"] }}</td>
-		  </tr>
-		    {% endfor %}
+		    </tr>
+		  {% endfor %}
 		</tbody>
 	      </table>
 	    </div>
