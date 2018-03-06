@@ -81,6 +81,19 @@ $(document).ready(function() {
     }
   });
 
+    //Certain fields are hidden in the case of Delivery In. They are shown in Delivery Out.
+    if ($("#status").val() == '15') {  //In/Out flag is saved in a hidden field. 15 is OUT(Delivery Out) and 9 is IN(Delivery In).
+	$(".invoice_issuer").show();  //Issuer Name is shown in Delivery Out. Delivery In is only recorded.	
+	$(".fixed-table").removeClass('fixed-tablepurchase');  //CSS class for adjusting style properties.
+	$(".fixed-table").addClass('fixed-tablesale');
+    }
+
+    if ($("#status").val() == '9') {  
+	$(".reversepurchase").show();
+    }
+
+    
+
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -165,7 +178,7 @@ $(document).ready(function() {
         return false;
       }
       else {
-          $("#deliverychallan_customer").focus().select();
+          $("#invoicestate").focus().select();
       }
     }
     if (event.which==38) {
@@ -194,6 +207,40 @@ $(document).ready(function() {
       $("#deliverychallan_purchaseorder").focus().select();
     }
   });
+
+    //Keydown For 'State'
+
+    $("#invoicestate").change(function(event) {
+	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+
+	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
+	 $.ajax({
+                    url: '/existingorg?type=getgstin',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"gstinstate" : gstinstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+         })
+	.done(function(resp) {
+            if (resp["gkstatus"] == 0) {
+		console.log("success");
+		$("#orggstin").text(resp["gkresult"]);
+         	  }
+                })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+
+    });
+    $("#invoicestate").change();
+    
+    //
 
   $("#deliverychallan_godown").keydown(function(event) {
     if (event.which==13) {
@@ -330,6 +377,7 @@ $(document).ready(function() {
     });
 
     $("#deliverychallan_customer").change(function(event) {
+	console.log($("#deliverychallan_customer option:selected").val());
     $.ajax({
       url: '/customersuppliers?action=get',
       type: 'POST',
@@ -342,11 +390,16 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      console.log("success");
-      if (resp["gkstatus"]==0) {
-        $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
-        $("#deliverychallan_supplieraddr").val(resp["gkresult"]["custaddr"]);
-      }
+	console.log("success");
+	if (resp["gkstatus"]==0) {
+	    $("#deliverychallan_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+	    $("#deliverychallan_customerstate").change();
+	    $("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+	    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+            //All GSTINs of this customer are
+	    //gstins = resp["gkresult"]["gstin"];
+
+	}
     })
     .fail(function() {
       console.log("error");
