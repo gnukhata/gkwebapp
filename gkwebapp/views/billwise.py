@@ -120,3 +120,16 @@ def getunadjustedamounts(request):
         totalamtpending = totalamtpending + float(inv["balanceamount"])
         
     return {"invoices":invs, "vouchers":unadjustedamounts.json()["vouchers"],"totalinv":"%.2f"%(totalinv),"totalamtpending":"%.2f"%(totalamtpending)}
+
+@view_config(route_name="billwise", request_param = "action=viewlistofunpaidinvoices", renderer="gkwebapp:templates/viewlistofunpaidinvoices.jinja2")
+def viewListofInvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    invoices = requests.get("http://127.0.0.1:6543/billwise?type=all",headers=header)
+    return {"status":True,"numberofinvoices":len(invoices.json()["invoices"])}
+
+@view_config(route_name="billwise", request_param="action=showlist", renderer="gkwebapp:templates/listofunpaidinvoices.jinja2")
+def listofUnpaidInvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&typeflag=%d&orderflag=1&startdate=%s&enddate=%s"%(int(request.params["flag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+    #resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
