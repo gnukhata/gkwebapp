@@ -42,7 +42,17 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var selectedproduct = "";
-  var gstins = {};  
+  var gstins = {};
+
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+	$(".tinfield").show();
+	$(".gstfield").hide();
+    } else {
+	$(".gstinfield").show();
+	$(".vatfield").hide();
+    }
+    
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -97,28 +107,27 @@ $(document).ready(function() {
 
   $("#deliverychallan_customer").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
-        $("#custsup-blank-alert").alert();
-        $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#custsup-blank-alert").hide();
-        });
-        $('#deliverychallan_customer').focus();
-        return false;
-      }
+	event.preventDefault();
+	if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
+            $("#custsup-blank-alert").alert();
+            $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#custsup-blank-alert();ert").hide();
+            });
+            $('#deliverychallan_customer').focus();
+            return false;
+	}
       else {
-        $("#deliverychallan_consignment").focus().select();
+        $("#deliverychallan_customerstate").focus().select();
       }
-      if ($("#deliverychallan_godown").length == 0){
-    	  $("#deliverychallan_consignment").focus().select();
-
-      }
-      else{
-      $("#deliverychallan_godown").focus().select();
-    }}
+      //if ($("#deliverychallan_godown").length == 0){
+    	//  $("#deliverychallan_consignment").focus().select();
+	//}else{$("#deliverychallan_godown").focus().select();}
+    }
     if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
-      event.preventDefault();
-      $("#deliverychallan_year").focus().select();
+	event.preventDefault();
+	if($("#status").val() == 15){
+	    $("#invoice_issuer_designation").focus();
+	}else{ $("#invoicestate").focus().select(); }
     }
     if (event.which==32){
       event.preventDefault();
@@ -209,7 +218,7 @@ $(document).ready(function() {
     }
   });
 
-    //Keydown For 'State'
+    //Change Event For 'State'.
 
     $("#invoicestate").change(function(event) {
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
@@ -240,8 +249,22 @@ $(document).ready(function() {
 
     });
     $("#invoicestate").change();
-    
-    //
+
+    //Keydown For 'State'.
+    $("#invoicestate").keydown(function(event) {
+	if (event.which == 13) {
+	    if ($("#status").val()  == 15) {
+		$("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name.
+	    }else{
+		$("#deliverychallan_customer").focus().select();
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#invoicestate option:visible").first().is(":selected")) {
+		$("#deliverychallan_year").focus();
+	    }
+	}
+    });
 
   $("#deliverychallan_godown").keydown(function(event) {
     if (event.which==13) {
@@ -274,23 +297,44 @@ $(document).ready(function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#deliverychallan_consignment").focus().select();
+      $("#deliverychallan_customerstate").focus().select();
     }
   });
   $("#consigneestate").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	$('#deliverychallan_consigneeaddr').focus();
+	if ($("#tinconsignee").is(":visible")) {
+	    $("#tinconsignee").focus();
+	}else{$('#gstinconsignee').focus();}
     }
     if (event.which==38 && document.getElementById('consigneestate').selectedIndex==0) {
       event.preventDefault();
       $("#consigneename").focus().select();
     }
   });
+
+    $("#gstinconsignee").keydown(function(event) {
+	if(event.which==13){
+	    $("#deliverychallan_consigneeaddr").focus();
+	}
+	if(event.which==38){
+	    $('#consigneestate').focus();
+	}
+    });
+
+    $("#tinconsignee").keydown(function(event) {
+	if(event.which==13){
+	    $("#deliverychallan_consigneeaddr").focus();
+	}
+	if(event.which==38){
+	    $('#consigneestate').focus();
+	}
+    });
+    
   $("#deliverychallan_consigneeaddr").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if ($("#consigneename").val() == "" && $("#deliverychallan_consigneeaddr").val() != ""){
+	/*if ($("#consigneename").val() == "" && $("#deliverychallan_consigneeaddr").val() != ""){
 	    $("#consigneename-blank-alert").alert();
             $("#consigneename-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#consigneename-blank-alert").hide();
@@ -309,11 +353,18 @@ $(document).ready(function() {
 	    return false;
 	} else {
 	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	    }*/
+	if ($("#taxapplicable").val() == 7) {
+	    $(".product_name_gst:first").focus().select();
+	}else{
+	    $(".product_name_vat:first").focus().select();
 	}
     }
     if (event.which==38) {
-      event.preventDefault();
-      $("#consigneestate").focus().select();
+	event.preventDefault();
+	if ($("#tinconsignee").is(":visible")) {
+	    $("#tinconsignee").focus();
+	}else{$("#gstinconsignee").focus();}
     }
   });
     
@@ -444,6 +495,18 @@ $(document).ready(function() {
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#deliverychallan_customerstate").change();
+
+    //Keydown for customer and supplier state.
+    $("#deliverychallan_customerstate").keydown(function(event) {
+	if (event.which == 13) {
+	    $("#consigneename").focus();
+	}
+	if(event.which == 38){
+	    if ($("#deliverychallan_customerstate option:visible").first().is(":selected") || $("#deliverychallan_customerstate option:first").is(":selected")) {
+		$("#deliverychallan_customer").focus().select();  //Focus shifts to Customer.
+	    }
+	}
+    });
 
     //Change event for 'consignee state'.
     $("#consigneestate").change(function(event) {

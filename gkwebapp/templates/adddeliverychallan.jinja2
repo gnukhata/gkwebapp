@@ -225,8 +225,8 @@
 		  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin" name="gstinconsignee" maxlength="15"></input>
 		</div>
 		<div class="form-group form-inline">
-		  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-		  <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
+		  <label for="deliverychallan_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
+		  <input type="text" id="deliverychallan_consigneeaddr" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
 		</div>
 	      </div>
 	    </div>
@@ -665,6 +665,13 @@
 	  </form>
       </div>
     </div>
+    
+    {% if gkstatus=='out' %}
+      <input type="hidden"  id="deliverychallan_gkstatus" value="out">
+    {%else%}
+      <input type="hidden" id="deliverychallan_gkstatus" value="in">
+    {% endif %}
+    
     <div class="panel-footer ">
       <div class="container-fluid">
 	<div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
