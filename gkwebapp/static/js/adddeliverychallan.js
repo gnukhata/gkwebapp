@@ -575,6 +575,137 @@ $(document).ready(function() {
   }
 });
 
+    //-----------------------------------------product_name_gst-------------------------------//
+
+    //Change event for Product Name field.
+    $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
+	event.preventDefault();
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
+	var destinationstate = "";
+	var sourcestate = "";
+
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+        $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
+	
+      if ($("#status").val() == 9) {
+	  destinationstate = $("#invoicestate option:selected").val();
+	  sourcestate = $("#deliverychallan_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	   sourcestate = $("#consigneestate option:selected").val();
+	  }
+      }
+      else if ($("#status").val() ==  15) {
+	  sourcestate = $("#invoicestate option:selected").val();
+	  destinationstate = $("#deliverychallan_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
+	  }
+      }
+    var taxflag=$("#taxapplicable").val();
+
+    if (productcode != "") {
+	$.ajax({
+            url: '/deliverychallan?action=getappliedtax',
+            type: 'POST',
+            dataType: 'json',
+            async: false,
+            data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
+            beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+          })
+           .done(function(resp) {
+               if (resp["gkstatus"] == 0) {
+		   //Loads SGST rate.
+		   if('SGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate if avaliable.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+		   //Loads IGST rate.
+		   else if('IGST' in resp['tax']){
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['IGST']).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+		       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+		       //Loads CESS rate.
+		       if ('CESS' in resp['tax']) {
+			   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+		       }
+		   }
+	       }
+	       else if (resp["gkstatus"] == 1) {
+		   $("#notax-alert").alert();
+		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+		       $("#notax-alert").hide();
+		   });
+	       }
+           })
+           .fail(function() {
+               console.log("error");
+           })
+           .always(function() {
+             console.log("complete");
+           });
+    $.ajax({
+      url: '/deliverychallan?action=getproduct',
+      type: 'POST',
+      dataType: 'json',
+      async: false,
+      data: { "productcode": productcode },
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+     .done(function(resp) {
+       console.log("success");
+       if (resp["gkstatus"] == 0) {
+
+         $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
+         if (resp["gsflag"]==7){
+           $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+             $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
+	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", false);
+               $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
+
+         }
+	   else {
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true).val("0.00");
+               $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true).val("0.00");
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
+	   }
+
+
+       }
+
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+    }
+	else {
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", false);
+            $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
+	    $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
+	}
+    });
+
+    //-------------------------------product_name_gst----------------------------//
+
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
