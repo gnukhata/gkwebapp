@@ -42,6 +42,7 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var selectedproduct = "";
+  var gstins = {};  
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -396,9 +397,21 @@ $(document).ready(function() {
 	    $("#deliverychallan_customerstate").change();
 	    $("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 	    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
-            //All GSTINs of this customer are
-	    //gstins = resp["gkresult"]["gstin"];
-
+	    //All GSTINs of this customer are
+	    gstins = resp["gkresult"]["gstin"];
+	    console.log(gstins);
+            if ($("#deliverychallan_customer option:selected").attr("custid") in gstins) {
+      		$("#gstin").text(resp["gkresult"]["gstin"][$("#deliverychallan_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+      	    }
+      	    else {
+      		$("#gstin").text('');  //If GSTIN is not available it is set as blank.
+      	    }
+	    //GSTIN of customer in default state is selected.
+	    $("#gstin").text(resp["gkresult"]["gstin"][$("#deliverychallan_customerstate option:selected").attr("stateid")]);
+	    
+	    //State Code of Customer State is loaded.
+	    $("#statecodeofcustomer").text($("#deliverychallan_customerstate option:selected").attr("stateid"));
+	    
 	}
     })
     .fail(function() {
@@ -409,6 +422,54 @@ $(document).ready(function() {
     });
   });
 
+    //Change Event for 'Supplier/customer' state.
+    $("#deliverychallan_customerstate").change(function(event) {
+	$("#statecodeofcustomer").text($("#deliverychallan_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	if ($("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
+	       $("#gstin").text(gstins[$("#deliverychallan_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+	}
+	else {
+	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
+	}
+	if ($("#taxapplicable").val() == 7) {
+	    if ($("#deliverychallan_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
+	}
+	$(".product_name_vat, .product_name_gst").change();
+    });
+    $("#deliverychallan_customerstate").change();
+
+    //Change event for 'consignee state'.
+    $("#consigneestate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
+	if ($("#status").val() == 15) {
+	    console.log(15);
+	    if($("#statecodeofconsignee").text() in gstins) {
+		var custgstin = gstins[$("#statecodeofconsignee").text()];
+		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
+	    } else {$("#gstin").text("");}
+	    if ($("#taxapplicable").val() == 7){
+		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".igstfield").show();
+		}
+	    }
+	}
+	$(".product_name_vat, .product_name_gst").change();
+    });
+    $("#consigneestate").change();
+    
 
   $(document).off("change",".product_name").on("change",".product_name",function(event)
   { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user
