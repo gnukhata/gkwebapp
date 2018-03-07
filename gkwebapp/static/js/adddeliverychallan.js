@@ -706,6 +706,96 @@ $(document).ready(function() {
 
     //-------------------------------product_name_gst----------------------------//
 
+    //-----------------------------Product_name_vat----------------------------//
+
+    $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
+	var productcode = $(this).find('option:selected').val();
+	var curindex = $(this).closest('tbody tr').index();
+	var destinationstate = "";
+	var sourcestate = "";
+	if ($("#status").val() == 9) {
+	    destinationstate = $("#invoicestate option:selected").val();
+	    sourcestate = $("#deliverychallan_customerstate").val();
+	    if ($("#consigneename").val() != "") {
+		sourcestate = $("#consigneestate option:selected").val();
+	    }
+	}
+	else if ($("#status").val() ==  15) {
+	    sourcestate = $("#invoicestate option:selected").val();
+	    destinationstate = $("#deliverychallan_customerstate").val();
+	    if ($("#consigneename").val() != "") {
+		destinationstate = $("#consigneestate option:selected").val();
+	    }
+	}
+	var taxflag=$("#taxapplicable").val();
+	if (productcode != "") {
+	    $.ajax({
+		url: '/deliverychallan?action=getappliedtax',
+		type: 'POST',
+		dataType: 'json',
+		async: false,
+		data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    })
+		.done(function(resp) {
+		    if (resp["gkstatus"] == 0) {
+			if ('VAT' in resp['tax']) {
+			    $('#invoice_product_// TODO: able_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
+			}
+			else if ('CVAT' in resp['tax']) {
+			    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
+			}
+		    }
+		    else if (resp["gkstatus"] == 1) {
+			$("#notax-alert").alert();
+			$("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#notax-alert").hide();
+			});
+		    }
+		})
+		.fail(function() {
+		    console.log("error");
+		})
+		.always(function() {
+		    console.log("complete");
+		});
+      $.ajax({
+	  url: '/deliverychallan?action=getproduct',
+	  type: 'POST',
+	  dataType: 'json',
+	  async: false,
+	  data: { "productcode": productcode },
+	  beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	  }
+      })
+		.done(function(resp) {
+		    console.log("success");
+		    if (resp["gkstatus"] == 0) {
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+		    }
+		    
+		})
+		.fail(function() {
+		    console.log("error");
+		})
+		.always(function() {
+		    console.log("complete");
+		});
+	}
+	else {
+	    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
+	    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text("");
+            $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
+	}
+    });
+    //-----------------------------Product_name_vat----------------------------//
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {

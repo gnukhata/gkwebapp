@@ -40,7 +40,7 @@
           </div>
           <div class="alert alert-danger" id="challanno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Please enter invoice no.!{% endtrans %}</label>
+            <label >{% trans %}Please enter Note no.!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="issuer-blank-alert"  aria-live="rude" role="alert" hidden>
 
@@ -55,11 +55,7 @@
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
 
-          <div class="alert alert-danger" id="invdc-date-alert" aria-live="rude" role="alert" hidden>
-
-            {% trans %}Invoice cannot be prior to Devivery Note!{% endtrans %}
-          </div>
-	  <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+          <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
 
             {% trans %}Improper GSTIN!{% endtrans %}
 
@@ -81,7 +77,7 @@
 		{% endif %}
 		<div class="form-group form-inline">
 		  <label class="col-sm-4 fsize" for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-		  <input class="form-control input-sm col-sm-8" size="15" id="deliverychallan_challanno" placeholder="{% trans %}Enter Delivery Note No.{% endtrans %}" value = "{{lastdelchaldata['dcno']}}">
+		  <input class="form-control input-sm col-sm-8" size="15" id="deliverychallan_challanno" placeholder="{% trans %}Enter Deli. Note No.{% endtrans %}" value = "{{lastdelchaldata['dcno']}}">
 		</div>
 		<div class="form-group form-inline">
 		  <label for="deliverychallan_date" class="col-sm-4 fsize">{% trans %}Note Date{% endtrans %} :</label>
