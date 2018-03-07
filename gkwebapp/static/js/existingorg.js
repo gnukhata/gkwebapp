@@ -87,13 +87,10 @@ $(document).ready(function()
 $("#selectnav").click(function(event){
     event.preventDefault();
     var numoforg = $("#org-name option").length;
-    console.log(numoforg);
     var numofyears =  $("#finalyears option").length;
-    console.log(numofyears);
     if (numoforg == 2){ //for setting focus to the "next" button if there is only one organisation present
 	if(numofyears==1)
 	{
-	    console.log("first");
 	    setTimeout( function() { $("#callLogin").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 	}
 
