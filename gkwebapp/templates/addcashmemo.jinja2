@@ -57,6 +57,12 @@
               {% endif %}
             </label>
           </div>
+	  <!-- These are hidden fields which decide Record or Create Cash Memo -->
+	  {% if gkstatus=="in" %}
+	    <input type="hidden" id="status" value="9">
+	  {% else %}
+	    <input type="hidden" id="status" value="15">
+	  {% endif %}
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
@@ -408,10 +414,79 @@
             </table>
               </div>
 	      <div class="row">
-		<div class ="col-md-3 pull-right " >
-		  <label style="font-size:120% !important;" for="cashmemo total">{% trans %}Total Amount{% endtrans %} :</label>		  <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></label>
+		<div class ="col-md-4 pull-right">
+		  <div class="row">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield sgstfield">
+		    <div class="form-group sgstfield form-inline">
+		      <div class="col-sm-6">
+			<label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield sgstfield">
+		    <div class="form-group sgstfield form-inline">
+		      <div class="col-sm-6">
+			<label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv vatfield">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv" style="border-bottom-style:solid;">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
 		</div>
-		<div class="col-md-9" style='display:none align:right;' id="cash">
+		<div class="col-md-4" style='display:none align:right;' id="cash">
 		  <label style="font-size:120% !important">CASH RECEIVED</label>
 	    </div>
 	      </div>
@@ -436,13 +511,13 @@
     <div class="panel-footer">
       <div class="container-fluid">
 
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true" accesskey="e"></i> R<u>e</u>set{% endtrans %}</button>
         <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
       </div>
     </div>
 
-  </div>
+    </div>
 
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
@@ -456,8 +531,8 @@
                 <p>{% trans %}Are you sure?{% endtrans %}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
+                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->

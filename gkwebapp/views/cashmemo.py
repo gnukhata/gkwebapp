@@ -47,8 +47,11 @@ def showaddcashmemo(request):
 @view_config(route_name="cashmemos",request_param="action=showedit",renderer="gkwebapp:templates/viewcashmemo.jinja2")
 def showeditcashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/invoice?cash=all", headers=header)
-    return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"cashmemo":len(result.json()["gkresult"]),"status":True}
+    #For Getting Created Cash Memo.
+    result = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=15", headers=header)
+    #For Getting Recorded Cash Memo.
+    recordcash = requests.get("http://127.0.0.1:6543/invoice?cash=all&inoutflag=9", headers=header)
+    return {"gkstatus": result.json()["gkstatus"],"gkresult": result.json()["gkresult"],"record":recordcash.json()["gkresult"],"createcash":len(result.json()["gkresult"]),"recordcash":len(recordcash.json()["gkresult"]),"status":True}
 
 @view_config(route_name="cashmemos",request_param="action=showcashmemo",renderer="gkwebapp:templates/viewsinglecashmemo.jinja2")
 def showsinglecashmemo(request):
@@ -71,8 +74,8 @@ def getproducts(request):
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
 def savecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"orgstategstin":request.params["orgstategstin"],"paymentmode":request.params["paymentmode"]}
-
+    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"orgstategstin":request.params["orgstategstin"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"]}
+    
     if request.params.has_key("discount"):
         cashmemodata["discount"]=json.loads(request.params["discount"])
     if request.params.has_key("bankdetails"):

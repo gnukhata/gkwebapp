@@ -4,10 +4,13 @@
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
   <style media="screen">
-  .nopadding{
-    margin:0 !important;
-    padding:0 !important;
-  }
+   .nopadding{
+       margin:0 !important;
+       padding:0 !important;
+   }
+   label:not(invoice_all_no){
+       font-size:95% !important;
+   }
 
 
   </style>
@@ -17,27 +20,57 @@
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
-        <div class="container-fluid row">
-          <div class="form-group col-md-6">
-            {%if cashmemo == 0%}
-	      <label class="text-danger">{% trans %}No Cash Memo Found!{% endtrans %}</label>
+        <div class="container-fluid row col-sm-12">
+	  <form class="form-inline">
+	    {%if createcash == 0 and recordcash == 0%}
+	      <label class="text-danger">{% trans %}No Cash Memos Found!{% endtrans %}</label>
 	    {%else%}
-	      <label for="invoice_all_no">
-		{% trans %}Cash Memo{% endtrans %} :
-              </label>
-	      <select class="form-control input-sm" id="invoice_all_no" accesskey="">
-		<option value="" disabled hidden selected>{% trans %}Select Cash Memo{% endtrans %}</option>
-		{% for invoice in gkresult %}
-		  <option value="{{invoice['invid']}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
-		{% endfor %}
+	      <div class="form-group col-sm-2">
+		<div class="radio">
+		  <label><input type="radio" class="cashmemo" name="cashmemo" id="recordradio" aria-label="Recorded" value="9" checked> Recorded</label>
+		</div>
+		<div class="radio">
+		  <label><input type="radio" class="cashmemo" name="cashmemo" id="createradio" aria-label="Created" value="15"> Created</label>
+		</div>
+	      </div>
+              <div class="form-group col-md-6" id="createselectdiv">
+		{% if gkresult %}
+		  <label for="invoice_all_no">{% trans %}List of Created Cash Memos{% endtrans %} :</label>
+		  <select class="form-control input-sm" id="invoice_all_no" accesskey="">
+		    <option value="" disabled hidden selected>{% trans %}Select Created Cash Memo{% endtrans %}</option>
+		    {% for invoice in gkresult %}
+		      <option value="{{invoice['invid']}}" inout="{{invoice["inoutflag"]}}">{{invoice["invoiceno"]}} {{invoice["invoicedate"]}}</option>
+		    {% endfor %}
+		  </select>
+		  <br>
+		  <small id="txtareahelp" class="form-text text-muted" style="margin:190px">{% trans %}Press "Shift+Tab" keys to shift focus to Create. {% endtrans %}</small>
+		{%else%}
+		  <label class="text-danger">{% trans %}No Created Cash Memos Found!{% endtrans %}</label>
+		{% endif %}
+              </div>
+	      <div class="form-group col-md-6" id="recordselectdiv">
+		{% if record %}
+		  <label for="invoice_all_no">{% trans %}List of Recorded Cash Memos{% endtrans %} :</label>
+		  <select class="form-control input-sm" id="record_all_no" accesskey="">
+		    <option value="" disabled hidden selected>{% trans %}Select Recorded Cash Memo{% endtrans %}</option>
+		    {% for reccash in record %}
+		      <option value="{{reccash['invid']}}" inout="{{reccash["inoutflag"]}}">{{reccash["invoiceno"]}} {{reccash["invoicedate"]}}</option>
+		    {% endfor %}
+		  </select>
+		  <br>
+		  <small id="txtareahelp" class="form-text text-muted" style="margin:200px">{% trans %}Press "Shift+Tab" keys to shift focus to Record. {% endtrans %}</small>
+	     {%else%}
+	    <label class="text-danger">{% trans %}No Recorded Cash Memos Found!{% endtrans %}</label>
+	      {% endif %}
+            </div>
+	  </form>
 	    {%endif%}
-              </select>
-          </div>
-        </div>
+	</div>
+	<br><br><br>
         <div id="viewcashmemodiv">
         </div>
       </div>
-      {% if cashmemo >0 %}
+      {% if createcash >0 and recordcash>0 %}
 	<div class="panel-footer" id="viewinvfooter" hidden>
         <div class="container-fluid btndisablediv">
           <button id="cashmemo_print" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>

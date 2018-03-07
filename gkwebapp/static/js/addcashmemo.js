@@ -35,6 +35,14 @@ $(document).ready(function() {
     $('.modal-backdrop').remove(); //Removes backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number'); // Focus shift from fields among date field.
     $("#invoice_challanno").focus(); // Focus on the cashmemo no. when the page loads.
+    if(sessionStorage.vatorgstflag == '22' ){
+      $(".gstinfield").hide();
+	$(".tinfield").show();
+	$(".gstfield").hide();
+    } else {
+	$(".gstinfield").show();
+	$(".vatfield").hide();
+    }
 
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -99,6 +107,11 @@ $(document).ready(function() {
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$('#totalinvoicevalue').text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -134,6 +147,9 @@ $(document).ready(function() {
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     $(".invstate").show();
@@ -216,7 +232,9 @@ $(document).ready(function() {
         $("#taxapplicable").val("7");
               $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 	      $("#vathelp").hide();
-        $("#gstproducttable").show();  //Shows GST Product table.
+              $("#gstproducttable").show();  //Shows GST Product table.
+	      $(".vatfield").hide();
+	      $(".gstfield").show();
           }
           else {
         $("#taxapplicabletext").text("VAT");
@@ -225,6 +243,8 @@ $(document).ready(function() {
 	      $(".gstinfield").hide();
               $("#invoice_product_table_vat").show();
 	      $("#vathelp").show();
+	      $(".vatfield").show();
+	      $(".gstfield").hide();
           }
       }
     });
@@ -878,6 +898,7 @@ $(document).off("keydown", ".invoice_product_tax_rate_vat").on("keydown", ".invo
 
   if (event.which == 27) {
     event.preventDefault();
+      $("#chkcash").focus().click();
 calculatevataxamt(curindex1);
   } else if (event.which == 13) {
 event.preventDefault();
@@ -912,6 +933,7 @@ $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);;
   $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
     }
+      else{$("#chkcash").focus().click();}
   } else if (event.which == 190 && event.shiftKey) {
     event.preventDefault();
     $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(4) input').focus().select();
@@ -1008,6 +1030,7 @@ $(document).off("keyup").on("keyup", function(event) {
     return false;
   }
 });
+    console.log($("#status").val());
     $("#invoice_save").click(function(event) {
         // validations start below
         event.stopPropagation();
@@ -1073,6 +1096,8 @@ $(document).off("keyup").on("keyup", function(event) {
         var discount = {};
         var bankdetails = {};
 	var invoicetotal;
+	//'inoutflag' will sent 9 for 'Record' and 15 for 'Create' cash memo.
+	var inoutflag = $("#status").val();
           bankdetails["accountno"] = $("#accountno").val();
           bankdetails["bankname"] = $("#bankname").val();
           bankdetails["ifsc"] = $("#ifsc").val();
@@ -1220,6 +1245,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
+	form_data.append("inoutflag",inoutflag);
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
@@ -1230,8 +1256,6 @@ $(document).off("keyup").on("keyup", function(event) {
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-      
-        
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
@@ -1250,8 +1274,10 @@ $(document).off("keyup").on("keyup", function(event) {
             }
           })
            .done(function(resp) {
-             if (resp["gkstatus"] == 0) {
-               $("#cashmemo_create").click();
+               if (resp["gkstatus"] == 0) {
+		   if(inoutflag == 15){
+		       $("#cashmemo_create").click();
+		   }else{ $("#cashmemo_record").click();}
                $("#success-alert").alert();
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                  $("#success-alert").hide();
@@ -1765,6 +1791,7 @@ $(document).off("keyup").on("keyup", function(event) {
           $("#invoicestate").change();
           $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
       }
+	else{$("#chkcash").click().focus();}
     }
         else if (event.which == 190 && event.shiftKey) {
           event.preventDefault();
