@@ -17,12 +17,11 @@ def showaddcreditnote(request):
     header={"gktoken":request.headers["gktoken"]}
     if request.params["drcrflag"]=='3':
         invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
-        print "Sale3"
-        print invoices.json()["gkresult"]
+        #print "Sale3"
+        #print invoices.json()["gkresult"]
     else:
         invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
-        print "Purchase4"
-        print invoices.json()["gkresult"]
+        #print "Purchase4"
+        #print invoices.json()["gkresult"]
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"drcrflag": request.params["drcrflag"],"invoices":invoices.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
-
