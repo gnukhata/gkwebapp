@@ -510,10 +510,6 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 		    $("#invoice_customerstate").change();
-		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
-		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
-		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
-		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -2488,6 +2484,35 @@ if (event.which == 13) {
 				$("#chkbank").prop('checked', false);
 				$('#chkcash').trigger('click');    //trigger click event on cash radio button
 			    }
+
+			     //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
+			    if ($("#status").val() == '15' && resp.invoicedata.paymentmode == "3" && $("#accountno").val() != '') {      //Checking whether it is sale invoice or not (15 = sale invoice).
+				$("#chkbank").click(function(event) {
+				    $.ajax({
+					url: '/editorganisation?action=orgbankdetails',
+					type: 'POST',
+					dataType: 'json',
+					beforeSend: function(xhr) {
+					    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					}
+				    })
+					.done(function(resp) {
+					    console.log("success");
+					    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisations is loaded.
+					    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //Branchname of organisations is loaded.
+					    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //Ifsc code of organisations is loaded.
+					    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //Branchname of organisations is loaded.
+
+					})
+					.fail(function() {
+					    console.log("error");
+					})
+					.always(function() {
+					    console.log("complete");
+					});
+				});
+
+			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
 			    $("#vehicleno").val(resp.invoicedata.vehicleno);
 			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
@@ -2735,6 +2760,16 @@ if (event.which == 13) {
           });
           $('#consigneename').focus();
           return false;
+      }
+
+      //validation for bankdetails on save button.  
+      if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+		$("#bankdetails-blank-alert").alert();
+		$("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankdetails-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
       }
       var tax = {};
       var cess = {};
@@ -3211,33 +3246,124 @@ if (event.which == 13) {
                 $("#bank").hide();
 		$("#cash").show();
             }
-        });
-    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
-    if ($("#status").val() == '15') {      //Checking whether it is sale invoice or not (15 = sale invoice).
-	$("#chkbank").click(function(event) {
-            $.ajax({
-                url: '/editorganisation?action=orgbankdetails',
-                type: 'POST',
-                dataType: 'json',
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-            })
-		.done(function(resp) {
-                    console.log("success");
-                    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisations is loaded.
-		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //Branchname of organisations is loaded.
-		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //Ifsc code of organisations is loaded.
-		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //Branchname of organisations is loaded.
+    });
 
-		})
-		.fail(function() {
-                    console.log("error");
-		})
-		.always(function() {
-                    console.log("complete");
-		});
-	});
+      //Keydown event for BANK DETAILS
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    $("#bankname").focus().select();
+	}
+    });  
 
+
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+          
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())!="") {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+         else if ($.trim($("#accnum").val())!="" && $.trim($("#bank_name").val())=="") {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+	    
+      $("#branch").focus().select();
     }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#accountno").focus().select();
+	};
+    });
+
+    $("#branch").keydown(function(event) {
+	if (event.which==13) {
+	     if ($.trim($("#accountno").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+          }
+
+	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+
+
+	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())=="" ) {
+            $("#branch-blank-alert").alert();
+            $("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branch-blank-alert").hide();
+            });
+            $("#branch").focus();
+            return false;
+          }    
+	    
+	    event.preventDefault();
+      $("#ifsc").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#bankname").focus().select();
+	};
+    });    
+
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#accountno_bankname_branch-blank-alert").alert();
+            $("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno_bankname_branch-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#bankname_branch-blank-alert").alert();
+            $("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname_branch-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+         }
+
+
+
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())!="" && $.trim($("#ifsc").val())=="" ) {
+            $("#ifsc-blank-alert").alert();
+            $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#ifsc-blank-alert").hide();
+            });
+            $("#ifsc").focus();
+            return false;
+            }
+	    
+      event.preventDefault();
+      $("#transportationmode").focus().select();
+    }
+    if (event.which==38) {
+	 event.preventDefault();
+	 $("#branch").focus().select();
+       };
+    });
+  
 });

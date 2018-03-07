@@ -2390,6 +2390,16 @@ if (event.which == 13) {
           $('#consigneename').focus();
           return false;
       }
+
+      //validation for bankdetails on save button.  
+      if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+		$("#bankdetails-blank-alert").alert();
+		$("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankdetails-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
+      }
       var tax = {};
       var cess = {};
       var contents = {};
@@ -2868,5 +2878,122 @@ if (event.which == 13) {
 	});
 
     }
+      //Keydown EVENT for BANK DETAILS
+
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    $("#bankname").focus().select();
+	}
+    });  
+
+
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+          
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())!="") {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+         else if ($.trim($("#accnum").val())!="" && $.trim($("#bank_name").val())=="") {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+	    
+      $("#branch").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#accountno").focus().select();
+	};
+    });
+
+    $("#branch").keydown(function(event) {
+	if (event.which==13) {
+	     if ($.trim($("#accountno").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+          }
+
+	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+
+
+	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())=="" ) {
+            $("#branch-blank-alert").alert();
+            $("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branch-blank-alert").hide();
+            });
+            $("#branch").focus();
+            return false;
+          }    
+	    
+	    event.preventDefault();
+      $("#ifsc").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#bankname").focus().select();
+	};
+    });
+    
+
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#accountno_bankname_branch-blank-alert").alert();
+            $("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno_bankname_branch-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#bankname_branch-blank-alert").alert();
+            $("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname_branch-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+         }
+
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())!="" && $.trim($("#ifsc").val())=="" ) {
+            $("#ifsc-blank-alert").alert();
+            $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#ifsc-blank-alert").hide();
+            });
+            $("#ifsc").focus();
+            return false;
+            }
+	    
+      event.preventDefault();
+      $("#transportationmode").focus().select();
+    }
+    if (event.which==38) {
+	 event.preventDefault();
+	 $("#branch").focus().select();
+       };
+    });
     
 });
