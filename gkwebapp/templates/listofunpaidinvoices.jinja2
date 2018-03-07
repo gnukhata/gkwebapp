@@ -96,7 +96,8 @@
    </head>
    <body>
      <div id="listdiv">
-      <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
+       <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
+       <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>List of Unpaid Invoices</strong></span>
       <br>
