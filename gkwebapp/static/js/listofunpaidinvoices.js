@@ -77,13 +77,14 @@ $(document).ready(function() {
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
         var dataset = {
-            "flag": $("#invoicetypeselect").val(),
+	    "orderflag": $("#reportorderselect").val(),
+            "typeflag": $("#reporttypeselect").val(),
             "fromdate": $("#fromdate").data("fromdate"),
             "todate": $("#todate").data("todate")
         };
         $.ajax({
                 type: "POST",
-                url: "/invoice?action=printlist",
+                url: "/billwise?action=printlist",
                 global: false,
                 async: false,
                 data: dataset,

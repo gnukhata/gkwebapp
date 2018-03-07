@@ -42,10 +42,11 @@
     </style>
   </head>
   <body>
-    <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
+    <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
+    <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
     <div class="hidden-print">
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
+      <span style="margin-left: 46.4%;"><strong>List of Unpaid Invoices</strong></span>
     </div>
 
     <div class="table-responsive printorgdetails">
@@ -53,70 +54,44 @@
 	<thead class="bg-primary">
           <tr class="visible-print">
             <th colspan="11" style="text-align:center; font-size:80%;">
-              List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices
+              List of Unpaid Invoices
 	      <br>
-	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong>
+	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong>
             </th>
           </tr>
 	  <tr>
-	    <th class="srnowrap text-center" >
-              {% trans %}Sr. No.{% endtrans %}
-	    </th>
-	    <th class="smwrap text-center" >
-              {% trans %}INV No.{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% trans %}INV Date{% endtrans %}
-	    </th>
-	    <th class="smwrap text-center" >
-              {% trans %}DC No.{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% trans %}DC Date{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% if resultgstvat == '7' %}
-		{% trans %}GSTIN{% endtrans %}
-	      {% elif resultgstvat == '22' %}
-                {% trans %}TIN{% endtrans %}
-	      {% else %}
-		{% trans %}TIN/GSTIN{% endtrans %}
-	      {% endif %}
-	    </th>
-	    <th class="mdwrap text-right" >
-              {% trans %}Gross Amt{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-right" >
-              {% trans %}Net Amt{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-right" >
-              {% trans %}TAX Amt{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% trans %}Godown{% endtrans %}
-	    </th>
-	  </tr>
+            <th class="srnowrap text-center" >
+              {% trans %}Sr.No.{% endtrans %}
+            </th>
+            <th class="srnowrap text-center" >
+              {% trans %}Invoice No.{% endtrans %}
+            </th>
+            <th class="smlwrap text-center" >
+              {% trans %}Invoice Date{% endtrans %}
+            </th>
+            <th class="mdlwrap text-center" >
+              {% trans %}Cust/Supp Name{% endtrans %}
+            </th>
+            <th class="smlwrap text-right" >
+              {% trans %}Invoice Amount{% endtrans %}
+            </th>
+            <th class="smlwrap text-right" >
+              {% trans %}Pending Amount{% endtrans %}
+            </th>
+          </tr>
 	</thead>
 	<tbody>
-	  {% for invoice in gkresult %}
-	    <tr data-invid="{{invoice["invid"]}}">
-	      <td class="srnowrap text-center">{{invoice["srno"]}}</td>
-	      <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
-	      <td class="smwrap text-center">{{invoice["dcno"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["custname"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
-	      <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
-	      <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
-	      <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["godown"]}}</td>
-	    </tr>
-	  {% endfor %}
-	</tbody>
+          {% for invoice in gkresult %}
+            <tr data-invid="{{invoice["invid"]}}">
+              <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+              <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
+              <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
+              <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
+              <td class="smlwrap text-right">{{invoice["invoiceamount"]}}</td>
+              <td class="smlwrap text-right">{{invoice["balanceamount"]}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
       </table>
       <span style="margin:auto; display:table;">
   	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
@@ -136,11 +111,11 @@
        });
        $("#loiback").click(function(event) {
          $("#msspinmodal").modal("show");
-	 var dataset = {"flag":$("#invoicetypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
+	 var dataset = {"orderflag":$("#reportorderselect").val(), "typeflag":$("#reporttypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
 	 $.ajax(
 	   {
 	     type: "POST",
-	     url: "/invoice?action=showlist",
+	     url: "/billwise?action=showlist",
 	     global: false,
 	     async: false,
 	     datatype: "text/html",
