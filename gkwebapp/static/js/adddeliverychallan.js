@@ -1364,9 +1364,10 @@ if (event.which == 13) {
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	}
 	else {
-	    $("#accountno").focus().select();
+	    $("#transportationmode").focus().select();
 	}
     }
+    //$("#transportationmode").focus().select();
 }
     else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
