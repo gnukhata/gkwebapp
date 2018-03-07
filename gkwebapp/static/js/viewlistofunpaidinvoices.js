@@ -88,7 +88,27 @@ $(document).ready(function() {
     $("#reporttypeselect").keydown(function(e) {
         if (e.which == 13) {
             e.preventDefault();
+            $("#ascending").focus().select();
+        }
+    });
+    $("#ascending").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $("#descending").focus().select();
+        }
+	if (e.which == 38) {
+	    e.preventDefault();
+            $("#reporttypeselect").focus();
+        }
+    });
+    $("#descending").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
             $("#viewlist_fromdate").focus().select();
+        }
+	if (e.which == 38) {
+	    e.preventDefault();
+            $("#ascending").focus();
         }
     });
     $("#viewlist_fromdate").keydown(function(e) {
@@ -97,7 +117,7 @@ $(document).ready(function() {
             $("#viewlist_frommonth").focus().select();
         }
         if (e.which == 38) {
-            $("#invoicetypeselect").focus();
+            $("#descending").focus();
         }
     });
     $("#viewlist_frommonth").keydown(function(e) {
@@ -241,8 +261,13 @@ $(document).ready(function() {
 
         // creating dataset for retrieving report from the server.
         var dataset = {};
+	var orderflag  = 1;
+	if($("#descending").is(":checked")){
+	    orderflag = 4;
+	}
         dataset = {
-            "flag": $("#reporttypeselect option:selected").val(),
+	    "orderflag":orderflag,
+            "typeflag": $("#reporttypeselect option:selected").val(),
             "fromdate": $("#viewlist_fromdate").val() + "-" + $("#viewlist_frommonth").val() + "-" + $("#viewlist_fromyear").val(),
             "todate": $("#viewlist_todate").val() + "-" + $("#viewlist_tomonth").val() + "-" + $("#viewlist_toyear").val()
         };

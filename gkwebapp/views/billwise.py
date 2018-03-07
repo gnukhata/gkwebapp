@@ -132,9 +132,8 @@ def viewListofInvoices(request):
 @view_config(route_name="billwise", request_param="action=showlist", renderer="gkwebapp:templates/listofunpaidinvoices.jinja2")
 def listofUnpaidInvoices(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&typeflag=%d&orderflag=1&startdate=%s&enddate=%s"%(int(request.params["flag"]), request.params["fromdate"], request.params["todate"]), headers=header)
-    #resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
+    result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "flag": request.params["typeflag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
 
 @view_config(route_name="billwise", request_param="type=spreadsheet", renderer="")
 def unpaidInvoicesSpreadsheet(request):
