@@ -241,15 +241,10 @@ $(document).ready(function() {
       else {
         $("#deliverychallan_customerstate").focus().select();
       }
-      //if ($("#deliverychallan_godown").length == 0){
-    	//  $("#deliverychallan_consignment").focus().select();
-	//}else{$("#deliverychallan_godown").focus().select();}
     }
     if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
 	event.preventDefault();
-	if($("#status").val() == 15){
-	    $("#invoice_issuer_designation").focus();
-	}else{ $("#invoicestate").focus().select(); }
+	$("#deliverychallan_consignment").focus().select();
     }
     if (event.which==32){
       event.preventDefault();
@@ -401,11 +396,7 @@ $(document).ready(function() {
     //Keydown For 'State'.
     $("#invoicestate").keydown(function(event) {
 	if (event.which == 13) {
-	    if ($("#status").val()  == 15) {
-		$("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name.
-	    }else{
-		$("#deliverychallan_customer").focus().select();
-	    }
+	    $("#deliverychallan_godown").focus().select();
 	}
 	else if (event.which == 38) {
 	    if ($("#invoicestate option:visible").first().is(":selected")) {
@@ -421,15 +412,14 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#deliverychallan_godown option:selected").index()==0) {
       event.preventDefault();
-      $("#deliverychallan_customer").focus().select();
+      $("#invoicestate").focus().select();
     }
   });
 
   $("#deliverychallan_consignment").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	$('#consigneename').focus();
-      //$('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	$('#deliverychallan_customer').focus().select();
     }
     if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
       event.preventDefault();

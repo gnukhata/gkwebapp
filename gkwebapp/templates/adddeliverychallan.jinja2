@@ -69,97 +69,107 @@
 	    <!-- Upper Three Column  -->
 	    <div class="col-md-12">
 	      <!-- Details Of Delivery in/out -->
-	      <div class="col-md-4">
+	      <div class="col-sm-12">
 		{% if gkstatus=="in" %}
 		  {% trans %}<h4>Details of Delivery In: </h4>{% endtrans %}
 		{% else %}
 		  {% trans %}<h4>Details of Delivery Out: </h4>{% endtrans %}
 		{% endif %}
-		<div class="form-group form-inline">
-		  <label class="col-sm-4 fsize" for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-		  <input class="form-control input-sm col-sm-8" size="15" id="deliverychallan_challanno" placeholder="{% trans %}Enter Deli. Note No.{% endtrans %}" value = "{{lastdelchaldata['dcno']}}">
+		<div class="row">
+		  <div class="col-sm-12 form-group form-inline">
+		    <div class="form-group form-inline col-sm-3">
+		      <label class="col-sm-5 fsize" for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
+		      <input class="form-control input-sm col-sm-7" size="15" id="deliverychallan_challanno" placeholder="{% trans %}Enter Deli. Note No.{% endtrans %}" value = "{{lastdelchaldata['dcno']}}">
+		    </div>
+		    <div class="form-group form-inline col-sm-3">
+		      <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
+		      <input type="text" class="form-control input-sm delchaldate" size="1" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v" value = "{{lastdelchaldata['dcdate'][0:2]}}">
+                      <input type="text" class="form-control input-sm delchaldate" size="1" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v" value = "{{lastdelchaldata['dcdate'][3:5]}}">
+                      <input type="text" class="form-control input-sm delchaldate" size="5" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
+                    </div>
+		    <div class="form-group form-inline col-sm-4">
+		      {% if gkstatus=="in" %}
+			<label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Destination{% endtrans %} :</label>
+		      {% else %}
+			<label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Origin{% endtrans %} :</label>
+		      {% endif %}
+		      <select class="form-control input-sm col-sm-7" id="invoicestate" aria-describedby="statecodeforinvoice">
+			{% for state in states %}
+			  {% for key, value in state.items() %}
+			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			  {% endfor %}
+			{% endfor %}
+                      </select>
+		    </div>
+		    <div class="form-group form-inline col-sm-2">
+		      <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
+		      <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
+		    </div>
+		  </div>
 		</div>
-		<div class="form-group form-inline">
-		  <label for="deliverychallan_date" class="col-sm-4 fsize">{% trans %}Note Date{% endtrans %} :</label>
-		  <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v" value = "{{lastdelchaldata['dcdate'][0:2]}}">
-                  <input type="text" class="form-control input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v" value = "{{lastdelchaldata['dcdate'][3:5]}}">
-                  <input type="text" class="form-control input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
-                </div>
-		<div class="form-group form-inline">
-		  {% if gkstatus=="in" %}
-                    <label for="invoicestate" class="col-sm-4 fsize">{% trans %}State of Destination{% endtrans %} :</label>
-		  {% else %}
-		    <label for="invoicestate" class="col-sm-4 fsize">{% trans %}State of Origin{% endtrans %} :</label>
-		  {% endif %}
-		  <select class="form-control input-sm col-sm-8" id="invoicestate" aria-describedby="statecodeforinvoice">
-                    {% for state in states %}
-		      {% for key, value in state.items() %}
-			<option value="{{value}}" stateid="{{key}}">{{value}}</option>
-		      {% endfor %}
-		    {% endfor %}
-                  </select>
-		</div>
-		<div class="form-group form-inline">
-		  <label class="col-sm-4 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
-		  <label class="col-sm-8 nopadding fsize" id="statecodeforinvoice"></label>
+		<div class="row">
+		  <div class="col-sm-12 form-group form-inline">
+		    <div class="form-group form-inline col-sm-4">
+		      {%if numberofgodowns > 0 %}
+			<div class="col-sm-12 form-group form-inline">
+			  <label class="col-sm-5" for="deliverychallan_godown">
+			    {% if gkstatus=="in" %}
+			      {% trans %}Received At{% endtrans %} :
+			    {% else %}
+			      {% trans %}Dispatch From{% endtrans %} :
+			    {% endif %}
+			  </label>
+			  <select class="form-control input-sm col-sm-7" id="deliverychallan_godown">
+			    {% for godown in godowns %}
+			      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+			    {% endfor %}
+			  </select>
+			</div>		  
+		      {% endif %}
+		  </div>
+		  <div class="form-group form-inline col-sm-4">
+		    {%if numberofgodowns > 0 %}
+		      <div class="col-sm-12 form-group form-inline">
+			<label class="col-sm-6" for="deliverychallan_consignment">Type of transaction:</label>
+			<select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
+			  <option value="1">{% trans %}Approval{% endtrans %}</option>
+			  <option value="3">{% trans %}Consignment{% endtrans %}</option>
+			  {% if gkstatus=="in" %}
+			    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+			    <option value="16">{% trans %}Purchase{% endtrans %}</option>
+			  {% else %}
+			    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+			    <option value="4">{% trans %}Sale{% endtrans %}</option>
+			  {% endif %}
+			  <option value="19">{% trans %}Sample{% endtrans %}</option>
+			</select>
+		      </div>
+		    {% else %}
+		      <div class="col-sm-4 form-group form-inline">
+			<label class="col-sm-6" for="deliverychallan_consignment">Type of transaction:</label>
+			<select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
+			  <option value="1">{% trans %}Approval{% endtrans %}</option>
+			  <option value="3">{% trans %}Consignment{% endtrans %}</option>
+			  {% if gkstatus=="in" %}
+			    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+			    <option value="16">{% trans %}Purchase{% endtrans %}</option>
+			  {% else %}
+			    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+			    <option value="4">{% trans %}Sale{% endtrans %}</option>
+			  {% endif %}
+			  <option value="19">{% trans %}Sample{% endtrans %}</option>
+			</select>
+		      </div>
+		    {%endif%}
 		</div>
 		{% if resultgstvat != '22' %}
-		  <div class="form-group form-inline invoice_issuer">
-		    <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
+		  <div class="form-group form-inline invoice_issuer col-sm-4">
+		    <label class="col-sm-6 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+		    <label class="col-sm-6  nopadding fsize gstinfield" id="orggstin"></label>
 		  </div>
 		{% endif %}
-		
-		{%if numberofgodowns > 0 %}
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4" for="deliverychallan_godown">
-		      {% if gkstatus=="in" %}
-			{% trans %}Received At{% endtrans %} :
-                      {% else %}
-			{% trans %}Dispatch From{% endtrans %} :
-                      {% endif %}
-		    </label>
-		    <select class="form-control input-sm col-sm-8" id="deliverychallan_godown">
-		      {% for godown in godowns %}
-			<option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-		      {% endfor %}
-		    </select>
-		  </div>		  
-		{% endif %}
-
-		{%if numberofgodowns > 0 %}
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4" for="deliverychallan_consignment">Type of transaction:</label>
-                    <select class="form-control input-sm col-sm-8" id="deliverychallan_consignment" accesskey="">
-                      <option value="1">{% trans %}Approval{% endtrans %}</option>
-                      <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                      {% if gkstatus=="in" %}
-			<option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-			<option value="16">{% trans %}Purchase{% endtrans %}</option>
-                      {% else %}
-			<option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-			<option value="4">{% trans %}Sale{% endtrans %}</option>
-                      {% endif %}
-                      <option value="19">{% trans %}Sample{% endtrans %}</option>
-                    </select>
 		  </div>
-		{% else %}
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4" for="deliverychallan_consignment">Type of transaction:</label>
-                    <select class="form-control input-sm col-sm-8" id="deliverychallan_consignment" accesskey="">
-                      <option value="1">{% trans %}Approval{% endtrans %}</option>
-                      <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                      {% if gkstatus=="in" %}
-			<option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-			<option value="16">{% trans %}Purchase{% endtrans %}</option>
-                      {% else %}
-			<option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-			<option value="4">{% trans %}Sale{% endtrans %}</option>
-                      {% endif %}
-                      <option value="19">{% trans %}Sample{% endtrans %}</option>
-                    </select>
-		  </div>
-		{%endif%}
+		</div>
 
 		<!-- <div class="form-group form-inline invoice_issuer" hidden>
 		     <label class="col-sm-4 fsize" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
@@ -172,7 +182,7 @@
             </div>
 
 	      <!-- Details Supplier/Customer -->
-	      <div class="col-md-4 borderdiv">
+	      <div class="col-md-6 hborderdiv">
 		{% if gkstatus=="in" %}
 		  <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
 		{% else %}
@@ -242,7 +252,7 @@
 	      </div>
 
 	      <!-- Details Of Consignee -->
-	      <div class="col-md-4 borderdiv">
+	      <div class="col-md-6 borderdiv hborderdiv">
 		<h4>Details of Consignee | Shipped to: </h4>
 		<div class="form-group form-inline">
 		  <label for="consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
