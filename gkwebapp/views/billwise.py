@@ -32,7 +32,9 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
+from pyramid.response import Response
+import base64
+import os
 '''
 This function brings data of unpaid bills and unadjusted amounts.
 This could be either called after a voucher is created or from the Unadjusted Amounts module.
@@ -133,3 +135,23 @@ def listofUnpaidInvoices(request):
     result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&typeflag=%d&orderflag=1&startdate=%s&enddate=%s"%(int(request.params["flag"]), request.params["fromdate"], request.params["todate"]), headers=header)
     #resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
+
+@view_config(route_name="billwise", request_param="type=spreadsheet", renderer="")
+def unpaidInvoicesSpreadsheet(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/billwise?type=spreadsheet&typeflag=%d&orderflag=%d&startdate=%s&enddate=%s"%(int(request.params["typeflag"]), int(request.params["orderflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+        invoices = result.json()["gkdata"]
+        invoices_str = base64.b64decode(invoices)
+        xlsxfile = open("report.xlsx","w")
+        xlsxfile.write(invoices_str)
+        xlsxfile.close()
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    except:
+        print "file not found"
+        return {"gkstatus":3}
