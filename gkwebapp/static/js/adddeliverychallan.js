@@ -518,21 +518,33 @@ $(document).ready(function() {
       $('#deliverychallan_product_table tbody tr:last td:eq(1) input').focus();
     }
   });
-  $("#deliverychallan_modeoftransport").keydown(function(event) {
+    
+  $("#transportationmode").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      if($("#deliverychallan_issuername").length) {
-        $('#deliverychallan_issuername').focus();
-      }
-      else {
-        $('#deliverychallan_save').click();
-      }
+	event.preventDefault();
+	if ($("#vehicleno").is(":visible")) {
+	    $("#vehicleno").focus();
+	}
+	else {
+            $('#invoice_issuer_name').focus();
+	}
     }
     if (event.which==38) {
-      event.preventDefault();
-      $('#deliverychallan_noofpackages').focus();
+	event.preventDefault();
+	//remaining
+      //$('#deliverychallan_noofpackages').focus();
     }
   });
+
+    $("#vehicleno").keydown(function(event){
+	if(event.which == 13){
+	    $("invoice_issuer_name").focus();
+	}
+	else if(event.which){
+	    $("#transportationmode").focus().select();
+	}
+    });
+    
   $("#deliverychallan_issuername").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -1871,6 +1883,18 @@ if (event.which == 13) {
   });
 
     //-----------------------------------------------END--------------------------------------------------------------------//
+
+    //Vehicle Number is to be entered only when Transportation Mode is Road.
+    $("#transportationmode").change(function(event){
+	if ($(this).val() == 'Road') {
+	    $("#vehiclenodiv").show();
+	}
+	else {
+	    $("#vehiclenodiv").hide();
+	}
+    });
+    $("#transportationmode").change();
+
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
       // focus shifting events based on ctrl and shift keys

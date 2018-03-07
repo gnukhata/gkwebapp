@@ -170,15 +170,6 @@
 		{% endif %}
 		  </div>
 		</div>
-
-		<!-- <div class="form-group form-inline invoice_issuer" hidden>
-		     <label class="col-sm-4 fsize" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		     <input class="form-control input-sm col-sm-8" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a" aria-label="{% trans %}Issuer's Name{% endtrans %}">
-		     </div>
-		     <div class="form-inline form-group invoice_issuer" hidden>
-		     <label class="col-sm-4 fsize">{% trans %}Designation{% endtrans %} :</label>
-		     <input class="form-control input-sm col-sm-8" id="invoice_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
-		     </div> -->
             </div>
 
 	      <!-- Details Supplier/Customer -->
@@ -607,6 +598,20 @@
 		    <input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm" name="vehicleno"></input>
 		  </div>
 		</div>
+
+		<div class="row col-sm-12">
+		<div class="form-group form-inline invoice_issuer" hidden>
+		  <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+		  <input class="form-control input-sm col-sm-7" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a" aria-label="{% trans %}Issuer's Name{% endtrans %}">
+		</div>
+		</div>
+		<div class="row col-sm-12">
+		<div class="form-inline form-group invoice_issuer" hidden>
+		  <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
+		  <input class="form-control input-sm col-sm-7" id="invoice_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
+		</div>
+		</div>
+		
 		<div class="row col-sm-12">
 		  <div class="col-sm-12">
 		    <div class="alert alert-danger" id="supply-date-alert" aria-live="rude" role="alert" hidden>
