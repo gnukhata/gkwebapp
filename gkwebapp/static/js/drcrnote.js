@@ -1,5 +1,4 @@
 $(document).ready(function() {
-    $("#creditnote_create").click();
     // This script is for base page of drcrnote.
     $("#creditnote_create").click(function() { // calls create credit note page.
 	$.ajax(

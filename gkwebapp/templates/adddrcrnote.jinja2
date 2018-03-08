@@ -162,15 +162,20 @@
 	     <a id="taxapplicablescroll"></a>
 	     <div class="col-md-12">
 	       <div class="col-md-3">
-		   <label aria-describedby="taxapplicable" class="fsize col-sm-6 nopadding" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
-		   {% if resultgstvat == '29' or resultgstvat == '7' %}
-		     <label id="taxapplicabletext" class="">GST</label>
-		     <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
-		   {% else %}
-		     <label id="taxapplicabletext" >VAT</label>
-		     <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
-		   {% endif %}
+		 <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
+		 {% if resultgstvat == '29' or resultgstvat == '7' %}
+		   <label id="taxapplicabletext" class="">GST</label>
+		   <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+		 {% else %}
+		   <label id="taxapplicabletext" >VAT</label>
+		   <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+		 {% endif %}
 	       </div>
+	       {#{% if drcrflag=="3" %}
+	       <input type="hidden" id="status" value="3">
+	       {% else %}
+	       <input type="hidden" id="status" value="4">
+	       {% endif %}#}
 	     </div>
 	     <div class="col-md-12">
 	       {% if resultgstvat == '29' or resultgstvat == '22' %}
@@ -203,12 +208,7 @@
 		 <tbody>
 		   <tr>
 		     <td class="mdvwrap">
-		       <select class="form-control input-sm product_name_vat">
-			 <option value="" disabled hidden selected>Select Product</option>
-			 {% for product in products %}
-			   <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-			 {% endfor %}
-		       </select>
+		       <label class="product_name_vat"></label>
 		     </td>
 		     <td class="qtyvwrap">
 		       <div class="input-group">
@@ -310,12 +310,7 @@
 			 <tbody>
 			   <tr>
 			     <td class="mdwrap">
-			       <select class="form-control input-sm product_name_gst">
-				 <option value="" disabled hidden selected>Select Product</option>
-				 {% for product in productsnservices %}
-				   <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
-				 {% endfor %}
-			       </select>
+			       <label class="product_name_gst"></label>
 			     </td>
 			     <td class="smwrap text-center" style="vertical-align:middle;">
 			       <label class="drcrnote_product_hsncode text-center"></label>
@@ -371,7 +366,7 @@
 		     </div>
 		   </div>
 		   <div class="col-sm-2 nopadding">
-		     <table id="drcrnote_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablecrnote">
+		     <table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablecrnote">
 		       <thead>
 			 <tr>
 			   <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
