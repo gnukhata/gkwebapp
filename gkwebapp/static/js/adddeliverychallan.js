@@ -557,16 +557,15 @@ $(document).ready(function() {
     }
   });
     
-  $("#deliverychallan_noofpackages").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $('#deliverychallan_modeoftransport').focus();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $('#deliverychallan_product_table tbody tr:last td:eq(1) input').focus();
-    }
-  });
+    $("#deliverychallan_noofpackages").keydown(function(event){
+	if(event.which==13){
+	    event.preventDefault();
+	    $("#transportationmode").focus().select();
+	}
+	else if(event.which==38){
+	    $('.invoice_product_discount_gst').focus();
+	}
+    });
     
   $("#transportationmode").keydown(function(event) {
     if (event.which==13) {
@@ -580,7 +579,7 @@ $(document).ready(function() {
     }
     if (event.which==38) {
 	event.preventDefault();
-      $('.invoice_product_discount_gst').focus();
+      $('#deliverychallan_noofpackages').focus();
     }
   });
 
@@ -2013,6 +2012,7 @@ if (event.which == 13) {
 		$('#supply_date').focus().select();
 		return false;
 	    }
+	    console.log(invoicedate);
 	    if (invoicedate) {
 		if (supplydate < invoicedate) {
 		    $("#supply-date-alert").alert();
@@ -2473,8 +2473,20 @@ else {
     } else {
 	$('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
     }
-    
+
+    var tax = {};
+    var cess = {};
+    var contents = {};
+    var freeqty = {};
+    var stock = {};
+    var items = {};
+    var discount = {};
+    var delchaltotal = 0.00;
+    var productcodes = [];
+    var productqtys = [];
+    var ppu;  
     var consignee = {};
+      
     if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
           consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
