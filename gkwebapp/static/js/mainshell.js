@@ -1032,7 +1032,7 @@ $('#listofaccounts').click(function (e) {
     $.ajax(
       {
         type: "POST",
-        url: "/showconsolidationpopup",
+        url: "/gstsummary",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1043,7 +1043,6 @@ $('#listofaccounts').click(function (e) {
         success: function(resp)
         {
           $("#info").html(resp);
-          //$("#holdingorg").modal("show");
         }
       });
   });
