@@ -57,29 +57,34 @@
           </div>
 	  </div>
 	  
-	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
-	    <div class ="row" class ="col-sm-6">
-	      <label>{%trans%}Select Account/s{% endtrans %}</label>
+	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px; padding:10px;">
+	    <div class ="row">
+	      <div class="col-sm-12 text-center">
+		<label>{%trans%}Select Account/s{% endtrans %}</label>
+	      </div>
 	    </div>
-	    <div class="form-inline col-sm-6">
-	      <label>{% trans %}SGST In{% endtrans %} :</label>
-	      <select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" >
-		<option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		{% for accs in gkresult %}
-		  <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		{% endfor %}
-              </select>
+	    <div class="row">
+	      <div class="form-inline col-sm-6">
+		<label>{% trans %}SGST In{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="sgst_in"  name = "sgst_in" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
 	    </div>
-	    <br>
-	    <label>{% trans %}CGST{% endtrans %}</label><br>
-	    <label>{%trans%} Output Tax{% endtrans %}:</label>
-	    <select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" multiple="multiple">
-              <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-              {% for accs in gkresult %}
-		<option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-              {% endfor %}
-            </select>
-	    
+	    <div class="row">
+	      <div class="form-inline col-sm-6">
+		<label>{% trans %}CGST Out{% endtrans %}:</label>
+		<select class = "form-control input-sm" id="cgst_out"  name = "cgst_out">
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </div>
 	    
 	  </div>
 	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
