@@ -2381,9 +2381,9 @@ if (event.which == 13) {
 					$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    else{
-					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_sgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
-					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_cgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
