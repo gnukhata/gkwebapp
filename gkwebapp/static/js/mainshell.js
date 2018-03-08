@@ -667,7 +667,7 @@ var userrole1;
 	// get binary data as a response
 	var blob = this.response;
 	var url = window.URL.createObjectURL(blob);
-	window.location.assign(url)
+	  window.location.assign(url);
       }
     };
     xhr.send();
@@ -1004,7 +1004,31 @@ var userrole1;
     }
   );
 
-  $('#consolidatedbalancesheet').click(function (e) {
+
+$('#listofaccounts').click(function (e) {
+    // calls list of accounts report.
+    $("#msspinmodal").modal("show");
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/showlistofaccounts",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+    
+  $('#gstsummary').click(function (e) {
     $.ajax(
       {
         type: "POST",
