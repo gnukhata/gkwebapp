@@ -1027,7 +1027,8 @@ $('#listofaccounts').click(function (e) {
       }
     );
   });
-    
+
+   
   $('#gstsummary').click(function (e) {
     $.ajax(
       {

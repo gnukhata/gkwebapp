@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}View GST Summary{% endtrans %}</title>
+    <style media="screen">
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     label {
+  	 font-size: 90%;
+     }
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-6 ">
+      <div class="panel shadow">
+	<div class="panel-heading">
+          <h3 class="panel-title">{% trans %}View GST Summary{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#CashFModal"></i></h3>
+	</div>
+	<div class="panel-body">
+          <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="cashfl_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="cashfl_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="cashfl_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+          </div>
+	  <div class="row">
+	    <div class="form-inline col-sm-6">
+            <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
+          <div class="form-inline" >
+            <div class="form-group">
+              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_frommonth" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromyear" value="" size="4" maxlength="4" placeholder="YYYY">
+            </div>
+	  </div>
+	  </div>
+	
+          <div class="form-inline col-sm-6">
+            <label for="cashfl_todate">{% trans %}To{% endtrans %} :</label>
+            <div class="form-inline">
+              <div class="form-group">
+
+		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_todate" value=""  size="2" maxlength="2" placeholder="DD">
+		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_tomonth" value="" size="2" maxlength="2" placeholder="MM">
+		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_toyear" value="" size="4" maxlength="4" placeholder="YYYY">
+	      </div>
+            </div>
+          </div>
+	  </div>
+	  
+	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
+	    <div class ="row" class ="col-sm-6">
+	      <label>{%trans%}Select Account/s{% endtrans %}</label>
+	    </div>
+	    <div class="form-inline col-sm-6">
+	      <label>{% trans %}SGST In{% endtrans %} :</label>
+	      <select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" >
+		<option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		{% for accs in gkresult %}
+		  <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		{% endfor %}
+              </select>
+	    </div>
+	    <br>
+	    <label>{% trans %}CGST{% endtrans %}</label><br>
+	    <label>{%trans%} Output Tax{% endtrans %}:</label>
+	    <select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" multiple="multiple">
+              <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+              {% for accs in gkresult %}
+		<option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+              {% endfor %}
+            </select>
+	    
+	    
+	  </div>
+	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
+	    
+	    <label>{% trans %}IGST{% endtrans %}</label>
+	    
+	  </div>
+	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
+	    
+	    <label>{% trans %}CESS{% endtrans %}</label>
+	    
+	  </div>
+	  
+	  
+	</div>
+	<div class="panel-footer">
+          <button type="button" class="btn btn-sm btn-primary" name="button" id="cashfl_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+          <button type="button" name="button" class="btn btn-sm btn-danger" id="cashfl_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+	</div>
+      </div>
+      <div id="CashFModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	  <div class="modal-dialog bgcolor " >
+	    <div class="modal-content ">
+	      <div class="modal-header">
+		{% trans %}<strong>Help!</strong>{% endtrans %}
+		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		  <span aria-hidden="true">&times;</span>
+		</button> </div>
+	      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+		<p>   <font color=" #566573"> {%trans%}
+		  Receipt & Payment Account or Cash Flow </br>
+		  This report can be viewed for any period.</br>
+		  Drill Down facility is available. You can double click or press enter key on any row to see the ledger for that account.</br>
+		  All users can view this report.
+		  .{% endtrans %} </font>
+
+		</p>
+	      </div>
+
+	    </div>
+	  </div>
+	</div>
+    </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewgstsummary.js')}}"></script>
+  </body>
+</html>
