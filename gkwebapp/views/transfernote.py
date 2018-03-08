@@ -69,7 +69,7 @@ def viewlistoftransfernotes(request):
                     gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
                     goddata.append(gdata)
                 transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=all", headers=header)
-                return {"gkresult":goddata}
+                return {"gkresult":goddata, "numberoftransfernotes":len(transfernotes.json()["gkresult"])}
 
 @view_config(route_name="transfernotes",request_param="action=printlist",renderer="gkwebapp:templates/printlistoftransfernotes.jinja2")
 def printlistoftransfernotes(request):
