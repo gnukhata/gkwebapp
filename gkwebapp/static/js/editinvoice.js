@@ -512,6 +512,10 @@ $(document).ready(function() {
 		    $("#invoice_customerstate").change();
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
         //All GSTINs of this customer are
 		    gstins = resp["gkresult"]["gstin"];
         if ($("#invoice_customer option:selected").attr("custid") in gstins) {
@@ -2478,15 +2482,16 @@ if (event.which == 13) {
 				$("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
 				$("#chkbank").prop('checked', true);  
 				$("#chkcash").prop('checked', false);
-				$('#chkbank').trigger('click');    //trigger click event on bank radio button
+				$("#bank").show();
+				$("#cash").hide();
 			    } else {
 				$("#chkcash").prop('checked', true);
 				$("#chkbank").prop('checked', false);
-				$('#chkcash').trigger('click');    //trigger click event on cash radio button
+				$("#bank").hide();
+				$("#cash").show();
 			    }
-
-			     //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
-			    if ($("#status").val() == '15' && resp.invoicedata.paymentmode == "3" && $("#accountno").val() != '') {      //Checking whether it is sale invoice or not (15 = sale invoice).
+			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
+			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
 				$("#chkbank").click(function(event) {
 				    $.ajax({
 					url: '/editorganisation?action=orgbankdetails',
@@ -2763,13 +2768,15 @@ if (event.which == 13) {
       }
 
       //validation for bankdetails on save button.  
-      if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
-		$("#bankdetails-blank-alert").alert();
-		$("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#bankdetails-blank-alert").hide();
-		});
-		$("#accountno").focus();
-		return false;
+       if ($("#chkbank").is(":checked")) {
+	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+	      $("#bankdetails-blank-alert").alert();
+	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#bankdetails-blank-alert").hide();
+	      });
+	      $("#accountno").focus();
+	      return false;
+	  }
       }
       var tax = {};
       var cess = {};
@@ -3240,7 +3247,14 @@ if (event.which == 13) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
                 $("#bank").show();
 	        $("#cash").hide();
+	    console.log(paymentmod);
+	    if ($("#status").val() == "15" && editflag == 'false') {
+		console.log("hiii");
+		$('#chkbank').trigger('click');    //trigger click event on bank radio button.
+	    }
+	    if (editflag == 'false'){
 	        $("#invoice_customer").trigger("change");    //Calling change event on onclick of bank to load bankdetails.
+	    }
         } else {
 	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
                 $("#bank").hide();

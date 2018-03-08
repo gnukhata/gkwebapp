@@ -2391,14 +2391,16 @@ if (event.which == 13) {
           return false;
       }
 
-      //validation for bankdetails on save button.  
-      if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
-		$("#bankdetails-blank-alert").alert();
-		$("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#bankdetails-blank-alert").hide();
-		});
-		$("#accountno").focus();
-		return false;
+      //validation for bankdetails on save button.
+      if ($("#chkbank").is(":checked")) {
+	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+	      $("#bankdetails-blank-alert").alert();
+	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#bankdetails-blank-alert").hide();
+	      });
+	      $("#accountno").focus();
+	      return false;
+	  }
       }
       var tax = {};
       var cess = {};
