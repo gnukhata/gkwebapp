@@ -25,6 +25,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 "Abhijith Balan" <abhijith@dff.org.in>
+"Pravin Dake" <pravindake24@gmail.com>
 */
 
 // This script is for the addinvoice.jinja2
@@ -3247,9 +3248,7 @@ if (event.which == 13) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
                 $("#bank").show();
 	        $("#cash").hide();
-	    console.log(paymentmod);
 	    if ($("#status").val() == "15" && editflag == 'false') {
-		console.log("hiii");
 		$('#chkbank').trigger('click');    //trigger click event on bank radio button.
 	    }
 	    if (editflag == 'false'){

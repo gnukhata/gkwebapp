@@ -29,6 +29,7 @@
    "Abhijith Balan" <abhijith@dff.org.in>
    "Reshma Bhatawadekar" <reshma_b@riseup.net>"
    "Rohini Baraskar" <robaraskar@gmail.com>
+   "Pravin Dake" <pravindake24@gmail.com>
  */
 
 // This script is for the addinvoice.jinja2
