@@ -46,7 +46,7 @@ $(document).ready(function() {
 
 		    } else {
 			$("#drcrnote_state").text(resp.invoicedata.destinationstate);
-			$("#statecodefordrcrnote").text(resp.invoicedata.destinationstatecode);
+			$("#statecodefordrcrnote").text(resp.invoicedata.taxstatecode);
 			$("#drcrnote_custsuppstate").text(resp.invoicedata.sourcestate);
 			$("#statecodeofcustsupp").text(resp.invoicedata.sourcestatecode);
 			$.ajax({
