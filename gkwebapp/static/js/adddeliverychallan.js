@@ -92,11 +92,60 @@ $(document).ready(function() {
   $("#deliverychallan_month").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
-
   $("#deliverychallan_year").blur(function(event) {
-    $(this).val(yearpad($(this).val(),4));
+      $(this).val(yearpad($(this).val(), 4));
+      invoicedatestring = $("#deliverychallan_date").val() + $("#deliverychallan_month").val() + $("#deliverychallan_year").val();
+      invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
+      if (invoicedatestring.length == 0) {
+	  $("#date-blank-alert").alert();
+	  $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#date-blank-alert").hide();
+	  });
+	  $("#deliverychallan_date").focus().select();
+	  return false;
+      }
+      else if (!invoicedate && invoicedatestring.length == 8) {
+	  $("#date-alert").alert();
+	  $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#date-alert").hide();
+	  });
+	  $("#deliverychallan_date").focus().select();
+	  return false;
+      }
+      else if (invoicedate) {
+	  if (!invoicedate.between(financialstart, financialend)) {
+	      $("#between-date-alert").alert();
+	      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#between-date-alert").hide();
+	      });
+	      $('#deliverychallan_date').focus().select();
+	      return false;
+	  }
+	  if (invoicedate >= gstdate) {
+	      $("#taxapplicabletext").text("GST");
+	      $("#taxapplicable").val("7");
+	      $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+	      $("#vathelp").hide();
+	      $(".tinfield").hide();
+	      $("#gstproducttable").show();  //Shows GST Product table.
+	      $(".gstinfield").show();
+	      $(".vatfield").hide();
+	      $(".gstfield").show();
+	  }
+	  else {
+	      $("#taxapplicabletext").text("VAT");
+	      $("#taxapplicable").val("22");
+	      $("#gstproducttable").hide();
+	      $(".gstinfield").hide();
+	      $("#invoice_product_table_vat").show();
+	      $(".tinfield").show();
+	      $("#vathelp").show();
+	      $(".gstfield").hide();
+	      $(".vatfield").show();
+	  }
+      }
   });
-    
+
     //--------------------------------IMP-------------------------//
 
     //Function to calculate gst tax amount
@@ -525,46 +574,87 @@ $(document).ready(function() {
 	if ($("#vehicleno").is(":visible")) {
 	    $("#vehicleno").focus();
 	}
-	else {
+	else if($("#status").val() == 15){
             $('#invoice_issuer_name').focus();
-	}
+	}else{ $("#supply_date").focus(); }
     }
     if (event.which==38) {
 	event.preventDefault();
-	//remaining
-      //$('#deliverychallan_noofpackages').focus();
+      $('.invoice_product_discount_gst').focus();
     }
   });
 
     $("#vehicleno").keydown(function(event){
 	if(event.which == 13){
-	    $("invoice_issuer_name").focus();
+	    event.preventDefault();
+	    if($("#invoice_issuer_name").is(":visible")){
+		$("#invoice_issuer_name").focus();
+	    }else{
+		$("#supply_date").focus();
+	    }
 	}
-	else if(event.which){
+	else if(event.which ==38){
 	    $("#transportationmode").focus().select();
 	}
     });
     
-  $("#deliverychallan_issuername").keydown(function(event) {
+  $("#invoice_issuer_name").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $('#deliverychallan_designation').focus();
+      $('#invoice_issuer_designation').focus();
+    }
+    if (event.which==38) {
+	event.preventDefault();
+	if ($("#vehicleno").is(":visible")) {
+	    $("#vehicleno").focus();
+	}else{ $("#transportationmode").focus().select(); }
+    }
+  });
+  $("#invoice_issuer_designation").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+	$('#supply_date').focus();
     }
     if (event.which==38) {
       event.preventDefault();
-      $('#deliverychallan_modeoftransport').focus();
+      $("#invoice_issuer_name").focus();
     }
   });
-  $("#deliverychallan_designation").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $('#deliverychallan_save').click();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#deliverychallan_issuername").focus().select();
-    }
-  });
+
+    $('#supply_date').keydown(function(event){
+	if(event.which == 13){
+	event.preventDefault();
+	    $("#supply_month").focus();
+	}
+	if(event.which ==38){
+	    if($("#status").val() == 15){
+		$("#invoice_issuer_designation").focus();
+	    }
+	    else if($("#vehicleno").is(":visible")){
+		$("#vehicleno").focus();
+	    }else{ $("#transportationmode").focus().select(); }
+	}
+    });
+
+    $("#supply_month").keydown(function(event){
+	if(event.which==13){
+	    event.preventDefault();
+	    $("#supply_year").focus();
+	}
+	else if(event.which==38){
+	    $("#supply_date").focus();
+	}
+    });
+
+    $("#supply_year").keydown(function(event){
+	if(event.which==13){
+	    event.preventDefault();
+	    $("#deliverychallan_save").focus().click();
+	}
+	else if(event.which==38){
+	    $("#supply_month").focus();
+	}
+    });
 
     var modalpresent = 0;
     $(document).off("keyup").on("keyup", function(event) {
@@ -1895,6 +1985,48 @@ if (event.which == 13) {
     });
     $("#transportationmode").change();
 
+    //Date
+    $("#supply_date").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_month").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#supply_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
+	var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+	if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
+	    $("#supplydate-alert").alert();
+	    $("#supplydate-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#supplydate-alert").hide();
+	    });
+	    $('#supply_date').focus().select();
+	    return false;
+	}
+	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
+	if (supplydate) {
+	    if (!supplydate.between(financialstart, financialend)) {
+		$("#supbetween-date-alert").alert();
+		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#supbetween-date-alert").hide();
+		});
+		$('#supply_date').focus().select();
+		return false;
+	    }
+	    if (invoicedate) {
+		if (supplydate < invoicedate) {
+		    $("#supply-date-alert").alert();
+		    $("#supply-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#supply-date-alert").hide();
+		    });
+		    $('#supply_date').focus().select();
+		    return false;
+		}
+	    }
+	}
+    });
+
+
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
       // focus shifting events based on ctrl and shift keys
@@ -2080,6 +2212,7 @@ else {
     }
 
   });
+    
 
 
   $(document).off("click",".product_del").on("click", ".product_del", function() {
