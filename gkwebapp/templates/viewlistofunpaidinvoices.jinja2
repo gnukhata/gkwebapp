@@ -27,7 +27,7 @@
                   <label>{% trans %}Please enter date within the financial year!{% endtrans %}</label>
                </div>
                <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
-                  <label for="viewlist_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+                  <label for="viewlist_todate">{% trans %}From date should be before or after To date !{% endtrans %}</label>
                </div>
                <div class="form-group col-xs-12" id="typediv" style="margin-top:10px;">
                   <label for="invoicetypeselect">{% trans %}Type of Report{% endtrans %} :</label>
@@ -45,7 +45,18 @@
 		   <label><input type="radio" class="order" name="order" id="descending" aria-label="Descending"> Descending</label>
 		 </div>
 	       </div>
-               <div class="col-xs-12" style="margin-top: 10px;">
+	       <div class="col-sm-12">
+		 <label for="invoicetypeselect">{% trans %}Type of Invoice{% endtrans %} :</label>
+		 <div class="form-group form-inline">
+		   <div class="radio">
+		     <label><input type="radio" class="inout" name="inout" id="sale" aria-label="Sale" checked> Sale</label>
+		   </div>
+		   <div class="radio">
+		     <label><input type="radio" class="inout" name="inout" id="purchase" aria-label="Descending"> Purchase</label>
+		   </div>
+		 </div>
+	       </div>
+               <div class="col-sm-12 row">
                   <div class="col-xs-6">
                      <label for="viewlist_fromdate">{% trans %}From Date{% endtrans %} :</label>
                      <div class="form-inline" >

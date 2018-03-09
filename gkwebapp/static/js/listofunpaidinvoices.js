@@ -77,6 +77,7 @@ $(document).ready(function() {
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
         var dataset = {
+	    "inoutflag": $("#reportinoutselect").val(),
 	    "orderflag": $("#reportorderselect").val(),
             "typeflag": $("#reporttypeselect").val(),
             "fromdate": $("#fromdate").data("fromdate"),
@@ -184,7 +185,7 @@ $(document).ready(function() {
     $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
-        var linvurlstring = 'orderflag=' + $("#reportorderselect").val() + '&typeflag=' + $("#reporttypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
+        var linvurlstring = 'inoutflag=' + $("#reportinoutselect").val() + '&orderflag=' + $("#reportorderselect").val() + '&typeflag=' + $("#reporttypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
         xhr.open('GET', '/billwise?type=spreadsheet&' + linvurlstring, true);
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         xhr.responseType = 'blob';

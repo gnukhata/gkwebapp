@@ -44,9 +44,10 @@
   <body>
     <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
     <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
+    <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
     <div class="hidden-print">
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>List of Unpaid Invoices</strong></span>
+      <span style="margin-left: 46.4%;"><strong>{% trans %}List of Outstanding{% endtrans %} {% if inoutflag|int == 9 %}{% trans %}Purchase{% endtrans %}{% else %}{% trans %}Sale{% endtrans %}{% endif %} {% trans %}Invoices{% endtrans %}</strong></span>
     </div>
 
     <div class="table-responsive printorgdetails">
@@ -111,7 +112,7 @@
        });
        $("#loiback").click(function(event) {
          $("#msspinmodal").modal("show");
-	 var dataset = {"orderflag":$("#reportorderselect").val(), "typeflag":$("#reporttypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
+	 var dataset = {"inoutflag":$("#reportinoutselect").val(),"orderflag":$("#reportorderselect").val(), "typeflag":$("#reporttypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
 	 $.ajax(
 	   {
 	     type: "POST",

@@ -104,11 +104,31 @@ $(document).ready(function() {
     $("#descending").keydown(function(e) {
         if (e.which == 13) {
             e.preventDefault();
-            $("#viewlist_fromdate").focus().select();
+            $("#sale").focus().select();
         }
 	if (e.which == 38) {
 	    e.preventDefault();
             $("#ascending").focus();
+        }
+    });
+    $("#sale").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $("#purchase").focus().select();
+        }
+	if (e.which == 38) {
+	    e.preventDefault();
+            $("#descending").focus();
+        }
+    });
+    $("#purchase").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $("#viewlist_fromdate").focus().select();
+        }
+	if (e.which == 38) {
+	    e.preventDefault();
+            $("#sale").focus();
         }
     });
     $("#viewlist_fromdate").keydown(function(e) {
@@ -117,7 +137,7 @@ $(document).ready(function() {
             $("#viewlist_frommonth").focus().select();
         }
         if (e.which == 38) {
-            $("#descending").focus();
+            $("#purchase").focus();
         }
     });
     $("#viewlist_frommonth").keydown(function(e) {
@@ -262,10 +282,15 @@ $(document).ready(function() {
         // creating dataset for retrieving report from the server.
         var dataset = {};
 	var orderflag  = 1;
+	var inoutflag = 15;
 	if($("#descending").is(":checked")){
 	    orderflag = 4;
 	}
+	if($("#purchase").is(":checked")){
+	    inoutflag = 9;
+	}
         dataset = {
+	    "inoutflag":inoutflag,
 	    "orderflag":orderflag,
             "typeflag": $("#reporttypeselect option:selected").val(),
             "fromdate": $("#viewlist_fromdate").val() + "-" + $("#viewlist_frommonth").val() + "-" + $("#viewlist_fromyear").val(),
