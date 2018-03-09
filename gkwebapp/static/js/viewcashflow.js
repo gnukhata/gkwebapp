@@ -39,14 +39,14 @@ $(document).ready(function() {
   }
 
 	// Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#cashfl_fromdate").val(fromdatearray[2])
-  $("#cashfl_frommonth").val(fromdatearray[1])
-  $("#cashfl_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#cashfl_todate").val(todatearray[2])
-  $("#cashfl_tomonth").val(todatearray[1])
-  $("#cashfl_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#cashfl_fromdate").val(fromdatearray[2]);
+    $("#cashfl_frommonth").val(fromdatearray[1]);
+    $("#cashfl_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#cashfl_todate").val(todatearray[2]);
+    $("#cashfl_tomonth").val(todatearray[1]);
+    $("#cashfl_toyear").val(todatearray[0]);
   $("#cashfl_fromdate").select();
 
 

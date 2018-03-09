@@ -37,9 +37,9 @@
             <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
           <div class="form-inline" >
             <div class="form-group">
-              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_frommonth" value="" size="2" maxlength="2" placeholder="MM">
-              <input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_fromyear" value="" size="4" maxlength="4" placeholder="YYYY">
+              <input type="text" class="form-control input-sm gstsm_autotab" id="from_date" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+              <input type="text" class="form-control input-sm cashfl_autotab" id="from_month" value="" size="2" maxlength="2" placeholder="MM">
+              <input type="text" class="form-control input-sm cashfl_autotab" id="from_year" value="" size="4" maxlength="4" placeholder="YYYY">
             </div>
 	  </div>
 	  </div>
@@ -49,9 +49,9 @@
             <div class="form-inline">
               <div class="form-group">
 
-		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_todate" value=""  size="2" maxlength="2" placeholder="DD">
-		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_tomonth" value="" size="2" maxlength="2" placeholder="MM">
-		<input type="text" class="form-control input-sm cashfl_autotab" id="cashfl_toyear" value="" size="4" maxlength="4" placeholder="YYYY">
+		<input type="text" class="form-control input-sm cashfl_autotab" id="to_date" value=""  size="2" maxlength="2" placeholder="DD">
+		<input type="text" class="form-control input-sm cashfl_autotab" id="to_month" value="" size="2" maxlength="2" placeholder="MM">
+		<input type="text" class="form-control input-sm cashfl_autotab" id="to_year" value="" size="4" maxlength="4" placeholder="YYYY">
 	      </div>
             </div>
           </div>
@@ -156,55 +156,6 @@
 	  </div>
 
 
-
-
-
-
-
-	  
-	  <!--  
-	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px; padding:10px;">
-	    <div class ="row">
-	      <div class="col-sm-12 text-center">
-		<label>{%trans%}Select Account/s{% endtrans %}</label>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="form-inline col-sm-6">
-		<label>{% trans %}SGST In{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="sgst_in"  name = "sgst_in" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
-	      </div>
-	    </div>
-	    <div class="row">
-	      <div class="form-inline col-sm-6">
-		<label>{% trans %}CGST Out{% endtrans %}:</label>
-		<select class = "form-control input-sm" id="cgst_out"  name = "cgst_out">
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
-	      </div>
-	    </div>
-	    
-	  </div>
-	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
-	    
-	    <label>{% trans %}IGST{% endtrans %}</label>
-	    
-	  </div>
-	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px;">
-	    
-	    <label>{% trans %}CESS{% endtrans %}</label>
-	    
-	  </div>
-	  
-	</div>-->
 	</div>
 	<div class="panel-footer">
           <button type="button" class="btn btn-sm btn-primary" name="button" id="cashfl_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
