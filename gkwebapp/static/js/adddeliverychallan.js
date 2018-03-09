@@ -33,6 +33,7 @@ Contributors:
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $('.delchaldate').autotab('number');
+  $(".supplydate").autotab('number');  
   $("#deliverychallan_challanno").focus().select();
   $("#deliverychallan_date").numeric();
   $("#deliverychallan_month").numeric();
@@ -1449,7 +1450,7 @@ if (event.which == 13) {
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	}
 	else {
-	    $("#transportationmode").focus().select();
+	    $("#deliverychallan_noofpackages").focus().select();
 	}
     }
     //$("#transportationmode").focus().select();
@@ -1481,7 +1482,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#transportationmode").focus().select();
+      $("#deliverychallan_noofpackages").focus();
     }
 });
 
@@ -2208,14 +2209,30 @@ else {
     
 
 
-  $(document).off("click",".product_del").on("click", ".product_del", function() {
-      // removing the row where the del is clicked
-    $(this).closest('tr').fadeOut(200, function(){
-      $(this).closest('tr').remove();	 //closest method gives the closest element productified
-      $('#deliverychallan_product_table tbody tr:last td:eq(0) input').focus().select();
+    $(document).off("click", ".product_del").on("click", ".product_del", function(event){
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var nextindex = curindex + 1;
+	var previndex = curindex - 1;
+	if ($("#invoice_product_table_vat tbody tr").length > 1) {
+	    $(this).closest('tr').fadeOut(200, function() {
+		$(this).closest('tr').remove(); //closest method gives the closest element productified
+		$("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+	    });
+	}
+	if ($("#invoice_product_table_vat tbody tr").length == 1) {
+	  $("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
+	}
+      
+	if ($("#invoice_product_table_gst tbody tr").length > 1) {
+	    $(this).closest('tr').remove();
+	    $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
+	    $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	}
+	if ($("#invoice_product_table_gst tbody tr").length == 1) {
+	    $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+	}
     });
-    $('#deliverychallan_product_table tbody tr:last td:eq(0) input').select();
-  });
 
   $("#deliverychallan_addcust").click(function() {
       var custsup = "";
