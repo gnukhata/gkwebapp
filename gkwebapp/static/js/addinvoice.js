@@ -2764,7 +2764,6 @@ if (event.which == 13) {
 	    }
 	form_data.append("file" + i, files[i]);
       }
-    console.log(form_data);
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {

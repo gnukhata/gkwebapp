@@ -2578,7 +2578,10 @@ if (event.which == 13) {
 
 			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
-			    $("#vehicleno").val(resp.invoicedata.vehicleno);
+			    if(resp.invoicedata.vehicleno != ""){
+				$("#vehiclenodiv").show();
+				$("#vehicleno").val(resp.invoicedata.vehicleno);
+			    }else{ $("#vehiclenodiv").hide(); }
 			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
 			    $("#supply_date").val(dateofsupply["0"]);
 			    $("#supply_month").val(dateofsupply["1"]);
