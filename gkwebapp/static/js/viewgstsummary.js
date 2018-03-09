@@ -44,7 +44,28 @@ $(document).ready(function() {
     $("#to_date").val(todatearray[2]);
     $("#to_month").val(todatearray[1]);
     $("#to_year").val(todatearray[0]);
- 
+
+    function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
+  function yearpad (str, max) { //to add leading 20 or 200 to year
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
 
 
 
