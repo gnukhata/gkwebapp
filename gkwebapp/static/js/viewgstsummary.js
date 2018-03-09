@@ -189,6 +189,25 @@ $("#igst_out").keydown(function(event) {
     }
   });
 
+
+    //key event to trigger click of checkbox.
+    $(document).off('keydown', '.dropdownitem').on('keydown',
+'.dropdownitem', function(event) {
+        event.preventDefault();
+        if (event.which==32) {
+        $(this).find(".dropdowncheckbox").click();  //Find will select all children of dropdownitem with class dropdowncheckbox.
+    }
+    });
+
+    //List to load accounts.
+    var sgstinaccounts = [];
+    $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
+	    sgstinaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+
+
    
 
 }); // close for document ready

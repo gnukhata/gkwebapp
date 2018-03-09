@@ -82,8 +82,11 @@
 		<div class="dropdown">
 		  <button class="btn button sgst_in dropdown-toggle" id="sgst_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
+		   <!-- Class dropdownitem will let us identify each li element. We will use it to trigger checkbox on spacebar press. -->
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="sgstin">{{accs["accountname"]}}</label></a></li>
+	<!-- Class sgstinaccount is for ceckboxes. They have value as accountcode. We can loop them in js to get list od accounts. -->
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox sgstinaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -95,7 +98,8 @@
 		  <button class="btn button  dropdown-toggle" id="sgst_out" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="sgstout">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox sgstoutaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -109,7 +113,8 @@
 		  <button class="btn button  dropdown-toggle" id="cgst_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="cgstin">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox cgstinaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -121,7 +126,8 @@
 		  <button class="btn button  dropdown-toggle" type="button" id="cgst_out" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="cgstout">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox cgstoutaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -136,7 +142,8 @@
 		  <button class="btn button  dropdown-toggle" id="igst_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="igstin">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox igstinaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -148,7 +155,8 @@
 		  <button class="btn button  dropdown-toggle" id="igst_out" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="igstout">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox igstoutaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -163,7 +171,8 @@
 		  <button class="btn button  dropdown-toggle" id="cess_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="cessin">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox cessinaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
@@ -175,7 +184,8 @@
 		  <button class="btn button  dropdown-toggle" id="cess_out" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">
 		    {% for accs in gkresult %}
-		      <li><a href="#"><label> <input type="checkbox" class="cessout">{{accs["accountname"]}}</label></a></li>
+		      <li class="dropdownitem"><a href="#"><label>
+			<input type="checkbox" class="dropdowncheckbox cessoutaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
 		    {% endfor %}
 		  </ul>
 		</div>
