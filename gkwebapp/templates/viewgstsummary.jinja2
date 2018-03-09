@@ -56,7 +56,113 @@
             </div>
           </div>
 	  </div>
+	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px; padding:10px;">
+	    <div class ="row">
+	    <div class="col-sm-12">
+	      <label>{%trans%}Select Account/s for tax calculation{% endtrans %}</label>
+	    </div>
+	    </div>
+	    <br>
+	    <div class ="row">
+	      <div class="form-inline col-sm-6">
+		<label for="sgst_in">{% trans %}SGST In{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="sgst_in"  name = "sgst_in" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+
+	      <div class="form-inline col-sm-6">
+		<label for ="sgst_out">{% trans %}SGST Out{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="sgst_out"  name = "sgst_out" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </div>
+	    <br>
+	    <div class ="row">
+	      <div class="form-inline col-sm-6">
+		<label for="cgst_in">{% trans %}CGST In{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="cgst_in"  name = "cgst_in" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+
+	      <div class="form-inline col-sm-6">
+		<label for ="cgst_out">{% trans %}CGST Out{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </div>
+
+	    <br>
+	    <div class ="row">
+	      <div class="form-inline col-sm-6">
+		<label for="igst_in">{% trans %}IGST In{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="igst_in"  name = "igst_in" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+
+	      <div class="form-inline col-sm-6">
+		<label for ="igst_out">{% trans %}IGST Out{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="igst_out"  name = "igst_out" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </div>
+
+	    <br>
+	    <div class ="row">
+	      <div class="form-inline col-sm-6">
+		<label for="cess_in">{% trans %}CESS In{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="cess_in"  name = "cess_in" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+
+	      <div class="form-inline col-sm-6">
+		<label for ="cess_out">{% trans %}CESS Out{% endtrans %} :</label>
+		<select class = "form-control input-sm" id="cess_out"  name = "cgst_out" >
+		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
+		  {% for accs in gkresult %}
+		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+		  {% endfor %}
+		</select>
+	      </div>
+	    </div>
+	    
+	  </div>
+
+
+
+
+
+
+
 	  
+	  <!--  
 	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px; padding:10px;">
 	    <div class ="row">
 	      <div class="col-sm-12 text-center">
@@ -98,7 +204,7 @@
 	    
 	  </div>
 	  
-	  
+	</div>-->
 	</div>
 	<div class="panel-footer">
           <button type="button" class="btn btn-sm btn-primary" name="button" id="cashfl_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
