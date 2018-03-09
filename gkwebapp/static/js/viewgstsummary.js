@@ -67,8 +67,41 @@ $(document).ready(function() {
     }
   }
 
+$("#from_date").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#from_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#to_date").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#to_month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
 
+  $("#from_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
 
-});
+  $("#to_year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  });
+  $("#to_year").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $(this).val(yearpad($(this).val(),4));
+      $("#sgst_in").focus();
+      event.stopPropagation();
+    }
+  });
+
+   
+
+    
+
+    
+
+}); // close for document ready
 
 

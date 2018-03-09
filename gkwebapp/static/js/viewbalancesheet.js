@@ -102,7 +102,7 @@ $(document).ready(function() {
 
 
 // Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
   $("#viewbalsht_fromday").val(fromdatearray[2])
   $("#viewbalsht_frommonth").val(fromdatearray[1])
   $("#viewbalsht_fromyear").val(fromdatearray[0])
