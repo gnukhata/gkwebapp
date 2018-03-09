@@ -8,9 +8,24 @@
 	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      }
      label {
-  	 font-size: 90%;
+  	 font-size: 100%;
      }
-    
+
+     .button {
+	 background-color:#e7e7e7;  /* Grey */
+	 border: none;
+	 border-radius: 4px;
+	 width: 180px;
+	 height:30px;
+	 color: black;
+	 
+	 text-align: center;
+	 
+	 text-decoration: none;
+	 display: inline-block;
+	 font-size: 12px;
+	 border: 1px solid #555555;
+     }
 
     </style>
   </head>
@@ -36,74 +51,82 @@
           </div>
 	  <div class="row">
 	    <div class="form-inline col-sm-6">
-            <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
-          
-            <div class="form-group">
-              <input type="text" class="form-control input-sm gstsm_autotab" id="from_date" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-              <input type="text" class="form-control input-sm gstsm_autotab" id="from_month" value="" size="2" maxlength="2" placeholder="MM">
-              <input type="text" class="form-control input-sm gstsm_autotab" id="from_year" value="" size="4" maxlength="4" placeholder="YYYY">
-            </div>
-	  </div>
-	 
-	
-          <div class="form-inline col-sm-6">
-            <label for="cashfl_todate">{% trans %}To{% endtrans %} :</label>
+              <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
+              
+              <div class="form-group">
+		<input type="text" class="form-control input-sm gstsm_autotab" id="from_date" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+		<input type="text" class="form-control input-sm gstsm_autotab" id="from_month" value="" size="2" maxlength="2" placeholder="MM">
+		<input type="text" class="form-control input-sm gstsm_autotab" id="from_year" value="" size="4" maxlength="4" placeholder="YYYY">
+              </div>
+	    </div>
+	    
+	    
+            <div class="form-inline col-sm-6">
+              <label for="cashfl_todate">{% trans %}To{% endtrans %} :</label>
               <div class="form-group">
 
 		<input type="text" class="form-control input-sm gstsm_autotab" id="to_date" value=""  size="2" maxlength="2" placeholder="DD">
 		<input type="text" class="form-control input-sm gstsm_autotab" id="to_month" value="" size="2" maxlength="2" placeholder="MM">
 		<input type="text" class="form-control input-sm gstsm_autotab" id="to_year" value="" size="4" maxlength="4" placeholder="YYYY">
 	      </div>
-          </div>
+            </div>
 	  </div>
 	  <div style="border:1px solid grey; border-radius:4px; margin-top:20px; padding:10px;">
 	    <div class ="row">
-	    <div class="col-sm-12">
-	      <label>{%trans%}Select Account/s for tax calculation{% endtrans %}</label>
-	    </div>
+	      <div class="col-sm-12">
+		<label><font size="3">{%trans%}Select Account/s for tax calculation{% endtrans %}</font></label>
+	      </div>
 	    </div>
 	    <br>
 	    <div class ="row">
 	      <div class="form-inline col-sm-6">
 		<label for="sgst_in">{% trans %}SGST In{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="sgst_in"  name = "sgst_in" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 
 	      <div class="form-inline col-sm-6">
 		<label for ="sgst_out">{% trans %}SGST Out{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="sgst_out"  name = "sgst_out" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 	    </div>
 	    <br>
 	    <div class ="row">
 	      <div class="form-inline col-sm-6">
 		<label for="cgst_in">{% trans %}CGST In{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="cgst_in"  name = "cgst_in" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 
 	      <div class="form-inline col-sm-6">
 		<label for ="cgst_out">{% trans %}CGST Out{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="cgst_out"  name = "cgst_out" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 	    </div>
 
@@ -111,22 +134,26 @@
 	    <div class ="row">
 	      <div class="form-inline col-sm-6">
 		<label for="igst_in">{% trans %}IGST In{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="igst_in"  name = "igst_in" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 
 	      <div class="form-inline col-sm-6">
 		<label for ="igst_out">{% trans %}IGST Out{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="igst_out"  name = "igst_out" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 	    </div>
 
@@ -134,22 +161,26 @@
 	    <div class ="row">
 	      <div class="form-inline col-sm-6">
 		<label for="cess_in">{% trans %}CESS In{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="cess_in"  name = "cess_in" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 
 	      <div class="form-inline col-sm-6">
 		<label for ="cess_out">{% trans %}CESS Out{% endtrans %} :</label>
-		<select class = "form-control input-sm" id="cess_out"  name = "cgst_out" >
-		  <option value="" disabled selected hidden>{% trans %}Select Account/s{% endtrans %}</option>
-		  {% for accs in gkresult %}
-		    <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-		  {% endfor %}
-		</select>
+		<div class="dropdown">
+		  <button class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		  <ul class="dropdown-menu">
+		    {% for accs in gkresult %}
+		      <li><a href="#"><label> <input type="checkbox" class="cess_out">{{accs["accountname"]}}</label></a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
 	      </div>
 	    </div>
 	    
