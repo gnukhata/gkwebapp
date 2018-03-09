@@ -171,9 +171,24 @@ $("#cgst_out").keydown(function(event) {
 $("#igst_out").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#sgst_out").focus();
+      $("#cess_in").focus();
     }
   });
+
+    $("#cess_in").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#cess_out").focus();
+    }
+    });
+
+     $("#cess_out").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#report_view").focus();
+    }
+  });
+
     
 
     
