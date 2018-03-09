@@ -113,7 +113,6 @@ $(document).ready(function() {
 		    }
 		    
 		    // Change event for product price(i.e.Rate) in VAT
-		    calculatevataxamt(curindex);
 		    $(document).off('change', '.drcrnote_product_per_price_vat').on('change', '.drcrnote_product_per_price_vat', function(event) {
 			event.preventDefault();
 			/* Act on the event */
@@ -240,7 +239,12 @@ $(document).ready(function() {
 		$(".vatfield").hide();
 		$(".gstfield").show();
 	    }
-	    else {
+		else {
+		    $("#discounttotal_product_vat").val(resp.invoicedata.totaldiscount);
+		    $("#taxablevaluetotal_product_vat").val(resp.invoicedata.totaltaxablevalue);
+		    $("#totaltax").val(resp.invoicedata.totaltaxamt);
+		    $("#total_product_vat").val(resp.invoicedata.invoicetotal);
+		    
 		$("#taxapplicabletext").text("VAT");
 		$("#gstproducttable").hide();
 		$(".gstinfield").hide();
