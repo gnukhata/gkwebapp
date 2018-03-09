@@ -35,9 +35,22 @@ import os
 from odslib import ODS
 
 @view_config(route_name="gstsummary",renderer="gkwebapp:templates/viewgstsummary.jinja2")
-def viewgstsummary(request):
+def viewGstSummary(request):
 
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
     projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
     return {"gkresult":result.json()["gkresult"]}
+
+@view_config(route_name="gstsummary",request_param="type=senddata",)
+def sendReportData(request):
+    print "Hii "
+    '''
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    calculatefrom = request.params["calculatefrom"]
+    orgtype = request.params["orgtype"]
+    header={"gktoken":request.headers["gktoken"]}
+    print "hello you are here"
+    #result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+'''

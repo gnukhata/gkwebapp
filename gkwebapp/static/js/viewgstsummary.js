@@ -31,7 +31,7 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
     $("#from_date").focus().select();
   $('.gstsm_autotab').autotab('number');
-  var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
 
   // Setting default date to financialstart and end.
@@ -206,8 +206,88 @@ $("#igst_out").keydown(function(event) {
 
     });
 
+   
 
 
+
+
+    $(document).off('click' ,'#report_view').on('click' ,'#report_view', function(event) {
+
+
+	var sgstinaccounts = [];
+        $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
+	sgstinaccounts.push($(this).val()); //Push appends values to list.
+
+	});
+
+	  var sgstoutaccounts = [];
+          $(".sgstoutaccount:checked").each(function() {  //Loop all slected accounts.
+	  sgstoutaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+    var cgstinaccounts = [];
+    $(".cgstinaccount:checked").each(function() {  //Loop all slected accounts.
+	    cgstinaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+    var cgstoutaccounts = [];
+    $(".cgstoutaccount:checked").each(function() {  //Loop all slected accounts.
+	    cgstoutaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+	  var igstoutaccounts = [];
+    $(".igstoutaccount:checked").each(function() {  //Loop all slected accounts.
+	    igstoutaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+    var igstinaccounts = [];
+    $(".igstinaccount:checked").each(function() {  //Loop all slected accounts.
+	    igstinaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+    var cessinaccounts = [];
+    $(".cessinaccount:checked").each(function() {  //Loop all slected accounts.
+	    cessinaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+	var cessoutaccounts = [];
+    $(".cessoutaccount:checked").each(function() {  //Loop all slected accounts.
+	    cessoutaccounts.push($(this).val()); //Push appends values to list.
+
+    });
+
+    $("#msspinmodal").modal("show");
+    $.ajax(
+      {
+        type: "POST",
+        url: "/gstsummary?type=senddata",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+  });
+  $("#cashfl_reset").click(function(event) {
+    $("#showcashflow").click();
+  });
    
 
 }); // close for document ready
