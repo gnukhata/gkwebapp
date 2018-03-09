@@ -96,8 +96,84 @@ $("#from_date").blur(function(event) {
     }
   });
 
-   
+    // Navigate within date fields uing "ENTER" key
 
+     $("#from_date").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#from_month").focus();
+    }
+     });
+     $("#from_month").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#from_year").focus();
+    }
+  });
+
+     $("#from_year").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#to_date").focus();
+    }
+     });
+
+     $("#to_date").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#to_month").focus();
+    }
+     });
+
+      $("#to_month").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#to_year").focus();
+    }
+  });
+
+    // Navigate through tax select box using "ENTER" key
+    
+    $("#sgst_in").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#sgst_out").focus();
+    }
+    });
+
+    $("#sgst_out").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#cgst_in").focus();
+    }
+    });
+    
+    $("#cgst_in").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#cgst_out").focus();
+    }
+    });
+    
+$("#cgst_out").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#igst_in").focus();
+    }
+  });
+
+    $("#igst_in").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#igst_out").focus();
+    }
+  });
+$("#igst_out").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#sgst_out").focus();
+    }
+  });
     
 
     
