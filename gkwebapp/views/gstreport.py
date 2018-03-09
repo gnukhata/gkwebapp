@@ -45,9 +45,8 @@ def viewGstSummary(request):
 @view_config(route_name="gstsummary",request_param="type=senddata",)
 def sendReportData(request):
     print "Hii "
-    '''
     calculateto = request.params["calculateto"]
-    financialstart = request.params["financialstart"]
+   # financialstart = request.params["financialstart"]
     calculatefrom = request.params["calculatefrom"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}

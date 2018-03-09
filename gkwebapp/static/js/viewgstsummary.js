@@ -259,6 +259,8 @@ $("#igst_out").keydown(function(event) {
 	    cessoutaccounts.push($(this).val()); //Push appends values to list.
 
     });
+	result ={"sgstin":JSON.stringify(sgstinaccounts),"sgstout":JSON.stringify(sgstaccounts)};
+	
 
     $("#msspinmodal").modal("show");
     $.ajax(
