@@ -10,6 +10,45 @@ $(document).ready(function() {
     var totaltablehtml = $("#drcrnote_product_table_total tbody tr:first").html(); //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#drcrnote_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     
+    //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
+    function calculatevataxamt(curindex) {
+	//Initialising variables to zero and getting values from various input fileds.
+	var rowqty = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+	var rowdiscount = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
+	var taxamount = 0.00;
+	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtotal = 0.00;
+	var totalamount = 0.00;
+	var totaltax = 0.00;
+	var totaldiscount = 0.00;
+	var totaltaxable = 0.00;
+	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(taxamount).toFixed(2));
+	 rowtotal = rowtaxableamount + taxamount;
+	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(rowtotal).toFixed(2));
+	//Total of discount, taxable amount, tax amounts and total are found out
+	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
+	    totaldiscount = totaldiscount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(3) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+	    totaltax = totaltax + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    totalamount = totalamount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
+	}
+	
+	//Total of various columns are displayed on the footer.
+	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
+	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
+	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
+	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
+	$("#totaldrcrnotvalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	
+    }
+    
     $("#drcrnote_invoice").change(function(event){
 	$.ajax({
 		url: '/invoice?action=getinvdetails',
@@ -72,6 +111,27 @@ $(document).ready(function() {
 			    });
 				
 		    }
+		    
+		    // Change event for product price(i.e.Rate) in VAT
+		    calculatevataxamt(curindex);
+		    $(document).off('change', '.drcrnote_product_per_price_vat').on('change', '.drcrnote_product_per_price_vat', function(event) {
+			event.preventDefault();
+			/* Act on the event */
+			if ($(this).val() == "") {
+			    $(this).val(0);
+			}
+			var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
+			console.log("CUR",curindex);
+			if (parseFloat($(this).val()) == 0) {
+			    $("#price-blank-alert").alert();
+			    $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#price-blank-alert").hide();
+				$('.drcrnote_product_per_price_vat:eq(' + curindex + ')').focus().select();
+			    });
+			    return false;
+			}
+			calculatevataxamt(curindex);
+		    });
 		    //invoicedata contents filled in table
 		    console.log("invoice contents which gives details of product to fill table ",resp.invoicedata.invcontents);
 		    $('#drcrnote_table_vat tbody').empty();
