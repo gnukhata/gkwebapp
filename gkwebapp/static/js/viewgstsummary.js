@@ -191,12 +191,6 @@ $("#igst_out").keydown(function(event) {
 
    
 
- 
-  
- 
-   
-    
-
 }); // close for document ready
 
 
