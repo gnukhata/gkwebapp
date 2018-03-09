@@ -529,8 +529,48 @@
 		</div>
 	      {% endif %}
 	    </div>
-	    <div class ="row col-sm-12">
-	      <div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;">
+	    <div class="row">
+	      <div class="form-inline col-sm-6"> 
+		<label for="inv">{% trans %}&nbsp &nbsp Payment Details{% endtrans %}:</label>
+		<div class="radio">
+        	  <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkbank" aria-label="" checked>&nbsp {% trans %}Bank{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkcash" aria-label="">&nbsp{% trans %}Cash{% endtrans %}.</label>
+        	</div>
+	      </div>
+	    </div>
+	    <div class ="row col-sm-12" >
+	      <div class ="col-sm-12">
+		<div class="alert alert-danger" id="bankdetails-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Bank Name.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an account  number.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Branch Name.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="accountno_bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Account Number, Bank Name and the Branch Name.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Bank Name and the Branch Name.{% endtrans %}
+		</div>
+
+		<div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an IFSC Code{% endtrans %}
+		</div>
+	      </div>
+	      <div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;" id="bank">
 		<h4>Bank Details:</h4>
 		<div class="row col-sm-12">
 		  <div class="form-group form-inline">
@@ -557,8 +597,12 @@
 		    <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
 		  </div>
 		</div>
+	      </div><br>
+	      <div class="col-sm-4 rborderdiv" style='display:none;' id="cash">
+		<label style="font-size:120% !important;">CASH RECEIVED</label>
+		<br><br><br><br><br><br><br><br><br><br>	
 	      </div>
-	      <div class="col-sm-4" style="margin-top:1.1cm;">
+	      <div class="col-sm-4 " style="margin-top:1.1cm;">
 		<div class="row col-sm-12">
 		  <div class="form-inline form-group">
 		    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
@@ -706,7 +750,7 @@
 	</div>
 	  </form>
       </div>
-    </div>
+    
     <div class="panel-footer ">
       <div class="container-fluid">
 	<div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>

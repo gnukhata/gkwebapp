@@ -84,10 +84,12 @@ def saveinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
 
     invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],
-                   "tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]),"bankdetails":json.loads(request.params["bankdetails"]),"taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"]}
+                   "tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]), "taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"], "paymentmode":request.params["paymentmode"]}
+    
     if request.params["dateofsupply"] != "":
         invoicedata["dateofsupply"] = request.params["dateofsupply"]
-
+    if request.params.has_key("bankdetails"):
+        invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
     try:
         files = {}
         count = 0
@@ -127,9 +129,11 @@ The data received is sent to core engine.
 def updateinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
 
-    invoicedata = {"invid":request.params["invid"],"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]),"bankdetails":json.loads(request.params["bankdetails"]),"taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"]}
+    invoicedata = {"invid":request.params["invid"],"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]), "taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"], "paymentmode":request.params["paymentmode"]}
     if request.params["dateofsupply"] != "":
         invoicedata["dateofsupply"] = request.params["dateofsupply"]
+    if request.params.has_key("bankdetails"):
+        invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
 
     try:
         files = {}

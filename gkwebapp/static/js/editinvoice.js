@@ -25,6 +25,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 "Abhijith Balan" <abhijith@dff.org.in>
+"Pravin Dake" <pravindake24@gmail.com>
 */
 
 // This script is for the addinvoice.jinja2
@@ -45,13 +46,14 @@ $(document).ready(function() {
     var consigneeflag = false;
     var editflag = false;
     var delchalproducts = [];
+    var paymentmod = {};     //Store the paymentmode.
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
-    var gstins = {};
+    var gstins = {};    
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -511,6 +513,10 @@ $(document).ready(function() {
 		    $("#invoice_customerstate").change();
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
         //All GSTINs of this customer are
 		    gstins = resp["gkresult"]["gstin"];
         if ($("#invoice_customer option:selected").attr("custid") in gstins) {
@@ -1036,7 +1042,11 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1109,7 +1119,11 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1201,7 +1215,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1265,7 +1283,11 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
     }
   });
 
@@ -1329,7 +1351,11 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
     }
   });
 
@@ -1386,6 +1412,11 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
+	 if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
@@ -1442,7 +1473,11 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	  }
       else {
-          $("#accountno").focus().select();
+          if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
@@ -1473,7 +1508,11 @@ $(document).ready(function() {
       $("#invoice_issuer_name").focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1652,7 +1691,11 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1725,8 +1768,12 @@ $(document).ready(function() {
 	event.preventDefault();
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
-    else if (event.which == 27) {
-	  $("#accountno").focus().select();
+      else if (event.which == 27) {
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1827,7 +1874,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1896,7 +1947,11 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
     }
   });
 
@@ -2015,7 +2070,11 @@ if (event.which == 13) {
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	}
 	else {
-	    $("#accountno").focus().select();
+	    if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
 	}
     }
 }
@@ -2046,7 +2105,11 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      if ($("#chkbank").is(":checked")) {
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
     }
 });
 
@@ -2318,9 +2381,9 @@ if (event.which == 13) {
 					$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    else{
-					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_sgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
-					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate/2).toFixed(2));
+					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_cgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
@@ -2411,10 +2474,51 @@ if (event.which == 13) {
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
-			    $("#accountno").val(resp.invoicedata.bankdetails.accountno);
-			    $("#bankname").val(resp.invoicedata.bankdetails.bankname);
-			    $("#branch").val(resp.invoicedata.bankdetails.branch);
-			    $("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
+			    paymentmod = resp.invoicedata.paymentmode; 
+			    // If paymentmode is 2(i.e. bank) then load bankdetails.
+			    if (resp.invoicedata.paymentmode == "2") {
+				$("#accountno").val(resp.invoicedata.bankdetails.accountno);
+				$("#bankname").val(resp.invoicedata.bankdetails.bankname);
+				$("#branch").val(resp.invoicedata.bankdetails.branch);
+				$("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
+				$("#chkbank").prop('checked', true);  
+				$("#chkcash").prop('checked', false);
+				$("#bank").show();
+				$("#cash").hide();
+			    } else {
+				$("#chkcash").prop('checked', true);
+				$("#chkbank").prop('checked', false);
+				$("#bank").hide();
+				$("#cash").show();
+			    }
+			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
+			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
+				$("#chkbank").click(function(event) {
+				    $.ajax({
+					url: '/editorganisation?action=orgbankdetails',
+					type: 'POST',
+					dataType: 'json',
+					beforeSend: function(xhr) {
+					    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					}
+				    })
+					.done(function(resp) {
+					    console.log("success");
+					    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisations is loaded.
+					    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //Branchname of organisations is loaded.
+					    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //Ifsc code of organisations is loaded.
+					    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //Branchname of organisations is loaded.
+
+					})
+					.fail(function() {
+					    console.log("error");
+					})
+					.always(function() {
+					    console.log("complete");
+					});
+				});
+
+			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
 			    $("#vehicleno").val(resp.invoicedata.vehicleno);
 			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
@@ -2663,6 +2767,18 @@ if (event.which == 13) {
           $('#consigneename').focus();
           return false;
       }
+
+      //validation for bankdetails on save button.  
+       if ($("#chkbank").is(":checked")) {
+	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+	      $("#bankdetails-blank-alert").alert();
+	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#bankdetails-blank-alert").hide();
+	      });
+	      $("#accountno").focus();
+	      return false;
+	  }
+      }
       var tax = {};
       var cess = {};
       var contents = {};
@@ -2908,7 +3024,16 @@ if (event.which == 13) {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-    form_data.append("bankdetails", JSON.stringify(bankdetails));
+    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+        if ($("#chkcash").is(":checked")) {
+	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+	        form_data.append("paymentmode",3);   
+
+        } else {
+	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+	        form_data.append("bankdetails", JSON.stringify(bankdetails));
+		form_data.append("paymentmode",2);
+            }  
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
@@ -3105,4 +3230,153 @@ if (event.which == 13) {
                 console.log("complete");
             });
     });
+
+    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+        if(event.which==13){
+        $("#accountno").focus();
+        }
+    });
+    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
+        if(event.which==13){
+        $("#transportationmode").focus();
+        }
+    });
+     //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
+    $("input[name='chkpaymentmode']").click(function () {
+	//Checking which radio button is selected.
+        if ($("#chkbank").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+                $("#bank").show();
+	        $("#cash").hide();
+	    if ($("#status").val() == "15" && editflag == 'false') {
+		$('#chkbank').trigger('click');    //trigger click event on bank radio button.
+	    }
+	    if (editflag == 'false'){
+	        $("#invoice_customer").trigger("change");    //Calling change event on onclick of bank to load bankdetails.
+	    }
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#bank").hide();
+		$("#cash").show();
+            }
+    });
+
+      //Keydown event for BANK DETAILS
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    $("#bankname").focus().select();
+	}
+    });  
+
+
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+          
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())!="") {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+         else if ($.trim($("#accnum").val())!="" && $.trim($("#bank_name").val())=="") {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+	    
+      $("#branch").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#accountno").focus().select();
+	};
+    });
+
+    $("#branch").keydown(function(event) {
+	if (event.which==13) {
+	     if ($.trim($("#accountno").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+          }
+
+	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+
+
+	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())=="" ) {
+            $("#branch-blank-alert").alert();
+            $("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branch-blank-alert").hide();
+            });
+            $("#branch").focus();
+            return false;
+          }    
+	    
+	    event.preventDefault();
+      $("#ifsc").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#bankname").focus().select();
+	};
+    });    
+
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#accountno_bankname_branch-blank-alert").alert();
+            $("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno_bankname_branch-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#bankname_branch-blank-alert").alert();
+            $("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname_branch-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+         }
+
+
+
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())!="" && $.trim($("#ifsc").val())=="" ) {
+            $("#ifsc-blank-alert").alert();
+            $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#ifsc-blank-alert").hide();
+            });
+            $("#ifsc").focus();
+            return false;
+            }
+	    
+      event.preventDefault();
+      $("#transportationmode").focus().select();
+    }
+    if (event.which==38) {
+	 event.preventDefault();
+	 $("#branch").focus().select();
+       };
+    });
+  
 });

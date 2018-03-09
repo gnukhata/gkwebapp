@@ -152,3 +152,9 @@ def editOrganisationPreferences(request):
     gkdata= {"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"]}
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="editorganisation",request_param="action=orgbankdetails", renderer="json")
+def orgbankDetails(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://0.0.0.0:6543/organisation?orgbankdetails", headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkbankdata":result.json()["gkbankdata"]}
