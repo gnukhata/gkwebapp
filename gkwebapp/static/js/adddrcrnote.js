@@ -31,7 +31,14 @@ $(document).ready(function() {
 		    $("#gstin").text(resp.invoicedata.custSupDetails["custgstin"]);
 		    $("#tin").text(resp.invoicedata.custSupDetails["custtin"]);
 		    $("#drcrnote_custsuppaddr").text(resp.invoicedata.custSupDetails["custaddr"]);
-		    $("#taxapplicable").text(resp.invoicedata.taxname);
+		    /*
+		    if (resp.invoicedata.taxname=="VAT"){
+			 $("#taxapplicabletext").text(resp.invoicedata.taxname);
+		    }else if ((resp.invoicedata.taxname=="IGST") || (resp.invoicedata.taxname=="SGST")){
+			 $("#taxapplicabletext").text("GST");
+		   
+		    }
+		    */
 		    if(resp.invoicedata.inoutflag == "15") {
 			console.log("Source State");
 			console.log(resp.invoicedata.sourcestate);
@@ -96,12 +103,8 @@ $(document).ready(function() {
 		    });
 		    $("#drcrnote_table_vat tbody tr:first td:eq(9)").empty();
 		    var productcode;
-		    if(resp.invoicedata.taxname=="IGST"){
-			$(".sgstfield").hide();		
-		    }else{
-			$(".igstfield").hide();
-		    }
 		    $('#drcrnote_product_table_gst tbody').empty();
+		    $('#drcrnote_product_table_total tbody').empty();
 		    $.each(resp.invoicedata.invcontents, function(key, value) {
 			$('#drcrnote_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 			console.log("from gst prod name=======",value.proddesc);
@@ -122,6 +125,8 @@ $(document).ready(function() {
 			
 			if(resp.invoicedata.taxname=="IGST")
 			{
+			    $(".sgstfield").hide();
+			    $(".igstfield").show();
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2));
@@ -130,12 +135,13 @@ $(document).ready(function() {
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(8) input').val(parseFloat(value.cessrate).toFixed(2)).attr("data", parseFloat(value.cessrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(value.cess).toFixed(2)).attr("data", parseFloat(value.cess).toFixed(2));
-		
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.totalAmount).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(value.totalAmount).toFixed(2));
+
+			    
 			}
 			else if(resp.invoicedata.taxname=="SGST")
 			{
+			    $(".igstfield").hide();
+			$(".sgstfield").show();
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2));
@@ -146,28 +152,66 @@ $(document).ready(function() {
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));			    
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.cessrate).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.cessrate).toFixed(2)).attr("data", parseFloat(value.cessrate).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.cess).toFixed(2)).attr("data", parseFloat(value.cess).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.cess).toFixed(2)).attr("data", parseFloat(value.cess).toFixed(2));
 		
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(12) input').val(parseFloat(value.totalAmount).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(12) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(value.totalAmount).toFixed(2));
-			
+		
 			   
 			}
-			//$('.drcrnote_product_quantity_gst').numeric({ negative: false });
-			//$('.drcrnote_product_per_price_gst').numeric({ negative: false });
-					
 			$("#drcrnote_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 			$('#drcrnote_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		    });
+		  
 		    $("#drcrnote_product_table_total tbody tr:first td:last").empty();
 		  //  $(".product_name_gst, .product_name_vat, #drcrnote_state").change();
 		    
 		    
 		}
-	       });
+
+
+
+
+
+		
+		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
+	console.log(resp.invoicedata.taxflag);
+	if (resp.invoicedata.taxflag=="7"){
+	    
+	    	$("#taxapplicabletext").text("GST");
+	        $("#drcrnote_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+		$("#vathelp").hide();
+		$(".tinfield").hide();
+		$("#gstproducttable").show();  //Shows GST Product table.
+		$(".gstinfield").show();
+		$(".vatfield").hide();
+		$(".gstfield").show();
+	    }
+	    else {
+		$("#taxapplicabletext").text("VAT");
+		$("#gstproducttable").hide();
+		$(".gstinfield").hide();
+		$("#drcrnote_table_vat").show();
+		$(".tinfield").show();
+		$("#vathelp").show();
+		$(".gstfield").hide();
+		$(".vatfield").show();
+	    }
 	
-    });
+	       });//done end
+
+	
+
+
+
+
+
+
+
+
+
+	
+    });//invoice change event end
+    
 }); // ready func end
 
 
