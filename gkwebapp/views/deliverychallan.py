@@ -134,12 +134,9 @@ def getdelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
     header={"gktoken":request.headers["gktoken"]}
-    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"],"taxstate":request.params["taxstate"],"tax":request.params["tax"],"cess":request.params["cess"], "delchatotal":request.params["delchaltotal"], "freeqty":request.params["freeqty"], "discount":request.params["discount"], "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "contents":request.params["contents"]}
-    print delchaldata
-    products = {}
-    for  row in json.loads(request.params["contents"]):
-        products[row["productcode"]] = row["ppu"]["qty"]
-    stockdata = {"inout":int(request.params["inout"]),"items":products}
+    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"],"taxstate":request.params["taxstate"],"tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "delchatotal":request.params["delchaltotal"], "freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "contents":json.loads(request.params["contents"])}
+ 
+    stockdata = {"inout":int(request.params["inout"])}
     if request.params.has_key("goid"):
         stockdata["goid"]=int(request.params["goid"])
     if request.params.has_key("issuername"):

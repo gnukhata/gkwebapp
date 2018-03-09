@@ -2721,8 +2721,10 @@ else {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("taxflag", $("#taxapplicable").val());
+    console.log(JSON.stringify(contents));	
     form_data.append("contents", JSON.stringify(contents));
-    form_data.append("orgstategstin",$("#orggstin").text() );	
+	console.log($("#orggstin").text());	
+    form_data.append("orgstategstin",$("#orggstin").text());	
     if($("#consigneename").val() != ""){
 	form_data.append("consignee", JSON.stringify(consignee));
     }
