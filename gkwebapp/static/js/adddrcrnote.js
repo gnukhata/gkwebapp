@@ -300,6 +300,7 @@ $(document).ready(function() {
 			$("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
 		
 		    });   
+
 		}
 		
 		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
@@ -354,33 +355,34 @@ $(document).ready(function() {
 		    $(".igstfield").hide();
 		    $(".sgstfield").hide();
 		} 
-	
-
+		
 	    });//done end
 
-    $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
-	event.preventDefault();
-  var curindex = $(this).closest('tr').index();
-  var nextindex = curindex + 1;
-  var previndex = curindex - 1;
-  if ($("#drcrnote_table_vat tbody tr").length > 1) {
-    $(this).closest('tr').fadeOut(200, function() {
-      $(this).closest('tr').remove(); //closest method gives the closest element productified
-      //$("#drcrnote_table_vat tbody tr:first td:eq(0) label").focus();
-    });
-  }
-      if ($("#drcrnote_table_vat tbody tr").length == 1) {
-	  $("#drcrnote_table_vat tbody tr:eq(0) td:eq(9)").empty();
-      }
-  if ($("#drcrnote_product_table_gst tbody tr").length > 1) {
-	  $(this).closest('tr').remove();
-	  $("#drcrnote_product_table_gst tbody tr:eq("+curindex+")").remove();
-	  $("#drcrnote_product_table_gst tbody tr:first td:eq(0) select").focus();
-      }
-      if ($("#drcrnote_product_table_gst tbody tr").length == 1) {
-	  $("#drcrnote_product_table_total tbody tr:eq(0) td:eq(1)").empty();
-      }
-  });
+	//click event of delete product
+	$(document).off("click", ".product_del").on("click", ".product_del", function(event) {
+	    event.preventDefault();
+	    var curindex = $(this).closest('tr').index();
+	    var nextindex = curindex + 1;
+	    var previndex = curindex - 1;
+	    if ($("#drcrnote_table_vat tbody tr").length > 1) {
+		$(this).closest('tr').fadeOut(200, function() {
+		    $(this).closest('tr').remove(); //closest method gives triggerHandler()e closest element productified
+		    //$("#drcrnote_table_vat tbody tr:first td:eq(0) label").focus();
+		});
+	    }
+	    if ($("#drcrnote_table_vat tbody tr").length == 1) {
+		$("#drcrnote_table_vat tbody tr:eq(0) td:eq(9)").empty();
+	    }
+	    if ($("#drcrnote_product_table_gst tbody tr").length > 1) {
+		$(this).closest('tr').remove();
+		$("#drcrnote_product_table_gst tbody tr:eq("+curindex+")").remove();
+		$("#drcrnote_product_table_gst tbody tr:first td:eq(0) select").focus();
+	    }
+	    if ($("#drcrnote_product_table_gst tbody tr").length == 1) {
+		$("#drcrnote_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+	    }
+	});
+
 
 	
     });//invoice change event end
