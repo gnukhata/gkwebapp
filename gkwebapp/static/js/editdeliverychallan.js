@@ -85,8 +85,8 @@ $(document).ready(function() {
       $("#deliverychallan_edit_date").val(dcdatearray[0]);
       $("#deliverychallan_edit_month").val(dcdatearray[1]);
       $("#deliverychallan_edit_year").val(dcdatearray[2]);
-      inout = resp.delchaldata.stockdata.inout;
-      if (resp.delchaldata.stockdata.inout==9) {
+      inout = resp.delchaldata.delchaldata.inout;
+      if (resp.delchaldata.delchaldata.inout==9) {
         $("#polabel").show();
         $("#slabel").show();
         $("#tgolabel").hide();

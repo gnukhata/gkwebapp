@@ -124,7 +124,8 @@ def getdelchal(request):
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
     delchalresult = {}
     delchalresult = delchaldata.json()["gkresult"]
-    if int(delchalresult["stockdata"]["inout"])==9:
+    print delchalresult
+    if int(delchalresult["delchaldata"]["inout"])==9:
         inoutflag="in"
     else:
         inoutflag="out"
