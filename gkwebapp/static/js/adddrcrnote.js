@@ -377,7 +377,6 @@ $(document).ready(function() {
 		
 	    });//done end
 
-
     //click event of delete product
     $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
 	event.preventDefault();
