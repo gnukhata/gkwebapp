@@ -26,6 +26,7 @@ Contributors:
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 "Abhijith Balan" <abhijith@dff.org.in>
 "Pravin Dake" <pravindake24@gmail.com>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 // This script is for the addinvoice.jinja2
@@ -39,6 +40,7 @@ $(document).ready(function() {
      //Initialising some variables.
     var issuername = "";
     var designation = "";
+    var address = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var invoicedatestring = "";
@@ -373,6 +375,37 @@ $(document).ready(function() {
 	
 	$(".product_name_vat, .product_name_gst").change();
 
+	//In create 'sale invoice' if user selected 'state' has address in orgnisation then it will be autopopulated in address field.
+	//ajax for autopopulating address for selected state.
+	var invstate = $("#invoicestate option:selected").val();
+	var invstateid=$("#invoicestate option:selected").attr("stateid");
+	$.ajax({
+	    url: '/existingorg?type=getaddress',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"invstate" : invstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+	})
+	    .done(function(resp) {
+		if (resp["gkstatus"] == 0) {
+		    console.log("success");
+		    if(invstate == resp["orgdetails"]["orgstate"]){
+			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
+			$("#originaddress").prop("disabled", true);
+		    }else{$("#originaddress").prop("disabled", false);}
+         	}
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+
+	//ajax for autopopulating gstin for selected state.
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
@@ -388,8 +421,8 @@ $(document).ready(function() {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
 		$("#orggstin").text(resp["gkresult"]);
-         	  }
-                })
+            }
+        })
                 .fail(function() {
                     console.log("error");
                 })
@@ -406,7 +439,10 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
-		$("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name.
+		if($("#originaddress").is(":disabled")){
+		    $("#invoice_issuer_name").focus().select();
+		}
+		$("#originaddress").focus().select();
 	    }
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
@@ -433,6 +469,24 @@ $(document).ready(function() {
 	    }
 	}
     });
+    
+    // Key Events for Address in sale invoice.
+    $("#originaddress").keydown(function(event){
+	if(event.which ==13){
+	    	    if($("#originaddress").val() == ""){
+		$("#address-blank-alert").alert();
+		$("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#address-blank-alert").hide();
+		});
+		$("#originaddress").focus();
+		return false;
+	    }
+	    $("#invoice_issuer_name").focus().select();
+	}
+	else if(event.which ==38){
+	    $("#invoicestate").focus();
+	}
+    });
 
     //Key Events for Issuer Name.
     $("#invoice_issuer_name").keydown(function(event) {
@@ -441,7 +495,10 @@ $(document).ready(function() {
 	    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
-	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+	    if($("#originaddress").is(":disabled")){
+		$("#invoicestate").focus();
+	    }
+	    $("#originaddress").focus().select();  //Focus shifts to address.
 	}
     });
 
@@ -2339,6 +2396,7 @@ if (event.which == 13) {
 			    if ($("#status").val() == 15) {
 				$("#invoicestate").val(resp.invoicedata.sourcestate);
 				$("#statecodeforinvoice").text(resp.invoicedata.sourcestatecode);
+				$("#originaddress").val(resp.invoicedata.address);
 				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
 				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
 			    }
@@ -2520,7 +2578,10 @@ if (event.which == 13) {
 
 			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);
-			    $("#vehicleno").val(resp.invoicedata.vehicleno);
+			    if(resp.invoicedata.vehicleno != ""){
+				$("#vehiclenodiv").show();
+				$("#vehicleno").val(resp.invoicedata.vehicleno);
+			    }else{ $("#vehiclenodiv").hide(); }
 			    let dateofsupply = resp.invoicedata.dateofsupply.split('-');
 			    $("#supply_date").val(dateofsupply["0"]);
 			    $("#supply_month").val(dateofsupply["1"]);
@@ -2554,6 +2615,7 @@ if (event.which == 13) {
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .delchalfield, .supplydate").prop("disabled", true);
 	}
+	$("#originaddress").prop("disabled",true);
 	if ($("#taxapplicable").val() == 7) {
 	    $(".product_name_gst").each(function(index){
 		if ($(".product_name_gst:eq(" + index + ") option:selected").attr("gsflag") != 7) {  // If an item is not a product
@@ -2779,6 +2841,19 @@ if (event.which == 13) {
 	      return false;
 	  }
       }
+
+      //Validation for Address in sale invoice.
+      if ($("#status").val() == 15) {
+	  if($("#originaddress").val() == ""){
+	      $("#address-blank-alert").alert();
+              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#address-blank-alert").hide();
+	      });
+	      $("#originaddress").focus();
+	      return false;
+	  }
+      }
+      
       var tax = {};
       var cess = {};
       var contents = {};
@@ -2792,6 +2867,7 @@ if (event.which == 13) {
       var productcodes = [];
       var productqtys = [];
       var ppu;
+      var inoutflag = $("#status").val();
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
@@ -2980,6 +3056,10 @@ if (event.which == 13) {
 	      return false;
 	  }
       }
+      //For sales invoice store address.
+      if($("#status").val() == 15){
+	  address = $("#originaddress").val();
+      }
       var form_data = new FormData();
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
@@ -3014,6 +3094,8 @@ if (event.which == 13) {
 	  if ($("#consigneename").val() != "") {
 	      destinationstate = $("#consigneestate option:selected").val();
 	      }*/
+	  //appending address to the form_data.	  
+	  form_data.append("address", address);
 	  if ($("#consigneename").val() != "") {
 	      form_data.append("taxstate", $("#consigneestate option:selected").val());
 	  } else {
@@ -3037,6 +3119,7 @@ if (event.which == 13) {
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
+    form_data.append("inoutflag",inoutflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
     if (dateofsupply == "") {
 	form_data.append("dateofsupply", dateofsupply);

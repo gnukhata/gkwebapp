@@ -30,6 +30,7 @@
    "Reshma Bhatawadekar" <reshma_b@riseup.net>"
    "Rohini Baraskar" <robaraskar@gmail.com>
    "Pravin Dake" <pravindake24@gmail.com>
+   "Nitesh Chaughule" <nitesh@disroot.org>
  */
 
 // This script is for the addinvoice.jinja2
@@ -51,6 +52,7 @@ $(document).ready(function() {
     //Initialising some variables.
     var issuername = "";
     var designation = "";
+    var address = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var invoicedatestring = "";
@@ -370,10 +372,40 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	}
-	
+	}	
 	$(".product_name_vat, .product_name_gst").change();
 	
+	//In create 'sale invoice' if user selected 'state' has address in orgnisation then it will be autopopulated in address field.
+	//ajax for autopopulating address for selected state.
+	var invstate = $("#invoicestate option:selected").val();
+	var invstateid=$("#invoicestate option:selected").attr("stateid");//statecode
+	$.ajax({
+	    url: '/existingorg?type=getaddress',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"invstate" : invstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+	})
+	    .done(function(resp) {
+		if (resp["gkstatus"] == 0) {
+		    console.log("success");
+		    if(invstate == resp["orgdetails"]["orgstate"]){
+			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
+			$("#originaddress").prop("disabled", true);
+		    }else{$("#originaddress").prop("disabled", false);}
+         	}
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+
+	//ajax for autopopulating gstin for selected state.
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
@@ -407,7 +439,10 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
-		$("#invoice_issuer_name").focus().select();  //Focus shifts to Issuer Name.
+		if($("#originaddress").is(":disabled")){
+		    $("#invoice_issuer_name").focus().select();
+		}
+		$("#originaddress").focus().select();
 	    }
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
@@ -435,6 +470,25 @@ $(document).ready(function() {
 	}
     });
 
+    // Key Events for Address in sale invoice.
+    $("#originaddress").keydown(function(event){
+	if(event.which ==13){
+	    if($("#originaddress").val() == ""){
+		$("#address-blank-alert").alert();
+		$("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#address-blank-alert").hide();
+		});
+		$("#originaddress").focus();
+		return false;
+	    }
+	    $("#invoice_issuer_name").focus().select();
+	}
+	else if(event.which ==38){
+	    $("#invoicestate").focus();
+	}
+    });
+    
+    
     //Key Events for Issuer Name.
     $("#invoice_issuer_name").keydown(function(event) {
 	if (event.which == 13) {
@@ -442,7 +496,10 @@ $(document).ready(function() {
 	    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
-	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+	    if($("#originaddress").is(":disabled")){
+		$("#invoicestate").focus();
+	    }
+	    $("#originaddress").focus();  //Focus shifts to Address of Origin.
 	}
     });
 
@@ -2400,6 +2457,17 @@ if (event.which == 13) {
 		  $("#bankdetails-blank-alert").hide();
 	      });
 	      $("#accountno").focus();
+	  }
+      }
+	      
+      //Validation for Address in sale invoice.
+      if ($("#status").val() == 15) {
+	  if($("#originaddress").val() == ""){
+	      $("#address-blank-alert").alert();
+              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#address-blank-alert").hide();
+	      });
+	      $("#originaddress").focus();
 	      return false;
 	  }
       }
@@ -2604,6 +2672,10 @@ if (event.which == 13) {
 	      return false;
 	  }
       }
+      //For sales invoice store address.
+      if($("#status").val() == 15){
+	  address = $("#originaddress").val();
+      }   
       var form_data = new FormData();
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
@@ -2622,7 +2694,7 @@ if (event.which == 13) {
 	 let sourcestate = $("#invoice_customerstate").val();
 	  if ($("#consigneename").val() != "") {
 	      sourcestate = $("#consigneestate option:selected").val();
-	  }*/
+	      }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
 	  if ($("#consigneename").val() != "") {
 	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
@@ -2637,6 +2709,8 @@ if (event.which == 13) {
 	  if ($("#consigneename").val() != "") {
 	      destinationstate = $("#consigneestate option:selected").val();
 	      }*/
+	  //appending address to the form_data.
+	  form_data.append("address", address);
 	  if ($("#consigneename").val() != "") {
 	      form_data.append("taxstate", $("#consigneestate option:selected").val());
 	  } else {
@@ -2660,6 +2734,7 @@ if (event.which == 13) {
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
+    form_data.append("inoutflag",inoutflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
     if (dateofsupply == "") {
 	form_data.append("dateofsupply", dateofsupply);
@@ -2688,7 +2763,7 @@ if (event.which == 13) {
 		return false;
 	    }
 	form_data.append("file" + i, files[i]);
-    }
+      }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {

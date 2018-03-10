@@ -76,6 +76,11 @@
 		    {% trans %}Please enter Consignee Name if you want to save Details of Consignee!{% endtrans %}
 
 		  </div>
+		  <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		    {% trans %}Please enter Address!{% endtrans %}
+
+		  </div>
 		  <form class="form-horizontal" >
 		    <div class="col-md-12">
 		      <div class="col-md-4">
@@ -128,6 +133,10 @@
 			<div class="form-group form-inline">
 			  <label class="col-sm-4 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
 			  <label class="col-sm-8 nopadding fsize" id="statecodeforinvoice"></label>
+			</div>
+			<div class="form-group form-inline invoice_issuer" hidden>
+			  <label for="originaddress" class="col-sm-4 fsize">{% trans %}Address :{% endtrans %}</label>
+			  <input type="text" id="originaddress" class="col-sm-8 form-control input-sm" name="originaddress" size="30"></input>
 			</div>
 			{% if resultgstvat != '22' %}
 			  <div class="form-group form-inline invoice_issuer" hidden>
@@ -614,7 +623,7 @@
 			<label style="font-size:120% !important;">CASH RECEIVED</label>
 			<br><br><br><br><br><br><br><br><br><br>	
 		      </div>
-		      <div class="col-sm-4" style="margin-top:1.1cm;">
+		      <div class="col-sm-4">
 			<div class="row col-sm-12">
 			  <div class="form-inline form-group">
 			    <label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
@@ -676,7 +685,7 @@
 			  </div>
 			</div>
 		      </div>
-		      <div class="col-sm-4" style="margin-top:0.7cm;">
+		      <div class="col-sm-4">
 			<div class="row hborderdiv">
 			  <div class="form-group form-inline">
 			    <div class="col-sm-6">

@@ -36,6 +36,11 @@
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
 	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["taxstatecode"] }}{% endif %}
       </div>
+      {% if gkresult["inoutflag"] == 15 %}
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="originaddress">{% trans %}Address{% endtrans %} : </label>{{ gkresult["address"] }}
+	</div>
+      {% endif%}
 	{% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
 	  <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
