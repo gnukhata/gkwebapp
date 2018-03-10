@@ -165,11 +165,11 @@
 		 <label aria-describedby="taxapplicabletext" name="taxflag" >{% trans %}Tax Applicable{% endtrans %} : </label>
 		 <label id="taxapplicabletext" ></label>
 	       </div>
-	       {#{% if drcrflag=="3" %}
+	       {% if drcrflag=="3" %}
 	       <input type="hidden" id="status" value="3">
 	       {% else %}
 	       <input type="hidden" id="status" value="4">
-	       {% endif %}#}
+	       {% endif %}
 	     </div>
 	     <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 

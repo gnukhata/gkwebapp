@@ -285,12 +285,20 @@ $(document).ready(function() {
       }
   });
 
-
-
-
-
 	
     });//invoice change event end
+
+    //click event for reset button
+    $(document).off('click', '#drcrnote_reset').on('click', '#drcrnote_reset', function(event) {
+    event.preventDefault();
+    /* Act on the event */
+    if ($("#status").val() == '3') {
+      $("#creditnote_create").click();
+
+    } else {
+      $("#debitnote_create").click();
+    }
+  });
     
 }); // ready func end
 
