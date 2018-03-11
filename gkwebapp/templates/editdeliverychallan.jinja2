@@ -29,8 +29,7 @@
 	    {%endif%}
           </div>
 	  {#------------------------------------------------------------------------------#}
-
-	  <div class="panel deliverychallan_panel shadow">
+	  <div class="panel deliverychallan_panel shadow deliverychallan_edit_div">
 	    <div class="panel-body">
               <div class="container-fluid row">
 		<form class="form-horizontal" >
@@ -44,14 +43,14 @@
 		      <div class="row">
 			<div class="col-sm-12 form-group form-inline">
 			  <div class="form-group form-inline col-sm-3">
-			    <label class="col-sm-5 fsize" for="deliverychallan_challanno">{% trans %}Note No{% endtrans %} :</label>
-			    <label class="form-control input-sm col-sm-7" id="deliverychallan_challanno" value = "{{lastdelchaldata['dcno']}}"></label>
+			    <label class="col-sm-5 fsize" for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
+			    <label class="col-sm-7" id="deliverychallan_edit_challanno"></label>
 			  </div>
 			  <div class="form-group form-inline col-sm-3">
 			    <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
-			    <label class="form-control input-sm delchaldate col-sm-1" id="deliverychallan_date"></label>
-			    <label class="form-control input-sm delchaldate col-sm-1" id="deliverychallan_month">
-			    <label class="form-control input-sm delchaldate col-sm-5" id="deliverychallan_year"></label>
+			    <label class=" delchaldate col-sm-1" id="deliverychallan_edit_date"></label>
+			    <label class=" delchaldate col-sm-1" id="deliverychallan_edit_month"></label>
+			    <label class=" delchaldate col-sm-5" id="deliverychallan_edit_year"></label>
 			  </div>
 			  <div class="form-group form-inline col-sm-4">
 			    {% if gkstatus=="in" %}
@@ -59,7 +58,7 @@
 			    {% else %}
 			      <label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Origin{% endtrans %} :</label>
 			    {% endif %}
-			    <label class="form-control input-sm col-sm-7" id="invoicestate"></label>
+			    <label class="col-sm-7" id="invoicestate"></label>
 			  </div>
 			  <div class="form-group form-inline col-sm-2">
 			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
@@ -78,22 +77,22 @@
 			  <div class="form-group form-inline col-sm-4">
 			    {%if numberofgodowns > 0 %}
 			      <div class="col-sm-12 form-group form-inline">
-				<label class="col-sm-5" for="deliverychallan_godown">
+				<label class="col-sm-5" for="deliverychallan_edit_godown">
 				  {% if gkstatus=="in" %}
 				    {% trans %}Received At{% endtrans %} :
 				  {% else %}
 				    {% trans %}Dispatch From{% endtrans %} :
 				  {% endif %}
 				</label>
-				<label class="form-control input-sm col-sm-7" id="deliverychallan_godown"></label>
+				<label class="form-control input-sm col-sm-7" id="deliverychallan_edit_godown"></label>
 			      </div>		  
 			    {% endif %}
 			  </div>
 			  <div class="form-group form-inline col-sm-4">
 			    {%if numberofgodowns > 0 %}
 			      <div class="col-sm-12 form-group form-inline">
-				<label class="col-sm-6" for="deliverychallan_consignment">Type of transaction:</label>
-				<select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
+				<label class="col-sm-6" for="deliverychallan_edit_consignment">Type of transaction:</label>
+				<select class="form-control input-sm col-sm-6" id="deliverychallan_edit_consignment" accesskey="">
 				  <option value="1">{% trans %}Approval{% endtrans %}</option>
 				  <option value="3">{% trans %}Consignment{% endtrans %}</option>
 				  {% if gkstatus=="in" %}
@@ -108,8 +107,8 @@
 			      </div>
 			    {% else %}
 			      <div class="col-sm-4 form-group form-inline">
-				<label class="col-sm-6" for="deliverychallan_consignment">Type of transaction:</label>
-				<select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
+				<label class="col-sm-6" for="deliverychallan_edit_consignment">Type of transaction:</label>
+				<select class="form-control input-sm col-sm-6" id="deliverychallan_edit_consignment" accesskey="">
 				  <option value="1">{% trans %}Approval{% endtrans %}</option>
 				  <option value="3">{% trans %}Consignment{% endtrans %}</option>
 				  {% if gkstatus=="in" %}
@@ -184,33 +183,33 @@
 		    </div>
 
 		    <!-- Details Of Consignee -->
-		    <div class="col-md-6 borderdiv hborderdiv">
+		    <div class="col-md-6 hborderdiv">
 		      <h4>Details of Consignee | Shipped to: </h4>
 		      <div class="form-group form-inline">
-			<label for="consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
-			<label id="consigneename" class="col-sm-8 form-control input-sm"></label>
+			<label for="delchal_consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
+			<label id="delchal_consigneename" class="col-sm-8 form-control input-sm"></label>
 		      </div>
 		      <div class="form-group form-inline">
-			<label for="consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
-			<label class="col-sm-8" id="consigneestate"></label>
+			<label for="delchal_consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
+			<label class="col-sm-8" id="delchal_consigneestate"></label>
 		      </div>
 		      <div class="form-group form-inline">
-			<label for="statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-			<label id="statecodeofconsignee" class="col-sm-8 nopadding"></label>
+			<label for="delchal_statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
+			<label id="delchal_statecodeofconsignee" class="col-sm-8 nopadding"></label>
 		      </div>
 		      <!-- For VAT -->
 		      <div class="form-group form-inline tinfield" hidden>
-			<label for="tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-			<input type="text" id="tinconsignee" class="col-sm-8 form-control input-sm" name="tinconsignee"></input>
+			<label for="delchal_tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
+			<input type="text" id="delchal_tinconsignee" class="col-sm-8 form-control input-sm" name="tinconsignee"></input>
 		      </div>
 		      <!-- For GST -->
 		      <div class="form-group form-inline gstinfield">
-			<label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-			<label id="gstinconsignee" class="col-sm-8 gstin"></label>
+			<label for="delchal_gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
+			<label id="delchal_gstinconsignee" class="col-sm-8 gstin"></label>
 		      </div>
 		      <div class="form-group form-inline">
-			<label for="deliverychallan_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-			<label id="deliverychallan_consigneeaddr" class="col-sm-8"></label>
+			<label for="delchal_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
+			<label id="delchal_consigneeaddr" class="col-sm-8"></label>
 		      </div>
 		    </div>
 		  </div>
@@ -480,13 +479,13 @@
 		      <div class="row col-sm-12">
 			<div class="form-group form-inline invoice_issuer" hidden>
 			  <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-			  <label class="form-control input-sm col-sm-7" id="invoice_issuer_name"></label>
+			  <label class="form-control input-sm col-sm-7" id="delchal_issuer_name"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-inline form-group invoice_issuer" hidden>
 			  <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
-			  <label class="form-control input-sm col-sm-7" id="invoice_issuer_designation"></label>
+			  <label class="form-control input-sm col-sm-7" id="delchal_issuer_designation"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
@@ -590,9 +589,7 @@
 	      </div>
 		</form>
 	    </div>
-	  </div>
-
-	  
+	  </div>	  
 	  {#--------------------------------------------------------------------------------#}
         </div>
       </div>

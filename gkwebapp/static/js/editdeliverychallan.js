@@ -80,44 +80,44 @@ $(document).ready(function() {
       else{
           $("#viewattach").hide();
       }
-      $("#deliverychallan_edit_customer").html(custsup);
-      var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
-      $("#deliverychallan_edit_date").val(dcdatearray[0]);
-      $("#deliverychallan_edit_month").val(dcdatearray[1]);
-      $("#deliverychallan_edit_year").val(dcdatearray[2]);
-      inout = resp.delchaldata.delchaldata.inout;
-      if (resp.delchaldata.delchaldata.inout==9) {
-        $("#polabel").show();
-        $("#slabel").show();
-        $("#tgolabel").hide();
-        $("#solabel").hide();
-        $("#clabel").hide();
-        $("#fgolabel").show();
-        $("#customersgroup").remove();
-        $("label[for='deliverychallan_edit_issuername']").hide();
-        $("label[for='deliverychallan_edit_designation']").hide();
-        $('#deliverychallan_edit_issuername').hide();
-        $('#deliverychallan_edit_designation').hide();
-        $("#deliverychallan_editprint").hide();
-      }
-      else {
-        $("#polabel").hide();
-        $("#slabel").hide();
-        $("#tgolabel").show();
-        $("#solabel").show();
-        $("#clabel").show();
-        $("#fgolabel").hide();
-        $("#suppliersgroup").remove();
-        $("label[for='deliverychallan_edit_issuername']").show();
-        $("label[for='deliverychallan_edit_designation']").show();
-        $("#deliverychallan_editprint").show();
-        $('#deliverychallan_edit_issuername').show();
-        $('#deliverychallan_edit_designation').show();
-        $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
-        $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
-      }
-      $('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
-      $.ajax({
+	$("#deliverychallan_edit_customer").html(custsup);
+	var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
+	$("#deliverychallan_edit_date").text(dcdatearray[0]);
+	$("#deliverychallan_edit_month").text(dcdatearray[1]);
+	$("#deliverychallan_edit_year").text(dcdatearray[2]);
+	inout = resp.delchaldata.delchaldata.inout;
+	if (resp.delchaldata.delchaldata.inout==9) {
+            $("#polabel").show();
+            $("#slabel").show();
+            $("#tgolabel").hide();
+            $("#solabel").hide();
+            $("#clabel").hide();
+            $("#fgolabel").show();
+            $("#customersgroup").remove();
+            $("label[for='deliverychallan_edit_issuername']").hide();
+            $("label[for='deliverychallan_edit_designation']").hide();
+            $('#deliverychallan_edit_issuername').hide();
+            $('#deliverychallan_edit_designation').hide();
+            $("#deliverychallan_editprint").hide();
+	}
+	else {
+            $("#polabel").hide();
+            $("#slabel").hide();
+            $("#tgolabel").show();
+            $("#solabel").show();
+            $("#clabel").show();
+            $("#fgolabel").hide();
+            $("#suppliersgroup").remove();
+            $("label[for='deliverychallan_edit_issuername']").show();
+            $("label[for='deliverychallan_edit_designation']").show();
+            $("#deliverychallan_editprint").show();
+            $('#deliverychallan_edit_issuername').show();
+            $('#deliverychallan_edit_designation').show();
+            $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
+            $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
+	}
+	/*$('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
+	$.ajax({
         url: '/customersuppliers?action=get',
         type: 'POST',
         dataType: 'json',
@@ -148,18 +148,40 @@ $(document).ready(function() {
       })
       .always(function() {
         console.log("complete");
-      });
-      $('#deliverychallan_edit_challanno').val(resp.delchaldata.delchaldata.dcno);
-      $('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
-	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+      });*/
+	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
+	//Sourcestate and Destinationstate.
+	if ($("#status").val() == 15) {
+	    $("#invoicestate").text(resp.delchaldata.delchaldata.sourcestate);
+	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.sourcestatecode);
+	    $("#delchal_issuer_name").val(resp.delchaldata.delchaldata.issuername);
+	    $("#delchal_issuer_designation").val(resp.delchaldata.delchaldata.designation);
+	}
+	else {
+	    $("#invoicestate").val(resp.delchalata.delchal.destinationstate);
+	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.taxstatecode);
+	}
+	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
+	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goid);
+	$('#deliverychallan_edit_consignment').text(resp.delchaldata.delchaldata.dcflag);
 	if(resp.delchaldata.delchaldata.consignee) {
-	   $('#deliverychallan_edit_consigneename').val(resp.delchaldata.delchaldata.consignee.consigneename);
-           $('#deliverychallan_edit_consigneestate').val(resp.delchaldata.delchaldata.consignee.consigneestate);
-           $('#deliverychallan_edit_consigneeaddr').val(resp.delchaldata.delchaldata.consignee.consigneeaddress); 
+	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
+            $('#delchal_consigneestate').text(resp.delchaldata.delchaldata.consignee.consigneestate);
+            $('#delchal_consigneeaddr').text(resp.delchaldata.delchaldata.consignee.consigneeaddress);
+	    if ((resp.delchaldata.delchaldata.taxflag) == '22') {
+		$("#delchal_tinconsignee").text(resp.delchaldata.delchaldata.consignee.tinconsignee);
+	    }
+	    else if ((resp.delchaldata.delchaldata.taxflag) ==  '7') {
+		$("#delchal_gstinconsignee").text(resp.delchaldata.delchaldata.consignee.gstinconsignee);
+	    }
+	    $("#delchal_statecodeofconsignee").text(resp.delchaldata.delchaldata.consignee.consigneestatecode);
 	} else {
-	   $('#deliverychallan_edit_consigneename').val("");
-           $('#deliverychallan_edit_consigneestate').val("");
-           $('#deliverychallan_edit_consigneeaddr').val(""); 
+	    $('#delchal_consigneename').text("");
+            $('#delchal_consigneestate').text("");
+            $('#delchal_consigneeaddr').text("");
+	    $("#delchal_tinconsignee").text("");
+	    $("#delchal_gstinconsignee").text("");
+	    $("#delchal_statecodeofconsignee").text("");
 	}
       
       $('#deliverychallan_edit_noofpackages').val(resp.delchaldata.delchaldata.noofpackages);

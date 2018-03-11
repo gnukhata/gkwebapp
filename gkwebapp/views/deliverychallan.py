@@ -74,7 +74,7 @@ def showeditdeliverychallan(request):
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofdeliverynote":len(delchals.json()["gkresult"]),"status":True}
+    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofgodowns":len(godowns.json()["gkresult"]),"numberofdeliverynote":len(delchals.json()["gkresult"]),"status":True}
        
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
 def showeditpopupdeliverychallan(request):
@@ -122,6 +122,7 @@ def getpurchaseorder(request):
 def getdelchal(request):
     header={"gktoken":request.headers["gktoken"]}
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
+    print delchaldata.json()["gkresult"]
     delchalresult = {}
     delchalresult = delchaldata.json()["gkresult"]
     print delchalresult
