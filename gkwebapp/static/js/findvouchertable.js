@@ -43,6 +43,10 @@ $(document).ready(function() {
   var nextindex;
   var previndex;
 
+     //For redirecting to the homepage
+    $("#backbutton").click(function(event) {
+	location.reload();
+    });
 
   $(document).off('keydown' ,'.vno').on('keydown' ,'.vno',function(event) {
     curindex = $(this).closest('tr').index();

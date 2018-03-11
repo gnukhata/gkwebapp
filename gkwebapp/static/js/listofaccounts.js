@@ -126,6 +126,13 @@ $(document).ready(function() {
     $('#latable tbody tr:eq('+currindex+') a').focus();
 
   });
+
+  //For redirecting to the homepage
+    $("#backbutton").click(function(event) {
+	location.reload();
+    });
+    
+    
   $("#print").click(function(event) {
     event.preventDefault();
     var xhr = new XMLHttpRequest();

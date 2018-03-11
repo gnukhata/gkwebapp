@@ -1,55 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Deleted Voucher{% endtrans %}</title>
-  <style type="text/css">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Deleted Voucher{% endtrans %}</title>
+    <style type="text/css">
 
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #deletedvouchertable td {
-      font-size: 75%;
-      padding: 4 !important;
-      margin: 4 !important;
-    }
-  #deletedvouchertable th {
-      font-size: 85%;
-    }
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     #deletedvouchertable td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+     #deletedvouchertable th {
+	 font-size: 85%;
+     }
 
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 30%;
-      text-align: left !important;
-  }
-  #deletedvouchertable tbody {
-      display:block;
-      height: calc(100vh - 16em);
-      overflow-y:scroll;
-  }
-  #deletedvouchertable thead,#deletedvouchertable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #deletedvouchertable thead {
-      width: calc( 100% - 0.65em )
-  }
-  .ralign{
-		text-align:right;
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 30%;
+	 text-align: left !important;
+     }
+     #deletedvouchertable tbody {
+	 display:block;
+	 height: calc(100vh - 16em);
+	 overflow-y:scroll;
+     }
+     #deletedvouchertable thead,#deletedvouchertable tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     #deletedvouchertable thead {
+	 width: calc( 100% - 0.65em )
+     }
+     .ralign{
+	 text-align:right;
 
-	}
-	.cred{
-		color:red;
-	}
-	.calign{
-		text-align:center;
-	}
-  </style>
-</head>
-<body>
-  <span class="pull-right" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#DelVModal"></i></span>
-  <span style="margin:auto; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
+     }
+     .cred{
+	 color:red;
+     }
+     .calign{
+	 text-align:center;
+     }
+    </style>
+  </head>
+  <body>
+    <span class="pull-right" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#DelVModal"></i></span>
+    <span style="margin:auto; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
   </br>
   <div class="row">
     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
@@ -68,102 +68,103 @@
       <tbody>
 
         {% for transaction in gkresult%}
-        <tr value="{{transaction["vouchercode"]}}">
-        <td class="col-xs-1">{{transaction["voucherdate"]}}</td>
-        {% if transaction['vouchernumber']=="" %}
-        <td class="col-xs-1">
-          <a class="vno" href="">&nbsp</a>
-        </td>
-        {% else %}
-        <td class="col-xs-1" style="width:100px; word-wrap:break-word;">
-          <a class="vno" href="">{{transaction['vouchernumber']}}</a>
-        </td>
-        {% endif %}
-          {% if transaction["vouchertype"]=="" %}
-          <td class="col-xs-1">&nbsp</td>
-          {% elif (transaction["vouchertype"]=="purchasereturn")%}
-          <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
-          {% elif (transaction["vouchertype"]=="salesreturn")%}
-          <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
-          {% elif (transaction["vouchertype"]=="creditnote")%}
-          <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
-          {% elif (transaction["vouchertype"]=="debitnote")%}
-          <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
-          {% else %}
-          <td class="col-xs-1">
-            {{(transaction["vouchertype"]).title()}}
-          </td>
-          {% endif %}
-        <td class="col-xs-5">
-          {% for key in transaction["drs"].keys()%}
-          {{key}}
-          </br>
-          {% endfor %}
-        </br>
-          To,
-          {% for key in transaction["crs"].keys()%}
-          {{key}}
-          </br>
-          {% endfor %}
-          {% if transaction["narration"]!="" %}
-          [{{transaction["narration"]}}]
-          {%endif%}
-        </td>
-        <td class="col-xs-1 ralign">
-          {% for key in transaction["drs"].keys()%}
-          {{transaction["drs"][key]}}
-          </br>
-          {% endfor %}
-        </td>
-        <td class="col-xs-1 ralign">
-          {% for key in transaction["drs"].keys()%}
-          </br>
-          {% endfor %}</br>
-          {% for key in transaction["crs"].keys()%}
-          {{transaction["crs"][key]}}
-          </br>
-          {% endfor %}
-        </td>
+          <tr value="{{transaction["vouchercode"]}}">
+            <td class="col-xs-1">{{transaction["voucherdate"]}}</td>
+            {% if transaction['vouchernumber']=="" %}
+              <td class="col-xs-1">
+		<a class="vno" href="">&nbsp</a>
+              </td>
+            {% else %}
+              <td class="col-xs-1" style="width:100px; word-wrap:break-word;">
+		<a class="vno" href="">{{transaction['vouchernumber']}}</a>
+              </td>
+            {% endif %}
+            {% if transaction["vouchertype"]=="" %}
+              <td class="col-xs-1">&nbsp</td>
+            {% elif (transaction["vouchertype"]=="purchasereturn")%}
+              <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
+            {% elif (transaction["vouchertype"]=="salesreturn")%}
+              <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
+            {% elif (transaction["vouchertype"]=="creditnote")%}
+              <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
+            {% elif (transaction["vouchertype"]=="debitnote")%}
+              <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
+            {% else %}
+              <td class="col-xs-1">
+		{{(transaction["vouchertype"]).title()}}
+              </td>
+            {% endif %}
+            <td class="col-xs-5">
+              {% for key in transaction["drs"].keys()%}
+		{{key}}
+  </br>
+              {% endfor %}
+  </br>
+  To,
+  {% for key in transaction["crs"].keys()%}
+    {{key}}
+  </br>
+  {% endfor %}
+  {% if transaction["narration"]!="" %}
+    [{{transaction["narration"]}}]
+  {%endif%}
+            </td>
+            <td class="col-xs-1 ralign">
+              {% for key in transaction["drs"].keys()%}
+		{{transaction["drs"][key]}}
+  </br>
+              {% endfor %}
+            </td>
+            <td class="col-xs-1 ralign">
+              {% for key in transaction["drs"].keys()%}
+  </br>
+              {% endfor %}</br>
+              {% for key in transaction["crs"].keys()%}
+		{{transaction["crs"][key]}}
+  </br>
+              {% endfor %}
+            </td>
 
-        <td class = "col-xs-2 calign">
-          {% if transaction["projectname"] != ""%}
-          {{transaction["projectname"]}}
-          {% else %}
-          &nbsp
-          {%endif%}
-        </td>
-      </tr>
+            <td class = "col-xs-2 calign">
+              {% if transaction["projectname"] != ""%}
+		{{transaction["projectname"]}}
+              {% else %}
+		&nbsp
+              {%endif%}
+            </td>
+	  </tr>
         {% endfor %}
       </tbody>
     </table>
+    <center><button type="button" id="backbutton" accesskey="k" class="btn btn-sm btn-danger">Bac<u>k</u></button></center>
     <span style="margin:auto; display:table;">
     </span>
   </div>
   <div id="DelVModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
-  	<div class="modal-dialog bgcolor " >
-   	 <div class="modal-content ">
+    <div class="modal-dialog bgcolor " >
+      <div class="modal-content ">
     	<div class="modal-header">
-      		{% trans %}<strong>Help!</strong>{% endtrans %}
-   			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+      	  {% trans %}<strong>Help!</strong>{% endtrans %}
+   	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button> </div>
+	<div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
-       <p>   <font color=" #566573"> {%trans%}
-This report gives a chronological list of all vouchers deleted during the year.</br>
-Operators cannot view this report.
+	  <p>   <font color=" #566573"> {%trans%}
+	    This report gives a chronological list of all vouchers deleted during the year.</br>
+	    Operators cannot view this report.
 {% endtrans %} </font>
 
-        </p>
-      </div>
+          </p>
+	</div>
 
+      </div>
     </div>
   </div>
-</div>
 
   <div id="viewvc">
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/deletedvoucher.js')}}"></script>
-</body>
+  </body>
 </html>

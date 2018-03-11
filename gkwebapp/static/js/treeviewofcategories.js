@@ -29,6 +29,10 @@ This script is for the tree view of categories.
 */
 
 $(document).ready(function() {
+     //For redirecting to the homepage
+    $("#backbutton").click(function(event) {
+	location.reload();
+    });
   $("#tvtoloc").click(function(event) {
     $.ajax({
       type: "POST",

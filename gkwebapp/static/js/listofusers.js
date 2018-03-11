@@ -81,7 +81,12 @@ $(document).ready(function() {
     });
   });
 
-  $("#print").click(function(event) {
+  //For redirecting to the homepage
+    $("#backbutton").click(function(event) {
+	location.reload();
+    });
+    
+    $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
         xhr.open('GET', '/showuser?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2'), true);
