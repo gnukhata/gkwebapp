@@ -199,21 +199,35 @@ $("#igst_out").keydown(function(event) {
     }
     });
 
-    //List to load accounts.
-    var sgstinaccounts = [];
-    $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
-	    sgstinaccounts.push($(this).val()); //Push appends values to list.
 
-    });
+    $("#sgstindropdownitem").keydown(function(event) {
+    $("#sgstinsearch").focus(); });
 
-   
+   //Setting up timer to detect when user stops typing.
+    var typingTimer; //timer identifier
+    var doneTypingInterval = 100; //typing interval
+    clearTimeout(typingTimer);  //clearing timeout
+    //Keyup event to trigger search when user stops tiyping.  
+     $('#sgstinsearch').keyup(function(event) {
+     clearTimeout(typingTimer);
+     typingTimer = setTimeout(function(){
+     //We use contains selector from jQuery to match text
+     $(".sgstindropdownitems:not(:contains('" +
+     $('#sgstinsearch').val() + "'))").hide();
+     $(".sgstindropdownitems:contains('" + $('#sgstinsearch').val() +"')").show();
+     if(event.which == 27){
+     $('#sgstinsearch').val("");
+     $(".sgstindropdownitems").show();
+      }
+      }, doneTypingInterval);
+      });
 
 
 
 
     $(document).off('click' ,'#report_view').on('click' ,'#report_view', function(event) {
 
-
+	//List to load accounts.
 	var sgstinaccounts = [];
         $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
 	sgstinaccounts.push($(this).val()); //Push appends values to list.
@@ -259,7 +273,7 @@ $("#igst_out").keydown(function(event) {
 	    cessoutaccounts.push($(this).val()); //Push appends values to list.
 
     });
-	result ={"sgstin":JSON.stringify(sgstinaccounts),"sgstout":JSON.stringify(sgstaccounts)};
+	var result ={"sgstin":sgstinaccounts,"sgstout":sgstoutaccounts,"cgstin":cgstinaccounts,"cgstout":cgstoutaccounts,"igstin":igstinaccounts,"igstout":igstoutaccounts,"cessin":cessinaccounts,"cessout":cessoutaccounts};
 	
 
     $("#msspinmodal").modal("show");
@@ -270,7 +284,7 @@ $("#igst_out").keydown(function(event) {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val()},
+          data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val(),"tax":JSON.stringify(result)},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

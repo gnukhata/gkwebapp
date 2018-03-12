@@ -48,8 +48,11 @@ def sendReportData(request):
     calculateto = request.params["calculateto"]
    # financialstart = request.params["financialstart"]
     calculatefrom = request.params["calculatefrom"]
-    orgtype = request.params["orgtype"]
+   # orgtype = request.params["orgtype"]
+    taxdata = request.params["tax"]
+    print taxdata
     header={"gktoken":request.headers["gktoken"]}
     print "hello you are here"
-    #result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc", headers=header)
+    return 0
 
