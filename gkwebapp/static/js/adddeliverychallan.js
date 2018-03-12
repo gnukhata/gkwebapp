@@ -2776,6 +2776,13 @@ else {
       
       /*------------------End-------------------------------------------------------------*/
 
+     var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
+     if (dateofsupply == "") {
+  	 form_data.append("dateofsupply", dateofsupply);
+     } 
+	else {
+	form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
+    }
     //form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
       var files = $("#my-file-selector")[0].files;
