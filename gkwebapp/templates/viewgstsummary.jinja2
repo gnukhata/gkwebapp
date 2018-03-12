@@ -25,6 +25,10 @@
 	 border: 1px solid #555555;
      }
 
+     .optiondialog {
+	  overflow-y:scroll;
+	  max-height:60vh !important;
+     }
     </style>
   </head>
   <body>
@@ -79,17 +83,26 @@
 	    <div class ="row">
 	      <div class="form-inline col-sm-6">
 		<label for="sgst_in">{% trans %}SGST In{% endtrans %} :</label>
+
 		<div class="dropdown">
-		  <button class="btn button sgst_in dropdown-toggle" id="sgst_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
-		  <ul class="dropdown-menu">
-		   <!-- Class dropdownitem will let us identify each li element. We will use it to trigger checkbox on spacebar press. -->
-		    {% for accs in gkresult %}
+		  <button id="sgst_in" class="btn button  dropdown-toggle" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
+		   <ul class="dropdown-menu optiondialog" id="sgstindropdownmenu">
+		    <li id="sgstindropdownitem"><a href="#">
+		     <div class="input-group">
+		       <label for="sgstinsearch" class="sr-only">Account name to search</label>
+		        <input id="sgstinsearch" type="text" class="form-control" placeholder="Account"> <span class="input-group-addon"><span class="glyphiconglyphicon-search"></span></span>
+		     </div> </a></li>
+		  <!-- Class dropdownitem will let us identify each li element. We will use it to trigger checkbox on spacebar press. -->
+		   {% for accs in gkresult %}
 	<!-- Class sgstinaccount is for ceckboxes. They have value as accountcode. We can loop them in js to get list od accounts. -->
-		      <li class="dropdownitem"><a href="#"><label>
-			<input type="checkbox" class="dropdowncheckbox sgstinaccount" value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
-		    {% endfor %}
-		  </ul>
-		</div>
+		   <li class="sgstindropdownitems"><a href="#"><label> <input type="checkbox" class="dropdowncheckbox sgstinaccount"
+			value="{{accs['accountcode']}}">{{accs["accountname"]}}</label></a></li>
+		   {% endfor %}
+		   </ul>
+		   </div>
+
+
+		
 	      </div>
 
 	      <div class="form-inline col-sm-6">

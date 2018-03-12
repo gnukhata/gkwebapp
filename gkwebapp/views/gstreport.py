@@ -52,4 +52,4 @@ def sendReportData(request):
     header={"gktoken":request.headers["gktoken"]}
     print "hello you are here"
     #result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
-'''
+
