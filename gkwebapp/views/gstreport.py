@@ -42,7 +42,7 @@ def viewGstSummary(request):
     projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
     return {"gkresult":result.json()["gkresult"]}
 
-@view_config(route_name="gstsummary",request_param="type=senddata",)
+@view_config(route_name="gstsummary",request_param="type=senddata",renderer="gkwebapp:templates/gstsummaryreport.jinja2")
 def sendReportData(request):
     print "Hii "
     calculateto = request.params["calculateto"]
@@ -55,5 +55,6 @@ def sendReportData(request):
     print "hello you are here"
     gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"taxData":json.loads(request.params["tax"])}
     result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
-    return 0
+    return{  result.json()["gkresult"]}
+    
 
