@@ -19,33 +19,39 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
 Contributors:
-"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Abhijith Balan" <abhijith@dff.org.in>
 */
-// This script is for list of invoices report.
+// This script is for list of unpaid invoices report.
 $(document).ready(function() {
+    //Hides spinner and removes modal backdrop and loading message.
     $("#msspinmodal").modal("hide");
     $(".modal-backdrop").remove();
     $(".fixed-table-loading").remove();
     var currentrow = 0;
 
+    // First row is selected and focus set on it.
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first').addClass('selected');
 
 
+    //A row is highlighted when focus shifts to it.
     $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
         $('#latable tr').removeClass('selected');
         $(this).closest('tr').addClass('selected');
     });
 
+    //When a row looses highlight is removed.
     $(document).off('blur', '.libgname').on('blur', '.libgname', function() {
         $('#latable tr').removeClass('selected');
 
     });
 
+    //Clearing the search fields.
     $('#laclearfields').click(function() {
         $(".search").children(".form-control").val("");
     });
 
+    //Escape key clears search field.
     $(".search").children(".form-control").keyup(function(event) {
         if (event.keyCode == 27) {
             $(this).val("");
@@ -57,6 +63,7 @@ $(document).ready(function() {
         }
     });
 
+    //Enter key shifts focus from search to first visible row.
     $(".search").children(".form-control").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
@@ -68,14 +75,17 @@ $(document).ready(function() {
     var nextindex;
     var previndex;
 
+    //View Another List button takes user back to view page.
     $('#viewanotherlist').click(function(e) {
         e.preventDefault();
         $("#msspinmodal").modal("show");
         $("#listofunpaidinvoices").click();
     });
 
+    //View Printable Version button gives a view that does not have scrolling so that it can be printed or converted to PDF.
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
+	//Datas Set has data that the view requires.
         var dataset = {
 	    "inoutflag": $("#reportinoutselect").val(),
 	    "orderflag": $("#reportorderselect").val(),
@@ -106,14 +116,18 @@ $(document).ready(function() {
     });
 
 
+    //Key Events for each row.
     $(document).off('keydown', '.libgname').on('keydown', '.libgname', function(event) {
         curindex = $(this).closest('tr').index();
         nextindex = curindex + 1;
         previndex = curindex - 1;
+	//Down arrow takes to the row below.
         if (event.which == 40) {
             event.preventDefault();
             $('#latable tbody tr:eq(' + nextindex + ') td:eq(1) a').focus();
-        } else if (event.which == 38) {
+        }
+	//Up arrow takes to the row above.
+	else if (event.which == 38) {
             if (previndex > -1) {
                 event.preventDefault();
                 $('#latable tbody tr:eq(' + previndex + ') td:eq(1) a').focus();
@@ -125,6 +139,7 @@ $(document).ready(function() {
     });
 
 
+    //Clicking a row selects it.
     $("#latable").off('click', 'tr').on('click', 'tr', function(e) {
         e.preventDefault();
         var id = $(this).attr('value');
@@ -135,6 +150,7 @@ $(document).ready(function() {
 
     });
 
+    //Enter key triggers click.
     $("#latable").off('keydown', 'tr').on('keydown', 'tr', function(e) {
         var id = $(this).data("invid");
         var currindex = $(this).index();
@@ -144,6 +160,7 @@ $(document).ready(function() {
         }
     });
 
+    //Double click triggers drilldown. Invoice is shown to the user.
     $("#latable").off('dblclick', 'tr').on('dblclick', 'tr', function(e) {
         // This function opens a modal of the selected voucher.
         // It shows the complete details of the selected voucher along with option to edit, delete and clone.
@@ -175,6 +192,7 @@ $(document).ready(function() {
 		$("#viewinvdiv").show();
             });
     });
+    //Back button closes the Invoice view.
     $("#backbutton").click(function(event){
 	$("#invload").html("");
 	$("#viewinvdiv").hide();
@@ -182,6 +200,7 @@ $(document).ready(function() {
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
         $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
     });
+    //Print button gives the report in spreadsheet format.
     $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
@@ -200,6 +219,7 @@ $(document).ready(function() {
         };
         xhr.send();
     });
+    // Print button from the invoice view opens a printable view of the invoice.
     $("#printbutton").click(function(event) {
 	var invid = $("#latable tbody tr:eq(" + currentrow + ")").data("invid");
         $.ajax({
