@@ -39,6 +39,7 @@ $(document).ready(function() {
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
+
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (newtaxableamnt * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	
