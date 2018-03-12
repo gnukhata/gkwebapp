@@ -166,9 +166,9 @@
 		 <label id="taxapplicabletext" ></label>
 	       </div>
 	       {% if drcrflag=="3" %}
-	       <input type="hidden" id="status" value="3">
+		 <input type="hidden" id="status" value="3">
 	       {% else %}
-	       <input type="hidden" id="status" value="4">
+		 <input type="hidden" id="status" value="4">
 	       {% endif %}
 	     </div>
 	     <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -379,7 +379,6 @@
 			   <td class="col-xs-8"><input type="text" class="drcrnote_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled>
 			   </td>
 			   <td class="col-xs-4 text-center">
-			     <a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			   </td>
 			 </tr>
 		       </tbody>
@@ -396,134 +395,77 @@
 		 </div>
 	       {% endif %}
 	     </div>
-	     //summary 3 div 
-	     <div class="col-sm-4" style="margin-top:0.7cm;">this one is for remark</div>
-
-
-	     
-	     <div class="col-sm-4 borderdiv" style="margin-top:0.7cm;">
-	       <div class=" ">
-		 <div class="form-group form-inline">
-		   <div class="col-sm-6">
-		     <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-6 text-right">
-		     <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-	       </div>
-
-	       <div class="">
-		 <div class="form-group form-inline">
-		   <div class="col-sm-4">
-		     <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-4 text-right">
-		     <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-	       </div>
-	       <div class=" gstfield sgstfield">
-		 <div class="form-group sgstfield form-inline">
-		   <div class="col-sm-6">
-		     <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-6 text-right">
-		     <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-	       </div>
-	      
-
-	       <div class=" gstfield igstfield">
-		 <div class="form-group igstfield form-inline">
-		   <div class="col-sm-6">
-		     <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-6 text-right">
-		     <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-		 </div>
-	       <div class="" style="">
-		 <div class="form-group form-inline">
-		   <div class="col-sm-4">
-		     <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total drcr{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-4 text-right">
-		     <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-	       </div>
-	       
-	     </div>
-
-
-
-	     
-	     
-	     <div class="col-sm-4 borderdiv" style="margin-top:0.7cm;">
-	       <div class=" vatfield">
-		 <div class="form-group form-inline">
-		   <div class="col-sm-4">
-		     <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
-		   </div>
-		   <div class="col-sm-4 text-right">
-		     <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
-		   </div>
-		 </div>
-	       </div>
-
-
-		 <div class=" vatfield">
-		   <div class="form-group form-inline">
-		     <div class="col-sm-4">
-		       <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Reduct{% endtrans %} :</label>
-		     </div>
-		     <div class="col-sm-4 text-right">
-		       <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
-		     </div>
-		   </div>
-		 </div>
-		 <div class="gstfield sgstfield">
-		   <div class="form-group sgstfield form-inline">
-		     <div class="col-sm-6">
-		       <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+	     //2 div remark and summary 
+	     <div class="col-sm-6" style="margin-top:0.7cm;"> remark</div>
+	     <div class="col-sm-6 borderdiv" style="margin-top:0.7cm;">
+	       <div class="col-sm-6">
+		
+		      <div class="col-sm-6">
+		       <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
 		     </div>
 		     <div class="col-sm-6 text-right">
-		       <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		       <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
 		     </div>
+		   
+		  
+		     <div class="col-sm-6">
+		       <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		     </div>
+		     <div class="col-sm-6 text-right">
+		       <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+		     
 		   </div>
-		 </div>
-
-		 <div class=" gstfield">
-		   <div class="form-group form-inline">
-		     <div class="col-sm-4">
-		       <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
-		     </div>
-		     <div class="col-sm-4 text-right">
-		       <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
-		     </div>
-		   </div>
-	     </div>
-	     
-
-
 		 
 
 
+ 
 
 
 
 
-	       
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+		 
+	       </div>
+	       <div class="col-sm-6"></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	     </div>
-	     
 	 </div><!--End .container-fluid -->
 
 
 
-	 
+	 //footer buttons
 
 	 <div class="panel-footer ">
 	   <div class="container-fluid">

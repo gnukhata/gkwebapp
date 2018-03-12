@@ -296,9 +296,10 @@ $(document).ready(function() {
 			    
 			}
 			$("#drcrnote_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-		    });
-		  
-		    $("#drcrnote_product_table_total tbody tr:first td:last").empty();   
+			$("#drcrnote_product_table_total tbody tr:last td:eq(1)").append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+			$("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
+		
+		    });   
 		}
 		
 		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
@@ -332,12 +333,37 @@ $(document).ready(function() {
 		    $(".tinfield").show();
 		    $("#vathelp").show();
 		    $(".gstfield").hide();
+		    $(".igstfield").css('border','');
 		    $(".vatfield").show();
+
 		}	
+ if (resp.invoicedata.taxname=="IGST")
+               {
+	            $(".igstfield").show();
+		    
+		    $(".sgstfield").hide();
+		}
+		else if(resp.invoicedata.taxname=="SGST") 
+             {
+		    $(".sgstfield").show();
+		    $(".igstfield").hide();
+		
+	    } 
+             else {
+		
+		    $(".igstfield").hide();
+		    $(".sgstfield").hide();
+		} 
+	
+
 	    });//done end
 
 	
+       
 
+
+
+	
 	//click event of delete product
 	$(document).off("click", ".product_del").on("click", ".product_del", function(event) {
 	    event.preventDefault();
