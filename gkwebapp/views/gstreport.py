@@ -53,6 +53,7 @@ def sendReportData(request):
     print taxdata
     header={"gktoken":request.headers["gktoken"]}
     print "hello you are here"
-    result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc", headers=header)
+    gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"taxData":json.loads(request.params["tax"])}
+    result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
     return 0
 
