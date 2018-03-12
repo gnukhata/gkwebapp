@@ -1,177 +1,179 @@
 <!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>{% trans %}GNUKhata | Create Account{% endtrans %}</title>
-<style media="screen">
-.modal-dialog{
-  position: relative;
-  display: table; //This is important
-  overflow-y: auto;
-  overflow-x: auto;
-  width: auto;
-  min-width: 50%;
-}
+  <head>
+    <meta charset="UTF-8">
+    <title>{% trans %}GNUKhata | Create Account{% endtrans %}</title>
+    <style media="screen">
+     .modal-dialog{
+	 position: relative;
+	 display: table; //This is important
+	 overflow-y: auto;
+	 overflow-x: auto;
+	 width: auto;
+	 min-width: 50%;
+     }
 
-.shadow {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-td {
-	font-size: 60%;
-}
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     td {
+	 font-size: 60%;
+     }
 
-th {
-	font-size: 70%;
-}
+     th {
+	 font-size: 70%;
+     }
 
-</style>
-</head>
+    </style>
+  </head>
 
-<body >
-  <div id="m_accmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
-    <div class="modal-dialog modal-sm">
-      <div class="modal-content">
-        <div class="container">
-          <div class="alert alert-success" id="m_success-alert" hidden>
+  <body >
+    <div id="m_accmodal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+      <div class="modal-dialog modal-sm">
+	<div class="modal-content">
+          <div class="container">
+            <div class="alert alert-success" id="m_success-alert" hidden>
 
-      			{% trans %}Account created successfully.{% endtrans %}
+      	      {% trans %}Account created successfully.{% endtrans %}
+      	    </div>
+      	    <div class="alert alert-danger" id="m_failure-alert" hidden>
+      	      <a href="" class="close" aria-label="close">&times;</a>
+      	      {% trans %}Account could not be created.{% endtrans %}
+      	    </div>
+      	    <div class="alert alert-danger" id="m_blank-alert" hidden>
+
+      	      {% trans %}Please enter account name!{% endtrans %}
+      	    </div>
+
+      	    <div class="alert alert-danger" id="m_nsblank-alert" hidden>
+
+      	      {% trans %}Please enter new sub-group name!{% endtrans %}
+      	    </div>
+
+      	    <div class="alert alert-danger" id="m_grpblank-alert" hidden>
+
+      	      {% trans %}Please select group name!{% endtrans %}
+      	    </div>
+
+      	    <div class="alert alert-danger" id="m_sgrpblank-alert" hidden>
+
+      	      {% trans %}Please select sub-group name!{% endtrans %}
+      	    </div>
+
+      	    <div class="alert alert-danger" id="m_duplicate-alert" hidden>
+
+      	      {% trans %}Account already exists!{% endtrans %}
+      	    </div>
+
+      	    <div style="padding-top:5px" class="mainbox col-md-6">
+      	      <div class="panel shadow" >
+      		<div class="panel-heading">
+      		  <div class="panel-title">{% trans %}Create Account{% endtrans %}<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	          </button></div>
+
       		</div>
-      		<div class="alert alert-danger" id="m_failure-alert" hidden>
-      			<a href="" class="close" aria-label="close">&times;</a>
-      			{% trans %}Account could not be created.{% endtrans %}
+
+      		<div style="padding-top:5px" class="panel-body" >
+
+
+      		  <form id="m_accountform" method="post"  action="addaccount" class="form-horizontal">
+
+      		    <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+      		      <label for="groupname" id="m_gname">{% trans %}<u>G</u>roup Name{% endtrans %} :</label><label for="groupname" style="color:red;font-size: 120%;">*</label>
+      		      <select class = "form-control gsselect input-sm" id="m_groupname"  name = "groupname" accesskey="g">
+      			<option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
+      			{% for grps in gkresult %}
+      			  <option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
+      			{% endfor %}
+      		      </select>
+      		      <br/>
+      		      <label for="subgroupname" id="m_sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
+      		      <select class = "form-control gsselect input-sm" id="m_subgroupname" name="subgroupname" accesskey="b">
+      			<option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
+      		      </select>
+      		      <br/>
+      		      <div id="m_nsgp" style="margin-bottom: 25px" class="input-group">
+      			<label for="newsubgroup" id="m_newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
+      			<input type="text" id="m_newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
+      		      </div>
+      		      <label for="accountname" id="m_accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
+      		      <input type="text" id="m_accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
+      		      <br/>
+      		      <label for="openbal" id="m_obal">{% trans %}<u>O</u>pening Balance{% endtrans %} : </label>
+      		      <input id="m_openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o"/>
+      		      <br/>
+      		      <button type="submit" class="btn btn-primary btn-sm" id="m_submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
+
+      		    </div>
+      		  </form>
       		</div>
-      		<div class="alert alert-danger" id="m_blank-alert" hidden>
-
-      			{% trans %}Please enter account name!{% endtrans %}
-      		</div>
-
-      		<div class="alert alert-danger" id="m_nsblank-alert" hidden>
-
-      			{% trans %}Please enter new sub-group name!{% endtrans %}
-      		</div>
-
-      		<div class="alert alert-danger" id="m_grpblank-alert" hidden>
-
-      			{% trans %}Please select group name!{% endtrans %}
-      		</div>
-
-      		<div class="alert alert-danger" id="m_sgrpblank-alert" hidden>
-
-      			{% trans %}Please select sub-group name!{% endtrans %}
-      		</div>
-
-      		<div class="alert alert-danger" id="m_duplicate-alert" hidden>
-
-      			{% trans %}Account already exists!{% endtrans %}
-      		</div>
-
-      		<div style="padding-top:5px" class="mainbox col-md-6">
-      			<div class="panel shadow" >
-      				<div class="panel-heading">
-      					<div class="panel-title">{% trans %}Create Account{% endtrans %}</div>
-
-      				</div>
-
-      				<div style="padding-top:5px" class="panel-body" >
-
-
-      					<form id="m_accountform" method="post"  action="addaccount" class="form-horizontal">
-
-      						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
-      							<label for="groupname" id="m_gname">{% trans %}<u>G</u>roup Name{% endtrans %} :</label><label for="groupname" style="color:red;font-size: 120%;">*</label>
-      							<select class = "form-control gsselect input-sm" id="m_groupname"  name = "groupname" accesskey="g">
-      								<option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
-      								{% for grps in gkresult %}
-      								<option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
-      								{% endfor %}
-      							</select>
-      							<br/>
-      							<label for="subgroupname" id="m_sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
-      							<select class = "form-control gsselect input-sm" id="m_subgroupname" name="subgroupname" accesskey="b">
-      								<option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
-      							</select>
-      							<br/>
-      							<div id="m_nsgp" style="margin-bottom: 25px" class="input-group">
-      								<label for="newsubgroup" id="m_newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
-      								<input type="text" id="m_newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
-      							</div>
-      							<label for="accountname" id="m_accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
-      							<input type="text" id="m_accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
-      							<br/>
-      							<label for="openbal" id="m_obal">{% trans %}<u>O</u>pening Balance{% endtrans %} : </label>
-      							<input id="m_openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o"/>
-      							<br/>
-      							<button type="submit" class="btn btn-primary btn-sm" id="m_submit" name="submit" accesskey="s">{% trans %}<u>S</u>ave{% endtrans %}</button>
-
-      						</div>
-      					</form>
-      				</div>
-      			</div>
-      		</div>
-      		<div style="padding-top:5px" class="col-md-6 shadow" id="m_baltbl">
-      			<table class="table table-condensed">
-      				<thead>
-      					<tr>
-      						<th class="col-xs-6">{{baltbl[0]}}</th>
-      					</tr>
-      					<tr>
-      						<th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
-      						<th class="col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
-      						<th class="col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
-      					</tr>
-      				</thead>
-      				<tbody>
-      					{% for i in range(1,5) %}
-      					<tr>
-      						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
-      						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
-      						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
-      					</tr>
-      					{% endfor %}
-      					<tr>
-      						<th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
-      						<th class="col-xs-3"></th>
-      						<td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
-      					</tr>
-      				</tbody>
-      			</table>
-      			<table class="table table-condensed">
-      				<thead>
-      					<tr>
-      						<th class="col-xs-6">{{baltbl[6]}}</th>
-      					</tr>
-      					<tr class="thead">
-      						<th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
-      						<th class="col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
-      						<th class="col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
-      					</tr>
-      				</thead>
-      				<tbody>
-      					{% for i in range(7,((baltbl|length)-2)) %}
-      					<tr>
-      						<td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
-      						<td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
-      						<td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
-      					</tr>
-      					{% endfor %}
-      					<tr>
-      						<th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
-      						<th class="col-xs-3"></th>
-      						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
-      					</tr>
-      					<tr>
-      						<th class="col-xs-6">{% trans %}Difference in Balance{% endtrans %}</th>
-      						<th class="col-xs-3"></th>
-      						<td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
-      					</tr>
-      				</tbody>
-      			</table>
-      		</div>
-        </div>
+      	      </div>
+      	    </div>
+      	    <div style="padding-top:5px" class="col-md-6 shadow" id="m_baltbl">
+      	      <table class="table table-condensed">
+      		<thead>
+      		  <tr>
+      		    <th class="col-xs-6">{{baltbl[0]}}</th>
+      		  </tr>
+      		  <tr>
+      		    <th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
+      		    <th class="col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
+      		    <th class="col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
+      		  </tr>
+      		</thead>
+      		<tbody>
+      		  {% for i in range(1,5) %}
+      		    <tr>
+      		      <td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+      		      <td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+      		      <td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
+      		    </tr>
+      		  {% endfor %}
+      		  <tr>
+      		    <th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
+      		    <th class="col-xs-3"></th>
+      		    <td class="col-xs-3" align="right"><b>{{baltbl[5]["Total"]}}</b></td>
+      		  </tr>
+      		</tbody>
+      	      </table>
+      	      <table class="table table-condensed">
+      		<thead>
+      		  <tr>
+      		    <th class="col-xs-6">{{baltbl[6]}}</th>
+      		  </tr>
+      		  <tr class="thead">
+      		    <th class="col-xs-6">{% trans %}Group Name{% endtrans %}</th>
+      		    <th class="col-xs-3">{% trans %}No. of Accounts{% endtrans %}</th>
+      		    <th class="col-xs-3">{% trans %}Group Balance{% endtrans %}</th>
+      		  </tr>
+      		</thead>
+      		<tbody>
+      		  {% for i in range(7,((baltbl|length)-2)) %}
+      		    <tr>
+      		      <td class="col-xs-6">{{baltbl[i]["groupname"]}}</td>
+      		      <td class="col-xs-3" align="right">{{baltbl[i]["numberofaccounts"]}}</td>
+      		      <td class="col-xs-3" align="right">{{baltbl[i]["groupbalance"]}}</td>
+      		    </tr>
+      		  {% endfor %}
+      		  <tr>
+      		    <th class="col-xs-6">{% trans %}Total{% endtrans %}</th>
+      		    <th class="col-xs-3"></th>
+      		    <td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-2)]["Total"]}}</b></td>
+      		  </tr>
+      		  <tr>
+      		    <th class="col-xs-6">{% trans %}Difference in Balance{% endtrans %}</th>
+      		    <th class="col-xs-3"></th>
+      		    <td class="col-xs-3" align="right"><b>{{baltbl[((baltbl|length)-1)]["Difference in balance"]}}</b></td>
+      		  </tr>
+      		</tbody>
+      	      </table>
+      	    </div>
+          </div>
+	</div>
       </div>
     </div>
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createaccountpopup.js')}}"></script>
 </body>
 </html>
