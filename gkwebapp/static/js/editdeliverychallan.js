@@ -96,6 +96,35 @@ $(document).ready(function() {
 	//$("#deliverychallan_edit_month").text(dcdatearray[1]);
 	//$("#deliverychallan_edit_year").text(dcdatearray[2]);
 	inout = resp.delchaldata.delchaldata.inout;
+
+	console.log(resp.delchaldata.delchaldata.consignee.consigneestate);
+	console.log(resp.delchaldata.delchaldata.sourcestate);
+	console.log(resp.delchaldata.delchaldata.custSupDetails.custsupstate);
+	  if (resp.delchaldata.delchaldata.taxflag == '7'){
+	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
+		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.delchaldata.sourcestate) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
+	    } else {
+		if (resp.delchaldata.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		} else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
+	    }
+	}
+	
 	if (resp.delchaldata.delchaldata.inout==9) {
             $("#polabel").show();
             $("#slabel").show();
@@ -262,19 +291,37 @@ $(document).ready(function() {
 		else{
 		    $('.invoice_product_sgstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
 		    $('.invoice_product_sgstamount:eq(' + curindex + ')').text(parseFloat(value.taxamount).toFixed(2));
-		    $('.invoice_product_cgstrate:eq(' + curindex + ')').tetx(parseFloat(value.taxrate).toFixed(2));
+		    $('.invoice_product_cgstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
 		    $('.invoice_product_cgstamount:eq(' + curindex + ')').text(parseFloat(value.taxamount).toFixed(2));
 		}
 		$('.invoice_product_cessrate:eq(' + curindex + ')').text(parseFloat(value.cessrate).toFixed(2));
 		$('.invoice_product_cessamount:eq(' + curindex + ')').text(parseFloat(value.cess).toFixed(2));
 		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-		$('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
+		$('.invoice_product_total_gst:eq(' + curindex + ')').text(parseFloat(value.totalAmount).toFixed(2));
 	    /*if (delchalproducts[key]) {
 		$('.product_name_gst:eq(' + curindex + ')').addClass("delchalfield");
 	    }*/
 		curindex = curindex + 1;
 	    });
+	    $('.invoice_product_quantity_gst').numeric({ negative: false });
+	    $('.invoice_product_per_price_gst').numeric({ negative: false });
+	    $("#invoice_product_table_total tbody tr:first td:last").empty();
+	    $("#discounttotal_product_gst").text(parseFloat(resp.delchaldata.totaldiscount).toFixed(2));
+	    $("#taxablevaluetotal_product_gst").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
+	    $("#totalcgst_product_gst").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalsgst_product_gst").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totaligst_product_gst").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalcess_product_gst").text(parseFloat(resp.delchaldata.totalcessamt).toFixed(2));
+	    $("#total_product_gst").text(parseFloat(resp.delchaldata.delchaltotal).toFixed(2));
+	    $("#taxableamount").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
+	    $("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchalContents.totalAmount).toFixed(2));
+	    $("#totalsgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalcgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totaligtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalinvcess").text(parseFloat(resp.delchaldata.totalcessamt).toFixed(2));
+	    $(".vatfied").hide();
+	    $(".gstfield").show();
 	}
       $(".deliverychallan_edit_div").show();
       $("#deliverychallan_edit_edit").show();

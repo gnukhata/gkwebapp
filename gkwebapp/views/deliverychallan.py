@@ -123,10 +123,8 @@ def getpurchaseorder(request):
 def getdelchal(request):
     header={"gktoken":request.headers["gktoken"]}
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-    print delchaldata.json()["gkresult"]
     delchalresult = {}
     delchalresult = delchaldata.json()["gkresult"]
-    print delchalresult
     if int(delchalresult["delchaldata"]["inout"])==9:
         inoutflag="in"
     else:
@@ -137,7 +135,7 @@ def getdelchal(request):
 @view_config(route_name="deliverychallan",request_param="action=save",renderer="json")
 def savedelchal(request):
     header={"gktoken":request.headers["gktoken"]}
-    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"],"taxstate":request.params["taxstate"],"tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "delchatotal":request.params["delchaltotal"], "freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "contents":json.loads(request.params["contents"])}
+    delchaldata = {"custid":int(request.params["custid"]),"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcflag":request.params["dcflag"], "noofpackages":request.params["noofpackages"], "modeoftransport":request.params["modeoftransport"],"taxstate":request.params["taxstate"],"tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "delchatotal":request.params["delchaltotal"], "freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]),"sourcestate":request.params["sourcestate"], "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "contents":json.loads(request.params["contents"])}
  
     stockdata = {"inout":int(request.params["inout"])}
     if request.params.has_key("goid"):
@@ -149,7 +147,7 @@ def savedelchal(request):
     if request.params.has_key("consignee"):
         delchaldata["consignee"]=json.loads(request.params["consignee"])
     if request.params["dateofsupply"] != "":
-        delchaldatat["dateofsupply"] = request.params["dateofsupply"]
+        delchaldata["dateofsupply"] = request.params["dateofsupply"]
     try:
         files = {}
         count = 0
@@ -168,6 +166,7 @@ def savedelchal(request):
         if len(files)>0:
             delchaldata["attachment"] = files
             delchaldata["attachmentcount"] = len(delchaldata["attachment"])
+        print delchaldata
     except:
         print "no attachment found"
     delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}

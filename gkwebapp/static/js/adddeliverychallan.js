@@ -2591,6 +2591,7 @@ else {
 	  }
 	  
 	  delchaltotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
+	  console.log(delchaltotal);
 
     }
     //-----------------------End VAT Product--------------------------------------------//
@@ -2666,6 +2667,7 @@ else {
 	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
 	  }
 	  delchaltotal = $.trim($('#total_product_gst').html());
+	  console.log(delchaltotal);
       }
       //----------------------- End GST Table Product Values-----------------------------------//      
       
@@ -2725,7 +2727,6 @@ else {
       $('#deliverychallan_designation').focus();
       return false;
     }*/
-	console.log("good");
     var form_data = new FormData();
     form_data.append("custid", $("#deliverychallan_customer option:selected").val());
     form_data.append("dcno", $("#deliverychallan_challanno").val());
@@ -2776,13 +2777,13 @@ else {
       
       /*------------------End-------------------------------------------------------------*/
 
-     var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
-     if (dateofsupply == "") {
-  	 form_data.append("dateofsupply", dateofsupply);
-     } 
+	var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
+	if (dateofsupply == "") {
+  	    form_data.append("dateofsupply", dateofsupply);
+	} 
 	else {
-	form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
-    }
+	    form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
+	}
     //form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
     form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
       var files = $("#my-file-selector")[0].files;
