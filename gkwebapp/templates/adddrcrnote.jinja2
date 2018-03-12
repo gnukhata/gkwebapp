@@ -195,7 +195,8 @@
 		   <tr>
 		     <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		     <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		     <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+		     <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+		     <th class="smvwrap text-center">{% trans %}Reduct Rate{% endtrans %}</th>
 		     <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		     <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		     <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
@@ -214,6 +215,9 @@
 			 <input type="text" class="drcrnote_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" aria-describedby="unitaddon">
 			 <span class="input-group-addon input-sm unitaddon"></span>
 		       </div>
+		     </td>
+		     <td class="qtyvwrap">
+			 <input type="text" class="drcrnote_product_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" >
 		     </td>
 		     <td class="smvwrap">
 		       <input type="text" class="drcrnote_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
@@ -284,7 +288,8 @@
 			     <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
 			     <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
 			     <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-			     <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+			     <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+			     <th rowspan="2" class="smwrap text-center">{% trans %}Reduct Rate{% endtrans %}</th>
 			     <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			     <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			     <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
@@ -321,6 +326,9 @@
 				 <input type="text" class="drcrnote_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
 				 <span class="input-group-addon input-sm unitaddon"></span>
 			       </div>
+			     </td>
+			     <td class="qtywrap">
+			       <input type="text" class="drcrnote_product_rate_gst form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="9" >
 			     </td>
 			     <td class="smwrap">
 			       <input type="text" class="drcrnote_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
