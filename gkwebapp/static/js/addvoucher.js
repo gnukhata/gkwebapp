@@ -322,6 +322,13 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
 
     }
+      else if(event.which==13 && $('#vno').val()==""){
+	  $("#voucherno-alert").alert();
+      $("#voucherno-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#voucherno-alert").hide();
+      });
+    
+      }
     if (event.which==190 && event.ctrlKey) {
       $("#vdate").focus().select();
       event.preventDefault();
