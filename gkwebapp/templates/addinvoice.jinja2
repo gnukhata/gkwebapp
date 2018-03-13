@@ -787,13 +787,13 @@
 
 	  {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	</div>
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" accesskey="s" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}<u>R</u>eset{% endtrans %}</button>
         {% if gkstatus=="out" %}
 	  <!-- <button id="invoice_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
-	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
+	  <button id="invoice_addcust" class="btn btn-info btn-sm" accesskey="a"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Customer{% endtrans %}</button>
         {% else %}
-	  <button id="invoice_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
+	  <button id="invoice_addcust" class="btn btn-info btn-sm" accesskey="a"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Supplier{% endtrans %}</button>
         {% endif %}
 	<label class="btn btn-primary btn-sm" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
