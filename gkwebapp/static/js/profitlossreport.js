@@ -62,10 +62,10 @@ $(document).ready(function() {
 
 // Navigation function for table rows for expensetbl
   $(document).off('keydown' ,'.rcaccname').on('keydown' ,'.rcaccname',function(event) {
-    curindex = $(this).closest('tr').index();
+    var currentrow = $(this).closest('tr');
     rcindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+     nextindex = $(currentrow).nextAll("tr:visible:first").index();
+     previndex = $(currentrow).prevAll("tr:visible:first").index();
     if (event.which==40)
     {
       event.preventDefault();
@@ -175,11 +175,12 @@ $(document).ready(function() {
 
 // Navigation function for table rows for incometbl
   $(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
-    curindex = $(this).closest('tr').index();
+   
+    curindex = $(this).closest('tr');
     pyindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
-    if (event.which==40)
+    nextindex = $(curindex).nextAll("tr:visible:first").index();
+    previndex = $(curindex).prevAll("tr:visible:first").index();
+        if (event.which==40)
     {
 
       $('#incometbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
