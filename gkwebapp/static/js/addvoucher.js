@@ -345,7 +345,14 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if(event.which==13 && $('#vdate').val()!=""){
       $('#vmonth').select().focus();
     }
-  }
+    else if(event.which==13 && $('#vdate').val()==""){
+	  $("#voucherdate-alert").alert();
+      $("#voucherdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#voucherdate-alert").hide();
+      });
+    
+    }
+    }
     if (event.which==38) {
       $("#vno").select().focus();
     }
@@ -366,6 +373,14 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
       $('#vyear').focus().select();
     }
+       else if(event.which==13 && $('#vmonth').val()==""){
+	  $("#vouchermon-alert").alert();
+      $("#vouchermon-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#vouchermon-alert").hide();
+      });
+    
+    }
+   
     if (event.which==38) {
       event.preventDefault();
       $("#vdate").select().focus();
