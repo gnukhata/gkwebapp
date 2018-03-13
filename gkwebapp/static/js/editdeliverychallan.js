@@ -1,5 +1,5 @@
 /*
-  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
  Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
 This file is part of GNUKhata:A modular,robust and Free Accounting System.
@@ -42,7 +42,7 @@ $(document).ready(function() {
   $("#deliverychallan_editprint").hide();
   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
-
+    var inoutflag;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
 	$(".tinfield").show();
@@ -54,7 +54,7 @@ $(document).ready(function() {
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html(); 
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  
-  $("#deliverychallan_edit_list").change(function(event) {
+    $("#deliverychallan_edit_list").change(function(event) {
     $.ajax({
       url: '/deliverychallan?action=getdelchal',
       type: 'POST',
@@ -92,15 +92,10 @@ $(document).ready(function() {
           $("#viewattach").hide();
       }
 	$("#deliverychallan_edit_customer").html(custsup);
-	//var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
-	//$("#deliverychallan_edit_month").text(dcdatearray[1]);
-	//$("#deliverychallan_edit_year").text(dcdatearray[2]);
 	inout = resp.delchaldata.delchaldata.inout;
+	inoutflag = resp.delchaldata.delchaldata.inoutflag;
 
-	console.log(resp.delchaldata.delchaldata.consignee.consigneestate);
-	console.log(resp.delchaldata.delchaldata.sourcestate);
-	console.log(resp.delchaldata.delchaldata.custSupDetails.custsupstate);
-	  if (resp.delchaldata.delchaldata.taxflag == '7'){
+	/*if (resp.delchaldata.delchaldata.taxflag == '7'){
 	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
 		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
@@ -123,9 +118,10 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	}
+	  }
+	*/
 	
-	if (resp.delchaldata.delchaldata.inout==9) {
+	if (inoutflag == 9) {
             $("#polabel").show();
             $("#slabel").show();
             $("#tgolabel").hide();
@@ -138,6 +134,7 @@ $(document).ready(function() {
             $('#deliverychallan_edit_issuername').hide();
             $('#deliverychallan_edit_designation').hide();
             $("#deliverychallan_editprint").hide();
+	    $(".invoice_issuer").hide();
 	}
 	else {
             $("#polabel").hide();
@@ -154,6 +151,7 @@ $(document).ready(function() {
             $('#deliverychallan_edit_designation').show();
             $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
             $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
+	    $(".invoice_issuer").show();
 	}
 	/*$('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
 	$.ajax({
@@ -191,20 +189,16 @@ $(document).ready(function() {
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
 	//Sourcestate and Destinationstate.
-	console.log($("#status").val());
-	if ($("#status").val() == 15) {
-	    $("#invoicestate").text(resp.delchaldata.delchaldata.sourcestate);
-	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.sourcestatecode);
+	if (inoutflag == 15) {
+	    $("#invoicestate").text(resp.delchaldata.sourcestate);
+	    $("#statecodeforinvoice").text(resp.delchaldata.sourcestatecode);
 	    $(".invoice_issuer").show();
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
 	    $("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
 	}
 	else {
-	    console.log("Purchase");
-	    $(".invoice_issuer").hide();
-	    console.log(resp.delchaldata.delchaldata.destinationstate);
-	    console.log(resp.delchaldata.delchaldata.taxstatecode);
-	    $("#invoicestate").text(resp.delchalata.delchaldata.destinationstate);
+	    console.log("IN");
+	    $("#invoicestate").text(resp.delchaldata.delchaldata.destinationstate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
@@ -249,9 +243,8 @@ $(document).ready(function() {
 	if(vehicleno!=""){
 	    $("#vehicleno").text(vehicleno);
 	}
-	console.log(resp.delchaldata.dateofsupply);
 	$("#supply_date").text(resp.delchaldata.dateofsupply);
-      $('#deliverychallan_edit_product_table tbody').empty();
+	$('#deliverychallan_edit_product_table tbody').empty();
       /*$.each(resp.delchaldata.stockdata.items, function(key, value) {
         $('#deliverychallan_edit_product_table tbody').append('<tr>'+
         '<td class="col-xs-7">'+
@@ -276,11 +269,11 @@ $(document).ready(function() {
 	    let curindex = 0;
 	    $.each(resp.delchaldata.delchalContents, function(key, value) {
 		$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-		$('.product_name_gst:eq(' + curindex + ')').text(key).prop("disabled", true);
+		$('.product_name_gst:eq(' + curindex + ')').text(value.proddesc).prop("disabled", true);
 		$('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 		$('.invoice_product_quantity_gst:eq(' + curindex + ')').text(value.qty).attr("data", value.qty);
 		$('.invoice_product_freequantity_gst:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
-		$('.unitaddonqty_gst:eq(' + curindex + '), .unitaddonfreeqty_gst:eq(' + curindex + ')').text(value.uom);
+		$('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
 		$('.invoice_product_per_price_gst:eq(' + curindex + ')').text(value.priceperunit);
 		$('.invoice_product_discount_gst:eq(' + curindex + ')').text(value.discount);
 		$('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').text(value.taxableamount);
@@ -298,7 +291,7 @@ $(document).ready(function() {
 		$('.invoice_product_cessamount:eq(' + curindex + ')').text(parseFloat(value.cess).toFixed(2));
 		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-		$('.invoice_product_total_gst:eq(' + curindex + ')').text(parseFloat(value.totalAmount).toFixed(2));
+		$('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
 	    /*if (delchalproducts[key]) {
 		$('.product_name_gst:eq(' + curindex + ')').addClass("delchalfield");
 	    }*/
@@ -313,15 +306,55 @@ $(document).ready(function() {
 	    $("#totalsgst_product_gst").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totaligst_product_gst").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totalcess_product_gst").text(parseFloat(resp.delchaldata.totalcessamt).toFixed(2));
-	    $("#total_product_gst").text(parseFloat(resp.delchaldata.delchaltotal).toFixed(2));
+	    $("#total_product_gst").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
 	    $("#taxableamount").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
-	    $("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchalContents.totalAmount).toFixed(2));
+	    $("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
 	    $("#totalsgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totalcgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totaligtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalinvdiscount").text(parseFloat(resp.delchaldata.totaldiscount).toFixed(2));
 	    $("#totalinvcess").text(parseFloat(resp.delchaldata.totalcessamt).toFixed(2));
 	    $(".vatfied").hide();
 	    $(".gstfield").show();
+	}
+	else if (resp.delchaldata.delchaldata.taxflag == 22) {
+	    console.log("Hello");
+	    // Loading tax and product details when VAT is applied.
+	    $("#taxapplicabletext").text('VAT');
+	    $("#tin").text(resp.delchaldata.delchaldata.custSupDetails.custtin);
+	    $('#invoice_product_table_vat tbody').empty();
+	    let curindex = 0;
+	    $.each(resp.delchaldata.delchalContents, function(key, value) {
+		$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+		$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+		$('.product_name_vat:eq(' + curindex + ')').text(value.proddesc).prop("disabled", true);
+		$('.invoice_product_quantity_vat:eq(' + curindex + ')').text(value.qty).attr("data", value.qty);
+		$('.invoice_product_freequantity_vat:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
+		$('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+		$('.invoice_product_per_price_vat:eq(' + curindex + ')').text(value.priceperunit);
+		$('.invoice_product_discount_vat:eq(' + curindex + ')').text(value.discount);
+		$('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').text(value.taxableamount);
+		$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').text(value.taxrate);
+		$('.invoice_product_tax_amount_vat:eq(' + curindex + ')').text(value.taxamount);
+		$('.invoice_product_total:eq(' + curindex + ')').text(value.totalAmount);
+		/*if (delchalproducts[key]) {
+		    $('.product_name_vat:eq(' + curindex + ')').addClass("delchalfield");
+		}*/
+		curindex = curindex + 1;
+	    });
+	    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+	    $('.invoice_product_quantity_vat').numeric({ negative: false });
+	    $('.invoice_product_per_price_vat').numeric({ negative: false });
+	    $("#discounttotal_product_vat").text(parseFloat(resp.delchaldata.totaldiscount).toFixed(2));
+	    $("#taxablevaluetotal_product_vat").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
+	    $("#totaltax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#total_product_vat").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
+	    $("#totalinvtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
+	    $("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
+	    $("#totalinvdiscount").text(parseFloat(resp.delchaldata.totaldiscount).toFixed(2));
+	    $("#taxableamount").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
+	    $(".gstfield").hide();
+	    $(".vatfield").show();
 	}
       $(".deliverychallan_edit_div").show();
       $("#deliverychallan_edit_edit").show();

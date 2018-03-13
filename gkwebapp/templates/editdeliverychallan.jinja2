@@ -29,15 +29,19 @@
 	    {%endif%}
           </div>
 	  {#------------------------------------------------------------------------------#}
-	  <div class= "deliverychallan_edit_div">
+	  <div class="deliverychallan_edit_div">
 		<form class="form-horizontal" >
 		  <div class="col-md-12">
 		    <div class="col-sm-12">
-		      {% if gkstatus=="in" %}
-			{% trans %}<h4>Details of Delivery In: </h4>{% endtrans %}
-		      {% else %}
-			{% trans %}<h4>Details of Delivery Out: </h4>{% endtrans %}
-		      {% endif %}
+		      <div class="row">
+			<label class=" form-inline form-group nopadding" id="detIN"><h4>Details of Delivery In: </h4></label>
+			<label class="nopadding fsize" id="detOUT" hidden><h4>Details of Delivery Out: </h4></label>
+		      </div>
+		      {#{% if gkstatus=="in" %}#}
+			{#{% trans %}<h4>Details of Delivery In: </h4>{% endtrans %}#}
+		      {#{% else %}#}
+			{#{% trans %}<h4>Details of Delivery Out: </h4>{% endtrans %}#}
+		      {#{% endif %}#}
 		      <div class="row">
 			<div class="col-sm-12 form-group form-inline">
 			  <div class="form-group form-inline col-sm-3">
@@ -194,7 +198,7 @@
 		      <!-- For VAT -->
 		      <div class="form-group form-inline tinfield" hidden>
 			<label for="delchal_tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-			<input type="text" id="delchal_tinconsignee" class="col-sm-8 form-control input-sm" name="tinconsignee"></input>
+			<label type="text" id="delchal_tinconsignee" class="col-sm-8" name="tinconsignee"></label>
 		      </div>
 		      <!-- For GST -->
 		      <div class="form-group form-inline gstinfield">
@@ -255,13 +259,13 @@
 			  <td class="qtyvwrap">
 			    <div class="input-group">
 			      <label class="invoice_product_quantity_vat form-control input-sm text-right numtype"></label>
-			      <span class="input-group-addon input-sm unitaddon"></span>
+			      <span class="input-group-addon input-sm unitaddon_qty_vat"></span>
 			    </div>
 			  </td>
 			  <td class="qtyvwrap">
 			    <div class="input-group">
 			      <label class="invoice_product_freequantity_vat form-control input-sm text-right numtype"></label>
-			      <span class="input-group-addon input-sm unitaddon"></span>
+			      <span class="input-group-addon input-sm unitaddon_freeqty_vat"></span>
 			    </div>
 			  </td>
 			  <td class="smvwrap">
@@ -361,13 +365,13 @@
 				  <td class="qtywrap">
 				    <div class="input-group">
 				      <label class="invoice_product_quantity_gst form-control input-sm text-right numtype"></label>
-				      <span class="input-group-addon input-sm unitaddon"></span>
+				      <span class="input-group-addon input-sm unitaddon_qty_gst"></span>
 				    </div>
 				  </td>
 				  <td class="qtywrap">
 				    <div class="input-group">
 				      <label class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap"></label>
-				      <span class="input-group-addon input-sm unitaddon"></span>
+				      <span class="input-group-addon input-sm unitaddon_freeqty_gst"></span>
 				    </div>
 				  </td>
 				  <td class="smwrap">
@@ -560,7 +564,7 @@
 		      <div class="row hborderdiv" style="border-bottom-style:solid;">
 			<div class="form-group form-inline">
 			  <div class="col-sm-6">
-			    <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+			    <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
 			  </div>
 			  <div class="col-sm-6 text-right">
 			    <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>

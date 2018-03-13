@@ -491,7 +491,7 @@
 			    <td class="mdwrap">
 			      <select class="form-control input-sm product_name_gst">
 				<option value="" disabled hidden selected>Select Product</option>
-				{% for product in productsnservices %}
+				{% for product in products %}
 				  <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
 				{% endfor %}
 			      </select>

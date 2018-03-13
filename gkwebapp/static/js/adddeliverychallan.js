@@ -65,6 +65,13 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
+
+    //When focus is on an element which has numtype class entering characters and negative integers is disabled.
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	$(".numtype").numeric({ negative: false });
+    });
     
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -2653,7 +2660,6 @@ else {
 	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
 	  }
 	  delchaltotal = $.trim($('#total_product_gst').html());
-	  console.log(delchaltotal);
       }
       //----------------------- End GST Table Product Values-----------------------------------//      
       
