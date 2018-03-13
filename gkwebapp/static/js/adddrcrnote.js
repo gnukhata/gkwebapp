@@ -2,6 +2,16 @@ $(document).ready(function() {
     console.log("Ready");
     $("#drcrnote_invoice").focus();
     $('.drcrnotedate').autotab('number');  //Focus shifts from fields among date fields.
+ 
+    //to hide and show refernce fields date and number of drcrnote.
+      $("#reference").change(function() {
+          if($(this).prop('checked') == true) {
+	      $(".ref").show();
+        } else {
+	    $(".ref").hide();
+	}
+      });
+    	
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     
@@ -228,6 +238,7 @@ $(document).ready(function() {
 			$('#drcrnote_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 			console.log("key ans",value.proddesc);
 			$('#drcrnote_table_vat tbody tr:last td:first label').text(value.proddesc);
+			$('#drcrnote_table_vat tbody tr:last td:first label').attr("data-productcode",key);
 			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
