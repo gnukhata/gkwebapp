@@ -24,24 +24,26 @@ $(document).ready(function() {
     function calculatevataxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-	var temp = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowreductrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
-	var rowprice = temp-rowreductrate;
-	console.log(rowprice);
+	// var rowprice = temp-rowreductrate;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	
+	var reductprice=rowqty*rowreductrate;
+	var newtaxableamnt=rowtaxableamount-reductprice;
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val(parseFloat(rowprice).toFixed(2)); 
-	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
-	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (newtaxableamnt * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
-	 rowtotal = rowtaxableamount + taxamount;
+	 rowtotal = newtaxableamnt + taxamount;
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
