@@ -29,7 +29,6 @@ $(document).ready(function() {
 	var rowdiscount = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
-	// var rowprice = temp-rowreductrate;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	
 	var reductprice=rowqty*rowreductrate;
@@ -69,11 +68,16 @@ $(document).ready(function() {
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var temp = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+	var rowprice = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
 	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-	var rowprice = temp - rowreductrate;
+	
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	console.log("RTaxabla", rowtaxableamount);
+	var reductprice=rowqty*rowreductrate;
+	console.log("Rp", reductprice);
+	var newtaxableamnt=rowtaxableamount-reductprice;
+	
 	if ($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
 	}
@@ -87,24 +91,23 @@ $(document).ready(function() {
 	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val(parseFloat(rowprice).toFixed(2)); 
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+ 
+	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
 
 	let sgstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
-	let sgstamount = (rowtaxableamount * sgstrate)/100;  //Amount of SGST to be applied is found out.
+	let sgstamount = (newtaxableamnt * sgstrate)/100;  //Amount of SGST to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
 
 	let igstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
-	let igstamount = (rowtaxableamount * igstrate)/100;  //Amount of IGST to be applied is found out.
+	let igstamount = (newtaxableamnt * igstrate)/100;  //Amount of IGST to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(igstamount).toFixed(2));
 
 	let cessrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val();
-        let cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
+        let cessamount = (newtaxableamnt * cessrate)/100;  //Amount of Cess to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = rowtaxableamount + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
+	rowtotal = newtaxableamnt + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
         $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
