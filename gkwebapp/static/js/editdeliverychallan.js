@@ -69,6 +69,7 @@ $(document).ready(function() {
     .done(function(resp) {
 	console.log("success");
 	$(".panel-footer").hide();
+	$(".deliverychallan_edit_div").show();
       if (resp.delchaldata.delchaldata.cancelflag==1)
       {
         $("#cancelmsg").show();

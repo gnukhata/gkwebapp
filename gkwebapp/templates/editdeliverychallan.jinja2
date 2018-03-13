@@ -29,7 +29,7 @@
 	    {%endif%}
           </div>
 	  {#------------------------------------------------------------------------------#}
-	  <div class="deliverychallan_edit_div">
+	  <div class="deliverychallan_edit_div" hidden>
 		<form class="form-horizontal" >
 		  <div class="col-md-12">
 		    <div class="col-sm-12">
@@ -412,44 +412,38 @@
 		    <div class="col-sm-6" style="margin-top:1.1cm;">
 		      <div class="row col-sm-12">
 			<div class="form-group form-inline">
-			  <label for="deliverychallan_noofpackages" class="col-sm-7">{% trans %}Number of Packages{% endtrans %} :
-			    <label id="deliverychallan_noofpackages" ></label>
-			  </label>
+			  <label for="deliverychallan_noofpackages" class="col-sm-5">{% trans %}Number of Packages{% endtrans %} :</label>
+			  <label id="deliverychallan_noofpackages" class="col-sm-5"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-inline form-group">
-			  <label for="deliverychallan_edit_modeoftransport" class="col-sm-7" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :
-			    <label id="deliverychallan_edit_modeoftransport"></label>
-			  </label>
+			  <label for="deliverychallan_edit_modeoftransport" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
+			  <label id="deliverychallan_edit_modeoftransport" class="col-sm-5"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-inline form-group" id="vehiclenodiv" hidden>
-			  <label for="inv" class="col-sm-6">{% trans %}Vehicle No.{% endtrans %} :
-			    <label id="vehicleno"></label>
-			  </label>
+			  <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
+			  <label id="vehicleno" class="col-sm-5"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-group form-inline invoice_issuer" hidden>
-			  <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :
-			    <label id="delchal_issuer_name"></label>
-			  </label>
+			  <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+			  <label id="delchal_issuer_name" class="col-sm-5"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-inline form-group invoice_issuer" hidden>
-			  <label class="col-sm-5">{% trans %}Designation{% endtrans %} :
-			    <label id="delchal_issuer_designation"></label>
-			  </label>
+			  <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
+			  <label id="delchal_issuer_designation" class="col-sm-5"></label>
 			</div>
 		      </div>
 		      <div class="row col-sm-12">
 			<div class="form-group form-inline">
-			  <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:
-			    <label id="supply_date"></label>
-			  </label>
+			  <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
+			  <label id="supply_date" class="col-sm-5"></label>
 			</div>
 		      </div>
 		    </div>
