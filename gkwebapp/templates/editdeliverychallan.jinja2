@@ -33,15 +33,8 @@
 		<form class="form-horizontal" >
 		  <div class="col-md-12">
 		    <div class="col-sm-12">
-		      <div class="row">
-			<label class=" form-inline form-group nopadding" id="detIN"><h4>Details of Delivery In: </h4></label>
-			<label class="nopadding fsize" id="detOUT" hidden><h4>Details of Delivery Out: </h4></label>
-		      </div>
-		      {#{% if gkstatus=="in" %}#}
-			{#{% trans %}<h4>Details of Delivery In: </h4>{% endtrans %}#}
-		      {#{% else %}#}
-			{#{% trans %}<h4>Details of Delivery Out: </h4>{% endtrans %}#}
-		      {#{% endif %}#}
+			<label class="form-inline form-group nopadding" id="detailsIN" hidden><h4>Details of Delivery In: </h4></label>
+			<label class="nopadding fsize" id="detailsOUT" hidden><h4>Details of Delivery Out: </h4></label>
 		      <div class="row">
 			<div class="col-sm-12 form-group form-inline">
 			  <div class="form-group form-inline col-sm-3">
@@ -51,16 +44,11 @@
 			  <div class="form-group form-inline col-sm-3">
 			    <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
 			    <label class=" delchaldate col-sm-7" id="deliverychallan_edit_date"></label>
-			    <!-- -<label class=" delchaldate col-sm-1" id="deliverychallan_edit_month"></label>
-				 <label class=" delchaldate col-sm-5" id="deliverychallan_edit_year"></label> -->
 			  </div>
 			  <div class="form-group form-inline col-sm-4">
-			    {% if gkstatus=="in" %}
-			      <label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Destination{% endtrans %} :</label>
-			    {% else %}
-			      <label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Origin{% endtrans %} :</label>
-			    {% endif %}
-			    <label class="col-sm-7" id="invoicestate"></label>
+			      <label id="statedest" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Destination{% endtrans %} :</label>
+			      <label id="stateorigin" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Origin{% endtrans %} :</label>
+			      <label class="col-sm-7" id="invoicestate"></label>
 			  </div>
 			  <div class="form-group form-inline col-sm-2">
 			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
@@ -79,13 +67,8 @@
 			  <div class="form-group form-inline col-sm-3">
 			    {%if numberofgodowns > 0 %}
 			      <div class="col-sm-12 form-group form-inline">
-				<label class="col-sm-7" for="deliverychallan_edit_godown">
-				  {% if gkstatus=="in" %}
-				    {% trans %}Received At{% endtrans %} :
-				  {% else %}
-				    {% trans %}Dispatch From{% endtrans %} :
-				  {% endif %}
-				</label>
+				<label class="col-sm-7 infield" for="deliverychallan_edit_godown" hidden>Received At :</label>
+				<label class="col-sm-7 outfield" for="deliverychallan_edit_godown" hidden>Dispatch From :</label>
 				<label class=" col-sm-5" id="deliverychallan_edit_godown"></label>
 			      </div>		  
 			    {% endif %}
@@ -129,29 +112,16 @@
 
 		    <!-- Details Supplier/Customer -->
 		    <div class="col-md-6 hborderdiv">
-		      {% if gkstatus=="in" %}
-			<h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
-		      {% else %}
-			<h4>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h4>
-		      {% endif %}
+		      <label class="infield" hidden><h4>Details of Supplier : </h4></label>
+		      <label class="outfield" hidden><h4>Details of Receiver | Billed to : </h4></label>
 		      <div class="form-group form-inline">
-			<label class="col-sm-4 fsize" for="deliverychallan_customer">
-			  {% if gkstatus=="in" %}
-			    {% trans %}Supplier{% endtrans %} :
-			  {% else %}
-			    {% trans %}Customer{% endtrans %} :
-			  {% endif %}
-			</label>
+			<label class="col-sm-4 fsize infield" for="deliverychallan_customer" hidden>Supplier :</label>
+			<label class="col-sm-4 fsize outfield" for="deliverychallan_customer" hidden>Customer :</label>
 			<label class="col-sm-8 fsize" id="deliverychallan_customer"></label>
 		      </div>
 		      <div class="form-group form-inline">
-			<label for="deliverychallan_customerstate" class="col-sm-4 fsize">
-			  {% if gkstatus == "in" %}
-			    {% trans %}Supplier State{% endtrans %}:
-			  {% else %}
-			    {% trans %}Customer State{% endtrans %}:
-			  {% endif %}
-			</label>
+			<label for="deliverychallan_customerstate" class="col-sm-4 fsize infield" hidden>Supplier State :</label>
+			<label for="deliverychallan_customerstate" class="col-sm-4 fsize outfield" hidden>Customer State :</label>
 			<label id="deliverychallan_customerstate" class="col-sm-8"></label>
 		      </div>
 		      <div class="form-group form-inline">
@@ -169,13 +139,8 @@
 			<label type="text" id="gstin" class="col-sm-8 nopadding" name="gstin" ></label>
 		      </div>
 		      <div class="form-group form-inline">
-			<label class="col-sm-4 fsize" for="deliverychallan_customeraddr">
-			  {% if gkstatus == "in" %}
-			    {% trans %}Supplier{% endtrans %}<br> {% trans %}Address{% endtrans %} :
-			  {% else %}
-			    {% trans %}Customer Address{% endtrans %} :
-			  {% endif %}
-			</label>
+			<label class="col-sm-4 fsize infield" for="deliverychallan_customeraddr" hidden>Supplier Address :</label>
+			<label class="col-sm-4 fsize outfield" for="deliverychallan_customeraddr" hidden>Customer Address :</label>
 			<label class="col-sm-8 nopadding" id="deliverychallan_customeraddr"></label>
 		      </div>
 		    </div>

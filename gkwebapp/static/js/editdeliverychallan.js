@@ -94,6 +94,22 @@ $(document).ready(function() {
 	$("#deliverychallan_edit_customer").html(custsup);
 	inout = resp.delchaldata.delchaldata.inout;
 	inoutflag = resp.delchaldata.delchaldata.inoutflag;
+	if(inoutflag == 9){
+	    $("#detailsIN").show();
+	    $("#detailsOUT").hide();
+	    $("#statedest").show();
+	    $("#stateorigin").hide();
+	    $(".infield").show();
+	    $(".outfield").hide();
+	}
+	else if(inoutflag == 15){
+	    $("#detailsOUT").show();
+	    $("#detailsIN").hide();
+	    $("#statedest").hide();
+	    $("#stateorigin").show();
+	    $(".infield").hide();
+	    $(".outfield").show();
+	}
 
 	/*if (resp.delchaldata.delchaldata.taxflag == '7'){
 	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
