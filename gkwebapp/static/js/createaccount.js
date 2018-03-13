@@ -143,8 +143,16 @@ $("#openbal").keydown(function(event){
 	    event.preventDefault();
 	    $("#maccounts").focus().select();
 	}
+
     });
 
+
+    $("#maccounts").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#accountname").focus().select();
+	}
+	});
 $("#accountform").submit(function(e)
 {
 
