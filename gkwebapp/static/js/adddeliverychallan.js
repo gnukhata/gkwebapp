@@ -40,7 +40,7 @@ $(document).ready(function() {
   $("#deliverychallan_year").numeric();
   $('.deliverychallan_product_quantity').numeric({ negative: false});
   $('#deliverychallan_noofpackages').numeric({ negative: false});
-    var fancialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var selectedproduct = "";
     var gstins = {};
@@ -2373,6 +2373,15 @@ else {
      $('#salesorderdiv').html("");
    });
 
+    /*if ($.trim($('#deliverychallan_noofpackages').val())=="") {
+      $("#noofpackages-blank-alert").alert();
+      $("#noofpackages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#noofpackages-blank-alert").hide();
+      });
+      $('#deliverychallan_noofpackages').focus();
+      return false;
+    }*/
+
 
     //....................Saving Delchal..............................
     $("#deliverychallan_save").click(function(event) {
@@ -2716,7 +2725,7 @@ else {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("taxflag", $("#taxapplicable").val());
-    console.log(JSON.stringify(contents));	
+    form_data.append("inoutflag",$("#status").val());
     form_data.append("contents", JSON.stringify(contents));
 	console.log($("#orggstin").text());	
     form_data.append("orgstategstin",$("#orggstin").text());	
