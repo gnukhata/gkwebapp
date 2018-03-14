@@ -45,6 +45,33 @@ $(document).ready(function()
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
+    $.ajax({
+      type: "POST",
+      url: "/getaccdetails",
+      data: {"accountcode":acccode},
+      global: false,
+      async: false,
+      dataType: "json",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(jsonObj)
+      {
+        accdetails=jsonObj["gkresult"];
+        $("#editaccountform").show();
+
+        $("#groupname").val(accdetails["groupname"]);
+        $("#groupname").prop("disabled", true);
+        $("#subgroupname").val(accdetails["subgroupname"]);
+        $("#subgroupname").prop("disabled", true);
+        $("#accountname").val(accdetails["accountname"]);
+        $("#accountname").prop("disabled", true);
+        $("#openingbal").val(accdetails["openingbal"]);
+        $("#openingbal").prop("disabled", true);
+        $("#accountcode").val(accdetails["accountcode"]);
+
+ 
     if(accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
       $("#accnamenoedit").hide();
@@ -82,32 +109,8 @@ $(document).ready(function()
       $("#openingbal").show();
 	$("#openbal").show();
       $("#baltbl").show();
-    };
-    $.ajax({
-      type: "POST",
-      url: "/getaccdetails",
-      data: {"accountcode":acccode},
-      global: false,
-      async: false,
-      dataType: "json",
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(jsonObj)
-      {
-        accdetails=jsonObj["gkresult"];
-        $("#editaccountform").show();
-
-        $("#groupname").val(accdetails["groupname"]);
-        $("#groupname").prop("disabled", true);
-        $("#subgroupname").val(accdetails["subgroupname"]);
-        $("#subgroupname").prop("disabled", true);
-        $("#accountname").val(accdetails["accountname"]);
-        $("#accountname").prop("disabled", true);
-        $("#openingbal").val(accdetails["openingbal"]);
-        $("#openingbal").prop("disabled", true);
-        $("#accountcode").val(accdetails["accountcode"]);
+    }
+	  
       }
     });
   });
