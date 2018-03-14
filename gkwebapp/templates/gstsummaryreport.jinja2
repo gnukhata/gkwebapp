@@ -6,13 +6,13 @@
      .shadow {
 	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      }
-     #registertable td {
+     #rptt td {
 	 font-size: 75%;
 	 padding: 4 !important;
 	 margin: 4 !important;
      }
 
-     #registertable th {
+     #rptt th {
 	 font-size: 85%;
      }
      .card-view .title {
@@ -21,54 +21,115 @@
 	 min-width: 20%;
 	 text-align: left !important;
      }
-     #registertable tbody {
+     #rptt tbody {
 	 display:block;
 	 width: 100%;
 	 height: calc(100vh - 17em);
 	 overflow-y:scroll;
+	 overflow-y:scroll;
 
      }
-     #registertable thead,#registertable tbody tr {
+     #rptt thead,#rptt tbody tr {
 	 display:table;
 	 width:100%;
 	 table-layout:fixed;
      }
-     #registertable thead {
+     #rptt thead {
 	 width: calc( 99%)
      }
-     .registertablecss{
+     .rpttcess{
 	 overflow-y:scroll;
 	 overflow-x:scroll;
 	 max-height:100%;
      }
      .ralign{
 	 text-align:right;
+	 }
+	 .lalign{
+	     text-align:left;
 
-     }
-     .cred{
-	 color:red;
-     }
-     .calign{
-	 text-align:center;
-     }
-     .dtwrap{
-	 width :100px
-     }
-     .smwrap{
-	 width:80px
-     }
-     .lngwrap{
-	 width:560px
-     }
-     .mdwrap{
-	 width:120px
-     }
+	 }
+	 .cred{
+	     color:red;
+	 }
+	 .calign{
+	     text-align:center;
+	 }
+	 .dtwrap{
+	     width :80%;
+	 }
+	 .smwrap{
+	     width:25%;
+	 }
+	 .lngwrap{
+	     width:100%;
+	 }
+	 .mdwrap{
+	     width:50%;
+	 }
 
 
     </style>
   </head>
   <body>
-    <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Sales Register{% endtrans %}</strong></span>
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+   <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Statement of GST Calculation {% endtrans %}</strong></span>
+   <div class ="container">
+     
+     <p>
+       <span class="pull-left" style="padding-left:250px;"><i>{% trans %}State{% endtrans %}</i> :<strong> Kerala</strong></span>
+       <span class="pull-right" style="padding-right:100px;"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{reportheader["startDate"]}}</strong> {% trans %}to{% endtrans %} <strong>{{reportheader["enddate"]}}</strong></span>
+     </p>
+
+   </div>
+   <div class="rpttcess">
+     <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+     <table id="rptt" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+
+       <thead class="bg-primary">
+         <tr>
+	   <th scope="col" class="smwrap calign" rowspan="2" >{% trans %}Type of Tax{% endtrans %}</th>
+           <th scope ="col " class="smwrap calign" colspan="2" rowspan="2">{% trans %}Tax Amount{% endtrans %}</th>
+           <th scope="col" class="smwrap calign" colspan="2" >{% trans %}Net Tax Amount{% endtrans %}</th>
+	 </tr>
+	 <tr>
+	   <th class="smwrap calign">{% trans %}Payable{% endtrans %}
+	     <th class="smwrap calign" >{% trans %}Carried Forward{% endtrans %}
+	 </tr>
+       </thead>
+       <tbody>
+	  {% for record in gstData %} 
+	   {%  if gstData["lenSGSTin"] > 0 %}
+	   <tr>
+	     <td scope ="row" class="smwrap ">SGST</td>
+	     <td></td>
+	     <td></td><td></td><td></td>
+	   </tr>
+	   <tr>
+	     <td scope ="row" class="smwrap">&nbsp Input Tax</td>
+	     <td></td><td></td><td></td><td></td></tr>
+	   <tr>
+	     
+	     {% for sgstinacc in gstData["sgstin"] %}
+	       
+	       <td class="smwrap calign">{{sgstinacc}}</td>
+	       <td class="ralign">{{gstData["sgstin"][sgstinacc]}}</td>
+	       
+	       {% if gstData["lenSGSTin"] == loop.index %}
+		 
+		 <td >{{gstData["totalSGSTIn"]}}</td>
+		 <td></td><td></td>
+	       {% else %}
+		 <td></td><td></td><td></td>
+	       {% endif %}
+	   </tr>
+	     {% endfor %}
+	   {% endif %}
+	   
+	      	 {% endfor %}  
+       </tbody>
+     </table>
+   </div>
+   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewgstsummary.js')}}"></script>
+ 
   </body>
 </html>

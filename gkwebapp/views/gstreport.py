@@ -51,9 +51,18 @@ def sendReportData(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"taxData":json.loads(request.params["tax"])}
     result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
-    print type(result.json()["gkresult"])
     reportheader = {"startDate":str(request.params["calculatefrom"]),"enddate":str(request.params["calculateto"])}
-    return{"reportheader":reportheader,"gstData":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+    data = result.json()["gkresult"]
+    data["lenSGSTin"] = len(result.json()["gkresult"]["sgstin"])
+    data["lenSGSTout"] = len(result.json()["gkresult"]["sgstout"])
+    data["lenCGSTin"] =  len(result.json()["gkresult"]["cgstin"])
+    data["lenCGSTout"] =  len(result.json()["gkresult"]["cgstout"])
+    data["lenIGSTin"] =  len(result.json()["gkresult"]["igstin"])
+    data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
+    data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
+    data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])
+    
+    return{"reportheader":reportheader,"gstData":data,"gkstatus":result.json()["gkstatus"]}
     
     
 
