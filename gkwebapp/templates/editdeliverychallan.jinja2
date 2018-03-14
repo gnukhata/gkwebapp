@@ -354,9 +354,8 @@
 				  <td class="taxcell sgstfield"><label class="invoice_product_sgstrate trate form-control input-sm text-right numtype"></label></td>
 				  <td class="taxcell sgstfield"><label class="invoice_product_sgstamount tamount input-sm form-control text-right numtype"></label></td>
 
-				  <td class="taxcell igstfield">
-				    <label class="invoice_product_igstrate trate input-sm text-right form-control numtype"></label></td>
-				  <td class="taxcell igstfield"><label type="text" class="invoice_product_igstamount tamount form-control input-sm text-right numtype"></label></td>
+				  <td class="taxcell igstfield"><label class="invoice_product_igstrate trate input-sm text-right form-control numtype"></label></td>
+				  <td class="taxcell igstfield"><label class="invoice_product_igstamount tamount form-control input-sm text-right numtype"></label></td>
 				  <td class="taxcell"><label class="invoice_product_cessrate trate input-sm text-right form-control numtype"></label></td>
                                   <td class="taxcell"><label class="invoice_product_cessamount tamount form-control input-sm text-right numtype"></label></td>
 				</tr>
@@ -460,7 +459,8 @@
 			  </div>
 			</div>
 		      </div>
-		      <div class="row hborderdiv gstfield sgstfield">
+		      <div class="gstfield">
+			<div class="row sgstfield hborderdiv">
 			<div class="form-group sgstfield form-inline">
 			  <div class="col-sm-6">
 			    <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
@@ -470,7 +470,9 @@
 			  </div>
 			</div>
 		      </div>
-		      <div class="row hborderdiv gstfield sgstfield">
+		      </div>
+		      <div class="gstfield">
+			<div class="row sgstfield hborderdiv">
 			<div class="form-group sgstfield form-inline">
 			  <div class="col-sm-6">
 			    <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
@@ -479,8 +481,10 @@
 			    <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
 			  </div>
 			</div>
+			</div>
 		      </div>
-		      <div class="row hborderdiv gstfield igstfield">
+		      <div class="gstfield ">
+			<div class="row igstfield hborderdiv">
 			<div class="form-group igstfield form-inline">
 			  <div class="col-sm-6">
 			    <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
@@ -488,6 +492,7 @@
 			  <div class="col-sm-6 text-right">
 			    <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
 			  </div>
+			</div>
 			</div>
 		      </div>
 		      <div class="row hborderdiv gstfield">
@@ -535,7 +540,13 @@
 		</form>
 	  </div>	  
 	  {#--------------------------------------------------------------------------------#}
-        </div>
+	</div>
+      </div>
+      <div class="panel-footer">
+	<div style="text-align:left; border-radius: 5px 5px 5px 5px !important;">
+	  <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+	  <!-- <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button> -->
+	</div>  
       </div>
     </div>
   </div>

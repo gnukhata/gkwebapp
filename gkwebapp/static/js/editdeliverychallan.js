@@ -102,6 +102,8 @@ $(document).ready(function() {
 	    $("#stateorigin").hide();
 	    $(".infield").show();
 	    $(".outfield").hide();
+	    $(".panel-footer").hide();
+	    $("#deliverychallan_editprint").hide();
 	}
 	else if(inoutflag == 15){
 	    $("#detailsOUT").show();
@@ -110,11 +112,13 @@ $(document).ready(function() {
 	    $("#stateorigin").show();
 	    $(".infield").hide();
 	    $(".outfield").show();
+	    $(".panel-footer").show();
+	    $("#deliverychallan_editprint").show();
 	}
 
-	/*if (resp.delchaldata.delchaldata.taxflag == '7'){
+	if (resp.delchaldata.delchaldata.taxflag == '7'){
 	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
-		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.delchaldata.sourcestate) {
+		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -135,8 +139,15 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	  }
-	*/
+	}
+	else if(resp.delchaldata.delchaldata.taxflag == '22'){
+	    $(".gstinfield").hide();
+	    $("#invoice_product_table_vat").show();
+	    $(".tinfield").show();
+	    $("#vathelp").show();
+	    $(".gstfield").hide();
+	    $(".vatfield").show();
+	}
 	
 	if (inoutflag == 9) {
             $("#polabel").show();
@@ -280,6 +291,7 @@ $(document).ready(function() {
         '</td>'+
         '</tr>');
 	});*/
+	console.log(resp.delchaldata.taxname);
 	if(resp.delchaldata.delchaldata.taxflag == 7){
 	    $('#invoice_product_table_gst tbody').empty();
 	    $('#invoice_product_table_total tbody').empty();
@@ -294,7 +306,7 @@ $(document).ready(function() {
 		$('.invoice_product_per_price_gst:eq(' + curindex + ')').text(value.priceperunit);
 		$('.invoice_product_discount_gst:eq(' + curindex + ')').text(value.discount);
 		$('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').text(value.taxableamount);
-		if(resp.delchaldata.delchalContents.taxname == 'IGST'){
+		if(resp.delchaldata.taxname == 'IGST'){
 		    $('.invoice_product_igstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
 		    $('.invoice_product_igstamount:eq(' + curindex + ')').text(parseFloat(value.taxamount).toFixed(2));
 		}
@@ -435,7 +447,7 @@ if(event.which==13)
 
 
 $("#deliverychallan_editprint").click(function(event) {
- let printset = [];
+    let printset = [];
     let qtytotal =0;
     var consignee = {};
     if($("#deliverychallan_edit_consigneename").val() != ""){
