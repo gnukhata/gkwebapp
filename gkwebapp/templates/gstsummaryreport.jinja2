@@ -143,11 +143,20 @@
 		 
 		 {% if gstData["lenSGSTout"] == loop.index %}
 		   
+		   
 		   <td class="smwrap ralign" >{{gstData["totalSGSTOut"]}}</td>
-		   {% if gstData["sgstpa"] %}
-		   <td class ="smwrap"> <td class ="smwrap">
 		 {% else %}
-		     <td class ="smwrap"> <td class ="smwrap"> <td class ="smwrap">
+		   <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		   {% if 'sgstpayable'in gstData %}
+		     <td class ="smwrap">{{gstData["sgstpayable"]}} </td>
+		       <td class ="smwrap"> </td>
+		   {% else %}
+		       <td class ="smwrap"> </td>
+		       <td class ="smwrap">{{gstData["sgstcrdfwd"]}}</td>
+			 
+		  
+			   
+			     {% endif %}
 		 {% endif %}
 	     </tr>
 	       {% endfor %}
