@@ -46,17 +46,14 @@ def viewGstSummary(request):
 def sendReportData(request):
     print "Hii "
     calculateto = request.params["calculateto"]
-   # financialstart = request.params["financialstart"]
     calculatefrom = request.params["calculatefrom"]
-   # orgtype = request.params["orgtype"]
     taxdata = request.params["tax"]
-    print taxdata
     header={"gktoken":request.headers["gktoken"]}
-    print "hello you are here"
     gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"taxData":json.loads(request.params["tax"])}
     result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
+    print type(result.json()["gkresult"])
     reportheader = {"startDate":str(request.params["calculatefrom"]),"enddate":str(request.params["calculateto"])}
-    return{"reportheader":reportheader,"gstData":result.json["gkresult"],"gkstatus":result.json()["gkstatus"]}
+    return{"reportheader":reportheader,"gstData":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
     
     
 
