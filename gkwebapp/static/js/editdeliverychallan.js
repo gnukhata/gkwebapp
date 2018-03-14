@@ -446,8 +446,9 @@ if(event.which==13)
 
 
 
-$("#deliverychallan_editprint").click(function(event) {
-    let printset = [];
+    $("#deliverychallan_editprint").click(function(event) {
+	var dcid = $("#deliverychallan_edit_list option:selected").val();
+    /*let printset = [];
     let qtytotal =0;
     var consignee = {};
     if($("#deliverychallan_edit_consigneename").val() != ""){
@@ -463,13 +464,13 @@ $("#deliverychallan_editprint").click(function(event) {
     obj.unitname = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) span").text();
     qtytotal += +obj.qty;
     printset.push(obj);
-  }
-  $.ajax({
-    url: '/deliverychallan?action=print',
-    type: 'POST',
-    dataType: 'html',
-    data: {"dcno": $("#deliverychallan_edit_challanno").val(),
-    "custid":$("#deliverychallan_edit_customer option:selected").val(),
+  }*/
+	$.ajax({
+	    url: '/deliverychallan?action=print',
+	    type: 'POST',
+	    dataType: 'html',
+	    data: {"dcid": dcid
+    /*"custid":$("#deliverychallan_edit_customer option:selected").val(),
     "dcdate":$("#deliverychallan_edit_date").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
     "printset":JSON.stringify(printset),
     "consignee":JSON.stringify(consignee),
@@ -477,22 +478,22 @@ $("#deliverychallan_editprint").click(function(event) {
     "designation":$("#deliverychallan_edit_designation").val(),
     "goid":$("#deliverychallan_edit_godown option:selected").val(),
     "notetype":$("#deliverychallan_edit_consignment option:selected").text(),
-    "qtytotal":qtytotal
-    },
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-    }
-  })
-  .done(function(resp) {
-    console.log("success");
-    $('#info').html(resp);
-  })
-  .fail(function() {
-    console.log("error");
-  })
-  .always(function() {
-    console.log("complete");
-  });
-});
+    "qtytotal":qtytotal*/
+		  },
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp) {
+		console.log("success");
+		$('#info').html(resp);
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+    });
 });
