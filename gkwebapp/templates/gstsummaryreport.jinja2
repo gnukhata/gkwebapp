@@ -59,13 +59,13 @@
 	     width :80%;
 	 }
 	 .smwrap{
-	     width:25%;
+	     width:15%
 	 }
 	 .lngwrap{
 	     width:100%;
 	 }
 	 .mdwrap{
-	     width:50%;
+	     width:30%
 	 }
 
 
@@ -87,9 +87,9 @@
 
        <thead class="bg-primary">
          <tr>
-	   <th scope="col" class="smwrap calign" rowspan="2" >{% trans %}Type of Tax{% endtrans %}</th>
-           <th scope ="col " class="smwrap calign" colspan="2" rowspan="2">{% trans %}Tax Amount{% endtrans %}</th>
-           <th scope="col" class="smwrap calign" colspan="2" >{% trans %}Net Tax Amount{% endtrans %}</th>
+	   <th scope="col" class="mdwrap calign" rowspan="2" >{% trans %}Type of Tax{% endtrans %}</th>
+           <th scope ="col " class="mdwrap calign" colspan="2" rowspan="2">{% trans %}Tax Amount{% endtrans %}</th>
+           <th scope="col" class="mdwrap calign" colspan="2" >{% trans %}Net Tax Amount{% endtrans %}</th>
 	 </tr>
 	 <tr>
 	   <th class="smwrap calign">{% trans %}Payable{% endtrans %}
@@ -97,35 +97,89 @@
 	 </tr>
        </thead>
        <tbody>
-	  {% for record in gstData %} 
+	  
 	   {%  if gstData["lenSGSTin"] > 0 %}
 	   <tr>
-	     <td scope ="row" class="smwrap ">SGST</td>
-	     <td></td>
-	     <td></td><td></td><td></td>
+	     <td scope ="row" class="mdwrap">SGST</td>
+	     <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	    
 	   </tr>
 	   <tr>
-	     <td scope ="row" class="smwrap">&nbsp Input Tax</td>
-	     <td></td><td></td><td></td><td></td></tr>
+	     <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	     <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
 	   <tr>
 	     
 	     {% for sgstinacc in gstData["sgstin"] %}
 	       
-	       <td class="smwrap calign">{{sgstinacc}}</td>
-	       <td class="ralign">{{gstData["sgstin"][sgstinacc]}}</td>
+	       <td  scope ="row" scope ="row" class="mdwrap calign">{{sgstinacc}}</td>
+	       <td class="smwrap ralign">{{gstData["sgstin"][sgstinacc]}}</td>
 	       
 	       {% if gstData["lenSGSTin"] == loop.index %}
 		 
-		 <td >{{gstData["totalSGSTIn"]}}</td>
-		 <td></td><td></td>
+		 <td class="smwrap ralign" >{{gstData["totalSGSTIn"]}}</td>
+		 <td class ="smwrap"> <td class ="smwrap">
 	       {% else %}
-		 <td></td><td></td><td></td>
+		   <td class ="smwrap"> <td class ="smwrap"> <td class ="smwrap">
 	       {% endif %}
 	   </tr>
 	     {% endfor %}
 	   {% endif %}
-	   
-	      	 {% endfor %}  
+
+	   {%  if gstData["lenSGSTout"] > 0 %}
+	     <tr>
+	       <td scope ="row" class="mdwrap">SGST</td>
+	       <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	       
+	     </tr>
+	     <tr>
+	       <td scope ="row" class="mdwrap" style ="text-indent :5em;">Output Tax</td>
+	       <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	     <tr>
+	       
+	       {% for sgstoutacc in gstData["sgstout"] %}
+		 
+		 <td  scope ="row" scope ="row" class="mdwrap calign">{{sgstoutacc}}</td>
+		 <td class="smwrap ralign">{{gstData["sgstout"][sgstoutacc]}}</td>
+		 
+		 {% if gstData["lenSGSTout"] == loop.index %}
+		   
+		   <td class="smwrap ralign" >{{gstData["totalSGSTOut"]}}</td>
+		   {% if gstData["sgstpa"] %}
+		   <td class ="smwrap"> <td class ="smwrap">
+		 {% else %}
+		     <td class ="smwrap"> <td class ="smwrap"> <td class ="smwrap">
+		 {% endif %}
+	     </tr>
+	       {% endfor %}
+	   {% endif %}
+
+	   {%  if gstData["lenCGSTin"] > 0 %}
+	     <tr>
+	       <td scope ="row" class="mdwrap">CGST</td>
+	       <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	       
+	     </tr>
+	     <tr>
+	       <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	       <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	     <tr>
+	       
+	       {% for cgstinacc in gstData["cgstin"] %}
+		 
+		 <td  scope ="row" scope ="row" class="mdwrap calign">{{cgstinacc}}</td>
+		 <td class="smwrap ralign">{{gstData["cgstin"][cgstinacc]}}</td>
+		 
+		 {% if gstData["lenCGSTin"] == loop.index %}
+		   
+		   <td class="smwrap ralign" >{{gstData["totalCGSTIn"]}}</td>
+		   <td class ="smwrap"> <td class ="smwrap">
+		 {% else %}
+		     <td class ="smwrap"> <td class ="smwrap"> <td class ="smwrap">
+		 {% endif %}
+	     </tr>
+	       {% endfor %}
+	   {% endif %}
+	      	  
        </tbody>
      </table>
    </div>
