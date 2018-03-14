@@ -232,7 +232,7 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
-	$('#deliverychallan_edit_godown').val(resp.delchaldata.delchaldata.goid);
+	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.gostate);
 	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
 	if(resp.delchaldata.delchaldata.consignee) {
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
