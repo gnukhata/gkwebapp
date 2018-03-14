@@ -69,18 +69,27 @@ $(document).ready(function() {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
+       	var gsflag=$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) label').attr("data-gsflag");
+	console.log("its from cal fun gsflag ans=====",gsflag);
 	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	console.log("rowreduct",rowreductrate);
 	var rowdiscount = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-	
-	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	console.log("RTaxabla", rowtaxableamount);
-	var reductprice=rowqty*rowreductrate;
-	console.log("Rp", reductprice);
-	var newtaxableamnt=rowtaxableamount-reductprice;
-	
-	if ($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled")) {
-	    rowtaxableamount = rowprice - rowdiscount;
+	var rowtaxableamount=0.00;
+	if (gsflag=="19") {
+	    console.log("rowprice",rowprice);
+	    rowtaxableamount = (rowprice-rowreductrate) - rowdiscount;
+	    console.log("rta",rowtaxableamount);
 	}
+	else{
+	    rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	    
+	}
+	var reductprice=rowqty*rowreductrate;
+	console.log("Rp=  ", reductprice);
+
+	var newtaxableamnt=rowtaxableamount-reductprice;
+	console.log("newta",newtaxableamnt);
+	
 
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
@@ -271,9 +280,14 @@ $(document).ready(function() {
 		    $('#drcrnote_product_table_gst tbody').empty();
 		    $('#drcrnote_product_table_total tbody').empty();
 		    $.each(resp.invoicedata.invcontents, function(key, value) {
-			$('#drcrnote_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 			
+			$('#drcrnote_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 			$('#drcrnote_product_table_gst tbody tr:last td:first label').text(value.proddesc);
+			$('#drcrnote_product_table_gst tbody tr:last td:first label').attr("data-productcode",key);
+			$('#drcrnote_product_table_gst tbody tr:last td:first label').attr("data-gsflag",value.gsflag);
+			
+			
+
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
@@ -408,6 +422,55 @@ $(document).ready(function() {
 	
     });//invoice change event end
 
+
+    //footer buttons event
+
+    //click event of save button
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+
+    
     //click event for reset button
     $(document).off('click', '#drcrnote_reset').on('click', '#drcrnote_reset', function(event) {
     event.preventDefault();
