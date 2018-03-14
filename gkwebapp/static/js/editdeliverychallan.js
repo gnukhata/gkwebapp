@@ -116,6 +116,9 @@ $(document).ready(function() {
 	    $("#deliverychallan_editprint").show();
 	}
 
+	var dict={"16":"Purchase","4":"sale","1":"Approval","3":"Consignment","19":"Sample","6":"Free Replacement"};
+	var typeoftrans = dict[resp.delchaldata.delchaldata.dcflag];
+ 	
 	if (resp.delchaldata.delchaldata.taxflag == '7'){
 	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
 		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
@@ -181,6 +184,7 @@ $(document).ready(function() {
             $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
 	    $(".invoice_issuer").show();
 	}
+	
 	/*$('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
 	$.ajax({
         url: '/customersuppliers?action=get',
@@ -213,7 +217,8 @@ $(document).ready(function() {
       })
       .always(function() {
         console.log("complete");
-      });*/
+	});*/
+
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
 	//Sourcestate and Destinationstate.
@@ -243,8 +248,8 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
-	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.gostate);
-	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
+	$('#deliverychallan_edit_consignment').text(typeoftrans);
 	if(resp.delchaldata.delchaldata.consignee) {
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
             $('#delchal_consigneestate').text(resp.delchaldata.delchaldata.consignee.consigneestate);

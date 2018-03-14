@@ -5,6 +5,7 @@
       <div class="panel-body">
         <div class="container-fluid row">
 	  <div class="form-group col-md-5">
+	    <div class="col-sm-12">
 	    {%if numberofdeliverynote == 0 %}
 	      <label class="text-danger">{% trans %}No Delivery Note Found!{% endtrans %}</label>
 	    {%else%}
@@ -27,9 +28,10 @@
 		</optgroup>
               </select>
 	    {%endif%}
+	    </div>
           </div>
-	  {#------------------------------------------------------------------------------#}
-	  <div class="deliverychallan_edit_div" hidden>
+	  <!-- View of Single Delivery Challan -->
+	  <div class="deliverychallan_edit_div borderdiv" hidden>
 		<form class="form-horizontal" >
 		  <div class="col-md-12">
 		    <div class="col-sm-12">
@@ -41,15 +43,17 @@
 			    <label class="col-sm-5 fsize" for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
 			    <label class="col-sm-7" id="deliverychallan_edit_challanno"></label>
 			  </div>
-			  <div class="form-group form-inline col-sm-3">
-			    <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
-			    <label class=" delchaldate col-sm-7" id="deliverychallan_edit_date"></label>
-			  </div>
 			  <div class="form-group form-inline col-sm-4">
 			      <label id="statedest" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Destination{% endtrans %} :</label>
 			      <label id="stateorigin" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Origin{% endtrans %} :</label>
 			      <label class="col-sm-7" id="invoicestate"></label>
 			  </div>
+			  {% if resultgstvat != '22' %}
+			    <div class="form-group form-inline invoice_issuer col-sm-3">
+			      <label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+			      <label class="col-sm-7  nopadding fsize gstinfield" id="orggstin"></label>
+			    </div>
+			  {% endif %}
 			  <div class="form-group form-inline col-sm-2">
 			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
 			    <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
@@ -58,18 +62,16 @@
 		      </div>
 		      <div class="row">
 			<div class="col-sm-12 form-group form-inline">
-			  {% if resultgstvat != '22' %}
-			    <div class="form-group form-inline invoice_issuer col-sm-3">
-			      <label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-			      <label class="col-sm-7  nopadding fsize gstinfield" id="orggstin"></label>
-			    </div>
-			  {% endif %}
 			  <div class="form-group form-inline col-sm-3">
+			    <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
+			    <label class=" delchaldate col-sm-7" id="deliverychallan_edit_date"></label>
+			  </div>
+			  <div class="form-group form-inline col-sm-4">
 			    {%if numberofgodowns > 0 %}
 			      <div class="col-sm-12 form-group form-inline">
-				<label class="col-sm-6 infield" for="deliverychallan_edit_godown" hidden>Received At :</label>
-				<label class="col-sm-6 outfield" for="deliverychallan_edit_godown" hidden>Dispatch From :</label>
-				<label class=" col-sm-6" id="deliverychallan_edit_godown"></label>
+				<label class="col-sm-5 infield" for="deliverychallan_edit_godown" hidden>Received At :</label>
+				<label class="col-sm-5 outfield" for="deliverychallan_edit_godown" hidden>Dispatch From :</label>
+				<label class="col-sm-7" id="deliverychallan_edit_godown"></label>
 			      </div>		  
 			    {% endif %}
 			  </div>
@@ -77,14 +79,7 @@
 			    {%if numberofgodowns > 0 %}
 			      <div class="col-sm-12 form-group form-inline">
 				<label class="col-sm-6" for="deliverychallan_edit_consignment">Type of transaction:</label>
-				<select class="form-control input-sm col-sm-6" id="deliverychallan_edit_consignment" accesskey="">
-				  <option value="16">{% trans %}Purchase{% endtrans %}</option>
-				  <option value="4">{% trans %}Sale{% endtrans %}</option>
-				  <option value="1">{% trans %}Approval{% endtrans %}</option>
-				  <option value="3">{% trans %}Consignment{% endtrans %}</option>
-				  <option value="19">{% trans %}Sample{% endtrans %}</option>
-				  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-				</select>
+				<label class="col-sm-6" id="deliverychallan_edit_consignment"></label>
 			      </div>
 			    {% else %}
 			      <div class="col-sm-4 form-group form-inline">
@@ -126,22 +121,22 @@
 		      </div>
 		      <div class="form-group form-inline">
 			<label for="statecodeofcustomer" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-			<label id="statecodeofcustomer" class="col-sm-8 nopadding"></label>
+			<label id="statecodeofcustomer" class="col-sm-8"></label>
 		      </div>
 		      <!-- For VAT -->
 		      <div class="form-group form-inline tinfield" hidden>
 			<label for="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-			<label type="text" id="tin" class="col-sm-8 nopadding"></label>
+			<label type="text" id="tin" class="col-sm-8"></label>
 		      </div>
 		      <!-- For GST -->
 		      <div class="form-group form-inline gstinfield">
 			<label for="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-			<label type="text" id="gstin" class="col-sm-8 nopadding" name="gstin" ></label>
+			<label type="text" id="gstin" class="col-sm-8" name="gstin" ></label>
 		      </div>
 		      <div class="form-group form-inline">
 			<label class="col-sm-4 fsize infield" for="deliverychallan_customeraddr" hidden>Supplier Address :</label>
 			<label class="col-sm-4 fsize outfield" for="deliverychallan_customeraddr" hidden>Customer Address :</label>
-			<label class="col-sm-8 nopadding" id="deliverychallan_customeraddr"></label>
+			<label class="col-sm-8" id="deliverychallan_customeraddr"></label>
 		      </div>
 		    </div>
 
@@ -158,7 +153,7 @@
 		      </div>
 		      <div class="form-group form-inline">
 			<label for="delchal_statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-			<label id="delchal_statecodeofconsignee" class="col-sm-8 nopadding"></label>
+			<label id="delchal_statecodeofconsignee" class="col-sm-8"></label>
 		      </div>
 		      <!-- For VAT -->
 		      <div class="form-group form-inline tinfield" hidden>
@@ -539,7 +534,6 @@
 		  </div>
 		</form>
 	  </div>	  
-	  {#--------------------------------------------------------------------------------#}
 	</div>
       </div>
       <div class="panel-footer">
