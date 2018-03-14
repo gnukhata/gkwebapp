@@ -47,7 +47,7 @@
   </style>
 </head>
 <body>
-  <div class="container-fluid row" >
+  <div id="cashmemodiv" class="container-fluid row" >
     <ul class="nav nav-pills nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="" id="cashmemo_record" role="tab" data-toggle="tab" accesskey="1">{% trans %}Record Cash Memo{% endtrans %}</a></li>
       <li role="presentation"><a href="" id="cashmemo_create" role="tab" data-toggle="tab" accesskey="2">{% trans %}Create Cash Memo{% endtrans %}</a></li>
@@ -55,11 +55,25 @@
     </ul>
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="cashmemo_div">
-
       </div>
     </div>
-
-
+  </div>
+  <div id="viewcashmemo_div" hidden>
+    <div class="panel editblank">
+      <div class="panel-body editblank">
+	<div id="cashmemoload">
+	  
+	</div>
+	<div id="printload">
+	  
+	</div>
+      </div>
+    </div>
+    <div class="col-sm-3 col-sm-offset-4" id="buttondiv">
+      <button type="button" class="btn btn-sm btn-danger pull-right" id="backbutton" accesskey="b" style="margin-left:10px;"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button id="editbutton" class="btn btn-info btn-sm pull-right" accesskey="e" style="margin-left:10px;"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right:5px;"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary pull-right" id="printbutton" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    </div>
   </div>
 
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/cashmemo.js')}}"></script>

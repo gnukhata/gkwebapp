@@ -333,23 +333,58 @@ $(document).ready(function() {
     $("#invoice_state").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            if ($("#taxapplicable").val() == 7) {
-         $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
-           }
-           else {
-         $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
-           }
-
-        }
+	    if ($("#taxapplicable").val() == 7) {
+		$("#gstin_panno").focus();
+	    }else {
+		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }	    
+	}
         if (event.which == 38 && (document.getElementById('#invoice_state').selectedIndex == 0)) {
             event.preventDefault();
-
-
             $("#invoice_year").focus();
-
-
         }
     });
+    
+    //Validation for GSTIN fields.
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
+    $("#gstin_panno").keydown(function(event) {
+	panno = $(this).val();
+        if (event.which == 13 && ($("#taxapplicable").val() == 7)) {
+	    event.preventDefault();
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno != ""){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$(this).focus().select();
+	    }else {
+		$("#gstin").focus();
+	    }
+	}
+    });
+    $("#gstin").keydown(function(event) {
+        if (event.which == 13) {
+	    let gstinstring=$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val();
+	    event.preventDefault();
+	    if ($("#taxapplicable").val() == 7) {
+		if(gstinstring != ''){
+  		    if(gstinstring.length !=15){
+  			$("#gstin-improper-modal").alert();
+			$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#gstin-improper-modal").hide();
+  			    $("#gstin_panno").focus().select();
+			});
+  			return false;
+		    }
+		}
+		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }
+            else {
+		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }
+	}
+	});
 
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
         event.preventDefault();
@@ -381,6 +416,7 @@ $(document).ready(function() {
         $(".product_name_vat").change();
 	$("#orggstin").text("");
 	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
+	$("#gstin_statecode").val(gstinstateid);
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
@@ -394,7 +430,10 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		$("#orggstin").text(resp["gkresult"]);
+		var gstincode=resp["gkresult"];
+		//$("#gstin_statecode").val(gstincode.substring(0, 2));
+		$("#gstin_panno").val(gstincode.substring(2, 12));
+		$("#gstin").val(gstincode.substring(12,15));
          	  }
                 })
                 .fail(function() {
@@ -1070,9 +1109,9 @@ $(document).off("keyup").on("keyup", function(event) {
     return false;
   }
 });
-    console.log($("#status").val());
+    
     $("#invoice_save").click(function(event) {
-        // validations start below
+        // Validations start below
         event.stopPropagation();
 
         var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -1126,6 +1165,37 @@ $(document).off("keyup").on("keyup", function(event) {
             $('#invoice_date').focus().select();
             return false;
         }
+
+	//Validation for GSTIN on Save Button.
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var panno1= $("#gstin_panno").val();
+	let gstinstring=$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val();
+	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+	    $("#gstin-improper-modal").alert();
+	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-modal").hide();
+		$("#gstin_panno").focus();
+	    });
+	    return false;
+	}
+	else if(panno1 !="" && $("#gstin").val() ==""){
+	    $("#gstin-improper-modal").alert();
+	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-modal").hide();
+		$("#gstin").focus();
+	    });
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    if(gstinstring.length != 15){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		    $("#gstin_panno").focus();
+		});
+		return false;
+	    }
+	}	    
 
         var tax = {};
 	var cess = {};
@@ -1271,8 +1341,8 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
-	
-       var form_data = new FormData();
+
+	var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
         form_data.append("contents", JSON.stringify(contents));
@@ -1283,7 +1353,7 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-	form_data.append("orgstategstin",$("#orggstin").text() );
+	form_data.append("orgstategstin",$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val());
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
@@ -1323,7 +1393,36 @@ $(document).off("keyup").on("keyup", function(event) {
 		   }else{ $("#cashmemo_record").click();}
                $("#success-alert").alert();
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                 $("#success-alert").hide();
+		   $("#success-alert").hide();
+		   let invid = resp["gkresult"];
+		   console.log(inoutflag);
+		   if (inoutflag == "15") {
+		       $.ajax({
+			   url: '/cashmemos?action=showcashmemo',
+			   type: 'POST',
+			   dglobal: false,
+			   async: false,
+			   data: {"invid": invid},
+			   datatype: "text/html",
+			   beforeSend: function(xhr) {
+                               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			   }
+                       })
+			   .done(function(resp) {
+			       $("#cashmemoload").html("");
+			       $("#cashmemoload").html(resp);
+			       $("#viewcashmemo_div").show();
+			       $("#cashmemodiv").hide();
+			       $("#printbutton").attr("invid",invid);
+			       $("#cashmemo_div").html("");
+			   })
+			   .fail(function() {
+			       console.log("error");
+			   })
+			   .always(function() {
+			       console.log("complete");
+			   });
+		   }
                });
                return false;
              } else if (resp["gkstatus"] == 1) {
@@ -1894,7 +1993,32 @@ $(document).off("keyup").on("keyup", function(event) {
                 $("#cash").hide();
 		$("#bank").show();
             }
-        });
+    });
+
+
+    $("#printbutton").click(function(event) {
+        $.ajax({
+                url: '/cashmemos?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"invid":$("#printbutton").attr("invid")},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#printload').html(resp);
+		$("#cashmemoload").hide();
+		$("#buttondiv").hide();
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
     
 });
 

@@ -93,5 +93,5 @@ $(document).ready(function() {
 
   $("#cashmemo_record").click();
 
-return false;
+    return false;
 });
