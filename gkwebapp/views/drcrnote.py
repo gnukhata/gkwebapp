@@ -28,8 +28,8 @@ def showadddrcrnote(request):
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
 
-    drcrdata = {}
-    
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"reference":json.loads(request.params["reference"]),"contents":json.loads(request.params["contents"]),"dctypeflag":request.params["dctypeflag"],"caseflag":request.params["caseflag"]}
+    print drcrdata
     try:
         files = {}
         count = 0

@@ -426,8 +426,357 @@ $(document).ready(function() {
     //footer buttons event
 
     //click event of save button
+var allow = 1;
 
+  $("#drcrnote_save").click(function(event) {
+      event.preventDefault();
+      event.stopPropagation();
+    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    if ($.trim($('#drcrnote_invoice').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      $("#challanno-blank-alert").alert();
+      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#challanno-blank-alert").hide();
+      });
+      $('#drcrnote_invoice').focus();
+      return false;
+    } 
+
+//note no validation
+ if ($.trim($('#drcrnote_no').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      $("#challanno-blank-alert").alert();
+      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#challanno-blank-alert").hide();
+      });
+      $('#drcrnote_no').focus();
+      return false;
+    }
+//date validation
+      if ($.trim($('#drcrnote_date').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#date-blank-alert").hide();
+      });
+      $('#drcrnote_date').focus();
+      return false;
+    }
+//month
+      if ($.trim($('#drcrnote_month').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#date-blank-alert").hide();
+      });
+      $('#drcrnote_month').focus();
+      return false;
+    }
+//year
+      if ($.trim($('#drcrnote_year').val()) == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#date-blank-alert").hide();
+      });
+      $('#drcrnote_year').focus();
+      return false;
+    }
+//parsing of date
+
+      if (!Date.parseExact($("#drcrnote_date").val() + $("#drcrnote_month").val() + $("#drcrnote_year").val(), "ddMMyyyy")) {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#date-alert").hide();
+      });
+      $('#drcrnote_date').focus().select();
+      return false;
+    }
+	//taken current date in curdate variable
+      var curdate = Date.parseExact($("#drcrnote_year").val() + $("#drcrnote_month").val() + $("#drcrnote_date").val(), "yyyyMMdd");
     
+
+if (!curdate.between(financialstart, financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#between-date-alert").hide();
+      });
+      $('#drcrnote_date').focus().select();
+      return false;
+    }
+//to check date from invoice date
+
+    if ($("#drcrnote_invoice option:selected").val() != "") {
+
+	if (Date.parseExact($("#drcrnote_invoice option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+        $("#invdc-date-alert").alert();
+        $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#invdc-date-alert").hide();
+        });
+        $('#drcrnote_date').focus().select();
+        return false;
+      }
+    }
+
+//reference field validation
+
+      if($("#drcrnote_no_ref").val()!=""){
+	  console.log("Hello Motto faltu");
+	if($("#drcrnote_date_ref").val()==""){
+		 $("#between-date-alert").alert();
+      	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#between-date-alert").hide();
+      });
+	    $('#drcrnote_date_ref').focus();
+	    return false;
+}
+}
+
+
+      if($("#drcrnote_date_ref").val()!=""){
+	  console.log("Hello Motto");
+	if($("#drcrnote_no_ref").val()==""){
+		 $("#between-date-alert").alert();
+      	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#between-date-alert").hide();
+      });
+      $('#drcrnote_no_ref').focus();
+      return false;
+}
+}
+
+//GST and VAT table 
+
+      var reference  = {};
+      var contents = {};
+      var totalreduct = 0.00;
+      var productcodes = [];
+      var productqtys = [];
+      var ppu;
+ 
+
+    if ($("#taxapplicabletext").text() == "VAT") {
+
+    for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
+	productqtys.push(parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
+    
+	calculatevataxamt(i);
+      productcodes.push($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode"));
+	
+      var productcode = $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+
+      let quantity =parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	
+
+	//at time of rejection of product/service	 
+	 if (parseFloat(quantity) === 0.00) {
+	      $("#quantity-blank-alert").alert();
+	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#quantity-blank-alert").hide();
+	      });
+	      $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
+	      return false;
+	  }
+
+	//at time of reduction in price
+	if (parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.drcrnote_product_quantity_vat:eq(' + i + ')').val()) > 0) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.drcrnote_product_per_price_vat:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
+
+     
+	if (parseFloat(quantity) > 0) {
+	    let obj = {};
+            ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
+            obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+            contents[productcode] = obj;
+          }
+    }
+	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(5) input').val());
+
+    }
+
+      else if ($("#taxapplicabletext").text() == "GST") {
+
+	  for (let i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
+		let quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val());
+	/*//at time of rejection of product/service	 
+	 if (parseFloat(quantity) === 0.00) {
+	      $("#quantity-blank-alert").alert();
+	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#quantity-blank-alert").hide();
+	      });
+	      $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
+	      return false;
+	  }
+
+	//at time of reduction in price
+	if (parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.drcrnote_product_quantity_vat:eq(' + i + ')').val()) > 0) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.drcrnote_product_per_price_vat:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
+        */
+
+	      calculategstaxamt(i);
+	      productqtys.push(parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
+	      let obj = {};
+	      productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+	      ppu = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
+	      obj[ppu] = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
+	      contents[productcode] = obj;
+	      
+	  }
+	  totreduct = $.trim($('#total_product_gst').html());
+      }
+
+
+//send data
+
+
+
+      var dctypeflag = $("#status").val();
+      //var caseflag =$("#case0").val();
+      //var caseflag =$("#case1").val();
+      //var caseflag =$("#case2").val();
+      //var caseflag =$("#case3").val();
+
+      //store reference
+         reference["dcref"]=$("#drcrnote_no_ref").val();
+	 reference["dcdate"]=$.trim($("#drcrnote_year_ref").val() + '-' + $("#drcrnote_month_ref").val() + '-' + $("#drcrnote_date_ref").val());
+
+//send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
+      var form_data = new FormData();
+      form_data.append("invid", $("#drcrnote_invoice option:selected").val());
+      form_data.append("drcrno", $("#drcrnote_no").val());
+      form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
+      form_data.append("contents", JSON.stringify(contents));
+      form_data.append("reference", JSON.stringify(reference));
+      form_data.append("dctypeflag",dctypeflag);  
+      //sending hardcode values until caseflag not set
+      form_data.append("caseflag","0");
+      form_data.append("totreduct",totreduct);
+      
+//attachment
+ var files = $("#my-file-selector")[0].files;
+    var filelist = [];
+      for (var i = 0; i < files.length; i++) {
+	  if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+	      $('#my-file-selector').focus();
+		return false;
+	    }
+	form_data.append("file" + i, files[i]);
+      }
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
+	if (allow == 1){
+	    $.ajax({
+                url: '/drcrnote?action=save',
+                type: 'POST',
+                global: false,
+                contentType: false,
+                cache: false,
+                processData: false,
+                dataType: 'json',
+                async: false,
+                data: form_data,
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+                .done(function(resp) {
+                    if (resp["gkstatus"] == 0) {
+			/* allow = 0;
+			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#success-alert").alert();
+                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#success-alert").hide();
+			    let invid = resp.gkresult;
+			    $.ajax({
+				type: "POST",
+				url: "/drcrnote?action=showdrcrnote",
+				global: false,
+				async: false,
+				datatype: "text/html",
+				data: {
+				    "invid": invid
+				},
+				beforeSend: function(xhr) {
+				    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+				}
+			    })
+				.done(function(resp) {
+				    $("#invload").html("");
+				    $("#invload").html(resp);
+				    $("#backbutton").attr("inoutflag", inoutflag);
+				    $("#editbutton").attr("invid",invid);
+				    if (inoutflag == '9') {
+					$("#printbutton").hide();
+				    }
+				    else {
+					$("#printbutton").show();
+					$("#printbutton").attr("invid",invid);
+				    }
+				    $("#listdiv").hide();
+				    $("#viewinvdiv").show();
+				    $('#invoice_div').html("");
+				});
+                        });
+                        return false;  */
+                    } else if (resp["gkstatus"] == 1) {
+
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#invoice_challanno").focus();
+                        $("#duplicate-alert").alert();
+                        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#duplicate-alert").hide();
+                        });
+                        return false;
+                    } else {
+                        $("#invoice_deliverynote").focus();
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $("#failure-alert").alert();
+                        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#failure-alert").hide();
+                        });
+                        return false;
+                    }
+		    
+                    })
+                .fail(function() {
+                    console.log("error");
+                })
+                .always(function() {
+                    console.log("complete");
+                });
+        }
+
+      return false;
+    });
+  });
+  $("#confirm_yes").on('shown.bs.modal', function(event) {
+    $("#tn_save_no").focus();
+
+  });
+  $("#confirm_yes").on('hidden.bs.modal', function(event) {
+    $("#invoice_deliverynote").focus();
+  });
+
 
 
 
