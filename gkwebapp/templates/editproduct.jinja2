@@ -17,6 +17,10 @@
 		  {% else %}
 		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
 		  {%endif%}
+		  <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+
+		    {% trans %}Please select Product/Service!{% endtrans %}
+		  </div>
 		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
 		    <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
 		    {% for prod in gkresult %}

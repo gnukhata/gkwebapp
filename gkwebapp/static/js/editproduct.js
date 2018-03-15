@@ -39,22 +39,37 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml;
     var stateshtml;
-  $("#prodselect").focus();
-    $(".product_tax_disable").prop('disabled',true);
-  $(".product_cat_tax_disable").prop('disabled',true);
-  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric();
+    $("#prodselect").focus();
+    $("#prodselect").keydown(function(e){
+    if (e.which == 13) {
+      e.preventDefault();
+      if ($.trim($("#prodselect").val())=="") {
+          $("#blank-alert").alert();
+          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+            $("#blank-alert").hide();
+          });
+          $("#prodselect").focus();
+          return false;
+        }
+      else {
+      
+	  $(".product_tax_disable").prop('disabled',true);
+	  $(".product_cat_tax_disable").prop('disabled',true);
+	  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+	      event.preventDefault();
+	      /* Act on the event */
+	      $(".numtype").numeric();
+	  });
+      }
+    }
   });
 
-
     if(sessionStorage.invflag==0){
-  $(".noinventory").hide();
-    $("#taxhelp3").hide();
-    $("#taxhelp4").show();
+	$(".noinventory").hide();
+	$("#taxhelp3").hide();
+	$("#taxhelp4").show();
 
-  }
+    }
 
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
