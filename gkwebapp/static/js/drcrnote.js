@@ -41,5 +41,45 @@ $(document).ready(function() {
 	    }
 	);
     });
+    $("#creditnote_view").click(function() { // calls view credit note page.
+	$.ajax(
+	    {
+		type: "POST",
+		url: "/drcrnote",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		data:{"drcrflag": 4},
+		datatype: "text/html",
+		beforeSend: function(xhr){
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		},
+		success: function(resp)
+		{
+		    $("#drcrnote_div").html(resp);
+		}
+	    }
+	);
+    });
+    $("#debitnote_view").click(function() { // calls view debit note page.
+	$.ajax(
+	    {
+		type: "POST",
+		url: "/drcrnote",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		data:{"drcrflag": 4},
+		datatype: "text/html",
+		beforeSend: function(xhr){
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		},
+		success: function(resp)
+		{
+		    $("#drcrnote_div").html(resp);
+		}
+	    }
+	);
+    });
     $("#creditnote_create").click();
 });
