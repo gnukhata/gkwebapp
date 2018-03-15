@@ -32,6 +32,8 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
+      $("#add_cussup_phone").numeric();
+
     $("#add_cussup").change(function(event) {
 	event.preventDefault();
 	if($("#add_cussup option:selected").val() == '3'){
@@ -84,7 +86,7 @@ $(document).ready(function() {
     }
   });
   $("#add_cussup_name").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13||event.which==9) {
     	if ($.trim($("#add_cussup_name").val())=="") {
             $("#name-blank-alert").alert();
             $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -155,7 +157,7 @@ $(document).ready(function() {
     });
     
 $("#add_state").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13||event.which==9) {
     	event.preventDefault();
     	if ($.trim($("#add_state").val())=="") {
             $("#state-blank-alert").alert();
@@ -578,8 +580,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
    instead of the next element. So the below function will detect the event where enter key is pressed twice
    and if so then shift the focus to the next element */
   $("#add_cussup_address").keydown(function(event) {
-    if (event.which==13)
-    {
+    if (event.which==13|| event.which == 9)
+      {
+	  event.preventDefault();
       var thisKeypressTime = new Date();
       if ( thisKeypressTime - lastKeypressTime <= delta )
       {

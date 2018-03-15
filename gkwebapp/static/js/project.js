@@ -80,11 +80,19 @@ $(document).ready(function() {
   });
 
   $("#prjname").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#prjamount").focus().select();
-    }
-  });
+      if (event.which==13||event.which==9) {
+	event.preventDefault();
+	 if ($.trim($("#prjname").val())=="") {
+	     $("#blank-alert").alert();
+	     $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		 $("#blank-alert").hide();
+	     });
+	     $("#prjname").focus().select();
+	 }
+	  else {
+	      $("#prjamount").focus();
+	  }
+      }});
   $("#m_prjname").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
