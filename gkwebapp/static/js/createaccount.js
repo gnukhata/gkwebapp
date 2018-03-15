@@ -35,60 +35,12 @@ $(document).ready(function()
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
-
-  var sel1 = 0;
-  var sel2 = 0;
-
-  $("#groupname").focus(function() {
-    sel1 = 1;
-  });
-  $("#groupname").blur(function(){
-    sel1 = 0;
-  });
-  $("#subgroupname").focus(function() {
-    sel2 = 1;
-  });
-  $("#subgroupname").blur(function(){
-    sel2 = 0;
-  });
-
-
-  $('input:text,select, input:checkbox').keydown( function(event) {
-    var n = $("input:text:visible,select, input:checkbox").length;
-    var f = $('input:text:visible,select, input:checkbox');
-
-    if (event.which == 13)
-    {
-
-
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        event.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-    }
-
-
-    var s2 = $("#subgroupname option:selected").index();
-    if ((event.which == 38 && sel2 == 1 && s2 == 0) || (event.which == 38 && (sel1 == 0 && sel2==0)))
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex < n){
-        event.preventDefault();
-        f[prevIndex].focus();
-        f[prevIndex].select();
-      }
-    }
-  });
-
   $("#baltbl").hide();
   $("#groupname").focus().select();
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
-    var gname = $("#groupname option:selected").text();
-    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
+      var gname = $("#groupname option:selected").text();
+    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
     {
       $("#obal").hide();
       $("#openbal").hide();
@@ -155,15 +107,87 @@ $(document).ready(function()
     $('#addaccount').click();
   }
 );
-
+  // Keydown event for Opening Balance.
 $("#openbal").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
 	    $("#submit").click();
 	}
-    });
+    else if (event.which == 38){
+	event.preventDefault();
+	$("#accountname").focus().select();
+    }
+});
+    // Keydown event for Group Name.
+    // Validations for Group Name.
+      $("#groupname").keydown(function(event) {
+	  if(event.which==13 || event.which == 9) {
+	      event.preventDefault();
+	      if ($.trim($("#groupname option:selected").val())=="") {
+		  
+		  $("#grpblank-alert").alert();
+		  $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#grpblank-alert").hide();
+		  });
+		  $("#groupname").focus();
+		  $("#groupname").select();
+		  return false;
+	      }
+	  }
+	  if(event.which==13){
+	      event.preventDefault();
+	      $("#subgroupname").focus().select();
+	  }
+      });
+    // Keydown event for Sub-Group Name.
+    $("#subgroupname").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#maccounts").focus().select();
+	}
+	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
+      event.preventDefault();
+      $("#groupname").focus().select();
+    }
 
-$("#accountform").submit(function(e)
+    });
+    // Keydown event for Create Multiple Accounts Checkbox.  
+     $("#maccounts").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#accountname").focus().select();
+	}
+	 else if (event.which == 38){
+	event.preventDefault();
+	$("#subgroupname").focus().select();
+    }
+     });
+    // Keydown event for Account Name.
+    //Validations for Account Name.
+     $("#accountname").keydown(function(event){
+	if(event.which==13||event.which==9) {
+	    event.preventDefault();
+	    var gname = $("#groupname option:selected").text();    //Storing selected value from Goup Name dropdown list. 
+            if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group"){
+		$("#submit").click();	
+	    } else {
+	    $("#openbal").focus().select();
+	    }
+	    if ($.trim($("#accountname").val())=="") {
+                $("#blank-alert").alert();
+                $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+                $("#blank-alert").hide();
+           });
+                $("#accname").focus().select();
+                  return false;
+                }
+	}
+	else if (event.which == 38){
+	event.preventDefault();
+	$("#maccounts").focus().select();
+    }
+    });
+    $("#accountform").submit(function(e)
 {
 
   if ($.trim($("#accountname").val())=="") {
