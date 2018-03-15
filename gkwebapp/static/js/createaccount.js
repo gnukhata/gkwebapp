@@ -115,13 +115,13 @@ $("#openbal").keydown(function(event){
 	}
     else if (event.which == 38){
 	event.preventDefault();
-	$("#groupname").focus().select();
+	$("#accountname").focus().select();
     }
 });
     // Keydown event for Group Name.
     // Validations for Group Name.
       $("#groupname").keydown(function(event) {
-	  if(event.which==13) {
+	  if(event.which==13 || event.which == 9) {
 	      event.preventDefault();
 	      if ($.trim($("#groupname option:selected").val())=="") {
 		  
@@ -157,6 +157,10 @@ $("#openbal").keydown(function(event){
 	    event.preventDefault();
 	    $("#accountname").focus().select();
 	}
+	 else if (event.which == 38){
+	event.preventDefault();
+	$("#subgroupname").focus().select();
+    }
      });
     // Keydown event for Account Name.
     //Validations for Account Name.
@@ -178,6 +182,10 @@ $("#openbal").keydown(function(event){
                   return false;
                 }
 	}
+	else if (event.which == 38){
+	event.preventDefault();
+	$("#maccounts").focus().select();
+    }
     });
     $("#accountform").submit(function(e)
 {
