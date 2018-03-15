@@ -225,7 +225,7 @@ def printlistofusers(request):
 def listofusersspreadsheet(request):
     try:
         header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/worksheet?type=sprdsheet", headers=header)
+        result = requests.get("http://127.0.0.1:6543/worksheet?type=listofusers", headers=header)
         userrep = result.json()["gkdata"]
         users_str = base64.b64decode(userrep)
         xlsxfile = open("report.xlsx","w")
