@@ -318,7 +318,10 @@
        </tbody>
      </table>
    </div>
-   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewgstsummary.js')}}"></script>
+   <span style="margin:auto; display:table;">
+     <button type="button" class="btn btn-sm btn-danger" id="cfback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button></span>
+     
+     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/gstsummaryreport.js')}}"></script>
  
   </body>
 </html>

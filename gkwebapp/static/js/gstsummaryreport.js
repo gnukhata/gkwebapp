@@ -28,4 +28,10 @@ Contributors:
 $(document).ready(function() {
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
+
+
+
+    	$("#cfback").click(function(event) {
+	    $("#gstsummary").click();
+	});
 });

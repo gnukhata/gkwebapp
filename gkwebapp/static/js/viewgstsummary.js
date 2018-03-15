@@ -302,7 +302,7 @@ $("#igst_out").keydown(function(event) {
 
   });
   $("#cashfl_reset").click(function(event) {
-    $("#showcashflow").click();
+    $("#gstsummary").click();
   });
    
 
