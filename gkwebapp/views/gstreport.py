@@ -61,7 +61,7 @@ def sendReportData(request):
     data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
     data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
     data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])
-    
+   
     return{"reportheader":reportheader,"gstData":data,"gkstatus":result.json()["gkstatus"]}
     
     
