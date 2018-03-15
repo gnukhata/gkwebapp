@@ -74,7 +74,6 @@ $(document).ready(function() {
 	    $("#deliverychallan_OLD_product_div").hide();
 	    $(".deliverychallan_edit_div").show();
 	
-	//$(".deliverychallan_edit_div").show();
       if (resp.delchaldata.delchaldata.cancelflag==1)
       {
         $("#cancelmsg").show();
@@ -187,41 +186,6 @@ $(document).ready(function() {
             $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
 	    $(".invoice_issuer").show();
 	}
-	
-	/*$('#deliverychallan_edit_customer').val(resp.delchaldata.delchaldata.custid);
-	$.ajax({
-        url: '/customersuppliers?action=get',
-        type: 'POST',
-        dataType: 'json',
-        async : false,
-        data: {"custid":resp.delchaldata.delchaldata.custid},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-      .done(function(resp) {
-        console.log("success");
-        if (resp["gkstatus"]==0) {
-          $("#deliverychallan_customeraddr").val(resp["gkresult"]["custaddr"]);
-          if (resp.gkresult.csflag == 3) {
-              $('#deliverychallan_edit_challtype').val("OUT");
-	      $(".panel-footer").show();
-	      $("#deliverychallan_editprint").show();
-          }
-          else {
-              $('#deliverychallan_edit_challtype').val("IN");
-	      $("#deliverychallan_editprint").hide();
-          }
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-	});*/
-
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
 	//Sourcestate and Destinationstate.
@@ -233,7 +197,6 @@ $(document).ready(function() {
 	    $("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
 	}
 	else {
-	    console.log("IN");
 	    $("#invoicestate").text(resp.delchaldata.delchaldata.destinationstate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.taxstatecode);
 	}
@@ -247,7 +210,6 @@ $(document).ready(function() {
 	    $("#gstin").text(resp.delchaldata.custSupDetails.custgstin);
 	}
 	$("#deliverychallan_customeraddr").text(resp.delchaldata.custSupDetails.custaddr);
-	//$("#taxapplicabletext").text(resp.delchaldata.delchaldata.custSupDetails.custaddr);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
@@ -281,25 +243,6 @@ $(document).ready(function() {
 	}
 	$("#supply_date").text(resp.delchaldata.dateofsupply);
 	$('#deliverychallan_edit_product_table tbody').empty();
-      /*$.each(resp.delchaldata.stockdata.items, function(key, value) {
-        $('#deliverychallan_edit_product_table tbody').append('<tr>'+
-        '<td class="col-xs-7">'+
-        '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
-        '<option value="'+key+'">'+value.productdesc+'</option>'+
-        '</select>'+
-        '</td>'+
-        '<td class="col-xs-4">'+
-        '<div class="input-group">'+
-        '<input type="text" class="deliverychallan_edit_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
-          '<span class="input-group-addon input-sm" id="unitaddon">'+value.unitname+'</span>'+
-        '</div>'+
-        '</td>'+
-        '<td class="col-xs-1">'+
-        '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-        '</tr>');
-	});*/
-	console.log(resp.delchaldata.taxname);
 	if(resp.delchaldata.delchaldata.taxflag == 7){
 	    $('#invoice_product_table_gst tbody').empty();
 	    $('#invoice_product_table_total tbody').empty();
@@ -331,9 +274,6 @@ $(document).ready(function() {
 		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		$('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
-	    /*if (delchalproducts[key]) {
-		$('.product_name_gst:eq(' + curindex + ')').addClass("delchalfield");
-	    }*/
 		curindex = curindex + 1;
 	    });
 	    $('.invoice_product_quantity_gst').numeric({ negative: false });
@@ -357,7 +297,6 @@ $(document).ready(function() {
 	    $(".gstfield").show();
 	}
 	else if (resp.delchaldata.delchaldata.taxflag == 22) {
-	    console.log("Hello");
 	    // Loading tax and product details when VAT is applied.
 	    $("#taxapplicabletext").text('VAT');
 	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
@@ -376,9 +315,6 @@ $(document).ready(function() {
 		$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').text(value.taxrate);
 		$('.invoice_product_tax_amount_vat:eq(' + curindex + ')').text(value.taxamount);
 		$('.invoice_product_total:eq(' + curindex + ')').text(value.totalAmount);
-		/*if (delchalproducts[key]) {
-		    $('.product_name_vat:eq(' + curindex + ')').addClass("delchalfield");
-		}*/
 		curindex = curindex + 1;
 	    });
 	    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
@@ -402,7 +338,6 @@ $(document).ready(function() {
 	    $(".deliverychallan_OLD_div").show();
 	    $("#deliverychallan_OLD_product_div").show();
 	    $(".deliverychallan_edit_div").hide();
-	    //..........................start......................//
 	    $("#deliverychallan_edit_customer").html(custsup);
 	    var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
 	    $("#deliverychallan_edit_date_old").val(dcdatearray[0]);
@@ -510,7 +445,6 @@ $(document).ready(function() {
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
 
-	    //........................end.............................//
 	}
     })
     .fail(function() {
@@ -572,38 +506,11 @@ if(event.which==13)
 
     $("#deliverychallan_editprint").click(function(event) {
 	var dcid = $("#deliverychallan_edit_list option:selected").val();
-    /*let printset = [];
-    let qtytotal =0;
-    var consignee = {};
-    if($("#deliverychallan_edit_consigneename").val() != ""){
-	  consignee["consigneename"] = $.trim($("#deliverychallan_edit_consigneename").val());
-          consignee["consigneeaddress"] = $.trim($("#deliverychallan_edit_consigneeaddr").val());
-          consignee["consigneestate"] = $.trim($("#deliverychallan_edit_consigneestate").val());
-      }
-  for (var i = 0; i < $("#deliverychallan_edit_product_table tbody tr").length; i++) {
-    var obj = {};
-
-    obj.productdesc = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").text();
-    obj.qty = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) input").val();
-    obj.unitname = $("#deliverychallan_edit_product_table tbody tr:eq("+i+") td:eq(1) span").text();
-    qtytotal += +obj.qty;
-    printset.push(obj);
-  }*/
 	$.ajax({
 	    url: '/deliverychallan?action=print',
 	    type: 'POST',
 	    dataType: 'html',
-	    data: {"dcid": dcid
-    /*"custid":$("#deliverychallan_edit_customer option:selected").val(),
-    "dcdate":$("#deliverychallan_edit_date").val()+'-'+$("#deliverychallan_edit_month").val()+'-'+$("#deliverychallan_edit_year").val(),
-    "printset":JSON.stringify(printset),
-    "consignee":JSON.stringify(consignee),
-    "issuername":$("#deliverychallan_edit_issuername").val(),
-    "designation":$("#deliverychallan_edit_designation").val(),
-    "goid":$("#deliverychallan_edit_godown option:selected").val(),
-    "notetype":$("#deliverychallan_edit_consignment option:selected").text(),
-    "qtytotal":qtytotal*/
-		  },
+	    data: {"dcid": dcid},
 	    beforeSend: function(xhr)
 	    {
 		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

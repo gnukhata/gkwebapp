@@ -65,10 +65,7 @@
             {% trans %}Please enter Consignee Name if you want to save Details of Consignee!{% endtrans %}
 
           </div>
-	  <div class="alert alert-danger" id="noofpackages-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label for="vno">{% trans %}Please enter Number of Packages!{% endtrans %}</label>
-          </div>
+	  
           <form class="form-horizontal" >
 	    <!-- Upper Three Column  -->
 	    <div class="col-md-12">
@@ -441,7 +438,6 @@
 		    </td>
 		  </tr>
 		</tfoot>
-
 		    </table>
 	      {% endif %}
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
@@ -507,8 +503,8 @@
 			      <div class="input-group">
 				<input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
 				<span class="input-group-addon input-sm unitaddon"></span>
-			      </div>		      </td>
-
+			      </div>
+			    </td>
 			    <td class="smwrap">
 			      <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
 			    </td>
@@ -538,11 +534,11 @@
 		      </table>
 		    </div>
 		    <div class="row">
-		      <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+		      <table id="invoice_product_table_gst_tfoot" class="table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 			<tfoot>
 			  <tr>
 			    <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			    <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+			    <td class="text-right smwrap"><span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
 			    <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
 			    <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
 
@@ -573,9 +569,7 @@
 			<td class="col-xs-8 text-right">
 			  <span id="total_product_gst" class="input-sm text-right" size="9"></span>
 			</td>
-			<td class="col-xs-4">
-
-			</td>
+			<td class="col-xs-4"></td>
 		      </tfoot>
 		    </table>
 		  </div>
@@ -585,6 +579,18 @@
 	    <!-- Product Table Close -->
 	    <div class ="row col-sm-12">
 	      <div class="col-sm-6" style="margin-top:1.1cm;">
+		<div class="alert alert-danger" id="noofpackages-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		  <label for="vno">{% trans %}Please enter Number of Packages!{% endtrans %}</label>
+		</div>
+		<div class="alert alert-danger" id="issuername-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		  <label for="vno">{% trans %}Please enter Issuer Name!{% endtrans %}</label>
+		</div>
+		<div class="alert alert-danger" id="designation-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		  <label for="vno">{% trans %}Please enter Designation!{% endtrans %}</label>
+		</div>
 		<div class="row col-sm-12">
 		  <div class="form-group form-inline">
 		    <label for="deliverychallan_noofpackages" class="col-sm-5">{% trans %}Number of Packages{% endtrans %} :</label>
@@ -752,13 +758,13 @@
 
 	  {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	</div>
-        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-        <button id="deliverychallan_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+        <button id="deliverychallan_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="e"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         {% if gkstatus=="out" %}
 	  <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button>
-	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
+	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true" accesskey="d"></i> {% trans %}A<u>d</u>d Customer{% endtrans %}</button>
         {% else %}
-	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
+	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true" accesskey="d"></i> {% trans %}A<u>d</u>d Supplier{% endtrans %}</button>
         {% endif %}
 	<label class="btn btn-primary btn-sm" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">

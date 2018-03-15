@@ -166,12 +166,14 @@ def savedelchal(request):
         if len(files)>0:
             delchaldata["attachment"] = files
             delchaldata["attachmentcount"] = len(delchaldata["attachment"])
-        print delchaldata
     except:
         print "no attachment found"
     delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
     result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+    if result.json()["gkstatus"]==0:
+        return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+    else:
+        return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="deliverychallan",request_param="action=edit",renderer="json")
 def editdelchal(request):
