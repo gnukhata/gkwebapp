@@ -334,7 +334,7 @@ $("#igst_out").keydown(function(event) {
 
     });
 	
-	
+	// check all tax accounts are not null
 	if((sgstinaccounts.length == 0) && (sgstoutaccounts.length == 0) && (cgstinaccounts.length == 0 ) && (cgstoutaccounts.length == 0 )&&(igstinaccounts.length == 0 )&& (igstoutaccounts.length == 0 )&&(cessinaccounts.length == 0)&&(cessoutaccounts.length == 0)){
       $("#select-account").alert();
       $("#select-account").fadeTo(2250, 500).slideUp(500, function(){
