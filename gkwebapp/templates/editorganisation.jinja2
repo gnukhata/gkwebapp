@@ -254,7 +254,7 @@
 					      <label for="organisationgstin" id="orggstinlbl" class="gstinfield">{% trans %}GSTIN{% endtrans %} :</label>
 					    </td>
 					    <td>
-					      <button class="btn btn-primary btn-sm gstinfield" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add GSTIN{% endtrans %}</button>
+					      <button class="btn btn-primary btn-sm gstinfield" type="button" id="orggstin"  data-toggle="modal" data-target="#addgstinmodal"><i class="fa fa-plus" aria-hidden="true" accesskey="g"></i> {% trans %}Add <u>G</u>STIN{% endtrans %}</button>
 					    </td>
 					  </tr>
 					{% endif %}
@@ -263,7 +263,7 @@
 					    <label for="orgbankdetails" id="orgbkdel" class="bankdel">{% trans %}Bank Details{% endtrans %} :</label>
 					  </td>
 					  <td>
-					    <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Bank Details{% endtrans %}</button>
+					    <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true" accesskey="b"></i> {% trans %}Add <u>B</u>ank Details{% endtrans %}</button>
 					  </td>
 					</tr>
 				      </tbody>
@@ -402,7 +402,7 @@
 
 	      <div class="panel-footer">
 		<div class="container-fluid">
-		  <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+		  <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true" accesskey="d"></i>{% trans %} <u>D</u>one{% endtrans %}</button>
 		  {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
 		</div>
 	      </div>
@@ -518,7 +518,7 @@
                   </div>
 		<div class="panel-footer">
 		<div class="container-fluid">
-		  <button class="btn btn-success btn-sm" id="bankdel_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true"></i>{% trans %} Done{% endtrans %}</button>
+		  <button class="btn btn-success btn-sm" id="bankdel_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true" accesskey="n"></i>{% trans %} Do<u>n</u>e{% endtrans %}</button>
 		</div>
 	      </div>
 	    </div>
