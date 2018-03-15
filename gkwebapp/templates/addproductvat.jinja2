@@ -253,7 +253,12 @@
           <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
           <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
           {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
-      </div>
+
+	  {%if userrole|int==3%}
+	    <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	    </td>
+	  {% endif %}
+	</div>
     </div>
     </div>
     </div>
@@ -284,5 +289,23 @@
       </div>
     </div>
     </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
 </body>
+
+
+  <!--  for adding stock to existing Product-->
+  
+  <div id="addstockmodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="modal-title">
+	    {% trans %}Add stock to existing product{% endtrans %} :
+          </div>
+        </div>
+	<div class="modal-body" id="vatstkmodal">
+	</div>
+	</div>
+      </div>
+    </div>

@@ -295,15 +295,42 @@
             <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 	    {% if userrole|int != 3 %}
               <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-	  </div>
-	  {% endif %}
-	</div>
+	      
+	    {% endif %}
+	    {%if userrole|int==3%}
+	      <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	      </td>
+	    {% endif %}
+		      </tr>
+			</td>
+	  </div> 
+	  
+        </div>
+      </div>
+    </div> 
+    <div id="addgodownpopup">
     </div>
-  </div>
-  <div id="addgodownpopup">
 
-  </div>
-  <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+    <!--  for adding stock to existing Product-->
+    
+    <div id="addstockmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+	<div class="modal-content">
+          <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <div class="modal-title">
+	      {% trans %}Add stock to existing product{% endtrans %} :
+            </div>
+          </div>
+          <div class="modal-body" id="gststkmodal" >
+	  </div>
+	  </div>
+	</div>
+      </div>
+
+      <!-- #end of adding stock# -->
+
+    <div id="CatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
   <div class="modal-dialog bgcolor " >
     <div class="modal-content ">
       <div class="modal-header">
@@ -328,3 +355,4 @@
       </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>
+
