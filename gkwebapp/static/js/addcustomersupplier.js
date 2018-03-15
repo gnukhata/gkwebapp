@@ -32,7 +32,6 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-      $("#add_cussup_phone").numeric();
 
     $("#add_cussup").change(function(event) {
 	event.preventDefault();
