@@ -113,6 +113,10 @@ $("#openbal").keydown(function(event){
 	    event.preventDefault();
 	    $("#submit").click();
 	}
+    else if (event.which == 38){
+	event.preventDefault();
+	$("#groupname").focus().select();
+    }
 });
     // Keydown event for Group Name.
     // Validations for Group Name.
@@ -157,7 +161,7 @@ $("#openbal").keydown(function(event){
     // Keydown event for Account Name.
     //Validations for Account Name.
      $("#accountname").keydown(function(event){
-	if(event.which==13) {
+	if(event.which==13||event.which==9) {
 	    event.preventDefault();
 	    var gname = $("#groupname option:selected").text();    //Storing selected value from Goup Name dropdown list. 
             if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group"){

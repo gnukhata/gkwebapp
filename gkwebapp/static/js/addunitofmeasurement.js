@@ -47,7 +47,7 @@ $(document).ready(function() {
   $("#sub_unit_of").keydown(function(event) {
     if (event.which==13 && $("#sub_unit_of option:selected").val()=='') {
       event.preventDefault();
-	$("#unit_save").focus().select();
+	$("#unit_save").click();
     }
     else if(event.which==13 && $("#sub_unit_of option:selected").val()!='') {
       event.preventDefault();
@@ -62,7 +62,7 @@ $(document).ready(function() {
   $("#conversion_rate").keydown(function(event) {
     if (event.which==13){
       event.preventDefault();
-	$("#unit_save").focus().select();
+	$("#unit_save").click();
     }
     if (event.which==38){
       event.preventDefault();

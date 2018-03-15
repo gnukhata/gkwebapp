@@ -93,7 +93,7 @@ $(document).ready(function() {
     $("#unit_edit_conversion_rate").keydown(function(event) {
       if (event.which==13){
         event.preventDefault();
-          $("#unit_edit_save").focus().select();
+          $("#unit_edit_save").click();
       }
       if (event.which==38){
         event.preventDefault();
