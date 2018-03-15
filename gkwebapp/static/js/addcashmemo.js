@@ -363,6 +363,10 @@ $(document).ready(function() {
 		$("#gstin").focus();
 	    }
 	}
+	if (event.which == 39) {
+	    event.preventDefault();
+	    $("#gstin").focus().select();
+	}
     });
     $("#gstin").keydown(function(event) {
         if (event.which == 13) {
@@ -384,6 +388,10 @@ $(document).ready(function() {
             else {
 		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
             }
+	}
+	if (event.which == 37) {
+	    event.preventDefault();
+	    $("#gstin_panno").focus().select();
 	}
 	});
 
