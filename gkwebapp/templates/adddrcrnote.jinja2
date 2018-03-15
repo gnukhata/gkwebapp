@@ -3,6 +3,7 @@
  <link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
  <body style="padding-right:1%;">
    <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+     <!-- Alerts for drcrnote -->
      <div class="alert alert-success" id="cr-success-alert"  aria-live="rude" role="alert" hidden>
        {% trans %}Credit Note saved.{% endtrans %}
      </div>
@@ -18,6 +19,33 @@
      <div class="alert alert-danger" id="dr-duplicate-alert"  aria-live="rude" role="alert" hidden>
        {% trans %}Duplicate debit note no.!{% endtrans %}
      </div>
+     <div class="alert alert-danger" id="invoice-blank-alert" aria-live="rude" role="alert" hidden>
+       {% trans %}Please select Invoice.{% endtrans %}
+     </div>
+     <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
+
+       <label >{% trans %}Please enter date!{% endtrans %}</label>
+     </div>
+     <div class="alert alert-danger" id="drcrno-blank-alert" aria-live="rude" role="alert" hidden>
+       {% trans %}Please Enter Number.{% endtrans %}
+     </div>
+     <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+       <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
+     </div>
+     <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+       {% trans %}Please enter date within the financial year!{% endtrans %}
+     </div>
+
+     <div class="alert alert-danger" id="prior-date-alert" aria-live="rude" role="alert" hidden>
+
+       {% trans %}Drcr note cannot be prior to Invoice Date!{% endtrans %}
+     </div>
+     
+     
+
+     
      <div class="panel drcr_panel shadow">
        <div class="panel-body">
 	 <div class="container-fluid row">
@@ -222,25 +250,25 @@
 		     </td>
 		     <td class="qtyvwrap">
 		       <div class="input-group">
-			 <input type="text" class="drcrnote_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" aria-describedby="unitaddon">
+			 <input type="text" class="drcrnote_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" aria-describedby="unitaddon" disabled>
 			 <span class="input-group-addon input-sm unitaddon"></span>
 		       </div>
 		     </td>
 		     <td class="qtyvwrap">
-		       <input type="text" class="drcrnote_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		       <input type="text" class="drcrnote_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
 		     <td class="smvwrap">
 		       <input type="text" class="drcrnote_product_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" >
 		     </td>
 		     <td class="smvwrap">
-		       <input type="text" class="drcrnote_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		       <input type="text" class="drcrnote_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
 
 		     <td class="smvwrap">
 		       <input type="text" class="drcrnote_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
 		     <td class="ratewrap">
-		       <input type="text" class="drcrnote_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		       <input type="text" class="drcrnote_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
 		     <td class="smvwrap">
 		       <input  size="10" class="drcrnote_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
@@ -333,18 +361,18 @@
 			     </td>
 			     <td class="qtywrap">
 			       <div class="input-group">
-				 <input type="text" class="drcrnote_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
+				 <input type="text" class="drcrnote_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
 				 <span class="input-group-addon input-sm unitaddon"></span>
 			       </div>
 			     </td>
 			     <td class="qtywrap">
-			       <input type="text" class="drcrnote_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			       <input type="text" class="drcrnote_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 			     </td>
 			     <td class="smwrap">
 			       <input type="text" class="drcrnote_product_rate_gst form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="9" >
 			     </td>
 			     <td class="smwrap">
-			       <input type="text" class="drcrnote_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+			       <input type="text" class="drcrnote_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 			     </td>
 			     <td class="smwrap">
 			       <input type="text" class="drcrnote_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>

@@ -3,15 +3,306 @@ $(document).ready(function() {
     $("#drcrnote_invoice").focus();
     $('.drcrnotedate').autotab('number');  //Focus shifts from fields among date fields.
  
-    //to hide and show refernce fields date and number of drcrnote.
+    
+    //Preventing characters in numeric fields.
+    $("#drcrnote_date").numeric({ negative: false });
+    $("#drcrnote_month").numeric({ negative: false });
+    $("#drcrnote_year").numeric({ negative: false });
+     $("#drcrnote_date_ref").numeric({ negative: false });
+    $("#drcrnote_month_ref").numeric({ negative: false });
+    $("#drcrnote_year_ref").numeric({ negative: false });
+
+    //keydown events for drcrnote
+
+    $("#drcrnote_invoice").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($.trim($('#drcrnote_invoice option:selected').val()) == "") {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+		$("#invoice-blank-alert").alert();
+		$("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#invoice-blank-alert").hide();
+		});
+		$('#drcrnote_invoice').focus();
+		return false;
+	    } else {
+		$("#drcrnote_no").focus();
+	    }
+	}
+    });
+
+    //Key Event for credit/debit Number.
+    $("#drcrnote_no").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($.trim($('#drcrnote_no').val()) == "") {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+		$("#drcrno-blank-alert").alert();
+		$("#drcrno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#drcrno-blank-alert").hide();
+		});
+		$('#drcrnote_no').focus();
+		return false;
+	    } else {
+		$("#drcrnote_date").focus();
+	    }
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_invoice").focus(); //Focus shifts to select invoice
+	}
+    });
+    //Function to add leading zeros in date and month fields.
+    function pad(str, max) { //to add leading zeros in date
+	str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("0" + str, max) : str;
+	}
+	else {
+	    return str;
+	}
+    }
+    //Function to add leading numbers in year fields.
+    function yearpad(str, max) {
+	str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("200" + str, max) : str;
+	}
+	else if (str.length == 2) {
+	    return str.length < max ? pad("20" + str, max) : str;
+	}
+	else {
+	    return str;
+	}
+    }
+    
+    //Padding functions are called on blur events.
+    $("#drcrnote_date").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#drcrnote_month").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#drcrnote_year").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
+	drcrdatestring = $("#drcrnote_date").val() + $("#drcrnote_month").val() + $("#drcrnote_year").val();
+	drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
+	if (drcrdatestring.length == 0) {
+	    $("#date-blank-alert").alert();
+	    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-blank-alert").hide();
+	    });
+	    $("#drcrnote_date").focus().select();
+	    return false;
+	}
+	else if (!drcrdate && drcrdatestring.length == 8) {
+	    $("#date-alert").alert();
+	    $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-alert").hide();
+	    });
+	    $("#drcrnote_date").focus().select();
+	    return false;
+	}
+	else if (drcrdate) {
+	    if (!drcrdate.between(financialstart, financialend)) {
+		$("#between-date-alert").alert();
+		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#between-date-alert").hide();
+		});
+		$('#drcrnote_date').focus().select();
+		return false;
+	    }
+	    if ($("#drcrnote_invoice option:selected").val() != "") {
+		console.log($("#drcrnote_invoice option:selected").attr("drcrdate"));
+		if (Date.parseExact($("#drcrnote_invoice option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(drcrdate) == 1) {
+		    $("#prior-date-alert").alert();
+		    $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#prior-date-alert").hide();
+		    });
+		    $('#drcrnote_date').focus().select();
+		    return false;
+		}
+	    }
+	}
+    });
+    //Key Event for drcr Date Field.
+    $("#drcrnote_date").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#drcrnote_month").focus().select();  //Focus shifts to Month field
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_no").focus().select();  //Focus shifts to drcrnote Number.
+	}
+    });
+
+    //Key Event for drcr Month field.
+    $("#drcrnote_month").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#drcrnote_year").focus().select();  //Focus Shifts to Year field.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_date").focus().select();  //Focus Shifts to Date field.
+	}
+    });
+
+    //Key Event for Invoice Year field.
+    $("#drcrnote_year").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#reference").focus();  //Focus shifts to State of Origin/Delivery.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_month").focus().select();  //Focus shifts to month field.
+	}
+    });
+    //reference filed validation
+  //to hide and show refernce fields date and number of drcrnote.
       $("#reference").change(function() {
           if($(this).prop('checked') == true) {
 	      $(".ref").show();
+	     
         } else {
 	    $(".ref").hide();
 	}
       });
-    	
+    
+     $("#reference").keydown(function(event) {
+          if($("#reference").prop('checked') == true) {
+	      if (event.which == 13) {
+		  event.preventDefault();
+		  $("#drcrnote_no_ref").focus();
+	      }
+	      if (event.which == 38) {
+		  event.preventDefault();
+		  $("#drcrnote_month").focus().select();  
+	      }
+	  }
+	 else{
+	     $(".drcrnote_product_rate_gst:first").focus().select();
+	     $(".drcrnote_product_rate_vat:first").focus().select();
+
+	 }
+     });
+
+    //Key Event for drcr date field.
+    $("#drcrnote_date_ref").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($("#drcrnote_no_ref").val()!="" && $("#drcrnote_date_ref").val()==""){
+		$("#date-alert").alert();
+		$("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#date-alert").hide();
+		});
+	    $('#drcrnote_date_ref').focus();
+	    return false;
+	    } else {
+		$("#drcrnote_month_ref").focus().select();  //Focus shifts to Month field
+	    }
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_no_ref").focus().select();  //Focus shifts to drcrnote Number.
+	}
+    });
+
+     //Key Event for drcr Month field.
+    $("#drcrnote_month_ref").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#drcrnote_year_ref").focus().select();  //Focus Shifts to Year field.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_date_ref").focus().select();  //Focus Shifts to Date field.
+	}
+    });
+
+    //Key Event for Invoice Year field.
+    $("#drcrnote_year_ref").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $(".drcrnote_product_rate_gst:first").focus().select();
+	     $(".drcrnote_product_rate_vat:first").focus().select();
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#drcrnote_month_ref").focus().select();  //Focus shifts to month field.
+	}
+    });
+    $("#drcrnote_no_ref").keydown(function(event) {	 
+	if($("#drcrnote_no_ref").val()!=""){
+	     if (event.which == 13) {
+		 event.preventDefault();
+		 $('#drcrnote_date_ref').focus();
+	     }
+	}
+	else{
+	    $("#drcrno-blank-alert").alert();
+	    $("#drcrno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#drcrno-blank-alert").hide();
+	    });
+	    $('#drcrnote_no_ref').focus();
+	}
+	});
+		 
+    //date validation for reference
+    
+    //Padding functions are called on blur events.
+    $("#drcrnote_date_ref").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#drcrnote_month_ref").blur(function(event) {
+	$(this).val(pad($(this).val(), 2));
+    });
+    $("#drcrnote_year_ref").blur(function(event) {
+	$(this).val(yearpad($(this).val(), 4));
+	drcrdatestring = $("#drcrnote_date_ref").val() + $("#drcrnote_month_ref").val() + $("#drcrnote_year_ref").val();
+	drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
+	
+	if (drcrdatestring.length == 0) {
+	    $("#date-blank-alert").alert();
+	    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-blank-alert").hide();
+	    });
+	    $("#drcrnote_date_ref").focus().select();
+	    return false;
+	}
+	else if (!drcrdate && drcrdatestring.length == 8) {
+	    $("#date-alert").alert();
+	    $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#date-alert").hide();
+	    });
+	    $("#drcrnote_date_ref").focus().select();
+	    return false;
+	}
+	else if (drcrdate) {
+	    if (!drcrdate.between(financialstart, financialend)) {
+		$("#between-date-alert").alert();
+		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#between-date-alert").hide();
+		});
+		$('#drcrnote_date_ref').focus().select();
+		return false;
+	    }
+	    if ($("#drcrnote_invoice option:selected").val() != "") {
+		if (Date.parseExact($("#drcrnote_invoice option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(drcrdate) == 1) {
+		    $("#prior-date-alert").alert();
+		    $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#prior-date-alert").hide();
+		    });
+		    $('#drcrnote_date_ref').focus().select();
+		    return false;
+		}
+	    }
+	}
+    });
+    
+    
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     
@@ -777,49 +1068,7 @@ if (!curdate.between(financialstart, financialend)) {
     $("#invoice_deliverynote").focus();
   });
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    
-
-
-
-    
+ 
     //click event for reset button
     $(document).off('click', '#drcrnote_reset').on('click', '#drcrnote_reset', function(event) {
     event.preventDefault();
