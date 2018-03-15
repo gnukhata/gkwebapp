@@ -8,6 +8,7 @@
    }
   </style>
 </head>
+<body>
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline cashborder">
   <br>
@@ -199,6 +200,7 @@
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    <td colspan="2" class="text-right taxwrap">{{ gkresult["totalcessamt"] }}</td>
+		  </tr>
 		</tfoot>
 	      </table>
 	    </div>
@@ -363,4 +365,4 @@
 
     </div>
 </form>
-
+</body>

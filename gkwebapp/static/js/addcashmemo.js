@@ -1178,14 +1178,15 @@ $(document).off("keyup").on("keyup", function(event) {
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var panno1= $("#gstin_panno").val();
 	let gstinstring=$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val();
-	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
-	    $("#gstin-improper-modal").alert();
-	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
-		$("#gstin-improper-modal").hide();
-		$("#gstin_panno").focus();
-	    });
-	    return false;
-	}
+	 if ($("#taxapplicable").val() == 7) {
+	     if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+		 $("#gstin-improper-modal").alert();
+		 $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		     $("#gstin-improper-modal").hide();
+		     $("#gstin_panno").focus();
+		 });
+		 return false;
+	     }
 	else if(panno1 !="" && $("#gstin").val() ==""){
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
@@ -1203,7 +1204,8 @@ $(document).off("keyup").on("keyup", function(event) {
 		});
 		return false;
 	    }
-	}	    
+	}
+	 }
 
         var tax = {};
 	var cess = {};
