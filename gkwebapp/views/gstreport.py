@@ -39,8 +39,8 @@ def viewGstSummary(request):
 
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
-    projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
-    return {"gkresult":result.json()["gkresult"]}
+    state = requests.get("http://127.0.0.1:6543/state", headers=header)
+    return {"gkresult":result.json()["gkresult"],"states":state.json()["gkresult"]}
 
 @view_config(route_name="gstsummary",request_param="type=senddata",renderer="gkwebapp:templates/gstsummaryreport.jinja2")
 def sendReportData(request):

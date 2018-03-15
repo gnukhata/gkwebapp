@@ -55,7 +55,24 @@
 
             <label for="select-account">{% trans %}Please select accounts for respective tax calculations!{% endtrans %}</label>
           </div>
+	  <div  class="row ">
+	    <div class="form-inline col-sm-12">
+	      <label for="state" >{% trans %}State{% endtrans %} :</label>
+	    
+	    
+		  <select class="form-control input-sm " id="state" aria-describedby="statecodeforreport">
+                    {% for state in states %}
+		      {% for key, value in state.items() %}
+			<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+		      {% endfor %}
+		    {% endfor %}
+                  </select>
+	    
+	    </div>
+	  </div>
+	  <br>
 	  <div class="row">
+	    
 	    <div class="form-inline col-sm-6">
               <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
               
