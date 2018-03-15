@@ -2136,10 +2136,11 @@ if (event.which == 13) {
   var nextindex = curindex + 1;
   var previndex = curindex - 1;
   if ($("#invoice_product_table_vat tbody tr").length > 1) {
-    $(this).closest('tr').fadeOut(200, function() {
-      $(this).closest('tr').remove(); //closest method gives the closest element productified
-      $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
-    });
+      $(this).closest('tr').fadeOut(200, function() {
+	  $(this).closest('tr').remove(); //closest method gives the closest element productified
+	  $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+	  calculatevataxamt(curindex);
+      });
   }
       if ($("#invoice_product_table_vat tbody tr").length == 1) {
 	  $("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
@@ -2149,6 +2150,7 @@ if (event.which == 13) {
 	  $(this).closest('tr').remove();
 	  $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
 	  $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	  calculategstaxamt(curindex);
       }
       if ($("#invoice_product_table_gst tbody tr").length == 1) {
 	  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
