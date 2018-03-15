@@ -96,16 +96,14 @@ $("#from_date").blur(function(event) {
     }
   });
 
-
+  // Navigate within date  using "ENTER" key
   $("#state").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
       $("#from_date").focus();
     }
   });
-  // Navigate within date fields uing "ENTER" key
   
-
   $("#from_date").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
@@ -196,11 +194,23 @@ $("#igst_out").keydown(function(event) {
       $("#report_view").focus();
     }
   });
-
-
-    //key event to trigger click of checkbox.
-    $(document).off('keydown', '.dropdownitem').on('keydown',
-'.dropdownitem', function(event) {
+/*
+  $("#add_cussup").change(function(event) {
+    event.preventDefault();
+    if($("#add_cussup option:selected").val() == '3'){
+      $("#bankdetails").hide();
+      $(".custlbl").show();
+      $(".suplbl").hide();
+    } else {
+      $("#bankdetails").show();
+      $(".custlbl").hide();
+      $(".suplbl").show();
+    }
+  });
+*/
+  //key event to trigger click of checkbox.
+  $(document).off('keydown', '.dropdownitem').on('keydown',
+						 '.dropdownitem', function(event) {
         event.preventDefault();
         if (event.which==32) {
         $(this).find(".dropdowncheckbox").click();  //Find will select all children of dropdownitem with class dropdowncheckbox.
@@ -363,7 +373,7 @@ $("#igst_out").keydown(function(event) {
         global: false,
         async: false,
         datatype: "text/html",
-          data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val(),"tax":JSON.stringify(result)},
+        data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val(),"tax":JSON.stringify(result),"statename":$("#state option:selected").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
