@@ -291,7 +291,13 @@ def deliveryprint(request):
     header={"gktoken":request.headers["gktoken"]}
     org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":delchaldata.json()["gkresult"]}
+    cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(delchaldata.json()["gkresult"]["custSupDetails"]["custid"])), headers=header)
+    if delchaldata.json()["gkresult"]["delchaldata"]["goid"]:
+        godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(delchaldata.json()["gkresult"]["delchaldata"]["goid"])), headers=header)
+        godowndata = godown.json()["gkresult"]
+    else:
+        godowndata = ''
+    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":delchaldata.json()["gkresult"],"cust":cust.json()["gkresult"],"godown":godowndata, "delchalflag":delchaldata.json()["gkresult"]["delchalflag"]}
 
 @view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
 def show_unbilled_deliveries_report(request):

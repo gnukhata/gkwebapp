@@ -69,15 +69,18 @@ $(document).ready(function() {
     .done(function(resp) {
 	console.log("success");
 	$(".panel-footer").hide();
-	$(".deliverychallan_edit_div").show();
+	if(resp.delchaldata.delchalContents){
+	    $(".deliverychallan_OLD_div").hide();
+	    $("#deliverychallan_OLD_product_div").hide();
+	    $(".deliverychallan_edit_div").show();
+	
+	//$(".deliverychallan_edit_div").show();
       if (resp.delchaldata.delchaldata.cancelflag==1)
       {
         $("#cancelmsg").show();
         $("#alertstrong").html("Delivery Note cancelled on "+resp.delchaldata.delchaldata.canceldate);
         $("#deliverychallan_edit_delete").prop("disabled",true);
         $("#deliverychallan_edit_delete").hide();
-
-
       }
       else
       {
@@ -132,7 +135,7 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    } else {
-		if (resp.delchaldata.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
+		if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -235,15 +238,15 @@ $(document).ready(function() {
 	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
-	$("#deliverychallan_customer").text(resp.delchaldata.delchaldata.custSupDetails.custname);
-	$("#deliverychallan_customerstate").text(resp.delchaldata.delchaldata.custSupDetails.custsupstate);
-	$("#statecodeofcustomer").text(resp.delchaldata.delchaldata.custSupDetails.custsupstatecode);
+	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
+	$("#deliverychallan_customerstate").text(resp.delchaldata.custSupDetails.custsupstate);
+	$("#statecodeofcustomer").text(resp.delchaldata.custSupDetails.custsupstatecode);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
-	    $("#tin").text(resp.delchaldata.delchaldata.custSupDetails.custtin);
+	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
 	}else{
-	    $("#gstin").text(resp.delchaldata.delchaldata.custSupDetails.custgstin);
+	    $("#gstin").text(resp.delchaldata.custSupDetails.custgstin);
 	}
-	$("#deliverychallan_customeraddr").text(resp.delchaldata.delchaldata.custSupDetails.custaddr);
+	$("#deliverychallan_customeraddr").text(resp.delchaldata.custSupDetails.custaddr);
 	//$("#taxapplicabletext").text(resp.delchaldata.delchaldata.custSupDetails.custaddr);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
@@ -357,7 +360,7 @@ $(document).ready(function() {
 	    console.log("Hello");
 	    // Loading tax and product details when VAT is applied.
 	    $("#taxapplicabletext").text('VAT');
-	    $("#tin").text(resp.delchaldata.delchaldata.custSupDetails.custtin);
+	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
 	    $('#invoice_product_table_vat tbody').empty();
 	    let curindex = 0;
 	    $.each(resp.delchaldata.delchalContents, function(key, value) {
@@ -392,9 +395,123 @@ $(document).ready(function() {
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	}
-      $(".deliverychallan_edit_div").show();
+	    $(".deliverychallan_edit_div").show();
+	    $("#deliverychallan_edit_edit").show();
+	    $("#deliverychallan_edit_save").hide();
+	}else if(resp.delchaldata.stockdata){
+	    $(".deliverychallan_OLD_div").show();
+	    $("#deliverychallan_OLD_product_div").show();
+	    $(".deliverychallan_edit_div").hide();
+	    //..........................start......................//
+	    $("#deliverychallan_edit_customer").html(custsup);
+	    var dcdatearray = resp.delchaldata.delchaldata.dcdate.split(/\s*\-\s*/g);
+	    $("#deliverychallan_edit_date_old").val(dcdatearray[0]);
+	    $("#deliverychallan_edit_month").val(dcdatearray[1]);
+      $("#deliverychallan_edit_year").val(dcdatearray[2]);
+      inout = resp.delchaldata.stockdata.inout;
+      if (resp.delchaldata.delchaldata.inoutflag==9) {
+        $("#polabel").show();
+        $("#slabel").show();
+        $("#tgolabel").hide();
+        $("#solabel").hide();
+        $("#clabel").hide();
+        $("#fgolabel").show();
+        $("#customersgroup").remove();
+        $("label[for='deliverychallan_edit_issuername']").hide();
+        $("label[for='deliverychallan_edit_designation']").hide();
+        $('#deliverychallan_edit_issuername').hide();
+        $('#deliverychallan_edit_designation').hide();
+        $("#deliverychallan_editprint").hide();
+      }
+      else {
+        $("#polabel").hide();
+        $("#slabel").hide();
+        $("#tgolabel").show();
+        $("#solabel").show();
+        $("#clabel").show();
+        $("#fgolabel").hide();
+        $("#suppliersgroup").remove();
+        $("label[for='deliverychallan_edit_issuername']").show();
+        $("label[for='deliverychallan_edit_designation']").show();
+        $("#deliverychallan_editprint").show();
+        $('#deliverychallan_edit_issuername').show();
+        $('#deliverychallan_edit_designation').show();
+        $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
+        $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
+      }
+      $('#deliverychallan_edit_customer_old').val(resp.delchaldata.custSupDetails.custid);
+      $("#deliverychallan_customeraddr_old").val(resp.delchaldata.custSupDetails.custaddr);	    
+      $.ajax({
+        url: '/customersuppliers?action=get',
+        type: 'POST',
+        dataType: 'json',
+        async : false,
+        data: {"custid":resp.delchaldata.custSupDetails.custid},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        }
+      })
+      .done(function(resp) {
+        console.log("success");
+        if (resp["gkstatus"]==0) {
+          if (resp.gkresult.csflag == 3) {
+              $('#deliverychallan_edit_challtype').val("OUT");
+	      $(".panel-footer").show();
+	      $("#deliverychallan_editprint").show();
+          }
+          else {
+              $('#deliverychallan_edit_challtype').val("IN");
+	      $("#deliverychallan_editprint").hide();
+          }
+        }
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+      $('#deliverychallan_edit_challanno_old').val(resp.delchaldata.delchaldata.dcno);
+      $('#deliverychallan_edit_godown_old').val(resp.delchaldata.delchaldata.goid);
+	$('#deliverychallan_edit_consignment').val(resp.delchaldata.delchaldata.dcflag);
+	if(resp.delchaldata.delchaldata.consignee) {
+	   $('#deliverychallan_edit_consigneename').val(resp.delchaldata.delchaldata.consignee.consigneename);
+           $('#deliverychallan_edit_consigneestate').val(resp.delchaldata.delchaldata.consignee.consigneestate);
+           $('#deliverychallan_edit_consigneeaddr').val(resp.delchaldata.delchaldata.consignee.consigneeaddress); 
+	} else {
+	   $('#deliverychallan_edit_consigneename').val("");
+           $('#deliverychallan_edit_consigneestate').val("");
+           $('#deliverychallan_edit_consigneeaddr').val(""); 
+	}
+      
+	    $('#deliverychallan_edit_noofpackages').val(resp.delchaldata.delchaldata.noofpackages);
+      $('#deliverychallan_edit_modeoftransport_old').val(resp.delchaldata.delchaldata.modeoftransport);
+      $('#deliverychallan_edit_product_table tbody').empty();
+      $.each(resp.delchaldata.stockdata, function(key, value) {
+        $('#deliverychallan_edit_product_table tbody').append('<tr>'+
+        '<td class="col-xs-7">'+
+        '<select class="form-control deliverychallan_edit_disable input-sm product_name">'+
+        '<option value="'+key+'">'+value.productdesc+'</option>'+
+        '</select>'+
+        '</td>'+
+        '<td class="col-xs-4">'+
+        '<div class="input-group">'+
+        '<input type="text" class="deliverychallan_edit_product_quantity form-control deliverychallan_edit_disable input-sm text-right" value="'+value.qty+'">'+
+          '<span class="input-group-addon input-sm" id="unitaddon">'+value.unitname+'</span>'+
+        '</div>'+
+        '</td>'+
+        '<td class="col-xs-1">'+
+        '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '</td>'+
+        '</tr>');
+      });
+
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
+
+	    //........................end.............................//
+	}
     })
     .fail(function() {
       console.log("error");

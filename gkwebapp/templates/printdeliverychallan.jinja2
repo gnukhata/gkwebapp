@@ -49,8 +49,8 @@
     <div class="container-fluid">
 
       {#..................................................................................#}
-
-      <div class="hidden-print row text-center text-primary">
+      {% if delchalflag == 14 %}
+      <div class="hidden-print row text-center text-primary newdelchal" hidden>
 	<b>{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
       </div>
       <div class="row text-center">
@@ -164,19 +164,19 @@
 		      {% trans %}Customer{% endtrans %} :
 		    {% endif %}
 		  </label>
-		  {{ gkresult["delchaldata"]["custSupDetails"]["custname"] }}
+		  {{ gkresult["custSupDetails"]["custname"] }}
 		</div>
 		{% if gkresult["delchaldata"]["taxflag"] == 22 %}
 		  <div class="form-group form-inline col-xs-12 nopadding">
 		    <label for="tin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} : </label>
-		    {{ gkresult["delchaldata"]["custSupDetails"]["custtin"] }}
+		    {{ gkresult["custSupDetails"]["custtin"] }}
 		  </div>
 		  <input type="text" id="taxapplicable" value="22" accesskey="" hidden>
 		{% endif %}
 		{% if gkresult["delchaldata"]["taxflag"] == 7 %}
 		  <div class="form-group form-inline col-xs-12 nopadding">
 		    <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
-		    {{ gkresult["delchaldata"]["custSupDetails"]["custgstin"] }}
+		    {{ gkresult["custSupDetails"]["custgstin"] }}
 		  </div>
 		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
 		{% endif %}
@@ -190,10 +190,10 @@
 		  </label>
 		  {% if gkresult["delchaldata"]["consignee"]["consigneename"] %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}
-		      {{ gkresult["delchaldata"]["custSupDetails"]["custsupstate"] }}
+		      {{ gkresult["custSupDetails"]["custsupstate"] }}
 		    {% endif %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 15 %}
-		      {{ gkresult["delchaldata"]["custSupDetails"]["custsupstate"]}}
+		      {{ gkresult["custSupDetails"]["custsupstate"]}}
 		    {% endif %}
 		  {% else %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}
@@ -203,8 +203,8 @@
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="stcode">{% trans %}State Code{% endtrans %} : </label>
 		  {% if gkresult["delchaldata"]["consignee"]["consigneename"] %}
-		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}{{ gkresult["delchaldata"]["custSupDetails"]["custsupstatecode"] }}{% endif %}
-		    {% if gkresult["delchaldata"]["inoutflag"] == 15 %}{{ gkresult["delchaldata"]["custSupDetails"]["custsupstatecode"] }}{% endif %}
+		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
+		    {% if gkresult["delchaldata"]["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
 		  {% else %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
@@ -221,7 +221,7 @@
 		    </label>
 		  </div>
 		  <div style="max-width:175px; padding-left:5px; display:table-cell;">
-		    {{ gkresult["delchaldata"]["custSupDetails"]["custaddr"] }}
+		    {{ gkresult["custSupDetails"]["custaddr"] }}
 		  </div>
 		</div>
 	      </td>
@@ -599,7 +599,7 @@
 
       <div class="row">
 	<div class="col-xs-6">
-	  <strong><i>Thank you for your business!</i></strong>
+	  <strong><i>Thank you!</i></strong>
 	</div>
 	<div class="text-right col-xs-6">
 	  <strong>{{ gkresult["delchaldata"]["issuername"] }}</strong>
@@ -609,7 +609,174 @@
 	  {% endif %}
 	</div>
       </div>
-      
+      {% endif %}
+      {#...................................................................................#}
+      {#...................................................................................#}
+      {% if delchalflag == 15 %}
+      <div class="row olddelchal">
+
+	<div class="col-xs-6">
+          <div class="row">
+            <div class="col-xs-6" id="logo_div">
+
+              <div class="img-thumbnail img-circle ">
+		<div style="position: relative; padding: 0; cursor: pointer;" type="file">
+		  <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+		</div>
+              </div>
+            </div>
+            <div class="col-xs-6">
+              <h4>{{org["orgname"]}}</br>
+		<small>
+		  {% if org["orgaddr"]!='' %}
+		    {{org["orgaddr"]}},
+		  {% endif %}
+		  {% if org["orgcity"]!='' %}
+          </br>{{org["orgcity"]}} - {{org["orgpincode"]}},
+		  {% endif %}
+		  {% if org["orgstate"]!='' %}
+          </br>{{org["orgstate"]}}.
+		  {% endif %}
+		  {% if org["orgtelno"]!='' %}
+          </br>Contact No.: {{org["orgtelno"]}}
+		  {% endif %}
+		  {% if org["orgemail"]!='' %}
+		    <br>Email : {{org["orgemail"]}}
+		  {% endif %}
+		  {% if org["orgfax"] %}
+		    <br>Fax : {{org["orgfax"]}}
+		  {% endif %}
+		  {% if org["orgwebsite"]!='' %}
+		    <br>Website : {{org["orgwebsite"]}}
+		  {% endif %}
+		  <br></small></h4>
+
+            </div>
+	  </div>
+          <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+          {% if godown!='' %}
+            <h4><small>Godown: {{godown["goname"]}}
+              <br>{{godown["goaddr"]}},<br>{{godown["state"]}},
+              {% if godown["contactname"]!='' %}
+		<br>Contact : {{godown["contactname"]}} - {{godown["gocontact"]}}
+              {% endif %}
+            </small></h4>
+            <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+          {% endif %}
+	  <div class="row">
+	    <div class="form-group col-sm-6">
+	      To,
+              <h4>{{cust["custname"]}}</br><small>{{cust["custaddr"]}},</br>{{cust["state"]}}
+		{% if cust["custphone"]!='' %}
+		  <br>Contact No.: {{cust["custphone"]}}
+		{% endif %}
+		{% if cust["custemail"]!='' %}
+		  <br>Email : {{cust["custemail"]}}
+		{% endif %}
+              </small></h4>
+	    </div>
+	    <div class="form-group col-sm-6">
+	      {% if gkresult["delchaldata"]["consignee"] %}
+		Consignee Details :
+		<h4>{{gkresult["delchaldata"]["consignee"]["consigneename"]}}<br>
+		  <small>{{gkresult["delchaldata"]["consignee"]["consigneeaddress"]}},<br>
+		    {{gkresult["delchaldata"]["consignee"]["consigneestate"]}}</small></h4>
+	      {% endif %}
+	    </div>
+	  </div>
+	</div>
+	<div class="col-sm-offset-1 col-sm-5">
+          <h2 class="text-right">Delivery Note</h2><br>
+          <table class="table table-bordered">
+            <tbody>
+              <tr>
+		<td class="col-xs-5">
+                  <strong>Note No.</strong>
+		</td>
+		<td class="text-right">
+                  {{gkresult["delchaldata"]["dcno"]}}
+		</td>
+              </tr>
+              <tr>
+                <td class="col-xs-5">
+                  <strong>Date</strong>
+                </td>
+                <td class="text-right">
+                  {{gkresult["delchaldata"]["dcdate"]}}
+                </td>
+              </tr>
+              <tr>
+		<td class="col-xs-5">
+                  <strong>Type</strong>
+		</td>
+		<td class="text-right">
+		  {% if gkresult["delchaldata"]["dcflag"] == 4 %}Sale{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 16 %}Purchase{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 1 %}Approval{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 3 %}Consignment{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 19 %}Sample{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 6 %}Free Replacement{% endif %}
+		</td>
+              </tr>
+            </tbody>
+          </table>
+	</div>
+      </div>
+
+      <div class="row">
+	<div class="col-xs-12">
+
+          <table class="table table-bordered table-condensed" style="margin-bottom:0px;">
+            <thead class="bg-primary" style="border-bottom-style:double; border-top-style:double;">
+              <tr>
+                <th>
+                  Description
+                </th>
+                <th class="text-right">
+                  Qty
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for product in gkresult["stockdata"] %}
+		<tr>
+		  <td>
+                    {{gkresult["stockdata"][product]["productdesc"]}}
+		  </td>
+		  <td class="text-right">
+                    {{gkresult["stockdata"][product]["qty"]}}
+		  </td>
+		</tr>
+              {% endfor %}
+            </tbody>
+          </table>
+          <hr style="border-color:grey;margin-top:0px; margin-bottom:0px;">
+	</div>
+      </div>
+
+
+      <div class="row">
+	<div class="col-xs-7">
+          <label for="notes" class="hidden-print">Notes :</label>
+          <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+          <p class="visible-print" id = "notespara">
+          </p>
+	</div>
+
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-xs-6">
+          <strong><i>Thank you!</i></strong>
+        </div>
+        <div class="text-right col-xs-6">
+          <strong>{{gkresult["delchaldata"]["issuername"]}}</strong>
+          {% if gkresult["delchaldata"]["designation"]!='' %}
+            <i>({{gkresult["delchaldata"]["designation"]}})</i>
+          {% endif %}
+        </div>
+      </div>
+      {% endif %}
       {#...................................................................................#}
       <span style="margin:auto; display:table;">
     	<button type="button" class="btn btn-sm btn-danger hidden-print" id="delchalback" accesskey="b">{% trans %}<u>B</u>ack{% endtrans %}</button>
