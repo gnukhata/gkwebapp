@@ -29,7 +29,7 @@ Contributors:
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
-    $("#from_date").focus().select();
+    $("#state").focus().select();
   $('.gstsm_autotab').autotab('number');
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -96,9 +96,17 @@ $("#from_date").blur(function(event) {
     }
   });
 
-    // Navigate within date fields uing "ENTER" key
 
-     $("#from_date").keydown(function(event) {
+  $("#state").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#from_date").focus();
+    }
+  });
+  // Navigate within date fields uing "ENTER" key
+  
+
+  $("#from_date").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
       $("#from_month").focus();
