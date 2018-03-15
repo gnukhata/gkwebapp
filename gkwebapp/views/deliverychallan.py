@@ -290,20 +290,8 @@ def unbillspreadsheet(request):
 def deliveryprint(request):
     header={"gktoken":request.headers["gktoken"]}
     org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
-    #cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(request.params["custid"])), headers=header)
-    #if request.params.has_key("goid"):
-    #    godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
-    #    godowndata = godown.json()["gkresult"]
-    #else:
-    #    godowndata = ''
-    #tableset = json.loads(request.params["printset"])
-    #return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"cust":cust.json()["gkresult"],
-    #"tableset":tableset,"dcno":request.params["dcno"],"dcdate":request.params["dcdate"],"dcno":request.params["dcno"],
-    #"issuername":request.params["issuername"],"designation":request.params["designation"],"godown":godowndata,
-    #       "notetype":request.params["notetype"],"qtytotal":request.params["qtytotal"],"consignee":json.loads(request.params["consignee"])}
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
     return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":delchaldata.json()["gkresult"]}
-
 
 @view_config(route_name="show_del_unbilled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
 def show_unbilled_deliveries_report(request):

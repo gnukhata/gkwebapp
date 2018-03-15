@@ -147,7 +147,12 @@
 		</div>
 		<div class="form-group form-inline col-xs-12 nopadding">
 		  <label for="deliverychallan_consignment">{% trans %}Type of transaction:{% endtrans %}</label>
-		  
+		  {% if gkresult["delchaldata"]["dcflag"] == 4 %}Sale{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 16 %}Purchase{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 1 %}Approval{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 3 %}Consignment{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 19 %}Sample{% endif %}
+		  {% if gkresult["delchaldata"]["dcflag"] == 6 %}Free Replacement{% endif %}
 		</div>
 	      </td>
 	      <td>

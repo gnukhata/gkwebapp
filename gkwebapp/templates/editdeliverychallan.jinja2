@@ -48,16 +48,16 @@
 			      <label id="stateorigin" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Origin{% endtrans %} :</label>
 			      <label class="col-sm-7" id="invoicestate"></label>
 			  </div>
+			  <div class="form-group form-inline col-sm-2">
+			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
+			    <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
+			  </div>
 			  {% if resultgstvat != '22' %}
 			    <div class="form-group form-inline invoice_issuer col-sm-3">
 			      <label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
 			      <label class="col-sm-7  nopadding fsize gstinfield" id="orggstin"></label>
 			    </div>
 			  {% endif %}
-			  <div class="form-group form-inline col-sm-2">
-			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
-			    <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
-			  </div>
 			</div>
 		      </div>
 		      <div class="row">
