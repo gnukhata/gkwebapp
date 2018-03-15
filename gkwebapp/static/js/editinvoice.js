@@ -531,6 +531,15 @@ $(document).ready(function() {
     $("#invoice_customer").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+	     if ($.trim($('#invoice_customer option:selected').val()) == "") {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+		$("#custsup-blank-alert").alert();
+		$("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#custsup-blank-alert").hide();
+		});
+		$('#invoice_customer').focus();
+		return false;
+	    }
 	    $("#invoice_customerstate").focus();  //Focus shifts to Customer State.
 	}
 	if (event.which == 38) {
@@ -2227,14 +2236,6 @@ if (event.which == 13) {
 	}
 	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
 	if (supplydate) {
-	    if (!supplydate.between(financialstart, financialend)) {
-		$("#supbetween-date-alert").alert();
-		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#supbetween-date-alert").hide();
-		});
-		$('#supply_date').focus().select();
-		return false;
-	    }
 	    if (invoicedate) {
 		if (supplydate < invoicedate) {
 		    $("#supply-date-alert").alert();
