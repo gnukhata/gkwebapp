@@ -35,15 +35,12 @@ $(document).ready(function()
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
-
-  
-
   $("#baltbl").hide();
   $("#groupname").focus().select();
   $("#accountform").validate();
   $("#groupname").bind("change keyup", function(){
-    var gname = $("#groupname option:selected").text();
-    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income")
+      var gname = $("#groupname option:selected").text();
+    if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
     {
       $("#obal").hide();
       $("#openbal").hide();
@@ -110,14 +107,15 @@ $(document).ready(function()
     $('#addaccount').click();
   }
 );
-
+  // Keydown event for Opening Balance.
 $("#openbal").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#submit").click();
+	    $("#submit").focus().select();
 	}
 });
-    
+    // Keydown event for Group Name.
+    // Validations for Group Name.
       $("#groupname").keydown(function(event) {
 	  if(event.which==13) {
 	      event.preventDefault();
@@ -137,23 +135,47 @@ $("#openbal").keydown(function(event){
 	      $("#subgroupname").focus().select();
 	  }
       });
-
+    // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
 	if(event.which==13) {
 	    event.preventDefault();
 	    $("#maccounts").focus().select();
 	}
+	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
+      event.preventDefault();
+      $("#groupname").focus().select();
+    }
 
     });
-
-
-    $("#maccounts").keydown(function(event){
+    // Keydown event for Create Multiple Accounts Checkbox.  
+     $("#maccounts").keydown(function(event){
 	if(event.which==13) {
 	    event.preventDefault();
 	    $("#accountname").focus().select();
 	}
-	});
-$("#accountform").submit(function(e)
+     });
+    // Keydown event for Account Name.
+    //Validations for Account Name.
+     $("#accountname").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    var gname = $("#groupname option:selected").text();    //Storing selected value from Goup Name dropdown list. 
+            if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group"){
+		$("#submit").focus().select();	
+	    } else {
+	    $("#openbal").focus().select();
+	    }
+	    if ($.trim($("#accountname").val())=="") {
+                $("#blank-alert").alert();
+                $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+                $("#blank-alert").hide();
+           });
+                $("#accname").focus().select();
+                  return false;
+                }
+	}
+    });
+    $("#accountform").submit(function(e)
 {
 
   if ($.trim($("#accountname").val())=="") {

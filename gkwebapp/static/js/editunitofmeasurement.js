@@ -73,7 +73,7 @@ $(document).ready(function() {
     $("#sub_unit_edit").keydown(function(event) {
       if (event.which==13 && $("#sub_unit_edit option:selected").val()=='') {
         event.preventDefault();
-        $("#unit_edit_save").click();
+          $("#unit_edit_save").focus().select();
       }
       if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
@@ -93,7 +93,7 @@ $(document).ready(function() {
     $("#unit_edit_conversion_rate").keydown(function(event) {
       if (event.which==13){
         event.preventDefault();
-        $("#unit_edit_save").click();
+          $("#unit_edit_save").focus().select();
       }
       if (event.which==38){
         event.preventDefault();
