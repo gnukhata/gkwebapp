@@ -44,7 +44,6 @@ def viewGstSummary(request):
 
 @view_config(route_name="gstsummary",request_param="type=senddata",renderer="gkwebapp:templates/gstsummaryreport.jinja2")
 def sendReportData(request):
-    print "Hii "
     calculateto = request.params["calculateto"]
     calculatefrom = request.params["calculatefrom"]
     taxdata = request.params["tax"]

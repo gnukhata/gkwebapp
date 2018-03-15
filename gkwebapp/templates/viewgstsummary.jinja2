@@ -51,6 +51,10 @@
 
             <label for="cashfl_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
           </div>
+	  <div class="alert alert-danger" id="select-account" aria-live="rude" role="alert" hidden>
+
+            <label for="select-account">{% trans %}Please select accounts for respective tax calculations!{% endtrans %}</label>
+          </div>
 	  <div class="row">
 	    <div class="form-inline col-sm-6">
               <label for="cashfl_fromdate">{% trans %}From{% endtrans %} :</label>
@@ -83,7 +87,7 @@
 	    <div class ="row">
 	      
 	      <div class="form-inline col-sm-6">
-		<label for="cgst_in">{% trans %}SGST In{% endtrans %} :</label>
+		<label for="sgst_in">{% trans %}SGST In{% endtrans %} :</label>
 		<div class="dropdown">
 		  <button class="btn button  dropdown-toggle" id="sgst_in" type="button" data-toggle="dropdown">Select Account/s <span class="caret"></span></button>
 		  <ul class="dropdown-menu">

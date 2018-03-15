@@ -226,7 +226,67 @@ $("#igst_out").keydown(function(event) {
 
 
     $(document).off('click' ,'#report_view').on('click' ,'#report_view', function(event) {
-
+	
+	// alert for Date
+      if ($("#from_year").val()==0 ||$("#from_month").val()==0 ||$("#from_date").val()==0 ) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#from_date').focus().select();
+      return false;
+    }
+    if ($("#to_year").val() ==0||$("#to_month").val()==0||$("#to_date").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#to_date').focus().select();
+      return false;
+    }
+    var todate = $("#to_year").val()+$("#to_month").val()+$("#to_date").val();
+    var fromdate = $("#from_year").val()+$("#from_month").val()+$("#from_date").val();
+    if(!Date.parseExact(fromdate,"yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#from_date').focus().select();
+      return false;
+    }
+    if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#from_date').focus().select();
+      return false;
+    }
+    if(!Date.parseExact(todate, "yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#to_date').focus().select();
+      return false;
+    }
+    if (Date.parseExact(fromdate,"yyyyMMdd").compareTo(Date.parseExact(todate,"yyyyMMdd"))==1) {
+      $("#compare-date-alert").alert();
+      $("#compare-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#compare-date-alert").hide();
+      });
+      $('#to_date').focus().select();
+      return false;
+    }
+    if (!Date.parseExact(todate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#to_date').focus().select();
+      return false;
+    }
+	//Get all accounts from individual list.
 	//List to load accounts.
 	var sgstinaccounts = [];
         $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
@@ -238,8 +298,8 @@ $("#igst_out").keydown(function(event) {
           $(".sgstoutaccount:checked").each(function() {  //Loop all slected accounts.
 	  sgstoutaccounts.push($(this).val()); //Push appends values to list.
 
-    });
-
+	  });
+	
     var cgstinaccounts = [];
     $(".cgstinaccount:checked").each(function() {  //Loop all slected accounts.
 	    cgstinaccounts.push($(this).val()); //Push appends values to list.
@@ -273,6 +333,17 @@ $("#igst_out").keydown(function(event) {
 	    cessoutaccounts.push($(this).val()); //Push appends values to list.
 
     });
+	
+	
+	if((sgstinaccounts.length == 0) && (sgstoutaccounts.length == 0) && (cgstinaccounts.length == 0 ) && (cgstoutaccounts.length == 0 )&&(igstinaccounts.length == 0 )&& (igstoutaccounts.length == 0 )&&(cessinaccounts.length == 0)&&(cessoutaccounts.length == 0)){
+      $("#select-account").alert();
+      $("#select-account").fadeTo(2250, 500).slideUp(500, function(){
+        $("#select-account").hide();
+      });
+      $('#sgst_in').focus().select();
+      return false;
+}
+	 
 	var result ={"sgstin":sgstinaccounts,"sgstout":sgstoutaccounts,"cgstin":cgstinaccounts,"cgstout":cgstoutaccounts,"igstin":igstinaccounts,"igstout":igstoutaccounts,"cessin":cessinaccounts,"cessout":cessoutaccounts};
 	
 
