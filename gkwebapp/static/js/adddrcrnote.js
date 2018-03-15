@@ -542,13 +542,13 @@ $(document).ready(function() {
 		    $.each(resp.invoicedata.invcontents, function(key, value) {
 			$('#drcrnote_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 			$('#drcrnote_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-			console.log("key ans",value.proddesc);
+			console.log("key ans",value);
 			$('#drcrnote_table_vat tbody tr:last td:first label').text(value.proddesc);
 			$('#drcrnote_table_vat tbody tr:last td:first label').attr("data-productcode",key);
 			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
+			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.uom);
+			$('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.uom);
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
@@ -582,8 +582,8 @@ $(document).ready(function() {
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) span').text(value.uom);
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) span').text(value.uom);
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
@@ -842,6 +842,7 @@ if (!curdate.between(financialstart, financialend)) {
 
       var reference  = {};
       var contents = {};
+      var idrate={};   //idrate dict takes key as productcode and value as inc or dec rate 
       var totalreduct = 0.00;
       var productcodes = [];
       var productqtys = [];
@@ -884,9 +885,11 @@ if (!curdate.between(financialstart, financialend)) {
      
 	if (parseFloat(quantity) > 0) {
 	    let obj = {};
+	    
             ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
             obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             contents[productcode] = obj;
+	    idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
           }
     }
 	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(5) input').val());
@@ -925,6 +928,7 @@ if (!curdate.between(financialstart, financialend)) {
 	      ppu = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
 	      obj[ppu] = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	      contents[productcode] = obj;
+	      idrate[productcode]=$.trim($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val());
 	      
 	  }
 	  totreduct = $.trim($('#total_product_gst').html());
@@ -956,6 +960,7 @@ if (!curdate.between(financialstart, financialend)) {
       //sending hardcode values until caseflag not set
       form_data.append("caseflag","0");
       form_data.append("totreduct",totreduct);
+      form_data.append("reductionval",JSON.stringify(idrate));
       
 //attachment
  var files = $("#my-file-selector")[0].files;
