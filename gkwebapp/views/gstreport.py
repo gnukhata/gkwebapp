@@ -36,7 +36,6 @@ from odslib import ODS
 
 @view_config(route_name="gstsummary",renderer="gkwebapp:templates/viewgstsummary.jinja2")
 def viewGstSummary(request):
-
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
     state = requests.get("http://127.0.0.1:6543/state", headers=header)
@@ -44,8 +43,6 @@ def viewGstSummary(request):
 
 @view_config(route_name="gstsummary",request_param="type=senddata",renderer="gkwebapp:templates/gstsummaryreport.jinja2")
 def sendReportData(request):
-    #calculateto = request.params["calculateto"]
-    #calculatefrom = request.params["calculatefrom"]
     taxdata = request.params["tax"]
     header={"gktoken":request.headers["gktoken"]}
     gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"taxData":json.loads(request.params["tax"])}
