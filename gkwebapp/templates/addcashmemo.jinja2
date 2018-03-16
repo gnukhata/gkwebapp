@@ -475,7 +475,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv" style="border-bottom-style:solid;">
+		  <div class="row hborderdiv">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
@@ -488,8 +488,20 @@
 		</div>
 		<div class="col-md-4" style='display:none align:right;' id="cash">
 		  <label style="font-size:120% !important">CASH RECEIVED</label>
-	    </div>
+		</div>
+		<div class ="col-sm-12">
+		  <div class ="col-sm-4 ">
+		  </div>
+		  <div class ="col-sm-8">
+		    <div class="row hborderdiv" style="border-bottom-style:solid;">
+		      <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+		      <label id="totalValueInWord" style="font-size:100% !important;"></label>
+		      
+		    </div>
+		  </div>
+		</div>
 	      </div>
+	      
 	    
 	    <!--
 		 <div class="col-md-6" >
@@ -560,5 +572,6 @@
   </div>
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcashmemo.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
 </body>
 </html>

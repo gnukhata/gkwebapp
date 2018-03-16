@@ -509,6 +509,7 @@
 	      </div>
 	      <div class="col-sm-6 text-right">
 		<label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["invoicetotal"] }}</label>
+		
 	      </div>
 	  </div>
 	</div>
@@ -519,13 +520,25 @@
 	<div class ="col-sm-8">
 	  <div class="row hborderdiv" style="border-bottom-style:solid;">
 	    <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-	    <label id="totalValueInWord" style="font-size:100% !important;"></label>
+	    
+	    <script>
+	       var word ={{ gkresult["invoicetotal"] }};
+	       var x    =convertNumberToWords(word);
+	       
+	      </script>
+	    </label>
 	    
 	  </div>
 	</div>
       </div>
-    </div>
-      </div>
-      </div>
+  </div>
+  </div>
+  </div>
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}">
+
+</script>
+
+
+

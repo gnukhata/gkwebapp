@@ -70,6 +70,7 @@ $(document).ready(function() {
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
+	var numbertowords = "";
 	var totalcgst = 0.00;
 	var totalsgst = 0.00;
 	var totalcess = 0.00;
@@ -97,6 +98,7 @@ $(document).ready(function() {
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+	    numbertowords = convertNumberToWords(totalamount);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -112,6 +114,7 @@ $(document).ready(function() {
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -126,6 +129,7 @@ $(document).ready(function() {
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
+	var numbertowords = "";
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
@@ -140,6 +144,7 @@ $(document).ready(function() {
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	    numbertowords = convertNumberToWords(totalamount);
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -150,6 +155,7 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     $(".invstate").show();
