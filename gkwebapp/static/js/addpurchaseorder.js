@@ -174,18 +174,6 @@ $(document).ready(function() {
 	$("#deliverynoterow").hide();
     }
 
-    //Certain fields are hidden in the case of Purchase Purchaseorder. They are shown in Sale Purchaseorder.
-    if ($("#status").val() == '15') {  //In/Out flag is saved in a hidden field. 15 is OUT(Sale Purchaseorder) and 9 is IN(Purchase Purchaseorder).
-	$(".purchaseorder_issuer").show();  //Issuer Name is shown in Sale Purchaseorder. Purchase Purchaseorder is only recorded, not created by an organisation.	
-	$(".fixed-table").removeClass('fixed-tablepurchase');  //CSS class for adjusting style properties.
-	$(".fixed-table").addClass('fixed-tablesale');
-    }
-
-    if ($("#status").val() == '9') {  
-	$(".reversepurchase").show();
-    }
-
-
     $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#purchaseorder_date").numeric({ negative: false });
