@@ -54,10 +54,8 @@ $(document).ready(function() {
 		},
 		success: function(resp)
 		{
-		    
 		    $("#drcrload").html("");
 		    $("#drcrload").html(resp);
-		    $("#viewdrcrdiv").show();
 		}
 	    }
 	);
@@ -77,7 +75,6 @@ $(document).ready(function() {
 		{
 		    $("#drcrload").html("");
 		    $("#drcrload").html(resp);
-		    $("#viewdrcrdiv").show();
 		}
 	    }
 	);
