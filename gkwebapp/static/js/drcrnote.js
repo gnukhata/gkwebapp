@@ -45,17 +45,16 @@ $(document).ready(function() {
 	$.ajax(
 	    {
 		type: "POST",
-		url: "/drcrnote",
+		url: "/drcrnote?action=showdrcrnote&status=3",
 		global: false,
 		async: false,
-		datatype: "text/html",
-		data:{"drcrflag": 4},
 		datatype: "text/html",
 		beforeSend: function(xhr){
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		},
 		success: function(resp)
 		{
+		    
 		    $("#drcrnote_div").html(resp);
 		}
 	    }
@@ -65,11 +64,9 @@ $(document).ready(function() {
 	$.ajax(
 	    {
 		type: "POST",
-		url: "/drcrnote",
+		url: "/drcrnote?action=showdrcrnote&status=4",
 		global: false,
 		async: false,
-		datatype: "text/html",
-		data:{"drcrflag": 4},
 		datatype: "text/html",
 		beforeSend: function(xhr){
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

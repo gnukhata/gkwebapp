@@ -1,7 +1,7 @@
 $(document).ready(function() {
     console.log("Ready");
     $("#drcrnote_invoice1").hide();
-    $("#drcrnote_invoice").focus();
+    $("#sale").focus();
     $('.drcrnotedate').autotab('number');  //Focus shifts from fields among date fields.
     //Preventing characters in numeric fields.
     $("#drcrnote_date").numeric({ negative: false });
