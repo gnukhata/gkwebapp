@@ -1158,12 +1158,35 @@ $('#listofaccounts').click(function (e) {
       }
     );
   });
-  $('#stockonhandreport').click(function (e) {
+
+    $('#showstockreport').click(function (e) {
+    // calls view page for stock report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/product?type=viewstockreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+    
+  $('#consolidatedbalancesheet').click(function (e) {
     // calls view page for stock report.
     $.ajax(
       {
         type: "POST",
-        url: "/product?type=viewstockonhandreport",
+        url: "/showconsolidationpopup",
         global: false,
         async: false,
         datatype: "text/html",
