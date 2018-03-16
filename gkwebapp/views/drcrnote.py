@@ -57,17 +57,19 @@ def savedrcrnote(request):
         return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
     else:
         return {"gkstatus":result.json()["gkstatus"]}
+    
 ''' this is for single view i=of drcrnote after saving data '''
 @view_config(route_name="drcrnote",request_param="action=showdrcrnote",renderer="gkwebapp:templates/viewdrcrnote.jinja2")
 def showsingledrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    if request.params["status"] == 3:
-        crdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
-    if request.params["status"] == 4:
-        drdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-    return {"gkstatus":crdata.json()["gkstatus"],"drdata": drdata.json()["gkresult"],"crdata":crdata.json()["gkresult"]}
+    if request.params["status"] == '3':
+         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
+    if request.params["status"] == '4':
+        drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
+    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata": drcrdata.json()["gkresult"]}
+
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetails",renderer="json")
-def getInvoiceDetails(request):
+def getDrCrDetails(request):
     header={"gktoken":request.headers["gktoken"]}
-    invoicedata = requests.get("http://127.0.0.1:6543/drcrnote?inv=single&invid=%d"%(int(request.params["invid"])),headers=header)
-    return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
+    drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&dcid=%d"%(int(request.params["dcid"])),headers=header)
+    return {"gkstatus": drcrnotedata.json()["gkstatus"],"drcrnotedata": drcrnotedata.json()["gkresult"]}

@@ -55,7 +55,9 @@ $(document).ready(function() {
 		success: function(resp)
 		{
 		    
-		    $("#drcrnote_div").html(resp);
+		    $("#drcrload").html("");
+		    $("#drcrload").html(resp);
+		    $("#viewdrcrdiv").show();
 		}
 	    }
 	);
@@ -73,7 +75,9 @@ $(document).ready(function() {
 		},
 		success: function(resp)
 		{
-		    $("#drcrnote_div").html(resp);
+		    $("#drcrload").html("");
+		    $("#drcrload").html(resp);
+		    $("#viewdrcrdiv").show();
 		}
 	    }
 	);
