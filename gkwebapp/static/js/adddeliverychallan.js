@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Reshma Bhatawadekar <reshma_b@riseup.net>"
+"Nitesh Chaughule <nitesh@disroot.org>"
 */
 
 // This script is for the add adddeliverychallan.jinja2
@@ -833,8 +834,6 @@ $(document).ready(function() {
   }
 });
 
-    //-----------------------------------------product_name_gst-------------------------------//
-
     //Change event for Product Name field.
     $(document).off('change', '.product_name_gst').on('change', '.product_name_gst', function(event) {
 	event.preventDefault();
@@ -962,10 +961,6 @@ $(document).ready(function() {
 	}
     });
 
-    //-------------------------------product_name_gst----------------------------//
-
-    //-----------------------------Product_name_vat----------------------------//
-
     $(document).off('change', '.product_name_vat').on('change', '.product_name_vat', function(event) {
 	event.preventDefault();
 	/* Act on the event */
@@ -1053,9 +1048,7 @@ $(document).ready(function() {
             $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
 	}
     });
-    //-----------------------------Product_name_vat----------------------------//
 
-    //-------Keydown for product_name_gst----------//
     $(document).off("keydown", ".product_name_gst").on("keydown", ".product_name_gst", function(event) {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
@@ -1105,9 +1098,7 @@ $(document).ready(function() {
 	  $("#accountno").focus().select();
       }
   });
-    //---------Keydown for product_name_gst--------//
 
-    //
     $(document).off('change', '.invoice_product_quantity_gst').on('change', '.invoice_product_quantity_gst', function(event) {
     event.preventDefault();
       /* Act on the event */
@@ -1504,10 +1495,7 @@ if (event.which == 13) {
     }
 });
 
-    //------------------------------------//
-
-
-    //------------------------------------------------VAT VAlidation and Calculation of tax----------------------------------//
+    //VAT Validation and Calculation of tax
     $(document).off("keydown", ".product_name_vat").on("keydown", ".product_name_vat", function(event) {
     var curindex = $(this).closest('tr').index();
     var nextindex = curindex + 1;
@@ -1985,8 +1973,6 @@ if (event.which == 13) {
     } 
   });
 
-    //-----------------------------------------------END--------------------------------------------------------------------//
-
     //Vehicle Number is to be entered only when Transportation Mode is Road.
     $("#transportationmode").change(function(event){
 	if ($(this).val() == 'Road') {
@@ -2038,7 +2024,6 @@ if (event.which == 13) {
 	    }
 	}
     });
-
 
   $(document).off("keydown",".product_name").on("keydown",".product_name",function(event)
   {
@@ -2326,13 +2311,10 @@ else {
              $("#selectedcustsup").val("");
              $("#deliverychallan_customer").focus();
            });
-
-
-
      }
-  }
-   );
-   });
+     }
+     );
+  });
 
     $("#my-file-selector").change(function(event){
 	var files = $("#my-file-selector")[0].files;
@@ -2416,7 +2398,6 @@ else {
      $('#salesorderdiv').html("");
    });
 
-    //....................Saving Delchal..............................
     $("#deliverychallan_save").click(function(event) {
 	// save event for saving the delivery note
 	event.stopPropagation();
@@ -2639,9 +2620,6 @@ else {
 	  delchaltotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 
     }
-    //-----------------------End VAT Product--------------------------------------------//
-
-      //-----------------------GST Table Product Values-----------------------------------//
       else if ($("#taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
@@ -2713,7 +2691,6 @@ else {
 	  }
 	  delchaltotal = $.trim($('#total_product_gst').html());
       }
-      //----------------------- End GST Table Product Values-----------------------------------//      
 
         var form_data = new FormData();
     form_data.append("custid", $("#deliverychallan_customer option:selected").val());
@@ -2742,8 +2719,6 @@ else {
     	form_data.append("goid", $("#deliverychallan_godown option:selected").val());
     }
 
-      /*---------To Store 'TaxState' and 'SourceState-------------------------------------*/
-
       //Delivery In
       if ($("#status").val() == 9) {
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
@@ -2761,8 +2736,6 @@ else {
 	  }
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
       }
-      
-      /*------------------End-------------------------------------------------------------*/
 
 	var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
 	if (dateofsupply == "") {
@@ -2925,6 +2898,33 @@ else {
 	    return false;
 	}
 
+	if($.trim($('#deliverychallan_noofpackages').val())=="") {
+	    $("#noofpackages-blank-alert").alert();
+	    $("#noofpackages-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#noofpackages-blank-alert").hide();
+	    });
+	    $('#deliverychallan_noofpackages').focus();
+	    return false;
+	}
+	
+	if ($.trim($('#invoice_issuer_name').val())=="" && $("#status").val()=='15') {
+	    $("#issuername-blank-alert").alert();
+	    $("#issuername-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#issuername-blank-alert").hide();
+	    });
+	    $('#invoice_issuer_name').focus();
+	    return false;
+	}
+
+	if ($.trim($('#invoice_issuer_designation').val())=="" && $("#status").val()=='15') {
+	    $("#designation-blank-alert").alert();
+	    $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#designation-blank-alert").hide();
+	    });
+	    $('#invoice_issuer_designation').focus();
+	    return false;
+	}
+
 	//validation for consignee name and consignee address
 	if ($("#consigneename").val() == "" && $("#deliverychallan_consigneeaddr").val() != ""){
 	    $("#consigneename-blank-alert").alert();
@@ -3052,13 +3052,9 @@ else {
 		    freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 		    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
 		}
-	    }
-	  
+	    }  
 	    delchaltotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 	}
-	//-----------------------End VAT Product--------------------------------------------//
-
-	//-----------------------GST Table Product Values-----------------------------------//
 	else if ($("#taxapplicable").val() == 7) {
 	    for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 		if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
@@ -3130,8 +3126,7 @@ else {
 	    }
 	    delchaltotal = $.trim($('#total_product_gst').html());
 	}
-	//----------------------- End GST Table Product Values-----------------------------------//      
-	
+
 	var dataset = {};
 	dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
 		   "dcno":$("#deliverychallan_challanno").val(),
@@ -3160,8 +3155,6 @@ else {
     	    dataset["goid"] = $("#deliverychallan_godown option:selected").val();
 	}
 
-      /*---------To Store 'TaxState' and 'SourceState-------------------------------------*/
-
       //Delivery In
 	if ($("#status").val() == 9) {
 	    dataset["taxstate"] = $("#invoicestate option:selected").val();
@@ -3180,8 +3173,6 @@ else {
 	    dataset["sourcestate"] = $("#invoicestate option:selected").val();
 	}
       
-      /*------------------End-------------------------------------------------------------*/
-
 	var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
 	if (dateofsupply == "") {
   	    dataset["dateofsupply"] = dateofsupply;
@@ -3250,7 +3241,7 @@ else {
 			    });
 		    }
 		}
-		else if(resp["gkstatus"]==1) {
+		else if(resp["gkstatus"] == 1) {
 		    $("#deliverychallan_challanno").focus();
 		    $("#duplicate-alert").alert();
 		    $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){

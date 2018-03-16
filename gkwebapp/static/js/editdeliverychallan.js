@@ -28,6 +28,7 @@ Contributors:
 "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar <reshma_b@riseup.net>"
+"Nitesh Chaughule <nitesh@disroot.org>"
 */
 $(document).ready(function() {
   $('.modal-backdrop').remove();
