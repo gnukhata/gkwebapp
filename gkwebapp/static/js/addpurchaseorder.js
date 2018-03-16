@@ -1,25 +1,23 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+  Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is Free Software; you can redistribute it and/or modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.
 
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
 
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
-
-*/
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
    Contributors:
@@ -29,7 +27,10 @@ Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
    "Prajkta Patkar"<prajakta@dff.org.in>
    "Vaibhav Kurhe" <vaibhav.kurhe@gmail.com>
    "Abhijith Balan" <abhijith@dff.org.in>
+   "Reshma Bhatawadekar" <reshma_b@riseup.net>"
    "Rohini Baraskar" <robaraskar@gmail.com>
+   "Pravin Dake" <pravindake24@gmail.com>
+   "Nitesh Chaughule" <nitesh@disroot.org>
  */
 
 // This script is for the addpurchaseorder.jinja2
@@ -41,14 +42,17 @@ $(document).ready(function() {
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
-      $(".tinfield").show();
+	$(".tinfield").show();
+	$(".gstfield").hide();
     } else {
-      $(".gstinfield").show();
+	$(".gstinfield").show();
+	$(".vatfield").hide();
     }
 
     //Initialising some variables.
     var issuername = "";
     var designation = "";
+    var address = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var purchaseorderdatestring = "";
@@ -58,7 +62,8 @@ $(document).ready(function() {
     var gsthtml = $('#purchaseorder_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#purchaseorder_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#purchaseorder_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
-
+    //A dictionary to store GSTINs of a customer.
+    var gstins = {};
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -118,6 +123,12 @@ $(document).ready(function() {
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
 	$("#totalpurchaseordervalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
+	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -153,6 +164,9 @@ $(document).ready(function() {
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totalpurchaseordervalue").text(parseFloat(totalamount).toFixed(2));
+	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
+	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -277,6 +291,8 @@ $(document).ready(function() {
 		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
+		$(".vatfield").hide();
+		$(".gstfield").show();
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
@@ -286,6 +302,8 @@ $(document).ready(function() {
 		$("#purchaseorder_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
+		$(".gstfield").hide();
+		$(".vatfield").show();
 	    }
 	}
     });
@@ -331,18 +349,63 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforpurchaseorder").text($("#purchaseorderstate option:selected").attr("stateid"));
-	if ($("#purchaseorder_customerstate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".igstfield").css('border','');
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".sgstfield").css('border','');
-	    $(".igstfield").show();
-	}
+	if ($("#taxapplicable").val() == 7){
+	    if($("#consigneename").val() != ""){
+		if ($("#consigneestate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
+	    } else {
+		if ($("#purchaseorder_customerstate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
+		} else {
+		    $(".sgstfield").hide();
+		    $(".sgstfield").css('border','');
+		    $(".igstfield").show();
+		}
+	    }
+	}	
 	$(".product_name_vat, .product_name_gst").change();
+	
+	//In create 'sale purchaseorder' if user selected 'state' has address in orgnisation then it will be autopopulated in address field.
+	//ajax for autopopulating address for selected state.
+	var invstate = $("#purchaseorderstate option:selected").val();
+	var invstateid=$("#purchaseorderstate option:selected").attr("stateid");//statecode
+	$.ajax({
+	    url: '/existingorg?type=getaddress',
+                    type: 'POST',
+                    dataType: 'json',
+                    async: false,
+	            data : {"invstate" : invstateid},
+                    beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+	})
+	    .done(function(resp) {
+		if (resp["gkstatus"] == 0) {
+		    console.log("success");
+		    if(invstate == resp["orgdetails"]["orgstate"]){
+			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
+			$("#originaddress").prop("disabled", true);
+		    }else{$("#originaddress").prop("disabled", false);}
+         	}
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
 
+	//ajax for autopopulating gstin for selected state.
 	var gstinstateid=$("#purchaseorderstate option:selected").attr("stateid");
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
@@ -376,11 +439,24 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
-		$("#purchaseorder_issuer_name").focus().select();  //Focus shifts to Issuer Name.
+		if($("#originaddress").is(":disabled")){
+		    $("#purchaseorder_issuer_name").focus().select();
+		}
+		$("#originaddress").focus().select();
 	    }
 	    else {
 		if ($("#purchaseorder_customer").is(":disabled")) {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    if($("#consigneename").is(":disabled")) {
+			if(sessionStorage.vatorgstflag == '22' ){
+			    $("#tinconsignee").focus();
+			}
+			else {
+			    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
+			}
+		    }
+		    else{
+			$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		    }
 		}
 		else {
 		    $("#purchaseorder_customer").focus();  //Focus shifts to Customer.
@@ -394,6 +470,25 @@ $(document).ready(function() {
 	}
     });
 
+    // Key Events for Address in sale purchaseorder.
+    $("#originaddress").keydown(function(event){
+	if(event.which ==13){
+	    if($("#originaddress").val() == ""){
+		$("#address-blank-alert").alert();
+		$("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#address-blank-alert").hide();
+		});
+		$("#originaddress").focus();
+		return false;
+	    }
+	    $("#purchaseorder_issuer_name").focus().select();
+	}
+	else if(event.which ==38){
+	    $("#purchaseorderstate").focus();
+	}
+    });
+    
+    
     //Key Events for Issuer Name.
     $("#purchaseorder_issuer_name").keydown(function(event) {
 	if (event.which == 13) {
@@ -401,7 +496,10 @@ $(document).ready(function() {
 	    $("#purchaseorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
-	    $("#purchaseorderstate").focus();  //Focus shifts to State of Origin/Delivery.
+	    if($("#originaddress").is(":disabled")){
+		$("#purchaseorderstate").focus();
+	    }
+	    $("#originaddress").focus();  //Focus shifts to Address of Origin.
 	}
     });
 
@@ -410,7 +508,16 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#purchaseorder_customer").is(":disabled")) {
-		$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		if($("#consigneename").is(":disabled")){
+		    if ($("#taxapplicable").val() == 22) {
+			$("#tinconsignee").focus();
+		    } else {
+			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    }
+		}
+		else {
+		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
+		}
 	    }
 	    else {
 		$("#purchaseorder_customer").focus();  //Focus shifts to Customer.
@@ -442,11 +549,9 @@ $(document).ready(function() {
 	    $('#purchaseorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
     });
-
-    //A dictionary to store GSTINs of a customer.
-    var gstins = {};
     //Change Event for Customer.
     $("#purchaseorder_customer").change(function(event) {
+	$(".product_name_vat, .product_name_gst").change();
 	//AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
@@ -461,7 +566,12 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-		    $("#purchaseorder_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+		    $("#purchaseorder_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
+		    $("#purchaseorder_customerstate").change();
+		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 		    $("#purchaseorder_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
@@ -478,10 +588,10 @@ $(document).ready(function() {
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text($("#purchaseorder_customerstate option:selected").attr("stateid"));
 		    //Consignee State is synced with Customer State.
-		    if ($("#status").val() == 15) {
+		    /*if ($("#status").val() == 15) {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
 			$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
-		    }
+		    }*/
 		}
 	    })
 	    .fail(function() {
@@ -499,24 +609,22 @@ $(document).ready(function() {
 	       $("#gstin").text(gstins[$("#purchaseorder_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
 	else {
-	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
+	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#status").val() == 15) {
-	    $("#consigneestate").val($("#purchaseorder_customerstate option:selected").val());  //Consignee State is synced with customer state.
-      $("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	}
-	if ($("#purchaseorder_customerstate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
-	    $(".igstfield").hide();
-	    $(".sgstfield").show();
-	}
-	else {
-	    $(".sgstfield").hide();
-	    $(".igstfield").show();
+	if ($("#taxapplicable").val() == 7) {
+	    if ($("#purchaseorder_customerstate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#purchaseorder_customerstate").change();
-
+    
     //Key down event for Customer State.
     $("#purchaseorder_customerstate").keydown(function(event) {
 	if (event.which == 13) {
@@ -535,21 +643,30 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    $("#purchaseorder_customerstate").val($("#consigneestate option:selected").val());  //Customer State is synced with state of consignee.
-      $("#statecodeofcustomer").text($("#purchaseorder_customerstate option:selected").attr("stateid"));  //State code is loaded.
-	    if ($("#consigneestate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
-		$(".igstfield").hide();
-		$(".sgstfield").show();
-	    }
-	    else {
-		$(".sgstfield").hide();
-		$(".igstfield").show();
+	    if($("#statecodeofconsignee").text() in gstins) {
+		var custgstin = gstins[$("#statecodeofconsignee").text()];
+		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
+	    } else {$("#gstin").text("");}
+	    if ($("#taxapplicable").val() == 7){
+		if ($("#consigneestate option:selected").val() == $("#purchaseorderstate option:selected").val()) {
+		    $(".igstfield").hide();
+		    $(".sgstfield").show();
+		}
+		else {
+		    $(".sgstfield").hide();
+		    $(".igstfield").show();
+		}
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
 
+    if(sessionStorage.vatorgstflag == '22' ){
+	    $(".gstfield").hide();
+	} else {
+	    $(".vatfield").hide();
+	}
     //Key down event for Consignee Name.
     $("#consigneename").keydown(function(event) {
 	if (event.which == 13) {
@@ -592,15 +709,29 @@ $(document).ready(function() {
     $("#tinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#gstinconsignee").is(":visible")) {
+	    /*if ($("#gstinconsignee").is(":visible")) {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
-	    }
-	    else {
-		$("#consigneeaddress").focus().select();  //Focus shifts to Address of Consignee.
+		}*/
+	    if ($("#taxapplicable").val() == 22) {
+		if ($("#consigneename").is(":disabled")){
+		   $(".purchaseorder_product_quantity_vat:first").focus().select(); 
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
 	    }
 	}
 	else if (event.which == 38) {
-	    $("#consigneestate").focus();  //Focus Shifts to State of Consignee.
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#purchaseorder_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#purchaseorder_issuer_designation").focus().select();
+		    } else {
+			$("#purchaseorderstate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    }
 	}
     });
 
@@ -608,14 +739,25 @@ $(document).ready(function() {
     $("#gstinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+	    if ($("#taxapplicable").val() == 7) {
+		if ($("#consigneename").is(":disabled")){
+		    $(".purchaseorder_product_quantity_gst:first").focus().select();
+		} else {
+		    $("#consigneeaddress").focus().select();  //Focus Shift to Address of Consignee.
+		}
+	    }
 	}
 	else if (event.which == 38) {
-	    if ($("#tinconsignee").is(":visible")) {
-		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-	    }
-	    else {
-		$("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
+	    if ($("#consigneestate").is(":disabled")){
+		if ($("#purchaseorder_deliverynote option:selected").val() != '') {
+		    if($("#status").val() == 15){
+			 $("#purchaseorder_issuer_designation").focus().select();
+		    } else {
+			$("#purchaseorderstate").focus().select();
+		    }
+		} 
+	    } else {
+		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
 	    }
 	}
     });
@@ -675,11 +817,12 @@ $(document).ready(function() {
 	    $(this).val(parseFloat($(this).val()).toFixed(2));
 	}
     });
-    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
         var curindex = $(this).closest('tr').index();
         var gstin = $(this).val();
         var gstnint = parseInt(gstin[0] + gstin[1]);
-        if((!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15)  && gstin != ""){
+        if (gstin != ""){
+	    if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
             $("#gstin-improper-alert").alert();
             $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#gstin-improper-alert").hide();
@@ -687,6 +830,7 @@ $(document).ready(function() {
             });
             return false;
         }
+	}
     });
 
     //VAT Table events start here
@@ -703,15 +847,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#purchaseorderstate option:selected").val();
 	  sourcestate = $("#purchaseorder_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#purchaseorderstate option:selected").val();
 	  destinationstate = $("#purchaseorder_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
 	var taxflag=$("#taxapplicable").val();
@@ -813,7 +957,16 @@ $(document).ready(function() {
 			$("#purchaseorder_customer").val(resp["delchal"]["delchaldata"]["custid"]);
 			$("#purchaseorder_customer").prop("disabled", true);
 			$("#purchaseorder_customerstate").prop("disabled", true);
-			$("#purchaseorder_customer").change();
+			if(resp["delchal"]["delchaldata"]["consignee"]){
+			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
+			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
+			} else {
+			    $("#consigneename").val("").prop("disabled", false);
+			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
+			    $("#consigneeaddress").val("").prop("disabled", false);
+			}
+			$("#consigneestate").change();
 			$.ajax({
 			    url: '/customersuppliers?action=get',
 			    type: 'POST',
@@ -828,6 +981,7 @@ $(document).ready(function() {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
 				    $("#purchaseorder_customerstate").val(resp["gkresult"]["state"]);
+				    $("#purchaseorder_customer").change();
 				    $("#purchaseorder_supplierstate").val(resp["gkresult"]["state"]);
 				    $("#purchaseorder_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#purchaseorder_supplieraddr").val(resp["gkresult"]["custaddr"]);
@@ -863,8 +1017,8 @@ $(document).ready(function() {
 					$('#purchaseorder_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 					$('#purchaseorder_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 					$('#purchaseorder_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
-					$('#purchaseorder_product_table_vat tbody tr:last td:eq(1) input').val(value.qty);
-					$('#purchaseorder_product_table_vat tbody tr:last td:eq(1) input').val(value.qty).attr("data", value.qty);
+					$('#purchaseorder_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
+					$('#purchaseorder_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#purchaseorder_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 					$('#purchaseorder_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
 				    });
@@ -874,8 +1028,8 @@ $(document).ready(function() {
 					$('#purchaseorder_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 					$('#purchaseorder_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
 					$('#purchaseorder_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
-					$('#purchaseorder_product_table_gst tbody tr:last td:eq(2) input').val(value.qty);
-					$('#purchaseorder_product_table_gst tbody tr:last td:eq(2) input').val(value.qty).attr("data", value.qty);
+					$('#purchaseorder_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
+					$('#purchaseorder_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 					$('#purchaseorder_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
 					$('#purchaseorder_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
 					$('.purchaseorder_product_quantity_gst').numeric({ negative: false });
@@ -892,6 +1046,16 @@ $(document).ready(function() {
 		});
 	}
 	else {
+	    $("#purchaseorder_customer").val("").prop("disabled", false).change();
+	    $("#purchaseorder_customerstate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
+	    $("#purchaseorder_customeraddr").text("");
+	    $("#consigneename").val("").prop("disabled", false);
+	    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
+	    $("#gstinconsignee").val("").prop("disabled",false);
+	    $("#consigneeaddress").val("").prop("disabled", false);
+	    $("#supply_date").val("").prop("disabled", false);
+	    $("#supply_month").val("").prop("disabled", false);
+	    $("#supply_year").val("").prop("disabled", false);
 	    $('#purchaseorder_product_table_vat tbody').empty();
 	    $('#purchaseorder_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	    $('#purchaseorder_product_table_gst tbody').empty();
@@ -902,6 +1066,14 @@ $(document).ready(function() {
 	}
     });
 
+
+    $('#purchaseorder_product_table_total tbody').on('scroll', function () {
+	$('#purchaseorder_product_table_gst tbody').scrollTop($(this).scrollTop());
+    });
+    $('#purchaseorder_product_table_gst tbody').on('scroll', function () {
+	$('#purchaseorder_product_table_total tbody').scrollTop($(this).scrollTop());
+    });
+    
 //VAT events start here
   $(document).off("keydown", ".product_name_vat").on("keydown", ".product_name_vat", function(event) {
     var curindex = $(this).closest('tr').index();
@@ -944,7 +1116,7 @@ $(document).ready(function() {
       $('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1000,8 +1172,12 @@ $(document).ready(function() {
         $('#purchaseorder_product_table_vat tbody tr:eq(' + previndex + ') td:eq(1) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1013,7 +1189,7 @@ $(document).ready(function() {
       $('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1088,8 +1264,12 @@ $(document).ready(function() {
         $('#purchaseorder_product_table_vat tbody tr:eq(' + previndex + ') td:eq(2) input').focus();
       }
       if (curindex == 0) {
-        event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          event.preventDefault();
+	  if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1101,7 +1281,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1111,7 +1291,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#purchaseorder_product_table_vat tbody tr').index();
+      var curindex = $(this).closest('#purchaseorder_product_table_vat tbody tr').index();
+      if (parseFloat($(this).val()) == 0 && parseFloat($('.purchaseorder_product_quantity_vat:eq(' + curindex + ')').val()) > 0) {
+	  $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.purchaseorder_product_per_price_vat:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+      }
       calculatevataxamt(curindex);
   });
 
@@ -1121,6 +1309,13 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
+	if (parseFloat($(this).val()) == 0 && parseFloat($('.purchaseorder_product_quantity_vat:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	$('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -1132,7 +1327,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1145,7 +1344,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1155,7 +1354,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#purchaseorder_product_table_vat tbody tr').index();
+	var curindex = $(this).closest('#purchaseorder_product_table_vat tbody tr').index();
+	if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + curindex + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	}
       calculatevataxamt(curindex);
   });
 
@@ -1165,6 +1372,14 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
+	if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + curindex + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	}
 	$('#purchaseorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -1176,7 +1391,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1189,7 +1408,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1226,6 +1445,13 @@ $(document).ready(function() {
           });
           return false;
 	    }
+	  if (parseFloat($('.purchaseorder_product_per_price_vat:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.purchaseorder_product_quantity_vat:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	}
     calculatevataxamt(curindex1);
 
@@ -1239,12 +1465,18 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
+	$("#chkbank").focus().click();
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
-      if (curindex1 != ($("#purchaseorder_product_table_vat tbody tr").length - 1)) {//Not a last row.
-        $('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      } else if ($("#purchaseorder_deliverynote option:selected").val() == '' && $('#purchaseorder_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){//Last row along with additional conditions.
+	if (curindex1 != ($("#purchaseorder_product_table_vat tbody tr").length - 1)) {//Not a last row.
+	    if ($('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').is(":disabled")) {
+		$('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(1) input').focus().select();
+	    }
+	    else{
+		$('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+	    }
+      } else {//Last row along with additional conditions.
         if ($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1262,6 +1494,23 @@ $(document).ready(function() {
 	      $("#purchaseorder_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").focus().select();
 	      return false;
 	  }
+	  if ($("#purchaseorder_deliverynote option:selected").val() != '') {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
+          $("#quantity-exceed-alert").alert();
+          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#quantity-exceed-alert").hide();
+          });
+          return false;
+	    }
+	  }
+	  if (parseFloat($('.purchaseorder_product_per_price_vat:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.purchaseorder_product_quantity_vat:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
+	  if ($('#purchaseorder_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	$('#purchaseorder_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	  $('#purchaseorder_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	  for (let i = 0; i <= curindex1; i++) {
@@ -1271,21 +1520,12 @@ $(document).ready(function() {
 	  $('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	  $('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
 	  $('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
-      }
-	else if ($("#purchaseorder_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2))) {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          return false;
-	    }
-	    $("#accountno").focus().select();
-	}
+	  }
       else {
-          $("#accountno").focus().select();
+          $("#chkbank").focus().click();
       }
-    } else if (event.which == 190 && event.shiftKey) {
+      }
+    }else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
       $('#purchaseorder_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(4) input').focus().select();
     } else if (event.which == 188 && event.shiftKey) {
@@ -1295,7 +1535,11 @@ $(document).ready(function() {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#tinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 190 && event.ctrlKey) {
@@ -1330,15 +1574,15 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#purchaseorderstate option:selected").val();
 	  sourcestate = $("#purchaseorder_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
+	  if ($("#consigneename").val() != "") {
 	   sourcestate = $("#consigneestate option:selected").val();
 	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#purchaseorderstate option:selected").val();
 	  destinationstate = $("#purchaseorder_customerstate").val();
-	  if ($("#gstinconsignee").val() != "") {
-	   destinationstate = $("#consigneestate option:selected").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
 	  }
       }
     var taxflag=$("#taxapplicable").val();
@@ -1486,7 +1730,7 @@ $(document).ready(function() {
       $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1544,7 +1788,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1556,7 +1804,7 @@ $(document).ready(function() {
       $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1623,7 +1871,7 @@ $(document).ready(function() {
 	      return false;
 	  }
 	if ($("#purchaseorder_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex + ") td:eq(1) input").attr("data")).toFixed(2))) {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
           $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#quantity-exceed-alert").hide();
@@ -1641,7 +1889,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1653,7 +1905,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#accountno").focus().select();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1663,7 +1915,15 @@ $(document).ready(function() {
     if ($(this).val() == "") {
       $(this).val(0);
     }
-    var curindex = $(this).closest('#purchaseorder_product_table_gst tbody tr').index();
+      var curindex = $(this).closest('#purchaseorder_product_table_gst tbody tr').index();
+      if (parseFloat($(this).val()) == 0 && parseFloat($('.purchaseorder_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.purchaseorder_product_per_price_gst:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
       calculategstaxamt(curindex);
   });
 
@@ -1673,6 +1933,14 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
+	if (parseFloat($(this).val()) == 0 && parseFloat($('.purchaseorder_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.purchaseorder_product_per_price_gst:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
 	$('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').focus().select();
     } else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -1684,7 +1952,11 @@ $(document).ready(function() {
       }
       if (curindex == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1702,12 +1974,39 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
   });
 
     $(document).off("change", ".purchaseorder_product_discount_gst").on("change", ".purchaseorder_product_discount_gst", function(event) {
 	var curindex = $(this).closest('#purchaseorder_product_table_gst tbody tr').index();
+	if ($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_gst:eq(" + curindex + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	else{
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_gst:eq(" + curindex + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	if (parseFloat($('.purchaseorder_product_per_price_gst:eq(' + curindex + ')').val()) == 0 && parseFloat($('.purchaseorder_product_quantity_gst:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
+    }
 	calculategstaxamt(curindex);
     });
 
@@ -1717,53 +2016,86 @@ var curindex1 = $(this).closest('tr').index();
 var nextindex1 = curindex1 + 1;
 var previndex1 = curindex1 - 1;
 if (event.which == 13) {
-  event.preventDefault();
-
-	  if (curindex1 != ($("#purchaseorder_product_table_gst tbody tr").length - 1)) {//Not a last row.
-	      $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-  } else if ($("#purchaseorder_deliverynote option:selected").val() == '' && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){//Last row along with additional conditions.
-    if ($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
-      $("#product-blank-alert").alert();
-      $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#product-blank-alert").hide();
-      });
-      $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').focus();
-      return false;
-    }
-      var quantity = parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(3) input").val());
-	  if (parseFloat(quantity) === 0.00 && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-	      $("#quantity-blank-alert").alert();
-	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#quantity-blank-alert").hide();
-	      });
-	      $("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(3) input").focus().select();
-	      return false;
-	  }
-      $('#purchaseorder_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
-      $("#purchaseorder_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-	  $('#purchaseorder_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-	  for (let i = 0; i <= curindex1; i++) {
-              var selectedproduct = $("#purchaseorder_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
-	      $("#purchaseorder_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
-          }
-      $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
-      $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
-      $("#purchaseorderstate").change();
-      $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
-  }
-    else if ($("#purchaseorder_deliverynote option:selected").val() != '') {
-	if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2)))  && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          return false;
+    event.preventDefault();
+    if (curindex1 != (parseInt($("#purchaseorder_product_table_gst tbody tr").length) - 1)) {//Not a last row.
+	if ($('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').is(":disabled")) {
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(2) input').focus().select();
+	}
+	else{
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+	}
+    } else {//Last row.
+	//Validations
+	if ($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').val() == "") {
+	    $("#product-blank-alert").alert();
+	    $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#product-blank-alert").hide();
+	    });
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').focus();
+	    return false;
+	}
+	var quantity = parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(3) input").val());
+	if (parseFloat(quantity) === 0.00 && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+	    $("#quantity-blank-alert").alert();
+	    $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#quantity-blank-alert").hide();
+	    });
+	    $("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(3) input").focus().select();
+	    return false;
+	}
+	if ($("#purchaseorder_deliverynote option:selected").val() != '') {
+	    if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(1) input").attr("data")).toFixed(2)))  && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		$("#quantity-exceed-alert").alert();
+		$("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#quantity-exceed-alert").hide();
+		});
+		return false;
 	    }
-	$("#accountno").focus().select();
+	}
+	if ($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + curindex1 + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	else{
+	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + curindex1 + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	if (parseFloat($('.purchaseorder_product_per_price_gst:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.purchaseorder_product_quantity_gst:eq(' + curindex1 + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+          });
+	  return false;
     }
-    else {
-          $("#accountno").focus().select();
-      }
+	if ($('#purchaseorder_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
+	    $('#purchaseorder_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+	    $("#purchaseorder_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+	    $('#purchaseorder_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    for (let i = 0; i <= curindex1; i++) {
+		var selectedproduct = $("#purchaseorder_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
+		$("#purchaseorder_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
+	    }
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
+	    $("#purchaseorderstate").change();
+	    $('#purchaseorder_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
+	}
+	else {
+	    $("#accountno").focus().select();
+	}
+    }
 }
     else if (event.which == 190 && event.shiftKey) {
       event.preventDefault();
@@ -1775,7 +2107,11 @@ if (event.which == 13) {
       }
       if (curindex1 == 0) {
         event.preventDefault();
-          $("#consigneeaddress").focus().select();
+          if($("#consigneeaddress").is(":disabled")) {
+	      $("#gstinconsignee").focus().select();
+	  } else {
+	      $("#consigneeaddress").focus().select();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       }
     } else if (event.which == 188 && event.ctrlKey) {
@@ -1788,13 +2124,14 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#chkbank").focus().click();
     }
 });
 
     //GST events end here
 
-  $(document).off("click", ".product_del").on("click", ".product_del", function() {
+    $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
+	event.preventDefault();
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex + 1;
   var previndex = curindex - 1;
@@ -2004,6 +2341,21 @@ if (event.which == 13) {
     });
   });
 
+    $("#my-file-selector").change(function(event){
+	var files = $("#my-file-selector")[0].files;
+	var filelist = [];
+	for (let i = 0; i < files.length; i++) {
+	    if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+		$('#my-file-selector').focus();
+		return false;
+	    }
+	}
+    });
+
     var allow = 1;
   $("#purchaseorder_save").click(function(event) {
       event.preventDefault();
@@ -2096,6 +2448,29 @@ if (event.which == 13) {
           $('#consigneename').focus();
           return false;
       }
+
+      //validation for bankdetails on save button.
+      if ($("#chkbank").is(":checked")) {
+	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+	      $("#bankdetails-blank-alert").alert();
+	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#bankdetails-blank-alert").hide();
+	      });
+	      $("#accountno").focus();
+	  }
+      }
+	      
+      //Validation for Address in sale purchaseorder.
+      if ($("#status").val() == 15) {
+	  if($("#originaddress").val() == ""){
+	      $("#address-blank-alert").alert();
+              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#address-blank-alert").hide();
+	      });
+	      $("#originaddress").focus();
+	      return false;
+	  }
+      }
       var tax = {};
       var cess = {};
       var contents = {};
@@ -2108,8 +2483,8 @@ if (event.which == 13) {
       var purchaseordertotal = 0.00;
       var productcodes = [];
       var productqtys = [];
-      var quantity;
       var ppu;
+      var inoutflag = $("#status").val();
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
@@ -2147,34 +2522,6 @@ if (event.which == 13) {
       productcodes.push($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val());
 
       var productcode = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-	$.ajax({
-        url: '/product?type=prodtax',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: { "productcode": productcode },
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         console.log("success");
-         if (resp["gkresult"].length == 0) {
-             $("#sometax-alert").alert();
-           $("#sometax-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#sometax-alert").hide();
-           });
-           return false;
-         }
-
-       })
-       .fail(function() {
-         console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
-
       if ($('#purchaseorder_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2183,7 +2530,7 @@ if (event.which == 13) {
           $('#purchaseorder_product_table_vat tbody tr:eq(' + i + ') td:eq(0) select').focus();
           return false;
         }
-	quantity = parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	let quantity = parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	  if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2192,8 +2539,24 @@ if (event.which == 13) {
 	      $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
 	      return false;
 	  }
+	if (parseFloat($('.purchaseorder_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.purchaseorder_product_quantity_vat:eq(' + i + ')').val()) > 0) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.purchaseorder_product_per_price_vat:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
+	if (parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + i + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_vat tbody tr:eq(' + i + ') td:eq(3) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	}
       if ($("#purchaseorder_deliverynote option:selected").val() != '') {
-	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) {
+	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
           $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
               $("#quantity-exceed-alert").hide();
@@ -2229,7 +2592,7 @@ if (event.which == 13) {
 		  $('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select').focus();
 		  return false;
 	      }
-	      quantity = parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
+	      let quantity = parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()) + parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val());
 	      if (parseFloat(quantity) === 0.00 && $('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
 		  $("#quantity-blank-alert").alert();
 		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2238,8 +2601,28 @@ if (event.which == 13) {
 		  $("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
 		  return false;
 	      }
+	      if ($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == 7) {
+	    if (parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > (parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2)))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	else{
+	    if (parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val()).toFixed(2)) > parseFloat(parseFloat($('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(4) input').val()).toFixed(2))) {
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".purchaseorder_product_discount_vat:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
 	      if ($("#purchaseorder_deliverynote option:selected").val() != '') {
-		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) && $('#purchaseorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
+		  if ((parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").attr("data")).toFixed(2))) && $('#purchaseorder_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').attr("gsflag") == '7') {
 		      $("#quantity-exceed-alert").alert();
 		      $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
 			  $("#quantity-exceed-alert").hide();
@@ -2247,6 +2630,14 @@ if (event.which == 13) {
 		      return false;
 		  }
 	      }
+	      if (parseFloat($('.purchaseorder_product_per_price_gst:eq(' + i + ')').val()) == 0 && parseFloat($('.purchaseorder_product_quantity_gst:eq(' + i + ')').val()) > 0) {
+	 $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.purchaseorder_product_per_price_gst:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
 	      calculategstaxamt(i);
 	      productqtys.push(parseFloat($("#purchaseorder_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
@@ -2281,6 +2672,10 @@ if (event.which == 13) {
 	      return false;
 	  }
       }
+      //For sales purchaseorder store address.
+      if($("#status").val() == 15){
+	  address = $("#originaddress").val();
+      }   
       var form_data = new FormData();
       form_data.append("dcid", $("#purchaseorder_deliverynote option:selected").val());
       form_data.append("custid", $("#purchaseorder_customer option:selected").val());
@@ -2295,20 +2690,51 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", purchaseordertotal);
       if ($("#status").val() == 9) {
+	 /*let destinationstate = $("#purchaseorderstate option:selected").val();
+	 let sourcestate = $("#purchaseorder_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      sourcestate = $("#consigneestate option:selected").val();
+	      }*/
 	  form_data.append("taxstate", $("#purchaseorderstate option:selected").val());
-	  form_data.append("sourcestate", $("#purchaseorder_customerstate option:selected").val());
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("sourcestate", $("#purchaseorder_customerstate option:selected").val());
+	  }
+
       }
       else if ($("#status").val() ==  15) {
-	  form_data.append("taxstate", $("#purchaseorder_customerstate option:selected").val());
+	  /*let sourcestate = $("#purchaseorderstate option:selected").val();
+	  let destinationstate = $("#purchaseorder_customerstate").val();
+	  if ($("#consigneename").val() != "") {
+	      destinationstate = $("#consigneestate option:selected").val();
+	      }*/
+	  //appending address to the form_data.
+	  form_data.append("address", address);
+	  if ($("#consigneename").val() != "") {
+	      form_data.append("taxstate", $("#consigneestate option:selected").val());
+	  } else {
+	      form_data.append("taxstate", $("#purchaseorder_customerstate option:selected").val());
+	  }
 	  form_data.append("sourcestate", $("#purchaseorderstate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-    form_data.append("bankdetails", JSON.stringify(bankdetails));
+    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+        if ($("#chkcash").is(":checked")) {
+	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+		form_data.append("paymentmode",3);   
+
+        } else {
+	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+		form_data.append("bankdetails", JSON.stringify(bankdetails));
+		form_data.append("paymentmode",2);
+            }
     form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
+    form_data.append("inoutflag",inoutflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
     if (dateofsupply == "") {
 	form_data.append("dateofsupply", dateofsupply);
@@ -2327,9 +2753,17 @@ if (event.which == 13) {
 
     var files = $("#my-file-selector")[0].files;
     var filelist = [];
-    for (var i = 0; i < files.length; i++) {
+      for (var i = 0; i < files.length; i++) {
+	  if (files[i].type != 'image/jpeg') {
+		$("#image-alert").alert();
+		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#image-alert").hide();
+		});
+	      $('#my-file-selector').focus();
+		return false;
+	    }
 	form_data.append("file" + i, files[i]);
-    }
+      }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
@@ -2351,15 +2785,41 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-                        if ($("#status").val() == '9') {
-                            $("#purchaseorder_record").click();
-                        } else {
-                            $("#purchaseorder_create").click();
-                        }
+			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#success-alert").hide();
+			    let invid = resp.gkresult;
+			    $.ajax({
+				type: "POST",
+				url: "/purchaseorder?action=showinv",
+				global: false,
+				async: false,
+				datatype: "text/html",
+				data: {
+				    "invid": invid
+				},
+				beforeSend: function(xhr) {
+				    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+				}
+			    })
+				.done(function(resp) {
+				    $("#invload").html("");
+				    $("#invload").html(resp);
+				    $("#backbutton").attr("inoutflag", inoutflag);
+				    $("#editbutton").attr("invid",invid);
+				    if (inoutflag == '9') {
+					$("#printbutton").hide();
+				    }
+				    else {
+					$("#printbutton").show();
+					$("#printbutton").attr("invid",invid);
+				    }
+				    $("#listdiv").hide();
+				    $("#viewinvdiv").show();
+				    $('#purchaseorder_div').html("");
+				});
                         });
                         return false;
                     } else if (resp["gkstatus"] == 1) {
@@ -2408,339 +2868,210 @@ if (event.which == 13) {
       $("#purchaseorder_create").click();
     }
   });
-/*
-  $("#purchaseorder_saveprint").click(function(event) {
-    event.stopPropagation();
-    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-    if ($.trim($('#purchaseorder_challanno').val()) == "") {
-      $("#challanno-blank-alert").alert();
-      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#challanno-blank-alert").hide();
-      });
-      $('#purchaseorder_challanno').focus();
-      return false;
-    }
+    $("#backbutton").click(function(event){
+	$("#invload").html("");
+	$("#viewinvdiv").hide();
+	$('#listdiv').show();
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	if ($("#backbutton").attr("inoutflag") == '9') {
+	    $("#purchaseorder_record").click();
 
-    if ($.trim($('#purchaseorder_date').val()) == "") {
-      $("#date-blank-alert").alert();
-      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#date-blank-alert").hide();
-      });
-      $('#purchaseorder_date').focus();
-      return false;
-    }
-    if ($.trim($('#purchaseorder_month').val()) == "") {
-      $("#date-blank-alert").alert();
-      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#date-blank-alert").hide();
-      });
-      $('#purchaseorder_month').focus();
-      return false;
-    }
-    if ($.trim($('#purchaseorder_year').val()) == "") {
-      $("#date-blank-alert").alert();
-      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#date-blank-alert").hide();
-      });
-      $('#purchaseorder_year').focus();
-      return false;
-    }
-    if (!Date.parseExact($("#purchaseorder_date").val() + $("#purchaseorder_month").val() + $("#purchaseorder_year").val(), "ddMMyyyy")) {
-      $("#date-alert").alert();
-      $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#date-alert").hide();
-      });
-      $('#purchaseorder_date').focus().select();
-      return false;
-    }
-      var curdate = Date.parseExact($("#purchaseorder_year").val() + $("#purchaseorder_month").val() + $("#purchaseorder_date").val(), "yyyyMMdd");
-    if (!curdate.between(financialstart, financialend)) {
-      $("#between-date-alert").alert();
-      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#between-date-alert").hide();
-      });
-      $('#purchaseorder_date').focus().select();
-      return false;
-    }
-
-    if ($("#purchaseorder_deliverynote option:selected").val() != "") {
-
-      if (Date.parseExact($("#purchaseorder_deliverynote option:selected").attr("dcdate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
-        $("#invdc-date-alert").alert();
-        $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#invdc-date-alert").hide();
-        });
-        $('#purchaseorder_date').focus().select();
-        return false;
-      }
-    }
-
-    if ($.trim($('#purchaseorder_customer option:selected').val()) == "") {
-      $("#custsup-blank-alert").alert();
-      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#custsup-blank-alert").hide();
-      });
-      $('#purchaseorder_customer').focus();
-      return false;
-    }
-    var tax = {};
-    var contents = {};
-    var freeqty = {};
-    var stock = {};
-    var items = {};
-    var productcodes = [];
-    var productqtys = [];
-    for (var i = 0; i < $("#purchaseorder_product_table_vat tbody tr").length; i++) {
-      productqtys.push(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
-      if ($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
-        $("#product-blank-alert").alert();
-        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#product-blank-alert").hide();
-        });
-        $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select").focus();
-        return false;
-      }
-      for (productcode of productcodes) {
-        if ($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == productcode) {
-          $("#product-duplicate-alert").alert();
-          $("#product-duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#product-duplicate-alert").hide();
-          });
-          $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select").focus();
-          return false;
-        }
-      }
-      productcodes.push($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val());
-
-      var productcode = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-      $.ajax({
-        url: '/product?type=prodtax',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: { "productcode": productcode },
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         console.log("success");
-         if (resp["gkresult"].length == 0) {
-           $("#sometax-alert").alert();
-           $("#sometax-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#sometax-alert").hide();
-           });
-           return false;
-         }
-
-       })
-       .fail(function() {
-         console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
-
-
-      if ($("#purchaseorder_deliverynote option:selected").val() == '')  {
-        if ($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val() == "" || $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val() <= 0) {
-          $("#quantity-blank-alert").alert();
-          $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#quantity-blank-alert").hide();
-          });
-          $("#purchaseorder_product_table tbody tr:eq(" + i + ") td:eq(1) input").focus();
-          return false;
-        }
-      }
-      if (parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()).toFixed(2)) > parseFloat(parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").attr("data")).toFixed(2))) {
-          $("#quantity-exceed-alert").alert();
-          $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#quantity-exceed-alert").hide();
-          });
-          $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val($("#purchaseorder_product_table tbody tr:eq(" + i + ") td:eq(1) input").attr("data"));
-          $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus();
-          return false;
-      }
-
-      if (parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()) > parseFloat($("#purchaseorder_product_table tbody tr:eq(" + i + ") td:eq(1) input").val())) {
-        $("#quantity-freeqty-alert").alert();
-        $("#quantity-freeqty-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#quantity-freeqty-alert").hide();
-        });
-        $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").focus();
-        return false;
-      }
-      if ($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val() == "") {
-        $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val(0.00);
-      }
-
-      if ($("#purchaseorder_deliverynote option:selected").val() == '' || $("#purchaseorder_deliverynote option:selected").val() != '' && parseFloat($("#purchaseorder_product_table tbody tr:eq(" + i + ") td:eq(1) input").val()) != 0) {
-        if ($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val() == "" || $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val() <= 0) {
-          $("#price-blank-alert").alert();
-          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#price-blank-alert").hide();
-          });
-          $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").focus().select();
-          return false;
-        }
-      }
-      var obj = {};
-      if (parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
-        var productcode = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-        var ppu = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
-        obj[ppu] = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-        tax[productcode] = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
-        contents[productcode] = obj;
-        items[productcode] = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-        freeqty[productcode] = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-      }
-    }
-    //if all product quantities are zero, ask user, why are you creating an purchaseorder?
-    var zeroflag = 1;
-    for (qty of productqtys) {
-      if (qty != 0) {
-        zeroflag = 0;
-        break;
-      }
-    }
-    if (zeroflag == 1) {
-      $("#allquantities-blank-alert").alert();
-      $("#allquantities-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#allquantities-blank-alert").hide();
-      });
-      $("#purchaseorder_product_table_vat tbody tr:eq(0) td:eq(1) input").focus().select();
-      return false;
-    }
-
-
-    stock["items"] = items;
-
-    if ($("#status").val() == '9') {
-      stock["inout"] = 9;
-      issuername = "";
-      designation = "";
-    } else {
-      stock["inout"] = 15;
-      issuername = $("#purchaseorder_issuer_name").val();
-      designation = $("#purchaseorder_issuer_designation").val();
-      if (issuername == "") {
-        $("#purchaseorder_issuer_name").focus();
-        $("#issuer-blank-alert").alert();
-        $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#issuer-blank-alert").hide();
-        });
-        return false;
-      }
-    }
-    event.preventDefault();
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-    $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function(e) {
-      $.ajax({
-        url: '/purchaseorder?action=save',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: {
-          "dcid": $("#purchaseorder_deliverynote option:selected").val(),
-          "custid": $("#purchaseorder_customer option:selected").val(),
-          "purchaseorderno": $("#purchaseorder_challanno").val(),
-          "purchaseorderdate": $("#purchaseorder_year").val() + '-' + $("#purchaseorder_month").val() + '-' + $("#purchaseorder_date").val(),
-          "contents": JSON.stringify(contents),
-          "tax": JSON.stringify(tax),
-          "stock": JSON.stringify(stock),
-          "issuername": issuername,
-          "designation": designation,
-          "invtotal": $('#purchaseorder_product_table tfoot tr:last td:eq(5) input').val(),
-          "taxstate": $("#purchaseorder_state option:selected").val(),
-          "freeqty": JSON.stringify(freeqty)
-        },
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         if (resp["gkstatus"] == 0) {
-           printset = [];
-           subtotal = 0;
-           for (var i = 0; i < $("#purchaseorder_product_table tbody tr").length; i++) {
-            var obj = {};
-            if (parseFloat($("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()) > 0) {
-              obj.productdesc = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
-              obj.qty = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-              obj.freeqty = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-              obj.unitname = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(1) span").text();
-              obj.ppu = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
-              subtotal += +((obj.qty - obj.freeqty) * obj.ppu);
-              console.log(subtotal);
-              obj.taxrate = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
-              obj.taxamt = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
-              obj.rowtotal = $("#purchaseorder_product_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val();
-              printset.push(obj);
-            }
-           }
-           $.ajax({
-             url: '/purchaseorder?action=print',
-             type: 'POST',
-             dataType: 'html',
-             data: {
-               "dc": $("#purchaseorder_deliverynote option:selected").attr("dcno"),
-               "custid": $("#purchaseorder_customer option:selected").val(),
-               "purchaseorderno": $("#purchaseorder_challanno").val(),
-               "purchaseorderdate": $("#purchaseorder_date").val() + '-' + $("#purchaseorder_month").val() + '-' + $("#purchaseorder_year").val(),
-               "printset": JSON.stringify(printset),
-               "issuername": $("#purchaseorder_issuer_name").val(),
-               "designation": $("#purchaseorder_issuer_designation").val(),
-               "subtotal": parseFloat(subtotal).toFixed(2),
-               "taxtotal": $("#purchaseorder_product_table tfoot tr:first td:eq(4) input").val(),
-		 "gtotal": $("#purchaseorder_product_table tfoot tr:first td:eq(5) input").val()
-             },
-             beforeSend: function(xhr) {
-               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-             }
-           })
+	} else {
+	    $("#purchaseorder_create").click();
+	}
+	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+    });
+    $("#printbutton").click(function(event) {
+        $.ajax({
+                url: '/purchaseorder?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"invid":$("#printbutton").attr("invid")},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
             .done(function(resp) {
-              console.log("success");
-              $('#info').html(resp);
+                console.log("success");
+                $('#printload').html(resp);
+		$("#invload").hide();
+		$("#buttondiv").hide();
             })
             .fail(function() {
-              console.log("error");
+                console.log("error");
             })
             .always(function() {
-              console.log("complete");
+                console.log("complete");
             });
-         } else if (resp["gkstatus"] == 1) {
-           $("#purchaseorder_challanno").focus();
-           $("#duplicate-alert").alert();
-           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#duplicate-alert").hide();
-           });
-           return false;
-         } else {
-           $("#purchaseorder_deliverynote").focus();
-           $("#failure-alert").alert();
-           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-             $("#failure-alert").hide();
-           });
-           return false;
+    });
+
+    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+        if(event.which==13){
+        $("#accountno").focus();
+        }
+    });
+    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
+        if(event.which==13){
+        $("#transportationmode").focus();
+        }
+    });
+
+     //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
+    $("input[name='chkpaymentmode']").click(function () {
+	//Checking which radio button is selected.
+        if ($("#chkbank").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+                $("#bank").show();
+	        $("#cash").hide();
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#bank").hide();
+		$("#cash").show();
+            }
+        });
+    //Code for populting organisation's bankdetails in create sale purchaseorder on click event on Bank radio button.
+    if ($("#status").val() == '15') {      //checking whether it is sale purchaseorder or not (15 = sale purchaseorder).
+	$("#chkbank").click(function(event) {
+            $.ajax({
+                url: '/editorganisation?action=orgbankdetails',
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+		.done(function(resp) {
+                    console.log("success");
+                    $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisation loaded
+		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //branchname of organisation is loaded
+		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //ifsc code of organisation is loaded
+		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //branchname of organisation is loaded
+		})
+		.fail(function() {
+                    console.log("error");
+		})
+		.always(function() {
+                    console.log("complete");
+		});
+	});
+
+    }
+      //Keydown EVENT for BANK DETAILS
+
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    $("#bankname").focus().select();
+	}
+    });  
+
+
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+          
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())!="") {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
          }
-       })
-       .fail(function() {
-         console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
+
+         else if ($.trim($("#accnum").val())!="" && $.trim($("#bank_name").val())=="") {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
+	    
+      $("#branch").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#accountno").focus().select();
+	};
     });
 
+    $("#branch").keydown(function(event) {
+	if (event.which==13) {
+	     if ($.trim($("#accountno").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#accountno-blank-alert").alert();
+            $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+          }
+
+	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branch").val())!="" ) {
+            $("#bankname-blank-alert").alert();
+            $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+          }
 
 
-  });
-  $("#confirm_yes_print").on('shown.bs.modal', function(event) {
-        $("#tn_save_noprint").focus();
-
+	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())=="" ) {
+            $("#branch-blank-alert").alert();
+            $("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#branch-blank-alert").hide();
+            });
+            $("#branch").focus();
+            return false;
+          }    
+	    
+	    event.preventDefault();
+      $("#ifsc").focus().select();
+    }
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#bankname").focus().select();
+	};
     });
-    $("#confirm_yes_print").on('hidden.bs.modal', function(event) {
-        $("#purchaseorder_challanno").focus();
+    
+
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#accountno_bankname_branch-blank-alert").alert();
+            $("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#accountno_bankname_branch-blank-alert").hide();
+            });
+            $("#accountno").focus();
+            return false;
+         }
+
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+            $("#bankname_branch-blank-alert").alert();
+            $("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#bankname_branch-blank-alert").hide();
+            });
+            $("#bankname").focus();
+            return false;
+         }
+
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())!="" && $.trim($("#ifsc").val())=="" ) {
+            $("#ifsc-blank-alert").alert();
+            $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#ifsc-blank-alert").hide();
+            });
+            $("#ifsc").focus();
+            return false;
+            }
+	    
+      event.preventDefault();
+      $("#transportationmode").focus().select();
+    }
+    if (event.which==38) {
+	 event.preventDefault();
+	 $("#branch").focus().select();
+       };
     });
-	*/	    });
+    
+});
