@@ -48,6 +48,7 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
+    
 
     //Initialising some variables.
     var issuername = "";
@@ -84,6 +85,7 @@ $(document).ready(function() {
 	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
+	var numbertowords = "";
 
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 
@@ -112,6 +114,8 @@ $(document).ready(function() {
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+	    numbertowords = convertNumberToWords(totalamount);
+	    console.log(numbertowords);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -129,6 +133,7 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -146,6 +151,7 @@ $(document).ready(function() {
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
+	var numbertowords = "";
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
@@ -157,6 +163,8 @@ $(document).ready(function() {
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	    numbertowords = convertNumberToWords(totalamount);
+	    console.log(numbertowords);
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -167,6 +175,7 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
