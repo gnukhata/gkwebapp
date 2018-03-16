@@ -95,7 +95,8 @@ $(document).ready(function() {
       else{
           $("#viewattach").hide();
       }
-	$("#deliverychallan_edit_customer").html(custsup);
+	  $("#deliverychallan_edit_customer").html(custsup);
+
 	inout = resp.delchaldata.delchaldata.inout;
 	inoutflag = resp.delchaldata.delchaldata.inoutflag;
 	if(inoutflag == 9){
@@ -123,6 +124,8 @@ $(document).ready(function() {
 	var typeoftrans = dict[resp.delchaldata.delchaldata.dcflag];
  	
 	if (resp.delchaldata.delchaldata.taxflag == '7'){
+	    $("#gstproducttable").show();
+	    $("#invoice_product_table_vat").hide();
 	    if(resp.delchaldata.delchaldata.consignee){
 		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
@@ -146,7 +149,8 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	else if(resp.delchaldata.delchaldata.taxflag == '22'){
+	    else if(resp.delchaldata.delchaldata.taxflag == '22'){
+	    $("#gstproducttable").hide();
 	    $(".gstinfield").hide();
 	    $("#invoice_product_table_vat").show();
 	    $(".tinfield").show();

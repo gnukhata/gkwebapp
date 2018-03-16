@@ -1348,7 +1348,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#deliverychallan_noofpackages").focus();
     }
   });
 
@@ -1833,7 +1833,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#accountno").focus().select();
+      $("#deliverychallan_noofpackages").focus().select();
     }
   });
 
@@ -2012,7 +2012,7 @@ if (event.which == 13) {
 	}
 	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
 	if (supplydate) {
-	    if (!supplydate.between(financialstart, financialend)) {
+	    if (supplydate < financialstart) {
 		$("#supbetween-date-alert").alert();
 		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#supbetween-date-alert").hide();
@@ -2230,6 +2230,7 @@ else {
 	    $(this).closest('tr').fadeOut(200, function() {
 		$(this).closest('tr').remove(); //closest method gives the closest element productified
 		$("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+		calculatevataxamt(curindex);
 	    });
 	}
 	if ($("#invoice_product_table_vat tbody tr").length == 1) {
@@ -2240,6 +2241,7 @@ else {
 	    $(this).closest('tr').remove();
 	    $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
 	    $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	    calculategstaxamt(curindex);
 	}
 	if ($("#invoice_product_table_gst tbody tr").length == 1) {
 	    $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
@@ -2529,7 +2531,7 @@ else {
 	}
 	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
 	if (supplydate) {
-	    if (!supplydate.between(financialstart, financialend)) {
+	    if (supplydate < financialstart) {
 		$("#supbetween-date-alert").alert();
 		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#supbetween-date-alert").hide();
@@ -2831,6 +2833,7 @@ else {
             else {
 		$("#deliverychallan_create").click();
             }
+	    console.log("Only Save");
             $("#success-alert").alert();
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#success-alert").hide();
@@ -2838,6 +2841,7 @@ else {
             return false;
 	}
 	else if(resp["gkstatus"] == 1) {
+	    console.log("Only Save Dup");
             $("#deliverychallan_challanno").focus();
             $("#duplicate-alert").alert();
             $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2997,7 +3001,7 @@ else {
 	
 	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
 	if (supplydate) {
-	    if (!supplydate.between(financialstart, financialend)) {
+	    if (supplydate < financialstart) {
 		$("#supbetween-date-alert").alert();
 		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#supbetween-date-alert").hide();
@@ -3268,7 +3272,7 @@ else {
 	event.preventDefault();
 	$('.modal-backdrop').remove();
 	$('.modal').modal('hide');
-	$('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e)
+	$('#confirm_yes_dc').modal('show').one('click', '#dc_save_yes_print', function (e)
 	{
 	    $.ajax({ // ajax for saving the delivery note
 		url: '/deliverychallan?action=save',
@@ -3283,10 +3287,6 @@ else {
 	    })
 	    .done(function(resp) {
 		if(resp["gkstatus"] == 0){
-		    $("#success-alert").alert();
-		    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#success-alert").hide();
-		    });
 		    if ($("#status").val()=='15') {
 			let dcid = resp.gkresult;
 			$.ajax({ // passing the delivery note details to a page displaying it as a print preview
@@ -3310,8 +3310,10 @@ else {
 				console.log("complete");
 			    });
 		    }
+		    console.log("Nooooo");
 		}
 		else if(resp["gkstatus"] == 1) {
+		    console.log("Saveprint dup");
 		    $("#deliverychallan_challanno").focus();
 		    $("#duplicate-alert").alert();
 		    $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -3338,7 +3340,7 @@ else {
 	});
     });
     $("#confirm_yes_dc").on('shown.bs.modal', function(event) {
-	$("#dc_save_noprint").focus();
+	$("#dc_save_no_print").focus();
     });
     $("#confirm_yes_dc").on('hidden.bs.modal', function(event) {
 	$("#deliverychallan_challanno").focus();

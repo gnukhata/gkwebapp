@@ -187,7 +187,7 @@
 		      {% trans %}Customer State{% endtrans %} :
 		    {% endif %}
 		  </label>
-		  {% if gkresult["delchaldata"]["consignee"]["consigneename"] %}
+		  {% if gkresult["delchaldata"]["consignee"] %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}
 		      {{ gkresult["custSupDetails"]["custsupstate"] }}
 		    {% endif %}
@@ -201,7 +201,7 @@
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-		  {% if gkresult["delchaldata"]["consignee"]["consigneename"] %}
+		  {% if gkresult["delchaldata"]["consignee"] %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
 		    {% if gkresult["delchaldata"]["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
 		  {% else %}
@@ -227,18 +227,18 @@
 	      <td>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
-		  {% if gkresult["delchaldata"]["consignee"]["consigneename"] %}{{ gkresult["delchaldata"]["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
+		  {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
 		</div>
 		{% if gkresult["delchaldata"]["taxflag"] == 22 %}
 		  <div class="form-inline form-group col-xs-12 nopadding">
 		    <label for="tinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}TIN{% endtrans %} :</label>
-		    {% if gkresult["delchaldata"]["consignee"]["tinconsignee"] %}{{ gkresult["delchaldata"]["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}
 		  </div>
 		{% endif %}
 		{% if gkresult["delchaldata"]["taxflag"] == 7 %}
 		  <div class="form-inline form-group col-xs-12 nopadding">
 		    <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
-		    {% if gkresult["delchaldata"]["consignee"]["gstinconsignee"] %}{{ gkresult["delchaldata"]["consignee"]["gstinconsignee"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["gstinconsignee"] }}{% else %}N/A{% endif %}
 		  </div>
 		{% endif %}
 		<div class="form-inline form-group  col-xs-12 nopadding">
@@ -246,16 +246,16 @@
 		    <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
 		  </div>
 		  <div style="max-width:175px; padding-left:5px; display:table-cell;">
-		    {% if gkresult["delchaldata"]["consignee"]["consigneeaddress"] %}{{ gkresult["delchaldata"]["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
 		  </div>
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-		  {% if gkresult["delchaldata"]["consignee"]["consigneestate"] %}{{ gkresult["delchaldata"]["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}
+		  {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-		  {% if gkresult["delchaldata"]["consignee"]["consigneestatecode"] %}{{ gkresult["delchaldata"]["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
+		  {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
 		</div>
 	      </td>
 	      <tr>

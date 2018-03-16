@@ -181,9 +181,6 @@
 		      {% if resultgstvat == '22' %}
 			<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		      {% else %}
-			  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
-			    <small class="row col-sm-12 form-text text-muted">Please scroll horizontally to see all fields in this table.</small>
-			  </div>
 			  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		      {% endif %}
 		      <thead class="bg-primary">
@@ -439,7 +436,7 @@
 			    <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
 			  </div>
 			  <div class="col-sm-6 text-right">
-			    <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+			    <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
 			  </div>
 			</div>
 		      </div>
