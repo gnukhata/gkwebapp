@@ -42,20 +42,23 @@ $(document).ready(function() {
 	);
     });
     $("#creditnote_view").click(function() { // calls view credit note page.
+	console.log("Hello");
 	$.ajax(
 	    {
 		type: "POST",
-		url: "/drcrnote?action=showdrcrnote&status=3",
+		url: "/drcrnote?action=showdrcrnote",
 		global: false,
 		async: false,
 		datatype: "text/html",
+		data: {"drcrflag": 3},
 		beforeSend: function(xhr){
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		},
 		success: function(resp)
 		{
-		    $("#drcrload").html("");
-		    $("#drcrload").html(resp);
+		    console.log(resp);
+		    $("#drcrnote_div").html("");
+		    $("#viewdrcrdiv").html(resp);
 		}
 	    }
 	);
@@ -64,17 +67,18 @@ $(document).ready(function() {
 	$.ajax(
 	    {
 		type: "POST",
-		url: "/drcrnote?action=showdrcrnote&status=4",
+		url: "/drcrnote?action=showdrcrnote",
 		global: false,
 		async: false,
 		datatype: "text/html",
+		data: {"drcrflag": 4},
 		beforeSend: function(xhr){
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		},
 		success: function(resp)
 		{
-		    $("#drcrload").html("");
-		    $("#drcrload").html(resp);
+		    $("#drcrnote_div").html("");
+		    $("#viewdrcrdiv").html(resp);
 		}
 	    }
 	);

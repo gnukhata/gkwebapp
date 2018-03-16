@@ -62,11 +62,14 @@ def savedrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=showdrcrnote",renderer="gkwebapp:templates/viewdrcrnote.jinja2")
 def showsingledrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    if request.params["status"] == '3':
+    print request.params["drcrflag"]
+    if request.params["drcrflag"] =='3':
          drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
-    if request.params["status"] == '4':
+         print drcrdata.json()["gkresult"]
+    if request.params["drcrflag"] == 4:
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata": drcrdata.json()["gkresult"]}
+        print drcrdata1
+    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"]}
 
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetails",renderer="json")
 def getDrCrDetails(request):
