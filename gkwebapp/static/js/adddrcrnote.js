@@ -2,6 +2,7 @@ $(document).ready(function() {
     console.log("Ready");
     $("#drcrnote_invoice1").hide();
     $("#sale").focus();
+    $(".purchasediv").hide();
     $('.drcrnotedate').autotab('number');  //Focus shifts from fields among date fields.
     //Preventing characters in numeric fields.
     $("#drcrnote_date").numeric({ negative: false });
@@ -14,13 +15,18 @@ $(document).ready(function() {
     //keydown events for drcrnote
     $("input[name='invoice']").click(function () {
 	//Checking which radio button is selected.
-       if($("#sale").is(":checked"))  {
-	   $("#drcrnote_invoice").show();
-	   $("#drcrnote_invoice1").hide();
+	if($("#sale").is(":checked"))  {
+	    $(".salediv").show();
+	    $(".purchasediv").hide();
+	    $("#drcrnote_invoice").show();
+	    $("#drcrnote_invoice1").hide();
        }
 	else{
 	    $("#drcrnote_invoice1").show();
 	    $("#drcrnote_invoice").hide();
+	    $(".salediv").hide();
+	    $(".purchasediv").show();
+	    
 	}
         });
 
