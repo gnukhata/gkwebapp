@@ -37,11 +37,11 @@
         <div class="container-fluid">
 
           <button class="btn btn-success btn-sm" id="epsubmit" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-          <button id="epedit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}
-	    Edit{% endtrans %}</button>
-          <button id="epdelete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}
-	    Delete{% endtrans %}</button>
-          <button id="epreset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+          <button id="epedit" class="btn btn-primary btn-sm" accesskey="e"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}
+	    <u>E</u>dit{% endtrans %}</button>
+          <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}
+	    <u>D</u>elete{% endtrans %}</button>
+          <button id="epreset" class="btn btn-warning btn-sm" accesskey="t"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
 	  {% if userrole|int != 3 %}
             <button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none;"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
 	  {% endif %}
