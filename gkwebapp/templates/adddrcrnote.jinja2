@@ -127,6 +127,8 @@
                    
 		   </div>
                </div>
+	       {#<***>#}
+
 	       <!-- on the basis of sale and purchase start -->
 	       <div class="salediv" >
 	       <div class="col-md-4 borderdiv ">
@@ -155,6 +157,8 @@
 		     <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Customer{% endtrans %} :</label>
 		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsupp"></label>
 		   </div>
+
+
 		   <div class="form-group form-inline">
 		     <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Customer State{% endtrans %}:</label>
 		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsuppstate"></label>
@@ -182,51 +186,53 @@
 		   <h4>{% trans %}Details of Purchase Invoice{% endtrans %} :</h4>
 		   <div class="form-group form-inline">
 		     <label class="col-sm-4 fsize">{% trans %}Received At {% endtrans %} :</label>
-		     <label class="col-sm-8 nopadding fsize" id="drcrnote_state" aria-describedby="statefordrcrnote"></label>
+		     <label class="col-sm-8 nopadding fsize" id="drcrnote_state_pur" aria-describedby="statefordrcrnote"></label>
 		   </div>
 
 		   <div class="form-group form-inline">
 		     <label class="col-sm-4 fsize" aria-describedby="statecodefordrcrnote">{% trans %}State Code{% endtrans %} :</label>
-		     <label class="col-sm-8 nopadding fsize" id="statecodefordrcrnote"></label>
+		     <label class="col-sm-8 nopadding fsize" id="statecodefordrcrnote_pur"></label>
 		   </div>
 		   <div class="form-group form-inline">
 		     <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		     <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_name"></label>
+		     <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_name_pur"></label>
 		   </div>
 		   <div class="form-inline form-group">
 		     <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		     <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_designation"></label>
+		     <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_designation_pur"></label>
 		   </div>
 		 </div>
+		 {#<***>#}
 		 <div class="col-md-4 borderdiv">
 		   <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
 		   <div class="form-group form-inline">
 		     <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Supplier{% endtrans %} : </label>
-		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsupp"></label>
+		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsupp_pur"></label>
 		   </div>
 		   <div class="form-group form-inline">
 		     <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Supplier State{% endtrans %}:</label>
-		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsuppstate"></label>
+		     <label class="col-sm-8 nopadding fsize" id="drcrnote_custsuppstate_pur"></label>
 		   </div>
 		   <div class="form-group form-inline">
 		     <label aria-describedby="statecodeofcustsupp" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-		     <label id="statecodeofcustsupp" class="col-sm-8 nopadding"></label>
+		     <label id="statecodeofcustsupp_pur" class="col-sm-8 nopadding"></label>
 		   </div>
 		   <div class="form-group form-inline tinfield" hidden>
 		     <label aria-describedby="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-		     <label type="text" id="tin" class="col-sm-8 nopadding"></label>
+		     <label type="text" id="tin_pur" class="col-sm-8 nopadding"></label>
 		   </div>
 		   <div class="form-group form-inline gstinfield">
 		     <label aria-describedby="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-		     <label type="text" id="gstin" class="col-sm-8 nopadding" name="gstin" ></label>
+		     <label type="text" id="gstin1_pur" class="col-sm-8 nopadding" name="gstin" ></label>
 		   </div>
 		   <div class="form-group form-inline">
 		     <label class="col-sm-4 fsize" for="drcrnote_custsuppaddr">{% trans %}Supplier Address{% endtrans %}: </label>
-		     <label class="col-sm-8 nopadding" id="drcrnote_custsuppaddr" ></label>
+		     <label class="col-sm-8 nopadding" id="drcrnote_custsuppaddr_pur" ></label>
 		   </div>
 		 </div>
 	       </div>
 	       </div>
+
 	       <!-- sale/purchase end -->
 	     <a id="taxapplicablescroll"></a>
 	     <div class="col-md-12">

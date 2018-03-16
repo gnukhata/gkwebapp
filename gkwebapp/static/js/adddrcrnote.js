@@ -748,12 +748,12 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-		    console.log(resp);
+		    console.log("this is from purchase",resp.invoicedata);
 		    //Load invoice data
-		    $("#drcrnote_custsupp").text(resp.invoicedata.custSupDetails["custname"]);
-		    $("#gstin").text(resp.invoicedata.custSupDetails["custgstin"]);
-		    $("#tin").text(resp.invoicedata.custSupDetails["custtin"]);
-		    $("#drcrnote_custsuppaddr").text(resp.invoicedata.custSupDetails["custaddr"]);
+		    $("#drcrnote_custsupp_pur").text(resp.invoicedata.custSupDetails["custname"]);
+		    $("#gstin1_pur").text(resp.invoicedata.custSupDetails["custgstin"]);
+		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
+		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
 		    /*
 		    if (resp.invoicedata.taxname=="VAT"){
 			 $("#taxapplicabletext").text(resp.invoicedata.taxname);
@@ -764,21 +764,18 @@ $(document).ready(function() {
 		    */
 		    if(resp.invoicedata.inoutflag == "15") {
 			console.log(resp.invoicedata.sourcestate);
-			$("#drcrnote_state").text(resp.invoicedata.sourcestate);
-			$("#statecodefordrcrnote").text(resp.invoicedata.sourcestatecode);
-			$("#drcrnote_custsuppstate").text(resp.invoicedata.custSupDetails["custsupstate"]);
-			$("#statecodeofcustsupp").text(resp.invoicedata.custSupDetails["custsupstatecode"]);
-			$("#drcrnote_issuer_name").text(resp.invoicedata.issuername);
-			$("#drcrnote_issuer_designation").text(resp.invoicedata.designation);
+			$("#drcrnote_state_pur").text(resp.invoicedata.sourcestate);
+			$("#statecodefordrcrnote_pur").text(resp.invoicedata.sourcestatecode);
+			$("#drcrnote_custsuppstate_pur").text(resp.invoicedata.custSupDetails["custsupstate"]);
+			$("#statecodeofcustsupp_pur").text(resp.invoicedata.custSupDetails["custsupstatecode"]);
+			$("#drcrnote_issuer_name_pur").text(resp.invoicedata.issuername);
+			$("#drcrnote_issuer_designation_pur").text(resp.invoicedata.designation);
 
 		    } else {
-			console.log("purchase");
-			$("#drcrnote_state").text(resp.invoicedata.destinationstate);
-			$("#statecodefordrcrnote").text(resp.invoicedata.taxstatecode);
-			$("#drcrnote_custsuppstate").text(resp.invoicedata.sourcestate);
-			$("#statecodeofcustsupp").text(resp.invoicedata.sourcestatecode);
-			$("#drcrnote_issuer_name").text("vasu");
-			$("#drcrnote_issuer_designation").text("kadge");
+			$("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
+			$("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
+			$("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
+			$("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
 			
 			$.ajax({
 			    url: '/showuser?action=getuser',
@@ -791,8 +788,8 @@ $(document).ready(function() {
 			})
 			    .done(function(resp){
 				console.log(resp.unamerole["username"]);
-				$("#drcrnote_issuer_name").text(resp.unamerole["username"]);
-				$("#drcrnote_issuer_designation").text(resp.unamerole["userroleName"]);
+				$("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
+				$("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
 	
 			    });
 				
@@ -1251,7 +1248,12 @@ if (!curdate.between(financialstart, financialend)) {
 
 //send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
       var form_data = new FormData();
+      if($("#sale").is(":checked"))  {
       form_data.append("invid", $("#drcrnote_invoice option:selected").val());
+      }else{
+	   form_data.append("invid", $("#drcrnote_invoice1 option:selected").val());
+      }
+	  
       form_data.append("drcrno", $("#drcrnote_no").val());
       form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
       form_data.append("contents", JSON.stringify(contents));
