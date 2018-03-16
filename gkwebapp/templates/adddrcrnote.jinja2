@@ -42,16 +42,21 @@
 
        {% trans %}Drcr note cannot be prior to Invoice Date!{% endtrans %}
      </div>
-     
-     
-
-     
      <div class="panel drcr_panel shadow">
        <div class="panel-body">
 	 <div class="container-fluid row">
 	   <form class="form-horizontal" >
-	     //
-	     <div class="col-md-12">
+	     <div class="form-inline col-sm-12"> 
+		 <label for="inv">{% trans %}Select Invoice Type{% endtrans %}:</label>
+		 <div class="radio">
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="sale" aria-label="" checked>&nbsp{% trans %}Sale Invoice{% endtrans %}.</label>
+        	 </div>
+		 <div class="radio">
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="purchase" aria-label="">&nbsp {% trans %}Purchase Invoice{% endtrans %}.</label>
+        	 </div>
+	       </div>
+	     
+	       <div class="col-md-12">
 	       <div class="col-md-4">
 		 {% if drcrflag == "3" %}
 		   <h4>{% trans %}Details of Credit Note: {% endtrans %}</h4>
@@ -60,16 +65,20 @@
 		 {% endif %}
 		 <div class="form-group form-inline" id="invoicerow">
 		   <label class="col-sm-4 fsize" for="drcrnote_invoice">{% trans %}Invoice No.{% endtrans %} :</label>
+		   <!-- sale invoice select -->
 		   <select class="form-control input-sm col-sm-8"  id="drcrnote_invoice">
                      <option value="" invoiceno = "" selected>Select Invoice</option>
-                     {% for invoice in invoices %}
-                       {% if drcrflag=="3" %}
-			 <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
-		       {% else %}
-			 <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
-                       {% endif %}
+                     {% for invoice in invoicesS %}
+                       <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
+		     {% endfor %}
+		   </select>
+		   <!-- purchase invoice -->
+		   <select class="form-control input-sm col-sm-8"  id="drcrnote_invoice1">
+                     <option value="" invoiceno = "" selected>Select Invoice</option>
+                     {% for invoice in invoicesP %}
+		       <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
                      {% endfor %}
-                   </select>
+		   </select>
 		 </div>
 		 <div class="form-group form-inline">
 		   {% if drcrflag == "3" %}

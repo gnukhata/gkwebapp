@@ -17,12 +17,14 @@ def showdrcrnote(request):
 def showadddrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
     if request.params["drcrflag"]=='3':
-        invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
+        invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
+        invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
     else:
-        invoices = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
+        invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
+        invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
     #it gives tax type VAT or GST on the basis of financialEnd Year of organisation    
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"drcrflag": request.params["drcrflag"],"invoices":invoices.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
+    return {"drcrflag": request.params["drcrflag"],"invoicesS":invoicesS.json()["gkresult"],"invoicesP":invoicesP.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
 '''  this is for storing drcrnote details '''
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
