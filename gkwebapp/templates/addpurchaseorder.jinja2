@@ -728,12 +728,7 @@
 	  </div>
           <button class="btn btn-success btn-sm" id="purchaseorder_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
           <button id="purchaseorder_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
-          {% if gkstatus=="out" %}
-	    <!-- <button id="purchaseorder_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
-	    <button id="purchaseorder_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Customer{% endtrans %}</button>
-          {% else %}
 	    <button id="purchaseorder_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Supplier{% endtrans %}</button>
-          {% endif %}
 	  <label class="btn btn-primary btn-sm" for="my-file-selector">
 	    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 	    <i class="fa fa-paperclip" aria-hidden="true"></i>
