@@ -125,7 +125,7 @@ var userrole1;
       $("#transaction").click();
       event.preventDefault();
     }
-    if(event.ctrlKey && event.keyCode == 85) {
+    if(event.ctrlKey && event.keyCode == 67) {
       $("#business").click();
       event.preventDefault();
     }

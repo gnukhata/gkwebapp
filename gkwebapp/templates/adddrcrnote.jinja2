@@ -271,7 +271,11 @@
 		     <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		     <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		     <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-		     <th class="smvwrap text-center">{% trans %}Reduce Rate{% endtrans %}</th>
+		     {% if drcrflag == "3" %}
+		       <th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
+		     {% else %}
+		       <th class="smvwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+		     {% endif %}
 		     <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		     <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		     <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
@@ -364,7 +368,12 @@
 			     <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
 			     <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			     <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-			     <th rowspan="2" class="smwrap text-center">{% trans %}Reduce Rate{% endtrans %}</th>
+			     {% if drcrflag == "3" %}
+			       <th rowspan="2" class="smwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
+			     {% else %}
+			       <th rowspan="2" class="smwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+			     {% endif %}
+			     
 			     <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			     <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			     <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>

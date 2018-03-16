@@ -337,7 +337,6 @@ $(document).ready(function() {
 	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	
 	var reductprice=rowqty*rowreductrate;
 	var newtaxableamnt=rowtaxableamount-reductprice;
 	var rowtotal = 0.00;
@@ -534,9 +533,12 @@ $(document).ready(function() {
 			    });
 			    return false;
 			}
-			calculatevataxamt(curindex);
+			if($("#status").val()==3)
+			{
+			    calculatevataxamt(curindex);
+			}
 		    });
-
+		    
 		    // Change event for product price(i.e.Rate) in GST
 		    $(document).off('change', '.drcrnote_product_rate_gst').on('change', '.drcrnote_product_rate_gst', function(event) {
 			event.preventDefault();
