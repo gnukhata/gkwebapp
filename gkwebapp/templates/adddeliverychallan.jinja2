@@ -116,23 +116,23 @@
                       <input type="text" class="form-control input-sm delchaldate" size="1" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v" value = "{{lastdelchaldata['dcdate'][3:5]}}">
                       <input type="text" class="form-control input-sm delchaldate" size="5" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
                     </div>
-		    <div class="form-group form-inline col-sm-4">
-		      {%if numberofgodowns > 0 %}
-			  <label class="col-sm-5 fsize" for="deliverychallan_godown">
+		    {%if numberofgodowns > 0 %}
+		      <div class="form-group form-inline col-sm-4">
+			<label class="col-sm-5 fsize" for="deliverychallan_godown">
 			    {% if gkstatus=="in" %}
 			      {% trans %}Received At{% endtrans %} :
 			    {% else %}
 			      {% trans %}Dispatch From{% endtrans %} :
 			    {% endif %}
-			  </label>
-			  <select class="form-control input-sm col-sm-7" id="deliverychallan_godown">
+			</label>
+			<select class="form-control input-sm col-sm-7" id="deliverychallan_godown">
 			    {% for godown in godowns %}
 			      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
 			    {% endfor %}
-			  </select>		  
-		      {% endif %}
-		    </div>
-		    <div class="form-group form-inline col-sm-4">
+			</select>		  
+		      </div>
+		    {% endif %}
+		    <div class="form-group form-inline col-sm-5">
 		      {%if numberofgodowns > 0 %}
 			<div class="col-sm-12 form-group form-inline">
 			  <label class="col-sm-6 fsize" for="deliverychallan_consignment">Type of transaction:</label>
@@ -150,7 +150,7 @@
 			  </select>
 			</div>
 		      {% else %}
-			<div class="col-sm-4 form-group form-inline">
+			<div class="col-sm-12 form-group form-inline">
 			  <label class="col-sm-6 fsize" for="deliverychallan_consignment">Type of transaction:</label>
 			  <select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
 			    <option value="1">{% trans %}Approval{% endtrans %}</option>
@@ -166,8 +166,6 @@
 			  </select>
 			</div>
 		      {%endif%}
-		    </div>
-		    <div class="form-inline form-group col-sm-1" >
 		    </div>
 		  </div>
 		</div>
@@ -630,7 +628,6 @@
 		</div>
 		
 		<div class="row col-sm-12">
-		  <div class="col-sm-12">
 		    <div class="alert alert-danger" id="supply-date-alert" aria-live="rude" role="alert" hidden>
 
 		      {% trans %}Date of Supply cannot be before Invoice Date!{% endtrans %}
@@ -643,7 +640,6 @@
 
 		      <label >{% trans %}Please enter date in proper format!{% endtrans %}</label>
 		    </div>
-		  </div>
 		  <div class="form-group form-inline">
 		    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
 		    <div class="form-group col-sm-7">

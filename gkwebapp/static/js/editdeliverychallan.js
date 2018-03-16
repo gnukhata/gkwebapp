@@ -67,7 +67,7 @@ $(document).ready(function() {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
-    .done(function(resp) {
+	.done(function(resp) {
 	console.log("success");
 	$(".panel-footer").hide();
 	if(resp.delchaldata.delchalContents){
@@ -123,7 +123,7 @@ $(document).ready(function() {
 	var typeoftrans = dict[resp.delchaldata.delchaldata.dcflag];
  	
 	if (resp.delchaldata.delchaldata.taxflag == '7'){
-	    if(resp.delchaldata.delchaldata.consignee.consigneename != ""){
+	    if(resp.delchaldata.delchaldata.consignee){
 		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
@@ -190,16 +190,16 @@ $(document).ready(function() {
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
 	//Sourcestate and Destinationstate.
-	if (inoutflag == 15) {
+	    if (inoutflag == 15) {
 	    $("#invoicestate").text(resp.delchaldata.sourcestate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.sourcestatecode);
 	    $(".invoice_issuer").show();
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
 	    $("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
 	}
-	else {
-	    $("#invoicestate").text(resp.delchaldata.delchaldata.destinationstate);
-	    $("#statecodeforinvoice").text(resp.delchaldata.delchaldata.taxstatecode);
+	    else {
+	    $("#invoicestate").text(resp.delchaldata.destinationstate);
+	    $("#statecodeforinvoice").text(resp.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);

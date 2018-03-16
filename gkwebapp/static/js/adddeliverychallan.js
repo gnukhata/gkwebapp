@@ -461,7 +461,11 @@ $(document).ready(function() {
     //Keydown For 'State'.
     $("#invoicestate").keydown(function(event) {
 	if (event.which == 13) {
-	    $("#deliverychallan_godown").focus().select();
+	    if ($("#deliverychallan_godown").is(":visible")) {
+		$("#deliverychallan_godown").focus().select();
+	    }else{
+		$("#deliverychallan_consignment").focus();
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($("#invoicestate option:visible").first().is(":selected")) {
@@ -487,8 +491,12 @@ $(document).ready(function() {
 	$('#deliverychallan_customer').focus().select();
     }
     if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
-      event.preventDefault();
-      $("#deliverychallan_godown").focus().select();
+	event.preventDefault();
+	if ($("#deliverychallan_godown").is(":visible")) {
+		$("#deliverychallan_godown").focus().select();
+	    }else{
+		$("#invoicestate").focus();
+	    }
     }
   });
 
@@ -2510,6 +2518,37 @@ else {
 	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
 	}
 
+	var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+	if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
+	    $("#supplydate-alert").alert();
+	    $("#supplydate-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#supplydate-alert").hide();
+	    });
+	    $('#supply_date').focus().select();
+	    return false;
+	}
+	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
+	if (supplydate) {
+	    if (!supplydate.between(financialstart, financialend)) {
+		$("#supbetween-date-alert").alert();
+		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#supbetween-date-alert").hide();
+		});
+		$('#supply_date').focus().select();
+		return false;
+	    }
+	    if (invoicedate) {
+		if (supplydate < invoicedate) {
+		    $("#supply-date-alert").alert();
+		    $("#supply-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#supply-date-alert").hide();
+		    });
+		    $('#supply_date').focus().select();
+		    return false;
+		}
+	    }
+	}
+
     var tax = {};
     var cess = {};
     var contents = {};
@@ -2945,6 +2984,37 @@ else {
 	    return false;
 	} else {
 	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
+	}
+		var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+	if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
+	    $("#supplydate-alert").alert();
+	    $("#supplydate-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#supplydate-alert").hide();
+	    });
+	    $('#supply_date').focus().select();
+	    return false;
+	}
+	
+	var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
+	if (supplydate) {
+	    if (!supplydate.between(financialstart, financialend)) {
+		$("#supbetween-date-alert").alert();
+		$("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#supbetween-date-alert").hide();
+		});
+		$('#supply_date').focus().select();
+		return false;
+	    }
+	    if (invoicedate) {
+		if (supplydate < invoicedate) {
+		    $("#supply-date-alert").alert();
+		    $("#supply-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#supply-date-alert").hide();
+		    });
+		    $('#supply_date').focus().select();
+		    return false;
+		}
+	    }
 	}
 
 	var tax = {};
