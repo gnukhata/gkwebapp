@@ -1,23 +1,23 @@
 /*
-   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
-   This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-   GNUKhata is Free Software; you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as
-   published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
 
-   GNUKhata is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Affero General Public License for more details.
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
 
-   You should have received a copy of the GNU Affero General Public
-   License along with GNUKhata (COPYING); if not, write to the
-   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc.,51 Franklin Street, 
+  Fifth Floor, Boston, MA 02110, United States
 
 
    Contributors:
@@ -30,7 +30,7 @@
    "Parabjyot Singh" <parabjyot1996@gmail.com>
    "Rahul Chaurasiya" <crahul4133@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
-   "prajkta Patkar" <prajakta@dff.org.in>
+   "prajkta Patkar" <prajkta@riseup.net>
    "Reshma Bhatawadekar" <reshma@dff.org.in>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
@@ -667,7 +667,7 @@ var userrole1;
 	// get binary data as a response
 	var blob = this.response;
 	var url = window.URL.createObjectURL(blob);
-	window.location.assign(url)
+	  window.location.assign(url);
       }
     };
     xhr.send();
@@ -1004,11 +1004,15 @@ var userrole1;
     }
   );
 
-  $('#consolidatedbalancesheet').click(function (e) {
+
+$('#listofaccounts').click(function (e) {
+    // calls list of accounts report.
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
+
         type: "POST",
-        url: "/showconsolidationpopup",
+        url: "/showlistofaccounts",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1019,7 +1023,27 @@ var userrole1;
         success: function(resp)
         {
           $("#info").html(resp);
-          //$("#holdingorg").modal("show");
+        }
+      }
+    );
+  });
+
+   
+  $('#gstsummary').click(function (e) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/gstsummary",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
         }
       });
   });

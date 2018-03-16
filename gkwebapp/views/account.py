@@ -17,8 +17,8 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
   You should have received a copy of the GNU Affero General Public
   License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+  Free Software Foundation, Inc.,51 Franklin Street, Fifth Floor, 
+  Boston, MA 02110, United States
 
 
 Contributors:
@@ -27,6 +27,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+'Prajkta Patkar' <prajkta@riseup.net>
 """
 
 from pyramid.view import view_config

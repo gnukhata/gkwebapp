@@ -1,22 +1,23 @@
-
 """
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
-GNUKhata is Free Software; you can redistribute it and/otyper modify
-it under the terms of the GNU Affero General Public License as
-published by the Free Software Foundation; either version 3 of
-the License, or (at your option) any later version.and old.stockflag = 's'
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-GNUKhata is distributed in the hope that it will be useful, but
-WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU Affero General Public License for more details.
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
 
-You should have received a copy of the GNU Affero General Public
-License along with GNUKhata (COPYING); if not, write to the
-Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc.,51 Franklin Street, 
+  Fifth Floor, Boston, MA 02110, United States
 
 
 Contributors:
@@ -28,6 +29,7 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 "Sachin Patil" <sachpatil@openmailbox.org>
+'Prajkta Patkar'<prajkta@riseup.net>
 """
 
 from pyramid.config import Configurator
@@ -171,6 +173,7 @@ def main(global_config, **settings):
     config.add_route('showconsolidationpopup','/showconsolidationpopup')
     config.add_route('rejectionnote','/rejectionnote')
     config.add_route('billwise','/billwise')
+    config.add_route('gstsummary','/gstsummary')
 
     config.scan('gkwebapp')
     return config.make_wsgi_app()

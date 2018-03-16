@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Register{% endtrans %}</title>
+    <style type="text/css">
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     #rptt td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+
+     #rptt th {
+	 font-size: 85%;
+     }
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 20%;
+	 text-align: left !important;
+     }
+     #rptt tbody {
+	 display:block;
+	 width: 100%;
+	 height: calc(100vh - 17em);
+	 overflow-y:scroll;
+	 overflow-y:scroll;
+
+     }
+     #rptt thead,#rptt tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     #rptt thead {
+	 width: calc( 99%)
+     }
+     .rpttcess{
+	 overflow-y:scroll;
+	 overflow-x:scroll;
+	 max-height:100%;
+     }
+     .ralign{
+	 text-align:right;
+     }
+     .lalign{
+	 text-align:left;
+
+     }
+     .cred{
+	 color:red;
+     }
+     .calign{
+	 text-align:center;
+     }
+     .dtwrap{
+	 width :80%;
+     }
+     .smwrap{
+	 width:15%
+     }
+     .lngwrap{
+	 width:100%;
+     }
+     .mdwrap{
+	 width:30%
+     }
+
+
+    </style>
+  </head>
+  <body>
+    <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}Statement of GST Calculation {% endtrans %}</strong></span>
+    <div class ="container">
+      
+      <p>
+	<span class="pull-left" style="padding-left:150px;"><i>{% trans %}State{% endtrans %}</i> :<strong> {{reportheader["state"]}}</strong></span>
+	<span class="pull-right" style="padding-right:100px;"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{reportheader["startDate"]}}</strong> {% trans %}to{% endtrans %} <strong>{{reportheader["enddate"]}}</strong></span>
+      </p>
+
+    </div>
+    <div class="rpttcess">
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <table id="rptt" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+
+	<thead class="bg-primary">
+          <tr>
+	    <th scope="col" class="mdwrap calign" rowspan="2" >{% trans %}Type of Tax{% endtrans %}</th>
+            <th scope ="col " class="mdwrap calign" colspan="2" rowspan="2">{% trans %}Tax Amount{% endtrans %}</th>
+            <th scope="col" class="mdwrap calign" colspan="2" >{% trans %}Net Tax Amount{% endtrans %}</th>
+	  </tr>
+	  <tr>
+	    <th class="smwrap calign">{% trans %}Payable{% endtrans %}
+	      <th class="smwrap calign" >{% trans %}Carried Forward{% endtrans %}
+	  </tr>
+	</thead>
+	<tbody>
+	  
+	  {%  if gstData["lenSGSTin"] > 0 %}
+	    <tr>
+	      <td scope ="row" class="mdwrap">SGST</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	      
+	    </tr>
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      
+	      {% for sgstinacc in gstData["sgstin"] %}
+		
+		<td  scope ="row" class="mdwrap calign">{{sgstinacc}}</td>
+		<td class="smwrap ralign">{{gstData["sgstin"][sgstinacc]}}</td>
+		
+		{% if gstData["lenSGSTin"] == loop.index %}
+		  
+		  <td class="smwrap ralign" >{{gstData["totalSGSTIn"]}}</td>
+		  <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+	  
+	  {%  if gstData["lenSGSTout"] > 0 %}
+	    
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Output Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      {% for sgstoutacc in gstData["sgstout"] %}
+		<td  scope ="row" class="mdwrap calign">{{sgstoutacc}}</td>
+		<td class="smwrap ralign">{{gstData["sgstout"][sgstoutacc]}}</td>
+		{% if gstData["lenSGSTout"] == loop.index %}
+		  <td class="smwrap ralign" >{{gstData["totalSGSTOut"]}}</td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+		{% if ('sgstpayable'in gstData) and (  gstData["lenSGSTout"] == loop.index)  %}
+		  <td class ="smwrap ralign">{{gstData["sgstpayable"]}} </td>
+		  <td class ="smwrap"> </td>
+		{% endif %}
+		{% if ('sgstcrdfwd'in gstData) and (  gstData["lenSGSTout"] == loop.index)%}
+		  <td class ="smwrap"> </td>
+		  <td class ="smwrap ralign">{{gstData["sgstcrdfwd"]}}</td>
+		  
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+
+	  {%  if gstData["lenCGSTin"] > 0 %}
+	    <tr>
+	      <td scope ="row" class="mdwrap">CGST</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	      
+	    </tr>
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      
+	      {% for cgstinacc in gstData["cgstin"] %}
+		
+		<td  scope ="row" class="mdwrap calign">{{cgstinacc}}</td>
+		<td class="smwrap ralign">{{gstData["cgstin"][cgstinacc]}}</td>
+		
+		{% if gstData["lenCGSTin"] == loop.index %}
+		  
+		  <td class="smwrap ralign" >{{gstData["totalCGSTIn"]}}</td>
+		  <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+	  
+	  {%  if gstData["lenCGSTout"] > 0 %}
+	    
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Output Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      {% for cgstoutacc in gstData["cgstout"] %}
+		<td  scope ="row" class="mdwrap calign">{{cgstoutacc}}</td>
+		<td class="smwrap ralign">{{gstData["cgstout"][cgstoutacc]}}</td>
+		{% if gstData["lenCGSTout"] == loop.index %}
+		  <td class="smwrap ralign" >{{gstData["totalCGSTOut"]}}</td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+		{% if ('cgstpayable'in gstData) and (  gstData["lenCGSTout"] == loop.index)  %}
+		  <td class ="smwrap ralign">{{gstData["cgstpayable"]}} </td>
+		  <td class ="smwrap"> </td>
+		{% endif %}
+		{% if ('cgstcrdfwd'in gstData) and (  gstData["lenCGSTout"] == loop.index)%}
+		  <td class ="smwrap"> </td>
+		  <td class ="smwrap ralign">{{gstData["cgstcrdfwd"]}}</td>
+		  
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+
+	  {%  if gstData["lenIGSTin"] > 0 %}
+	    <tr>
+	      <td scope ="row" class="mdwrap">IGST</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	      
+	    </tr>
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      
+	      {% for igstinacc in gstData["igstin"] %}
+		
+		<td  scope ="row" class="mdwrap calign">{{igstinacc}}</td>
+		<td class="smwrap ralign">{{gstData["igstin"][igstinacc]}}</td>
+		
+		{% if gstData["lenIGSTin"] == loop.index %}
+		  
+		  <td class="smwrap ralign" >{{gstData["totalIGSTIn"]}}</td>
+		  <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+	  
+	  {%  if gstData["lenIGSTout"] > 0 %}
+	    
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Output Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      {% for igstoutacc in gstData["igstout"] %}
+		<td  scope ="row" class="mdwrap calign">{{igstoutacc}}</td>
+		<td class="smwrap ralign">{{gstData["igstout"][igstoutacc]}}</td>
+		{% if gstData["lenIGSTout"] == loop.index %}
+		  <td class="smwrap ralign" >{{gstData["totalIGSTOut"]}}</td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+		{% if ('IgstPayable'in gstData) and (  gstData["lenIGSTout"] == loop.index)  %}
+		  <td class ="smwrap ralign">{{gstData["IgstPayable"]}} </td>
+		  <td class ="smwrap"> </td>
+		{% endif %}
+		{% if ('IgstCrdFwd'in gstData) and (  gstData["lenIGSTout"] == loop.index)%}
+		  <td class ="smwrap"> </td>
+		  <td class ="smwrap ralign">{{gstData["IgstCrdFwd"]}}</td>
+		  
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+
+	  {%  if gstData["lenCESSin"] > 0 %}
+	    <tr>
+	      <td scope ="row" class="mdwrap"><b>CESS</b></td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+	      
+	    </tr>
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Input Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      
+	      {% for cessinacc in gstData["cessin"] %}
+		
+		<td  scope ="row" class="mdwrap calign">{{cessinacc}}</td>
+		<td class="smwrap ralign">{{gstData["cessin"][cessinacc]}}</td>
+		
+		{% if gstData["lenCESSin"] == loop.index %}
+		  
+		  <td class="smwrap ralign" >{{gstData["totalCESSIn"]}}</td>
+		  <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+	  
+	  {%  if gstData["lenCESSout"] > 0 %}
+	    
+	    <tr>
+	      <td scope ="row" class="mdwrap" style ="text-indent :5em;">Output Tax</td>
+	      <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td></tr>
+	    <tr>
+	      {% for cessoutacc in gstData["cessout"] %}
+		<td  scope ="row" class="mdwrap calign">{{cessoutacc}}</td>
+		<td class="smwrap ralign">{{gstData["cessout"][cessoutacc]}}</td>
+		{% if gstData["lenCESSout"] == loop.index %}
+		  <td class="smwrap ralign" >{{gstData["totalCESSOut"]}}</td>
+		{% else %}
+		  <td class ="smwrap"></td> <td class ="smwrap"></td> <td class ="smwrap"></td>
+		{% endif %}
+		{% if ('cesspayable'in gstData) and (  gstData["lenCESSout"] == loop.index)  %}
+		  <td class ="smwrap ralign">{{gstData["cesspayable"]}} </td>
+		  <td class ="smwrap"> </td>
+		{% endif %}
+		{% if ('cessCrdFwd'in gstData) and (  gstData["lenCESSout"] == loop.index)%}
+		  <td class ="smwrap"> </td>
+		  <td class ="smwrap ralign">{{gstData["cessCrdFwd"]}}</td>
+		  
+		{% endif %}
+	    </tr>
+	      {% endfor %}
+	  {% endif %}
+	  
+	  
+	</tbody>
+      </table>
+    </div>
+    <span style="margin:auto; display:table;">
+      <button type="button" class="btn btn-sm btn-danger" id="cfback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button></span>
+    
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/gstsummaryreport.js')}}"></script>
+ 
+  </body>
+</html>
