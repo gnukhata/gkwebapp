@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Debit & Credit Note{% endtrans %}</title>
-<link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
-<body style="padding-right:1%;">
-  Hello pagal
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewdrcrnote.js')}}"></script>
-</body>
-</html>
 <**>
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}View Debit & Credit Note{% endtrans %}</title>
@@ -16,15 +8,31 @@
       <div class="panel-body">
 	<div class="container-fluid row">
 	  <form class="form-horizontal" >
-	    <div class="form-inline col-sm-12"> 
-	      <label for="inv">{% trans %}Select Invoice Type{% endtrans %}:</label>
-	      <div class="radio">
-        	<label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="sale" aria-label="" checked>&nbsp{% trans %}Sale Invoice{% endtrans %}.</label>
-              </div>
-	      <div class="radio">
-        	<label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="purchase" aria-label="">&nbsp {% trans %}Purchase Invoice{% endtrans %}.</label>
-              </div>
-	    </div>
+	    //
+	    <!-- 
+		 <div class="form-group col-sm-6" id="nocrdr">
+		 <label class="text-danger">{% trans %}No Credit Note Found!{% endtrans %}</label>
+		 </div> -->
+	    <div class="form-group col-md-6" id="creditnotediv">
+		<label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
+		<select class="form-control input-sm" id="sel_creditnote" accesskey="">
+		  <option value="" disabled hidden selected>{% trans %}Select Credit Note{% endtrans %}</option>
+		  {% for drcr in drcrdata %}
+		    <option value="{{drcr['dcid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
+		  {% endfor %}
+		</select>
+            </div>
+	    <div class="form-group col-md-6" id="debitnotediv" hidden>
+		<label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
+		<select class="form-control input-sm" id="sel_debitnote" accesskey="">
+		  <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
+		  {% for drcr in drcrdata %}
+		    <option value="{{drcr['dcid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
+		  {% endfor %}
+		</select>
+            </div>
+	    	   
+	   //
 	    
 	    <div class="col-md-12">
 	      <div class="col-md-4">
@@ -42,6 +50,7 @@
                       <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
 		    {% endfor %}
 		  </select>
+		  <label class="col-sm-8 nopadding fsize" id="drcrnote_invoice" aria-describedby="drcrnote_invoice"></label>
 		  <!-- purchase invoice -->
 		  <select class="form-control input-sm col-sm-8"  id="drcrnote_invoice1">
                     <option value="" invoiceno = "" selected>Select Invoice</option>
@@ -448,31 +457,17 @@
 		</div>
 	      {% endif %}
 	    </div>
-
-	    <!-- 2 div for remark and  -->
-	    <div class="col-sm-6" style="margin-top:0.7cm;"> for remark</div>
-	    <div class="col-sm-6 borderdiv" style="margin-top:0.7cm;">
-	      <div class="col-sm-6">
-		
-		
-		
-	      </div>
-	      <div class="col-sm-6"></div>
 	    </div>
+	</form>
 	</div><!--End .container-fluid -->
 
-
-
-	//footer buttons
-
-	<div class="panel-footer ">
+	<div class="panel-footer " hidden>
 	  <div class="container-fluid">
 	    <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
 
 	      {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	    </div>
-            <button class="btn btn-success btn-sm" id="drcrnote_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-            <button id="drcrnote_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+            <button id="drcrnote_print" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Print{% endtrans %}</button>
             <label class="btn btn-primary btn-sm" for="my-file-selector">
 	      <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 	      <i class="fa fa-paperclip" aria-hidden="true"></i>
@@ -480,25 +475,6 @@
 	    </label>
 	    <span class='label label-info' id="upload-file-info"></span>
 	    <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
-	  </div>
-	</div>
-      </div>
-      <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-	<div class="vertical-alignment-helper">
-	  <div class="modal-dialog modal-sm vertical-align-center">
-            <div class="modal-content">
-              <div class="modal-header">
-
-		<h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-              </div>
-              <div class="modal-body">
-		<p>{% trans %}Are you sure?{% endtrans %}</p>
-              </div>
-              <div class="modal-footer">
-		<button type="button" id ="dc_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-		<button type="button" id="dc_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-              </div>
-	    </div>
 	  </div>
 	</div>
       </div>

@@ -16,12 +16,8 @@ def showdrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=add",renderer="gkwebapp:templates/adddrcrnote.jinja2")
 def showadddrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    if request.params["drcrflag"]=='3':
-        invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
-        invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
-    else:
-        invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
-        invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
+    invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
+    invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
     #it gives tax type VAT or GST on the basis of financialEnd Year of organisation    
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"drcrflag": request.params["drcrflag"],"invoicesS":invoicesS.json()["gkresult"],"invoicesP":invoicesP.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
@@ -62,14 +58,13 @@ def savedrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=showdrcrnote",renderer="gkwebapp:templates/viewdrcrnote.jinja2")
 def showsingledrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    print request.params["drcrflag"]
+    gkflag = request.params["drcrflag"]
     if request.params["drcrflag"] =='3':
          drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
          print drcrdata.json()["gkresult"]
-    if request.params["drcrflag"] == 4:
+    if request.params["drcrflag"] == '4':
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-        print drcrdata1
-    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"]}
+    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"gkflag":gkflag}
 
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetails",renderer="json")
 def getDrCrDetails(request):
