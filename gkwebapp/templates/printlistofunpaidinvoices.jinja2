@@ -47,7 +47,7 @@
     <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
     <div class="hidden-print">
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>{% trans %}List of Outstanding{% endtrans %} {% if inoutflag|int == 9 %}{% trans %}Purchase{% endtrans %}{% else %}{% trans %}Sale{% endtrans %}{% endif %} {% trans %}Invoices{% endtrans %}</strong></span>
+      <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
     </div>
 
     <div class="table-responsive printorgdetails">

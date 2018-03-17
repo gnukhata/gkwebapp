@@ -158,7 +158,7 @@ This function returns a printable view of list of unpaid invoices report.
 def printListofUnpaidInvoices(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&inoutflag=%d&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "inoutflag":int(request.params["inoutflag"]), "orderflag": request.params["orderflag"], "typeflag": request.params["typeflag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "type": result.json()["type"], "order": result.json()["order"], "inout": result.json()["inout"], "inoutflag":int(request.params["inoutflag"]), "orderflag": request.params["orderflag"], "typeflag": request.params["typeflag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
 
 '''
 This function returns a spreadsheet form of List of Unpaid Invoices Report.
