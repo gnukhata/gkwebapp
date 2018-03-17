@@ -62,9 +62,12 @@ def showsingledrcrnote(request):
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
     return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"status":request.params["drcrflag"]}
 
-@view_config(route_name="drcrnote",request_param="action=getdrcrnotedetails",renderer="json")
+@view_config(route_name="drcrnote",request_param="action=getdrcrnotedetail", renderer="gkwebapp:templates/viewsingledrcrnote.jinja2")
 def getDrCrDetails(request):
     header={"gktoken":request.headers["gktoken"]}
+    print "Hello pravinx"
     drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
-    print drcrnotedata.json()["gkresult"]
-    return {"gkstatus": drcrnotedata.json()["gkstatus"],"drcrnotedata": drcrnotedata.json()["gkresult"]}
+    print drcrnotedata.json()["gkstatus"]
+    if drcrnotedata.json()["gkstatus"] == 0:
+        return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrdata.json()["gkresult"]}
+    

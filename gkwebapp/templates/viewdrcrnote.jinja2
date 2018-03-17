@@ -15,7 +15,7 @@
 		    <select class="form-control input-sm" id="sel_creditnote" accesskey="">
 		      <option value="" disabled hidden selected>{% trans %}Select Credit Note{% endtrans %}</option>
 		      {% for drcr in drcrdata %}
-			<option value="{{drcr['dcid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
+			<option value="{{drcr['drcrid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
 		      {% endfor %}
 		    </select>
 		  </div>
@@ -26,439 +26,45 @@
 		{% endif %}
 	      {% else %}
 		{% if drcrdata %}
-		<div class="form-group col-md-6" id="debitnotediv">
-		  <label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
-		  <select class="form-control input-sm" id="sel_debitnote" accesskey="">
-		    <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
-		    {% for drcr in drcrdata %}
-		      <option value="{{drcr['dcid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
-		    {% endfor %}
-		  </select>
-		</div>
+		  <div class="form-group col-md-6" id="debitnotediv">
+		    <label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
+		    <select class="form-control input-sm" id="sel_debitnote" accesskey="">
+		      <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
+		      {% for drcr in drcrdata %}
+			<option value="{{drcr['drcrid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
+		      {% endfor %}
+		    </select>
+		  </div>
 		{% else %}
-		<div class="form-group col-md-6" id="nocrdr">
-		  <label class="text-danger">{% trans %}No dedit Note Found!{% endtrans %}</label>
-		</div>
+		  <div class="form-group col-md-6" id="nocrdr">
+		    <label class="text-danger">{% trans %}No dedit Note Found!{% endtrans %}</label>
+		  </div>
 		{% endif %}
 	      {% endif %}
-	    </div>	    
-	    <div class="col-md-12">
-	      <div class="col-md-4">
-		{% if drcrflag == "3" %}
-		  <h4>{% trans %}Details of Credit Note: {% endtrans %}</h4>
-		{% else %}
-		  <h4>{% trans %}Details of Debit Note: {% endtrans %}</h4>
-		{% endif %}
-		<div class="form-group form-inline" id="invoicerow">
-		  <label class="col-sm-4 fsize" for="drcrnote_invoice">{% trans %}Invoice No.{% endtrans %} :</label>
-		  {{}}
-		</div>
-		<div class="form-group form-inline">
-		  {% if drcrflag == "3" %}
-		    <label class="col-sm-4 fsize" for="crnote_no">{% trans %}Cr Note No.{% endtrans %} :</label>
-		  {% else %}
-		    <label class="col-sm-4 fsize" for="drnote_no">{% trans %}Dr Note No.{% endtrans %} :</label>
-		  {% endif %}
-		  {{}}
-		</div>
-		<div class="form-group form-inline">
-		  {% if drcrflag == "3" %}
-		    <label for="crnote_date" class="col-sm-4 fsize">{% trans %}Cr Note Date{% endtrans %} :</label>
-		  {% else %}
-		    <label for="drnote_date" class="col-sm-4 fsize">{% trans %}Dr Note Date{% endtrans %} :</label>
-		  {% endif %}
-		  {{}}
-                </div>
-		<div class="form-group form-inline">
-		  <div class="col-sm-6">
-
-		    <input type="checkbox" id="reference" >
-		    <label for="ref">{%trans%}Reference (If Received){%endtrans%}</label>
-		    
-		  </div>
-		</div>
-		<div class="form-group form-inline ref " hidden >
-		  {% if drcrflag == "3" %}
-		    <label class="col-sm-4 fsize" for="crnote_no" >{% trans %}Dr Note No.{% endtrans %} :</label>
-		  {% else %}
-		    <label class="col-sm-4 fsize" for="drnote_no" >{% trans %}Cr Note No.{% endtrans %} :</label>
-		  {% endif %}
-		  <input class="form-control input-sm col-sm-8" size="15" id="drcrnote_no_ref"  >
-		</div>
-		
-		<div class="form-group form-inline ref " hidden>
-		  {% if drcrflag == "3" %}
-		    <label for="crnote_date" class="col-sm-4 fsize" >{% trans %}Dr Note Date{% endtrans %} :</label>
-		  {% else %}
-		    <label for="drnote_date" class="col-sm-4 fsize" >{% trans %}Cr Note Date{% endtrans %} :</label>
-		  {% endif %}
-		  {{}}
-		</div>
-              </div>
-	      <!-- on the basis of sale and purchase start -->
-	      <div class="salediv" >
-		<div class="col-md-4 borderdiv ">
-		  <h4>{% trans %}Details of Sale Invoice{% endtrans %} :</h4>
-
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize">{% trans %}Dispatch From{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="statecodefordrcrnote">{% trans %}State Code{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-inline form-group">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		</div>
-		<div class="col-md-4 borderdiv">
-		  <h4>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h4>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Customer{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Customer State{% endtrans %}:</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label aria-describedby="statecodeofcustsupp" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline tinfield" hidden>
-		    <label aria-describedby="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline gstinfield">
-		    <label aria-describedby="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" for="drcrnote_custsuppaddr">{% trans %}Customer Address{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		</div>
-	      </div>
-	      <div class="purchasediv" >
-		<div class="col-md-4 borderdiv">
-		  <h4>{% trans %}Details of Purchase Invoice{% endtrans %} :</h4>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize">{% trans %}Received At {% endtrans %} :</label>
-		    {{}}
-		  </div>
-
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="statecodefordrcrnote">{% trans %}State Code{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-inline form-group">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		</div>
-		{#<***>#}
-		<div class="col-md-4 borderdiv">
-		  <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Supplier{% endtrans %} : </label>
-		   {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Supplier State{% endtrans %}:</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label aria-describedby="statecodeofcustsupp" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline tinfield" hidden>
-		    <label aria-describedby="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline gstinfield">
-		    <label aria-describedby="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-		    {{}}
-		  </div>
-		  <div class="form-group form-inline">
-		    <label class="col-sm-4 fsize" for="drcrnote_custsuppaddr">{% trans %}Supplier Address{% endtrans %}: </label>
-		    {{}}
-		  </div>
-		</div>
-	      </div>
 	    </div>
-
-	    <!-- sale/purchase end -->
-	    <a id="taxapplicablescroll"></a>
-	    <div class="col-md-12">
-	      <div class="col-md-3">
-		<label aria-describedby="taxapplicabletext" name="taxflag" >{% trans %}Tax Applicable{% endtrans %} : </label>
-		{{}}
-	      </div>
-	      {% if drcrflag=="3" %}
-		<input type="hidden" id="status" value="3">
-	      {% else %}
-		<input type="hidden" id="status" value="4">
-	      {% endif %}
+	    <div id="viewsingledrcr" hidden>
+	      dkashkas
 	    </div>
-	    <div class="col-md-12">
-	      {% if resultgstvat == '29' or resultgstvat == '22' %}
-		{% if resultgstvat == '22' %}
-		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
-		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctrl + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Debit/Credit Note. Press 'Esc' key to exit from the table.</small>
-		  </div>
-		  <table id="drcrnote_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote">
-		{% else %}
-		    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
-		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctrl + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Debit/Credit Note. Press 'Esc' key to exit from the table.</small>
-		    </div>
-		    <table id="drcrnote_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote" hidden>
-		{% endif %}
-		<thead class="bg-primary">
-		  <tr>
-		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		    <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Reduce Rate{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
-		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
-		    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
-		    <th class="crosswrap"></th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr>
-		    <td class="mdvwrap">
-		      <label class="product_name_vat" data-productcode=""></label>
-		    </td>
-		    <td class="qtyvwrap">
-		      <div class="input-group">
-			<input type="text" class="drcrnote_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" aria-describedby="unitaddon" disabled>
-			<span class="input-group-addon input-sm unitaddon"></span>
-		      </div>
-		    </td>
-		    <td class="qtyvwrap">
-		      <input type="text" class="drcrnote_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" class="drcrnote_product_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" >
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" class="drcrnote_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
-		    </td>
+	  </form>
+      </div><!--End .container-fluid -->
+      <div class="panel-footer " hidden>
+	<div class="container-fluid">
+	  <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
 
-		    <td class="smvwrap">
-		      <input type="text" class="drcrnote_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
-		    </td>
-		    <td class="ratewrap">
-		      <input type="text" class="drcrnote_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
-		    </td>
-		    <td class="smvwrap">
-		      <input  size="10" class="drcrnote_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
-		    </td>
-		    <td class="smvwrap">
-		      <input size="10" type="text" class="drcrnote_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
-		    </td>
-		    <td class="crosswrap">
-		    </td>
-		  </tr>
-		</tbody>
-		<tfoot>
-		  <tr>
-		    <td colspan="4" class="text-right">
-		      {% trans %}Total{% endtrans %}
-		    </td>
-		    <!--  Total : ptotal       -->
-		    <td class="smvwrap">
-		      <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
-		    </td>
-		    <td class="ratewrap">
-
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
-		    </td>
-		    <td class="crosswrap">
-
-		    </td>
-		  </tr>
-		</tfoot>
-
-		    </table>
-	      {% endif %}
-	      {% if resultgstvat == '29' or resultgstvat == '7' %}
-		<div class="row col-sm-12" id="gstproducttable">
-		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
-		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
-		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctrl + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Debit/Credit Note. Press 'Esc' key to exit from the table.</small>
-		  </div>
-		  <div class="col-sm-10" style="overflow-x:scroll;">
-		    <div class="row">
-		      <table id="drcrnote_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
-			
-			
-			<thead class="bg-primary">
-			  <tr>
-			    <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
-			    <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
-			    <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-			    <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-			    <th rowspan="2" class="smwrap text-center">{% trans %}Reduce Rate{% endtrans %}</th>
-			    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
-			    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-			    <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
-			    <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
-			    <th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
-			    <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
-			  </tr>
-
-			  <tr>
-			    <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
-			    <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
-			    <th class="igstfield text-center">{% trans %}Rate{% endtrans %} %</th>
-			    <th class="igstfield text-center">{% trans %}Amount{% endtrans %}</th>
-			    <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
-                            <th class="text-center">{% trans %}Amount{% endtrans %}</th>
-			  </tr>
-			</thead>
-		      </table>
-		    </div>
-		    <div class="row">
-		      <table id="drcrnote_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
-			<tbody>
-			  <tr>
-			    <td class="mdwrap">
-			      <label class="product_name_gst" data-gsflag="" data-productcode=""></label>
-			    </td>
-			    <td class="smwrap text-center" style="vertical-align:middle;">
-			      <label class="drcrnote_product_hsncode text-center"></label>
-			    </td>
-			    <td class="qtywrap">
-			      <div class="input-group">
-				<input type="text" class="drcrnote_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
-				<span class="input-group-addon input-sm unitaddon"></span>
-			      </div>
-			    </td>
-			    <td class="qtywrap">
-			      <input type="text" class="drcrnote_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
-			    </td>
-			    <td class="smwrap">
-			      <input type="text" class="drcrnote_product_rate_gst form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="9" >
-			    </td>
-			    <td class="smwrap">
-			      <input type="text" class="drcrnote_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
-			    </td>
-			    <td class="smwrap">
-			      <input type="text" class="drcrnote_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
-			    </td>
-
-			    <td class="taxcell sgstfield"><input type="text" class="drcrnote_product_cgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-			    <td class="taxcell sgstfield"><input type="text" class="drcrnote_product_cgstamount tamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
-
-			    <td class="taxcell  sgstfield"><input type="text" class="drcrnote_product_sgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-			    <td class="taxcell sgstfield"><input type="text" class="drcrnote_product_sgstamount tamount input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-
-			    <td class="taxcell igstfield">
-			      <input type="text" class="drcrnote_product_igstrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-			      <td class="taxcell igstfield"><input type="text" class="drcrnote_product_igstamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
-			      </td>
-			      <td class="taxcell">
-                                <input type="text" class="drcrnote_product_cessrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-                                <td class="taxcell"><input type="text" class="drcrnote_product_cessamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
-                                </td>
-                          </tr>
-                        </tbody>
-		      </table>
-		    </div>
-		    <div class="row">
-		      <table id="drcrnote_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:140%; max-width:140%;">
-			<tfoot>
-			  <tr>
-			    <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			    <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
-			    <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
-			    <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
-
-			    <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8"></span></td>
-			    <td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-sm text-right" size="8"></span></td>
-			    <td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8"></span></td>
-			</tfoot>
-		      </table>
-		    </div>
-		  </div>
-		  <div class="col-sm-2 nopadding">
-		    <table id="drcrnote_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablecrnote">
-		      <thead>
-			<tr>
-			  <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
-			  <th class="col-xs-4"></th>
-			</tr>
-		      </thead>
-		      <tbody>
-			<tr>
-			  <td class="col-xs-8"><input type="text" class="drcrnote_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled>
-			  </td>
-			  <td class="col-xs-4 text-center">
-			  </td>
-			</tr>
-		      </tbody>
-		      <tfoot>
-			<td class="col-xs-8 text-right">
-			  <span id="total_product_gst" class="input-sm text-right" size="9"></span>
-			</td>
-			<td class="col-xs-4">
-			  
-			</td>
-		      </tfoot>
-		    </table>
-		  </div>
-		</div>
-	      {% endif %}
-	    </div>
-	    </div>
-	</form>
-	</div><!--End .container-fluid -->
-
-	<div class="panel-footer " hidden>
-	  <div class="container-fluid">
-	    <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
-
-	      {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
-	    </div>
-            <button id="drcrnote_print" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Print{% endtrans %}</button>
-            <label class="btn btn-primary btn-sm" for="my-file-selector">
-	      <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-	      <i class="fa fa-paperclip" aria-hidden="true"></i>
-	      {% trans %}Attac<u>h</u>{% endtrans %}
-	    </label>
-	    <span class='label label-info' id="upload-file-info"></span>
-	    <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
+	    {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
 	  </div>
+          <button id="drcrnote_print" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Print{% endtrans %}</button>
+          <label class="btn btn-primary btn-sm" for="my-file-selector">
+	    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+	    <i class="fa fa-paperclip" aria-hidden="true"></i>
+	    {% trans %}Attac<u>h</u>{% endtrans %}
+	  </label>
+	  <span class='label label-info' id="upload-file-info"></span>
+	  <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
 	</div>
       </div>
-    </div> <!--End .panel-body -->
+    </div>
+  </div> <!--End .panel-body -->
   </div> <!--End .drcr_panel -->
   </div> <!--End .cantainer-fluid -->
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewdrcrnote.js')}}"></script>

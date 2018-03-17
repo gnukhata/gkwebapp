@@ -56,7 +56,6 @@ $(document).ready(function() {
 		},
 		success: function(resp)
 		{
-		    console.log(resp);
 		    $("#drcrnote_div").html("");
 		    $("#viewdrcrdiv").html(resp);
 		}
