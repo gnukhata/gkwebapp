@@ -514,18 +514,18 @@ $(document).ready(function() {
 	var rowtaxableamount=0.00;
 	if (gsflag=="19") {
 	    console.log("rowprice",rowprice);
-	    rowtaxableamount = (rowprice+rowreductrate) - rowdiscount;
-	    console.log("rta",rowtaxableamount);
+	    console.log("rowreduct",rowreductrate);
+	    newtaxableamnt = (parseFloat(rowprice) + parseFloat(rowreductrate)) - parseFloat(rowdiscount);
+	    console.log("rta",newtaxableamnt);
 	}
 	else{
 	    rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	    
+	    var reductprice=rowqty*rowreductrate;
+	    console.log("Rp=  ", reductprice);
+      	    var newtaxableamnt=rowtaxableamount+reductprice;
+	    console.log("newta",newtaxableamnt);
+	
 	}
-	var reductprice=rowqty*rowreductrate;
-	console.log("Rp=  ", reductprice);
-
-	var newtaxableamnt=rowtaxableamount+reductprice;
-	console.log("newta",newtaxableamnt);
 	
 
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
