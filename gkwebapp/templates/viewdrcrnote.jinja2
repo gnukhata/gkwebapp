@@ -1,4 +1,3 @@
-<**>
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}View Debit & Credit Note{% endtrans %}</title>
 <link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
@@ -8,32 +7,41 @@
       <div class="panel-body">
 	<div class="container-fluid row">
 	  <form class="form-horizontal" >
-	    //
-	    <!-- 
-		 <div class="form-group col-sm-6" id="nocrdr">
-		 <label class="text-danger">{% trans %}No Credit Note Found!{% endtrans %}</label>
-		 </div> -->
-	    <div class="form-group col-md-6" id="creditnotediv">
-		<label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
-		<select class="form-control input-sm" id="sel_creditnote" accesskey="">
-		  <option value="" disabled hidden selected>{% trans %}Select Credit Note{% endtrans %}</option>
-		  {% for drcr in drcrdata %}
-		    <option value="{{drcr['dcid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
-		  {% endfor %}
-		</select>
-            </div>
-	    <div class="form-group col-md-6" id="debitnotediv" hidden>
-		<label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
-		<select class="form-control input-sm" id="sel_debitnote" accesskey="">
-		  <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
-		  {% for drcr in drcrdata %}
-		    <option value="{{drcr['dcid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
-		  {% endfor %}
-		</select>
-            </div>
-	    	   
-	   //
-	    
+	    <div class="col-md-12">
+	      {% if status == "3" %}
+		{% if drcrdata %}
+		  <div class="form-group col-md-6" id="creditnotediv">
+		    <label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
+		    <select class="form-control input-sm" id="sel_creditnote" accesskey="">
+		      <option value="" disabled hidden selected>{% trans %}Select Credit Note{% endtrans %}</option>
+		      {% for drcr in drcrdata %}
+			<option value="{{drcr['dcid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
+		      {% endfor %}
+		    </select>
+		  </div>
+		{% else %}
+		  <div class="form-group col-md-6" id="nocrdr">
+		    <label class="text-danger">{% trans %}No Credit Note Found!{% endtrans %}</label>
+		  </div>
+		{% endif %}
+	      {% else %}
+		{% if drcrdata %}
+		<div class="form-group col-md-6" id="debitnotediv">
+		  <label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
+		  <select class="form-control input-sm" id="sel_debitnote" accesskey="">
+		    <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
+		    {% for drcr in drcrdata %}
+		      <option value="{{drcr['dcid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
+		    {% endfor %}
+		  </select>
+		</div>
+		{% else %}
+		<div class="form-group col-md-6" id="nocrdr">
+		  <label class="text-danger">{% trans %}No dedit Note Found!{% endtrans %}</label>
+		</div>
+		{% endif %}
+	      {% endif %}
+	    </div>	    
 	    <div class="col-md-12">
 	      <div class="col-md-4">
 		{% if drcrflag == "3" %}
@@ -43,21 +51,7 @@
 		{% endif %}
 		<div class="form-group form-inline" id="invoicerow">
 		  <label class="col-sm-4 fsize" for="drcrnote_invoice">{% trans %}Invoice No.{% endtrans %} :</label>
-		  <!-- sale invoice select -->
-		  <select class="form-control input-sm col-sm-8"  id="drcrnote_invoice">
-                    <option value="" invoiceno = "" selected>Select Invoice</option>
-                    {% for invoice in invoicesS %}
-                      <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
-		    {% endfor %}
-		  </select>
-		  <label class="col-sm-8 nopadding fsize" id="drcrnote_invoice" aria-describedby="drcrnote_invoice"></label>
-		  <!-- purchase invoice -->
-		  <select class="form-control input-sm col-sm-8"  id="drcrnote_invoice1">
-                    <option value="" invoiceno = "" selected>Select Invoice</option>
-                    {% for invoice in invoicesP %}
-		      <option value="{{invoice['invid']}}" invoiceno = "{{invoice["invoiceno"]}}" invoicedate="{{invoice['invoicedate']}}">{{invoice["invoiceno"]}}, {{invoice['invoicedate']}}, {{invoice["custname"]}}</option>
-                    {% endfor %}
-		  </select>
+		  {{}}
 		</div>
 		<div class="form-group form-inline">
 		  {% if drcrflag == "3" %}
@@ -65,7 +59,7 @@
 		  {% else %}
 		    <label class="col-sm-4 fsize" for="drnote_no">{% trans %}Dr Note No.{% endtrans %} :</label>
 		  {% endif %}
-		  <input class="form-control input-sm col-sm-8" size="15" id="drcrnote_no" >
+		  {{}}
 		</div>
 		<div class="form-group form-inline">
 		  {% if drcrflag == "3" %}
@@ -73,9 +67,7 @@
 		  {% else %}
 		    <label for="drnote_date" class="col-sm-4 fsize">{% trans %}Dr Note Date{% endtrans %} :</label>
 		  {% endif %}
-		  <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="DD" id="drcrnote_date" accesskey="v">
-                  <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month" accesskey="v">
-                  <input type="text" class="form-control input-sm drcrnotedate" size="4" maxlength="4" placeholder="YYYY" id="drcrnote_year" accesskey="v">
+		  {{}}
                 </div>
 		<div class="form-group form-inline">
 		  <div class="col-sm-6">
@@ -100,14 +92,9 @@
 		  {% else %}
 		    <label for="drnote_date" class="col-sm-4 fsize" >{% trans %}Cr Note Date{% endtrans %} :</label>
 		  {% endif %}
-		  <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="DD" id="drcrnote_date_ref" accesskey="v" >
-                  <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month_ref" accesskey="v">
-                  <input type="text" class="form-control input-sm drcrnotedate" size="4" maxlength="4" placeholder="YYYY" id="drcrnote_year_ref" accesskey="v" >
-                  
+		  {{}}
 		</div>
               </div>
-	      {#<***>#}
-
 	      <!-- on the basis of sale and purchase start -->
 	      <div class="salediv" >
 		<div class="col-md-4 borderdiv ">
@@ -115,48 +102,46 @@
 
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize">{% trans %}Dispatch From{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_state" aria-describedby="statefordrcrnote"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="statecodefordrcrnote">{% trans %}State Code{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="statecodefordrcrnote"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_name"></label>
+		    {{}}
 		  </div>
 		  <div class="form-inline form-group">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_designation"></label>
+		    {{}}
 		  </div>
 		</div>
 		<div class="col-md-4 borderdiv">
 		  <h4>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h4>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Customer{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_custsupp"></label>
+		    {{}}
 		  </div>
-
-
 		  <div class="form-group form-inline">
 		    <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Customer State{% endtrans %}:</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_custsuppstate"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label aria-describedby="statecodeofcustsupp" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-		    <label id="statecodeofcustsupp" class="col-sm-8 nopadding"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline tinfield" hidden>
 		    <label aria-describedby="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-		    <label type="text" id="tin" class="col-sm-8 nopadding"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline gstinfield">
 		    <label aria-describedby="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-		    <label type="text" id="gstin" class="col-sm-8 nopadding" name="gstin" ></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" for="drcrnote_custsuppaddr">{% trans %}Customer Address{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding" id="drcrnote_custsuppaddr" ></label>
+		    {{}}
 		  </div>
 		</div>
 	      </div>
@@ -165,20 +150,20 @@
 		  <h4>{% trans %}Details of Purchase Invoice{% endtrans %} :</h4>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize">{% trans %}Received At {% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_state_pur" aria-describedby="statefordrcrnote"></label>
+		    {{}}
 		  </div>
 
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="statecodefordrcrnote">{% trans %}State Code{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="statecodefordrcrnote_pur"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_name_pur"></label>
+		    {{}}
 		  </div>
 		  <div class="form-inline form-group">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_issuer_designation">{% trans %}Designation{% endtrans %} :</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_issuer_designation_pur"></label>
+		    {{}}
 		  </div>
 		</div>
 		{#<***>#}
@@ -186,27 +171,27 @@
 		  <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" aria-describedby="drcrnote_custsupp">{% trans %}Supplier{% endtrans %} : </label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_custsupp_pur"></label>
+		   {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label aria-describedby="drcrnote_custsuppstate" class="col-sm-4 fsize">{% trans %}Supplier State{% endtrans %}:</label>
-		    <label class="col-sm-8 nopadding fsize" id="drcrnote_custsuppstate_pur"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label aria-describedby="statecodeofcustsupp" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-		    <label id="statecodeofcustsupp_pur" class="col-sm-8 nopadding"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline tinfield" hidden>
 		    <label aria-describedby="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-		    <label type="text" id="tin_pur" class="col-sm-8 nopadding"></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline gstinfield">
 		    <label aria-describedby="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-		    <label type="text" id="gstin1_pur" class="col-sm-8 nopadding" name="gstin" ></label>
+		    {{}}
 		  </div>
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" for="drcrnote_custsuppaddr">{% trans %}Supplier Address{% endtrans %}: </label>
-		    <label class="col-sm-8 nopadding" id="drcrnote_custsuppaddr_pur" ></label>
+		    {{}}
 		  </div>
 		</div>
 	      </div>
@@ -217,7 +202,7 @@
 	    <div class="col-md-12">
 	      <div class="col-md-3">
 		<label aria-describedby="taxapplicabletext" name="taxflag" >{% trans %}Tax Applicable{% endtrans %} : </label>
-		<label id="taxapplicabletext" ></label>
+		{{}}
 	      </div>
 	      {% if drcrflag=="3" %}
 		<input type="hidden" id="status" value="3">
@@ -225,11 +210,6 @@
 		<input type="hidden" id="status" value="4">
 	      {% endif %}
 	    </div>
-	    <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
-
-	      <label >{% trans %}Rate must not be empty or zero!{% endtrans %}</label>
-	    </div>
-	    
 	    <div class="col-md-12">
 	      {% if resultgstvat == '29' or resultgstvat == '22' %}
 		{% if resultgstvat == '22' %}
@@ -484,9 +464,3 @@
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewdrcrnote.js')}}"></script>
 </body>
 </html>
-
-
-
-
-
-   <****>

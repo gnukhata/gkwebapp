@@ -49,10 +49,7 @@ def savedrcrnote(request):
     except:
         print "no attachment found"
     result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(drcrdata),headers=header)
-    if result.json()["gkstatus"]==0:
-        return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
-    else:
-        return {"gkstatus":result.json()["gkstatus"]}
+    return {"gkstatus":result.json()["gkstatus"]}
     
 ''' this is for single view i=of drcrnote after saving data '''
 @view_config(route_name="drcrnote",request_param="action=showdrcrnote",renderer="gkwebapp:templates/viewdrcrnote.jinja2")
@@ -61,13 +58,13 @@ def showsingledrcrnote(request):
     gkflag = request.params["drcrflag"]
     if request.params["drcrflag"] =='3':
          drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
-         print drcrdata.json()["gkresult"]
     if request.params["drcrflag"] == '4':
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"gkflag":gkflag}
+    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"status":request.params["drcrflag"]}
 
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetails",renderer="json")
 def getDrCrDetails(request):
     header={"gktoken":request.headers["gktoken"]}
-    drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&dcid=%d"%(int(request.params["dcid"])),headers=header)
+    drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
+    print drcrnotedata.json()["gkresult"]
     return {"gkstatus": drcrnotedata.json()["gkstatus"],"drcrnotedata": drcrnotedata.json()["gkresult"]}
