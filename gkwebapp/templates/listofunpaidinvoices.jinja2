@@ -100,7 +100,7 @@
        <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
        <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
        <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-       <span style="margin-left: 42%;"><strong>{% trans %}List of Outstanding{% endtrans %} {% if inoutflag|int == 9 %}{% trans %}Purchase{% endtrans %}{% else %}{% trans %}Sale{% endtrans %}{% endif %} {% trans %}Invoices{% endtrans %}</strong></span>
+       <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
       <br>
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; display:none" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >

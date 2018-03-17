@@ -94,7 +94,7 @@ $(document).ready(function() {
     $("#ascending").keydown(function(e) {
         if (e.which == 13) {
             e.preventDefault();
-            $("#descending").focus().select();
+            $("#sale").focus().select();
         }
 	if (e.which == 38) {
 	    e.preventDefault();
@@ -114,7 +114,7 @@ $(document).ready(function() {
     $("#sale").keydown(function(e) {
         if (e.which == 13) {
             e.preventDefault();
-            $("#purchase").focus().select();
+            $("#viewlist_fromdate").focus().select();
         }
 	if (e.which == 38) {
 	    e.preventDefault();
@@ -314,6 +314,6 @@ $(document).ready(function() {
     });
 
     $("#viewlist_reset").click(function(event) {
-        $("#listofinvoices").click();
+        $("#listofunpaidinvoices").click();
     });
 });
