@@ -264,11 +264,13 @@ $(document).ready(function() {
 		$('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').text(value.taxableamount);
 		if(resp.delchaldata.taxname == 'IGST'){
 		    $(".sgstfield").hide();
+		    $(".igstfield").show();
 		    $('.invoice_product_igstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
 		    $('.invoice_product_igstamount:eq(' + curindex + ')').text(parseFloat(value.taxamount).toFixed(2));
 		}
 		else{
 		    $(".igstfield").hide();
+		    $(".sgstfield").show();
 		    $('.invoice_product_sgstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
 		    $('.invoice_product_sgstamount:eq(' + curindex + ')').text(parseFloat(value.taxamount).toFixed(2));
 		    $('.invoice_product_cgstrate:eq(' + curindex + ')').text(parseFloat(value.taxrate).toFixed(2));
