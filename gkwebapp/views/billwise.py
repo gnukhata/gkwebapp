@@ -33,7 +33,8 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import base64
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import os
 '''
 This function brings data of unpaid bills and unadjusted amounts.
@@ -169,12 +170,89 @@ It is decoded and returned along with mime information.
 def unpaidInvoicesSpreadsheet(request):
     try:
         header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/billwise?type=spreadsheet&inoutflag=%d&typeflag=%d&orderflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["typeflag"]), int(request.params["orderflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
-        invoices = result.json()["gkdata"]
-        invoices_str = base64.b64decode(invoices)
-        xlsxfile = open("report.xlsx","w")
-        xlsxfile.write(invoices_str)
-        xlsxfile.close()
+        result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&inoutflag=%d&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+        inoutflag = int(request.params["inoutflag"])
+        orderflag = int(request.params["orderflag"])
+        typeflag = int(request.params["typeflag"])
+        inouts= {9:"Purchase", 15:"Sale"}
+        orders = {1:"Ascending", 2:"Descending"}
+        types = {1:"Amount Wise", 3:"Party Wise", 4:"Due Wise"}
+        inout = inouts[inoutflag]
+        order = orders[orderflag]
+        reporttype = types[typeflag]
+        startdate =datetime.strptime(str(request.params["fromdate"]),"%d-%m-%Y").strftime("%Y-%m-%d")
+        enddate =datetime.strptime(str(request.params["todate"]),"%d-%m-%Y").strftime("%Y-%m-%d")
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"]);
+        # A workbook is opened.
+        billwisewb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = billwisewb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "List of Unpaid Invoices"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 16
+        sheet.column_dimensions['F'].width = 16
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:F3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        invtype = 'Sale'
+        if inoutflag == 9:
+            invtype = 'Purchase'
+        sheet['A3'] = '%s List of Outstanding %s Invoices in %s Order'%(str(reporttype), str(inout), str(order))
+        sheet.merge_cells('A4:F4')
+        sheet['A4'] = 'Period: ' + str(request.params["fromdate"]) + ' to ' + str(request.params["todate"])
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A5'] = 'Sr. No. '
+        sheet['B5'] = 'Invoice No'
+        sheet['C5'] = 'Invoice Date'
+        custhead = "Customer Name"
+        if inoutflag == 9:
+            custhead = "Supplier Name"
+        sheet['D5'] = custhead
+        sheet['E5'] = 'Invoice Amount'
+        sheet['F5'] = 'Amount Pending'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['E5'].alignment = Alignment(horizontal='right')
+        sheet['F5'].alignment = Alignment(horizontal='right')
+        sheet['E5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        unAdjInvoices = result.json()["invoices"]
+        row = 6
+        # Looping each dictionaries in list unAdjInvoices to store data in cells and apply styles.
+        srno = 1
+        for uninv in unAdjInvoices:
+            sheet['A'+str(row)] = srno
+            sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = uninv['invoiceno']
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = uninv['invoicedate']
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = uninv['custname']
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = uninv['invoiceamount']
+            sheet['F'+str(row)] = uninv['balanceamount']
+            sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            row = row + 1
+            srno = srno + 1
+        billwisewb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}

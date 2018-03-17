@@ -116,7 +116,11 @@
                   {% trans %}Invoice Date{% endtrans %}
                </th>
                <th class="mdlwrap text-center" >
-                  {% trans %}Cust/Supp Name{% endtrans %}
+		 {% if inoutflag|int == 9 %}
+                   {% trans %}Supplier Name{% endtrans %}
+		 {% else %}
+		   {% trans %}Customer Name{% endtrans %}
+		 {% endif %}
                </th>
                <th class="smlwrap text-right" >
                   {% trans %}Invoice Amount{% endtrans %}
