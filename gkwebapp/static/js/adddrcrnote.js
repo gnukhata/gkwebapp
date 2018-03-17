@@ -1179,7 +1179,7 @@ var allow = 1;
       event.preventDefault();
       event.stopPropagation();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-    if($("#status").val()==3){
+      if($("#sale").is(":checked")){
 	   if ($.trim($('#drcrnote_invoice').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	      $("#challanno-blank-alert").alert();
