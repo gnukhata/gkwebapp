@@ -84,7 +84,7 @@
 	<tbody>
           {% for invoice in gkresult %}
             <tr data-invid="{{invoice["invid"]}}">
-              <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+	      <td class="srnowrap text-center">{{loop.index}}</td>
               <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
               <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
               <td class="mdlwrap text-center">{{invoice["custname"]}}</td>

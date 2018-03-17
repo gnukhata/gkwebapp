@@ -129,7 +129,7 @@
          <tbody>
            {% for invoice in gkresult %}
              <tr data-invid="{{invoice["invid"]}}">
-            <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+            <td class="srnowrap text-center">{{loop.index}}</td>
             <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
             <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
             <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
@@ -144,7 +144,7 @@
          <nbsp>
          <button type="button" class="btn btn-sm btn-warning" id="viewanotherlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
          <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-         <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+         <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="e"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Vi<u>e</u>w Printable Version{% endtrans %}</button>
       </span>
      </div>
      <div id="viewinvdiv" hidden>
