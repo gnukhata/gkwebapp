@@ -1421,10 +1421,6 @@ if (!curdate.between(financialstart, financialend)) {
       //var caseflag =$("#case2").val();
       //var caseflag =$("#case3").val();
 
-      //store reference
-         reference["dcref"]=$("#drcrnote_no_ref").val();
-	 reference["dcdate"]=$.trim($("#drcrnote_year_ref").val() + '-' + $("#drcrnote_month_ref").val() + '-' + $("#drcrnote_date_ref").val());
-
 //send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
       var form_data = new FormData();
       if($("#sale").is(":checked"))  {
@@ -1436,7 +1432,14 @@ if (!curdate.between(financialstart, financialend)) {
       form_data.append("drcrno", $("#drcrnote_no").val());
       form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
       form_data.append("contents", JSON.stringify(contents));
-      form_data.append("reference", JSON.stringify(reference));
+      if($("#reference").prop('checked') == true)
+      {
+	  //store reference    
+          reference["dcref"]=$("#drcrnote_no_ref").val();
+	  reference["dcdate"]=$.trim($("#drcrnote_year_ref").val() + '-' + $("#drcrnote_month_ref").val() + '-' + $("#drcrnote_date_ref").val());
+	  form_data.append("reference", JSON.stringify(reference));
+      }
+      
       form_data.append("dctypeflag",dctypeflag);  
       //sending hardcode values until caseflag not set
       form_data.append("caseflag","0");
@@ -1477,12 +1480,23 @@ if (!curdate.between(financialstart, financialend)) {
             })
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
-			/* allow = 0;
-			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-                        $("#success-alert").alert();
-                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
+			
+			if($("#status").val()==3){
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                            $("#cr-success-alert").alert();
+                            $("#cr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#cr-success-alert").hide();
+			    });
+			}else
+			{
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                            $("#dr-success-alert").alert();
+                            $("#dr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#dr-success-alert").hide();
+			    });
+			}
+			    
+			    /* allow = 0;
 			    let invid = resp.gkresult;
 			    $.ajax({
 				type: "POST",
@@ -1518,15 +1532,19 @@ if (!curdate.between(financialstart, financialend)) {
                     } else if (resp["gkstatus"] == 1) {
 
 			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-                        $("#invoice_challanno").focus();
-                        $("#duplicate-alert").alert();
+			
+                        $("#drcrnote_invoice").focus();
+
+			$("#duplicate-alert").alert();
                         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#duplicate-alert").hide();
                         });
                         return false;
                     } else {
-                        $("#invoice_deliverynote").focus();
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+
+			$("#drcrnote_invoice").focus();
+
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#failure-alert").alert();
                         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#failure-alert").hide();
@@ -1547,11 +1565,11 @@ if (!curdate.between(financialstart, financialend)) {
     });
   });
   $("#confirm_yes").on('shown.bs.modal', function(event) {
-    $("#tn_save_no").focus();
+    $("#dc_save_no").focus();
 
   });
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
-    $("#invoice_deliverynote").focus();
+    $("#drcrnote_invoice").focus();
   });
 
  
