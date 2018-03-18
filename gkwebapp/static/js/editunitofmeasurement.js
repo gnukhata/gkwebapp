@@ -17,7 +17,7 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      var result = resp["gkresult"]
+	var result = resp["gkresult"];
       $("#unit_edit_name").val(result["unitname"]);
       $("#unit_edit_name").prop("disabled", true);
       $("#sub_unit_edit").val(result["subunitof"]);
@@ -27,7 +27,14 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#unit_edit_innerdiv").show();
       $("#unit_edit_save").hide();
-      $("#edit_btn").show();
+	$("#edit_btn").show();
+	console.log(resp["gkresult"]["flag"]);
+	if(resp["gkresult"]["flag"] == "True"){
+	   $("#unit_delete").hide();
+	}
+	else if(resp["gkresult"]["flag"] == "False"){
+ 	    $("#unit_delete").show();
+	}
 
       if($("#sub_unit_edit option:selected").val()==''){
         $("#edit_conversion_div").hide();
