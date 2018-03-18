@@ -420,6 +420,15 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
 
     }
+      else if(event.which==13 && $('#vyear').val()==""){
+	  $("#voucheryear-alert").alert();
+      $("#voucheryear-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#voucheryear-alert").hide();
+	  
+      });     
+
+      }
+      
     if (event.which==38) {
       $("#vmonth").select().focus();
     }
@@ -432,6 +441,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vmonth').focus().select();
       event.preventDefault();
     }
+      
     if (event.which==190 && event.ctrlKey) {
 
   event.preventDefault();
