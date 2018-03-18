@@ -278,6 +278,8 @@
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}No Of Packages{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Schedule{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
@@ -309,6 +311,18 @@
 			<span class="input-group-addon input-sm unitaddon"></span>
 		      </div>
 		    </td>
+
+
+		    <td class="qtyvwrap">
+		      <input type="text" class="purchaseorder_product_noofpackages_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		    </td>
+
+
+		    <td class="qtyvwrap">
+		      <button class="btn btn-info btn-sm purchaseorder_product_schedule_vat form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">{% trans %}Add Schedule{% endtrans %}</button>
+		    </td>
+		    
+
 		    <td class="smvwrap">
 		      <input type="text" class="purchaseorder_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
 		    </td>
@@ -378,6 +392,8 @@
 			    <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
 			    <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			    <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+			    <th rowspan="2" class="smwrap text-center">{% trans %}No Of Packages{% endtrans %}</th>
+			    <th rowspan="2" class="qtywrap text-center">{% trans %}Schedule{% endtrans %}</th>
 			    <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
 			    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
@@ -426,6 +442,19 @@
 				<input type="text" class="purchaseorder_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
 				<span class="input-group-addon input-sm unitaddon"></span>
 			      </div>		      </td>
+
+
+			    <td class="smwrap">
+			      <input type="text" class="purchaseorder_product_noofpackages_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			    </td>
+
+
+			    <td class="qtywrap">
+			      <button class="btn btn-info btn-sm purchaseorder_product_schedule_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">{% trans %}Add Schedule{% endtrans %}</button>
+			    </td>
+
+
+			    
 
 			    <td class="smwrap">
 			      <input type="text" class="purchaseorder_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
