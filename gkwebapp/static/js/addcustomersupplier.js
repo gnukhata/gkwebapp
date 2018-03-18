@@ -69,7 +69,20 @@ $(document).ready(function() {
           $("#add_cussup_name").focus().select();
         }
   });
-
+    
+ $("#checkbnk").click(function(e){
+    if ($(this).is(":checked")) {
+      checkbnk = 1;
+      $("#checkbnk").val(1);
+      $("#bankdiv").show();
+    }
+    else {
+      checkbnk = 0;
+      $("#checkbnk").val(0);
+      $("#bankdiv").hide();
+     
+    }
+  });
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {
@@ -156,12 +169,27 @@ $("#add_state").keydown(function(event) {
   else if (event.which==27) {
       event.preventDefault();
       if($("#add_cussup").val() == '19'){
-	  $("#accountno").focus();
+	  $("#checkbnk").focus();
       } else {
 	  $("#cussup_save").focus();
       }
   }
 });
+    $(document).off("keydown", "#checkbnk").on("keydown", "#checkbnk", function(event) {
+	if(event.which == 13){
+	    event.preventDefault();
+	    $("#accountno").focus().select();
+	}
+	else if(event.which == 38){
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
+    });
+
+    
     //Change event on GSTIN State
     $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
 	event.preventDefault();
@@ -285,7 +313,7 @@ $("#add_state").keydown(function(event) {
   else if (event.which==27) {
       event.preventDefault();
       if($("#add_cussup").val() == '19'){
-	  $("#accountno").focus();
+	  $("#checkbnk").focus();
       } else {
 	  $("#cussup_save").focus();
       }
@@ -300,11 +328,7 @@ $("#add_state").keydown(function(event) {
 	}
 	else if (event.which==38){
 	    event.preventDefault();
-	    if ($("#vatorgstflag").val() == '22'){
-		$("#add_cussup_tan").focus();
-	    } else {
-		$(".gstin").focus().select();
-	    }
+	    $("#checkbnk").focus();
 	}
 
     });
@@ -592,7 +616,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		$("#add_cussup_tan").focus();
 		return false;
             } else if($("#add_cussup").val() == '19'){
-		$("#accountno").focus();
+		$("#checkbnk").focus();
 	    } else {
 	      $("#cussup_save").focus();
 	  }

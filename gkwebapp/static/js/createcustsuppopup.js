@@ -58,7 +58,36 @@ $(document).ready(function() {
           event.preventDefault();
           $("#add_cussup_email").focus().select();
         }
-      });
+  });
+     $("#checkbnkpop").click(function(e){
+    if ($(this).is(":checked")) {
+      $("#checkbnkpop").val(1);
+      $("#bnkdetails").show();
+    }
+    else {
+      $("#checkbnkpop").val(0);
+      $("#bnkdetails").hide();
+     
+    }
+     });
+    $("#checkbnkpop").keydown(function(e){
+	if (e.which == 13) {
+	    e.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#cust_accountno").focus();
+	    }
+	    else {
+		$("#cussup_save").focus();
+	    }
+	}
+	else if(e.which == 38){
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
+  });
   $("#add_cussup_email").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -270,11 +299,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	}
 	else if (event.which==38){
 	    event.preventDefault();
-	    if ($("#vatorgstflag").val() == '22'){
-		$("#add_cussup_tan").focus();
-	    } else {
-		$(".gstin").focus().select();
-	    }
+	    $("#checkbnkpop").focus();
 	}
 
     });
@@ -587,8 +612,12 @@ else{
             });
             $("#add_cussup_tan").focus();
             return false;
-        }
-          $("#cussup_save").focus();
+		}
+           else if($("#add_cussup").val() == '19'){
+		$("#checkbnkpop").focus();
+	    } else {
+	      $("#cussup_save").focus();
+	  }
 }
 else{
 	$(".gstinstate:first").focus();
@@ -731,7 +760,7 @@ else{
 	form_data.append("custtan", custtan);
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#add_state").val());
-	form_data.append("csflag", $("#add_cussup option:selected").val());
+	form_data.append("csflag", $("#add_cussup").val());
 	if ($("#status").val() == "9"){
 	    var bankdetails = {}; //dictionary for bank details
 	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
@@ -762,7 +791,7 @@ else{
       })
     .done(function(resp) {
 	if(resp["gkstatus"] == 0){
-	    allow ==0;
+	    allow =0;
         $.ajax(
           {
 

@@ -158,6 +158,7 @@
 		<input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
 	      </div>
 	    {%endif%}
+	    <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
         </div>
         <div class="col-md-6">
 	  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
@@ -200,30 +201,36 @@
 	      </table>
 	    </div>
 	    <small id="textareahelp" class="form-text text-muted custlbl">Press Esc key from any field in the table to shift focus to Save Button.</small>
-	    <small id="textareahelp" class="form-text text-muted suplbl">Press Esc key from any field in the table to shift focus to Account No.</small>
+	    <small id="textareahelp" class="form-text text-muted suplbl">Press Esc key from any field in the table to shift focus to Bank Details.</small>
+	    <br>
 	  </div>
 	  <div id="bankdetails">
-	    <label><h4>Bank Details :</h4></label>
+	    <input type="checkbox" value=0 id="checkbnk">
+  </input>
+  <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+            <div id="bankdiv" hidden>
 	      <div class="row">
-		<div class="form-group col-sm-6">
-		  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
-		  <input type="text" id="accountno" class="form-control input-sm"></input>
+		<div class="form-group form-inline col-sm-6">
+		  <label for="accountno" class="bankclass">{% trans %}Account No.{% endtrans %} :</label>
+		  <input type="text" id="accountno" class="form-control pull-right input-sm"></input>
 		</div>
-		<div class="form-group col-sm-6">
-		  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-		  <input type="text" id="bankname" class="form-control input-sm" name="bankname" ></input>
+		<div class="form-group form-inline col-sm-6">
+		  <label for="bankname" class="bankclass">{% trans %}Bank Name{% endtrans %} :</label>
+		  <input type="text" id="bankname" class="form-control pull-right input-sm" name="bankname" ></input>
 		</div>
 	      </div>
 	      <div class="row">
-		<div class="form-group col-sm-6">
-		  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
-		  <input type="text" id="branchname" class="form-control input-sm" ></input>
+		<div class="form-group form-inline col-sm-6">
+		  <label for="branch" class="bankclass">{% trans %}Branch Name{% endtrans %} :</label>
+		  <input type="text" id="branchname" class="form-control pull-right input-sm" ></input>
 		</div>
-		<div class="form-group col-sm-6">
-		  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
-		  <input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
+		<div class="form-group form-inline col-sm-6">
+		  <label for="ifsc" class="bankclass">{% trans %}IFSC code{% endtrans %} :</label>
+		  <input type="text" id="ifsc" class="form-control pull-right input-sm" name="ifsc" ></input>
 		</div>
 	      </div>
+	    </div>
+	   
 	  </div>
 	  {% endif %}
 	  {% if vatorgstflag == '22' %}
@@ -299,10 +306,13 @@
             <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="add_cussup_tan" style="color:red;font-size: 120%;">*</label>
 
             <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
+	    
           </div>
 	  <div id="bankdetails">
-	    <label><h4>Bank Details :</h4></label>
-	    <div class="row">
+	    <input type="checkbox" value=0 id="checkbnk"></input>
+	    <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+	    <div  id="bankdiv" hidden>
+	      <div class="row">
 	      <div class="form-group col-sm-6">
 		<label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
 		<input type="text" id="accountno" class="form-control input-sm"></input>
@@ -322,9 +332,10 @@
 		<input type="text" id="ifsc" class="form-control input-sm" name="ifsc" ></input>
 	      </div>
 	    </div>
+	    </div>
 	  </div>
 	  {% endif %}
-	  <small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
+	 
         </div>
       </div>
       <div id="accModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">

@@ -37,8 +37,10 @@ th {
 	  </button>
           {% if gkstatus=="in" %}
             <h5 class="modal-title">Create Supplier</h5>
+	    <input type="hidden" id="add_cussup" value="19" hidden>
           {%else%}
             <h5 class="modal-title">Create Customer</h5>
+	    <input type="hidden" id="add_cussup" value="3" hidden>
           {%endif%}
 	</div>
         <div class="container">
@@ -231,34 +233,41 @@ th {
 			    </td>
 			    <td class="col-xs-1">
 			    </td>
-			  </tr>
-			</tbody>
+			    </tr>
+			  </tbody>
 			</table>
 		      </div>
-		      <small id="textareahelplbl" class="form-text text-muted">Press Tab key from GSTIN field to shift focus to Save Button</small>
+		      <small id="textareahelplbl" class="form-text text-muted">Press Tab key twice from GSTIN field to shift focus to Save Button</small>
 		    </div>
 		    <div id="bankdetails">
-		      <label><h4>Bank Details :</h4></label>
-		      <div class="row">
-			<div class="form-group col-sm-6">
-			  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
-			  <input type="text" id="cust_accountno" class="form-control input-sm"></input>
-			</div>
-			<div class="form-group col-sm-6">
-			  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
-			  <input type="text" id="cust_bankname" class="form-control input-sm" name="bankname" ></input>
-			</div>
-		      </div>
-		      <div class="row">
-			<div class="form-group col-sm-6">
-			  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
-			  <input type="text" id="cust_branchname" class="form-control input-sm" ></input>
-			</div>
-			<div class="form-group col-sm-6">
-			  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
-			  <input type="text" id="cust_ifsc" class="form-control input-sm" name="ifsc" ></input>
-			</div>
-		      </div>
+		      <small id="textareahelplbd" class="form-text text-muted">Press Tab key twice from GSTIN field to shift focus to Bank Details.</small>
+		      <br>
+		      <input type="checkbox" value=0 id="checkbnkpop">
+	    </input>
+	    <label class="" for="bnkdetails">{% trans %}Bank Details{% endtrans %}</label>
+	    <div id="bnkdetails" hidden>
+	      <div class="row">
+		<div class="form-group col-sm-6">
+		  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		  <input type="text" id="cust_accountno" class="form-control input-sm"></input>
+		</div>
+		<div class="form-group col-sm-6">
+		  <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		  <input type="text" id="cust_bankname" class="form-control input-sm" name="bankname" ></input>
+		</div>
+	      </div>
+	      <div class="row">
+		<div class="form-group col-sm-6">
+		  <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		  <input type="text" id="cust_branchname" class="form-control input-sm" ></input>
+		</div>
+		<div class="form-group col-sm-6">
+		  <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		  <input type="text" id="cust_ifsc" class="form-control input-sm" name="ifsc" ></input>
+		</div>
+	      </div>
+	    </div>
+	     
 		    </div>
 		    {% endif %}
 
@@ -277,8 +286,10 @@ th {
 		      <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
 		      <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
 		    </div>
-		    <div id="bankdetails">
-		      <label><h4>Bank Details :</h4></label>
+		    <input type="checkbox" value=0 id="checkbnkpop">
+	    </input>
+	    <label class="" for="bnkdetails">{% trans %}Bank Details{% endtrans %}</label>
+		    <div id="bnkdetails" hidden>
 		      <div class="row">
 			<div class="form-group col-sm-6">
 			  <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
