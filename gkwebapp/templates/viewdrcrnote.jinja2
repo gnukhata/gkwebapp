@@ -8,8 +8,7 @@
 	<div class="container-fluid row">
 	  <form class="form-horizontal" >
 	    <div class="col-md-12">
-	      {% if status == "3" %}
-		{% if drcrdata %}
+
 		  <div class="form-group col-md-6" id="creditnotediv">
 		    <label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
 		    <select class="form-control input-sm" id="sel_creditnote" accesskey="">
@@ -19,31 +18,10 @@
 		      {% endfor %}
 		    </select>
 		  </div>
-		{% else %}
-		  <div class="form-group col-md-6" id="nocrdr">
-		    <label class="text-danger">{% trans %}No Credit Note Found!{% endtrans %}</label>
-		  </div>
-		{% endif %}
-	      {% else %}
-		{% if drcrdata %}
-		  <div class="form-group col-md-6" id="debitnotediv">
-		    <label for="sel_debitnote">{% trans %}List of Debit Note{% endtrans %} :</label>
-		    <select class="form-control input-sm" id="sel_debitnote" accesskey="">
-		      <option value="" disabled hidden selected>{% trans %}Select Debit Note{% endtrans %}</option>
-		      {% for drcr in drcrdata %}
-			<option value="{{drcr['drcrid']}}" drcrf="{{drcr["drcrflag"]}}">{{drcr["dcno"]}} {{drcr["drcrdate"]}}</option>
-		      {% endfor %}
-		    </select>
-		  </div>
-		{% else %}
-		  <div class="form-group col-md-6" id="nocrdr">
-		    <label class="text-danger">{% trans %}No Debit Note Found!{% endtrans %}</label>
-		  </div>
-		{% endif %}
-	      {% endif %}
+
 	    </div>
 	    <div id="viewsingledrcr">
-	      dkashkas
+	      dkashas
 	    </div>
 	  </form>
       </div><!--End .container-fluid -->

@@ -56,13 +56,14 @@ $(document).ready(function() {
 		},
 		success: function(resp)
 		{
-		    $("#drcrnote_div").html("");
-		    $("#viewdrcrdiv").html(resp);
+		    
+		    $("#drcrnote_div").html(resp);
 		}
 	    }
 	);
     });
     $("#debitnote_view").click(function() { // calls view debit note page.
+	console.log("bye bye");
 	$.ajax(
 	    {
 		type: "POST",
@@ -75,9 +76,8 @@ $(document).ready(function() {
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		},
 		success: function(resp)
-		{
-		    $("#drcrnote_div").html("");
-		    $("#viewdrcrdiv").html(resp);
+		{   
+		    $("#drcrnote_div").html(resp);
 		}
 	    }
 	);

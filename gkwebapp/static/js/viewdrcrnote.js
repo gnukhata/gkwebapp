@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    $("#sel_creditnote").focus();
+    $("#sel_debitnote").focus();
     $("#sel_creditnote").change(function(event) {
 	var drcrid = $("#sel_creditnote option:selected").val();
 	console.log("cool "+drcrid);
