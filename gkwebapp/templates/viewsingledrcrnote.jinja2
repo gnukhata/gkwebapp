@@ -1,4 +1,4 @@
-<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
+<link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
@@ -9,17 +9,20 @@
 	<h4>Debit Note: </h4>
       {% endif %}
       <div class="form-group form-inline col-sm-12 nopadding">
-	<label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} : </label>
+	<label class="normal"for="invoiceno">{% trans %}Invoice No.{% endtrans %} : </label>
 	{{ gkresult["invoiceno"] }}
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
-	<label for="instrument_date" class="normal">{% trans %}Invoice Date{% endtrans %} : </label>
-
+	{% if gkresult["dctypeflag"] == 3 %}
+	  <label for="creditnoteno" class="normal">{% trans %}Credit Note No.{% endtrans %} : </label>
+	{% else %}
+	  <label for="debitnoteno" class="normal">{% trans %}Debit Note No.{% endtrans %} : </label>
+	{% endif %}
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label>
 	  {% if gkresult["dctypeflag"] == 3 %}
-            {% trans %}State of Destination{% endtrans %} :
+            {% trans %}Dispatch From{% endtrans %} :
 	  {% else %}
 	    {% trans %}State of Origin{% endtrans %} :
 	  {% endif %}

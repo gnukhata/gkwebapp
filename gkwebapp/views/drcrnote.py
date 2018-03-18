@@ -69,5 +69,5 @@ def getDrCrDetails(request):
     drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
     print drcrnotedata.json()["gkstatus"]
     if drcrnotedata.json()["gkstatus"] == 0:
-        return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrdata.json()["gkresult"]}
+        return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrnotedata.json()["gkresult"]}
     
