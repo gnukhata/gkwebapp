@@ -153,8 +153,12 @@
 	  <tr>
 	    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 	    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-	    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+	    <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+	    {% if gkresult["dctypeflag"] == 3 %}
+	      <th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
+	    {% else %}
+	      <th class="smvwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+	    {% endif %}
 	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
@@ -163,36 +167,37 @@
 	  </tr>
 	</thead>
 	<tbody>
-	  {% for product in gkresult["invcontents"] %}
+	  {% for product in gkresult["drcrcontents"] %}
 	    <tr>
 	      <td class="mdvwrap">
-		{{ gkresult["invcontents"][product]["proddesc"] }}
+		{{ gkresult["drcrcontents"][product]["proddesc"] }}
 	      </td>
 	      <td class="qtyvwrap text-right">
-		{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		{{ gkresult["drcrcontents"][product]["qty"] }} {{ gkresult["drcrcontents"][product]["uom"] }}
 	      </td>
 	      <td class="qtyvwrap text-right">
-		{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		{{ gkresult["drcrcontents"][product]["priceperunit"] }}
 	      </td>
 
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["priceperunit"] }}
+		{{ gkresult["reductval"][product]}}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["discount"] }}
+		{{ gkresult["drcrcontents"][product]["discount"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["taxableamount"] }}
+		{#wrong#}
+		{{ gkresult["drcrcontents"][product]["taxableamount"] }}
 	      </td>
 	      </td>
 	      <td class="ratewrap text-right">
-		{{ gkresult["invcontents"][product]["taxrate"] }}
+		{{ gkresult["drcrcontents"][product]["taxrate"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["taxamount"] }}
+		{{ gkresult["drcrcontents"][product]["taxamount"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["totalAmount"] }}
+		{{ gkresult["drcrcontents"][product]["totalAmount"] }}
 	      </td>
 	    </tr>
 	  {% endfor %}
@@ -216,7 +221,7 @@
 	      {{ gkresult["totaltaxamt"] }}
 	    </td>
 	    <td class="smvwrap text-right">
-	      {{ gkresult["invoicetotal"] }}
+	      {{ gkresult["totreduct"] }}
 	    </td>
 	  </tr>
 	</tfoot>
@@ -237,14 +242,18 @@
       <div class="row col-md-12" id="gstproducttable">
 	<div class="col-sm-10" style="overflow-x:scroll;">
 	  <div class="row">
-	    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+	    <table id="drcrnote_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 	      <thead class="bg-primary">
 		<tr>
 		  <th rowspan="2" class="mdwrap text-center">{% trans %}Product{% endtrans %}</th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
 		  <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		  <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
-		  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+		  <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+		  {% if gkresult["dctypeflag"] == 3 %}
+		    <th rowspan="2" class="smwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
+		  {% else %}
+		    <th rowspan="2" class="smwrap text-center">{% trans %}Debitedted Value{% endtrans %}</th>
+		  {% endif %}
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		  {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
@@ -269,41 +278,42 @@
 	  <div class="row">
 	    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="overflow-x:hidden;overflow-y:scroll;width:140%; max-width:140%;">
 	      <tbody>
-		{% for product in gkresult["invcontents"] %}
+		{% for product in gkresult["drcrcontents"] %}
 		  <tr>
 		    <td class="mdwrap">
-		      {{ gkresult["invcontents"][product]["proddesc"] }}
+		      {{ gkresult["drcrcontents"][product]["proddesc"] }}
 		    </td>
 		    <td class="smwrap text-center">
-		      {{ gkresult["invcontents"][product]["gscode"] }}
+		      {{ gkresult["drcrcontents"][product]["gscode"] }}
 		    </td>
 		    <td class="qtywrap text-right">
-		      {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		      {{ gkresult["drcrcontents"][product]["qty"] }} {{ gkresult["drcrcontents"][product]["uom"] }}
 		    </td>
 		    <td class="qtywrap text-right">
-		      {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
+		      {{ gkresult["drcrcontents"][product]["priceperunit"] }}
 		    </td>
 
 		    <td class="smwrap text-right">
-		      {{ gkresult["invcontents"][product]["priceperunit"] }}
+		      {{ gkresult["reductval"][product]}}
 		    </td>
 		    <td class="smwrap text-right">
-		      {{ gkresult["invcontents"][product]["discount"] }}
+		      {{ gkresult["drcrcontents"][product]["discount"] }}
 		    </td>
 		    <td class="smwrap text-right">
-		      {{ gkresult["invcontents"][product]["taxableamount"] }}
+		      {#wrong#}
+		      {{ gkresult["drcrcontents"][product]["taxableamount"] }}
 		    </td>
 
-		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
-		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxamount"] }}</td>{% endif %}
 
-		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
-		    {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxamount"] }}</td>{% endif %}
 
-		    {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>{% endif %}
-		    {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
-		    <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cessrate"] }}</td>
-		    <td class="taxcell text-right">{{ gkresult["invcontents"][product]["cess"] }}</td>
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxrate"] }}</td>{% endif %}
+		    {% if gkresult["drcrcontents"][product]["taxname"]=='IGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxamount"] }}</td>{% endif %}
+		    <td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["cessrate"] }}</td>
+		    <td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["cess"] }}</td>
 		  </tr>
 		{% endfor %}
 	      </tbody>
@@ -333,24 +343,22 @@
 	      </tr>
 	    </thead>
 	    <tbody>
-	      {% for product in gkresult["invcontents"] %}
+	      {% for product in gkresult["drcrcontents"] %}
 		<tr>
-		  <td class="col-xs-12 text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
+		  <td class="col-xs-12 text-right">{{ gkresult["drcrcontents"][product]["totalAmount"] }}</td>
 		</tr>
 	      {% endfor %}
 	    </tbody>
 	    <tfoot>
 	      <td class="col-xs-12 text-right">
-		{{ gkresult["invoicetotal"] }}
+		{{ gkresult["totreduct"] }}
 	      </td>
 	    </tfoot>
 	  </table>
 	</div>
       </div>
-  {% endif %}
+      {% endif %}
     </div>
-      </div>
-  </div>
   </div>
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>

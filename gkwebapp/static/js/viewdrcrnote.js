@@ -24,7 +24,7 @@ $(document).ready(function() {
                     $("#viewsingledrcr").show();
 		    $("#viewsingledrcr").html(resp);
                     console.log("success");
-		    //$("#viewinvfooter").show();
+		    $("#viewinvfooter").show();
 		    //$("#cashmemo_print").show();
                 })
                 .fail(function() {
