@@ -187,7 +187,7 @@
 		</td>
 		<td class="smvwrap text-right">
 		  {#wrong#}
-		  {{ gkresult["drcrcontents"][product]["taxableamount"] }}
+		  {{ gkresult["drcrcontents"][product]["newtaxableamnt"] }}
 		</td>
 		</td>
 		<td class="ratewrap text-right">
@@ -301,7 +301,7 @@
 		      </td>
 		      <td class="smwrap text-right">
 			{#wrong#}
-			{{ gkresult["drcrcontents"][product]["taxableamount"] }}
+			{{ gkresult["drcrcontents"][product]["newtaxableamnt"] }}
 		      </td>
 
 		      {% if gkresult["drcrcontents"][product]["taxname"]=='SGST' %}<td class="taxcell text-right">{{ gkresult["drcrcontents"][product]["taxrate"] }}</td>{% endif %}

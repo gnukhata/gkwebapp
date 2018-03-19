@@ -26,8 +26,9 @@ def showadddrcrnote(request):
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
 
-    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"reference":json.loads(request.params["reference"]),"contents":json.loads(request.params["contents"]),"dctypeflag":request.params["dctypeflag"],"caseflag":request.params["caseflag"],"reductionval":json.loads(request.params["reductionval"])}
-    print drcrdata
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"contents":json.loads(request.params["contents"]),"dctypeflag":request.params["dctypeflag"],"caseflag":request.params["caseflag"],"reductionval":json.loads(request.params["reductionval"])}
+    if requests.params.has_key("reference"):
+        drcrdata["reference"]=request.params["reference"]
     try:
         files = {}
         count = 0
@@ -59,20 +60,18 @@ def showsingledrcrnote(request):
          drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
     if int(request.params["drcrflag"]) == 4:
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-    print drcrdata.json()["gkresult"]
     return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"status":request.params["drcrflag"]}
 
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetail", renderer="gkwebapp:templates/viewsingledrcrnote.jinja2")
 def getDrCrDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
-    print drcrnotedata.json()["gkstatus"]
     if drcrnotedata.json()["gkstatus"] == 0:
         return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrnotedata.json()["gkresult"]}
 
 @view_config(route_name="drcrnote",request_param="action=print",renderer="gkwebapp:templates/printdrcrnote.jinja2")
 def drcrNoteprint(request):
     header={"gktoken":request.headers["gktoken"]}
-    org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+    orgdata = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
-    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":drcrdata.json()["gkresult"]}
+    return {"gkstatus":orgdata.json()["gkstatus"],"org":orgdata.json()["gkdata"],"gkresult":drcrdata.json()["gkresult"]}
