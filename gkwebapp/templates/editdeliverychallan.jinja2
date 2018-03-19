@@ -1,9 +1,11 @@
+<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="panel shadow deliverychallan_edit_panel">
       <div class="panel-body">
         <div class="container-fluid row">
 	  <div class="form-group col-md-5">
+	    <div class="col-sm-12">
 	    {%if numberofdeliverynote == 0 %}
 	      <label class="text-danger">{% trans %}No Delivery Note Found!{% endtrans %}</label>
 	    {%else%}
@@ -26,165 +28,652 @@
 		</optgroup>
               </select>
 	    {%endif%}
+	    </div>
           </div>
-	  
-        </div>
-        <div class="col-md-5 deliverychallan_edit_div" hidden>
-          <div class="form-group">
-            <label for="deliverychallan_edit_challtype">{% trans %}Note Type{% endtrans %} :</label>
-            <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
-          </div>
-	  <div class="row">
-            <div class="form-group col-sm-6">
-              <label for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
-              <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
-            </div>
-            <div class="form-group col-sm-6">
-              <label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %} :</label>
-              <div class="form-inline">
-                <div class="form-group">
-                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date" accesskey="v">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_edit_month" accesskey="v">
-                </div>
-                <div class="form-group">
-                  <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v">
-                </div>
-              </div>
-            </div>
+	  <!-- View of Single Delivery Challan -->
+	  <div class="deliverychallan_edit_div borderdiv" hidden>
+		<form class="form-horizontal" >
+		  <div class="col-md-12">
+		    <div class="col-sm-12">
+			<label class="form-inline form-group nopadding" id="detailsIN" hidden><h4>Details of Delivery In: </h4></label>
+			<label class="nopadding fsize" id="detailsOUT" hidden><h4>Details of Delivery Out: </h4></label>
+		      <div class="row">
+			<div class="col-sm-12 form-group form-inline">
+			  <div class="form-group form-inline col-sm-3">
+			    <label class="col-sm-5 fsize" for="deliverychallan_edit_challanno">{% trans %}Note No{% endtrans %} :</label>
+			    <label class="col-sm-7" id="deliverychallan_edit_challanno"></label>
+			  </div>
+			  <div class="form-group form-inline col-sm-4">
+			      <label id="statedest" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Destination{% endtrans %} :</label>
+			      <label id="stateorigin" for="invoicestate" class="col-sm-5 fsize" hidden>{% trans %}State of Origin{% endtrans %} :</label>
+			      <label class="col-sm-7" id="invoicestate"></label>
+			  </div>
+			  <div class="form-group form-inline col-sm-2">
+			    <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
+			    <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
+			  </div>
+			  {% if resultgstvat != '22' %}
+			    <div class="form-group form-inline invoice_issuer col-sm-3">
+			      <label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+			      <label class="col-sm-7  nopadding fsize gstinfield" id="orggstin"></label>
+			    </div>
+			  {% endif %}
+			</div>
+		      </div>
+		      <div class="row">
+			<div class="col-sm-12 form-group form-inline">
+			  <div class="form-group form-inline col-sm-3">
+			    <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} :</label>
+			    <label class=" delchaldate col-sm-7" id="deliverychallan_edit_date"></label>
+			  </div>
+			  {%if numberofgodowns > 0 %}
+			    <div class="form-group form-inline col-sm-4">
+			      <div class="col-sm-12 form-group form-inline">
+				<label class="col-sm-5 infield" for="deliverychallan_edit_godown" hidden>Received At :</label>
+				<label class="col-sm-5 outfield" for="deliverychallan_edit_godown" hidden>Dispatch From :</label>
+				<label class="col-sm-7" id="deliverychallan_edit_godown"></label>
+			      </div>		  
+			    </div>
+			  {% endif %}
+			  <div class="form-group form-inline col-sm-4">
+			    {%if numberofgodowns > 0 %}
+			      <div class="col-sm-12 form-group form-inline">
+				<label class="col-sm-6" for="deliverychallan_edit_consignment">Type of transaction:</label>
+				<label class="col-sm-6" id="deliverychallan_edit_consignment"></label>
+			      </div>
+			    {% else %}
+			      <div class="col-sm-12 form-group form-inline">
+				<label class="col-sm-6" for="deliverychallan_edit_consignment">Type of transaction:</label>
+				<label class="col-sm-6" id="deliverychallan_edit_consignment"></label>
+			      </div>
+			    {%endif%}
+			  </div>
+			  <div class="form-inline form-group col-sm-1" >
+			  </div>
+			</div>
+		      </div>
+		    </div>
+
+		    <!-- Details Supplier/Customer -->
+		    <div class="col-md-6 hborderdiv">
+		      <label class="infield" hidden><h4>Details of Supplier : </h4></label>
+		      <label class="outfield" hidden><h4>Details of Receiver | Billed to : </h4></label>
+		      <div class="form-group form-inline">
+			<label class="col-sm-4 fsize infield" for="deliverychallan_customer" hidden>Supplier :</label>
+			<label class="col-sm-4 fsize outfield" for="deliverychallan_customer" hidden>Customer :</label>
+			<label class="col-sm-8 fsize" id="deliverychallan_customer"></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label for="deliverychallan_customerstate" class="col-sm-4 fsize infield" hidden>Supplier State :</label>
+			<label for="deliverychallan_customerstate" class="col-sm-4 fsize outfield" hidden>Customer State :</label>
+			<label id="deliverychallan_customerstate" class="col-sm-8"></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label for="statecodeofcustomer" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
+			<label id="statecodeofcustomer" class="col-sm-8"></label>
+		      </div>
+		      <!-- For VAT -->
+		      <div class="form-group form-inline tinfield" hidden>
+			<label for="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
+			<label type="text" id="tin" class="col-sm-8"></label>
+		      </div>
+		      <!-- For GST -->
+		      <div class="form-group form-inline gstinfield">
+			<label for="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
+			<label type="text" id="gstin" class="col-sm-8" name="gstin" ></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label class="col-sm-4 fsize infield" for="deliverychallan_customeraddr" hidden>Supplier Address :</label>
+			<label class="col-sm-4 fsize outfield" for="deliverychallan_customeraddr" hidden>Customer Address :</label>
+			<label class="col-sm-8" id="deliverychallan_customeraddr"></label>
+		      </div>
+		    </div>
+
+		    <!-- Details Of Consignee -->
+		    <div class="col-md-6 hborderdiv">
+		      <h4>Details of Consignee | Shipped to: </h4>
+		      <div class="form-group form-inline">
+			<label for="delchal_consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
+			<label id="delchal_consigneename" class="col-sm-8"></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label for="delchal_consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
+			<label class="col-sm-8" id="delchal_consigneestate"></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label for="delchal_statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
+			<label id="delchal_statecodeofconsignee" class="col-sm-8"></label>
+		      </div>
+		      <!-- For VAT -->
+		      <div class="form-group form-inline tinfield" hidden>
+			<label for="delchal_tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
+			<label type="text" id="delchal_tinconsignee" class="col-sm-8" name="tinconsignee"></label>
+		      </div>
+		      <!-- For GST -->
+		      <div class="form-group form-inline gstinfield">
+			<label for="delchal_gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
+			<label id="delchal_gstinconsignee" class="col-sm-8 gstin"></label>
+		      </div>
+		      <div class="form-group form-inline">
+			<label for="delchal_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
+			<label id="delchal_consigneeaddr" class="col-sm-8"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <!-- For Page adjust -->
+		  <a id="taxapplicablescroll"></a>
+		  <div class="col-md-12">
+		    <div class="col-md-3">
+		      <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :
+			<label for="taxapplicabletext" id="taxapplicabletext" name="taxflag"></label>
+		      </label>
+		    </div>
+		    {% if gkstatus=="in" %}
+		      <input type="hidden" id="status" value="9">
+		    {% else %}
+		      <input type="hidden" id="status" value="15">
+		    {% endif %}
+		  </div>
+
+		  <!-- Product Table -->
+		  <div class="col-md-12">
+		    {% if resultgstvat == '29' or resultgstvat == '22' %}
+		      {% if resultgstvat == '22' %}
+			<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
+		      {% else %}
+			  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+		      {% endif %}
+		      <thead class="bg-primary">
+			<tr>
+			  <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
+			  <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+			  <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+			  <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+			  <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			  <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
+			  <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+			  <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
+			  <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
+			  <th class="crosswrap"></th>
+			</tr>
+		      </thead>
+		      <tbody>
+			<tr>
+			  <td class="mdvwrap">
+			    <label class="form-control input-sm product_name_vat"></label>
+			  </td>
+			  <td class="qtyvwrap">
+			    <div class="input-group">
+			      <label class="invoice_product_quantity_vat form-control input-sm text-right numtype"></label>
+			      <span class="input-group-addon input-sm unitaddon_qty_vat"></span>
+			    </div>
+			  </td>
+			  <td class="qtyvwrap">
+			    <div class="input-group">
+			      <label class="invoice_product_freequantity_vat form-control input-sm text-right numtype"></label>
+			      <span class="input-group-addon input-sm unitaddon_freeqty_vat"></span>
+			    </div>
+			  </td>
+			  <td class="smvwrap">
+			    <label class="invoice_product_per_price_vat form-control input-sm text-right numtype"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label class="invoice_product_discount_vat form-control input-sm text-right numtype"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype"></label>
+			  </td>
+			  <td class="ratewrap">
+			    <label class="invoice_product_tax_rate_vat form-control input-sm text-right numtype"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label class="invoice_product_tax_amount_vat form-control text-right numtype"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label class="invoice_product_total form-control input-sm text-right numtype"></label>
+			  </td>
+			  <td class="crosswrap">
+			  </td>
+			</tr>
+		      </tbody>
+		      <tfoot>
+			<tr>
+			  <td colspan="4" class="text-right">
+			    {% trans %}Total{% endtrans %}
+			  </td>
+			  <!--  Total : ptotal       -->
+			  <td class="smvwrap">
+			    <label id="discounttotal_product_vat" class=" form-control input-sm text-right"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right"></label>
+			  </td>
+			  <td class="ratewrap">
+			  </td>
+			  <td class="smvwrap">
+			    <label id="totaltax" class=" form-control input-sm text-right"></label>
+			  </td>
+			  <td class="smvwrap">
+			    <label id="total_product_vat" class=" form-control input-sm text-right"></label>
+			  </td>
+			  <td class="crosswrap">
+			  </td>
+			</tr>
+		      </tfoot>
+			  </table>
+		    {% endif %}
+		    {% if resultgstvat == '29' or resultgstvat == '7' %}
+		      <div class="row col-sm-12" id="gstproducttable">
+			<div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
+			  <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+			</div>
+			<div class="col-sm-10" style="overflow-x:scroll;">
+			  <div class="row">
+			    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
+			      <thead class="bg-primary">
+				<tr>
+				  <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
+				  <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
+				  <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+				  <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+				  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+				  <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+				  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+				  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
+				  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
+				  <th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
+				  <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
+				</tr>
+
+				<tr>
+				  <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+				  <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+				  <th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+				  <th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+				  <th class="igstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+				  <th class="igstfield text-center">{% trans %}Amount{% endtrans %}</th>
+				  <th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+				  <th class="text-center">{% trans %}Amount{% endtrans %}</th>
+				</tr>
+			      </thead>
+			    </table>
+			  </div>
+			  <div class="row">
+			    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+			      <tbody>
+				<tr>
+				  <td class="mdwrap">
+				    <label class="form-control input-sm product_name_gst"></label>			
+				  </td>
+				  <td class="smwrap text-center" style="vertical-align:middle;">
+				    <label class="invoice_product_hsncode text-center"></label>
+				  </td>
+				  <td class="qtywrap">
+				    <div class="input-group">
+				      <label class="invoice_product_quantity_gst form-control input-sm text-right numtype"></label>
+				      <span class="input-group-addon input-sm unitaddon_qty_gst"></span>
+				    </div>
+				  </td>
+				  <td class="qtywrap">
+				    <div class="input-group">
+				      <label class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap"></label>
+				      <span class="input-group-addon input-sm unitaddon_freeqty_gst"></span>
+				    </div>
+				  </td>
+				  <td class="smwrap">
+				    <label class="invoice_product_per_price_gst form-control input-sm text-right numtype"></label>
+				  </td>
+				  <td class="smwrap">
+				    <label class="invoice_product_discount_gst form-control input-sm text-right numtype"></label>
+				  </td>
+				  <td class="smwrap">
+				    <label class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype"></label>
+				  </td>
+				  <td class="taxcell sgstfield"><label class="invoice_product_cgstrate trate form-control input-sm text-right numtype"></label></td>
+				  <td class="taxcell sgstfield"><label class="invoice_product_cgstamount tamount form-control input-sm text-right numtype"></label></td>
+
+				  <td class="taxcell sgstfield"><label class="invoice_product_sgstrate trate form-control input-sm text-right numtype"></label></td>
+				  <td class="taxcell sgstfield"><label class="invoice_product_sgstamount tamount input-sm form-control text-right numtype"></label></td>
+
+				  <td class="taxcell igstfield"><label class="invoice_product_igstrate trate input-sm text-right form-control numtype"></label></td>
+				  <td class="taxcell igstfield"><label class="invoice_product_igstamount tamount form-control input-sm text-right numtype"></label></td>
+				  <td class="taxcell"><label class="invoice_product_cessrate trate input-sm text-right form-control numtype"></label></td>
+                                  <td class="taxcell"><label class="invoice_product_cessamount tamount form-control input-sm text-right numtype"></label></td>
+				</tr>
+                              </tbody>
+			    </table>
+			  </div>
+			  <div class="row">
+			    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+			      <tfoot>
+				<tr>
+				  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+				  <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+				  <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
+				  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
+
+				  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8"></span></td>
+				  <td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-sm text-right" size="8"></span></td>
+				  <td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8"></span></td>
+			      </tfoot>
+			    </table>
+			  </div>
+			</div>
+			<div class="col-sm-2 nopadding">
+			  <table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
+			    <thead>
+			      <tr>
+				<th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
+				<th class="col-xs-4"></th>
+			      </tr>
+			    </thead>
+			    <tbody>
+			      <tr>
+				<td class="col-xs-8"><input type="text" class="invoice_product_total_gst form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
+				<td class="col-xs-4 text-center">
+				</td>
+			      </tr>
+			    </tbody>
+			    <tfoot>
+			      <td class="col-xs-8 text-right">
+				<span id="total_product_gst" class="input-sm text-right" size="9"></span>
+			      </td>
+			      <td class="col-xs-4">
+
+			      </td>
+			    </tfoot>
+			  </table>
+			</div>
+		      </div>
+		    {% endif %}
+		  </div>
+		  <!-- Product Table Close -->
+		  <div class ="row col-sm-12">
+		    <div class="col-sm-6" style="margin-top:1.1cm;">
+		      <div class="row col-sm-12">
+			<div class="form-group form-inline">
+			  <label for="deliverychallan_noofpackages" class="col-sm-5">{% trans %}Number of Packages{% endtrans %} :</label>
+			  <label id="deliverychallan_noofpackages" class="col-sm-5"></label>
+			</div>
+		      </div>
+		      <div class="row col-sm-12">
+			<div class="form-inline form-group">
+			  <label for="deliverychallan_edit_modeoftransport" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
+			  <label id="deliverychallan_edit_modeoftransport" class="col-sm-5"></label>
+			</div>
+		      </div>
+		      <div class="row col-sm-12">
+			<div class="form-inline form-group vehiclenodiv" hidden>
+			  <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
+			  <label id="vehicleno" class="col-sm-5"></label>
+			</div>
+		      </div>
+		      <div class="row col-sm-12">
+			<div class="form-group form-inline invoice_issuer" hidden>
+			  <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+			  <label id="delchal_issuer_name" class="col-sm-5"></label>
+			</div>
+		      </div>
+		      <div class="row col-sm-12">
+			<div class="form-inline form-group invoice_issuer" hidden>
+			  <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
+			  <label id="delchal_issuer_designation" class="col-sm-5"></label>
+			</div>
+		      </div>
+		      <div class="row col-sm-12">
+			<div class="form-group form-inline">
+			  <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
+			  <label id="supply_date" class="col-sm-5"></label>
+			</div>
+		      </div>
+		    </div>
+		    <div class="col-sm-2">
+		    </div>
+		    <div class="col-sm-4" style="margin-top:0.7cm;">
+		      <div class="row hborderdiv">
+			<div class="form-group form-inline">
+			  <div class="col-sm-6">
+			    <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		      <div class="gstfield">
+			<div class="row sgstfield hborderdiv">
+			<div class="form-group sgstfield form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		      </div>
+		      <div class="gstfield">
+			<div class="row sgstfield hborderdiv">
+			<div class="form-group sgstfield form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+			</div>
+		      </div>
+		      <div class="gstfield ">
+			<div class="row igstfield hborderdiv">
+			<div class="form-group igstfield form-inline">
+			  <div class="col-sm-6">
+			    <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+			</div>
+		      </div>
+		      <div class="row hborderdiv gstfield">
+			<div class="form-group form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		      <div class="row hborderdiv vatfield">
+			<div class="form-group form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		      <div class="row hborderdiv">
+			<div class="form-group form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		      <div class="row hborderdiv" style="border-bottom-style:solid;">
+			<div class="form-group form-inline">
+			  <div class="col-sm-6">
+			    <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
+			  </div>
+			  <div class="col-sm-6 text-right">
+			    <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+			  </div>
+			</div>
+		      </div>
+		    </div>
+		  </div>
+		</form>
 	  </div>
-	  <div class="row">
-            <div class="form-group col-sm-6">
-              <label for="deliverychallan_edit_customer" id="clabel">{% trans %}Customer{% endtrans %} :</label>
-              <label for="deliverychallan_edit_customer" id="slabel">{% trans %}Supplier{% endtrans %} :</label>
-              <select class="form-control deliverychallan_edit_disable input-sm deliverychallan_edit_disable" id="deliverychallan_edit_customer" accesskey="">
-                <optgroup id="customersgroup">
-                  {% for customer in customers %}
-                    <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-                  {% endfor %}
-                </optgroup>
-                <optgroup id="suppliersgroup">
-                  {% for supplier in suppliers %}
-                    <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                  {% endfor %}
-                </optgroup>
-              </select>
+	  <div class="col-sm-12">
+	  <div class="col-md-5 deliverychallan_OLD_div" hidden>
+            <div class="form-group">
+              <label for="deliverychallan_edit_challtype">{% trans %}Note Type{% endtrans %} :</label>
+              <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
             </div>
-            <div class ="form-group col-sm-6">
-              <label for="deliverychallan_customeraddr">
-                {% trans %}Address{% endtrans %} :
-              </label>
-	      <textarea class="form-control input-sm deliverychallan_edit_disable" rows="2" cols="40" id="deliverychallan_customeraddr" aria-describedby="textareahelp" accesskey="" disabled></textarea>
-            </div>
-	  </div>
-	  <div class="row">
-            <div class="form-group col-sm-6">
-	      {% if godowns %}
-		<label for="deliverychallan_edit_godown" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
-		<label for="deliverychallan_edit_godown" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
-		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown" accesskey="">
-                  <option value=""  selected>{% trans %}None{% endtrans %}</option>
-                  {% for godown in godowns %}
-                    <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                  {% endfor %}
-		</select>
-	      {% endif %}
-            </div>
-	    {% if godowns %}
+	    <div class="row">
               <div class="form-group col-sm-6">
-		<label for="deliverychallan_edit_consignment">Type of Transaction:</label>
-		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
-                  <option value="4">{% trans %}Sale{% endtrans %}</option>
-                  <option value="1">{% trans %}Approval{% endtrans %}</option>
-                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                  <option value="19">{% trans %}Sample{% endtrans %}</option>
-                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-		</select>
-              </label>
+		<label for="deliverychallan_edit_challanno_old">{% trans %}Note No{% endtrans %} :</label>
+		<input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno_old" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
               </div>
-	    {% else %}
-	      <div class="form-group col-sm-12">
-		<label for="deliverychallan_edit_consignment">Type of Transaction:</label>
-		<select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
-                  <option value="16">{% trans %}Purchase{% endtrans %}</option>
-                  <option value="4">{% trans %}Sale{% endtrans %}</option>
-                  <option value="1">{% trans %}Approval{% endtrans %}</option>
-                  <option value="3">{% trans %}Consignment{% endtrans %}</option>
-                  <option value="19">{% trans %}Sample{% endtrans %}</option>
-                  <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
-		</select>
-              </label>
+              <div class="form-group col-sm-6">
+		<label for="deliverychallan_edit_date">{% trans %}Date{% endtrans %} :</label>
+		<div class="form-inline">
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="DD" id="deliverychallan_edit_date_old" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="2" maxlength="2" placeholder="MM" id="deliverychallan_edit_month" accesskey="v">
+                  </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control deliverychallan_edit_disable input-sm delchaldate" size="4" maxlength="4" placeholder="YYYY" id="deliverychallan_edit_year" accesskey="v">
+                  </div>
+		</div>
               </div>
-	    {% endif %}
-	  </div>
-	  <div class="row">
-	    <div class="form-group col-sm-6">
-	      <label for="deliverychallan_edit_consigneename" class="fsize">{% trans %}Consignee Name{% endtrans %} :</label>
-	      <input type="text" id="deliverychallan_edit_consigneename" class="col-sm-8 form-control input-sm deliverychallan_edit_disable"></input>
 	    </div>
-	    
-	    <div class="form-group col-sm-6">
-	      <label for="deliverychallan_edit_consigneestate" class="fsize">{% trans %}Consignee State{% endtrans %} :</label>
-	      <input type="text" class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneestate"></input>
+	    <div class="row">
+              <div class="form-group col-sm-6">
+		<label for="deliverychallan_edit_customer_old" id="clabel">{% trans %}Customer{% endtrans %} :</label>
+		<label for="deliverychallan_edit_customer_old" id="slabel">{% trans %}Supplier{% endtrans %} :</label>
+		<select class="form-control deliverychallan_edit_disable input-sm deliverychallan_edit_disable" id="deliverychallan_edit_customer_old" accesskey="">
+                  <optgroup id="customersgroup">
+                    {% for customer in customers %}
+                      <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+                    {% endfor %}
+                  </optgroup>
+                  <optgroup id="suppliersgroup">
+                    {% for supplier in suppliers %}
+                      <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+                    {% endfor %}
+                  </optgroup>
+		</select>
+              </div>
+              <div class ="form-group col-sm-6">
+		<label for="deliverychallan_customeraddr_old">
+                  {% trans %}Address{% endtrans %} :
+		</label>
+		<textarea class="form-control input-sm deliverychallan_edit_disable" rows="2" cols="40" id="deliverychallan_customeraddr_old" aria-describedby="textareahelp" accesskey="" disabled></textarea>
+              </div>
 	    </div>
-	  </div>
-	  <div class="form-group">
-	    <label for="deliverychallan_edit_consigneeaddr">
-	      {% trans %}Consignee Address{% endtrans %} :
-            </label>
-	    <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneeaddr" placeholder="" accesskey="">
-	  </div>
-        </div>
-        <div class="col-md-7 deliverychallan_edit_div" id="deliverychallan_edit_product_div" hidden>
-          <div class="row">
-            <div class="panel">
-              <table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
-		<thead class="bg-primary">
-                  <tr>
-                    <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}Quantity{% endtrans %}</th>
-                    <th class="col-xs-1"></th>
-                  </tr>
-		</thead>
-		<tbody>
-		</tbody>
-              </table>
-            </div>
-            <div class="col-md-6">
-              <label for="deliverychallan_edit_noofpackages">{% trans %}Number of Packages{% endtrans %} :</label>
-              <input type="text" class="form-control deliverychallan_edit_disable input-sm text-right" id="deliverychallan_edit_noofpackages" value="">
-            </div>
-            <div class="col-md-6">
-              <label for="deliverychallan_edit_modeoftransport">{% trans %}Mode of Transport{% endtrans %} :</label>
-              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_modeoftransport">
-            </div>
-            <div class="col-md-6">
-              <br>
-              <label for="deliverychallan_edit_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
-              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_issuername" placeholder="Enter name">
-            </div>
-            <div class="col-md-6">
-              <br>
-              <label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
-              <input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" placeholder="Enter designation">
-            </div>
-	  </div>
-	  <br><br>
-	  <div class="row">
-	    <div class="panel-footer" hidden>
-	      <div class="float-right" style="text-align: right;border-radius: 5px 5px 5px 5px !important;">
-		<button id="deliverychallan_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-		<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+	    <div class="row">
+              <div class="form-group col-sm-6">
+		{% if godowns %}
+		  <label for="deliverychallan_edit_godown_old" id="fgolabel">{% trans %}Received At{% endtrans %} :</label>
+		  <label for="deliverychallan_edit_godown_old" id="tgolabel">{% trans %}Dispatch From{% endtrans %} :</label>
+		  <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_godown_old" accesskey="">
+                    <option value=""  selected>{% trans %}None{% endtrans %}</option>
+                    {% for godown in godowns %}
+                      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                    {% endfor %}
+		  </select>
+		{% endif %}
+              </div>
+	      {% if godowns %}
+		<div class="form-group col-sm-6">
+		  <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+		  <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                    <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                    <option value="4">{% trans %}Sale{% endtrans %}</option>
+                    <option value="1">{% trans %}Approval{% endtrans %}</option>
+                    <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                    <option value="19">{% trans %}Sample{% endtrans %}</option>
+                    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+		  </select>
+              </label>
+		</div>
+	      {% else %}
+		<div class="form-group col-sm-12">
+		  <label for="deliverychallan_edit_consignment">Type of Transaction:</label>
+		  <select class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_consignment" accesskey="">
+                    <option value="16">{% trans %}Purchase{% endtrans %}</option>
+                    <option value="4">{% trans %}Sale{% endtrans %}</option>
+                    <option value="1">{% trans %}Approval{% endtrans %}</option>
+                    <option value="3">{% trans %}Consignment{% endtrans %}</option>
+                    <option value="19">{% trans %}Sample{% endtrans %}</option>
+                    <option value="6">{% trans %}Free Replacement{% endtrans %}</option>
+		  </select>
+              </label>
+		</div>
+	      {% endif %}
+	    </div>
+	    <div class="row">
+	      <div class="form-group col-sm-6">
+		<label for="deliverychallan_edit_consigneename" class="fsize">{% trans %}Consignee Name{% endtrans %} :</label>
+		<input type="text" id="deliverychallan_edit_consigneename" class="col-sm-8 form-control input-sm deliverychallan_edit_disable"></input>
 	      </div>
-	    </div>  
+	      
+	      <div class="form-group col-sm-6">
+		<label for="deliverychallan_edit_consigneestate" class="fsize">{% trans %}Consignee State{% endtrans %} :</label>
+		<input type="text" class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneestate"></input>
+	      </div>
+	    </div>
+	    <div class="form-group">
+	      <label for="deliverychallan_edit_consigneeaddr">
+		{% trans %}Consignee Address{% endtrans %} :
+              </label>
+	      <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_consigneeaddr" placeholder="" accesskey="">
+	    </div>
+          </div>
+          <div class="col-md-7 deliverychallan_OLD_div" id="deliverychallan_OLD_product_div" hidden>
+            <div class="row">
+              <div class="panel">
+		<table id="deliverychallan_edit_product_table" class="table shadow table-condensed table-bordered fixed-edit-table">
+		  <thead class="bg-primary">
+                    <tr>
+                      <th class="col-xs-7">{% trans %}Product{% endtrans %}</th>
+                      <th class="col-xs-4 text-center">{% trans %}Quantity{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+                    </tr>
+		  </thead>
+		  <tbody>
+		  </tbody>
+		</table>
+              </div>
+              <div class="col-md-6">
+		<label for="deliverychallan_edit_noofpackages">{% trans %}Number of Packages{% endtrans %} :</label>
+		<input type="text" class="form-control deliverychallan_edit_disable input-sm text-right" id="deliverychallan_edit_noofpackages" value="">
+              </div>
+              <div class="col-md-6">
+		<label for="deliverychallan_edit_modeoftransport_old">{% trans %}Mode of Transport{% endtrans %} :</label>
+		<input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_modeoftransport_old">
+              </div>
+              <div class="col-md-6">
+		<br>
+		<label for="deliverychallan_edit_issuername">{% trans %}Issuer's Name{% endtrans %} :</label>
+		<input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_issuername" placeholder="Enter name">
+              </div>
+              <div class="col-md-6">
+		<br>
+		<label for="deliverychallan_edit_designation">{% trans %}Designation{% endtrans %} :</label>
+		<input type="text" class="form-control deliverychallan_edit_disable input-sm" id="deliverychallan_edit_designation" placeholder="Enter designation">
+              </div>
+	    </div>
 	  </div>
-        </div>
+	  </div>
+	</div>
+      </div>
+      <div class="panel-footer">
+	<div style="text-align:left; border-radius: 5px 5px 5px 5px !important;">
+	  <button id="deliverychallan_editprint" class="btn btn-primary btn-sm" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+	  <!-- <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button> -->
+	</div>  
       </div>
     </div>
-
-
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editdeliverychallan.js')}}"></script>
 </body>
