@@ -50,7 +50,7 @@ $(document).ready(function() {
     if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
 	$(".billhide").hide();
 	if (sessionStorage.invsflag==0){
-	    $(".invhide").hide(); //Hides list of invoices in Sale and Purchase vouchers when invoice flag is set to zero.
+	    $(".invhide").hide(); //Hides list of invoices in Sale and Purchase voucher when invoice flag is set to zero.
 	}
 	else
 	{
@@ -346,14 +346,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if(event.which==13 && $('#vdate').val()!=""){
       $('#vmonth').select().focus();
     }
-    else if(event.which==13 && $('#vdate').val()==""){
-	  $("#voucherdate-alert").alert();
-      $("#voucherdate-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#voucherdate-alert").hide();
-      });
-    
     }
-    }
+      
     if (event.which==38) {
       $("#vno").select().focus();
     }
@@ -367,20 +361,27 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vmonth').focus().select();
       event.preventDefault();
     }
+     else if (event.which==13 && $('#vdate').val()=="") {
+        $("#voucherdate-alert").alert();
+        $("#voucherdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#voucherdate-alert").hide();
+        });
+        $('#vdate').focus();
+        return false;
+      }
+      //else {
+        //$("#vmonth").focus().select();
+      //}
+   
+	  
   });
 
   $('#vmonth').keyup(function(event) {
-    if(event.which==13 && $('#vmonth').val()!=""){
+      if(event.which==13 && $('#vmonth').val()){
       event.preventDefault();
       $('#vyear').focus().select();
     }
-       else if(event.which==13 && $('#vmonth').val()==""){
-	  $("#vouchermon-alert").alert();
-      $("#vouchermon-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#vouchermon-alert").hide();
-      });
-    
-    }
+       
    
     if (event.which==38) {
       event.preventDefault();
@@ -392,6 +393,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       event.preventDefault();
     }
+     else if (event.which==13 && $('#vmonth').val()=="") {
+        $("#voucherdate-alert").alert();
+        $("#voucherdate-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#voucherdate-alert").hide();
+        });
+        $('#vmonth').focus();
+        return false;
+      }
+     // else {
+       // $("#vyear").focus().select();
+      //}
+   
     if (event.which==190 && event.ctrlKey) {
       $('#vyear').focus();
       event.preventDefault();
@@ -421,16 +434,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	event.preventDefault();
 
     }
-      else if(event.which==13 && $('#vyear').val()==""){
-	  $("#date-alert").alert();
-      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#date-alert").hide();
-      });
-	  
-	  $('#vdate').focus().select();
-	  return false;
-
-      }
       
     if (event.which==38) {
       $("#vmonth").select().focus();
@@ -442,10 +445,17 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vyear').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
       $('#vmonth').focus().select();
-	event.preventDefault();
-	
-	
+	event.preventDefault();	
     }
+      else if (event.which==13 && $('#vyear').val()=="") {
+        $("#date-alert").alert();
+        $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-alert").hide();
+        });
+        $('#vdate').focus();
+        return false;
+      }
+     
       
     if (event.which==190 && event.ctrlKey) {
 
@@ -1426,7 +1436,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if(!Date.parseExact($("#vdate").val()+$("#vmonth").val()+$("#vyear").val(), "ddMMyyyy")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#date-alert").hide();
+          $("#date-alert").hide();
+	  
       });
       $('#vdate').focus().select();
       return false;
