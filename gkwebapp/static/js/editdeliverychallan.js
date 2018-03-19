@@ -69,7 +69,7 @@ $(document).ready(function() {
     })
 	.done(function(resp) {
 	console.log("success");
-	$(".panel-footer").hide();
+	$(".panel-footer").hide();    
 	if(resp.delchaldata.delchalContents){
 	    $(".deliverychallan_OLD_div").hide();
 	    $("#deliverychallan_OLD_product_div").hide();
@@ -126,6 +126,8 @@ $(document).ready(function() {
 	if (resp.delchaldata.delchaldata.taxflag == '7'){
 	    $("#gstproducttable").show();
 	    $("#invoice_product_table_vat").hide();
+	    $(".gstinfield").show();
+	    $(".tinfield").hide();
 	    if(resp.delchaldata.delchaldata.consignee){
 		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
 		    $(".igstfield").hide();
@@ -242,10 +244,13 @@ $(document).ready(function() {
       
       $('#deliverychallan_noofpackages').text(resp.delchaldata.delchaldata.noofpackages);
       $('#deliverychallan_edit_modeoftransport').text(resp.delchaldata.delchaldata.modeoftransport);
-	var vehicleno = resp.delchaldata.delchaldata.vehicleno;
-	if(vehicleno!=""){
+	    var vehicleno = resp.delchaldata.delchaldata.vehicleno;
+	    if(resp.delchaldata.delchaldata.modeoftransport == "Road"){
+	    $(".vehiclenodiv").show();
 	    $("#vehicleno").text(vehicleno);
-	}
+	    }else{
+		$(".vehiclenodiv").hide();
+	    }
 	$("#supply_date").text(resp.delchaldata.dateofsupply);
 	$('#deliverychallan_edit_product_table tbody').empty();
 	if(resp.delchaldata.delchaldata.taxflag == 7){

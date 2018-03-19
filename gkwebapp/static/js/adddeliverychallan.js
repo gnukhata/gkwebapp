@@ -2570,6 +2570,7 @@ else {
         consignee["consigneestate"] = $.trim($("#consigneestate").val());
 	consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
 	consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
+	consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
     }
       
 	//------------VAT Product Values---------------//
@@ -2752,6 +2753,7 @@ else {
 	form_data.append("consignee", JSON.stringify(consignee));
     }
 	form_data.append("modeoftransport", $('#transportationmode').val());
+	form_data.append("vehicleno", $("#vehicleno").val());
       if ($("#status").val() == 15) {
 	  form_data.append("issuername", $("#invoice_issuer_name").val());
 	  form_data.append("designation", $("#invoice_issuer_designation").val());
@@ -3040,6 +3042,7 @@ else {
             consignee["consigneestate"] = $.trim($("#consigneestate").val());
 	    consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
 	    consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
+	    consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
 	}
       
 	//------------VAT Product Values---------------//
@@ -3221,6 +3224,7 @@ else {
 	    dataset["consignee"]=JSON.stringify(consignee);
 	}
 	dataset["modeoftransport"]= $('#transportationmode').val();
+	dataset["vehicleno"]= $("#vehicleno").val();
 	if ($("#status").val() == 15) {
 	    dataset["issuername"] = $("#invoice_issuer_name").val();
 	    dataset["designation"] = $("#invoice_issuer_designation").val();
