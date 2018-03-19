@@ -47,7 +47,7 @@
     <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
     <div class="hidden-print">
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>{% trans %}List of Outstanding{% endtrans %} {% if inoutflag|int == 9 %}{% trans %}Purchase{% endtrans %}{% else %}{% trans %}Sale{% endtrans %}{% endif %} {% trans %}Invoices{% endtrans %}</strong></span>
+      <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
     </div>
 
     <div class="table-responsive printorgdetails">
@@ -71,7 +71,11 @@
               {% trans %}Invoice Date{% endtrans %}
             </th>
             <th class="mdlwrap text-center" >
-              {% trans %}Cust/Supp Name{% endtrans %}
+              {% if inoutflag|int == 9 %}
+                {% trans %}Supplier Name{% endtrans %}
+	      {% else %}
+		{% trans %}Customer Name{% endtrans %}
+	      {% endif %}
             </th>
             <th class="smlwrap text-right" >
               {% trans %}Invoice Amount{% endtrans %}
@@ -84,7 +88,7 @@
 	<tbody>
           {% for invoice in gkresult %}
             <tr data-invid="{{invoice["invid"]}}">
-              <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+	      <td class="srnowrap text-center">{{loop.index}}</td>
               <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
               <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
               <td class="mdlwrap text-center">{{invoice["custname"]}}</td>

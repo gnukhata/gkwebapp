@@ -204,8 +204,8 @@ $(document).ready(function() {
     $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
-        var linvurlstring = 'inoutflag=' + $("#reportinoutselect").val() + '&orderflag=' + $("#reportorderselect").val() + '&typeflag=' + $("#reporttypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
-        xhr.open('GET', '/billwise?type=spreadsheet&' + linvurlstring, true);
+        var linvurlstring = '&inoutflag=' + $("#reportinoutselect").val() + '&orderflag=' + $("#reportorderselect").val() + '&typeflag=' + $("#reporttypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
+        xhr.open('GET', '/billwise?type=spreadsheet&fystart=' + sessionStorage.getItem('year1') + '&orgname=' + sessionStorage.getItem('orgn') + '&fyend=' + sessionStorage.getItem('year2') + linvurlstring, true);
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         xhr.responseType = 'blob';
 

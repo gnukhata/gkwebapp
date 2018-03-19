@@ -100,7 +100,7 @@
        <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
        <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
        <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-       <span style="margin-left: 42%;"><strong>{% trans %}List of Outstanding{% endtrans %} {% if inoutflag|int == 9 %}{% trans %}Purchase{% endtrans %}{% else %}{% trans %}Sale{% endtrans %}{% endif %} {% trans %}Invoices{% endtrans %}</strong></span>
+       <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
       <br>
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; display:none" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
       <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
@@ -116,7 +116,11 @@
                   {% trans %}Invoice Date{% endtrans %}
                </th>
                <th class="mdlwrap text-center" >
-                  {% trans %}Cust/Supp Name{% endtrans %}
+		 {% if inoutflag|int == 9 %}
+                   {% trans %}Supplier Name{% endtrans %}
+		 {% else %}
+		   {% trans %}Customer Name{% endtrans %}
+		 {% endif %}
                </th>
                <th class="smlwrap text-right" >
                   {% trans %}Invoice Amount{% endtrans %}
@@ -129,7 +133,7 @@
          <tbody>
            {% for invoice in gkresult %}
              <tr data-invid="{{invoice["invid"]}}">
-            <td class="srnowrap text-center">{{invoice["srno"]}}</td>
+            <td class="srnowrap text-center">{{loop.index}}</td>
             <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
             <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
             <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
@@ -144,7 +148,7 @@
          <nbsp>
          <button type="button" class="btn btn-sm btn-warning" id="viewanotherlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
          <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-         <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+         <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="e"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Vi<u>e</u>w Printable Version{% endtrans %}</button>
       </span>
      </div>
      <div id="viewinvdiv" hidden>
