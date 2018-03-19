@@ -1417,7 +1417,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if ($('#vdate').val()=="" || $('#vmonth').val()=="" || $('#vyear').val()==""||$('#vdate').val()==0 || $('#vmonth').val()==0 || $('#vyear').val()==0) {
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#date-alert").hide();
+          $("#date-alert").hide();
+	  
       });
       $('#vdate').focus().select();
       return false;
