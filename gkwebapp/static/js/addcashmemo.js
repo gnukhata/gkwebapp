@@ -370,11 +370,11 @@ $(document).ready(function() {
     });
     $("#gstin").keydown(function(event) {
         if (event.which == 13) {
-	    let gstinstring=$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val(); //Concatinating
+	    let gstinstring=$("#gstin_panno").val() + $("#gstin").val(); //Concatinating
 	    event.preventDefault();
 	    if ($("#taxapplicable").val() == 7) {
 		if(gstinstring != ''){
-  		    if(gstinstring.length !=15){
+  		    if(gstinstring.length !=13){
   			$("#gstin-improper-modal").alert();
 			$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 			    $("#gstin-improper-modal").hide();
@@ -1177,7 +1177,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	//Validation for GSTIN on Save Button.
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var panno1= $("#gstin_panno").val();
-	let gstinstring=$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val();
+	let gstinstring=$("#gstin_panno").val() + $("#gstin").val();
 	 if ($("#taxapplicable").val() == 7) {
 	     if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
 		 $("#gstin-improper-modal").alert();
@@ -1196,7 +1196,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	    return false;
 	}
 	else if(gstinstring != ""){
-	    if(gstinstring.length != 15){
+	    if(gstinstring.length != 13){
 		$("#gstin-improper-modal").alert();
 		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-modal").hide();
@@ -1363,12 +1363,16 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-	form_data.append("orgstategstin",$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val());
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
 	form_data.append("invoicetotalword", numbertowords);
-	
+	let gstinstr= $("#gstin_panno").val() + $("#gstin").val();
+	if(gstinstr != ''){
+  	    if(gstinstr.length == 13){
+		form_data.append("orgstategstin",$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val());
+	    }
+	}
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
@@ -1842,4 +1846,3 @@ $(document).off("keyup").on("keyup", function(event) {
   });
     
 });
-
