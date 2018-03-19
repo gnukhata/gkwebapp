@@ -26,6 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Rohini Baraskar" <robaraskar@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 // This script is for the add cashmemo page
@@ -47,6 +48,7 @@ $(document).ready(function() {
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var invoicedate = "";
+    var numbertowords = "";
     var invoicedatestring = "";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
 
@@ -70,7 +72,7 @@ $(document).ready(function() {
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 	var totalcgst = 0.00;
 	var totalsgst = 0.00;
 	var totalcess = 0.00;
@@ -129,7 +131,7 @@ $(document).ready(function() {
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
@@ -1237,6 +1239,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
+	console.log(numbertowords+"1");
        var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1252,6 +1255,8 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
+	form_data.append("invoicetotalword", numbertowords);
+	console.log(numbertowords+"2");
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)

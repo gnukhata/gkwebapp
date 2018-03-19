@@ -87,7 +87,7 @@ $(document).ready(function() {
 	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 
 	$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 
@@ -117,6 +117,7 @@ $(document).ready(function() {
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
+	    console.log("gst"+numbertowords);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -152,7 +153,7 @@ $(document).ready(function() {
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
@@ -165,6 +166,7 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
+	    console.log("vat"+numbertowords);
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -2687,7 +2689,9 @@ if (event.which == 13) {
       //For sales invoice store address.
       if($("#status").val() == 15){
 	  address = $("#originaddress").val();
-      }   
+      }
+
+      console.log("yaha"+numbertowords);
       var form_data = new FormData();
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
@@ -2701,7 +2705,7 @@ if (event.which == 13) {
       form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
-      form_data.append("invtotalword",numbertowords);
+      form_data.append("invtotalword", numbertowords);
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();
