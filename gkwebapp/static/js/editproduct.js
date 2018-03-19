@@ -214,29 +214,51 @@ $(document).ready(function() {
 
   });*/
   $(document).on('keydown', '#editproddesc', function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#gscode").focus();
-
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#prodselect").focus();
-    }
+      if (event.which==13) {
+	  event.preventDefault();
+	  if($("#gsflag").val() == '7'){
+	      if ($("#editproddesc").val()=="") {
+		  $("#pro-blank-alert").alert();
+		  $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#pro-blank-alert();ert").hide();
+		  });
+		  $("#editproddesc").focus();
+	      }
+	      else{
+		  $("#gscode").focus();
+	      }
+	  }
+	  else if($("#gsflag").val() =='19'){
+	      if ($("#editproddesc").val()=="") {
+		  $("#ser-blank-alert").alert();
+		  $("#ser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#ser-blank-alert").hide();
+		  });
+		  $("#editproddesc").focus();
+	      }
+	      else {
+		  $("#gscode").focus();
+	      }
+	  }
+	  if (event.which==38) {
+	      event.preventDefault();
+	      $("#prodselect").focus();
+	  }
+      }
   });
     
     $(document).on('keydown', '#gscode', function(event) {
     if (event.which==13) {
 	event.preventDefault();
 	if(parseInt($("#gscode").val()) <= 0)
-	    {
-	       	$("#hsnno-must-be-positive").alert();
-		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#hsnno-must-be-positive").hide();
-		    $("#gscode").focus().select();
-		});
-		return false;
-	    }
+	{
+	    $("#hsnno-must-be-positive").alert();
+	    $("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#hsnno-must-be-positive").hide();
+	    $("#gscode").focus().select();
+	    });
+	    return false;
+	}
 	if ($("#gscode").val()=="") {
     $("#hsnno-blank-alert").alert();
     $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
