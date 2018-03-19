@@ -69,4 +69,10 @@ def getDrCrDetails(request):
     print drcrnotedata.json()["gkstatus"]
     if drcrnotedata.json()["gkstatus"] == 0:
         return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrnotedata.json()["gkresult"]}
-    
+
+@view_config(route_name="drcrnote",request_param="action=print",renderer="gkwebapp:templates/printdrcrnote.jinja2")
+def drcrNoteprint(request):
+    header={"gktoken":request.headers["gktoken"]}
+    org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+    drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
+    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":drcrdata.json()["gkresult"]}

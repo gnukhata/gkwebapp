@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}View Debit & Credit Note{% endtrans %}</title>
-<link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
 <body style="padding-right:1%;">
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="panel drcr_panel shadow">
@@ -43,7 +42,7 @@
       </div>
       <div class="panel-footer" id="viewinvfooter" hidden>
 	<div class="container-fluid btndisablediv">
-	  <button id="cashmemo_print" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+	  <button id="drcr_print" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
 	</div>
       </div>
   </div> <!--End .panel-body -->

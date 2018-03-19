@@ -1,9 +1,7 @@
 $(document).ready(function() {
     $("#sel_creditnote").focus();
-    $("#sel_debitnote").focus();
     $("#sel_creditnote").change(function(event) {
 	var drcrid = $("#sel_creditnote option:selected").val();
-	console.log("cool "+drcrid);
         /*
         Getting complete information for the selected 'create cash memo' using its id.
         Display details in the corresponding fields.
@@ -33,36 +31,33 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
-
-	/*$.ajax({
-	    url: '/drcrnote?action=getdrcrnotedetail',
-	    type: 'POST',
-	    dglobal: false,
-	    async : false,
-	    data: {"drcrid": $("#sel_creditnote option:selected").val() },
-	    dataType: "text/html",
-	    beforeSend: function(xhr)
-	    {
-		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-	    }
-	   })
-	    .done(function(resp) {
-		if(resp.gkstatus==0){
-		    console.log();
-		
-		console.log("Credit DATA");
-		//console.log("resp");
-		$("#viewsingledrcrdiv").show();
-		}
-	    })
-	    .fail(function() {
-		console.log("error");
-	    })
-	    .always(function() {
-		console.log("complete");
-	    });
-	
-    }); // ends sel_creditnote change
-  */ 
+    });
+    $("#sel_creditnote").keydown(function(event){
+	if(event.which == 13){
+	    $("#drcr_print").focus();
+	}
+    });
+     $("#drcr_print").click(function(event) {
+        $.ajax({
+                url: '/drcrnote?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"drcrid":$("#sel_creditnote option:selected").val()},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#printdiv').html(resp);
+		$('#printdiv').show();
+		$('#tabdiv').hide();
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
     });
 });
