@@ -1159,13 +1159,13 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-    $('#showstockreport').click(function (e) {
-    // calls view page for stock report.
+    $('#stockonhandreport').click(function (e) {
+    // calls view page for stock on hand report.
     $.ajax(
       {
 
         type: "POST",
-        url: "/product?type=viewstockreport",
+        url: "/product?type=viewstockonhandreport",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1182,7 +1182,7 @@ $('#listofaccounts').click(function (e) {
   });
     
   $('#consolidatedbalancesheet').click(function (e) {
-    // calls view page for stock report.
+    // calls view page for consolidate balance sheet report.
     $.ajax(
       {
         type: "POST",
@@ -1201,6 +1201,8 @@ $('#listofaccounts').click(function (e) {
       }
     );
   });
+
+    
   $('#categorywisestockonhandreport').click(function (e) {
       // calls view page for stock report.
         $.ajax(
