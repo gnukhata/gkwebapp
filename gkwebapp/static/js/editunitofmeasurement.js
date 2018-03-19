@@ -28,7 +28,8 @@ $(document).ready(function() {
       $("#unit_edit_innerdiv").show();
       $("#unit_edit_save").hide();
 	$("#edit_btn").show();
-	console.log(resp["gkresult"]["flag"]);
+
+	//condition of delete button for uom which are associated with products. 
 	if(resp["gkresult"]["flag"] == "True"){
 	   $("#unit_delete").hide();
 	}
