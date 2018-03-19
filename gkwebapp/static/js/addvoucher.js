@@ -267,10 +267,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#between-date-alert").hide();
-      });
-      $("#postdate-alert").hide();
+          $("#between-date-alert").hide();
+	   $("#postdate-alert").hide();
       $('#vdate').focus().select();
+     
+      });
       return false;
     }
     if (Date.today().compareTo(curdate)==-1) {
@@ -417,15 +418,17 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
       $('#vtable tbody tr:first select:enabled').focus();
-      event.preventDefault();
+	event.preventDefault();
 
     }
       else if(event.which==13 && $('#vyear').val()==""){
-	  $("#voucheryear-alert").alert();
-      $("#voucheryear-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#voucheryear-alert").hide();
+	  $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#date-alert").hide();
+      });
 	  
-      });     
+	  $('#vdate').focus().select();
+	  return false;
 
       }
       
@@ -439,12 +442,15 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vyear').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
       $('#vmonth').focus().select();
-      event.preventDefault();
+	event.preventDefault();
+	
+	
     }
       
     if (event.which==190 && event.ctrlKey) {
 
-  event.preventDefault();
+	event.preventDefault();
+	
         $('#vtable tbody tr:first select:enabled').focus();
 
     }
@@ -1428,7 +1434,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#between-date-alert").hide();
+          $("#between-date-alert").hide();
+	  
+	  
       });
       $('#vdate').focus().select();
       return false;
