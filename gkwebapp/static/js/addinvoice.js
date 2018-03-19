@@ -59,6 +59,7 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var invoicedatestring = "";
     var invoicedate = "";
+    var numbertowords="";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -116,7 +117,6 @@ $(document).ready(function() {
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
-	    console.log(numbertowords);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -165,7 +165,6 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
-	    console.log(numbertowords);
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -2702,6 +2701,7 @@ if (event.which == 13) {
       form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
+      form_data.append("invtotalword",numbertowords);
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();

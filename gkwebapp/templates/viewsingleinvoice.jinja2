@@ -521,12 +521,9 @@
 	  <div class="row hborderdiv" style="border-bottom-style:solid;">
 	    <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
 	    
-	    <script>
-	       var word ={{ gkresult["invoicetotal"] }};
-	       var x    =convertNumberToWords(word);
-	       
-	      </script>
-	    </label>
+	    
+	  </label>
+	  <label id="totalValueInWord" style="font-size:100% !important;">{{invoicedata["invtotalword"]}}</label>
 	    
 	  </div>
 	</div>
