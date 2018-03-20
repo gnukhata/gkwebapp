@@ -41,6 +41,7 @@ $(document).ready(function() {
      //Initialising some variables.
     var issuername = "";
     var designation = "";
+    var numbertowords = "";
     var address = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
@@ -72,7 +73,7 @@ $(document).ready(function() {
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totalcgst = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 	var totalsgst = 0.00;
 	var totaligst = 0.00;
 	var totalcess = 0.00;
@@ -141,7 +142,7 @@ $(document).ready(function() {
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totaltax = 0.00;
-	var numbertowords = "";
+	//var numbertowords = "";
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
@@ -2426,7 +2427,7 @@ if (event.which == 13) {
 			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
-			    // Loading tax and proiduct data based on taxflag(VAT or GST)
+			    // Loading tax and product data based on taxflag(VAT or GST)
 			    if ($("#taxapplicable").val() == '7') {
 				// Loading tax and product details when GST is applied.
 				$("#taxapplicabletext").text('GST');
@@ -2540,13 +2541,9 @@ if (event.which == 13) {
 			    $("#invoicestate").change();
 			    // Loading bank details and other information.
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
-			    var word = resp.invoicedata.invoicetotal;
-			    var val = "";
-			    val = convertNumberToWords(word);
-			    console.log(val);
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
-			    $("#totalValueInWord").text(val);
+			    $("#totalValueInWord").text(resp.invoicedata.invoicetotalword);
 			    paymentmod = resp.invoicedata.paymentmode; 
 			    // If paymentmode is 2(i.e. bank) then load bankdetails.
 			    if (resp.invoicedata.paymentmode == "2") {
@@ -2879,6 +2876,7 @@ if (event.which == 13) {
       var consignee = {};
       var bankdetails = {};
       var invoicetotal = 0.00;
+      //var numbertowords="";
       var productcodes = [];
       var productqtys = [];
       var ppu;
@@ -3089,6 +3087,7 @@ if (event.which == 13) {
       form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
+      form_data.append("invtotalword", numbertowords);
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();
