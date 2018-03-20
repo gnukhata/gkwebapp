@@ -27,6 +27,7 @@ Contributors:
 "Abhijith Balan" <abhijith@dff.org.in>
 "Pravin Dake" <pravindake24@gmail.com>
 "Nitesh Chaughule" <nitesh@disroot.org>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 // This script is for the addinvoice.jinja2
