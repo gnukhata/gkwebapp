@@ -59,7 +59,11 @@
        {% trans %}Please enter date within the financial year!{% endtrans %}
      </div>
      <div class="alert alert-danger" id="prior-date-alert" aria-live="rude" role="alert" hidden>
-       {% trans %}Drcr note cannot be prior to Invoice Date!{% endtrans %}
+       {% if drcrflag == "3" %}
+	 {% trans %}Credit note date cannot be prior to Invoice Date!{% endtrans %}
+       {%else%}
+	 {% trans %}Debit note date cannot be prior to Invoice Date!{% endtrans %}
+       {% endif %}
      </div>
      <div class="alert alert-danger" id="drcr-value-alert"  aria-live="rude" role="alert" hidden>
        {% if drcrflag=="3" %}
