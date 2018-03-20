@@ -1126,9 +1126,9 @@ $(document).ready(function() {
     if ($("#editproddesc").val()=="")
     {
       $('.modal-backdrop').remove();
-      $("#blank-alert").alert();
-      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#blank-alert").hide();
+      $("#pro-blank-alert").alert();
+      $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#pro-blank-alert").hide();
       });
       $("#editproddesc").focus();
       $("#editproddesc").select();
