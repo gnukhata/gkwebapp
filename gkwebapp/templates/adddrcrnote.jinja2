@@ -13,13 +13,14 @@
      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
        {% trans %}Something went wrong!{% endtrans %}
      </div>
-     <div class="alert alert-danger" id="cr-duplicate-alert"  aria-live="rude" role="alert" hidden>
-       {% trans %}You cannot make more than one credit note on single invoice !{% endtrans %}
+     <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+       {%  if drcrflag=="3"%}
+	 {% trans %}You cannot make more than one credit note on single invoice !{% endtrans %}
+       {%else%}
+	 {% trans %}You cannot make more than one debit note on single invoice !{% endtrans %}
+       {% endif %}
      </div>
-     <div class="alert alert-danger" id="dr-duplicate-alert"  aria-live="rude" role="alert" hidden>
-       {% trans %}You cannot make more than one credit note on single invoice !{% endtrans %}
-     </div>
-     <div class="alert alert-danger" id="invoice-blank-alert" aria-live="rude" role="alert" hidden>
+          <div class="alert alert-danger" id="invoice-blank-alert" aria-live="rude" role="alert" hidden>
        {% trans %}Please select Invoice.{% endtrans %}
      </div>
      <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -68,7 +69,9 @@
        {% endif %}
      </div>
      <div class="alert alert-danger" id="exceed-blank-alert"  aria-live="rude" role="alert" hidden>
-       <label> {% trans %}Credit value cannot be greater than price per unit!{% endtrans %}</label>
+       {% if drcrflag=="3" %}
+	 <label> {% trans %}Credit value cannot be greater than price per unit!{% endtrans %}</label>
+       {% endif %}
      </div>
      <div class="panel drcr_panel shadow">
        <div class="panel-body">
@@ -509,24 +512,109 @@
 		   </div>
 		 </div>
 	       {% endif %}
-	     </div>
-
-	     <!-- 2 div for remark and  -->
-	     <div class="col-sm-6" style="margin-top:0.7cm;"> for remark</div>
-	     <div class="col-sm-6 borderdiv" style="margin-top:0.7cm;">
-	       <div class="col-sm-6">
-		 
-		
-		    
-	       </div>
-	       <div class="col-sm-6"></div>
-	     </div>
+	     </div>  
 	 </div><!--End .container-fluid -->
-
-			   </div>
-
-	 //footer buttons
-
+	 {#-----------------------------------------------------------------------------------#}
+	 <div class="col-sm-12" style="margin-top:0.2cm;">
+	   <div class="col-sm-4">
+	   </div>
+	   <div class="col-sm-4">
+	   </div>
+	   <div class="col-sm-4">
+	   <div class="row">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="taxableamount" style="font-size:130% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv gstfield sgstfield">
+	     <div class="form-group sgstfield form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv gstfield sgstfield">
+	     <div class="form-group sgstfield form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv gstfield igstfield">
+	     <div class="form-group igstfield form-inline">
+	       <div class="col-sm-6">
+		 <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv gstfield">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv vatfield">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="reductamount" style="font-size:100% !important;">{% trans %}Total Reduct Value{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="reductamount" style="font-size:130% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	   <div class="row hborderdiv" style="border-bottom-style:solid;">
+	     <div class="form-group form-inline">
+	       <div class="col-sm-6">
+		 <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	       </div>
+	       <div class="col-sm-6 text-right">
+		 <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+	       </div>
+	     </div>
+	   </div>
+	 </div>
+	 </div>
+	 {#------------------------------------------------------------------------------------#}
+       </div>
 	 <div class="panel-footer ">
 	   <div class="container-fluid">
 	     <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>

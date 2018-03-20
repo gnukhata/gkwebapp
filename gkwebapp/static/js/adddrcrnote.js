@@ -437,6 +437,7 @@ $(document).ready(function() {
 	
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
+        console.log("totalamount",totaltaxable);
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
@@ -1158,10 +1159,11 @@ $(document).ready(function() {
 	    });//done end
 
         $(".drcrnote_product_rate_vat").keydown(function(event) {
-	if (event.which == 13 || event.which==9) {
+	if (event.which == 13 ) {
 	    //event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
-			console.log("///////from  vat");
+	    console.log("///////from  vat");
+	    if($("#status").val()==3){
 			//credit amount cannot be greater than ppu
 			if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
@@ -1184,12 +1186,11 @@ $(document).ready(function() {
 			    console.log("right");
 			    calculatevatinc(curindex);
 			}
-
-	}
-	});
+	    	}
+	}	       });
 	
 	$(".drcrnote_product_rate_gst").keydown(function(event) {
-	if (event.which == 13 || event.which==9) {
+	if (event.which == 13) {
 	    //event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 			console.log("///////from  gst");
@@ -1315,9 +1316,17 @@ $(document).ready(function() {
 	
     });//invoice change event end
 
-
-    //footer buttons event
-
+ //keydown event for insert key
+     var modalpresent = 0;
+  $(document).off("keyup").on("keyup", function(event) {
+      if (event.which == 45) {
+	event.preventDefault();
+	if (modalpresent == 0) {
+	    $("#drcrnote_save").click();
+	}
+      return false;
+    }
+  });
     //click event of save button
 var allow = 1;
 
@@ -1347,16 +1356,17 @@ var allow = 1;
 	   }
 	}
 
-//note no validation
- if ($.trim($('#drcrnote_no').val()) == "") {
+      //note no validation
+      if ($.trim($('#drcrnote_no').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-      $("#challanno-blank-alert").alert();
-      $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#challanno-blank-alert").hide();
+      $("#drcrno-blank-alert").alert();
+      $("#drcrno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#drcrno-blank-alert").hide();
       });
       $('#drcrnote_no').focus();
       return false;
     }
+ 
 //date validation
       if ($.trim($('#drcrnote_date').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
@@ -1424,31 +1434,35 @@ if (!curdate.between(financialstart, financialend)) {
         return false;
       }
     }
-
-//reference field validation
-
-      if($("#drcrnote_no_ref").val()!=""){
-	  console.log("Hello Motto faltu");
-	if($("#drcrnote_date_ref").val()==""){
-		 $("#between-date-alert").alert();
-      	$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#between-date-alert").hide();
-      });
-	    $('#drcrnote_date_ref').focus();
-	    return false;
-}
-}
-
-
-      if($("#drcrnote_date_ref").val()!=""){
-	  if($("#drcrnote_no_ref").val()==""){
-	      $("#between-date-alert").alert();
-      	      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#between-date-alert").hide();
+//validation for reference fields
+      if($("#reference").prop('checked') == true) {
+	  if($("#drcrnote_no_ref").val()=="" && $("#drcrnote_date_ref").val()=="" ){
+	      $("#drcrnoref-blank-alert").alert();
+	      $("#drcrnoref-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#drcrnoref-blank-alert").hide();
 	      });
 	      $('#drcrnote_no_ref').focus();
 	      return false;
+	}
+    }
+    //reference field validation
+
+      if($("#drcrnote_no_ref").val()!="" && $("#drcrnote_date_ref").val()==""){
+	      $("#date-blank-alert").alert();
+      	  $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#date-blank-alert").hide();
+      });
+	    $('#drcrnote_date_ref').focus();
+	    return false;
+
 }
+      if($("#drcrnote_date_ref").val()!="" && $("#drcrnote_no_ref").val()==""){
+	      $("#drcrno-blank-alert").alert();
+      	      $("#drcrno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#drcrno-blank-alert").hide();
+	      });
+	      $('#drcrnote_no_ref').focus();
+	      return false;
 }
 
 //GST and VAT table 
