@@ -24,27 +24,42 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar" <prajkta@riseup.net>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 $(document).ready(function() {
     
-  $('.modal-backdrop').remove();
-  var specday;
-  var specmonth;
-  var specyear;
-  var specdate;
-  var selectedgodown;
-  var selectedtaxname;
-  var selectedtaxstate;
-  $("#prodselect").focus();
-  $(".product_tax_disable").prop('disabled',true);
-    $(".product_cat_tax_disable").prop('disabled',true);
+    $('.modal-backdrop').remove();
+    var specday;
+    var specmonth;
+    var specyear;
+    var specdate;
+    var selectedgodown;
+    var selectedtaxname;
+    var selectedtaxstate;
+    $("#prodselect").focus();
+    $("#prodselect").keydown(function(e){
+    if (e.which == 13) {
+	e.preventDefault();
+	if ($.trim($("#prodselect").val())=="") {
+            $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+		$("#blank-alert").hide();
+            });
+            $("#prodselect").focus();
+            return false;
+        }
+	else {
+	    $(".product_tax_disable").prop('disabled',true);
+	    $(".product_cat_tax_disable").prop('disabled',true);
     
-    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric();
-
+	    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		$(".numtype").numeric();
+	    });
+	}
+    }
   });
 
     
@@ -160,16 +175,25 @@ $(document).ready(function() {
   });
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      if ($("#editcatselect").length < 1) {
-          $("#edituom").focus();
-      }
-      else if ($("#editcatselect").is(':disabled')) {
-        $("#edituom").focus();
-      }
-      else {
-        $("#editcatselect").focus();
-      }
+	event.preventDefault();
+	if ($("#editproddesc").val()=="") {
+	    $("#pro-blank-alert").alert();
+	    $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#pro-blank-alert").hide();
+		  });
+	    $("#editproddesc").focus();
+	}
+	else{
+	    if ($("#editcatselect").length < 1) {
+		$("#edituom").focus();
+	    }
+	    else if ($("#editcatselect").is(':disabled')) {
+		$("#edituom").focus();
+	    }
+	    else {
+		$("#editcatselect").focus();
+	    }
+	}
     }
     if (event.which==38) {
       event.preventDefault();
@@ -1238,35 +1262,35 @@ $(document).ready(function() {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
-      .done(function(resp) {
-        if (resp["gkstatus"] ==0) {
-          $('.modal-backdrop').remove();
-          if ($("#prodselect option").length < 3) {
-          $("#product").click();
-          }
-          else {
-            $("#editproduct").click();
-          }
-          $("#deleteproduct-success-alert").alert();
-          $("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#deleteproduct-success-alert").hide();
-          });
-        }
-        else if(resp["gkstatus"] == 5) {
-          $("#prodselect").focus();
-          $("#failure-delete-alert").alert();
-          $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#failure-delete-alert").hide();
-          });
-          return false;
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+	    .done(function(resp) {
+		if (resp["gkstatus"] ==0) {
+		    $('.modal-backdrop').remove();
+		    if ($("#prodselect option").length < 3) {
+			$("#product").click();
+		    }
+		    else {
+			$("#editproduct").click();
+		    }
+		    $("#deleteproduct-success-alert").alert();
+		    $("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#deleteproduct-success-alert").hide();
+		    });
+		}
+		else if(resp["gkstatus"] == 5) {
+		    $("#prodselect").focus();
+		    $("#failure-delete-alert").alert();
+		    $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#failure-delete-alert").hide();
+		    });
+		    return false;
+		}
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
     });
     $('#m_confirmdel').on('shown.bs.modal', function(event) {
       $("#m_cancel").focus();

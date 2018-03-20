@@ -24,6 +24,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar" <prajkta@riseup.net>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 
@@ -42,25 +43,25 @@ $(document).ready(function() {
     $("#prodselect").focus();
     $("#prodselect").keydown(function(e){
     if (e.which == 13) {
-      e.preventDefault();
-      if ($.trim($("#prodselect").val())=="") {
-          $("#blank-alert").alert();
-          $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
-            $("#blank-alert").hide();
-          });
-          $("#prodselect").focus();
-          return false;
+	e.preventDefault();
+	if ($.trim($("#prodselect").val())=="") {
+            $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+		$("#blank-alert").hide();
+            });
+            $("#prodselect").focus();
+            return false;
         }
-      else {
+	else {
       
-	  $(".product_tax_disable").prop('disabled',true);
-	  $(".product_cat_tax_disable").prop('disabled',true);
-	  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-	      event.preventDefault();
-	      /* Act on the event */
-	      $(".numtype").numeric();
-	  });
-      }
+	    $(".product_tax_disable").prop('disabled',true);
+	    $(".product_cat_tax_disable").prop('disabled',true);
+	    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		$(".numtype").numeric();
+	    });
+	}
     }
   });
 
