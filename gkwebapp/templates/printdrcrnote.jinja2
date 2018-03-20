@@ -187,7 +187,13 @@
 		  <div style="white-space: nowrap; display:table-cell;">
 		    <label>
 		      {% trans %}Designation{% endtrans %} :
-		    </label>{{ gkresult["invdata"]["designation"] }}
+		      {% if gkresult["invdata"]["designation"]== -1 %}{{"Admin"}}
+		      {% elif gkresult["invdata"]["designation"]== 0 %}{{"Manager"}}
+		      {% elif gkresult["invdata"]["designation"]== 1 %}{{"Operator"}}
+		      {% elif gkresult["invdata"]["designation"]== 2 %}{{"Auditor"}}
+		      {% elif gkresult["invdata"]["designation"]== 3 %}{{"Godown In Charge"}}
+		      {% endif %} 
+		    </label>
 		  </div>
 		  
 		</div>
@@ -218,7 +224,7 @@
 		      {{ gkresult["invdata"]["taxstate"] }}
 		    {% endif %}
 		    {% if gkresult["invdata"]["inoutflag"] == 9 %}
-		      {{ gkresult[invdata]["sourcestate"] }}
+		      {{ gkresult["invdata"]["sourcestate"] }}
 		    {% endif %}
 		  </div>
 		</div>
@@ -446,7 +452,12 @@
 	  <strong>{{ gkresult["invdata"]["issuername"] }}</strong>
 	  <br>
 	  {% if gkresult["designation"] !='' %}
-	    <i>({{ gkresult["invdata"]["designation"] }})</i>
+	    {% if gkresult["invdata"]["designation"]== -1 %} <i>{{"Admin"}}</i>
+	    {% elif gkresult["invdata"]["designation"]== 0 %}<i>{{"Manager"}}</i>
+	    {% elif gkresult["invdata"]["designation"]== 1 %}<i>{{"Operator"}}</i>
+	    {% elif gkresult["invdata"]["designation"]== 2 %}<i>{{"Auditor"}}</i>
+	    {% elif gkresult["invdata"]["designation"]== 3 %}<i>{{"Godown In Charge"}}</i>
+	    {% endif %} 
 	  {% endif %}
 	</div>
       </div>
