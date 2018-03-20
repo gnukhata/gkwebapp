@@ -107,7 +107,6 @@ def tallyImport(request):
                     newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
                     curgrpid = newsub.json()["gkresult"]
             if accRow[0].font.i:
-                print len(accRow)
                 if len(accRow)>2:
                     if accRow[1].value==None and accRow[2].value==None:
                         newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
@@ -251,9 +250,6 @@ def exportLedger(request):
                     ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
                     cellCounter = cellCounter + 1
 
-        accountlist = tuple(accountList.rows)
-        for acc in accountlist:
-            print acc
         Voucher = gkwb.create_sheet()
         Voucher.title = "List of all vouchers"
         yearStart = str(request.params["yearstart"])
