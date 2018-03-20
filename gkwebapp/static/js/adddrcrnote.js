@@ -21,14 +21,13 @@ $(document).ready(function() {
 	    $(".purchasediv").hide();
 	    $("#drcrnote_invoice").show();
 	    $("#drcrnote_invoice_purchase").hide();
-	    $("#drcrnote_reset").click();
+	    
        }
 	else{
 	    $("#drcrnote_invoice_purchase").show();
 	    $("#drcrnote_invoice").hide();
 	    $(".salediv").hide();
 	    $(".purchasediv").show();
-	    $("#drcrnote_reset").click();
 	}
     });
     
