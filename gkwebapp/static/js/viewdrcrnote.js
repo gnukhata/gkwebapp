@@ -2,10 +2,10 @@ $(document).ready(function() {
     $("#sel_creditnote").focus();
     $("#sel_creditnote").change(function(event) {
 	var drcrid = $("#sel_creditnote option:selected").val();
-        /*
-        Getting complete information for the selected 'create cash memo' using its id.
+	/*
+        Getting complete information for the selected 'drcr note' using its id.
         Display details in the corresponding fields.
-	Only 'create cash memos' can 'Print'. 
+	Both 'Credit/Debit note' can 'Print'. 
 	*/
             $.ajax({
                     url: '/drcrnote?action=getdrcrnotedetail',
@@ -21,10 +21,8 @@ $(document).ready(function() {
                 .done(function(resp) {
                     $("#viewsingledrcr").show();
 		    $("#viewsingledrcr").html(resp);
-                    console.log("success");
-		    $("#viewinvfooter").show();
-		    //$("#cashmemo_print").show();
-                })
+               	    $("#viewinvfooter").show();
+	 })
                 .fail(function() {
                     console.log("error");
                 })
