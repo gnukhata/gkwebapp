@@ -28,7 +28,8 @@ Contributors:
 "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar <reshma_b@riseup.net>"
-"Nitesh Chaughule <nitesh@disroot.org>"
+"Sanket Shrawan Kolnoorkar" <sanketf123@gmail.com>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 $(document).ready(function() {
   $('.modal-backdrop').remove();
@@ -41,6 +42,8 @@ $(document).ready(function() {
   $('.deliverychallan_edit_product_quantity').numeric({ negative: false});
   $(".deliverychallan_edit_disable").prop("disabled",true);
   $("#deliverychallan_editprint").hide();
+  $("#delinradio").click().focus();
+  $("#delchalout").hide();
   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
     var inoutflag;
@@ -55,13 +58,23 @@ $(document).ready(function() {
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html(); 
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  
-    $("#deliverychallan_edit_list").change(function(event) {
+
+    //code for change event of edit lists dcid as variable taken and conditions are applied.
+    $("#deliverychallanin_edit_list, #deliverychallanout_edit_list").change(function(event) {
+      var dcid;
+	if ($("#delinradio").is(":checked"))
+	{
+	    dcid=$("#deliverychallanin_edit_list option:selected").val();
+	}
+	else {
+	    dcid=$("#deliverychallanout_edit_list option:selected").val();
+	} 
     $.ajax({
       url: '/deliverychallan?action=getdelchal',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"dcid":$("#deliverychallan_edit_list option:selected").val()},
+      data: {"dcid":dcid},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -454,6 +467,7 @@ $(document).ready(function() {
         '</tr>');
       });
 
+      $(".deliverychallan_edit_div").show();
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
 
@@ -477,6 +491,44 @@ if(event.which==13)
 }
   });
 
+    // keydown event for radiobutton
+    $("#delinradio").keydown(function(event) {
+	if (event.which==13) {
+	    $("#deliverychallanin_edit_list").focus().select();
+	}
+    });
+    $("#deloutradio").keydown(function(event) {
+	if (event.which==13) {
+	    $("#deliverychallanout_edit_list").focus().select();
+	}
+    });
+
+    //change event for radio buttons to get first selected option
+    $(document).off('focusin', '.delchalradio').on('focusin', '.delchalradio', function(event) {
+    $("#deliverychallanin_edit_list option:first").prop("selected",true);
+    $("#deliverychallanin_edit_list").change();
+    $("#deliverychallanout_edit_list option:first").prop("selected",true);
+    $("#deliverychallanout_edit_list").change();
+    });
+
+    //this is the change event written for radio buttons in delivery note. 
+    //on change event one of the deliverychallan note will be hidden. 
+    //also keydown performed.
+    $(document).off("change",".delchalradio").on("change",".delchalradio",function(event) {
+	//Checking which radio button is selected.
+        if ($("#delinradio").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+                $("#delchalin").show();
+		$("#delchalout").hide();
+
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#delchalin").hide();
+		$("#delchalout").show();
+            }
+        });
+    
+    
   $("#viewattach").click(function(event)
   {
     $.ajax({
