@@ -27,6 +27,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Reshma Bhatawadekar" <reshma_b@riseup.net>
+"Sanket Kolnoorkar" <sanketf123@gmail.com>
 */
 
 $(document).ready(function(){
@@ -217,7 +218,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    $("#bank_name").focus();
             return false;
          } else {
-	     $("#branch_name").focus();
+	     $("#accnum").focus();
 	 }
 	});
 
