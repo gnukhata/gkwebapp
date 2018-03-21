@@ -1073,61 +1073,80 @@ $(document).ready(function() {
 	});
 
 
-	$(document).off('keydown', '.drcrnote_product_rate_vat').on('keydown', '.drcrnote_product_rate_vat', function(event) {
+    $(document).off('keydown', '.drcrnote_product_rate_vat').on('keydown', '.drcrnote_product_rate_vat', function(event) {
 	if (event.which == 13 ) {
 	    event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
-	    if($("#status").val()==3){
-			//credit amount cannot be greater than ppu
-			if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
-			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    $("#exceed-blank-alert").alert();
-			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-				$("#exceed-blank-alert").hide();
-				$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-				$('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
-			    });
-			    return false;
-			} else{
-			    $("#drcrnote_save").focus();
-			    }
-			 
-			if($("#status").val()==3){
-			    calculatevataxamt(curindex);
-			}
-			else{
-			    calculatevatinc(curindex);
-			}
-	    	}
-	}	       });
+	    var nextindex = curindex + 1;
+	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
+		if($("#status").val()==3){
+		    //credit amount cannot be greater than ppu
+		    if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#exceed-blank-alert").alert();
+			$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#exceed-blank-alert").hide();
+			    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+			    $('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
+			});
+			return false;
+		    }
+		    calculatevataxamt(curindex);
+		    if (curindex == lastindex) {
+			$("#drcrnote_save").focus();
+		    }
+		    else{
+			$('.drcrnote_product_rate_vat:eq(' + nextindex + ')').focus().select();
+		    }
+		}
+		else{
+		    calculatevatinc(curindex);
+		    if (curindex == lastindex) {
+			$("#drcrnote_save").focus();
+		    }
+		    else{
+			$('.drcrnote_product_rate_vat:eq(' + nextindex + ')').focus().select();
+		    }
+		}
+	    }
+	});
 	
-	$(".drcrnote_product_rate_gst").keydown(function(event) {
-	if (event.which == 13) {
-	    //event.preventDefault();
+	$(document).off('keydown', '.drcrnote_product_rate_gst').on('keydown', '.drcrnote_product_rate_gst', function(event) {
+	if (event.which == 13 ) {
+	    event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
-			//credit amount cannot be greater than ppu
-
-	    if($("#status").val()==3){
-		if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val())) {
-			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    $("#exceed-blank-alert").alert();
-			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-				$("#exceed-blank-alert").hide();
-				//$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-				$('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
-			    });
-			    return false;   
-			}else{
-			    $("#drcrnote_save").focus();
-			}
+	    var nextindex = curindex + 1;
+	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
+		if($("#status").val()==3){
+		    //credit amount cannot be greater than ppu
+		    if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val())) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#exceed-blank-alert").alert();
+			$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#exceed-blank-alert").hide();
+			    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+			    $('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
+			});
+			return false;
+		    }
+		    calculategstaxamt(curindex);
+		    if (curindex == lastindex) {
+			$("#drcrnote_save").focus();
+		    }
+		    else{
+			$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
+		    }
+		}
+		else{
+		    calculategstinc(curindex);
+		    if (curindex == lastindex) {
+			$("#drcrnote_save").focus();
+		    }
+		    else{
+			$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
+		    }
+		}
 	    }
-	    if($("#status").val()==3){
-		calculategstaxamt(curindex);
-	    }else{
-		calculategstinc(curindex);
-	    }
-
-	}
 	});
 	
 	// Change event for product price(i.e.Rate) in VAT
