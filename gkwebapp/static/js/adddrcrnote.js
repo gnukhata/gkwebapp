@@ -135,8 +135,8 @@ $(document).ready(function() {
     });
     $("#drcrnote_year").blur(function(event) {
 	$(this).val(yearpad($(this).val(), 4));
-	drcrdatestring = $("#drcrnote_date").val() + $("#drcrnote_month").val() + $("#drcrnote_year").val();
-	drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
+	var drcrdatestring = $("#drcrnote_date").val() + $("#drcrnote_month").val() + $("#drcrnote_year").val();
+	var drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
 	if (drcrdatestring.length == 0) {
 	    $("#date-blank-alert").alert();
 	    $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -177,39 +177,47 @@ $(document).ready(function() {
     
     //Key Event for drcr Date Field.
     $("#drcrnote_date").keydown(function(event) {
-       if (event.which == 13 && $('#drcrnote_date').val()!="") {
+	if (event.which == 13) {
 	    event.preventDefault();
+	   if ($('#drcrnote_date').val()!="") {
 	    $("#drcrnote_month").focus().select();  //Focus shifts to Month field
      }
-       else if(event.which == 13 && $("#drcrnote_date").val()=="")
+       else
         {
 	 $("#date-blank-alert").alert();
 	 $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 	  $("#date-blank-alert").hide();
 	 });
+	    $("#drcrnote_date").focus().select();
 	}
-	if (event.which == 38) {
+       }
+	else if (event.which == 38) {
 	    	$("#drcrnote_no").focus();  //Focus shifts to Customer.
 	    }
 
     });
     //Key Event for ref Month field.
     $("#drcrnote_month").keydown(function(event) {
-       if (event.which == 13 && $('#drcrnote_month').val()!="") {
+       if (event.which == 13) {
+	   if ($('#drcrnote_month').val()!="") {
 	    event.preventDefault();
 	    $("#drcrnote_year").focus().select();  //Focus shifts to Month field
      }
-       else if(event.which == 13 && $("#drcrnote_month").val()=="")
+       else
         {
 	 $("#month-blank-alert").alert();
 	 $("#month-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 	  $("#month-blank-alert").hide();
 	 });
+	    $("#drcrnote_month").focus().select();
 	}
+       }
     });
     //key event for ref year
     $("#drcrnote_year").keydown(function(event) {
-	if (event.which == 13 && $('#drcrnote_year').val()!="") {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($('#drcrnote_year').val()!="") {
 	    if ($('#drcrnote_date').val()=="" || $('#drcrnote_month').val()=="" || $('#drcrnote_year').val()==""||$('#drcrnote_date').val()==0 || $('#drcrnote_month').val()==0 || $('#drcrnote_year').val()==0) {
 		$("#proper-date-alert").alert();
 		$("#proper-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -218,9 +226,8 @@ $(document).ready(function() {
 		$('#drcrnote_date').focus().select();
 		return false;
     }	   $('#reference').focus();
-	   event.preventDefault();
        }
-       else if(event.which == 13 && $("#drcrnote_year").val()=="")
+       else if($("#drcrnote_year").val()=="")
         {
 	 $("#proper-date-alert").alert();
 	 $("#proper-date-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -229,6 +236,7 @@ $(document).ready(function() {
 	    $('#drcrnote_date').focus();
 	    return false;
 	    
+	}
 	}
     });
     //reference filed validation
@@ -242,28 +250,26 @@ $(document).ready(function() {
 	}
       });
     
-     $("#reference").keydown(function(event) {
-          if($("#reference").prop('checked') == true) {
-	      if (event.which == 13) {
-		  event.preventDefault();
-		  $("#drcrnote_no_ref").focus();
-	      }
+    $("#reference").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($("#reference").prop('checked') == true) {
+		$("#drcrnote_no_ref").focus();
+	    }
+	    else{
+		$(".drcrnote_product_rate_gst:first").focus().select();
+		$(".drcrnote_product_rate_vat:first").focus().select();
+	    }
+	}
 	      if (event.which == 38) {
 		  event.preventDefault();
 		  $("#drcrnote_month").focus().select();  
 	      }
-	  }
-	 else{
-	     $(".drcrnote_product_rate_gst:first").focus().select();
-	     $(".drcrnote_product_rate_vat:first").focus().select();
-
-	 }
      });
     //keydown for reference number.
     $("#drcrnote_no_ref").keydown(function(event) {
 	if (event.which == 13) {
 	     event.preventDefault();
-	    if($("#reference").prop('checked') == true) {
 		if($("#drcrnote_no_ref").val()==""){
 		    $("#drcrnoref-blank-alert").alert();
 		    $("#drcrnoref-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -274,7 +280,6 @@ $(document).ready(function() {
 	 else{
 		$('#drcrnote_date_ref').focus();
 	 }
-    }
 	   
 	}
 	if (event.which == 38) {
@@ -351,8 +356,8 @@ $(document).ready(function() {
     });
     $("#drcrnote_year_ref").blur(function(event) {
 	$(this).val(yearpad($(this).val(), 4));
-	drcrdatestring = $("#drcrnote_date_ref").val() + $("#drcrnote_month_ref").val() + $("#drcrnote_year_ref").val();
-	drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
+	var drcrdatestring = $("#drcrnote_date_ref").val() + $("#drcrnote_month_ref").val() + $("#drcrnote_year_ref").val();
+	var drcrdate = Date.parseExact(drcrdatestring, "ddMMyyyy");
 	
 	if (drcrdatestring.length == 0) {
 	    $("#date-blank-alert").alert();
@@ -1065,10 +1070,12 @@ $(document).ready(function() {
 		} 
 		
 	    });//done end
+	});
 
-        $(".drcrnote_product_rate_vat").keydown(function(event) {
+
+	$(document).off('keydown', '.drcrnote_product_rate_vat').on('keydown', '.drcrnote_product_rate_vat', function(event) {
 	if (event.which == 13 ) {
-	    //event.preventDefault();
+	    event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
 	    if($("#status").val()==3){
 			//credit amount cannot be greater than ppu
@@ -1122,11 +1129,10 @@ $(document).ready(function() {
 
 	}
 	});
-
 	
 	// Change event for product price(i.e.Rate) in VAT
 		    $(document).off('change', '.drcrnote_product_rate_vat').on('change', '.drcrnote_product_rate_vat', function(event) {
-			// Act on the event 
+			// Act on the event
 			if ($(this).val() == "") {
 			    $(this).val(0);
 			}
@@ -1208,8 +1214,6 @@ $(document).ready(function() {
 	  $("#drcrnote_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
   });
-	
-    });//invoice change event end
 
  //keydown event for insert key
      var modalpresent = 0;
@@ -1438,7 +1442,7 @@ if (!curdate.between(financialstart, financialend)) {
 	      idrate[productcode]=$.trim($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val());
 	      
 	  }
-	  totreduct = $.trim($('#total_product_gst').html());
+	  var totreduct = $.trim($('#total_product_gst').html());
       }
 
 
