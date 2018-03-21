@@ -112,7 +112,7 @@
      min-width: 100% !important;
      width: 100% !important;
  }
- #invoice_customer, #invoice_deliverynote {
+ .selectfieldwidth {
      max-width: 180px !important;
  }
  .borderdiv {
