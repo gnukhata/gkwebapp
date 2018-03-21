@@ -1,14 +1,21 @@
 <body>
   <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+    <div class="alert alert-danger" id="ser-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Service Name cannot be blank!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="pro-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Product Name cannot be blank!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+      
+      {% trans %}Please select Product/Service!{% endtrans %}
+    </div>
     <div class='panel '>
-
-
-
       <div class="panel-body">
 	<form id="editprodform">
 	  <div class="container-fluid row nopadding" style="width: 48%;">
 	    <div class="form-group  col-sm-6">
-              <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
+	      <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
 	       	{% if numberofproducts ==0 %}
 		  <label class="text-danger">{% trans %}No Product/Service Found!{% endtrans %}</label>
 		{% else %}
@@ -17,6 +24,7 @@
 		  {% else %}
 		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
 		  {%endif%}
+		  
 		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
 		    <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
 		    {% for prod in gkresult %}

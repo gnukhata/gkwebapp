@@ -24,6 +24,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar" <prajkta@riseup.net>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 
@@ -39,22 +40,37 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml;
     var stateshtml;
-  $("#prodselect").focus();
-    $(".product_tax_disable").prop('disabled',true);
-  $(".product_cat_tax_disable").prop('disabled',true);
-  $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric();
+    $("#prodselect").focus();
+    $("#prodselect").keydown(function(e){
+    if (e.which == 13) {
+	e.preventDefault();
+	if ($.trim($("#prodselect").val())=="") {
+            $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+		$("#blank-alert").hide();
+            });
+            $("#prodselect").focus();
+            return false;
+        }
+	else {
+      
+	    $(".product_tax_disable").prop('disabled',true);
+	    $(".product_cat_tax_disable").prop('disabled',true);
+	    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		$(".numtype").numeric();
+	    });
+	}
+    }
   });
 
-
     if(sessionStorage.invflag==0){
-  $(".noinventory").hide();
-    $("#taxhelp3").hide();
-    $("#taxhelp4").show();
+	$(".noinventory").hide();
+	$("#taxhelp3").hide();
+	$("#taxhelp4").show();
 
-  }
+    }
 
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
     event.preventDefault();
@@ -199,29 +215,51 @@ $(document).ready(function() {
 
   });*/
   $(document).on('keydown', '#editproddesc', function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#gscode").focus();
-
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#prodselect").focus();
-    }
+      if (event.which==13) {
+	  event.preventDefault();
+	  if($("#gsflag").val() == '7'){
+	      if ($("#editproddesc").val()=="") {
+		  $("#pro-blank-alert").alert();
+		  $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#pro-blank-alert").hide();
+		  });
+		  $("#editproddesc").focus();
+	      }
+	      else{
+		  $("#gscode").focus();
+	      }
+	  }
+	  else if($("#gsflag").val() =='19'){
+	      if ($("#editproddesc").val()=="") {
+		  $("#ser-blank-alert").alert();
+		  $("#ser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#ser-blank-alert").hide();
+		  });
+		  $("#editproddesc").focus();
+	      }
+	      else {
+		  $("#gscode").focus();
+	      }
+	  }
+	  if (event.which==38) {
+	      event.preventDefault();
+	      $("#prodselect").focus();
+	  }
+      }
   });
     
     $(document).on('keydown', '#gscode', function(event) {
     if (event.which==13) {
 	event.preventDefault();
 	if(parseInt($("#gscode").val()) <= 0)
-	    {
-	       	$("#hsnno-must-be-positive").alert();
-		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#hsnno-must-be-positive").hide();
-		    $("#gscode").focus().select();
-		});
-		return false;
-	    }
+	{
+	    $("#hsnno-must-be-positive").alert();
+	    $("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#hsnno-must-be-positive").hide();
+	    $("#gscode").focus().select();
+	    });
+	    return false;
+	}
 	if ($("#gscode").val()=="") {
     $("#hsnno-blank-alert").alert();
     $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1160,18 +1198,32 @@ $(document).ready(function() {
 
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
     event.preventDefault();
-    /* Act on the event */
-    if ($("#editproddesc").val()=="")
-    {
-      $('.modal-backdrop').remove();
-      $("#blank-alert").alert();
-      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#blank-alert").hide();
-      });
-      $("#editproddesc").focus();
-      $("#editproddesc").select();
-      return false;
-    }
+      /* Act on the event */
+      if($("#gsflag").val() == '7'){
+	  if ($("#editproddesc").val()=="")
+	  {
+	      $('.modal-backdrop').remove();
+	      $("#pro-blank-alert").alert();
+	      $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#pro-blank-alert").hide();
+	      });
+	      $("#editproddesc").focus();
+	      $("#editproddesc").select();
+	      return false;
+	  }
+      }else if($("#gsflag").val() == '19'){
+	  if ($("#editproddesc").val()=="")
+	  {
+	      $('.modal-backdrop').remove();
+	      $("#ser-blank-alert").alert();
+	      $("#ser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#ser-blank-alert").hide();
+	      });
+	      $("#editproddesc").focus();
+	      $("#editproddesc").select();
+	      return false;
+	  }
+      }
     var igstflag=0;
     var taxflag=0;
   $("#product_edit_tax_table tbody tr").each(function(index){
