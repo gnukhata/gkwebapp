@@ -1239,7 +1239,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
-	console.log(numbertowords+"1");
+	
        var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1256,7 +1256,7 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
 	form_data.append("invoicetotalword", numbertowords);
-	console.log(numbertowords+"2");
+	
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)

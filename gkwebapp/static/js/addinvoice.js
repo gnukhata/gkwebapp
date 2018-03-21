@@ -117,7 +117,6 @@ $(document).ready(function() {
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
-	    console.log("gst"+numbertowords);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -166,7 +165,6 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    numbertowords = convertNumberToWords(totalamount);
-	    console.log("vat"+numbertowords);
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -2690,8 +2688,6 @@ if (event.which == 13) {
       if($("#status").val() == 15){
 	  address = $("#originaddress").val();
       }
-
-      console.log("yaha"+numbertowords);
       var form_data = new FormData();
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
