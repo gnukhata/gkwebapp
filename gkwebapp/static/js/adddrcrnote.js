@@ -1377,7 +1377,18 @@ if (!curdate.between(financialstart, financialend)) {
 
     if ($("#taxapplicabletext").text() == "VAT") {
 
-    for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
+	for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
+	    //Valiation for debit/credit note rate.
+	    if ((parseFloat($('.drcrnote_product_rate_vat:eq(' + i + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val())) && $("#status").val()==3) {
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			    $("#exceed-blank-alert").alert();
+			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#exceed-blank-alert").hide();
+				$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+				$('.drcrnote_product_rate_vat:eq(' + i + ')').focus().select();
+			    });
+			    return false;
+			}
 	productqtys.push(parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
     	//inc and decr calculation of vat
 	if($("#status").val()==3){
@@ -1406,6 +1417,16 @@ if (!curdate.between(financialstart, financialend)) {
       else if ($("#taxapplicabletext").text() == "GST") {
 
 	  for (let i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
+	      if ((parseFloat($('.drcrnote_product_rate_gst:eq(' + i + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + i + ')').val())) && $("#status").val()==3) {
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			    $("#exceed-blank-alert").alert();
+			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#exceed-blank-alert").hide();
+				//$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+				$('.drcrnote_product_rate_gst:eq(' + i + ')').focus().select();
+			    });
+			    return false;   
+			}
 		let quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val());
 	/*//at time of rejection of product/service	 
 	 if (parseFloat(quantity) === 0.00) {
