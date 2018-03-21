@@ -157,6 +157,11 @@
 		    {{gkresult["reference"]["dcdate"]}}
 		  </div>
 		{% endif %}
+		{% if gkresult["invdata"]["taxflag"] == 7 %}
+		  <div class="form-group form-inline">
+		    <label class="fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} : {{gkresult["invdata"]["orgstategstin"]}}</label>
+		  </div>
+		{% endif %}
 	      </td>
 	      <td>
 		<div class="form-group form-inline col-xs-12 nopadding">
@@ -540,13 +545,13 @@
 	<div class="text-right col-xs-6">
 	  <strong>{{ gkresult["invdata"]["issuername"] }}</strong>
 	  <br>
-	  {% if gkresult["designation"] !='' %}
-	    {% if gkresult["invdata"]["designation"]== -1 %} <i>{{"Admin"}}</i>
-	    {% elif gkresult["invdata"]["designation"]== 0 %}<i>{{"Manager"}}</i>
-	    {% elif gkresult["invdata"]["designation"]== 1 %}<i>{{"Operator"}}</i>
-	    {% elif gkresult["invdata"]["designation"]== 2 %}<i>{{"Auditor"}}</i>
-	    {% elif gkresult["invdata"]["designation"]== 3 %}<i>{{"Godown In Charge"}}</i>
-	    {% endif %} 
+	  {% if gkresult["invdata"]["designation"]== -1 %}{{"Admin"}}
+	  {% elif gkresult["invdata"]["designation"]== 0 %}{{"Manager"}}
+	  {% elif gkresult["invdata"]["designation"]== 1 %}{{"Operator"}}
+	  {% elif gkresult["invdata"]["designation"]== 2 %}{{"Auditor"}}
+	  {% elif gkresult["invdata"]["designation"]== 3 %}{{"Godown In Charge"}}
+	  {%else%}
+	    {{gkresult["invdata"]["designation"]}}
 	  {% endif %}
 	</div>
       </div>

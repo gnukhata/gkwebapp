@@ -46,6 +46,11 @@
 	  {{gkresult["reference"]["dcdate"]}}
 	</div>
       {% endif %}
+      {% if gkresult["invdata"]["taxflag"] == 7 %}
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label class="fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} : {{gkresult["invdata"]["orgstategstin"]}}</label>
+	</div>
+      {% endif %}
     </div>
 
     <div class="col-md-4 borderdiv">

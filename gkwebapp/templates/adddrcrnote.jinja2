@@ -60,9 +60,9 @@
      </div>
      <div class="alert alert-danger" id="prior-date-alert" aria-live="rude" role="alert" hidden>
        {% if drcrflag == "3" %}
-	 {% trans %}Credit note date cannot be prior to Invoice Date!{% endtrans %}
+	 {% trans %}Credit Note date cannot be prior to Invoice Date!{% endtrans %}
        {%else%}
-	 {% trans %}Debit note date cannot be prior to Invoice Date!{% endtrans %}
+	 {% trans %}Debit Note date cannot be prior to Invoice Date!{% endtrans %}
        {% endif %}
      </div>
      <div class="alert alert-danger" id="drcr-value-alert"  aria-live="rude" role="alert" hidden>
@@ -134,12 +134,6 @@
                    <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month" accesskey="v">
                    <input type="text" class="form-control input-sm drcrnotedate" size="4" maxlength="4" placeholder="YYYY" id="drcrnote_year" accesskey="v">
                  </div>
-		 {% if resultgstvat != '22' %}
-		   <div class="form-group form-inline">
-		     <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-		     <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
-		   </div>
-		 {% endif %}
 		 <div class="form-group form-inline">
 		   <div class="col-sm-6">
 
@@ -168,6 +162,12 @@
                    <input type="text" class="form-control input-sm drcrnotedate" size="4" maxlength="4" placeholder="YYYY" id="drcrnote_year_ref" accesskey="v" >
                    
 		   </div>
+		   {% if resultgstvat != '22' %}
+		     <div class="form-group form-inline">
+		       <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+		       <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
+		     </div>
+		   {% endif %}
                </div>
 	       {#<***>#}
 
