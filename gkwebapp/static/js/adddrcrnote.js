@@ -437,13 +437,12 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	}
-	
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
-	$("#totaldrcrnotvalue").text(parseFloat(totalamount).toFixed(2));
+	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));	
@@ -488,7 +487,7 @@ $(document).ready(function() {
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
-	$("#totaldrcrnotvalue").text(parseFloat(totalamount).toFixed(2));
+	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));	
@@ -560,7 +559,7 @@ $(document).ready(function() {
 	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
-	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
@@ -636,7 +635,7 @@ $(document).ready(function() {
 	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
 	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
 	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
-	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
