@@ -186,16 +186,16 @@
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <div style="white-space: nowrap; display:table-cell;">
 		    <label>
-		      {% trans %}Designation{% endtrans %} :
-		      {% if gkresult["invdata"]["designation"]== -1 %}{{"Admin"}}
-		      {% elif gkresult["invdata"]["designation"]== 0 %}{{"Manager"}}
-		      {% elif gkresult["invdata"]["designation"]== 1 %}{{"Operator"}}
-		      {% elif gkresult["invdata"]["designation"]== 2 %}{{"Auditor"}}
-		      {% elif gkresult["invdata"]["designation"]== 3 %}{{"Godown In Charge"}}
-		      {% endif %} 
-		    </label>
+		      {% trans %}Designation{% endtrans %} :</label>
+		    {% if gkresult["invdata"]["designation"]== -1 %}{{"Admin"}}
+		    {% elif gkresult["invdata"]["designation"]== 0 %}{{"Manager"}}
+		    {% elif gkresult["invdata"]["designation"]== 1 %}{{"Operator"}}
+		    {% elif gkresult["invdata"]["designation"]== 2 %}{{"Auditor"}}
+		    {% elif gkresult["invdata"]["designation"]== 3 %}{{"Godown In Charge"}}
+		    {%else%}
+		      {{gkresult["invdata"]["designation"]}}
+		    {% endif %}
 		  </div>
-		  
 		</div>
 	      </td>
 	      <td>
