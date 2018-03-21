@@ -20,6 +20,7 @@ $(document).ready(function() {
 	    $(".purchasediv").hide();
 	    $("#drcrnote_invoice").show();
 	    $("#drcrnote_invoice_purchase").hide();
+	    $("#drcrnote_invoice_purcase").val("");
 	    
        }
 	else{
@@ -27,6 +28,7 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice").hide();
 	    $(".salediv").hide();
 	    $(".purchasediv").show();
+	    $("#drcrnote_invoice").val("");
 	}
     });
     
@@ -164,6 +166,16 @@ $(document).ready(function() {
 	    }
 	    if ($("#drcrnote_invoice option:selected").val() != "") {
 		if (Date.parseExact($("#drcrnote_invoice option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(drcrdate) == 1) {
+		    $("#prior-date-alert").alert();
+		    $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#prior-date-alert").hide();
+		    });
+		    $('#drcrnote_date').focus().select();
+		    return false;
+		}
+	    }
+	    if ($("#drcrnote_invoice_purchase option:selected").val() != "") {
+		if (Date.parseExact($("#drcrnote_invoice_purchase option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(drcrdate) == 1) {
 		    $("#prior-date-alert").alert();
 		    $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
 			$("#prior-date-alert").hide();
@@ -1309,9 +1321,21 @@ if (!curdate.between(financialstart, financialend)) {
 
 	if (Date.parseExact($("#drcrnote_invoice option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
 	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-        $("#invdc-date-alert").alert();
-        $("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#invdc-date-alert").hide();
+        $("#prior-date-alert").alert();
+        $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#prior-date-alert").hide();
+        });
+        $('#drcrnote_date').focus().select();
+        return false;
+      }
+    }
+      if ($("#drcrnote_invoice_purchase option:selected").val() != "") {
+
+	if (Date.parseExact($("#drcrnote_invoice_purchase option:selected").attr("invoicedate"), "dd-MM-yyyy").compareTo(curdate) == 1) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+        $("#prior-date-alert").alert();
+        $("#prior-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#prior-date-alert").hide();
         });
         $('#drcrnote_date').focus().select();
         return false;
