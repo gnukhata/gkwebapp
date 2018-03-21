@@ -674,27 +674,7 @@ $(document).ready(function() {
 			$("#statecodeofcustsupp").text(resp.invoicedata.custSupDetails["custsupstatecode"]);
 			$("#drcrnote_issuer_name").text(resp.invoicedata.issuername);
 			$("#drcrnote_issuer_designation").text(resp.invoicedata.designation);
-
-		    } else {
-			$("#drcrnote_state").text(resp.invoicedata.destinationstate);
-			$("#statecodefordrcrnote").text(resp.invoicedata.taxstatecode);
-			$("#drcrnote_custsuppstate").text(resp.invoicedata.sourcestate);
-			$("#statecodeofcustsupp").text(resp.invoicedata.sourcestatecode);
-			$.ajax({
-			    url: '/showuser?action=getuser',
-			    type: 'POST',
-			    dataType: 'json',
-			    async : false,
-			    beforeSend: function(xhr) {
-				xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-			    }
-			})
-			    .done(function(resp){
-				$("#drcrnote_issuer_name").text(resp.unamerole["username"]);
-				$("#drcrnote_issuer_designation").text(resp.unamerole["userroleName"]);
-	
-			    });
-				
+			$('#orggstin').text(resp.invoicedata.orgstategstin);
 		    }
 		    
 		    //invoicedata contents filled in table
@@ -891,20 +871,11 @@ $(document).ready(function() {
 		    $("#gstin1_pur").text(resp.invoicedata.custSupDetails["custgstin"]);
 		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
 		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
-		    if(resp.invoicedata.inoutflag == "15") {
-			$("#drcrnote_state_pur").text(resp.invoicedata.sourcestate);
-			$("#statecodefordrcrnote_pur").text(resp.invoicedata.sourcestatecode);
-			$("#drcrnote_custsuppstate_pur").text(resp.invoicedata.custSupDetails["custsupstate"]);
-			$("#statecodeofcustsupp_pur").text(resp.invoicedata.custSupDetails["custsupstatecode"]);
-			$("#drcrnote_issuer_name_pur").text(resp.invoicedata.issuername);
-			$("#drcrnote_issuer_designation_pur").text(resp.invoicedata.designation);
-
-		    } else {
-			$("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
-			$("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
-			$("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
-			$("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
-			
+		    $("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
+		    $("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
+		    $("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
+		    $("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
+		    $('#orggstin').text(resp.invoicedata.orgstategstin);
 			$.ajax({
 			    url: '/showuser?action=getuser',
 			    type: 'POST',
@@ -914,15 +885,10 @@ $(document).ready(function() {
 				xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 			    }
 			})
-			    .done(function(resp){
-				console.log(resp.unamerole["username"]);
-				$("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
-				$("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
-	
-			    });
-				
-		    }
-		    
+			.done(function(resp){
+			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
+			    $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
+			});
 		    //invoicedata contents filled in table
 		    $('#drcrnote_table_vat tbody').empty();
 		    $.each(resp.invoicedata.invcontents, function(key, value) {

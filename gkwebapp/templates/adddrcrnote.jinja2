@@ -134,6 +134,12 @@
                    <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month" accesskey="v">
                    <input type="text" class="form-control input-sm drcrnotedate" size="4" maxlength="4" placeholder="YYYY" id="drcrnote_year" accesskey="v">
                  </div>
+		 {% if resultgstvat != '22' %}
+		   <div class="form-group form-inline">
+		     <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+		     <label class="col-sm-8 nopadding fsize gstinfield" id="orggstin"></label>
+		   </div>
+		 {% endif %}
 		 <div class="form-group form-inline">
 		   <div class="col-sm-6">
 
