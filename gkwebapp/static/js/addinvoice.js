@@ -51,6 +51,22 @@ $(document).ready(function() {
     }
     
 
+    //to fill the deatils of consignee same as the details of reciver if checkbo is checked.
+      $("#Consignee").change(function() {
+          if($(this).prop('checked') == true) {
+	      $("#consigneename").val($("#invoice_customer option:selected").text());
+	      $("#consigneestate").val($("#invoice_customerstate option:selected").text());
+	      $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	      $("#gstinconsignee").val($("#gstin").text());
+	      $("#tinconsignee").val($("#tin").text());
+	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
+	      	     
+          } else {
+ 
+	         
+	}
+      });
+    
     //Initialising some variables.
     var issuername = "";
     var designation = "";
