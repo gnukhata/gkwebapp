@@ -51,7 +51,7 @@ $(document).ready(function()
         success: function(jsonObj) {
             let ListofYears = jsonObj["gkresult"];
           $('#finalyears').empty();
-          for (i in ListofYears ) {
+          for (let i in ListofYears ) {
             $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
           }
 	    var numofyears =  $("#finalyears option:visible").length;
@@ -60,11 +60,13 @@ $(document).ready(function()
 		{
 		    $("#callLogin").focus();
 		}
-		else //set focus to organisation name if there are more than one organisations
-		{
-		    $("#finalyars").focus();
+		else if(numofyears > 1) //set focus to organisation name if there are more than one organisations
+	        {
+		    $("#finalyears").focus().select();
 		}
+	
 	    }
+	    
         }
       });
     }
