@@ -564,8 +564,8 @@ $(document).ready(function() {
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
-			$('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
 			
 			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
@@ -599,8 +599,8 @@ $(document).ready(function() {
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
 			
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
@@ -644,7 +644,6 @@ $(document).ready(function() {
 		
 		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
 		if (resp.invoicedata.taxflag=="7"){
-		    $("#discounttotal_product_gst").text(resp.invoicedata.totaldiscount);
 		    $("#taxablevaluetotal_product_gst").text(resp.invoicedata.totaltaxablevalue);
 		    $("#totalcgst_product_gst").text(resp.invoicedata.totaltaxamt);
 		    $("#totalsgst_product_gst").text(resp.invoicedata.totaltaxamt);
@@ -662,7 +661,6 @@ $(document).ready(function() {
 		    
 		}
 		else {
-		    $("#discounttotal_product_vat").val(resp.invoicedata.totaldiscount);
 		    $("#taxablevaluetotal_product_vat").val(resp.invoicedata.totaltaxablevalue);
 		    $("#totaltax").val(resp.invoicedata.totaltaxamt);
 		    $("#total_product_vat").val(resp.invoicedata.invoicetotal); 
@@ -776,8 +774,8 @@ $(document).ready(function() {
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
-			$('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
 			
 			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2));
 			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
@@ -811,8 +809,8 @@ $(document).ready(function() {
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 			
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
 			
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2));
 			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
@@ -856,7 +854,6 @@ $(document).ready(function() {
 		
 		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
 		if (resp.invoicedata.taxflag=="7"){
-		    $("#discounttotal_product_gst").text(resp.invoicedata.totaldiscount);
 		    $("#taxablevaluetotal_product_gst").text(resp.invoicedata.totaltaxablevalue);
 		    $("#totalcgst_product_gst").text(resp.invoicedata.totaltaxamt);
 		    $("#totalsgst_product_gst").text(resp.invoicedata.totaltaxamt);
@@ -874,7 +871,6 @@ $(document).ready(function() {
 		    
 		}
 		else {
-		    $("#discounttotal_product_vat").val(resp.invoicedata.totaldiscount);
 		    $("#taxablevaluetotal_product_vat").val(resp.invoicedata.totaltaxablevalue);
 		    $("#totaltax").val(resp.invoicedata.totaltaxamt);
 		    $("#total_product_vat").val(resp.invoicedata.invoicetotal); 
@@ -1230,7 +1226,7 @@ if (!curdate.between(financialstart, financialend)) {
 		idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
 	    }
 	}
-	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(5) input').val());
+	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(4) input').val());
     }
 
       else if ($("#taxapplicabletext").text() == "GST") {
@@ -1355,6 +1351,7 @@ if (!curdate.between(financialstart, financialend)) {
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                             $("#cr-success-alert").alert();
                             $("#cr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#creditnote_create").click();
                             $("#cr-success-alert").hide();
 			    });
 			}else
@@ -1362,17 +1359,9 @@ if (!curdate.between(financialstart, financialend)) {
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                             $("#dr-success-alert").alert();
                             $("#dr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#debitnote_create").click();
                             $("#dr-success-alert").hide();
 			    });
-			}
-                        if($("#status").val()==3)
-			{
-			    $("#creditnote_create").click();
-			}
-			else
-			{
-			    $("#debitnote_create").click();
-			    
 			}
 			    /* allow = 0;
 			    let invid = resp.gkresult;

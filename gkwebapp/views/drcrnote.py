@@ -25,7 +25,6 @@ def showadddrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-
     drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"contents":json.loads(request.params["contents"]),"dctypeflag":request.params["dctypeflag"],"caseflag":request.params["caseflag"],"reductionval":json.loads(request.params["reductionval"])}
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
