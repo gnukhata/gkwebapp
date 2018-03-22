@@ -423,86 +423,35 @@ $(document).ready(function() {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var rowreductrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	var rowreductrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtaxableamount=rowqty * rowprice; //Taxable amount for each row is calculated.
 	var reductprice=rowqty*rowreductrate;
-	var newtaxableamnt=rowtaxableamount-reductprice;
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totaltax = 0.00;
-	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
 
-	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
-	taxamount = (newtaxableamnt * rowtaxrate)/100;  //Amount of tax to be applied is found out.
+	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(reductprice).toFixed(2)); //Taxable amount is displayed.
+	taxamount = (reductprice * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
-	 rowtotal = newtaxableamnt + taxamount;
+	 rowtotal = reductprice + taxamount;
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	}
 	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
 	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
-	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));	
-    }
-
-
-    //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.Increase
-    
-    function  calculatevatinc(curindex) {
-	//Initialising variables to zero and getting values from various input fileds.
-	var rowqty = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-	var rowprice = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var rowreductrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-	var rowtaxrate = parseFloat($('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
-	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	var reductprice=rowqty*rowreductrate;
-	var newtaxableamnt=rowtaxableamount+reductprice;
-	var rowtotal = 0.00;
-	var totalamount = 0.00;
-	var totaltax = 0.00;
-	var totaldiscount = 0.00;
-	var totaltaxable = 0.00;
-
-	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
-	taxamount = (newtaxableamnt * rowtaxrate)/100;  //Amount of tax to be applied is found out.
-	
-	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
-	 rowtotal = newtaxableamnt + taxamount;
-	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
-	//Total of discount, taxable amount, tax amounts and total are found out
-	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
-	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
-	    totaltax = totaltax + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
-	    totalamount = totalamount + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-	}
-	
-	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
-	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
-	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
-	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
-	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
-	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
-	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));	
+	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));	
     }
 
     //Function to calculate gst tax amount Reduction.
@@ -511,95 +460,13 @@ $(document).ready(function() {
 	var rowqty = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
        	var gsflag=$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) label').attr("data-gsflag");
-	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
+	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var rowtaxableamount=0.00;
-	if (gsflag=="19") {
-	    rowtaxableamount = (rowprice-rowreductrate) - rowdiscount;
-	}
-	else{
-	    rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	    
-	}
 	var reductprice=rowqty*rowreductrate;
-	var newtaxableamnt=rowtaxableamount-reductprice;
-	
-	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
-	var rowtotal = 0.00;
-	var totalamount = 0.00;
-	var totalcgst = 0.00;
-	var totalsgst = 0.00;
-	var totaligst = 0.00;
-	var totalcess = 0.00;
-	var totaldiscount = 0.00;
-	var totaltaxable = 0.00;
- 
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
-
-	let sgstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
-	let sgstamount = (newtaxableamnt * sgstrate)/100;  //Amount of SGST to be applied is found out.
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
-
-	let igstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
-	let igstamount = (newtaxableamnt * igstrate)/100;  //Amount of IGST to be applied is found out.
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(igstamount).toFixed(2));
-
-	let cessrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val();
-        let cessamount = (newtaxableamnt * cessrate)/100;  //Amount of Cess to be applied is found out.
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
-
-	rowtotal = newtaxableamnt + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
-        $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
-
-	//Total of discount, taxable amount, tax amounts and total are found out
-	for(var i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
-	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
-	    totalcgst = totalcgst + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
-	    totalsgst = totalsgst + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
-	    totaligst = totaligst + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
-	    totalcess = totalcess + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
-	    totalamount = totalamount + parseFloat($('#drcrnote_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-	}
-
-	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
-	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
-	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
-	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
-	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
-	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
-	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
-	$("#totaldrcrnotevalue").text(parseFloat(totalamount).toFixed(2));
-	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
-	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
-	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
-	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
-	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-    }
-
-    
-    //Function to calculate gst tax amount Increment.
-    function calculategstinc(curindex) {
-	//Initialising variables to zero and getting values from various input fileds.
-	var rowqty = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var rowprice = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-       	var gsflag=$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) label').attr("data-gsflag");
-	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-	var rowtaxableamount=0.00;
 	if (gsflag=="19") {
-	    newtaxableamnt = (parseFloat(rowprice) + parseFloat(rowreductrate)) - parseFloat(rowdiscount);
-	}
-	else{
-	    rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	    var reductprice=rowqty*rowreductrate;
-	    var newtaxableamnt=rowtaxableamount+reductprice;
+	    reductprice=rowreductrate;
 	}
 	
-
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
@@ -607,30 +474,28 @@ $(document).ready(function() {
 	var totalsgst = 0.00;
 	var totaligst = 0.00;
 	var totalcess = 0.00;
-	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
  
-	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(newtaxableamnt).toFixed(2)); //Taxable amount is displayed.
+	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(reductprice).toFixed(2)); //Taxable amount is displayed.
 
 	let sgstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
-	let sgstamount = (newtaxableamnt * sgstrate)/100;  //Amount of SGST to be applied is found out.
+	let sgstamount = (reductprice * sgstrate)/100;  //Amount of SGST to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
 
 	let igstrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
-	let igstamount = (newtaxableamnt * igstrate)/100;  //Amount of IGST to be applied is found out.
+	let igstamount = (reductprice * igstrate)/100;  //Amount of IGST to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(igstamount).toFixed(2));
 
 	let cessrate = $('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val();
-        let cessamount = (newtaxableamnt * cessrate)/100;  //Amount of Cess to be applied is found out.
+        let cessamount = (reductprice * cessrate)/100;  //Amount of Cess to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = newtaxableamnt + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
+	rowtotal = reductprice + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
         $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    totalcgst = totalcgst + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
@@ -640,7 +505,6 @@ $(document).ready(function() {
 	}
 
 	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
@@ -653,10 +517,7 @@ $(document).ready(function() {
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
-	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
     }
-
-
 
     //1 start
         $("#drcrnote_invoice").change(function(event){
@@ -1056,135 +917,92 @@ $(document).ready(function() {
 	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
-		if($("#status").val()==3){
-		    //credit amount cannot be greater than ppu
-		    if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
-			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			$("#exceed-blank-alert").alert();
-			$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-			    $("#exceed-blank-alert").hide();
-			    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-			    $('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
-			});
-			return false;
-		    }
-		    calculatevataxamt(curindex);
-		    if (curindex == lastindex) {
-			$("#drcrnote_save").focus();
-		    }
-		    else{
-			$('.drcrnote_product_rate_vat:eq(' + nextindex + ')').focus().select();
-		    }
-		}
-		else{
-		    calculatevatinc(curindex);
-		    if (curindex == lastindex) {
-			$("#drcrnote_save").focus();
-		    }
-		    else{
-			$('.drcrnote_product_rate_vat:eq(' + nextindex + ')').focus().select();
-		    }
-		}
+	    //credit amount cannot be greater than ppu
+	    if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val()) && $("#status").val()) {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#exceed-blank-alert").alert();
+		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#exceed-blank-alert").hide();
+		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		    $('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
+		});
+		return false;
 	    }
-	});
-	
-	$(document).off('keydown', '.drcrnote_product_rate_gst').on('keydown', '.drcrnote_product_rate_gst', function(event) {
+	    calculatevataxamt(curindex);
+	    if (curindex == lastindex) {
+		$("#drcrnote_save").focus();
+	    }
+	    else{
+		$('.drcrnote_product_rate_vat:eq(' + nextindex + ')').focus().select();
+	    }
+	}
+    });
+    $(document).off('keydown', '.drcrnote_product_rate_gst').on('keydown', '.drcrnote_product_rate_gst', function(event) {
 	if (event.which == 13 ) {
 	    event.preventDefault();
 	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
-		if($("#status").val()==3){
-		    //credit amount cannot be greater than ppu
-		    if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val())) {
-			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			$("#exceed-blank-alert").alert();
-			$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-			    $("#exceed-blank-alert").hide();
-			    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-			    $('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
-			});
-			return false;
-		    }
-		    calculategstaxamt(curindex);
-		    if (curindex == lastindex) {
-			$("#drcrnote_save").focus();
-		    }
-		    else{
-			$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
-		    }
-		}
-		else{
-		    calculategstinc(curindex);
-		    if (curindex == lastindex) {
-			$("#drcrnote_save").focus();
-		    }
-		    else{
-			$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
-		    }
-		}
-	    }
-	});
-	
-	// Change event for product price(i.e.Rate) in VAT
-		    $(document).off('change', '.drcrnote_product_rate_vat').on('change', '.drcrnote_product_rate_vat', function(event) {
-			// Act on the event
-			if ($(this).val() == "") {
-			    $(this).val(0);
-			}
-			var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
-			 if($("#status").val()==3){
-			//credit amount cannot be greater than ppu
-			     if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
-				 $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-				 $("#exceed-blank-alert").alert();
-				 $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-				     $("#exceed-blank-alert").hide();
-				     $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-				     $('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
-				 });
-			    return false;   
-			}
-			else{
-			    $("#drcrnote_save").focus();
-			}
-			 }
-			if($("#status").val()==3){
-			    calculatevataxamt(curindex);
-			}
-			else{
-			    calculatevatinc(curindex);
-			}
+	    //credit amount cannot be greater than ppu
+	    if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val()) && $("#status").val()==3) {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#exceed-blank-alert").alert();
+		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#exceed-blank-alert").hide();
+		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		    $('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
 		});
-		  
-		    // Change event for product price(i.e.Rate) in GST
-		    $(document).off('change', '.drcrnote_product_rate_gst').on('change', '.drcrnote_product_rate_gst', function(event) {
-			/* Act on the event */
-			if ($(this).val() == "") {
-			    $(this).val(0);
-			}
-			var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
-			 if($("#status").val()==3){
-			if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val())) {
-			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    $("#exceed-blank-alert").alert();
-			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-				$("#exceed-blank-alert").hide();
-				$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-				$('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
-			    });
-			    return false;   
-			}else
-			     {
-				   $("#drcrnote_save").focus();
-			     }
-			 }
-			if($("#status").val()==3){
-			    calculategstaxamt(curindex);
-			}else{
-			    calculategstinc(curindex);
-			}
-		    });
+		return false;
+	    }
+	    calculategstaxamt(curindex);
+	    if (curindex == lastindex) {
+		$("#drcrnote_save").focus();
+	    }
+	    else{
+		$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
+	    }
+	}
+    });
+    // Change event for product price(i.e.Rate) in VAT
+    $(document).off('change', '.drcrnote_product_rate_vat').on('change', '.drcrnote_product_rate_vat', function(event) {
+	// Act on the event
+	if ($(this).val() == "") {
+	    $(this).val(0);
+	}
+	var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
+	//credit amount cannot be greater than ppu
+	if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	    $("#exceed-blank-alert").alert();
+	    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#exceed-blank-alert").hide();
+		$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		$('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
+	    });
+	    return false;   
+	}
+	calculatevataxamt(curindex);
+    });
+
+    // Change event for product price(i.e.Rate) in GST
+    $(document).off('change', '.drcrnote_product_rate_gst').on('change', '.drcrnote_product_rate_gst', function(event) {
+	/* Act on the event */
+	if ($(this).val() == "") {
+	    $(this).val(0);
+	}
+	var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
+	if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val()) && $("#status").val()==3) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	    $("#exceed-blank-alert").alert();
+	    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#exceed-blank-alert").hide();
+		$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		$('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
+	    });
+	    return false;
+	}
+	calculategstaxamt(curindex);
+    });
 
     //click event of delete product
     $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
@@ -1388,38 +1206,31 @@ if (!curdate.between(financialstart, financialend)) {
 	for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
 	    //Valiation for debit/credit note rate.
 	    if ((parseFloat($('.drcrnote_product_rate_vat:eq(' + i + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val())) && $("#status").val()==3) {
-			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    $("#exceed-blank-alert").alert();
-			    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-				$("#exceed-blank-alert").hide();
-				$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-				$('.drcrnote_product_rate_vat:eq(' + i + ')').focus().select();
-			    });
-			    return false;
-			}
-	productqtys.push(parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
-    	//inc and decr calculation of vat
-	if($("#status").val()==3){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#exceed-blank-alert").alert();
+		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#exceed-blank-alert").hide();
+		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		    $('.drcrnote_product_rate_vat:eq(' + i + ')').focus().select();
+		});
+		return false;
+	    }
+	    productqtys.push(parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
+    	    //inc and decr calculation of vat
 	    calculatevataxamt(i);
-	}else{
-	    calculatevatinc(i);
+	    productcodes.push($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode"));
+
+	    var productcode = $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+	    let quantity =parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+	    if (parseFloat(quantity) > 0) {
+		let obj = {};
+		ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
+		obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
+		contents[productcode] = obj;
+		idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
+	    }
 	}
-      productcodes.push($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode"));
-	
-      var productcode = $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
-
-      let quantity =parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
-	if (parseFloat(quantity) > 0) {
-	    let obj = {};
-	    
-            ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
-            obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
-            contents[productcode] = obj;
-	    idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
-          }
-    }
 	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(5) input').val());
-
     }
 
       else if ($("#taxapplicabletext").text() == "GST") {
@@ -1456,11 +1267,7 @@ if (!curdate.between(financialstart, financialend)) {
 	  return false;   
 	}
         */
-	      if($("#status").val()==3){
-		  calculategstaxamt(i);
-	      }else{
-		  calculategstinc(i);
-	      }
+	      calculategstaxamt(i);
 		  
 	      productqtys.push(parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
@@ -1622,7 +1429,6 @@ if (!curdate.between(financialstart, financialend)) {
                         });
                         return false;
                     }
-		    
                     })
                 .fail(function() {
                     console.log("error");

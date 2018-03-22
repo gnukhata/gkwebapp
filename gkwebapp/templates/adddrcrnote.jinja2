@@ -309,12 +309,12 @@
 		     <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		     <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		     <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+		     <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		     {% if drcrflag == "3" %}
 		       <th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
 		     {% else %}
 		       <th class="smvwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
 		     {% endif %}
-		     <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		     <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		     <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 		     <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -337,12 +337,11 @@
 		       <input type="text" class="drcrnote_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
 		     <td class="smvwrap">
-		       <input type="text" class="drcrnote_product_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" >
-		     </td>
-		     <td class="smvwrap">
 		       <input type="text" class="drcrnote_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
-
+		     <td class="smvwrap">
+		       <input type="text" class="drcrnote_product_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" >
+		     </td>
 		     <td class="smvwrap">
 		       <input type="text" class="drcrnote_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		     </td>
@@ -361,12 +360,8 @@
 		 </tbody>
 		 <tfoot>
 		   <tr>
-		     <td colspan="4" class="text-right">
+		     <td colspan="5" class="text-right">
 		       {% trans %}Total{% endtrans %}
-		     </td>
-		     <!--  Total : ptotal       -->
-		     <td class="smvwrap">
-		       <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		     </td>
 		     <td class="smvwrap">
 		       <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
@@ -397,7 +392,7 @@
 		   </div>
 		   <div class="col-sm-10" style="overflow-x:scroll;">
 		     <div class="row">
-		       <table id="drcrnote_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
+		       <table id="drcrnote_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:150%; max-width:150%">
 			 
 			 
 			 <thead class="bg-primary">
@@ -406,13 +401,12 @@
 			     <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
 			     <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			     <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+			     <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			     {% if drcrflag == "3" %}
 			       <th rowspan="2" class="smwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
 			     {% else %}
 			       <th rowspan="2" class="smwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
 			     {% endif %}
-			     
-			     <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			     <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			     <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 			     <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
@@ -434,7 +428,7 @@
 		       </table>
 		     </div>
 		     <div class="row">
-		       <table id="drcrnote_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+		       <table id="drcrnote_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:148.5%; max-width:148.5%; overflow-x:hidden;overflow-y:scroll;">
 			 <tbody>
 			   <tr>
 			     <td class="mdwrap">
@@ -453,10 +447,10 @@
 			       <input type="text" class="drcrnote_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 			     </td>
 			     <td class="smwrap">
-			       <input type="text" class="drcrnote_product_rate_gst form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="9" >
+			       <input type="text" class="drcrnote_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 			     </td>
 			     <td class="smwrap">
-			       <input type="text" class="drcrnote_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
+			       <input type="text" class="drcrnote_product_rate_gst form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="9" >
 			     </td>
 			     <td class="smwrap">
 			       <input type="text" class="drcrnote_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
@@ -481,11 +475,10 @@
 		       </table>
 		     </div>
 		     <div class="row">
-		       <table id="drcrnote_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:140%; max-width:140%;">
+		       <table id="drcrnote_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote" style="width:148.5%; max-width:148.5%;">
 			 <tfoot>
 			   <tr>
-			     <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			     <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+			     <td colspan="6" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
 			     <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
 			     <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
 
@@ -535,80 +528,74 @@
 	   <div class="col-sm-4">
 	   <div class="row">
 	     <div class="form-group form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv gstfield sgstfield">
 	     <div class="form-group sgstfield form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv gstfield sgstfield">
 	     <div class="form-group sgstfield form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv gstfield igstfield">
 	     <div class="form-group igstfield form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv gstfield">
 	     <div class="form-group form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv vatfield">
 	     <div class="form-group form-inline">
-	       <div class="col-sm-6">
+	       <div class="col-sm-7">
 		 <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
-	       </div>
-	     </div>
-	   </div>
-	   <div class="row hborderdiv">
-	     <div class="form-group form-inline">
-	       <div class="col-sm-6">
-		 <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
-	       </div>
-	       <div class="col-sm-6 text-right">
-		 <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
 	   </div>
 	   <div class="row hborderdiv" style="border-bottom-style:solid;">
 	     <div class="form-group form-inline">
-	       <div class="col-sm-6">
-		 <label for="totaldrcrnotevalue" style="font-size:100% !important;">{% trans %}Total Payable Amount{% endtrans %} :</label>
+	       <div class="col-sm-7">
+		 {% if drcrflag == "3" %}
+		   <label for="totaldrcrnotevalue" style="font-size:100% !important;">{% trans %}Total Credit Note Amount{% endtrans %} :</label>
+		 {% else %}
+		   <label for="totaldrcrnotevalue" style="font-size:100% !important;">{% trans %}Total Debit Note Amount{% endtrans %} :</label>
+		   {% endif %}
 	       </div>
-	       <div class="col-sm-6 text-right">
+	       <div class="col-sm-5 text-right">
 		 <label id="totaldrcrnotevalue" style="font-size:100% !important; font-weight:normal !important"></label>
 	       </div>
 	     </div>
