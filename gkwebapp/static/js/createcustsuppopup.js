@@ -87,11 +87,25 @@ $(document).ready(function() {
 		$(".gstin").focus().select();
 	    }
 	}
-  });
+    });
+    
+     var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var email="";
+    
   $("#add_cussup_email").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#add_cussup_phone").focus().select();
+    if (event.which==13 || event.which==9) {
+	event.preventDefault();
+	email = $(this).val();
+		if ((!email.match(emailExp)) && email!="") {
+	  $("#improper-email-alert").alert();
+            $("#improper-email-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#improper-email-alert").hide();
+		$("#add_cussup_email").focus().select();
+            });   
+
+
+	}
+	$("#add_cussup_phone").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();

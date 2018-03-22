@@ -213,12 +213,24 @@ $(document).ready(function() {
           event.preventDefault();
           $("#edit_cussup_email").focus().select();
         }
-      });
+  });
+      var editemailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var editemail="";
+    
   $("#edit_cussup_email").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#edit_cussup_phone").focus().select();
-    }
+    if (event.which==13 || event.which==9) {
+	event.preventDefault();
+	editemail = $(this).val();
+		if ((!editemail.match(editemailExp)) && editemail!= "") {
+		    $("#email-editimproper-alert").alert();
+		    $("#email-editimproper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#email-editimproper-alert").hide();
+			$("#edit_cussup_email").focus().select();
+		    });
+		}
+		    
+		    $("#edit_cussup_phone").focus().select();
+		}
     if (event.which==38){
       event.preventDefault();
       $("#edit_cussup_name").focus().select();
