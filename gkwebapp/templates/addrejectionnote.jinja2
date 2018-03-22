@@ -1,3 +1,20 @@
+<head>
+  <style>
+   .borderdiv {
+       border-left-style:solid;
+       border-width: 1px;
+   }
+   .rborderdiv {
+       border-right-style:solid;
+       border-width: 1px;
+   }
+   .hborderdiv {
+       border-top-style:solid;
+       padding-top: 10px;
+       border-width: 1px;
+   }
+  </style>
+</head>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
@@ -11,7 +28,7 @@
     </div>
     <div class="panel shadow rejectionnote_panel" id="rnmain">
       <div class="panel-body">
-	<div class="col-md-5">
+	<div class="col-md-4">
 	  <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
 	    <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
 	  </div>
@@ -34,6 +51,11 @@
 	    {% trans %}Note Date should not be prior to the Delivery Date!{% endtrans %}
 	  </div>
 	  <div class="form-group">
+	    {% if gkstatus=="in" %}
+	      {% trans %}<h4>Details of Rejection In: </h4>{% endtrans %}
+	    {% else %}
+	      {% trans %}<h4>Details of Rejection Out: </h4>{% endtrans %}
+	    {% endif %}
 	    <div class="row">
 	      <div class="col-xs-6">
 		<label for="rejectionnote_invoice"> {% trans %}Invoice{% endtrans %} : </label>
@@ -98,6 +120,80 @@
 	  <div class="form-group">
 	    <div class="row">
 	      <div class="col-xs-6">
+		<label for="rejectionnote_godown">
+		  {% if gkstatus=="in" %}
+		    {% trans %}Received At{% endtrans %} :
+		  {% else %}
+		    {% trans %}Dispatched From{% endtrans %} :
+		  {% endif %}
+		</label>
+		<input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" data-goid ="" disabled>
+	      </div>
+	      <div class="col-xs-6">
+		<label for="rejectionnote_consignment">Type of Transaction:</label>
+		<input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-4 borderdiv">
+	  <div class="form-group">
+	  {% if gkstatus=="in" %}
+	    {% trans %}<h4>Details of Invoice: </h4>{% endtrans %}
+	  {% else %}
+	    {% trans %}<h4>Details of Delivery Note: </h4>{% endtrans %}
+	  {% endif %}
+	  <div class="row">
+	    <div class="col-xs-6">
+	      <label for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
+	      <input class="form-control input-sm" id="invoice_noteno" disabled>
+	    </div>
+	    <div class="col-xs-6">
+	      <label for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+	      <div class="form-inline">
+		<div class="form-group ">
+		  <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v" disabled>
+		</div>
+		<div class="form-group">
+		  <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v" disabled>
+		</div>
+		<div class="form-group">
+		  <input type="text" class="form-control input-sm invdate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v" disabled>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  </div>
+	  <div class="form-group">
+	  <div class="row">
+	    <div class="col-xs-6">
+	      <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+	      <input class="form-control input-sm" id="invoice_state" disabled>
+	    </div>
+	    <div class="col-xs-6">
+		<label for="invoice_gstin">{% trans %}GSTIN{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	    </div>
+	  </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-12">
+		<label for="invoice_addr">{% trans %}Address{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_addr" disabled>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-4 borderdiv">
+	  {% if gkstatus=="in" %}
+	    {% trans %}<h4>Details of Customer: </h4>{% endtrans %}
+	  {% else %}
+	    {% trans %}<h4>Details of Supplier: </h4>{% endtrans %}
+	  {% endif %}
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-6">
 		<label for="rejectionnote_customer">
 		  {% if gkstatus=="out" %}
 		    {% trans %}Supplier Name{% endtrans %} :
@@ -128,37 +224,32 @@
 	    </div>
 	  </div>
 	  <div class="form-group">
-	    {% if gkstatus == "in" %}
-	      <label for="rejectionnote_customeraddr">
-		{% trans %}Customer Address{% endtrans %} :
-	      </label>
-	    {% else %}
-	      <label for="rejectionnote_supplieraddr">
-		{% trans %}Supplier Address{% endtrans %} :
-	      </label>
-	    {% endif %}
-	    <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
-	  </div>
-	  <div class="form-group">
 	    <div class="row">
-	      <div class="col-xs-6">
-		<label for="rejectionnote_godown">
-		  {% if gkstatus=="in" %}
-		    {% trans %}Received At{% endtrans %} :
-		  {% else %}
-		    {% trans %}Dispatched From{% endtrans %} :
-		  {% endif %}
-		</label>
-		<input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" data-goid ="" disabled>
-	      </div>
-	      <div class="col-xs-6">
-		<label for="rejectionnote_consignment">Type of Transaction:</label>
-		<input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
+	      <div class="col-xs-12">
+		<label for="cussup_state">{% trans %}State{% endtrans %} :</label>
+		<input class="form-control input-sm" id="cussup_state" disabled>
 	      </div>
 	    </div>
 	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-12">
+	      {% if gkstatus == "in" %}
+		<label for="rejectionnote_customeraddr">
+		  {% trans %}Customer Address{% endtrans %} :
+		</label>
+	      {% else %}
+		<label for="rejectionnote_supplieraddr">
+		  {% trans %}Supplier Address{% endtrans %} :
+		</label>
+	      {% endif %}
+	      <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+	      </div>
+	      </div >
+	    </div>
 	</div>
-	<div class="col-md-7" id="rejectionnote_product_div">
+	<!--     -----------------------Start Table-----------------------------------  -->
+	<div class="col-md-12" id="rejectionnote_product_div">
 	  <div class="alert alert-danger" id="product-blank-alert" aria-live="rude" role="alert" hidden>
 	    <label for="vno">{% trans %}Rejection Note with no rejected products cannot be created!{% endtrans %}</label>
 	  </div>
@@ -204,6 +295,7 @@
 	    <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
 	  </div>
 	</div>
+	<!--                      Table End                       -->
       </div>
       <div>
 	{% if gkstatus=='out' %}

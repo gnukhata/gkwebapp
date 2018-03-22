@@ -278,6 +278,8 @@ $(document).ready(function() {
 			    $(".tinfield").show();
 			    $(".gstinfield").hide();
 			}
+			console.log(resp["invDetails"]["invno"]);
+			$("#invoice_noteno").val(resp["invDetails"]["invno"]);
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);
 			$("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
 			if(resp["delchal"]["taxflag"] == 7){
@@ -285,7 +287,6 @@ $(document).ready(function() {
 			} else {
 			    $("#rejectionnote_customertin").val(resp["delchal"]["custtin"]);
 			}
-			
 			if(resp["delchal"]["dcflag"] == 1){
 			    $("#rejectionnote_consignment").val("Approval");
 			}
