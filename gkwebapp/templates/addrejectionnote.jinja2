@@ -124,18 +124,21 @@
 	</div>
 	<div class="col-md-4 borderdiv">
 	  <div class="form-group">
-	  {% if gkstatus=="in" %}
-	    {% trans %}<h4>Details of Invoice: </h4>{% endtrans %}
-	  {% else %}
-	    {% trans %}<h4>Details of Delivery Note: </h4>{% endtrans %}
-	  {% endif %}
+	    <div class="inv">
+	      {% trans %}<h4>Details of Invoice: </h4>{% endtrans %}
+	    </div>
+	    <div class="delchal" hidden>
+	      {% trans %}<h4>Details of Delivery Note: </h4>{% endtrans %}
+	    </div>
 	  <div class="row">
 	    <div class="col-xs-6">
-	      <label for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
+	      <label class="inv" for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
+	      <label class="delchal" for="invoice_noteno" hidden>{% trans %}Delivery Note No{% endtrans %} :</label>
 	      <input class="form-control input-sm" id="invoice_noteno" disabled>
 	    </div>
 	    <div class="col-xs-6">
-	      <label for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+	      <label class="inv" for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+	      <label class="delchal" for="invoice_date" hidden>{% trans %}Delivery Note Date{% endtrans %} :</label>
 	      <div class="form-inline">
 		<div class="form-group ">
 		  <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v" disabled>
