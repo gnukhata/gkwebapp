@@ -1463,7 +1463,3 @@ if (!curdate.between(financialstart, financialend)) {
   });
     
 }); // ready func end
-
-
-
-
