@@ -277,11 +277,14 @@
         <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
           <p>   <font color=" #566573"> {%trans%}
-            This module lets you add Products.{% endtrans %}
-            </br> {% trans %}If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.{% endtrans %}
-            </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
-            You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
-            you can also enter the details of taxes for the product. {%endtrans %} </font>
+            This module is for creating products. {% endtrans %}
+            </br> {% trans %}To create a Product, we have to provide Product Name, Unit of Measurement and Tax. We can have products under categories. To use this feature create categories and then while creating products we can choose a category they will belong to.
+{% endtrans %}
+              </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+	      You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one.
+ {%endtrans %} </br>
+ {% trans %}Products can have opening stock. If inventory is enabled for this organisation and we have godowns we can add them using a popup which can be activated by clicking Add Godown button. Godowns can also be added using the Create Godown Module.
+{%endtrans %}</font>
 
           </p>
         </div>
@@ -308,4 +311,7 @@
 	</div>
 	</div>
       </div>
-    </div>
+  </div>
+
+
+  
