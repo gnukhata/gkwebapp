@@ -224,12 +224,9 @@ def printlistofusers(request):
     '''
 @view_config(route_name="showuser",request_param="type=spreadsheet", renderer="")
 def listofusersspreadsheet(request):
-    #try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         result = requests.get("http://127.0.0.1:6543/users?type=list", headers=header)
-        #userrep = result.json()["gkdata"]
-        #print userrep
-        #users_str = base64.b64decode(userrep)
         fystart = str(request.params["fystart"]);
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"]);
@@ -259,12 +256,10 @@ def listofusersspreadsheet(request):
         sheet['C4'] = 'User Role'
         sheet['D4'] = 'Associated Godowns(s)'
         userList = result.json()["gkresult"]
-        print userList
         row=5
         #Looping to store the data in the cells and apply styles.
         srno = 1
         for user in userList:
-            print user
             sheet['A'+str(row)] = srno
             sheet['A'+str(row)].alignment = Alignment(horizontal='left')
             sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -273,12 +268,13 @@ def listofusersspreadsheet(request):
             sheet['C'+str(row)] = user["userrole"]
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             gostring = ""
-            i = 0
+            i = 1
             for godown in user["godowns"]:
                 if i == user["noofgodowns"]:
                     gostring += godown
+                    print gostring
                 else:
-                    gostring = gostring + godown + ","+""
+                    gostring = gostring + godown +","
                 i += 1
             sheet['D'+str(row)] = gostring
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -291,5 +287,5 @@ def listofusersspreadsheet(request):
         xlsxfile.close()
         os.remove("report.xlsx")
         return Response(reportxslx, headerlist=headerList.items())
-    #except:
+    except:
         return {"gkstatus":3}
