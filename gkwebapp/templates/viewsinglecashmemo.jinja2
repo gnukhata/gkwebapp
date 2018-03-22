@@ -229,7 +229,40 @@
   {% endif %}
       </div>
     </div>
-    <div class="row col-sm-18" style="margin-top:0.5cm;">
+    <div class="row col-sm-12" style="margin-top:0.5cm;">
+      <!-- code for show or hide bankdetails based on paymentmode,if paymentmode is 2 then show bankdetails or if paymentmode is 3 then show "Cash received"-->
+      <div class="row col-sm-8">
+	{% if gkresult["paymentmode"] == 2 %}
+	  <div class="col-sm-12" >
+	    <label>Bank Details :</label>
+	  </div>
+	  <div class="col-sm-12">
+	    <div class="row">
+	      <div class="form-group form-inline col-sm-6 nopadding">
+		<label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
+		{% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
+	      </div>
+	      <div class="form-group form-inline col-sm-6 nopadding">
+		<label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
+		{% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
+	      </div>
+	    </div>
+	    <br>
+	    <div class="row">
+	      <div class="form-group form-inline col-sm-6 nopadding">
+		<label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
+		{% if gkresult["bankdetails"]["branchname"] %}{{ gkresult["bankdetails"]["branchname"] }}{% else %}N/A{% endif %}
+	      </div>
+	      <div class="form-group form-inline col-sm-6 nopadding">
+		<label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
+		{% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
+	      </div>
+	    </div>
+	  </div>
+	{% else %}
+	  <div class="col-sm-6"><label style="font-size:120% !important">CASH RECEIVED</label></div><br>
+	{% endif %}
+      </div>
       <div class ="col-sm-4 pull-right" >
 	<div class="row">
 	  <div class="form-inline">
@@ -308,37 +341,7 @@
 	</div>
 	<br>
       </div>
-      <!-- code for show or hide bankdetails based on paymentmode,if paymentmode is 2 then show bankdetails or if paymentmode is 3 then show "Cash received"-->
-      {% if gkresult["paymentmode"] == 2 %}
-	<div class="col-sm-4" >
-	  <label>Bank Details :</label>
-	</div>
-	<div class="col-sm-6">
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-	      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
-	    </div>
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
-	      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
-	    </div>
-	  </div>
-	  <br>
-	  <div class="row">
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
-	      {% if gkresult["bankdetails"]["branchname"] %}{{ gkresult["bankdetails"]["branchname"] }}{% else %}N/A{% endif %}
-	    </div>
-	    <div class="form-group form-inline col-sm-6 nopadding">
-	      <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
-	      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
-	    </div>
-	  </div>
-	</div>
-      {% else %}
-	<div class="col-sm-6"><label style="font-size:120% !important">CASH RECEIVED</label></div><br>
-      {% endif %}
+      
       {% if gkresult["invoicetotalword"]!= None  %}
 	<div class ="col-sm-12">
 	  <div class ="col-sm-4 ">
