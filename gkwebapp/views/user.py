@@ -35,7 +35,8 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import base64
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import os
 
 
@@ -223,19 +224,72 @@ def printlistofusers(request):
     '''
 @view_config(route_name="showuser",request_param="type=spreadsheet", renderer="")
 def listofusersspreadsheet(request):
-    try:
+    #try:
         header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/worksheet?type=listofusers", headers=header)
-        userrep = result.json()["gkdata"]
-        users_str = base64.b64decode(userrep)
-        xlsxfile = open("report.xlsx","w")
-        xlsxfile.write(users_str)
-        xlsxfile.close()
+        result = requests.get("http://127.0.0.1:6543/users?type=list", headers=header)
+        #userrep = result.json()["gkdata"]
+        #print userrep
+        #users_str = base64.b64decode(userrep)
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"]);
+        # A workbook is opened.
+        userwb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = userwb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "List of Users"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 16
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 26
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:F3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'List of Users'
+        sheet['A4'] = 'Sr. No. '
+        sheet['B4'] = 'User Name'
+        sheet['C4'] = 'User Role'
+        sheet['D4'] = 'Associated Godowns(s)'
+        userList = result.json()["gkresult"]
+        print userList
+        row=5
+        #Looping to store the data in the cells and apply styles.
+        srno = 1
+        for user in userList:
+            print user
+            sheet['A'+str(row)] = srno
+            sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = user["username"]
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = user["userrole"]
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            gostring = ""
+            i = 0
+            for godown in user["godowns"]:
+                if i == user["noofgodowns"]:
+                    gostring += godown
+                else:
+                    gostring = gostring + godown + ","+""
+                i += 1
+            sheet['D'+str(row)] = gostring
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            row = row + 1
+            srno = srno + 1
+        userwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         xlsxfile.close()
         os.remove("report.xlsx")
         return Response(reportxslx, headerlist=headerList.items())
-    except:
+    #except:
         return {"gkstatus":3}
