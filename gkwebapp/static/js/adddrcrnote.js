@@ -1189,7 +1189,6 @@ if (!curdate.between(financialstart, financialend)) {
 //GST and VAT table 
 
       var reference  = {};
-      var contents = {};
       var idrate={};   //idrate dict takes key as productcode and value as inc or dec rate 
       var totalreduct = 0.00;
       var productcodes = [];
@@ -1222,8 +1221,7 @@ if (!curdate.between(financialstart, financialend)) {
 		let obj = {};
 		ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 		obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
-		contents[productcode] = obj;
-		idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val());
+		idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
 	    }
 	}
 	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(4) input').val());
@@ -1270,8 +1268,7 @@ if (!curdate.between(financialstart, financialend)) {
 	      productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
 	      ppu = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
 	      obj[ppu] = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-	      contents[productcode] = obj;
-	      idrate[productcode]=$.trim($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val());
+	      idrate[productcode]=$.trim($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val());
 	      
 	  }
 	  var totreduct = $.trim($('#total_product_gst').html());
@@ -1298,7 +1295,6 @@ if (!curdate.between(financialstart, financialend)) {
 	  
       form_data.append("drcrno", $("#drcrnote_no").val());
       form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
-      form_data.append("contents", JSON.stringify(contents));
       if($("#reference").prop('checked') == true)
       {
 	  //store reference    
