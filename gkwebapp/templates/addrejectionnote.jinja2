@@ -1,19 +1,4 @@
 <head>
-  <style>
-   .borderdiv {
-       border-left-style:solid;
-       border-width: 1px;
-   }
-   .rborderdiv {
-       border-right-style:solid;
-       border-width: 1px;
-   }
-   .hborderdiv {
-       border-top-style:solid;
-       padding-top: 10px;
-       border-width: 1px;
-   }
-  </style>
   <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
@@ -378,31 +363,28 @@
 		  <tbody>
 		    <tr>
 		      <td class="mdwrap">
-			<!-- <select class="form-control input-sm product_name_gst">
-			     <option value="" disabled hidden selected>Select Product</option>
-			     </select> -->
-			<input>
+			<input class="form-control input-sm product_name" placeholder="None" disabled>
 		      </td>
 		      <td class="smwrap text-center" style="vertical-align:middle;">
 			<label class="invoice_product_hsncode text-center"></label>
 		      </td>
 		      <td class="qtywrap">
 			<div class="input-group">
-			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm unitaddon"></span>
+			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
+			  <span class="input-group-addon input-sm unitaddon_qty_gst"></span>
 			</div>
 		      </td>
 		      <td class="qtywrap">
 			<div class="input-group">
-			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm unitaddon"></span>
+			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" >
+			  <span class="input-group-addon input-sm unitaddon_freeqty_gst"></span>
 			</div>		      </td>
 
 		      <td class="smwrap">
-			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 		      </td>
 		      <td class="smwrap">
-			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 		      </td>
 		      <td class="smwrap">
 			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
@@ -469,11 +451,99 @@
 	    </div>
 	  </div>
 	  <!-- GST Table end -->
-	    <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
+	</div>
+	<small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
+      <!--                      Table End                       -->
+      <!-- Summary -->
+      <div class="row">
+	<div class="col-md-8">
+	</div>
+	<div class="col-md-4">
+	  <div class="row">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
 	  </div>
-	</div><!-- table div close -->
-	<!--                      Table End                       -->
-      </div><!-- panal close -->
+	  <div class="row hborderdiv gstfield sgstfield">
+	    <div class="form-group sgstfield form-inline">
+	      <div class="col-sm-6">
+		<label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv gstfield sgstfield">
+	    <div class="form-group sgstfield form-inline">
+	      <div class="col-sm-6">
+		<label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv gstfield igstfield">
+	    <div class="form-group igstfield form-inline">
+	      <div class="col-sm-6">
+		<label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv gstfield">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv vatfield">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row hborderdiv" style="border-bottom-style:solid;">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+      <!-- Summary End -->
+      </div><!-- panel div close -->
+      
       <div>
 	{% if gkstatus=='out' %}
 	  <input type="hidden" id="rejectionnote_gkstatus" value="15">
@@ -487,6 +557,7 @@
 	  <button class="btn btn-warning btn-sm" id="rejectionnote_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i>{% trans %} R<u>e</u>set{% endtrans %}</button>
 	</div>
       </div>
+    </div><!-- panal close -->
     </div>
     <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
       <div class="vertical-alignment-helper">

@@ -35,6 +35,8 @@ $(document).ready(function() {
     }
     $('.rejectionnote_product_rejected_quantity').numeric({ negative: false});
     $('.numtype').numeric({ negative: false});
+    var gsthtml = $('#rejection_product_table_gst tbody tr:first').html();
+    var totaltablehtml = $("#rejection_product_table_total tbody tr:first").html();
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var todaysdate = new Date();
@@ -108,8 +110,16 @@ $(document).ready(function() {
     });
     
     $("#rejectionnote_noteno").keydown(function(event) {
-	if (event.which==13 && $("#rejectionnote_noteno").val()) {
+	if (event.which==13) {
 	    event.preventDefault();
+	    if ($.trim($('#rejectionnote_noteno').val())=="") {
+	    $("#noteno-blank-alert").alert();
+	    $("#noteno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#noteno-blank-alert").hide();
+	    });
+	    $('#rejectionnote_noteno').focus();
+	    return false;
+	}
 	    $("#rejectionnote_date").focus().select();
 	}
 	if (event.which==38) {
@@ -247,9 +257,62 @@ $(document).ready(function() {
 	    })
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
-			$('#rejectionnote_product_table tbody').empty();
+			var curindex = $(this).closest('#rejection_product_table_vat tbody tr').index();
+			$('#invoice_product_table tbody').empty();
+			$(".vatfield").hide();
 			$.each(resp.items, function(key, value) {
-			    $('#rejectionnote_product_table tbody').append('<tr>' +
+			    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
+			    $('.product_name:eq(' + curindex + ')').val(value.productdesc).prop("disabled", true);
+			    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
+			    $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
+			    $('.invoice_product_freequantity_gst:eq(' + curindex + ')').val(value.freeqty).attr("data", value.freeqty);
+			    $('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
+			    $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
+			    $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
+			    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
+			    console.log(value.taxname);
+			    if(value.taxname == 'IGST'){
+				$(".sgstfield").hide();
+				$(".igstfield").show();
+				$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
+				$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
+			    }
+			    else{
+				$(".igstfield").hide();
+				$(".sgstfield").show();
+				$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
+				$('.invoice_product_sgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
+				$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
+				$('.invoice_product_cgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
+			    }
+			    $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
+			    $('.invoice_product_cessamount:eq(' + curindex + ')').val(parseFloat(value.cess).toFixed(2));
+			    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+			    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+			    $('.invoice_product_total:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
+			    curindex = curindex + 1;
+			
+			$('.invoice_product_quantity_gst').numeric({ negative: false });
+			$('.invoice_product_per_price_gst').numeric({ negative: false });
+			$("#invoice_product_table_total tbody tr:first td:last").empty();
+			$("#discounttotal_product_gst").text(parseFloat(value.totaldiscount).toFixed(2));
+			$("#taxablevaluetotal_product_gst").text(parseFloat(value.totaltaxablevalue).toFixed(2));
+			$("#totalcgst_product_gst").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totalsgst_product_gst").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totaligst_product_gst").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totalcess_product_gst").text(parseFloat(value.totalcessamt).toFixed(2));
+			$("#total_product_gst").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
+			$("#taxableamount").text(parseFloat(value.totaltaxablevalue).toFixed(2));
+			$("#totalinvoicevalue").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
+			$("#totalsgtax").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totalcgtax").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totaligtax").text(parseFloat(value.totaltaxamt).toFixed(2));
+			$("#totalinvdiscount").text(parseFloat(value.totaldiscount).toFixed(2));
+			$("#totalinvcess").text(parseFloat(value.totalcessamt).toFixed(2));
+			$(".vatfied").hide();
+			$(".gstfield").show();
+			});
+			    /*$('#invoice_product_table_gst tbody').append('<tr>' +
 									   '<td class="col-xs-5">' +
 									   '<input class="form-control input-sm product_name" data-productcode="' + key + '" value="' + value.productdesc + '" disabled>' +
 									   '</td>' +
@@ -269,8 +332,7 @@ $(document).ready(function() {
 									   '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>' +
 									   '</td>' +
 									   '</tr>');
-			    $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
-			});
+			    $('#rejectionnote_product_table tbody tr:eq(' + $(this).closest("tr").index() + ') td:eq(1) input').val(parseFloat(value.qty).toFixed(2));*/
 			if(resp["delchal"]["taxflag"] == 7){
 			    $(".gstinfield").show();
 			    $(".tinfield").hide();
@@ -278,8 +340,14 @@ $(document).ready(function() {
 			    $(".tinfield").show();
 			    $(".gstinfield").hide();
 			}
-			console.log(resp["invDetails"]["invno"]);
 			$("#invoice_noteno").val(resp["invDetails"]["invno"]);
+			var dcdatearray = resp.invDetails.invdate.split(/\s*\-\s*/g);
+			$("#rejectionnote_date").val(dcdatearray[0]);
+			$("#rejectionnote_month").val(dcdatearray[1]);
+			$("#rejectionnote_year").val(dcdatearray[2]);
+			$("#invoice_state").val(resp.invDetails.taxstate);
+			$("#invoice_addr").val(resp.invDetails.address);
+			$("#cussup_state").val(resp["delchal"]["custstate"]);
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);
 			$("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
 			if(resp["delchal"]["taxflag"] == 7){
