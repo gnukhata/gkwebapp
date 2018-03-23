@@ -51,7 +51,7 @@ $(document).ready(function() {
     }
     
 
-    //to fill the deatils of consignee same as the details of reciver if checkbo is checked.
+    //to autopopulate the deatils of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
           if($(this).prop('checked') == true) {
 	      $("#consigneename").val($("#invoice_customer option:selected").text());
@@ -62,7 +62,12 @@ $(document).ready(function() {
 	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
 	      	     
           } else {
- 
+	      $("#consigneename").val("");
+	      $("#consigneestate").val("");
+	      $("#statecodeofconsignee").text("");
+	      $("#gstinconsignee").val("");
+	      $("#tinconsignee").val("");
+	      $("#consigneeaddress").val("");
 	         
 	}
       });
@@ -710,7 +715,7 @@ $(document).ready(function() {
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	if ($("#status").val() == 15) {
+/*	if ($("#status").val() == 15) {
 	    if($("#statecodeofconsignee").text() in gstins) {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
@@ -725,7 +730,7 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	}
+	}*/
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
@@ -922,9 +927,9 @@ $(document).ready(function() {
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
+	  //if ($("#consigneename").val() != "") {
+	    //  destinationstate = $("#consigneestate option:selected").val();
+	  //}
       }
 	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
