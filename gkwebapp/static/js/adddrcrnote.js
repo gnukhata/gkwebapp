@@ -19,12 +19,16 @@ $(document).ready(function() {
 	    $(".salediv").show();
 	    $(".purchasediv").hide();
 	    $("#drcrnote_invoice").show();
+	    $("#drcrnote_invoice").val("");
+	    $("#drcrnote_invoice").change();
 	    $("#drcrnote_invoice_purchase").hide();
-	    $("#drcrnote_invoice_purcase").val("");
+	    $("#drcrnote_invoice_purchase").val("");
 	    
        }
 	else{
 	    $("#drcrnote_invoice_purchase").show();
+	    $("#drcrnote_invoice_purchase").val("");
+	    $("#drcrnote_invoice_purchase").change();
 	    $("#drcrnote_invoice").hide();
 	    $(".salediv").hide();
 	    $(".purchasediv").show();
@@ -521,6 +525,8 @@ $(document).ready(function() {
 
     //1 start
     $("#drcrnote_invoice, #drcrnote_invoice_purchase").change(function(event){
+	$("label.col-sm-8, #taxapplicabletext, .input-group-addon, .summarylabel").text("");
+	$('input:not(#status, #taxapplicable), select:not(#drcrnote_invoice, #drcrnote_invoice_purchase)').val("");
 	if($(this).val()!=""){
 	$.ajax({
 		url: '/invoice?action=getinvdetails',
