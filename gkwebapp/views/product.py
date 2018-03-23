@@ -36,9 +36,9 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import os
-from odslib import ODS
-
 
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
 def showproducttab(request):
@@ -379,68 +379,98 @@ def printlistofstockitems(request):
 
 @view_config(route_name="product",request_param="type=spreadsheet", renderer="")
 def listofstockitemsspreadsheet(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/products", headers=header)
-    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    resultgstvat = resultgstvat.json()["gkresult"]
-    result = result.json()["gkresult"]
-    fystart = str(request.params["fystart"]);
-    fyend = str(request.params["fyend"]);
-    orgname = str(request.params["orgname"])
-    orgname += " (FY: " + fystart+" to "+fyend +")"
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.setSheetName("List of Products")
-    sheet.getRow(0).setHeight("23pt")
-
-    sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,4,1)
-    sheet.getRow(1).setHeight("18pt")
-    sheet.getCell(0,1).stringValue("List Of Products").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,4,1)
-    sheet.getColumn(1).setWidth("9cm")
-    sheet.getColumn(2).setWidth("4cm")
-    sheet.getColumn(3).setWidth("4cm")
-    sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-    if resultgstvat == "22":
-        sheet.getCell(1,2).stringValue("Product").setBold(True)
-        sheet.getCell(2,2).stringValue("Category").setBold(True)
-        sheet.getCell(3,2).stringValue("UOM").setBold(True)
-    else:
-        sheet.getCell(1,2).stringValue("Product / Service").setBold(True)
-        sheet.getCell(2,2).stringValue("Type").setBold(True)
-        sheet.getCell(3,2).stringValue("Category").setBold(True)
-        sheet.getCell(4,2).stringValue("UOM").setBold(True)
-
-    if resultgstvat == "22":
-        row = 3
-        for stock in result:
-            sheet.getCell(0, row).stringValue(stock["srno"])
-            sheet.getCell(1, row).stringValue(stock["productdesc"])
-            sheet.getCell(2, row).stringValue(stock["categoryname"])
-            sheet.getCell(3, row).stringValue(stock["unitname"])
-            row += 1
-    else:
-        row = 4
-        for stock in result:
-            sheet.getCell(0, row).stringValue(stock["srno"])
-            sheet.getCell(1, row).stringValue(stock["productdesc"])
-            if stock["gsflag"] == 7:
-                sheet.getCell(2, row).stringValue("Product")
-            else:
-                sheet.getCell(2, row).stringValue("Service")
-            sheet.getCell(3, row).stringValue(stock["categoryname"])
-            sheet.getCell(4, row).stringValue(stock["unitname"])
-            row += 1
-
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
-
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/products", headers=header)
+        resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+        resultgstvat = resultgstvat.json()["gkresult"]
+        result = result.json()["gkresult"]
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        #orgname += " (FY: " + fystart+" to "+fyend +")"
+        # A workbook is opened.
+        productwb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = productwb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "List of Products"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 24
+        sheet.column_dimensions['C'].width = 18
+        sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 16
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:E2')
+        # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:E3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'List of Products'
+        sheet.merge_cells('A3:E3')
+        sheet['A4'] = 'Sr.No.'
+        
+        if resultgstvat == "22":
+            print "helo"
+            sheet['B4'] = 'Product'
+            sheet['C4'] = 'Category'
+            sheet['D4'] = 'UOM'
+        else:
+            sheet['B4'] = 'Product/service'
+            sheet['C4'] = 'Type'
+            sheet['D4'] = 'Category'
+            sheet['E4'] = 'Uom'
+        titlerow = sheet.row_dimensions[4]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        srno=1
+        if resultgstvat == "22":
+            row = 5
+            for stock in result:
+                sheet['A'+str(row)] = srno
+                sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+                sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['B'+str(row)] = stock['productdesc']
+                sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['C'+str(row)] = stock["categoryname"]
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['D'+str(row)] = stock["unitname"]
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                row +=1
+                srno +=1
+        else:
+            row = 6
+            for stock in result:
+                sheet['A'+str(row)] = srno
+                sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+                sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['B'+str(row)] = stock['productdesc']
+                sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if stock["gsflag"] == 7:
+                          sheet['C'+str(row)] = 'Product'
+                          sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                else:    
+                         sheet['C'+str(row)] = 'Service'
+                         sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['D'+str(row)] = stock["categoryname"]
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['E'+str(row)] = stock["unitname"]
+                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                row +=1
+                srno +=1
+        productwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())       
+    except:
+        return {"gkstatus":3}
+    
 @view_config(route_name="product",request_param="type=viewstockreport", renderer="gkwebapp:templates/viewstockreport.jinja2")
 def viewstockreport(request):
 
