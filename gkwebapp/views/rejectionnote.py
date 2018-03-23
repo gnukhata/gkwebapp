@@ -65,7 +65,8 @@ def getrejectionnote(request):
 @view_config(route_name="rejectionnote",request_param="action=save",renderer="json")
 def saverejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    rndata = {"rnno":request.params["rnno"],"rndate":request.params["rndate"],"inout":request.params["inout"],"rejprods" : json.loads(request.params["products"])}
+    print request.params["products"]
+    rndata = {"rnno":request.params["rnno"],"rndate":request.params["rndate"],"inout":request.params["inout"],"rejprods" : json.loads(request.params["products"]),"rejectedtotal":request.params["rejectedtotal"]}
     if "dcid" in request.params:
         rndata["dcid"] = request.params["dcid"]
     if "invid" in request.params:

@@ -12,14 +12,14 @@
     <div class="alert alert-danger" id="duplicate-alert" aria-live="rude" role="alert" hidden>
       {% trans %}Duplicate Note no.!{% endtrans %}
     </div>
+    <div class="alert alert-danger" id="noteno-blank-alert" aria-live="rude" role="alert" hidden>
+      <label for="vno">{% trans %}Please enter note no.!{% endtrans %}</label>
+    </div>
     <div class="panel shadow rejectionnote_panel" id="rnmain">
       <div class="panel-body">
 	<div class="col-md-4">
 	  <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
 	    <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="noteno-blank-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Please enter note no.!{% endtrans %}</label>
 	  </div>
 	  <div class="alert alert-danger" id="dcinv-blank-alert" aria-live="rude" role="alert" hidden>
 	    <label for="vno">{% trans %}Please Select Invoice or Delivery Note.!{% endtrans %}</label>
@@ -256,6 +256,11 @@
 	  </div>
 	  <div class="panel">
 	    <!-- VAT Table start -->
+	    <div class="vatfield">
+	    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp">
+	      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+	      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Rejection Note. Press 'Esc' key to exit from the table.</small>
+	    </div>
 	    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		<thead class="bg-primary">
 		  <tr>
@@ -335,8 +340,14 @@
 		  </tr>
 		</tfoot>
 	    </table><!-- VAT table end -->
+	    </div>
 	    <!-- GST Table -->
 	    <div class="gsttable">
+	      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
+		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to Rejection Note. Press 'Esc' key to exit from the table.</small>
+	      </div>
 	    <div class="col-sm-10" style="overflow-x:scroll;">
 	      <div class="row">
 		<table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
@@ -463,8 +474,10 @@
 	  </div>
 	  <!-- GST Table end -->
 	</div>
-	<small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small><br>
 	<!--                      Table End                       -->
+	<div class=" col-sm-12">
+	  <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small>
+	</div>
 	<!-- Summary -->
 	<div class="row">
 	  <div class="col-md-8">
