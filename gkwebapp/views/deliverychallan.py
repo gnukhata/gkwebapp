@@ -29,7 +29,7 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Reshma Bhatawadekar" <reshma_b@riseup.net>
 "Nitesh Chaughule <nitesh@disroot.org>" 
-"Sanket Shrawan Kolnoorkar" <sanketf123@gmail.com>
+"Sanket Kolnoorkar" <sanketf123@gmail.com>
 """
 from pyramid.view import view_config
 import requests, json
@@ -66,7 +66,7 @@ def showadddeliverychallan(request):
     result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"],"purchaseorders":podata.json()["gkresult"], "lastdelchaldata":lastdelchaldata.json()["gkresult"], "numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"numberofgodowns":len(godowns.json()["gkresult"]),"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
-
+#delchalins and delchalouts are used to get the data of deliverych in i.e. 9 and deliverych out i.e. 15
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):
 
