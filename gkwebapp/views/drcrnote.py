@@ -28,6 +28,9 @@ def savedrcrnote(request):
     drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"])}
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
+    if request.params.has_key("usr"):
+        drcrdata["userid"]=request.params["usr"]
+    
     result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(drcrdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
     

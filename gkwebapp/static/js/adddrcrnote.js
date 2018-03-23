@@ -10,7 +10,8 @@ $(document).ready(function() {
     $("#drcrnote_year").numeric({ negative: false });
      $("#drcrnote_date_ref").numeric({ negative: false });
     $("#drcrnote_month_ref").numeric({ negative: false });
-    $("#drcrnote_year_ref").numeric({ negative: false });
+  $("#drcrnote_year_ref").numeric({ negative: false });
+  var usrid = "" ;
 
     //Show selectbox of invoice type on the basis of which radio button is checked.
     $("input[name='invoice']").click(function () {
@@ -580,7 +581,8 @@ $(document).ready(function() {
 			})
 			.done(function(resp){
 			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
-			    $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
+			  $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
+			   usrid = resp.unamerole["userid"];
 			});
 		    }
 		    
@@ -1063,7 +1065,9 @@ if (!curdate.between(financialstart, financialend)) {
       if($("#sale").is(":checked"))  {
       form_data.append("invid", $("#drcrnote_invoice option:selected").val());
       }else{
-	   form_data.append("invid", $("#drcrnote_invoice_purchase option:selected").val());
+	form_data.append("invid", $("#drcrnote_invoice_purchase option:selected").val());
+	console.log(usrid);
+	form_data.append("usr",usrid);
       }
 	  
       form_data.append("drcrno", $("#drcrnote_no").val());
@@ -1079,7 +1083,8 @@ if (!curdate.between(financialstart, financialend)) {
       form_data.append("dctypeflag",dctypeflag);  
       //sending hardcode values until caseflag not set
       form_data.append("totreduct",totreduct);
-      form_data.append("reductionval",JSON.stringify(idrate));
+    form_data.append("reductionval",JSON.stringify(idrate));
+    
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
