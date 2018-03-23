@@ -128,12 +128,12 @@ $(document).ready(function() {
     //This is similar to the function above.
     function calculatevataxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
-	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
+	var rowqty = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
+	//var rowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowtaxrate = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val()).toFixed(2);
 	var taxamount = 0.00;
-	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
+	var rowtaxableamount=(rowqty * rowprice); //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
 	var totaltax = 0.00;
@@ -283,8 +283,28 @@ $(document).ready(function() {
 	  return false;
     }
       calculategstaxamt(curindex);
-  });
+    });
 
+    $(document).off('change', '.rejectionnote_product_rejected_quantity').on('change', '.rejectionnote_product_rejected_quantity', function(event) {
+      event.preventDefault();
+    /* Act on the event */
+    if ($(this).val() == "") {
+      $(this).val(0);
+    }
+      var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+      if (parseFloat($(this).val()) == 0 && parseFloat($('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').val()) > 0) {
+      $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').focus().select();
+          });
+	  return false;
+    }
+      calculatevataxamt(curindex);
+    });
+    
+
+    //rejectionnote_product_rejected_quantity
     
     $(document).off('blur', '.rejectionnote_product_rejected_quantity').on('blur', '.rejectionnote_product_rejected_quantity', function(event) {
 	event.preventDefault();
@@ -441,9 +461,9 @@ $(document).ready(function() {
 			    $(".gstfield").show();
 			}else if(resp.invDetails.taxflag == 22){
 			    $("#invoice_product_table_vat").show();
+			    let curindex = 0;
 			    $(".gsttable").hide();
 			    $('#invoice_product_table_vat tbody').empty();
-			    let curindex = 0;
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
@@ -451,21 +471,21 @@ $(document).ready(function() {
 				$('.rejectionnote_product_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				$('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
 				$('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
-				$('.rejection_product_per_price_vat:eq(' + curindex + ')').text(value.priceperunit);
-				$('.rejection_product_discount_vat:eq(' + curindex + ')').text(value.discount);
-				$('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').text(value.taxableamount);
-				$('.rejection_product_tax_rate_vat:eq(' + curindex + ')').text(value.taxrate);
-				$('.rejection_product_tax_amount_vat:eq(' + curindex + ')').text(value.taxamount);
-				$('.rejection_product_total:eq(' + curindex + ')').text(value.totalAmount);
+				$('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
+				$('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
+				$('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
+				$('.rejection_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
+				$('.rejection_product_tax_amount_vat:eq(' + curindex + ')').val(value.taxamount);
+				$('.rejection_product_total:eq(' + curindex + ')').val(value.totalAmount);
 				curindex = curindex + 1;
 			    });
 			    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
 			    $('.invoice_product_quantity_vat').numeric({ negative: false });
 			    $('.invoice_product_per_price_vat').numeric({ negative: false });
-			    $("#discounttotal_product_vat").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
-			    $("#taxablevaluetotal_product_vat").text(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
-			    $("#totaltax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-			    $("#total_product_vat").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
+			    $("#discounttotal_product_vat").val(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
+			    $("#taxablevaluetotal_product_vat").val(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
+			    $("#totaltax").val(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
+			    $("#total_product_vat").val(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
 			    $("#totalinvtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
 			    $("#totalinvoicevalue").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));

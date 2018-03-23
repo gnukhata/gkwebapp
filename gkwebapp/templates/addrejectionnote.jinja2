@@ -159,9 +159,15 @@
 	      <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
 	      <input class="form-control input-sm" id="invoice_state" disabled>
 	    </div>
-	    <div class="col-xs-6">
-		<label for="invoice_gstin">{% trans %}GSTIN{% endtrans %} :</label>
-		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	    <div class="col-xs-6 gstinfield">
+	      <label for="invoice_gstin">
+		{% trans %}GSTIN{% endtrans %} :</label>
+	      <input class="form-control input-sm" id="invoice_gstin" disabled>
+	    </div>
+	    <div class="col-xs-6 tinfield" hidden>
+	      <label for="invoice_gstin">
+		{% trans %}TIN{% endtrans %} :</label>
+	      <input class="form-control input-sm" id="invoice_gstin" disabled>
 	    </div>
 	  </div>
 	  </div>
