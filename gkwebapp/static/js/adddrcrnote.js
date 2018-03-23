@@ -441,7 +441,7 @@ $(document).ready(function() {
 	taxamount = (reductprice * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
-	 rowtotal = reductprice + taxamount;
+	rowtotal = parseFloat(reductprice) + parseFloat(taxamount);
 	 $('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
@@ -466,9 +466,12 @@ $(document).ready(function() {
        	var gsflag=$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) label').attr("data-gsflag");
 	var rowreductrate = parseFloat($('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
 	var rowtaxableamount=0.00;
-	var reductprice=rowqty*rowreductrate;
+	var reductprice=0.00;
 	if (gsflag=="19") {
 	    reductprice=rowreductrate;
+	}
+	else{
+	    reductprice=rowqty*rowreductrate;
 	}
 	
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
@@ -495,7 +498,7 @@ $(document).ready(function() {
         let cessamount = (reductprice * cessrate)/100;  //Amount of Cess to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = reductprice + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
+	rowtotal = parseFloat(reductprice) + (2*parseFloat(sgstamount)) + parseFloat(igstamount) + parseFloat(cessamount); //Sum of Taxable Amount and Tax Amount is found out.
         $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
