@@ -209,7 +209,6 @@ def listofgodownssspreadsheet(request):
         fystart = str(request.params["fystart"]);
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"])
-        orgname += " (FY: " + fystart+" to "+fyend +")"
         # A workbook is opened.
         godownwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
