@@ -27,13 +27,18 @@
                 {% endfor %}
               </optgroup>
             </select>
-
           </div>
         </div>
 	<div class="viewrejectionnote_div" hidden>
         <div class="col-md-4 leftcolumn">
           <div class="form-group">
 	    <div class="row">
+	      <div class="col-xs-12 inrej">
+		{% trans %}<h4>Details of Rejection In: </h4>{% endtrans %}
+	      </div>
+	      <div class="col-xs-12 outrej" hidden>
+		{% trans %}<h4>Details of Rejection Out: </h4>{% endtrans %}
+	      </div>
 	      <div class="col-xs-6">
 		<label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
 		<input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
@@ -196,15 +201,6 @@
 	</div>
 	<!--     -----------------------Start Table-----------------------------------  -->
 	<div class="col-md-12" id="rejectionnote_product_div">
-	  <div class="alert alert-danger" id="product-blank-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Rejection Note with no rejected products cannot be created!{% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="quantity-blank-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Either enter rejected quantity or remove that product! {% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="quantity-more-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %} Rejected Quantity should not be greater than Total Quantity! {% endtrans %}</label>
-	  </div>
 	  <div class="panel">
 	    <!-- VAT Table start -->
 	    <div class="vatfield">
@@ -297,7 +293,6 @@
 	      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to Rejection Note. Press 'Esc' key to exit from the table.</small>
 	      </div>
 	      <div class="col-sm-10" style="overflow-x:scroll;">
 		<div class="row">
@@ -306,10 +301,8 @@
 		      <tr>
 			<th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
-			<th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			<th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-			<th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
@@ -342,21 +335,12 @@
 			</td>
 			<td class="qtywrap">
 			  <div class="input-group">
-			    <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
-			    <span class="input-group-addon input-sm unitaddon_qty_gst"></span>
-			  </div>
-			</td>
-			<td class="qtywrap">
-			  <div class="input-group">
-			    <input type="text" class="rejection_product_rejquantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" >
+			    <input type="text" class="rejection_product_rejquantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
 			    <span class="input-group-addon input-sm unitaddon_freeqty_gst"></span>
 			  </div>
 			</td>
 			<td class="smwrap">
 			  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
-			</td>
-			<td class="smwrap">
-			  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 			</td>
 			<td class="smwrap">
 			  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
@@ -384,8 +368,7 @@
 		  <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 		    <tfoot>
 		      <tr>
-			<td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-			<td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td colspan="4" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
 			<td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
 			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
 
@@ -425,12 +408,8 @@
 	  </div>
 	  <!-- GST Table end -->
 	</div>
-	<!--                      Table End                       -->
-	<div class=" col-sm-12">
-	  <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small>
-	</div>
 	<!-- Summary -->
-	<div class="row">
+	<div class="row" style="margin-top:0.2cm;">
 	  <div class="col-md-8">
 	  </div>
 	  <div class="col-md-4">
@@ -491,16 +470,6 @@
 		</div>
 		<div class="col-sm-6 text-right">
 		  <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
-		</div>
-	      </div>
-	    </div>
-	    <div class="row hborderdiv">
-	      <div class="form-group form-inline">
-		<div class="col-sm-6">
-		  <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
-		</div>
-		<div class="col-sm-6 text-right">
-		  <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
 		</div>
 	      </div>
 	    </div>

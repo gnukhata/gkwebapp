@@ -19,7 +19,13 @@ $(document).ready(function() {
     })
     .done(function(resp) {
       console.log("success");
-	$(".viewrejectionnote_div").show();	
+	$(".viewrejectionnote_div").show();
+	if(resp.gkresult.inout==9){
+	    $(".inrej").show();
+	    $(".outrej").hide();
+	}else{ $(".inrej").hide();
+	       $(".outrej").show();
+	     }
       $("#rejectionnote_noteno").val(resp.gkresult.rnno);
       if(resp.gkresult.invid)
         $("#rejectionnote_invoice").val(resp.gkresult.invno + ", " + resp.gkresult.invdate);
@@ -92,9 +98,10 @@ $(document).ready(function() {
 	  $(".vatfield").hide();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-	      $('.product_name_gst:eq(' + curindex + ')').val(value.productdesc);
+	      console.log(value.productdesc);
+	      $('.product_name_gst:eq(' + curindex + ')').val(value.proddesc);
 	      $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
-	      $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
+	      $('.rejection_product_rejquantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 	      $('.invoice_product_freequantity_gst:eq(' + curindex + ')').val(value.freeqty).attr("data", value.freeqty);
 	      $('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
 	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
@@ -124,20 +131,18 @@ $(document).ready(function() {
 	  $('.invoice_product_quantity_gst').numeric({ negative: false });
 	  $('.invoice_product_per_price_gst').numeric({ negative: false });
 	  $("#invoice_product_table_total tbody tr:first td:last").empty();
-	  $("#discounttotal_product_gst").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
-	  $("#taxablevaluetotal_product_gst").text(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
-	  $("#totalcgst_product_gst").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totalsgst_product_gst").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totaligst_product_gst").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totalcess_product_gst").text(parseFloat(resp.invDetails.totalcessamt).toFixed(2));
-	  $("#total_product_gst").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-	  $("#taxableamount").text(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
-	  $("#totalinvoicevalue").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-	  $("#totalsgtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totalcgtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totaligtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-	  $("#totalinvdiscount").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
-	  $("#totalinvcess").text(parseFloat(resp.invDetails.totalcessamt).toFixed(2));
+	  $("#taxablevaluetotal_product_gst").text(parseFloat(resp.gkresult.totaltaxablevalue).toFixed(2));
+	  $("#totalcgst_product_gst").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totalsgst_product_gst").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totaligst_product_gst").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totalcess_product_gst").text(parseFloat(resp.gkresult.totalcessamt).toFixed(2));
+	  $("#total_product_gst").text(parseFloat(resp.gkresult.rejectedtotal).toFixed(2));
+	  $("#taxableamount").text(parseFloat(resp.gkresult.totaltaxablevalue).toFixed(2));
+	  $("#totalinvoicevalue").text(parseFloat(resp.gkresult.rejectedtotal).toFixed(2));
+	  $("#totalsgtax").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totalcgtax").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totaligtax").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totalinvcess").text(parseFloat(resp.gkresult.totalcessamt).toFixed(2));
 	  $(".vatfied").hide();
 	  $(".gstfield").show();
       }
