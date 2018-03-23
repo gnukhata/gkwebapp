@@ -489,7 +489,7 @@ $(document).ready(function() {
 				$('.product_name:eq(' + curindex + ')').val(value.productdesc);
 				$('.rejectionnote_product_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				$('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
-				$('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+				$('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
 				$('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
 				$('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 				$('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
@@ -521,9 +521,9 @@ $(document).ready(function() {
 			}
 			$("#invoice_noteno").val(resp["invDetails"]["invno"]);
 			var dcdatearray = resp.invDetails.invdate.split(/\s*\-\s*/g);
-			$("#rejectionnote_date").val(dcdatearray[0]);
-			$("#rejectionnote_month").val(dcdatearray[1]);
-			$("#rejectionnote_year").val(dcdatearray[2]);
+			$("#invoice_date").val(dcdatearray[0]);
+			$("#invoice_month").val(dcdatearray[1]);
+			$("#invoice_year").val(dcdatearray[2]);
 			$("#invoice_state").val(resp.invDetails.taxstate);
 			$("#invoice_addr").val(resp.invDetails.address);
 			$("#cussup_state").val(resp["delchal"]["custstate"]);

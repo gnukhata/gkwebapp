@@ -1,3 +1,6 @@
+<head>
+  <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
+</head>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
 
@@ -27,123 +30,493 @@
 
           </div>
         </div>
-        <div class="col-md-5 leftcolumn" hidden>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-6">
-                        <label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
-                        <input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a" disabled>
-                    </div>
-                    <div class="col-xs-6">
-                        <label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
-                        <div class="form-inline">
-                            <div class="form-group ">
-                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v" disabled>
-                            </div>
-                            <div class="form-group">
-                                <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v" disabled>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                  <div class="col-xs-6">
-                    <label for="rejectionnote_invoice">
-                      {% trans %}Invoice{% endtrans %} :
-                    </label>
-                    <input class="form-control input-sm" id="rejectionnote_invoice" placeholder="None" accesskey="" disabled>
-                  </div>
-                  <div class="col-xs-6">
-                    <label for="rejectionnote_deliverynote">
-                      {% trans %}Delivery Note{% endtrans %} :
-                    </label>
-                    <input class="form-control input-sm" id="rejectionnote_deliverynote" placeholder="None" accesskey="" disabled>
-                  </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <div class="row">
-                  <div class="col-xs-6">
-                    <label for="rejectionnote_customer" id = "clabel" hidden>
-                        {% trans %}Customer Name{% endtrans %} :
-                    </label>
-                    <label for="rejectionnote_customer" id = "slabel" hidden>
-                        {% trans %}Supplier Name{% endtrans %} :
-                    </label>
-                    <input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
-                  </div>
-                  <div class="col-xs-6">
-                      <label for="rejectionnote_customer" id = "stinlabel" hidden>
-                        {% trans %}Supplier TIN{% endtrans %} :
-                      </label>
-                      <label for="rejectionnote_customer" id = "ctinlabel" hidden>
-                        {% trans %}Customer TIN{% endtrans %} :
-                      </label>
-                    <input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>
-                  </div>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="rejectionnote_customeraddr" id="caddr" hidden>
-                    {% trans %}Customer Address{% endtrans %} :
-                </label>
-                <label for="rejectionnote_supplieraddr" id ="saddr" hidden>
-                    {% trans %}Supplier Address{% endtrans %} :
-                </label>
-                <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
-            </div>
-            <div class="form-group">
-                <div class="row">
-                    <div class="col-xs-6">
-                      <label for="rejectionnote_godown" id="rgodown" hidden>
-                            {% trans %}Received At{% endtrans %} :
-                          </label>
-                      <label for="rejectionnote_godown" id="dgodown" hidden>
-                            {% trans %}Dispatched From{% endtrans %} :
-                      </label>
-                        <input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" data-goid ="" disabled>
-                    </div>
-                    <div class="col-xs-6">
-                        <label for="rejectionnote_consignment">Type of Transaction:</label>
-                        <input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-7" id="rejectionnote_product_div" hidden>
-            <div class="panel">
-                <table id="rejectionnote_product_table" class="table shadow table-condensed table-bordered fixed-table">
-                    <thead class="bg-primary">
-                        <tr>
-                            <th class="col-xs-">{% trans %}Product{% endtrans %}</th>
-                            <th class="col-xs-5 text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
-                            <th class="col-xs-1"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="col-xs-6">
-                                <input class="form-control input-sm product_name" placeholder="None" disabled>
-                            </td>
-                            <td class="col-xs-5">
-                                <div class="input-group">
-                                    <input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
-                                    <span class="input-group-addon input-sm" id="unitaddon"></span>
-                                </div>
-                            </td>
-                            <td class="col-xs-1">
+	<div class="viewrejectionnote_div" hidden>
+        <div class="col-md-4 leftcolumn">
+          <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
+		<input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
+	      </div>
+	      <div class="col-xs-6">
+		<label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
+		<div class="form-inline">
+		  <div class="form-group ">
+		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v">
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v">
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v">
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label for="rejectionnote_godown">
+		  {% if gkstatus=="in" %}
+		    {% trans %}Received At{% endtrans %} :
+		  {% else %}
+		    {% trans %}Dispatched From{% endtrans %} :
+		  {% endif %}
+		</label>
+		<input class="form-control input-sm" id="rejectionnote_godown" placeholder="None" data-goid ="" disabled>
+	      </div>
+	      <div class="col-xs-6">
+		<label for="rejectionnote_consignment">Type of Transaction:</label>
+		<input class="form-control input-sm" id="rejectionnote_consignment" placeholder="None" accesskey="" disabled>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-4 borderdiv">
+	  <div class="form-group">
+	    <div class="inv">
+	      {% trans %}<h4>Details of Invoice: </h4>{% endtrans %}
+	    </div>
+	    <div class="delchal" hidden>
+	      {% trans %}<h4>Details of Delivery Note: </h4>{% endtrans %}
+	    </div>
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label class="inv" for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
+		<label class="delchal" for="invoice_noteno" hidden>{% trans %}Delivery Note No{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_noteno" disabled>
+	      </div>
+	      <div class="col-xs-6">
+		<label class="inv" for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+		<label class="delchal" for="invoice_date" hidden>{% trans %}Delivery Note Date{% endtrans %} :</label>
+		<div class="form-inline">
+		  <div class="form-group ">
+		    <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v" disabled>
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v" disabled>
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm invdate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v" disabled>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_state" disabled>
+	      </div>
+	      <div class="col-xs-6 gstinfield">
+		<label for="invoice_gstin">
+		  {% trans %}GSTIN{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	      </div>
+	      <div class="col-xs-6 tinfield" hidden>
+		<label for="invoice_gstin">
+		  {% trans %}TIN{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-12">
+		<label for="invoice_addr">{% trans %}Address{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_addr" disabled>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	<div class="col-md-4 borderdiv">
+	  {% if gkstatus=="in" %}
+	    {% trans %}<h4>Details of Customer: </h4>{% endtrans %}
+	  {% else %}
+	    {% trans %}<h4>Details of Supplier: </h4>{% endtrans %}
+	  {% endif %}
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label for="rejectionnote_customer">
+		  {% if gkstatus=="out" %}
+		    {% trans %}Supplier Name{% endtrans %} :
+		  {% else %}
+		    {% trans %}Customer Name{% endtrans %} :
+		  {% endif %}
+		</label>
+		<input class="form-control input-sm" id="rejectionnote_customer" placeholder="None" accesskey="" disabled>
+	      </div>
+	      <div class="col-xs-6 tinfield" hidden>
+		<label for="rejectionnote_customer">
+		  {% if gkstatus=="out" %}
+		    {% trans %}Supplier TIN{% endtrans %} :
+		  {% else %}
+		    {% trans %}Customer TIN{% endtrans %} :
+		  {% endif %}
+		</label>
+		<input class="form-control input-sm" id="rejectionnote_customertin" placeholder="None" accesskey="" disabled>                           </div>
+		<div class="col-xs-6 gstinfield">
+		  <label for="rejectionnote_customer">
+		    {% if gkstatus=="out" %}
+		      {% trans %}Supplier GSTIN{% endtrans %} :
+		    {% else %}
+		      {% trans %}Customer GSTIN{% endtrans %} :
+		    {% endif %}
+		  </label>
+		  <input class="form-control input-sm" id="rejectionnote_customergstin" placeholder="None" accesskey="" disabled>                         </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-12">
+		<label for="cussup_state">{% trans %}State{% endtrans %} :</label>
+		<input class="form-control input-sm" id="cussup_state" disabled>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="form-group">
+	    <div class="row">
+	      <div class="col-xs-12">
+		{% if gkstatus == "in" %}
+		  <label for="rejectionnote_customeraddr">
+		    {% trans %}Customer Address{% endtrans %} :
+		  </label>
+		{% else %}
+		  <label for="rejectionnote_supplieraddr">
+		    {% trans %}Supplier Address{% endtrans %} :
+		  </label>
+		{% endif %}
+		<input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+	      </div>
+	    </div >
+	  </div>
+	</div>
+	<!--     -----------------------Start Table-----------------------------------  -->
+	<div class="col-md-12" id="rejectionnote_product_div">
+	  <div class="alert alert-danger" id="product-blank-alert" aria-live="rude" role="alert" hidden>
+	    <label for="vno">{% trans %}Rejection Note with no rejected products cannot be created!{% endtrans %}</label>
+	  </div>
+	  <div class="alert alert-danger" id="quantity-blank-alert" aria-live="rude" role="alert" hidden>
+	    <label for="vno">{% trans %}Either enter rejected quantity or remove that product! {% endtrans %}</label>
+	  </div>
+	  <div class="alert alert-danger" id="quantity-more-alert" aria-live="rude" role="alert" hidden>
+	    <label for="vno">{% trans %} Rejected Quantity should not be greater than Total Quantity! {% endtrans %}</label>
+	  </div>
+	  <div class="panel">
+	    <!-- VAT Table start -->
+	    <div class="vatfield">
+	      <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
+		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Rejection Note. Press 'Esc' key to exit from the table.</small>
+	      </div>
+	      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+		<thead class="bg-primary">
+		  <tr>
+		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
+		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
+		    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
+		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
+		    <th class="crosswrap"></th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <td class="mdvwrap">
+		      <input class="form-control input-sm product_name" placeholder="None" disabled>
+		    </td>
+		    <td class="qtyvwrap">
+		      <div class="input-group">
+			<input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="0.00" disabled>
+			<span class="input-group-addon input-sm" id="unitaddon_qty_vat"></span>
+		      </div>
+		    </td>
+		    <td class="qtyvwrap">
+		      <div class="input-group">
+			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
+			<span class="input-group-addon input-sm" id="unitaddon_freeqty_vat"></span>
+		      </div>
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" class="rejection_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" class="rejection_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+		    </td>
 
+		    <td class="smvwrap">
+		      <input type="text" class="rejection_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+		    </td>
+		    <td class="ratewrap">
+		      <input type="text" class="rejection_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+		    </td>
+		    <td class="smvwrap">
+		      <input  size="10" class="rejection_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
+		    </td>
+		    <td class="smvwrap">
+		      <input size="10" type="text" class="rejection_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+		    </td>
+		    <td class="crosswrap">
+		    </td>
+		  </tr>
+		</tbody>
+		<tfoot>
+		  <tr>
+		    <td colspan="4" class="text-right">
+		      {% trans %}Total{% endtrans %}
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+		    </td>
+		    <td class="ratewrap">
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+		    </td>
+		    <td class="smvwrap">
+		      <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+		    </td>
+		    <td class="crosswrap">
+		    </td>
+		  </tr>
+		</tfoot>
+	      </table><!-- VAT table end -->
+	    </div>
+	    <!-- GST Table -->
+	    <div class="gsttable">
+	      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
+		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to Rejection Note. Press 'Esc' key to exit from the table.</small>
+	      </div>
+	      <div class="col-sm-10" style="overflow-x:scroll;">
+		<div class="row">
+		  <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
+		    <thead class="bg-primary">
+		      <tr>
+			<th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
+			<th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+			<th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
+		      </tr>
+
+		      <tr>
+			<th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			<th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			<th class="sgstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			<th class="sgstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			<th class="igstfield text-center">{% trans %}Rate{% endtrans %} %</th>
+			<th class="igstfield text-center">{% trans %}Amount{% endtrans %}</th>
+			<th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+			<th class="text-center">{% trans %}Amount{% endtrans %}</th>
+		      </tr>
+		    </thead>
+		  </table>
+		</div>
+		<div class="row">
+		  <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+		    <tbody>
+		      <tr>
+			<td class="mdwrap">
+			  <input class="form-control input-sm product_name_gst" placeholder="None" disabled>
+			</td>
+			<td class="smwrap text-center" style="vertical-align:middle;">
+			  <label class="invoice_product_hsncode text-center"></label>
+			</td>
+			<td class="qtywrap">
+			  <div class="input-group">
+			    <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" disabled>
+			    <span class="input-group-addon input-sm unitaddon_qty_gst"></span>
+			  </div>
+			</td>
+			<td class="qtywrap">
+			  <div class="input-group">
+			    <input type="text" class="rejection_product_rejquantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0.00" placeholder="0.00" aria-describedby="unitaddon" >
+			    <span class="input-group-addon input-sm unitaddon_freeqty_gst"></span>
+			  </div>
+			</td>
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+			</td>
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
+			</td>
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
+			</td>
+
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
+
+			<td class="taxcell  sgstfield"><input type="text" class="invoice_product_sgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_sgstamount tamount input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+
+			<td class="taxcell igstfield">
+			  <input type="text" class="invoice_product_igstrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			  <td class="taxcell igstfield"><input type="text" class="invoice_product_igstamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+			  </td>
+			  <td class="taxcell">
+                            <input type="text" class="invoice_product_cessrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+                            <td class="taxcell"><input type="text" class="invoice_product_cessamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
                             </td>
-                        </tr>
+                      </tr>
                     </tbody>
-                </table>
-            </div>
-        </div>
+		  </table>
+		</div>
+		<div class="row">
+		  <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+		    <tfoot>
+		      <tr>
+			<td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+			<td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
+
+			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8"></span></td>
+		    </tfoot>
+		  </table>
+		</div>
+	      </div>
+	      <div class="col-sm-2 nopadding">
+		<table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
+		  <thead>
+		    <tr>
+		      <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
+		      <th class="col-xs-4"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		    <tr>
+		      <td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
+		      <td class="col-xs-4 text-center">
+		      </td>
+		    </tr>
+		  </tbody>
+		  <tfoot>
+		    <td class="col-xs-8 text-right">
+		      <span id="total_product_gst" class="input-sm text-right" size="9"></span>
+		    </td>
+		    <td class="col-xs-4">
+
+		    </td>
+		  </tfoot>
+		</table>
+	      </div>
+	    </div>
+	  </div>
+	  <!-- GST Table end -->
+	</div>
+	<!--                      Table End                       -->
+	<div class=" col-sm-12">
+	  <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small>
+	</div>
+	<!-- Summary -->
+	<div class="row">
+	  <div class="col-md-8">
+	  </div>
+	  <div class="col-md-4">
+	    <div class="row">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row gstfield sgstfield">
+	      <div class="form-group hborderdiv sgstfield form-inline">
+		<div class="col-sm-6">
+		  <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row gstfield sgstfield">
+	      <div class="form-group hborderdiv sgstfield form-inline">
+		<div class="col-sm-6">
+		  <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row gstfield igstfield">
+	      <div class="form-group hborderdiv igstfield form-inline">
+		<div class="col-sm-6">
+		  <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row hborderdiv gstfield">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row hborderdiv vatfield">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row hborderdiv">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	    <div class="row hborderdiv" style="border-bottom-style:solid;">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	</div>
       </div>
       <div class="panel-footer" hidden>
         <div class="container-fluid">
