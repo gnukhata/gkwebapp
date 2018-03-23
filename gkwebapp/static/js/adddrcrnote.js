@@ -520,13 +520,14 @@ $(document).ready(function() {
     }
 
     //1 start
-        $("#drcrnote_invoice").change(function(event){
+    $("#drcrnote_invoice, #drcrnote_invoice_purchase").change(function(event){
+	if($(this).val()!=""){
 	$.ajax({
 		url: '/invoice?action=getinvdetails',
 		type: 'POST',
 		dataType: 'json',
 		async: false,
-		data: { "invid": $("#drcrnote_invoice option:selected").val() },
+		data: { "invid": $(this).val() },
 		beforeSend: function(xhr) {
 		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 		   
@@ -549,38 +550,34 @@ $(document).ready(function() {
 			$("#drcrnote_issuer_designation").text(resp.invoicedata.designation);
 			$('#orggstin').text(resp.invoicedata.orgstategstin);
 		    }
+		    else {
+			$("#drcrnote_custsupp_pur").text(resp.invoicedata.custSupDetails["custname"]);
+		    $("#gstin1_pur").text(resp.invoicedata.custSupDetails["custgstin"]);
+		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
+		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
+		    $("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
+		    $("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
+		    $("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
+		    $("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
+		    $('#orggstin').text(resp.invoicedata.orgstategstin);
+			$.ajax({
+			    url: '/showuser?action=getuser',
+			    type: 'POST',
+			    dataType: 'json',
+			    async : false,
+			    beforeSend: function(xhr) {
+				xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			    }
+			})
+			.done(function(resp){
+			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
+			    $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
+			});
+		    }
 		    
-		    //invoicedata contents filled in table
-		    $('#drcrnote_table_vat tbody').empty();
-		    $.each(resp.invoicedata.invcontents, function(key, value) {
-			$('#drcrnote_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-			$('#drcrnote_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-			$('#drcrnote_table_vat tbody tr:last td:first label').text(value.proddesc);
-			$('#drcrnote_table_vat tbody tr:last td:first label').attr("data-productcode",key);
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.uom);
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.uom);
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(value.totalAmount).toFixed(2));
-		    });
-		    $("#drcrnote_table_vat tbody tr:first td:eq(9)").empty(); //please check eq
 		    var productcode;
-		    $('#drcrnote_product_table_gst tbody').empty();
+		    if (resp.invoicedata.taxflag=="7"){
+			$('#drcrnote_product_table_gst tbody').empty();
 		    $('#drcrnote_product_table_total tbody').empty();
 		    $.each(resp.invoicedata.invcontents, function(key, value) {
 			
@@ -638,12 +635,7 @@ $(document).ready(function() {
 			$("#drcrnote_product_table_total tbody tr:last td:eq(1)").append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 			$("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
 		
-		    });   
-
-		}
-		
-		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
-		if (resp.invoicedata.taxflag=="7"){
+		    });
 		    $("#taxablevaluetotal_product_gst").text(resp.invoicedata.totaltaxablevalue);
 		    $("#totalcgst_product_gst").text(resp.invoicedata.totaltaxamt);
 		    $("#totalsgst_product_gst").text(resp.invoicedata.totaltaxamt);
@@ -658,9 +650,37 @@ $(document).ready(function() {
 		    $(".gstinfield").show();
 		    $(".vatfield").hide();
 		    $(".gstfield").show();
-		    
 		}
-		else {
+		    else {
+			//invoicedata contents filled in table
+		    $('#drcrnote_table_vat tbody').empty();
+		    $.each(resp.invoicedata.invcontents, function(key, value) {
+			$('#drcrnote_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+			$('#drcrnote_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+			$('#drcrnote_table_vat tbody tr:last td:first label').text(value.proddesc);
+			$('#drcrnote_table_vat tbody tr:last td:first label').attr("data-productcode",key);
+			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.uom);
+			$('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.uom);
+			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
+			
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
+			
+			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
+			
+			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
+			
+			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2));
+			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(value.totalAmount).toFixed(2));
+		    });
+		    $("#drcrnote_table_vat tbody tr:first td:eq(9)").empty();
 		    $("#taxablevaluetotal_product_vat").val(resp.invoicedata.totaltaxablevalue);
 		    $("#totaltax").val(resp.invoicedata.totaltaxamt);
 		    $("#total_product_vat").val(resp.invoicedata.invoicetotal); 
@@ -673,27 +693,12 @@ $(document).ready(function() {
 		    $(".gstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".vatfield").show();
-
-		}	
-        if (resp.invoicedata.taxname=="IGST")
-               {
-	            $(".igstfield").show();
-		    
-		    $(".sgstfield").hide();
 		}
-		else if(resp.invoicedata.taxname=="SGST") 
-             {
-		    $(".sgstfield").show();
-		    $(".igstfield").hide();
-		
-	    } 
-             else {
-		
-		    $(".igstfield").hide();
-		    $(".sgstfield").hide();
-		} 
+		}
 		
 	    });//done end
+	}
+    });
 
     //click event of delete product
     $(document).off("click", ".product_del").on("click", ".product_del", function(event) {
@@ -719,192 +724,6 @@ $(document).ready(function() {
 	  $("#drcrnote_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
   });
-	
-    });//invoice change event end
-    //select purchase invoice change event start
-    $("#drcrnote_invoice_purchase").change(function(event){
-	$.ajax({
-		url: '/invoice?action=getinvdetails',
-		type: 'POST',
-		dataType: 'json',
-		async: false,
-		data: { "invid": $("#drcrnote_invoice_purchase option:selected").val() },
-		beforeSend: function(xhr) {
-		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-		   
-		}
-	})
-	    .done(function(resp) {
-		console.log("success");
-		if (resp["gkstatus"] == 0) {
-		    //Load invoice data
-		    $("#drcrnote_custsupp_pur").text(resp.invoicedata.custSupDetails["custname"]);
-		    $("#gstin1_pur").text(resp.invoicedata.custSupDetails["custgstin"]);
-		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
-		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
-		    $("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
-		    $("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
-		    $("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
-		    $("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
-		    $('#orggstin').text(resp.invoicedata.orgstategstin);
-			$.ajax({
-			    url: '/showuser?action=getuser',
-			    type: 'POST',
-			    dataType: 'json',
-			    async : false,
-			    beforeSend: function(xhr) {
-				xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-			    }
-			})
-			.done(function(resp){
-			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
-			    $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
-			});
-		    //invoicedata contents filled in table
-		    $('#drcrnote_table_vat tbody').empty();
-		    $.each(resp.invoicedata.invcontents, function(key, value) {
-			$('#drcrnote_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-			$('#drcrnote_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-			$('#drcrnote_table_vat tbody tr:last td:first label').text(value.proddesc);
-			$('#drcrnote_table_vat tbody tr:last td:first label').attr("data-productcode",key);
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(1) span').text(value.uom);
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.uom);
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(3) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(5) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
-			
-			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2));
-			$('#drcrnote_table_vat tbody tr:last td:eq(8) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(value.totalAmount).toFixed(2));
-		    });
-		    $("#drcrnote_table_vat tbody tr:first td:eq(9)").empty(); //please check eq
-		    var productcode;
-		    $('#drcrnote_product_table_gst tbody').empty();
-		    $('#drcrnote_product_table_total tbody').empty();
-		    $.each(resp.invoicedata.invcontents, function(key, value) {
-			
-			$('#drcrnote_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-			$('#drcrnote_product_table_gst tbody tr:last td:first label').text(value.proddesc);
-			$('#drcrnote_product_table_gst tbody tr:last td:first label').attr("data-productcode",key);
-			$('#drcrnote_product_table_gst tbody tr:last td:first label').attr("data-gsflag",value.gsflag);
-			
-			
-
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(2) span').text(value.uom);
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) span').text(value.uom);
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
-			
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(value.discount).toFixed(2)).attr("data", parseFloat(value.discount).toFixed(2));
-			
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(6) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
-			
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(13) input').val(parseFloat(value.cessrate).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(13) input').val(parseFloat(value.cessrate).toFixed(2)).attr("data", parseFloat(value.cessrate).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(14) input').val(parseFloat(value.cess).toFixed(2)).attr("data", parseFloat(value.cess).toFixed(2));
-			$('#drcrnote_product_table_gst tbody tr:last td:eq(14) input').val(parseFloat(value.cess).toFixed(2)).attr("data", parseFloat(value.cess).toFixed(2));
-
-			    
-			if(resp.invoicedata.taxname=="IGST")
-			{
-			    $(".sgstfield").hide();
-			    $(".igstfield").show();
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(12) input').val(parseFloat(value.taxamount).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(12) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));
-			}
-			else if(resp.invoicedata.taxname=="SGST")
-			{
-			    $(".igstfield").hide();
-			    $(".sgstfield").show();
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(8) input').val(parseFloat(value.taxamount).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(8) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(9) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.taxamount).toFixed(2));
-			    $('#drcrnote_product_table_gst tbody tr:last td:eq(10) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(value.taxamount).toFixed(2));			    
-			    
-			}
-			$("#drcrnote_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-			$("#drcrnote_product_table_total tbody tr:last td:eq(1)").append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-			$("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
-		
-		    });   
-
-		}
-		
-		//code for hide and show VAT and GST table on the basis of taxflag which is from invoicedata
-		if (resp.invoicedata.taxflag=="7"){
-		    $("#taxablevaluetotal_product_gst").text(resp.invoicedata.totaltaxablevalue);
-		    $("#totalcgst_product_gst").text(resp.invoicedata.totaltaxamt);
-		    $("#totalsgst_product_gst").text(resp.invoicedata.totaltaxamt);
-		    $("#totalcess_product_gst").text(resp.invoicedata.totalcessamt);
-		    $("#total_product_gst").text(resp.invoicedata.invoicetotal);
-		    $("#totaligst_product_gst").text(resp.invoicedata.totaltaxamt);
-	    	    $("#taxapplicabletext").text("GST");
-	            $("#drcrnote_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		    $("#vathelp").hide();
-		    $(".tinfield").hide();
-		    $("#gstproducttable").show();  //Shows GST Product table.
-		    $(".gstinfield").show();
-		    $(".vatfield").hide();
-		    $(".gstfield").show();
-		    
-		}
-		else {
-		    $("#taxablevaluetotal_product_vat").val(resp.invoicedata.totaltaxablevalue);
-		    $("#totaltax").val(resp.invoicedata.totaltaxamt);
-		    $("#total_product_vat").val(resp.invoicedata.invoicetotal); 
-		    $("#taxapplicabletext").text("VAT");
-		    $("#gstproducttable").hide();
-		    $(".gstinfield").hide();
-		    $("#drcrnote_table_vat").show();
-		    $(".tinfield").show();
-		    $("#vathelp").show();
-		    $(".gstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".vatfield").show();
-
-		}	
- if (resp.invoicedata.taxname=="IGST")
-               {
-	            $(".igstfield").show();
-		    
-		    $(".sgstfield").hide();
-		}
-		else if(resp.invoicedata.taxname=="SGST") 
-             {
-		    $(".sgstfield").show();
-		    $(".igstfield").hide();
-		
-	    } 
-             else {
-		
-		    $(".igstfield").hide();
-		    $(".sgstfield").hide();
-		} 
-		
-	    });//done end
-	});
 
 
     $(document).off('keydown', '.drcrnote_product_rate_vat').on('keydown', '.drcrnote_product_rate_vat', function(event) {
@@ -965,6 +784,7 @@ $(document).ready(function() {
 	if ($(this).val() == "") {
 	    $(this).val(0);
 	}
+	$(this).val(parseFloat($(this).val()).toFixed(2));
 	var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
 	//credit amount cannot be greater than ppu
 	if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
@@ -1219,9 +1039,9 @@ if (!curdate.between(financialstart, financialend)) {
 	    let quantity =parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	    if (parseFloat(quantity) > 0) {
 		let obj = {};
-		ppu = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
-		obj[ppu] = $.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
-		idrate[productcode]=$.trim($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
+		ppu = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()).toFixed(2);
+		obj[ppu] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()).toFixed(2);
+		idrate[productcode]=parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val()).toFixed(2);
 	    }
 	}
 	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(4) input').val());
@@ -1246,7 +1066,7 @@ if (!curdate.between(financialstart, financialend)) {
 	      $("#quantity-blank-alert").alert();
 	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		  $("#quantity-blank-alert").hide();
-	      });
+		  });
 	      $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus().select();
 	      return false;
 	  }
@@ -1266,9 +1086,9 @@ if (!curdate.between(financialstart, financialend)) {
 	      productqtys.push(parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
 	      productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
-	      ppu = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
-	      obj[ppu] = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
-	      idrate[productcode]=$.trim($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val());
+	      ppu = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val()).toFixed(2);
+	      obj[ppu] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()).toFixed(2);
+	      idrate[productcode]=parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val()).toFixed(2);
 	      
 	  }
 	  var totreduct = $.trim($('#total_product_gst').html());
