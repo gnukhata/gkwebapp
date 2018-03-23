@@ -27,6 +27,7 @@ $(document).ready(function() {
     $("#rejectionnote_month").numeric();
     $("#rejectionnote_year").numeric();
     $(".vatfield").hide();
+    var productcode;
     if(sessionStorage.vatorgstflag == '22' ){
 	$(".gstinfield").hide();
 	$(".gstfield").hide();
@@ -382,7 +383,6 @@ $(document).ready(function() {
 	}
     });
 
-    var productcode;
     $(document).off("change", "#rejectionnote_invoice").on("change", "#rejectionnote_invoice", function(event) {
 	$(".delchal").hide();
 	$(".inv").show();

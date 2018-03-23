@@ -157,6 +157,7 @@ $(document).ready(function() {
 	  $(".gsttable").hide();
 	  $(".gstinfield").hide();
 	  $(".tinfield").show();
+	  $("#vathelp").show();
 	  $('#invoice_product_table_vat tbody').empty();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');

@@ -78,8 +78,11 @@ def saverejectionnote(request):
     result=requests.post("http://127.0.0.1:6543/rejectionnote",data=json.dumps(rnwholedata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="rejectionnote",request_param="action=getprint",renderer="printrejectionnote.jinja2")
+@view_config(route_name="rejectionnote",request_param="action=getprint",renderer="gkwebapp:templates/printrejectionnote.jinja2")
 def printrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
-    return {"gkstatus":rnotes.json()["gkstatus"],"gkresult":rnotes.json()["gkresult"]}
+    print rnotes.json()["gkresult"]["rejectedtotal"]
+    statecode = rnotes.json()["gkresult"]["rejinvdata"]["sourcestatecode"]
+    org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
+    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":rnotes.json()["gkresult"]}
