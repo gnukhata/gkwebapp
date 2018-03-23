@@ -31,17 +31,17 @@
       {% if gkresult["reference"]%}
 	<div class="form-group form-inline col-sm-12 nopadding">
 	  {% if gkresult["dctypeflag"] == 3 %}
-	    <label for="creditnotenoref" class="normal">{% trans %}Credit Note No.{% endtrans %} : </label>
+	    <label for="creditnotenoref" class="normal">{% trans %}Debit Note No.{% endtrans %} : </label>
 	  {% else %}
-	    <label for="debitnotenoref" class="normal">{% trans %}Debit Note No.{% endtrans %} : </label>
+	    <label for="debitnotenoref" class="normal">{% trans %}Credit Note No.{% endtrans %} : </label>
 	  {% endif %}
 	  {{gkresult["reference"]["dcref"]}}
 	</div>
 	<div class="form-group form-inline col-sm-12 nopadding">
 	  {% if gkresult["dctypeflag"] == 3 %}
-	    <label for="creditnotedateref" class="normal">{% trans %}Credit Note Date{% endtrans %} : </label>
+	    <label for="creditnotedateref" class="normal">{% trans %}Debit Note Date{% endtrans %} : </label>
 	  {% else %}
-	    <label for="debitnotedateref" class="normal">{% trans %}Debit Note Date{% endtrans %} : </label>
+	    <label for="debitnotedateref" class="normal">{% trans %}Credit Note Date{% endtrans %} : </label>
 	  {% endif %}
 	  {{gkresult["reference"]["dcdate"]}}
 	</div>

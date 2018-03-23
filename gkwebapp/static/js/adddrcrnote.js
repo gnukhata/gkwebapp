@@ -740,17 +740,6 @@ $(document).ready(function() {
 	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
-	    //credit amount cannot be greater than ppu
-	    if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val()) && $("#status").val()) {
-		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-		$("#exceed-blank-alert").alert();
-		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#exceed-blank-alert").hide();
-		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-		    $('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
-		});
-		return false;
-	    }
 	    calculatevataxamt(curindex);
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
@@ -766,17 +755,6 @@ $(document).ready(function() {
 	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
-	    //credit amount cannot be greater than ppu
-	    if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val()) && $("#status").val()==3) {
-		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-		$("#exceed-blank-alert").alert();
-		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#exceed-blank-alert").hide();
-		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-		    $('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
-		});
-		return false;
-	    }
 	    calculategstaxamt(curindex);
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
@@ -794,17 +772,6 @@ $(document).ready(function() {
 	}
 	$(this).val(parseFloat($(this).val()).toFixed(2));
 	var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
-	//credit amount cannot be greater than ppu
-	if (parseFloat($('.drcrnote_product_rate_vat:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + curindex + ')').val())) {
-	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-	    $("#exceed-blank-alert").alert();
-	    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$("#exceed-blank-alert").hide();
-		$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-		$('.drcrnote_product_rate_vat:eq(' + curindex + ')').focus().select();
-	    });
-	    return false;   
-	}
 	calculatevataxamt(curindex);
     });
 
@@ -815,16 +782,6 @@ $(document).ready(function() {
 	    $(this).val(0);
 	}
 	var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
-	if (parseFloat($('.drcrnote_product_rate_gst:eq(' + curindex + ')').val()) >= parseFloat($('.drcrnote_product_per_price_gst:eq(' + curindex + ')').val()) && $("#status").val()==3) {
-	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-	    $("#exceed-blank-alert").alert();
-	    $("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$("#exceed-blank-alert").hide();
-		$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-		$('.drcrnote_product_rate_gst:eq(' + curindex + ')').focus().select();
-	    });
-	    return false;
-	}
 	calculategstaxamt(curindex);
     });
 
@@ -1027,17 +984,6 @@ if (!curdate.between(financialstart, financialend)) {
     if ($("#taxapplicabletext").text() == "VAT") {
 
 	for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
-	    //Valiation for debit/credit note rate.
-	    if ((parseFloat($('.drcrnote_product_rate_vat:eq(' + i + ')').val()) >= parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val())) && $("#status").val()==3) {
-		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-		$("#exceed-blank-alert").alert();
-		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#exceed-blank-alert").hide();
-		    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
-		    $('.drcrnote_product_rate_vat:eq(' + i + ')').focus().select();
-		});
-		return false;
-	    }
 	    productqtys.push(parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
     	    //inc and decr calculation of vat
 	    calculatevataxamt(i);
