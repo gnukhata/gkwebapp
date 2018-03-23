@@ -616,8 +616,9 @@ $(document).ready(function() {
 			    
 			if(resp.invoicedata.taxname=="IGST")
 			{
-			    $(".sgstfield").hide();
-			    $(".igstfield").show();
+			    $(".sgstfield").hide().removeClass("hborderdiv");
+			    $(".igstfield").show().addClass("hborderdiv");
+			    $(".form-inline").removeClass("hborderdiv");
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(11) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(12) input').val(parseFloat(value.taxamount).toFixed(2));
@@ -625,8 +626,9 @@ $(document).ready(function() {
 			}
 			else if(resp.invoicedata.taxname=="SGST")
 			{
-			    $(".igstfield").hide();
-			    $(".sgstfield").show();
+			    $(".igstfield").hide().removeClass("hborderdiv");
+			    $(".sgstfield").show().addClass("hborderdiv");
+			    $(".form-inline").removeClass("hborderdiv");
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(7) input').val(parseFloat(value.taxrate).toFixed(2)).attr("data", parseFloat(value.taxrate).toFixed(2));
 			    $('#drcrnote_product_table_gst tbody tr:last td:eq(8) input').val(parseFloat(value.taxamount).toFixed(2));
