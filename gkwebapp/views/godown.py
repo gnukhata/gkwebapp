@@ -214,7 +214,7 @@ def listofgodownssspreadsheet(request):
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = godownwb.active
         # Title of the sheet and width of columns are set.
-        sheet.title = "List of Accounts"
+        sheet.title = "List of Godowns"
         sheet.column_dimensions['A'].width = 8
         sheet.column_dimensions['B'].width = 18
         sheet.column_dimensions['C'].width = 36
