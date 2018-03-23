@@ -393,10 +393,6 @@ def listofstockitemsspreadsheet(request):
         fystart = str(request.params["fystart"]);
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"])
-<<<<<<< 16e080fbec954894557a6cc3a64a55b42f228839
-=======
-        #orgname += " (FY: " + fystart+" to "+fyend +")"
->>>>>>> fucntion written for generating spreadsheet of list of products in xlsx format.
         # A workbook is opened.
         productwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
@@ -421,13 +417,7 @@ def listofstockitemsspreadsheet(request):
         sheet['A3'] = 'List of Products'
         sheet.merge_cells('A3:E3')
         sheet['A4'] = 'Sr.No.'
-<<<<<<< 16e080fbec954894557a6cc3a64a55b42f228839
         if resultgstvat == "22":
-=======
-        
-        if resultgstvat == "22":
-            print "helo"
->>>>>>> fucntion written for generating spreadsheet of list of products in xlsx format.
             sheet['B4'] = 'Product'
             sheet['C4'] = 'Category'
             sheet['D4'] = 'UOM'
