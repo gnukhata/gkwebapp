@@ -2440,10 +2440,17 @@ if (event.which == 13) {
 				$("#originaddress").val(resp.invoicedata.address);
 				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
 				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
+				//when customer state changed
+				$("#invoice_customerstate").val(resp.invoicedata.destinationstate);
+				$("#statecodeofcustomer").text(resp.invoicedata.taxstatecode);
+			    
 			    }
 			    else {
 				$("#invoicestate").val(resp.invoicedata.destinationstate);
 				$("#statecodeforinvoice").text(resp.invoicedata.taxstatecode);
+				//when supplier state changed
+				$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
+				$("#statecodeofcustomer").text(resp.invoicedata.sourcestatecode);
 			    }
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
@@ -2453,9 +2460,7 @@ if (event.which == 13) {
 				    $(this).prop("selected", true);
 				}
 			    });
-			    
-			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
-			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
+
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
 			    // Loading tax and product data based on taxflag(VAT or GST)
@@ -3131,11 +3136,11 @@ if (event.which == 13) {
 	      sourcestate = $("#consigneestate option:selected").val();
 	  }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  } else {
+	 // if ($("#consigneename").val() != "") {
+	   //   form_data.append("sourcestate", $("#consigneestate option:selected").val());
+	  //} else {
 	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-	  }
+	  //}
 
       }
       else if ($("#status").val() ==  15) {
@@ -3146,11 +3151,11 @@ if (event.which == 13) {
 	      }*/
 	  //appending address to the form_data.	  
 	  form_data.append("address", address);
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  } else {
+	  //if ($("#consigneename").val() != "") {
+	    //  form_data.append("taxstate", $("#consigneestate option:selected").val());
+	  //} else {
 	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	  }
+	  //}
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));

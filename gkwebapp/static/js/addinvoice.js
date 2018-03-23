@@ -2762,11 +2762,11 @@ if (event.which == 13) {
 	      sourcestate = $("#consigneestate option:selected").val();
 	      }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  } else {
+	  //if ($("#consigneename").val() != "") {
+	    //  form_data.append("sourcestate", $("#consigneestate option:selected").val());
+	  //} else {
 	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-	  }
+	  //}
 
       }
       else if ($("#status").val() ==  15) {
