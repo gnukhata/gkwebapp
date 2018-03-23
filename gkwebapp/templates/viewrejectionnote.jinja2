@@ -121,9 +121,9 @@
 		<input class="form-control input-sm" id="invoice_gstin" disabled>
 	      </div>
 	      <div class="col-xs-6 tinfield" hidden>
-		<label for="invoice_gstin">
+		<label for="invoice_tin">
 		  {% trans %}TIN{% endtrans %} :</label>
-		<input class="form-control input-sm" id="invoice_gstin" disabled>
+		<input class="form-control input-sm" id="invoice_tin" disabled>
 	      </div>
 	    </div>
 	  </div>
@@ -212,10 +212,8 @@
 		<thead class="bg-primary">
 		  <tr>
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		    <th class="qtyvwrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 		    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -230,12 +228,6 @@
 		    </td>
 		    <td class="qtyvwrap">
 		      <div class="input-group">
-			<input type="text" class="rejectionnote_product_quantity form-control input-sm text-right" value="0.00" disabled>
-			<span class="input-group-addon input-sm" id="unitaddon_qty_vat"></span>
-		      </div>
-		    </td>
-		    <td class="qtyvwrap">
-		      <div class="input-group">
 			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
 			<span class="input-group-addon input-sm" id="unitaddon_freeqty_vat"></span>
 		      </div>
@@ -243,10 +235,6 @@
 		    <td class="smvwrap">
 		      <input type="text" class="rejection_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		    </td>
-		    <td class="smvwrap">
-		      <input type="text" class="rejection_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
-		    </td>
-
 		    <td class="smvwrap">
 		      <input type="text" class="rejection_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 		    </td>
@@ -267,9 +255,6 @@
 		  <tr>
 		    <td colspan="4" class="text-right">
 		      {% trans %}Total{% endtrans %}
-		    </td>
-		    <td class="smvwrap">
-		      <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
 		    <td class="smvwrap">
 		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
@@ -490,7 +475,7 @@
       <div class="panel-footer" hidden>
         <div class="container-fluid">
           <button id="rejectionnote_viewprint" class="btn btn-primary btn-sm" >{% trans %}Print{% endtrans %}</button>
-          <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+          <!-- <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h">{% trans %}View Attac<u>h</u>ment{% endtrans %}</button> -->
         </div>
       </div>
     </div>

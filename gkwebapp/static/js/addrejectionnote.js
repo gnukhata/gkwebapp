@@ -512,7 +512,7 @@ $(document).ready(function() {
 			    $(".gstfield").hide();
 			    $(".vatfield").show();
 			}    			    
-			if(resp["delchal"]["taxflag"] == 7){
+			if(resp["invDetails"]["taxflag"] == 7){
 			    $(".gstinfield").show();
 			    $(".tinfield").hide();
 			} else {
@@ -525,6 +525,7 @@ $(document).ready(function() {
 			$("#invoice_month").val(dcdatearray[1]);
 			$("#invoice_year").val(dcdatearray[2]);
 			$("#invoice_state").val(resp.invDetails.taxstate);
+			$("#invoice_gstin").val(resp.invDetails.orgstategstin);
 			$("#invoice_addr").val(resp.invDetails.address);
 			$("#cussup_state").val(resp["delchal"]["custstate"]);
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);

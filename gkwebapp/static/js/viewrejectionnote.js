@@ -23,8 +23,10 @@ $(document).ready(function() {
 	if(resp.gkresult.inout==9){
 	    $(".inrej").show();
 	    $(".outrej").hide();
+	    $(".panel-footer").hide();
 	}else{ $(".inrej").hide();
 	       $(".outrej").show();
+	       $(".panel-footer").show();
 	     }
       $("#rejectionnote_noteno").val(resp.gkresult.rnno);
       if(resp.gkresult.invid)
@@ -65,8 +67,10 @@ $(document).ready(function() {
 	$("#invoice_date").val(invdatearray[0]);
 	$("#invoice_month").val(invdatearray[1]);
 	$("#invoice_year").val(invdatearray[2]);
-	//$("#invoice_state").val();
-	//$("#invoice_gstin").val();
+	$("#invoice_state").val();
+	$("#invoice_addr").val(resp.gkresult.rejinvdata.address);
+	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
+	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
       if(resp.gkresult.hasOwnProperty("dcno")){
           $("#rejectionnote_consignment").val(resp.gkresult.transactiontype);
       }
@@ -96,6 +100,8 @@ $(document).ready(function() {
 	  $('#invoice_product_table_gst tbody').empty();
 	  $('#invoice_product_table_total tbody').empty();
 	  $(".vatfield").hide();
+	  $(".gstinfield").show();
+	  $(".tinfield").hide();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 	      console.log(value.productdesc);
@@ -145,6 +151,38 @@ $(document).ready(function() {
 	  $("#totalinvcess").text(parseFloat(resp.gkresult.totalcessamt).toFixed(2));
 	  $(".vatfied").hide();
 	  $(".gstfield").show();
+      }else if(resp.gkresult.rejinvdata.taxflag == 22){
+	  $("#invoice_product_table_vat").show();
+	  let curindex = 0;
+	  $(".gsttable").hide();
+	  $(".gstinfield").hide();
+	  $(".tinfield").show();
+	  $('#invoice_product_table_vat tbody').empty();
+	  $.each(resp.gkresult.rejcontents, function(key, value) {
+	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+	      $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	      $('.product_name:eq(' + curindex + ')').val(value.proddesc);
+	      $('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
+	      $('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+	      $('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
+	      $('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
+	      $('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
+	      $('.rejection_product_tax_rate_vat:eq(' + curindex + ')').val(value.taxrate);
+	      $('.rejection_product_tax_amount_vat:eq(' + curindex + ')').val(value.taxamount);
+	      $('.rejection_product_total:eq(' + curindex + ')').val(value.totalAmount);
+	      curindex = curindex + 1;
+	  });
+	  $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+	  $('.invoice_product_quantity_vat').numeric({ negative: false });
+	  $('.invoice_product_per_price_vat').numeric({ negative: false });
+	  $("#taxablevaluetotal_product_vat").val(parseFloat(resp.gkresult.totaltaxablevalue).toFixed(2));
+	  $("#totaltax").val(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#total_product_vat").val(parseFloat(resp.gkresult.rejectedtotal).toFixed(2));
+	  $("#totalinvtax").text(parseFloat(resp.gkresult.totaltaxamt).toFixed(2));
+	  $("#totalinvoicevalue").text(parseFloat(resp.gkresult.rejectedtotal).toFixed(2));
+	  $("#taxableamount").text(parseFloat(resp.gkresult.totaltaxablevalue).toFixed(2));
+	  $(".gstfield").hide();
+	  $(".vatfield").show();
       }
       $(".leftcolumn").show();
       $("#rejectionnote_product_div").show();
@@ -156,4 +194,26 @@ $(document).ready(function() {
       console.log("complete");
     });
   });
+
+    $("#rejectionnote_viewprint").click(function(event) {
+        $.ajax({
+            url: '/rejectionnote?action=getprint',
+            type: 'POST',
+            dataType: 'html',
+            data: {"rnid":$("#rejectionnote_view_list option:selected").val()},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        })
+            .done(function(resp) {
+                console.log("success");
+                $('#info').html(resp);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
 });

@@ -77,3 +77,9 @@ def saverejectionnote(request):
     rnwholedata = {"rejectionnotedata":rndata,"stockdata":stockdata}
     result=requests.post("http://127.0.0.1:6543/rejectionnote",data=json.dumps(rnwholedata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="rejectionnote",request_param="action=getprint",renderer="printrejectionnote.jinja2")
+def printrejectionnote(request):
+    header={"gktoken":request.headers["gktoken"]}
+    rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
+    return {"gkstatus":rnotes.json()["gkstatus"],"gkresult":rnotes.json()["gkresult"]}
