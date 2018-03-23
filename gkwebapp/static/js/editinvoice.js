@@ -2453,6 +2453,7 @@ if (event.which == 13) {
 				    $(this).prop("selected", true);
 				}
 			    });
+			    
 			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
 			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);

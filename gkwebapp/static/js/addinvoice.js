@@ -2777,11 +2777,11 @@ if (event.which == 13) {
 	      }*/
 	  //appending address to the form_data.
 	  form_data.append("address", address);
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  } else {
+	  //if ($("#consigneename").val() != "") {
+	    //  form_data.append("taxstate", $("#consigneestate option:selected").val());
+	  //} else {
 	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	  }
+	  //}
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));
