@@ -37,161 +37,174 @@ from odslib import ODS
 from pyramid.response import Response
 import os
 import calendar
+import openpyxl
+from openpyxl.styles import Font, Alignment
+from openpyxl.styles.colors import RED
 
 @view_config(route_name="showtrialbalance", renderer="gkwebapp:templates/viewtrialbalance.jinja2")
 def showtrialbalance(request):
-	return {"gkstatus":0}
+    return {"gkstatus":0}
 
 @view_config(route_name="printtrialbalancereport")
 def printtrialbalancereport(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	trialbalancetype = int(request.params["trialbalancetype"])
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    trialbalancetype = int(request.params["trialbalancetype"])
 
-	header={"gktoken":request.headers["gktoken"]}
-	if trialbalancetype == 1:
-		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/printnettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
-	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/printgrosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
-	elif trialbalancetype == 3:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/printextendedtrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":3,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    header={"gktoken":request.headers["gktoken"]}
+    if trialbalancetype == 1:
+        result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/printnettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    elif trialbalancetype == 2:
+        result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/printgrosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    elif trialbalancetype == 3:
+        result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/printextendedtrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":3,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 
 @view_config(route_name="showtrialbalancereport")
 def showtrialbalancereport(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	trialbalancetype = int(request.params["trialbalancetype"])
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    trialbalancetype = int(request.params["trialbalancetype"])
 
-	header={"gktoken":request.headers["gktoken"]}
-	if trialbalancetype == 1:
-		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/nettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
-	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/grosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
-	elif trialbalancetype == 3:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-		return render_to_response("gkwebapp:templates/extendedtrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":3,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    header={"gktoken":request.headers["gktoken"]}
+    if trialbalancetype == 1:
+        result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/nettrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":1,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    elif trialbalancetype == 2:
+        result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/grosstrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":2,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    elif trialbalancetype == 3:
+        result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        return render_to_response("gkwebapp:templates/extendedtrialbalance.jinja2",{"records":result.json()["gkresult"],"trialbalancetype":3,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 @view_config(route_name="printtrialbalance", renderer ="json")
 def printtrialbalance(request):
-	orgname = request.params["orgname"]
-	financialstart = request.params["financialstart"]
-	calculateto = request.params["calculateto"]
-	fyend = request.params["fyend"]
-	trialbalancetype = int(request.params["trialbalancetype"])
-	header = {"gktoken": request.headers["gktoken"]}
-	if trialbalancetype == 1:
-		result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-	elif trialbalancetype == 2:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
-	elif trialbalancetype == 3:
-		result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+    #try :
+        header = {"gktoken": request.headers["gktoken"]}
+        orgname = request.params["orgname"]
+        financialstart= str(request.params["financialstart"])
+        fyend = str(request.params["fyend"])
+        startdate =str(request.params["financialstart"])
+        calculateto =str(request.params["calculateto"])
+        trialbalancetype = int(request.params["trialbalancetype"])
+        if trialbalancetype == 1:
+            result = requests.get("http://127.0.0.1:6543/report?type=nettrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        elif trialbalancetype == 2:
+            result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
+        elif trialbalancetype == 3:
+            result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
 
-	records = result.json()["gkresult"]
-
-	ods = ODS()
-	sheet = ods.content.getSheet(0)
-	sheet.setSheetName("Trial Balance of "+orgname)
-	sheet.getRow(0).setHeight("23pt")
-
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+fyend+")").setBold(True).setFontSize("16pt").setAlignHorizontal("center")
-	if trialbalancetype == 1:
-		ods.content.mergeCells(0,0,5,1)
-		sheet.getRow(1).setHeight("18pt")
-		sheet.getCell(0,1).stringValue("Net Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-		ods.content.mergeCells(0,1,5,1)
-		sheet.getColumn(4).setWidth("4cm")
-		sheet.getColumn(1).setWidth("8cm")
-		sheet.getCell(0,2).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
-		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
-		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(4, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
-		row = 3
-		for record in records:
-			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-			sheet.getCell(1, row).stringValue(record["accountname"])
-			if record["advflag"]==1:
-				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			else:
-				sheet.getCell(2, row).stringValue(record["Dr"]).setAlignHorizontal("right")
-				sheet.getCell(3, row).stringValue(record["Cr"]).setAlignHorizontal("right")
-			sheet.getCell(4, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-			row+=1
-
-	elif trialbalancetype == 2:
-		ods.content.mergeCells(0,0,7,1)
-		sheet.getRow(1).setHeight("18pt")
-		sheet.getCell(0,1).stringValue("Gross Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-		ods.content.mergeCells(0,1,7,1)
-		sheet.getColumn(6).setWidth("4cm")
-		sheet.getColumn(1).setWidth("8cm")
-		sheet.getCell(0,2).stringValue("Sr. No.").setBold(True).setAlignHorizontal("center")
-		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
-		sheet.getCell(2, 2).stringValue("Debit").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(3, 2).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(4, 2).stringValue("Dr Balance").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(5, 2).stringValue("Cr Balance").setBold(True).setAlignHorizontal("right")
-		sheet.getCell(6, 2).stringValue("Group Name").setBold(True).setAlignHorizontal("center")
-		row = 3
-		for record in records:
-			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-			sheet.getCell(1, row).stringValue(record["accountname"])
-			sheet.getCell(2, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
-			sheet.getCell(3, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
-			if record["advflag"]==1:
-				sheet.getCell(4, row).stringValue(record["curbaldr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-				sheet.getCell(5, row).stringValue(record["curbalcr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			else:
-				sheet.getCell(4, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
-				sheet.getCell(5, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
-			sheet.getCell(6, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-			row+=1
-
-	elif trialbalancetype == 3:
-		ods.content.mergeCells(0,0,8,1)
-		sheet.getRow(1).setHeight("18pt")
-		sheet.getCell(0,1).stringValue("Extended Trial Balance for the period from "+financialstart[8:10]+financialstart[4:8]+financialstart[0:4]+" to "+calculateto[8:10]+calculateto[4:8]+calculateto[0:4]).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-		ods.content.mergeCells(0,1,8,1)
-		sheet.getColumn(1).setWidth("8cm")
-		sheet.getColumn(2).setWidth("3cm")
-		sheet.getColumn(5).setWidth("3cm")
-		sheet.getColumn(6).setWidth("3cm")
-		sheet.getColumn(7).setWidth("4cm")
-		sheet.getCell(0,2).stringValue("Sr. No.").setAlignHorizontal("center").setBold(True)
-		sheet.getCell(1, 2).stringValue("Account Name").setBold(True)
-		sheet.getCell(2, 2).stringValue("Opening Balance").setAlignHorizontal("right").setBold(True)
-		sheet.getCell(3, 2).stringValue("Total Debit").setAlignHorizontal("right").setBold(True)
-		sheet.getCell(4, 2).stringValue("Total Credit").setAlignHorizontal("right").setBold(True)
-		sheet.getCell(5, 2).stringValue("Debit Balance").setAlignHorizontal("right").setBold(True)
-		sheet.getCell(6, 2).stringValue("Credit Balance").setAlignHorizontal("right").setBold(True)
-		sheet.getCell(7, 2).stringValue("Group Name").setAlignHorizontal("center").setBold(True)
-		row = 3
-		for record in records:
-			sheet.getCell(0,row).stringValue(record["srno"]).setAlignHorizontal("center")
-			sheet.getCell(1, row).stringValue(record["accountname"])
-			sheet.getCell(2, row).stringValue(record["openingbalance"]).setAlignHorizontal("right")
-			sheet.getCell(3, row).stringValue(record["totaldr"]).setAlignHorizontal("right")
-			sheet.getCell(4, row).stringValue(record["totalcr"]).setAlignHorizontal("right")
-			if record["advflag"]==1:
-				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-			else:
-				sheet.getCell(5, row).stringValue(record["curbaldr"]).setAlignHorizontal("right")
-				sheet.getCell(6, row).stringValue(record["curbalcr"]).setAlignHorizontal("right")
-			sheet.getCell(7, row).stringValue(record["groupname"]).setAlignHorizontal("center")
-			row+=1
-
-	ods.save("response.ods")
-	repFile = open("response.ods")
-	rep = repFile.read()
-	repFile.close()
-	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-	os.remove("response.ods")
-	return Response(rep, headerlist=headerList.items())
+        records = result.json()["gkresult"]
+        # A workbook is opened.
+        trialbalancewb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = trialbalancewb.active
+        # Title of the sheet self.assertNotIn(member, container)d width of columns are set.
+        sheet.title = "Trial Balance of %s" %(str(orgname))
+        if trialbalancetype == 1:
+            print "Net"
+            sheet.column_dimensions['A'].width = 8
+            sheet.column_dimensions['B'].width = 20
+            sheet.column_dimensions['C'].width = 14
+            sheet.column_dimensions['D'].width = 16
+            sheet.column_dimensions['E'].width = 22
+            # Cells of first two rows are merged to display organisation details properly.
+            sheet.merge_cells('A1:F2')
+            # Name and Financial Year of organisation is fetched to be displayed on the first row.
+            sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+            sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+            # Organisation name and financial year are displayed.
+            sheet['A1'] = orgname + ' (FY: ' + financialstart + ' to ' + fyend +')'
+            sheet.merge_cells('A3:F3')
+            sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['A3'] = 'Net Trial Balance for the period from %s to %s' %(str( startdate), str(calculateto))
+            sheet['A4'] = 'Sr. No. '
+            sheet['B4'] = 'Accounting Name'
+            sheet['C4'] = 'Debit'
+            sheet['C4'].font= Font(name='Liberation Serif',size=12,bold=True)
+            sheet['D4'] = 'Credit'
+            sheet['D4'].font = Font(name='Liberation Serif',size=12,bold=True)
+            sheet['E4'] = 'Group Name'
+            sheet['E4'].font = Font(name='Liberation Serif',size=12,bold=True)
+            titlerow = sheet.row_dimensions[4]
+            titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+            sheet['c4'].alignment = Alignment(horizontal='right')
+            sheet['D4'].alignment = Alignment(horizontal='right')
+            sheet['E4'].alignment = Alignment(horizontal='center')
+            row =5
+            srno = 1
+            for record in records:
+                sheet['A'+str(row)] = srno
+                sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+                sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['B'+str(row)] = record['accountname']
+                sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if record["advflag"]==1:
+                    sheet['C'+str(row)] = record['Dr']
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                    sheet['D'+str(row)] = record['Cr']
+                    sheet['D'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                else:
+                    sheet['C'+str(row)] = record['Dr']
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['D'+str(row)] = record['Cr']
+                    sheet['D'+str(row)].alignment = Alignment(horizontal='right')
+                sheet['E'+str(row)] = record['groupname']
+                sheet['E'+str(row)].alignment = Alignment(horizontal='center')
+                row = row + 1
+                srno = srno + 1
+        elif trialbalancetype == 2:
+            print "GROSS"
+            sheet.column_dimensions['A'].width = 8
+            sheet.column_dimensions['B'].width = 20
+            sheet.column_dimensions['C'].width = 14
+            sheet.column_dimensions['D'].width = 16
+            sheet.column_dimensions['E'].width = 14
+            sheet.column_dimensions['F'].width = 14
+            sheet.column_dimensions['G'].width = 14
+            # Cells of first two rows are merged to display organisation details properly.
+            sheet.merge_cells('A1:F2')
+            # Name and Financial Year of organisation is fetched to be displayed on the first row.
+            sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+            sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+            # Organisation name and financial year are displayed.
+            sheet['A1'] = orgname + ' (FY: ' + financialstart + ' to ' + fyend +')'
+            sheet.merge_cells('A3:F3')
+            sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        elif trialbalancetype == 3:
+            print "Extended"
+            sheet.column_dimensions['A'].width = 8
+            sheet.column_dimensions['B'].width = 20
+            sheet.column_dimensions['C'].width = 14
+            sheet.column_dimensions['D'].width = 16
+            sheet.column_dimensions['E'].width = 16
+            sheet.column_dimensions['F'].width = 14
+            sheet.column_dimensions['G'].width = 14
+            sheet.column_dimensions['H'].width = 14
+            # Cells of first two rows are merged to display organisation details properly.
+            sheet.merge_cells('A1:F2')
+            # Name and Financial Year of organisation is fetched to be displayed on the first row.
+            sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+            sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+            # Organisation name and financial year are displayed.
+            sheet['A1'] = orgname + ' (FY: ' + financialstart + ' to ' + fyend +')'
+            sheet.merge_cells('A3:F3')
+            sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        trialbalancewb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    #except:
+        print "file not found"
+        return {"gkstatus":3}
