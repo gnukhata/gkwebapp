@@ -84,9 +84,9 @@
 		    </div>
 		    <div class="form-group form-inline col-sm-4">
 		      {% if gkstatus=="in" %}
-			<label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Destination{% endtrans %} :</label>
+			<label for="invoicestate" class="col-sm-4 fsize">{% trans %}State of Destination{% endtrans %} :</label>
 		      {% else %}
-			<label for="invoicestate" class="col-sm-5 fsize">{% trans %}State of Origin{% endtrans %} :</label>
+			<label for="invoicestate" class="col-sm-4 fsize">{% trans %}State of Origin{% endtrans %} :</label>
 		      {% endif %}
 		      <select class="form-control input-sm col-sm-7" id="invoicestate" aria-describedby="statecodeforinvoice">
 			{% for state in states %}
@@ -96,16 +96,17 @@
 			{% endfor %}
                       </select>
 		    </div>
-		    <div class="form-group form-inline col-sm-2">
-		      <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
-		      <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice"></label>
+		    <div class="form-group form-inline col-sm-3">
+		      <label class="col-sm-6 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
+		      <label class="col-sm-6 nopadding fsize" id="statecodeforinvoice"></label>
 		    </div>
 		    {% if resultgstvat != '22' %}
 		      <div class="form-group form-inline invoice_issuer col-sm-3">
-			<label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-			<label class="col-sm-7  nopadding fsize gstinfield" id="orggstin"></label>
+			<label class="col-sm-6 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+			<label class="col-sm-6  nopadding fsize gstinfield" id="orggstin"></label>
 		      </div>
 		    {% endif %}
+		  
 		  </div>
 		</div>
 		<div class="row">
@@ -118,14 +119,14 @@
                     </div>
 		    {%if numberofgodowns > 0 %}
 		      <div class="form-group form-inline col-sm-4">
-			<label class="col-sm-5 fsize" for="deliverychallan_godown">
+			<label class="col-sm-4 fsize" for="deliverychallan_godown">
 			    {% if gkstatus=="in" %}
 			      {% trans %}Received At{% endtrans %} :
 			    {% else %}
 			      {% trans %}Dispatch From{% endtrans %} :
 			    {% endif %}
 			</label>
-			<select class="form-control input-sm col-sm-7" id="deliverychallan_godown">
+			<select class="form-control input-sm col-sm-6" id="deliverychallan_godown">
 			    {% for godown in godowns %}
 			      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
 			    {% endfor %}

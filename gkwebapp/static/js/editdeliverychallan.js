@@ -44,7 +44,8 @@ $(document).ready(function() {
   $("#deliverychallan_editprint").hide();
   $("#delinradio").click().focus();
   $("#delchalout").hide();
-  var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
+  $(".deliverychallan_OLD_div").hide();
+   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
     var inoutflag;
     if(sessionStorage.vatorgstflag == '22' ){
@@ -61,7 +62,7 @@ $(document).ready(function() {
 
     //code for change event of edit lists dcid as variable taken and conditions are applied.
     $("#deliverychallanin_edit_list, #deliverychallanout_edit_list").change(function(event) {
-      var dcid;
+	var dcid;
 	if ($("#delinradio").is(":checked"))
 	{
 	    dcid=$("#deliverychallanin_edit_list option:selected").val();
@@ -69,20 +70,22 @@ $(document).ready(function() {
 	else {
 	    dcid=$("#deliverychallanout_edit_list option:selected").val();
 	} 
-    $.ajax({
+
+      if (dcid!="")
+	  $.ajax({
       url: '/deliverychallan?action=getdelchal',
       type: 'POST',
       dataType: 'json',
       async : false,
       data: {"dcid":dcid},
-      beforeSend: function(xhr)
+     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
       }
     })
 	.done(function(resp) {
-	console.log("success");
-	$(".panel-footer").hide();    
+	    console.log("success", resp);
+	    $(".panel-footer").hide();
 	if(resp.delchaldata.delchalContents){
 	    $(".deliverychallan_OLD_div").hide();
 	    $("#deliverychallan_OLD_product_div").hide();
@@ -467,7 +470,7 @@ $(document).ready(function() {
         '</tr>');
       });
 
-      $(".deliverychallan_edit_div").show();
+      $(".deliverychallan_edit_div").hide();
       $("#deliverychallan_edit_edit").show();
       $("#deliverychallan_edit_save").hide();
 
@@ -527,7 +530,15 @@ if(event.which==13)
 		$("#delchalout").show();
             }
         });
-    
+
+    //keydown event for shifting focus to print button from delivery out list.
+    $("#deliverychallanout_edit_list").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#deliverychallan_editprint").focus();
+	}
+});
+
     
   $("#viewattach").click(function(event)
   {
@@ -565,16 +576,13 @@ if(event.which==13)
     });
 
   });
-
-
-
     $("#deliverychallan_editprint").click(function(event) {
-	var dcid = $("#deliverychallan_edit_list option:selected").val();
+	var dcid = $("#deliverychallanout_edit_list option:selected").val();
 	$.ajax({
 	    url: '/deliverychallan?action=print',
 	    type: 'POST',
 	    dataType: 'html',
-	    data: {"dcid": dcid},
+	    data: {"dcid":dcid},
 	    beforeSend: function(xhr)
 	    {
 		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
