@@ -43,7 +43,7 @@
 	      {% trans %}<h4>Details of Rejection Out: </h4>{% endtrans %}
 	    {% endif %}
 	    <div class="row">
-	      <div class="col-xs-6">
+	      <div class="col-xs-12">
 		<label for="rejectionnote_invoice"> {% trans %}Invoice{% endtrans %} : </label>
 		<select class="form-control input-sm" id="rejectionnote_invoice" accesskey="">
 		  <option value="" selected disabled hidden>Select Invoice</option>
@@ -61,7 +61,7 @@
 		  {% endfor %}
 		</select>
 	      </div>
-	      <div class="col-xs-6">
+	      <div class="col-xs-6" hidden>
 		<label for="rejectionnote_deliverynote"> {% trans %}Delivery Note{% endtrans %} : </label>
 		<select class="form-control input-sm" id="rejectionnote_deliverynote" accesskey="">
 		  <option value="" selected disabled hidden>Select Delivery Note</option>

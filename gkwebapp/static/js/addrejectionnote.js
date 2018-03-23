@@ -27,7 +27,6 @@ $(document).ready(function() {
     $("#rejectionnote_month").numeric();
     $("#rejectionnote_year").numeric();
     $(".vatfield").hide();
-    var productcode;
     if(sessionStorage.vatorgstflag == '22' ){
 	$(".gstinfield").hide();
 	$(".gstfield").hide();
@@ -69,7 +68,22 @@ $(document).ready(function() {
 	$("#rejectionnote_month").val(todatearray[1]);
 	$("#rejectionnote_year").val(todatearray[0]);
     }
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	$(".numtype").numeric({ negative: false });
+    });
 
+    $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	if ($(this).val() == "") {
+	    $(this).val(parseFloat(0).toFixed(2));
+	} else {
+	    $(this).val(parseFloat($(this).val()).toFixed(2));
+	}
+    });
+    
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2);
@@ -273,8 +287,7 @@ $(document).ready(function() {
 	    if(sessionStorage.vatorgstflag == '22' ){
 		$('#invoice_product_table_vat tbody tr:first td:eq(2) input').focus().select();
 	    }else{
-		console.log("Enter");
-		$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
+		$('#invoice_product_table_gst tbody tr:first td:eq(3) input').focus().select();
 	    }
 	}
 	if (event.which==38) {
@@ -301,6 +314,82 @@ $(document).ready(function() {
       calculategstaxamt(curindex);
     });
 
+
+    $(document).off("keydown", ".rejection_product_rejquantity_gst").on("keydown", ".rejection_product_rejquantity_gst", function(event) {
+    var curindex1 = $(this).closest('tr').index();
+    var nextindex1 = curindex1 + 1;
+    var previndex1 = curindex1 - 1;
+
+    if (event.which == 27) {
+	event.preventDefault();
+	calculategstaxamt(curindex1);
+	$("#rejectionnote_save").focus();
+    }
+    else if (event.which == 13) {
+	event.preventDefault();
+	if ($("#invoice_product_table_gst tbody tr:eq("+ curindex1 +") td:eq(3) input").val()=="" || $("#invoice_product_table_gst tbody tr:eq("+ curindex1 +") td:eq(3) input").val()=="0.00" || $("#invoice_product_table_gst tbody tr:eq("+ curindex1 +") td:eq(3) input").val()=="0") {
+	    $("#quantity-blank-alert").alert();
+	    $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#quantity-blank-alert").hide();
+	    });
+	    $("#invoice_product_table_gst tbody tr:eq("+ curindex1 +") td:eq(3) input").focus();
+	    return false;
+	}
+	if (curindex1 != ($("#invoice_product_table_gst tbody tr").length - 1)) {//Not a last row.
+	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(3) input').focus().select();
+	}
+	calculategstaxamt(curindex1);
+    }else{
+	if (event.which == 27) {
+	    $("#rejectionnote_save").focus();
+	}
+    }
+
+    /* else {//Last row along with additional conditions.
+          $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(3) select').focus();
+    }
+	$("#rejectionnote_save").focus();**/
+  });
+
+//rejectionnote_product_quantity
+
+    
+    $(document).off("keydown", ".rejectionnote_product_quantity").on("keydown", ".rejectionnote_product_quantity", function(event) {
+    var curindex1 = $(this).closest('tr').index();
+    var nextindex1 = curindex1 + 1;
+    var previndex1 = curindex1 - 1;
+
+    if (event.which == 27) {
+	event.preventDefault();
+	calculatevataxamt(curindex1);
+	$("#rejectionnote_save").focus();
+    }
+    else if (event.which == 13) {
+	event.preventDefault();
+	if ($("#invoice_product_table_vat tbody tr:eq("+ curindex1 +") td:eq(2) input").val()=="" || $("#invoice_product_table_vat tbody tr:eq("+ curindex1 +") td:eq(2) input").val()=="0.00" || $("#invoice_product_table_vat tbody tr:eq("+ curindex1 +") td:eq(2) input").val()=="0") {
+	    $("#quantity-blank-alert").alert();
+	    $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#quantity-blank-alert").hide();
+	    });
+	    $("#invoice_product_table_vat tbody tr:eq("+ curindex1 +") td:eq(2) input").focus();
+	    return false;
+	}
+	if (curindex1 != ($("#invoice_product_table_vat tbody tr").length - 1)) {//Not a last row.
+	    $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(2) input').focus().select();
+	}
+	calculatevataxamt(curindex1);
+    }else{
+	if (event.which == 27) {
+	    $("#rejectionnote_save").focus();
+	}
+    }
+
+    /* else {//Last row along with additional conditions.
+          $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(3) select').focus();
+    }
+	$("#rejectionnote_save").focus();**/
+  });
+
     $(document).off('change', '.rejectionnote_product_rejected_quantity').on('change', '.rejectionnote_product_rejected_quantity', function(event) {
       event.preventDefault();
     /* Act on the event */
@@ -318,9 +407,6 @@ $(document).ready(function() {
     }
       calculatevataxamt(curindex);
     });
-    
-
-    //rejectionnote_product_rejected_quantity
     
     $(document).off('blur', '.rejectionnote_product_rejected_quantity').on('blur', '.rejectionnote_product_rejected_quantity', function(event) {
 	event.preventDefault();
@@ -345,10 +431,11 @@ $(document).ready(function() {
 	$('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').focus().select();
     });
 
-    $(document).off("keydown",".rejectionnote_product_rejected_quantity").on("keydown",".rejectionnote_product_rejected_quantity",function(event) {
+    //Keydown For Rejected Qty for Product Table VAT
+    /*$(document).off("keydown",".rejectionnote_product_rejected_quantity").on("keydown",".rejectionnote_product_rejected_quantity",function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
-	    var qty = $('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').val();
+	    var qty = $('#rejectionnote_product_table_vat tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').val();
 	    if(qty == "" || qty == "0.00" || qty == "0"){
 		$("#quantity-blank-alert").alert();
 		$("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -381,7 +468,7 @@ $(document).ready(function() {
 		$('#rejectionnote_product_table tbody tr:eq('+ind+') td:eq(2) input').focus().select();
 	    }
 	}
-    });
+    });*/
 
     $(document).off("change", "#rejectionnote_invoice").on("change", "#rejectionnote_invoice", function(event) {
 	$(".delchal").hide();
@@ -427,9 +514,8 @@ $(document).ready(function() {
 			    $('#invoice_product_table_total tbody').empty();
 			    $(".vatfield").hide();
 			    $.each(resp.items, function(key, value) {
-				productcode=key;
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-				$('.product_name_gst:eq(' + curindex + ')').val(value.productdesc);
+				$('.product_name_gst:eq(' + curindex + ')').val(value.productdesc).attr("data-productcode",key);
 				$('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 				$('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				$('.invoice_product_freequantity_gst:eq(' + curindex + ')').val(value.freeqty).attr("data", value.freeqty);
@@ -483,10 +569,9 @@ $(document).ready(function() {
 			    $(".gsttable").hide();
 			    $('#invoice_product_table_vat tbody').empty();
 			    $.each(resp.items, function(key, value) {
-				productcode=key;
 				$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-				$('.product_name:eq(' + curindex + ')').val(value.productdesc);
+				$('.product_name:eq(' + curindex + ')').val(value.productdesc).attr("data-productcode",key);
 				$('.rejectionnote_product_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				$('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
 				$('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
@@ -793,8 +878,9 @@ $(document).ready(function() {
 		return false;
 	    }
 	}
+	var productcode=[];
 	var rejprods ={};
-	var products = {}; // dictionary containing product code with rejected quantity.
+	// dictionary containing product code with rejected quantity.
 	if(taxflag == 7){
 	    var i = 0;
 	    for (i; i < $("#invoice_product_table_gst tbody tr").length; i++) {         // loop for getting details from each row at a time
@@ -806,9 +892,12 @@ $(document).ready(function() {
 		    $("#invoice_product_table_gst tbody tr:eq("+i+") td:eq(3) input").focus();
 		    return false;
 		}
+		productcode.push($("#invoice_product_table_gst tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode"));
+		var products = {};
+		var productcodes = $("#invoice_product_table_gst tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode");
 		var ppu = parseFloat($("#invoice_product_table_gst tbody tr:eq("+i+") td:eq(4) input").val()).toFixed(2);
 		products[ppu] = parseFloat($("#invoice_product_table_gst tbody tr:eq("+i+") td:eq(3) input").val()).toFixed(2);
-		rejprods[productcode] = products;
+		rejprods[productcodes] = products;
 	    }
 	    if(i == 0){
 		$("#product-blank-alert").alert();
@@ -829,6 +918,9 @@ $(document).ready(function() {
 		    $("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(2) input").focus();
 		    return false;
 		}
+		productcode.push($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode"));
+		products = {};
+		productcodes = $("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode");
 		ppu = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(3) input").val()).toFixed(2);
 		products[ppu] = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
 		rejprods[productcode] = products;
