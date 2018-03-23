@@ -608,19 +608,8 @@
 	 {#------------------------------------------------------------------------------------#}
 	 <div class="panel-footer ">
 	   <div class="container-fluid">
-	     <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
-
-	       {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
-	     </div>
              <button class="btn btn-success btn-sm" id="drcrnote_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
              <button id="drcrnote_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
-             <label class="btn btn-primary btn-sm" for="my-file-selector">
-	       <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
-	       <i class="fa fa-paperclip" aria-hidden="true"></i>
-	       {% trans %}Attac<u>h</u>{% endtrans %}
-	     </label>
-	     <span class='label label-info' id="upload-file-info"></span>
-	     <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
 	   </div>
 	 </div>
 			   </div>

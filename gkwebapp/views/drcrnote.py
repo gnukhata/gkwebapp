@@ -25,29 +25,9 @@ def showadddrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"caseflag":request.params["caseflag"],"reductionval":json.loads(request.params["reductionval"])}
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"])}
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
-    try:
-        files = {}
-        count = 0
-        for i in request.POST.keys():
-            if "file" not in i:
-                continue
-            else:
-                img = request.POST[i].file
-                image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
-                image.save(imgbuffer, format="JPEG")
-                img_str = base64.b64encode(imgbuffer.getvalue())
-                image.close()
-                files[count] = img_str
-                count += 1
-        if len(files)>0:
-            drcrdata["attachment"] = files
-            drcrdata["attachmentcount"] = len(drcrdata["attachment"])
-    except:
-        print "no attachment found"
     result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(drcrdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
     

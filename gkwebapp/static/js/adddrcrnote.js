@@ -1108,10 +1108,6 @@ if (!curdate.between(financialstart, financialend)) {
 
 
       var dctypeflag = $("#status").val();
-      //var caseflag =$("#case0").val();
-      //var caseflag =$("#case1").val();
-      //var caseflag =$("#case2").val();
-      //var caseflag =$("#case3").val();
 
 //send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
       var form_data = new FormData();
@@ -1133,24 +1129,8 @@ if (!curdate.between(financialstart, financialend)) {
       
       form_data.append("dctypeflag",dctypeflag);  
       //sending hardcode values until caseflag not set
-      form_data.append("caseflag","0");
       form_data.append("totreduct",totreduct);
       form_data.append("reductionval",JSON.stringify(idrate));
-      
-//attachment
- var files = $("#my-file-selector")[0].files;
-    var filelist = [];
-      for (var i = 0; i < files.length; i++) {
-	  if (files[i].type != 'image/jpeg') {
-		$("#image-alert").alert();
-		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#image-alert").hide();
-		});
-	      $('#my-file-selector').focus();
-		return false;
-	    }
-	form_data.append("file" + i, files[i]);
-      }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
