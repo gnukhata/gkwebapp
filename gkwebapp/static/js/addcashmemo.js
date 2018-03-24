@@ -44,7 +44,15 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
-
+  //Function to add leading zeros in date and month fields.
+    function pad(str, max) { //to add leading zeros in date
+        str = str.toString();
+        if (str.length == 1) {
+            return str.length < max ? pad("0" + str, max) : str;
+        } else {
+            return str;
+        }
+    }
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var invoicedate = "";
@@ -103,9 +111,15 @@ $(document).ready(function() {
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
+	    var len = str[1];
 	    if(totalamount!=0){
 		if(str[1] != undefined){
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
 		}else{
 		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
 
@@ -160,9 +174,15 @@ $(document).ready(function() {
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
+	    var len = str[1];
 	    if(totalamount!=0){
 		if(str[1] != undefined){
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
 		}else{
 		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
 
@@ -200,18 +220,7 @@ $(document).ready(function() {
         }
 
     });
-
-  //Function to add leading zeros in date and month fields.
-    function pad(str, max) { //to add leading zeros in date
-        str = str.toString();
-        if (str.length == 1) {
-            return str.length < max ? pad("0" + str, max) : str;
-        } else {
-            return str;
-        }
-    }
-
-  //Function to add leading numbers in year fields.
+    //Function to add leading numbers in year fields.
     function yearpad(str, max) { //to add leading 20 or 200 to the year
         str = str.toString();
         if (str.length == 1) {

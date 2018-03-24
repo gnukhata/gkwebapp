@@ -118,9 +118,15 @@ $(document).ready(function() {
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
+	    var len = str[1];
 	    if(totalamount!=0){
 		if(str[1] != undefined){
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
 		}else{
 		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
 
@@ -176,9 +182,16 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
-	    var str = res.split(".");if(totalamount!=0){
+	    var str = res.split(".");
+	    var len = str[1];
+	    if(totalamount!=0){
 		if(str[1] != undefined){
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
 		}else{
 		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
 
