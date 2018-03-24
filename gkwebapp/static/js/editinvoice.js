@@ -27,6 +27,7 @@ Contributors:
 "Abhijith Balan" <abhijith@dff.org.in>
 "Pravin Dake" <pravindake24@gmail.com>
 "Nitesh Chaughule" <nitesh@disroot.org>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 // This script is for the addinvoice.jinja2
@@ -40,6 +41,7 @@ $(document).ready(function() {
      //Initialising some variables.
     var issuername = "";
     var designation = "";
+    var numbertowords = "";
     var address = "";
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
@@ -104,7 +106,24 @@ $(document).ready(function() {
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-	}
+	    var res = totalamount.toString();
+	    var str = res.split(".");
+	    var len = str[1];
+	    if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }}
 
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
@@ -121,6 +140,7 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -149,7 +169,24 @@ $(document).ready(function() {
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-	}
+	    var res = totalamount.toString();
+	    var str = res.split(".");
+	    var len = str[1];
+	    if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
@@ -160,7 +197,9 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-    }
+	$("#totalValueInWord").text(numbertowords);
+
+}
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
@@ -2327,6 +2366,7 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
+			    console.log(resp.invoicedata);
 			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
@@ -2417,7 +2457,7 @@ if (event.which == 13) {
 			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
-			    // Loading tax and proiduct data based on taxflag(VAT or GST)
+			    // Loading tax and product data based on taxflag(VAT or GST)
 			    if ($("#taxapplicable").val() == '7') {
 				// Loading tax and product details when GST is applied.
 				$("#taxapplicabletext").text('GST');
@@ -2533,6 +2573,13 @@ if (event.which == 13) {
 			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
+			    if( resp.invoicedata.invoicetotalword != "" && resp.invoicedata.invoicetotalword != null ){
+				$("#tviw").show();
+				$("#totalValueInWord").text(resp.invoicedata.invoicetotalword);
+			    }else{
+				$("#tviw").hide();
+			    }
+			    
 			    paymentmod = resp.invoicedata.paymentmode; 
 			    // If paymentmode is 2(i.e. bank) then load bankdetails.
 			    if (resp.invoicedata.paymentmode == "2") {
@@ -3075,6 +3122,7 @@ if (event.which == 13) {
       form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
+      form_data.append("invtotalword", numbertowords);
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();

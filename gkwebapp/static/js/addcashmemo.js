@@ -26,6 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Rohini Baraskar" <robaraskar@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 // This script is for the add cashmemo page
@@ -43,10 +44,20 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
-
+  //Function to add leading zeros in date and month fields.
+    function pad(str, max) { //to add leading zeros in date
+        str = str.toString();
+        if (str.length == 1) {
+            return str.length < max ? pad("0" + str, max) : str;
+        } else {
+            return str;
+        }
+    }
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var invoicedate = "";
+    var numbertowords = "";
+    var numbertoword = "";
     var invoicedatestring = "";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
 
@@ -70,6 +81,7 @@ $(document).ready(function() {
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
+	//var numbertowords = "";
 	var totalcgst = 0.00;
 	var totalsgst = 0.00;
 	var totalcess = 0.00;
@@ -97,6 +109,24 @@ $(document).ready(function() {
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+	    var res = totalamount.toString();
+	    var str = res.split(".");
+	    var len = str[1];
+	    if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -112,6 +142,7 @@ $(document).ready(function() {
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -126,6 +157,7 @@ $(document).ready(function() {
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
 	var totalamount = 0.00;
+	//var numbertowords = "";
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
@@ -140,6 +172,24 @@ $(document).ready(function() {
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	    var res = totalamount.toString();
+	    var str = res.split(".");
+	    var len = str[1];
+	    if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -150,6 +200,7 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
     }
 
     $(".invstate").show();
@@ -169,18 +220,7 @@ $(document).ready(function() {
         }
 
     });
-
-  //Function to add leading zeros in date and month fields.
-    function pad(str, max) { //to add leading zeros in date
-        str = str.toString();
-        if (str.length == 1) {
-            return str.length < max ? pad("0" + str, max) : str;
-        } else {
-            return str;
-        }
-    }
-
-  //Function to add leading numbers in year fields.
+    //Function to add leading numbers in year fields.
     function yearpad(str, max) { //to add leading 20 or 200 to the year
         str = str.toString();
         if (str.length == 1) {
@@ -1231,6 +1271,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
+	
        var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1246,6 +1287,8 @@ $(document).off("keyup").on("keyup", function(event) {
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
+	form_data.append("invoicetotalword", numbertowords);
+	
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
