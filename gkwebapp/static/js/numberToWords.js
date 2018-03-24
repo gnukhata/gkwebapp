@@ -73,7 +73,7 @@ function convertNumberToWords(amount) {
                 words_string += "Thousand ";
             }
             if (i == 6 && value != 0 && (n_array[i + 1] != 0 && n_array[i + 2] != 0)) {
-                words_string += "Hundred and ";
+                words_string += "Hundred ";
             } else if (i == 6 && value != 0) {
                 words_string += "Hundred ";
             }
