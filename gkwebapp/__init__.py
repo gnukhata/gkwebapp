@@ -174,6 +174,6 @@ def main(global_config, **settings):
     config.add_route('rejectionnote','/rejectionnote')
     config.add_route('billwise','/billwise')
     config.add_route('gstsummary','/gstsummary')
-
+    config.add_route('drcrnote','/drcrnote')
     config.scan('gkwebapp')
     return config.make_wsgi_app()

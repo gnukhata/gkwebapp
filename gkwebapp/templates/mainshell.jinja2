@@ -75,11 +75,23 @@
 		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
 		<li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
 		<li><a class="transactionmenu intauditor" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
-
-		<li><a  class="transactionmenu invoicemenu intauditor" data-toggle="tab" id="invoice" status="9" href="">Invoice</a></li>
-		<li><a class="transactionmenu invoicemenu intauditor" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
-              </ul>
+	      </ul>
             </li>
+            <!-- Business Tab
+		 Cash Memo
+		 Invoice
+		 Rejection Note
+		 Debit/Credit Note
+	    -->
+	    <li id="businessdropdown" class="dropdown closebooks">
+              <a href="" id="business" class="dropdown-toggle businessmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Do<u>c</u>uments{% endtrans %}</a>
+              <ul class="dropdown-menu">
+		<li><a class="businessmenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
+		<li><a class="businessmenu" data-toggle="tab" id="invoice" status="9" href="">{% trans %}Invoice{% endtrans %}</a></li>
+		<!--Rejection note work <li><a class="businessmenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>-->	
+                <li><a class="businessmenu" data-toggle="tab" id="drcrnote" href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
+	      </ul>
+            </li>    
             <li id="reportdropdown" class="dropdown">
               <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
               <ul class="dropdown-menu">

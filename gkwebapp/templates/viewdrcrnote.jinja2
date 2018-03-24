@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}View Debit & Credit Note{% endtrans %}</title>
+<body style="padding-right:1%;">
+  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+    <div class="panel drcr_panel shadow">
+      <div class="panel-body">
+	<div class="container-fluid row">
+	  <form class="form-horizontal" >
+	    <div class="col-md-12">
+
+		  <div class="form-group col-md-6" id="creditnotediv">
+		    <label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
+		    <select class="form-control input-sm" id="sel_creditnote" accesskey="">
+		      <option value="" disabled hidden selected>{% trans %}Select Credit Note{% endtrans %}</option>
+		      {% for drcr in drcrdata %}
+			<option value="{{drcr['drcrid']}}">{{drcr["drcrno"]}}, {{drcr["drcrdate"]}}, {{drcr["custname"]}}</option>
+		      {% endfor %}
+		    </select>
+		  </div>
+
+	    </div>
+	    <div id="viewsingledrcr">
+	    </div>
+	  </form>
+      </div><!--End .container-fluid -->
+      <div class="panel-footer " hidden>
+	<div class="container-fluid">
+	  <div class="alert alert-danger" id="image-alert"  aria-live="rude" role="alert" hidden>
+
+	    {% trans %}Please upload image in JPG/JPEG format!{% endtrans %}
+	  </div>
+          <button id="drcrnote_print" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Print{% endtrans %}</button>
+          <label class="btn btn-primary btn-sm" for="my-file-selector">
+	    <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+	    <i class="fa fa-paperclip" aria-hidden="true"></i>
+	    {% trans %}Attac<u>h</u>{% endtrans %}
+	  </label>
+	  <span class='label label-info' id="upload-file-info"></span>
+	  <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
+	</div>
+      </div>
+      </div>
+      <div class="panel-footer" id="viewinvfooter" hidden>
+	<div class="container-fluid btndisablediv">
+	  <button id="drcr_print" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+	</div>
+      </div>
+  </div> <!--End .panel-body -->
+  </div> <!--End .drcr_panel -->
+  </div> <!--End .cantainer-fluid -->
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewdrcrnote.js')}}"></script>
+</body>
+</html>

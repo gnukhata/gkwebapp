@@ -56,6 +56,7 @@ var userrole1;
       $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
+      $(".businessmenu").show();	 
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -67,6 +68,7 @@ var userrole1;
         $('.inventory_hide').hide();
 	$("#showviewregister").show();
         $("#showbillwiseaccounting").hide();
+	$(".businessmenu").show();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -78,6 +80,7 @@ var userrole1;
       $('.inventorymenu').hide();
       $('.inventory_hide').hide();
       $("#showviewregister").show();
+      $(".businessmenu").show();
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -90,6 +93,7 @@ var userrole1;
       $(".productinmaster").hide();
       $(".categoryinmaster").hide();
       $(".uominmaster").hide();
+      $(".businessmen").show();
     }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -121,6 +125,11 @@ var userrole1;
       $("#transaction").click();
       event.preventDefault();
     }
+    if(event.ctrlKey && event.keyCode == 67) {
+      $("#business").click();
+      event.preventDefault();
+    }
+      
     if(event.ctrlKey && event.keyCode == 82) {
       $("#report").click();
       event.preventDefault();
@@ -297,7 +306,7 @@ var userrole1;
   });
   $(".transactionmenu").keydown(function(event){
     if(event.which == 39){
-      $("#report").click();
+      $("#business").click();
     }
     if(event.which == 37){
       if (sessionStorage.invflag ==1)
@@ -310,12 +319,23 @@ var userrole1;
         }
     }
   });
+
+$(".businessmenu").keydown(function(event){
+    if(event.which == 39){
+      $("#report").click();
+    }
+    if(event.which == 37){
+      $("#transaction").click();
+    }
+  });
+  
+    
   $(".reportmenu").keydown(function(event){
     if(event.which == 39){
       $("#administration").click();
     }
     if(event.which == 37){
-      $("#transaction").click();
+      $("#business").click();
     }
   });
   $(".administrationmenu").keydown(function(event){
@@ -403,6 +423,9 @@ var userrole1;
   $('#transactiondropdown').on('shown.bs.dropdown', function () {
     $("#showreceipt").focus();
   });
+  $('#businessdropdown').on('shown.bs.dropdown',function() {
+    $("#addcashmemo").focus();  
+  });  
   $('#reportdropdown').on('shown.bs.dropdown', function () {
     $("#addaccount").focus();
   });
@@ -667,7 +690,7 @@ var userrole1;
 	// get binary data as a response
 	var blob = this.response;
 	var url = window.URL.createObjectURL(blob);
-	  window.location.assign(url);
+	window.location.assign(url);
       }
     };
     xhr.send();
@@ -705,7 +728,8 @@ var userrole1;
 
 
        $("#orgprefsave").click(function(event){
-         if ($("#invinvsbillradio").is(":checked"))
+	   var invflag,billflag,invsflag;
+	 if ($("#invinvsbillradio").is(":checked"))
          {
            invflag=1;
            invsflag=1;
@@ -1309,7 +1333,6 @@ $('#listofaccounts').click(function (e) {
       }
     });
     });
-    
 
   $("#showdeletedvoucher").click(function (e){
     // shows deleted vouchers report.
@@ -1794,3 +1817,12 @@ $('#show_unbilled_deliveries').click(function (e) {
     }
   );
   });
+
+//debit credit note tab
+
+$('#drcrnote').click(function (e) {// calls base drcrnote page.
+    $("#info").load("/drcrnote");
+    $("#drcrnote_div").show();
+});
+    
+     
