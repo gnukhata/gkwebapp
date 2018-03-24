@@ -1,4 +1,5 @@
 /* Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation 
+   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
  
 GNUKhata is Free Software; you can redistribute it and/or modify 
@@ -16,7 +17,10 @@ License along with GNUKhata (COPYING); if not, write to the
 Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor, 
 Boston, MA  02110-1301  USA59 Temple Place, Suite 330, 
 
-Contributors: "Bhavesh Bawadhane" <bbhavesh07@gmail.com> */
+Contributors: 
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Nitesh Chaughule "<nitesh@disroot.org>
+ */
 
 // This script is for the add addrejectionnote.jinja2
 $(document).ready(function() {
@@ -623,7 +627,7 @@ $(document).ready(function() {
 			$("#invoice_date").val(dcdatearray[0]);
 			$("#invoice_month").val(dcdatearray[1]);
 			$("#invoice_year").val(dcdatearray[2]);
-			$("#invoice_state").val(resp.invDetails.taxstate);
+			$("#invoice_state").val(resp.invDetails.sourcestate);
 			$("#invoice_gstin").val(resp.invDetails.orgstategstin);
 			$("#invoice_addr").val(resp.invDetails.address);
 			$("#issuer_name").val(resp.invDetails.issuername);
@@ -682,7 +686,6 @@ $(document).ready(function() {
 	$(".inv").hide();
 	if ($("#rejectionnote_deliverynote option:selected").val() != '') {
 	    $("#rejectionnote_invoice option[value='']").prop("selected", true);
-	    console.log($("#rejectionnote_deliverynote option:selected").val());
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
 		type: 'POST',

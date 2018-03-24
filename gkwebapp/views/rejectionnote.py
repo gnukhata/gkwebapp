@@ -51,22 +51,17 @@ def showviewrejectionnote(request):
 def nonrejectedinvprods(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/invoice?type=nonrejectedinvprods", data=json.dumps({"invid":request.params["invid"] }), headers=header)
-    print rnotes.json()["gkresult"]
-    print rnotes.json()["delchal"]
-    print rnotes.json()["invDetails"]
     return {"gkstatus":rnotes.json()["gkstatus"],"items":rnotes.json()["gkresult"], "delchal": rnotes.json()["delchal"],"invDetails":rnotes.json()["invDetails"]}
 
 @view_config(route_name="rejectionnote",request_param="action=getrejectionnote",renderer="json")
 def getrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
-    print rnotes.json()["gkresult"]
     return {"gkstatus":rnotes.json()["gkstatus"],"gkresult":rnotes.json()["gkresult"]}
 
 @view_config(route_name="rejectionnote",request_param="action=save",renderer="json")
 def saverejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    print request.params["products"]
     rndata = {"rnno":request.params["rnno"],"rndate":request.params["rndate"],"inout":request.params["inout"],"rejprods" : json.loads(request.params["products"]),"rejectedtotal":request.params["rejectedtotal"]}
     if "dcid" in request.params:
         rndata["dcid"] = request.params["dcid"]
@@ -83,7 +78,6 @@ def saverejectionnote(request):
 def printrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
-    print rnotes.json()["gkresult"]
     statecode = rnotes.json()["gkresult"]["rejinvdata"]["sourcestatecode"]
     org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
     return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":rnotes.json()["gkresult"]}

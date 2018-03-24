@@ -194,10 +194,6 @@
       </div>
       {% if gkresult["rejinvdata"]["taxflag"] == 22 %}
 	<div class="row">
-	  <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-	  VAT
-	</div>
-	<div class="row">
 	  <br>
 	  <table class=" table table-condensed table-bordered">
 	    <thead class="bg-primary">
@@ -262,10 +258,6 @@
 	  </table>
 	</div>
       {% else %}
-	<div class="row">
-	  <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-	  GST
-	</div>
 	<br>
 	<div class="row">
 	  <table class="table table-condensed table-bordered">
@@ -348,7 +340,7 @@
 	  <div class="row">
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
-		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer name{% endtrans %} :</label>
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer Name{% endtrans %} :</label>
 		<label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["issuername"] }}</label>
 	      </div>
 	    </div>

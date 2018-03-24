@@ -1,3 +1,29 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Nitesh Chaughule" <nitesh@disroot.org>
+*/
+
 $(document).ready(function() {
   $('.modal-backdrop').remove();
     var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
@@ -67,7 +93,7 @@ $(document).ready(function() {
 	$("#invoice_date").val(invdatearray[0]);
 	$("#invoice_month").val(invdatearray[1]);
 	$("#invoice_year").val(invdatearray[2]);
-	$("#invoice_state").val();
+	$("#invoice_state").val(resp.gkresult.rejinvdata.sourcestate);
 	$("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
@@ -104,6 +130,7 @@ $(document).ready(function() {
       else {
         $("#rejectionnote_godown").val("None");
       }
+	//For GST Table values are taken
       if(resp.gkresult.rejinvdata.taxflag == 7){
 	  let curindex = 0;
 	  $('#invoice_product_table_gst tbody').empty();
@@ -160,7 +187,7 @@ $(document).ready(function() {
 	  $("#totalinvcess").text(parseFloat(resp.gkresult.totalcessamt).toFixed(2));
 	  $(".vatfied").hide();
 	  $(".gstfield").show();
-      }else if(resp.gkresult.rejinvdata.taxflag == 22){
+      }else if(resp.gkresult.rejinvdata.taxflag == 22){ //For VAT Table values are taken.
 	  $("#invoice_product_table_vat").show();
 	  let curindex = 0;
 	  $(".gsttable").hide();
@@ -205,6 +232,7 @@ $(document).ready(function() {
     });
   });
 
+    //Click event for 'Print'
     $("#rejectionnote_viewprint").click(function(event) {
         $.ajax({
             url: '/rejectionnote?action=getprint',
