@@ -1,5 +1,143 @@
 <head>
-  <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
+  <!-- <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css"> -->
+  <style>
+   #invoice_product_table_gst tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #invoice_product_table_gst tbody {
+       display:block;
+       width:100%;
+       height: calc(100vh - 31em);
+   }
+   #invoice_product_table_gst_heading thead {
+       display:table;
+       width: calc( 100% - 0.75em );
+       table-layout:fixed;
+   }
+   #invoice_product_table_gst_tfoot tfoot {
+       display:block;
+       width: calc( 100% - 0.70em );
+   }
+   #invoice_product_table_total tbody {
+       display:block;
+       height: calc(100vh - 31em);
+       overflow-y:scroll;
+   }
+   #invoice_product_table_total tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #invoice_product_table_total tfoot {
+       display:block;
+       width:calc( 100% - 0.80em );
+   }
+   #invoice_product_table_vat tbody {
+       display:block;
+       height: calc(100vh - 25em);
+       overflow-y:scroll;
+   }
+   #invoice_product_table_vat tfoot {
+       display:table;
+       width: calc( 100% - 0.70em );
+   }
+
+   .nopadding{
+       padidng:0 !important;
+       padding:0 !important;
+   }
+   td {
+       font-size: 65%;
+       color: black;
+   }
+
+   th {
+       font-size: 75%;
+   }
+
+   .crosswrap{
+       width :2.5%;
+   }
+   .mdwrap{
+       width:16%;
+   }
+   .qtywrap {
+       width:9%
+   }
+   .smwrap{
+       width:6%;
+   }
+   .taxwrap{
+       width:12%
+   }
+   .taxcell {
+       width:6%
+   }
+   .totalwrap {
+       width:37%;
+   }
+   .mdvwrap{
+       width:19.5%;
+   }
+   .smvwrap{
+       width:9.60%;
+   }
+   .ratewrap {
+       width: 6.75%;
+   }
+   .qtyvwrap {
+       width: 25.25%;
+   }
+   .unitaddon {
+       overflow:hidden;
+       text-overflow:clip;
+       white-space:nowrap;
+       max-width:20px;
+   }
+   
+   @page {
+       size : 21cm 29.7cm;
+       margin : 10mm 10mm 20mm 10mm
+   }
+   thead{
+       display: table-header-group;
+   }
+   tfoot{
+       display: table-footer-group;
+   } 
+   .rightJustified {
+       text-align: right;
+   }
+   .product_name_gst,.product_name_vat {
+       max-width: 100% !important;
+       min-width: 100% !important;
+       width: 100% !important;
+   }
+   #invoice_customer{
+       max-width: 180px !important;
+   }
+   .borderdiv {
+       border-left-style:solid;
+       border-width: 1px;
+   }
+   .rborderdiv {
+       border-right-style:solid;
+       border-width: 1px;
+   }
+   .hborderdiv {
+       border-top-style:solid;
+       padding-top: 10px;
+       border-width: 1px;
+   }
+   label {
+       font-size:95% !important; 
+   }
+   .noborder {
+       border-style: none !important;
+   }
+  </style>
 </head>
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
@@ -252,7 +390,7 @@
 		</tbody>
 		<tfoot>
 		  <tr>
-		    <td colspan="4" class="text-right">
+		    <td colspan="3" class="text-right">
 		      {% trans %}Total{% endtrans %}
 		    </td>
 		    <td class="smvwrap">
@@ -359,6 +497,7 @@
 			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8"></span></td>
 			<td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-sm text-right" size="8"></span></td>
 			<td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8"></span></td>
+		      </tr>
 		    </tfoot>
 		  </table>
 		</div>

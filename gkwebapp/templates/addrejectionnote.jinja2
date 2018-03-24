@@ -15,27 +15,27 @@
     <div class="alert alert-danger" id="noteno-blank-alert" aria-live="rude" role="alert" hidden>
       <label for="vno">{% trans %}Please enter note no.!{% endtrans %}</label>
     </div>
+    <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
+      <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="dcinv-blank-alert" aria-live="rude" role="alert" hidden>
+      <label for="vno">{% trans %}Please Select Invoice or Delivery Note.!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+      <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+      {% trans %}Please enter date within the financial year!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="between-inv-date-alert" aria-live="rude" role="alert" hidden>
+      {% trans %}Note Date should not be prior to the Invoice Date!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="between-dc-date-alert" aria-live="rude" role="alert" hidden>
+      {% trans %}Note Date should not be prior to the Delivery Date!{% endtrans %}
+    </div>
     <div class="panel shadow rejectionnote_panel" id="rnmain">
       <div class="panel-body">
 	<div class="col-md-4">
-	  <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="dcinv-blank-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Please Select Invoice or Delivery Note.!{% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-	    <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
-	  </div>
-	  <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-	    {% trans %}Please enter date within the financial year!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="between-inv-date-alert" aria-live="rude" role="alert" hidden>
-	    {% trans %}Note Date should not be prior to the Invoice Date!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="between-dc-date-alert" aria-live="rude" role="alert" hidden>
-	    {% trans %}Note Date should not be prior to the Delivery Date!{% endtrans %}
-	  </div>
 	  <div class="form-group">
 	    {% if gkstatus=="in" %}
 	      {% trans %}<h4>Details of Rejection In: </h4>{% endtrans %}
@@ -289,7 +289,7 @@
 		    </td>
 		    <td class="qtyvwrap">
 		      <div class="input-group">
-			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
+			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right numtype" value="0.00">
 			<span class="input-group-addon input-sm" id="unitaddon_freeqty_vat"></span>
 		      </div>
 		    </td>
