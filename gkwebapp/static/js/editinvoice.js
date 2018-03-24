@@ -389,7 +389,7 @@ $(document).ready(function() {
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
 	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -690,7 +690,7 @@ $(document).ready(function() {
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	if ($("#status").val() == 15) {
+	/*if ($("#status").val() == 15) {
 	    if($("#statecodeofconsignee").text() in gstins) {
 		var custgstin = gstins[$("#statecodeofconsignee").text()];
 		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
@@ -706,7 +706,7 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	}
+	} */
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
@@ -2481,11 +2481,16 @@ if (event.which == 13) {
 				    $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
 				    $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
 				    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
+				    console.log(resp.invoicedata.taxname);
 				    if(resp.invoicedata.taxname == 'IGST'){
+					console.log("from igst===",value.taxrate);
+					console.log("from igst",value.taxamount);
 					$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    else{
+					console.log("from sgst and cgst",value.taxrate);
+					console.log("from s c",value.taxamount);
 					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_sgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
