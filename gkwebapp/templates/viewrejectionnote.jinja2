@@ -1,5 +1,4 @@
 <head>
-  <!-- <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css"> -->
   <style>
    #invoice_product_table_gst tbody tr {
        display:table;
@@ -36,7 +35,7 @@
    }
    #invoice_product_table_vat tbody {
        display:block;
-       height: calc(100vh - 25em);
+       height: calc(100vh - 30em);
        overflow-y:scroll;
    }
    #invoice_product_table_vat tfoot {
@@ -82,13 +81,13 @@
        width:19.5%;
    }
    .smvwrap{
-       width:9.60%;
+       width:8.60%;
    }
    .ratewrap {
-       width: 6.75%;
+       width: 6.85%;
    }
    .qtyvwrap {
-       width: 25.25%;
+       width: 18.25%;
    }
    .unitaddon {
        overflow:hidden;
@@ -349,7 +348,7 @@
 		<thead class="bg-primary">
 		  <tr>
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
-		    <th class="qtyvwrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
@@ -423,7 +422,7 @@
 		      <tr>
 			<th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
-			<th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+			<th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
@@ -532,7 +531,7 @@
 	  <!-- GST Table end -->
 	</div>
 	<!-- Summary -->
-	<div class="row" style="margin-top:0.2cm;">
+	<div class="row" style="margin-top:0.5cm;">
 	  <div class="col-md-8">
 	  </div>
 	  <div class="col-md-4">

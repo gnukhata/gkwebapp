@@ -266,7 +266,7 @@
 		  <tr>
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		    <th class="qtyvwrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+		    <th class="qtyvwrap text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
@@ -356,7 +356,7 @@
 		      <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %} HSN/ ACS Code{% endtrans %}</th>
 		      <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		      <th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Qty{% endtrans %}</th>
+		      <th rowspan="2" class="qtywrap text-center">{% trans %}Rejected Quantity{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
@@ -478,9 +478,19 @@
 	<div class=" col-sm-12">
 	  <small id="spectotaxhelp" class="form-text text-muted">{% trans %}Press Esc key on Rejected Quantity to switch to Save.{% endtrans %}</small>
 	</div>
-	<!-- Summary -->
 	<div class="row">
-	  <div class="col-md-8">
+	  <div class="col-sm-4 nopadding" >
+	    <div class="col-sm-12 form-group form-inline">
+	      <label class="col-sm-5 fsize" for="issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+	      <input class="form-control input-sm col-sm-7" id="issuer_name" aria-label="{% trans %}Issuer's Name{% endtrans %}" disabled>
+	    </div>
+	    <div class="col-sm-12 form-inline form-group">
+	      <label class="col-sm-5 fsize">{% trans %}Designation{% endtrans %} :</label>
+	      <input class="form-control input-sm col-sm-7" id="issuer_designation" aria-label="{% trans %}Designation{% endtrans %}"disabled>
+	    </div>
+	  </div>
+	  <div class="col-sm-4">
+	    
 	  </div>
 	  <div class="col-md-4">
 	    <div class="row">

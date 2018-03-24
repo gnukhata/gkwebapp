@@ -60,6 +60,7 @@ def nonrejectedinvprods(request):
 def getrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
+    print rnotes.json()["gkresult"]
     return {"gkstatus":rnotes.json()["gkstatus"],"gkresult":rnotes.json()["gkresult"]}
 
 @view_config(route_name="rejectionnote",request_param="action=save",renderer="json")

@@ -626,6 +626,14 @@ $(document).ready(function() {
 			$("#invoice_state").val(resp.invDetails.taxstate);
 			$("#invoice_gstin").val(resp.invDetails.orgstategstin);
 			$("#invoice_addr").val(resp.invDetails.address);
+			$("#issuer_name").val(resp.invDetails.issuername);
+			if(resp.invDetails.inoutflag == 15){
+			    $("#issuer_designation").val(resp.invDetails.designation);
+			}else{
+			    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
+			    var userrole = dict[resp.invDetails.designation];
+			    $("#issuer_designation").val(userrole);
+			}
 			$("#cussup_state").val(resp["delchal"]["custstate"]);
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);
 			$("#rejectionnote_customeraddr").val(resp["delchal"]["custaddr"]);
