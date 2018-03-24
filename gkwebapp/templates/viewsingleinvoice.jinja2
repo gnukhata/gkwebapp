@@ -514,7 +514,8 @@
 	  </div>
 	</div>
       </div>
-      {% if gkresult["invoicetotalword"]!= ' ' %}
+      {% if gkresult["invoicetotalword"]!= ' ' || gkresult["invoicetotalword"]!= None %}
+	
 	<div class ="col-sm-12">
 	  <div class ="col-sm-4 ">
 	  </div>
@@ -527,6 +528,7 @@
 	    </div>
 	  </div>
 	</div>
+	
       {% endif %}
   </div>
   </div>
