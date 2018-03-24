@@ -344,9 +344,33 @@
 	</div>
       {% endif %}
       <div class="row">
-	<div class="col-sm-6 nopadding">
+	<div class="col-sm-4 nopadding">
+	  <div class="row">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer name{% endtrans %} :</label>
+		<label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["issuername"] }}</label>
+	      </div>
+	    </div>
+	  </div>
+	  <div class="row">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer Designation{% endtrans %} :</label>
+		{% if gkresult["rejinvdata"]["inoutflag"] == 15 %}
+		  <label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["designation"]}}</label>
+		{% else %}
+		  {% if gkresult["rejinvdata"]["designation"]==-1 %}<label style="font-size:130% !important;">{{"Admin"}}</label>{% endif %}
+		  {% if gkresult["rejinvdata"]["designation"]==0 %}<label style="font-size:130% !important;">{{"Manager"}}</label>{% endif %}
+		  {% if gkresult["rejinvdata"]["designation"]==1 %}<label style="font-size:130% !important;">{{"Oparator"}}</label>{% endif %}
+		  {% if gkresult["rejinvdata"]["designation"]==2 %}<label style="font-size:130% !important;">{{"Auditor"}}</label>{% endif %}
+		  {% if gkresult["rejinvdata"]["designation"]==3 %}<label style="font-size:130% !important;">{{"Godown In Charge"}}</label>{% endif %}
+		{% endif %}
+	      </div>
+	    </div>
+	  </div>
 	</div>
-	<div class="col-sm-2 nopadding">
+	<div class="col-sm-4 nopadding">
 	  <div class="row">
 	  </div>
 	</div>

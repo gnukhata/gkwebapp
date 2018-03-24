@@ -71,13 +71,22 @@ $(document).ready(function() {
 	$("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
-      if(resp.gkresult.hasOwnProperty("dcno")){
+	$("#issuer_name").val(resp.gkresult.rejinvdata.issuername);
+	console.log(resp.gkresult.rejinvdata.inotflag);
+	if(resp.gkresult.rejinvdata.inoutflag == 15){
+	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
+	}else{
+	    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
+	    var userrole = dict[resp.gkresult.rejinvdata.designation];
+	    $("#issuer_designation").val(userrole);
+	}
+	if(resp.gkresult.hasOwnProperty("dcno")){
           $("#rejectionnote_consignment").val(resp.gkresult.transactiontype);
-      }
-      else{
-        $("#rejectionnote_consignment").val("None");
-      }
-      if(resp.gkresult.rejinvdata.hasOwnProperty("custSupDetails")){
+	}
+	else{
+            $("#rejectionnote_consignment").val("None");
+	}
+	if(resp.gkresult.rejinvdata.hasOwnProperty("custSupDetails")){
         $("#rejectionnote_customer").val(resp.gkresult.rejinvdata.custSupDetails.custname);
         $("#rejectionnote_customeraddr").val(resp.gkresult.rejinvdata.custSupDetails.custaddr);
           $("#rejectionnote_customertin").val(resp.gkresult.rejinvdata.custSupDetails.custtin);

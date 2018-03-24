@@ -83,7 +83,7 @@ def saverejectionnote(request):
 def printrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=single&rnid=%d"%(int(request.params["rnid"])), headers=header)
-    print rnotes.json()["gkresult"]["rejectedtotal"]
+    print rnotes.json()["gkresult"]
     statecode = rnotes.json()["gkresult"]["rejinvdata"]["sourcestatecode"]
     org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
     return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":rnotes.json()["gkresult"]}
