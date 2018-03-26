@@ -40,9 +40,7 @@
    }
    #invoice_product_table_vat tfoot {
        display:table;
-       width: calc( 100% - 0.70em );
    }
-
    .nopadding{
        padidng:0 !important;
        padding:0 !important;
@@ -81,7 +79,7 @@
        width:19.5%;
    }
    .smvwrap{
-       width:8.60%;
+       width:14.00%;
    }
    .ratewrap {
        width: 6.85%;
@@ -135,6 +133,11 @@
    }
    .noborder {
        border-style: none !important;
+   }
+   .fixed-table tfoot tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
    }
   </style>
 </head>
@@ -395,6 +398,7 @@
 		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
 		    <td class="ratewrap">
+
 		    </td>
 		    <td class="smvwrap">
 		      <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
@@ -402,7 +406,6 @@
 		    <td class="smvwrap">
 		      <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
-		    <!-- <td class="crosswrap"></td> -->
 		  </tr>
 		</tfoot>
 	      </table><!-- VAT table end -->
