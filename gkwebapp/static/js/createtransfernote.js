@@ -108,7 +108,15 @@ $(document).ready(function() {
     }
   });
   $("#tn_year").keydown(function(event) {
-    if (event.which==13) {
+      if (event.which==13 || event.which==9) {
+	  if ($.trim($('#tn_year').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#tn_date').focus();
+      return false;
+    }
 	event.preventDefault();
 	if(fromgod==1 && togod==1){
 	    $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
