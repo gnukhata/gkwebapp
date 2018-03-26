@@ -120,12 +120,20 @@ $(document).ready(function(){
   });
 
   $("#name").keydown(function(e){
-    if (e.which==13)
-    {
-      e.preventDefault();
-      $("#password").focus();
-    }
-    });
+    if (e.which==13 ||e.which==9)
+      {
+	  if ($.trim($("#name").val())=="") {
+              $("#username-blank-alert").alert();
+              $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#username-blank-alert").hide();
+              });
+              $("#name").focus();
+              return false;
+          }
+	  e.preventDefault();
+	  $("#password").focus();
+      }
+  });
 
     $("#password").keydown(function(e){
       if (e.which==13)
