@@ -93,15 +93,16 @@ $(document).ready(function() {
 	$("#invoice_date").val(invdatearray[0]);
 	$("#invoice_month").val(invdatearray[1]);
 	$("#invoice_year").val(invdatearray[2]);
-	$("#invoice_state").val(resp.gkresult.rejinvdata.sourcestate);
-	$("#invoice_addr").val(resp.gkresult.rejinvdata.address);
+	$("#invoice_state").val(resp.gkresult.rejinvdata.sourcestate);	
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
 	$("#issuer_name").val(resp.gkresult.rejinvdata.issuername);
 	console.log(resp.gkresult.rejinvdata.inotflag);
 	if(resp.gkresult.rejinvdata.inoutflag == 15){
+	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
 	}else{
+	    $("invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
 	    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
 	    var userrole = dict[resp.gkresult.rejinvdata.designation];
 	    $("#issuer_designation").val(userrole);

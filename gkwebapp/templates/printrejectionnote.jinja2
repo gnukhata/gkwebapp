@@ -62,22 +62,18 @@
 	<div class="col-xs-9 nopaddng">
 	  
           <h3>{{org["orgname"]}}</h3>
-	  {% if gkresult["address"]!=""%}
-	    {{ gkresult["address"] }}
-	  {% else %}
-            {% if org["orgaddr"]!='' %}
-              {{org["orgaddr"]}}
-            {% endif %}
-            {% if org["orgcity"]!='' %}
-              , {{org["orgcity"]}}
-	    {% endif %}
-	    {% if org["orgpincode"] %}
-	      - {{org["orgpincode"]}},
-            {% endif %}
-            {% if org["orgstate"]!='' %}
-              , {{org["orgstate"]}}.
-            {% endif %}
+	  {% if org["orgaddr"]!='' %}
+            {{org["orgaddr"]}}
+          {% endif %}
+          {% if org["orgcity"]!='' %}
+            , {{org["orgcity"]}}
 	  {% endif %}
+	  {% if org["orgpincode"] %}
+	    - {{org["orgpincode"]}},
+          {% endif %}
+          {% if org["orgstate"]!='' %}
+            , {{org["orgstate"]}}.
+          {% endif %}
 	  <br>
           {% if org["orgtelno"]!='' %}
             Contact No.: {{org["orgtelno"]}}
@@ -155,12 +151,12 @@
 		  </div>
 		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
 		{% endif %}
-		{% if gkresult["rejinvdata"]["address"] %}
 		  <div class="form-inline form-group col-xs-12 nopadding">
 		    <label for="inv_addr">{% trans %}Address{% endtrans %} : </label>
-		    {{ gkresult["rejinvdata"]["address"] }}
+		    {% if gkresult["rejinvdata"]["inoutflag"]==15 %}{{ gkresult["rejinvdata"]["address"] }}
+		    {% else %}{{ org["orgaddr"]}} {{ org["orgcity"] }},{{ org["orgstate"] }} ,{{ org["orgpincode"] }}
+		      {% endif %}
 		  </div>
-		{% endif %}
 	      </td>
 	      <td>
 		<div class="form-inline form-group col-xs-12 nopadding">
