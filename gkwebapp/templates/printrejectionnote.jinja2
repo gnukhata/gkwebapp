@@ -336,7 +336,7 @@
 	  <div class="row">
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
-		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer Name{% endtrans %} :</label>
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer's Name{% endtrans %} :</label>
 		<label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["issuername"] }}</label>
 	      </div>
 	    </div>
@@ -344,7 +344,7 @@
 	  <div class="row">
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
-		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Issuer Designation{% endtrans %} :</label>
+		<label for="taxableamount" style="font-size:130% !important;">{% trans %}Designation{% endtrans %} :</label>
 		{% if gkresult["rejinvdata"]["inoutflag"] == 15 %}
 		  <label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["designation"]}}</label>
 		{% else %}
@@ -447,11 +447,17 @@
 	  <strong><i>Thank you!</i></strong>
 	</div>
 	<div class="text-right col-xs-6">
-	  <strong>{{ gkresult["issuername"] }}</strong>
+	  <strong>{{ gkresult["rejinvdata"]["issuername"] }}</strong>
 	  <br>
-	  {% if gkresult["designation"] !='' %}
-	    <i>({{ gkresult["designation"] }})</i>
-	  {% endif %}
+	  {% if gkresult["rejinvdata"]["inoutflag"] == 15 %}
+	    <label style="font-size:130% !important;">{{ gkresult["rejinvdata"]["designation"]}}</label>
+	  {% else %}
+	    {% if gkresult["rejinvdata"]["designation"]==-1 %}<i><label style="font-size:100% !important;">({{"Admin"}})</label></i>{% endif %}
+	    {% if gkresult["rejinvdata"]["designation"]==0 %}<i><label style="font-size:100% !important;">({{"Manager"}})</label></i>{% endif %}
+	    {% if gkresult["rejinvdata"]["designation"]==1 %}<i><label style="font-size:100% !important;">({{"Oparator"}})</label></i>{% endif %}
+	    {% if gkresult["rejinvdata"]["designation"]==2 %}<i><label style="font-size:100% !important;">({{"Auditor"}})</label></i>{% endif %}
+	    {% if gkresult["rejinvdata"]["designation"]==3 %}<i><label style="font-size:100% !important;">({{"Godown In Charge"}})</label></i>{% endif %}
+	    {% endif %}
 	</div>
       </div>
       <div class="row">
