@@ -147,7 +147,7 @@ $(document).ready(function() {
 	      $('.invoice_product_freequantity_gst:eq(' + curindex + ')').val(value.freeqty).attr("data", value.freeqty);
 	      $('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
 	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
-				$('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
+	      $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
 	      $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
 	      if(value.taxname == 'IGST'){
 		  $(".sgstfield").hide();
@@ -166,7 +166,6 @@ $(document).ready(function() {
 	      $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
 	      $('.invoice_product_cessamount:eq(' + curindex + ')').val(parseFloat(value.cess).toFixed(2));
 	      $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-	      $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      $('.invoice_product_total:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
 	      curindex = curindex + 1;
 	  });
@@ -197,7 +196,7 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody').empty();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-	      $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	      //$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      $('.product_name:eq(' + curindex + ')').val(value.proddesc);
 	      $('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 	      $('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);

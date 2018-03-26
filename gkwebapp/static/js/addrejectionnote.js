@@ -293,6 +293,7 @@ $(document).ready(function() {
 	    }else{
 		$('#invoice_product_table_gst tbody tr:first td:eq(3) input').focus().select();
 	    }
+	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
 	if (event.which==38) {
 	    event.preventDefault();
@@ -445,8 +446,32 @@ $(document).ready(function() {
     });
     
     $(document).off("click", ".product_del").on("click", ".product_del", function() {
-	$(this).closest('tr').remove();
-	$('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').focus().select();
+	//$(this).closest('tr').remove();
+	//$('#rejectionnote_product_table tbody tr:eq('+$(this).closest("tr").index()+') td:eq(2) input').focus().select();
+	var curindex = $(this).closest('tr').index();
+	var nextindex = curindex + 1;
+	var previndex = curindex - 1;
+	if ($("#invoice_product_table_vat tbody tr").length > 1) {
+	    $(this).closest('tr').fadeOut(200, function() {
+		$(this).closest('tr').remove(); //closest method gives the closest element productified
+		$("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+		calculatevataxamt(curindex);
+	    });
+	}
+	if ($("#invoice_product_table_vat tbody tr").length == 1) {
+	    $("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
+	}
+
+	if ($("#invoice_product_table_gst tbody tr").length > 1) {
+	    $(this).closest('tr').remove();
+	    $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
+	    $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	    calculategstaxamt(curindex);
+	}
+	if ($("#invoice_product_table_gst tbody tr").length == 1) {
+	    $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+	}
+
     });
 
     //Keydown For Rejected Qty for Product Table VAT

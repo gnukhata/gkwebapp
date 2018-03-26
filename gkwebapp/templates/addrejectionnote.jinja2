@@ -19,7 +19,7 @@
       <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="dcinv-blank-alert" aria-live="rude" role="alert" hidden>
-      <label for="vno">{% trans %}Please Select Invoice or Delivery Note.!{% endtrans %}</label>
+      <label for="vno">{% trans %}Please Select Invoice!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
       <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
@@ -240,9 +240,10 @@
 	      {% endif %}
 	      <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
 	      </div>
-	      </div >
-	    </div>
+	    </div >
+	  </div>
 	</div>
+	<a id="taxapplicablescroll"></a>
 	<!--     -----------------------Start Table-----------------------------------  -->
 	<div class="col-md-12" id="rejectionnote_product_div">
 	  <div class="alert alert-danger" id="product-blank-alert" aria-live="rude" role="alert" hidden>
