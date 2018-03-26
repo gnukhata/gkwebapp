@@ -532,12 +532,7 @@
 		<div class="radio">
         	  <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkcash" aria-label="">&nbsp{% trans %}Cash{% endtrans %}.</label>
         	</div>
-	    <div class="col-sm-12" style="margin-top: 0.5cm">
-	      <div class="form-group form-inline col-sm-4 pull-right">
-		<label for="totalpurchaseordervalue" style="font-size:150% !important;">{% trans %}Total Purchase Order Value{% endtrans %} :</label>
-		<label id="totalpurchaseordervalue" style="font-size:150% !important; font-weight:normal !important"></label>
 	      </div>
-	    </div>
 	    <div class ="row col-sm-12" >
 	      <div class ="col-sm-12">
 		<div class="alert alert-danger" id="bankdetails-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -569,27 +564,27 @@
 		</div>
 	      </div>
 	      <div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;" id="bank">
-		<h4>Bank Details:</h4>
-		<div class="row col-sm-12">
+		<h4>&nbsp &nbspBank Details:</h4>
+		<div class="col-sm-12">
 		  <div class="form-group form-inline">
 		    <label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
 		    <input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7"></input>
 		  </div>
 		</div>
-		<div class="row col-sm-12">
+		<div class="col-sm-12">
 		  <div class="form-group form-inline">
 		    <label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
 		    <input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7" name="bankname" ></input>
 		  </div>
 		</div>
 		<br>
-		<div class="row col-sm-12">
+		<div class="col-sm-12">
 		  <div class="form-group form-inline">
 		    <label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
 		    <input type="text" id="branch" class="lastfield form-control input-sm col-sm-7" ></input>
 		  </div>
 		</div>
-		<div class="row col-sm-12">
+		<div class="col-sm-12">
 		  <div class="form-group form-inline">
 		    <label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
 		    <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
