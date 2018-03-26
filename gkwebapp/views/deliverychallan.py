@@ -29,8 +29,8 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 "Reshma Bhatawadekar" <reshma_b@riseup.net>
 "Nitesh Chaughule <nitesh@disroot.org>" 
+"Sanket Kolnoorkar" <sanketf123@gmail.com>
 """
-
 from pyramid.view import view_config
 import requests, json
 from datetime import datetime
@@ -66,17 +66,18 @@ def showadddeliverychallan(request):
     result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus": request.params["status"],"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"],"purchaseorders":podata.json()["gkresult"], "lastdelchaldata":lastdelchaldata.json()["gkresult"], "numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"numberofgodowns":len(godowns.json()["gkresult"]),"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
-
+#delchalins and delchalouts are used to get the data of deliverych in i.e. 9 and deliverych out i.e. 15
 @view_config(route_name="deliverychallan",request_param="action=showedit",renderer="gkwebapp:templates/editdeliverychallan.jinja2")
 def showeditdeliverychallan(request):
 
     header={"gktoken":request.headers["gktoken"]}
-    delchals = requests.get("http://127.0.0.1:6543/delchal?delchal=all", headers=header)
+    delchalins = requests.get("http://127.0.0.1:6543/delchal?delchal=all&inoutflag=9", headers=header)
+    delchalouts = requests.get("http://127.0.0.1:6543/delchal?delchal=all&inoutflag=15", headers=header)
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"gkstatus":delchals.json()["gkstatus"],"delchals":delchals.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofgodowns":len(godowns.json()["gkresult"]),"resultgstvat":resultgstvat.json()["gkresult"],"numberofdeliverynote":len(delchals.json()["gkresult"]),"status":True}
+    return {"delchalins":delchalins.json()["gkresult"],"delchalouts":delchalouts.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofgodowns":len(godowns.json()["gkresult"]),"resultgstvat":resultgstvat.json()["gkresult"],"numberofdeliveryinnotes":len(delchalins.json()["gkresult"]),"numberofdeliveryoutnotes":len(delchalouts.json()["gkresult"]),"status":True}
        
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
 def showeditpopupdeliverychallan(request):
@@ -126,7 +127,7 @@ def getdelchal(request):
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
     delchalresult = {}
     delchalresult = delchaldata.json()["gkresult"]
-    if int(delchalresult["delchaldata"]["inout"])==9:
+    if int(delchalresult["delchaldata"]["inoutflag"])==9:
         inoutflag="in"
     else:
         inoutflag="out"
