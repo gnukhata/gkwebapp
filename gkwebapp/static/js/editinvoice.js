@@ -690,23 +690,6 @@ $(document).ready(function() {
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	/*if ($("#status").val() == 15) {
-	    if($("#statecodeofconsignee").text() in gstins) {
-		var custgstin = gstins[$("#statecodeofconsignee").text()];
-		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    } else {$("#gstin").text("");}
-	    
-	    if ($("#taxapplicable").val() == 7){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".igstfield").show();
-		}
-	    }
-	} */
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
@@ -891,16 +874,10 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      sourcestate = $("#consigneestate option:selected").val();
-	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
       }
 	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
@@ -1640,16 +1617,10 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
-	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
       }
     var taxflag=$("#taxapplicable").val();
 
@@ -3141,12 +3112,7 @@ if (event.which == 13) {
 	      sourcestate = $("#consigneestate option:selected").val();
 	  }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	 // if ($("#consigneename").val() != "") {
-	   //   form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  //} else {
-	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-	  //}
-
+	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
       }
       else if ($("#status").val() ==  15) {
 	  /*let sourcestate = $("#invoicestate option:selected").val();
@@ -3156,11 +3122,7 @@ if (event.which == 13) {
 	      }*/
 	  //appending address to the form_data.	  
 	  form_data.append("address", address);
-	  //if ($("#consigneename").val() != "") {
-	    //  form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  //} else {
-	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	  //}
+	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));

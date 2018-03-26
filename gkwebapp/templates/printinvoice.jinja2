@@ -174,27 +174,14 @@
 		    {% trans %}Customer State{% endtrans %} :
 		  {% endif %}
 		</label>
-		{% if gkresult["consignee"]["consigneename"] %}
-		  {% if gkresult["inoutflag"] == 9 %}
-		    {{ gkresult["custSupDetails"]["custsupstate"] }}
-		  {% endif %}
-		  {% if gkresult["inoutflag"] == 15 %}
-		    {{ gkresult["custSupDetails"]["custsupstate"]}}
-		  {% endif %}
-		{% else %}
+		<!-- when customer/supplier state changed-->
 		{% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestate"] }}{% endif %}
 		{% if gkresult["inoutflag"] == 15 %}{{ gkresult["destinationstate"] }}{% endif %}
-		{% endif %}
 	      </div>
 	      <div class="form-inline form-group col-xs-12 nopadding">
 		<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-		{% if gkresult["consignee"]["consigneename"] %}
-		  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-		  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-		{% else %}
 		{% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}
 		{% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
-		{% endif %}
 	      </div>
 	      <div class="form-inline form-group col-xs-12 nopadding">
 		<div style="white-space: nowrap; display:table-cell;">
