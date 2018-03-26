@@ -36,7 +36,7 @@
           <label for="viewledger_accname">{% trans %}Please select an account!{% endtrans %}</label>
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewledger_accname">{% trans %}Account Name{% endtrans %} :</label>
+          <label for="viewledger_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewledger_accname"" style="color:red;font-size: 120%;">*</label>
           <select class = "form-control input-sm" id="viewledger_accname"  name = "viewledger_accname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
