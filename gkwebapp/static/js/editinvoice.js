@@ -38,6 +38,26 @@ $(document).ready(function() {
     $("select:first").focus();
     $("#invoice_editprint").hide();
     $(".uploadclass").hide();
+
+    //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
+      $("#Consignee").change(function() {
+          if($(this).prop('checked') == true) {
+	      $("#consigneename").val($("#invoice_customer option:selected").text());
+	      $("#consigneestate").val($("#invoice_customerstate option:selected").text());
+	      $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	      $("#gstinconsignee").val($("#gstin").text());
+	      $("#tinconsignee").val($("#tin").text());
+	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
+	  } else {
+	      $("#consigneename").val("");
+	      $("#consigneestate").val("");
+	      $("#statecodeofconsignee").text("");
+	      $("#gstinconsignee").val("");
+	      $("#tinconsignee").val("");
+	      $("#consigneeaddress").val("");
+	  }
+      });
+
      //Initialising some variables.
     var issuername = "";
     var designation = "";
