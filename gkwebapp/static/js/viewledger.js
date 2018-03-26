@@ -224,6 +224,25 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
     }
   });
 
+
+    $("#viewledger_accname").keydown(function(event) {
+	if (event.which==13 || event.which==9) {
+	if ($("#viewledger_accname").val()==null) {
+	    $("#account-blank-alert").alert();
+	    $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#account-blank-alert").hide();
+	    });
+	    $('#viewledger_accname').focus();
+	    return false;
+	}
+	    event.preventDefault();
+            $("#viewledger_monthly").focus().select();
+        }
+    });
+      
+
+    
+
   $("#viewledger_submit").click(function(event) {
     // --------------------starting validations------------------
     if ($("#viewledger_accname").val()==null) {
