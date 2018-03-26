@@ -918,9 +918,9 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      sourcestate = $("#consigneestate option:selected").val();
-	  }
+	  //if ($("#consigneename").val() != "") {
+	    //  sourcestate = $("#consigneestate option:selected").val();
+	  //}
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
@@ -1645,9 +1645,9 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
-	  }
+	 // if ($("#consigneename").val() != "") {
+	   //sourcestate = $("#consigneestate option:selected").val();
+	  //}
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
