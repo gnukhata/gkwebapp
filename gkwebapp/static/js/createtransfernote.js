@@ -57,12 +57,21 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false}); //Prevents negative values in the field.
   //Key events for transfer note. Focus moves forward on pressing 'Enter' key and backward on 'Up' arrow.
-  $("#transfernote_no").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_date").focus().select();
-    }
-  });
+    $("#transfernote_no").keydown(function(event) {
+      if (event.which==13 || event.which==9) {
+
+	    if ($.trim($('#transfernote_no').val())=="") {
+		$("#tnno-blank-alert").alert();
+		$("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tnno-blank-alert").hide();
+		});
+		$('#transfernote_no').focus();
+		return false;
+	    }
+	  event.preventDefault();
+	  $("#tn_date").focus().select();
+      }
+    });
 
     //If No godowns to select then alert message will display.
     var fromgod =$("#tn_from_godown option").length;
