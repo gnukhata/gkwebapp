@@ -144,27 +144,14 @@ $(document).ready(function() {
 	    $("#invoice_product_table_vat").hide();
 	    $(".gstinfield").show();
 	    $(".tinfield").hide();
-	    if(resp.delchaldata.delchaldata.consignee){
-		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+	    if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
+		$(".igstfield").hide();
+		$(".igstfield").css('border','');
+		$(".sgstfield").show();
 	    } else {
-		if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		} else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+		$(".sgstfield").hide();
+		$(".sgstfield").css('border','');
+		$(".igstfield").show();
 	    }
 	}
 	    else if(resp.delchaldata.delchaldata.taxflag == '22'){
@@ -217,15 +204,16 @@ $(document).ready(function() {
 	    $("#statecodeforinvoice").text(resp.delchaldata.sourcestatecode);
 	    $(".invoice_issuer").show();
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
-	    $("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
+		$("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
+		$("#deliverychallan_customerstate").text(resp.delchaldata.destinationstate);
 	}
 	    else {
+		$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
 	    $("#invoicestate").text(resp.delchaldata.destinationstate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
-	$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
 	$("#statecodeofcustomer").text(resp.delchaldata.custSupDetails.custsupstatecode);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
