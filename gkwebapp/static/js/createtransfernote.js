@@ -112,7 +112,7 @@ $(document).ready(function() {
       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#date-blank-alert").hide();
       });
-      $('#tn_year').focus();
+      $('#tn_month').focus();
       return false;
     }
       event.preventDefault();
@@ -130,7 +130,7 @@ $(document).ready(function() {
 	      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#date-blank-alert").hide();
 	      });
-	      $('#tn_date').focus();
+	      $('#tn_year').focus();
 	      return false;
 	  }
 
