@@ -288,7 +288,6 @@ $(document).ready(function() {
 		$('.invoice_product_cessrate:eq(' + curindex + ')').text(parseFloat(value.cessrate).toFixed(2));
 		$('.invoice_product_cessamount:eq(' + curindex + ')').text(parseFloat(value.cess).toFixed(2));
 		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		$('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
 		curindex = curindex + 1;
 	    });
@@ -320,7 +319,6 @@ $(document).ready(function() {
 	    let curindex = 0;
 	    $.each(resp.delchaldata.delchalContents, function(key, value) {
 		$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-		$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		$('.product_name_vat:eq(' + curindex + ')').text(value.proddesc).prop("disabled", true);
 		$('.invoice_product_quantity_vat:eq(' + curindex + ')').text(value.qty).attr("data", value.qty);
 		$('.invoice_product_freequantity_vat:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
@@ -453,7 +451,7 @@ $(document).ready(function() {
         '</div>'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '<a href="#" class="product_del deliverychallan_edit_disable"></a>'+
         '</td>'+
         '</tr>');
       });
