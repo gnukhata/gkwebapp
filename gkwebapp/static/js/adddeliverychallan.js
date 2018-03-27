@@ -405,18 +405,6 @@ $(document).ready(function() {
     $("#invoicestate").change(function(event) {
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
-	    } else {
 		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
@@ -427,7 +415,6 @@ $(document).ready(function() {
 		    $(".igstfield").show();
 		}
 	    }
-	}
 	
 	$(".product_name_vat, .product_name_gst").change();
 
@@ -780,22 +767,6 @@ $(document).ready(function() {
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	if ($("#status").val() == 15) {
-	    if($("#statecodeofconsignee").text() in gstins) {
-		var custgstin = gstins[$("#statecodeofconsignee").text()];
-		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    } else {$("#gstin").text("");}
-	    if ($("#taxapplicable").val() == 7){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".igstfield").show();
-		}
-	    }
-	}
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
@@ -2765,18 +2736,10 @@ else {
       //Delivery In
       if ($("#status").val() == 9) {
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
-	  }
+	  form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
       }//Delivery Out
       else if ($("#status").val() ==  15) {
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
-	  }
+	  form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
       }
 

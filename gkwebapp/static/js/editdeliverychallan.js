@@ -225,7 +225,7 @@ $(document).ready(function() {
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
-	$("#deliverychallan_customerstate").text(resp.delchaldata.custSupDetails.custsupstate);
+	$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
 	$("#statecodeofcustomer").text(resp.delchaldata.custSupDetails.custsupstatecode);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
