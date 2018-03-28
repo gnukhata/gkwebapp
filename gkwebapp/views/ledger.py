@@ -58,9 +58,7 @@ def printmonthlyledgerreport(request):
         result = requests.get("http://127.0.0.1:6543/report?type=monthlyledger&accountcode=%d"%(accountcode), headers=header)
         result = result.json()["gkresult"]
         fystart = datetime.strptime(request.params["fystart"],'%Y-%m-%d').strftime('%d-%m-%Y')
-        # A workbook is opened.
         mledgerwb = openpyxl.Workbook()
-        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = mledgerwb.active
         sheet.column_dimensions['A'].width = 10
         sheet.column_dimensions['B'].width = 18
@@ -165,14 +163,14 @@ def printLedgerReport(request):
             result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,fystart), headers=header)
         else:
             result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,fystart, int(projectcode)), headers=header)
-        headrerrow = result.json()["ledgerheader"]
+        headerrow = result.json()["ledgerheader"]
         result = result.json()["gkresult"]
         ledgerwb = openpyxl.Workbook()
         sheet = ledgerwb.active
         sheet.column_dimensions['A'].width = 10
-        sheet.column_dimensions['B'].width = 18
-        sheet.column_dimensions['C'].width = 14
-        sheet.column_dimensions['D'].width = 26
+        sheet.column_dimensions['B'].width = 14
+        sheet.column_dimensions['C'].width = 16
+        sheet.column_dimensions['D'].width = 30
         sheet.column_dimensions['E'].width = 16
         sheet.column_dimensions['F'].width = 16
         sheet.column_dimensions['G'].width = 16
@@ -186,7 +184,88 @@ def printLedgerReport(request):
         sheet.merge_cells('A3:G3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Account : %s (Period : %s to %s)'%(str(headerrow["accountname"]),datetime.strptime(request.params["calculatefrom"],'%Y-%m-%d').strftime('%d-%m-%Y') , datetime.strptime(request.params["calculateto"],'%Y-%m-%d').strftime('%d-%m-%Y'))
+        sheet['A3'] = 'Account : %s (Period : %s to %s)'%(headerrow["accountname"],datetime.strptime(request.params["calculatefrom"],'%Y-%m-%d').strftime('%d-%m-%Y') , datetime.strptime(request.params["calculateto"],'%Y-%m-%d').strftime('%d-%m-%Y'))
+        row = 4
+        sheet.merge_cells('A4:G4')
+        if headerrow["projectname"]!="":
+            if orgtype == "Profit Making":
+                sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+                sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+                sheet['A4'+str(row)] = 'Cost Center :' + headerrow["projectname"]
+                row += 1
+            else:
+                sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+                sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+                sheet['A4'+str(row)] = 'Project :' + headerrow["projectname"]
+                row += 1
+        sheet['A5'] = 'Date'
+        sheet['B5'] = 'V. No.'
+        sheet['C5'] = 'Voucher Type'
+        sheet['D5'] = 'Particulars'
+        sheet['E5'] = 'Debit'
+        sheet['F5'] = 'Credit'
+        sheet['G5'] = 'Balance'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['A5'].alignment = Alignment(horizontal='center')
+        sheet['B5'].alignment = Alignment(horizontal='center')
+        sheet['C5'].alignment = Alignment(horizontal='center')
+        sheet['D5'].alignment = Alignment(horizontal='center')
+        sheet['E5'].alignment = Alignment(horizontal='right')
+        sheet['F5'].alignment = Alignment(horizontal='right')
+        sheet['G5'].alignment = Alignment(horizontal='right')
+        sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['C5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['D5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['E5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['G5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        row =6
+        for transaction in result:
+            sheet['A'+str(row)] = transaction["voucherdate"]
+            sheet['A'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = transaction["vouchernumber"]
+            sheet['B'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            if transaction["advflag"]==1:
+                sheet['E'+str(row)] = transaction['Dr']
+                sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                sheet['F'+str(row)] = transaction['Cr']
+                sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+            else:
+                sheet['E'+str(row)] = transaction['Dr']
+                sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
+                sheet['F'+str(row)] = transaction['Cr']
+                sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
+            sheet['G'+str(row)] = transaction['balance']
+            sheet['G'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
+
+            if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
+                sheet['C'+str(row)] = transaction['vouchertype'].title()
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            elif transaction["vouchertype"]=="debitnote":
+                sheet['C'+str(row)] = "Debit Note"
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            elif transaction["vouchertype"]=="creditnote":
+                sheet['C'+str(row)] = "Credit Note"
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            elif transaction["vouchertype"]=="salesreturn":
+                sheet['C'+str(row)] = "Sale Return"
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            elif transaction["vouchertype"]=="purchasereturn":
+                sheet['C'+str(row)] = "Purchase Return"
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            else:
+                sheet['C'+str(row)] = transaction['vouchertype']
+                sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            row +=1
         ledgerwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
