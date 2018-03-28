@@ -67,11 +67,11 @@ $(document).ready(function() {
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
-	var rowqty = parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
-	var rowprice = parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
+	var rowqty = parseFloat($('.salesorder_product_quantity_gst:eq(' + curindex + ')').val()).toFixed(2);
+	var rowprice = parseFloat($('.salesorder_product_per_price_gst:eq(' + curindex + ')').val()).toFixed(2);
+	var rowdiscount = parseFloat($('.salesorder_product_discount_gst:eq(' + curindex + ')').val()).toFixed(2);
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
-	if ($('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
+	if ($('.salesorder_product_quantity_gst:eq(' + curindex + ')').is(":disabled") && $('.salesorder_product_freequantity_gst:eq(' + curindex + ')').is(":disabled")) {
 	    rowtaxableamount = rowprice - rowdiscount;
 	}
 
@@ -85,33 +85,33 @@ $(document).ready(function() {
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
 
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	$('.salesorder_product_taxablevalue_gst:eq(' + curindex + ')').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 
-	let sgstrate = $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val();
+	let sgstrate = $('.salesorder_product_sgstrate:eq(' + curindex + ')').val();
 	let sgstamount = (rowtaxableamount * sgstrate)/100;  //Amount of SGST to be applied is found out.
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(sgstamount).toFixed(2));
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(10) input').val(parseFloat(sgstamount).toFixed(2));
+	$('.salesorder_product_sgstamount:eq(' + curindex + ')').val(parseFloat(sgstamount).toFixed(2));
+	$('.salesorder_product_cgstamount:eq(' + curindex + ')').val(parseFloat(sgstamount).toFixed(2));
 
-	let igstrate = $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val();
+	let igstrate = $('.salesorder_product_igstrate:eq(' + curindex + ')').val();
 	let igstamount = (rowtaxableamount * igstrate)/100;  //Amount of IGST to be applied is found out.
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(12) input').val(parseFloat(igstamount).toFixed(2));
+	$('.salesorder_product_igstamount:eq(' + curindex + ')').val(parseFloat(igstamount).toFixed(2));
 
-	let cessrate = $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val();
+	let cessrate = $('.salesorder_product_cessrate:eq(' + curindex + ')').val();
         let cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(14) input').val(parseFloat(cessamount).toFixed(2));
+	$('.salesorder_product_cessamount:eq(' + curindex + ')').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = rowtaxableamount + 2*sgstamount + igstamount + cessamount; //Sum of Taxable Amount and Tax Amount is found out.
-        $('#salesorder_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
+	rowtotal = parseFloat(parseFloat(rowtaxableamount).toFixed(2)) + parseFloat(parseFloat(2*sgstamount).toFixed(2)) + parseFloat(parseFloat(igstamount).toFixed(2)) + parseFloat(parseFloat(cessamount).toFixed(2)); //Sum of Taxable Amount and Tax Amount is found out.
+        $('.salesorder_product_total_gst:eq(' + curindex + ')').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#salesorder_product_table_gst tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
-	    totaltaxable = totaltaxable + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
-	    totalcgst = totalcgst + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
-	    totalsgst = totalsgst + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
-	    totaligst = totaligst + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
-	    totalcess = totalcess + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
-	    totalamount = totalamount + parseFloat($('#salesorder_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+	    totaldiscount = totaldiscount + parseFloat(rowdiscount);
+	    totaltaxable = totaltaxable + parseFloat(rowtaxableamount);
+	    totalcgst = totalcgst + parseFloat(sgstamount);
+	    totalsgst = totalsgst + parseFloat(sgstamount);
+	    totaligst = totaligst + parseFloat(igstamount);
+	    totalcess = totalcess + parseFloat(cessamount);
+	    totalamount = totalamount + parseFloat(rowtotal);
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -135,10 +135,10 @@ $(document).ready(function() {
     //This is similar to the function above.
     function calculatevataxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
-	var rowqty = parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2);
-	var rowprice = parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
-	var rowdiscount = parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-	var rowtaxrate = parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val()).toFixed(2);
+	var rowqty = parseFloat($('.salesorder_product_quantity_vat:eq(' + curindex + ')').val()).toFixed(2);
+	var rowprice = parseFloat($('.salesorder_product_per_price_vat:eq(' + curindex + ')').val()).toFixed(2);
+	var rowdiscount = parseFloat($('.salesorder_product_discount_vat:eq(' + curindex + ')').val()).toFixed(2);
+	var rowtaxrate = parseFloat($('.salesorder_product_tax_rate_vat:eq(' + curindex + ')').val()).toFixed(2);
 	var taxamount = 0.00;
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	var rowtotal = 0.00;
@@ -146,11 +146,11 @@ $(document).ready(function() {
 	var totaltax = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-	$('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
+	$('.salesorder_product_taxablevalue_vat:eq(' + curindex + ')').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
-	 $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(taxamount).toFixed(2));
+	 $('.salesorder_product_tax_amount_vat:eq(' + curindex + ')').val(parseFloat(taxamount).toFixed(2));
 	 rowtotal = rowtaxableamount + taxamount;
-	 $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(rowtotal).toFixed(2));
+	 $('.salesorder_product_total_vat:eq(' + curindex + ')').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat(rowdiscount);
@@ -821,24 +821,12 @@ $(document).ready(function() {
 	var curindex = $(this).closest('tbody tr').index();
     var destinationstate = "";
       var sourcestate = "";
-      if ($("#status").val() == 9) {
-	  destinationstate = $("#salesorderstate option:selected").val();
-	  sourcestate = $("#salesorder_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      sourcestate = $("#consigneestate option:selected").val();
-	  }
-      }
-      else if ($("#status").val() ==  15) {
 	  sourcestate = $("#salesorderstate option:selected").val();
 	  destinationstate = $("#salesorder_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
-      }
 	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
 	    $.ajax({
-        url: '/salesorder?action=getappliedtax',
+        url: '/invoice?action=getappliedtax',
         type: 'POST',
         dataType: 'json',
         async: false,
@@ -850,10 +838,10 @@ $(document).ready(function() {
        .done(function(resp) {
          if (resp["gkstatus"] == 0) {
 	     if ('VAT' in resp['tax']) {
-		 $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
+		 $('.salesorder_prduct_tax_rate_vat:eq(' + curindex + ')').val(parseFloat(resp['tax']['VAT']).toFixed(2));
 	     }
 	     else if ('CVAT' in resp['tax']) {
-                 $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
+                 $('.salesorder_prduct_tax_rate_vat:eq(' + curindex + ')').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
              }
          }
 	  else if (resp["gkstatus"] == 1) {
@@ -870,7 +858,7 @@ $(document).ready(function() {
          console.log("complete");
        });
     $.ajax({
-      url: '/salesorder?action=getproduct',
+      url: '/invoice?action=getproduct',
       type: 'POST',
       dataType: 'json',
       async: false,
@@ -882,8 +870,8 @@ $(document).ready(function() {
      .done(function(resp) {
        console.log("success");
        if (resp["gkstatus"] == 0) {
-           $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
-           $('#salesorder_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+           $('.unitaddon_quantity_vat:eq(' + curindex + ')').text(resp["unitname"]);
+           $('.unitaddon_freequanity_vat:eq(' + curindex + ')').text(resp["unitname"]);
        }
 
      })
@@ -1413,30 +1401,17 @@ $(document).ready(function() {
 	var destinationstate = "";
 	var sourcestate = "";
 
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
-        $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
-        $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
-	$('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(0).toFixed(2));
-	
-      if ($("#status").val() == 9) {
-	  destinationstate = $("#salesorderstate option:selected").val();
-	  sourcestate = $("#salesorder_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
-	  }
-      }
-      else if ($("#status").val() ==  15) {
+	$('.salesorder_product_sgstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
+        $('.salesorder_product_cgstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
+        $('.salesorder_product_igstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
+	$('.salesorder_product_cessrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
 	  sourcestate = $("#salesorderstate option:selected").val();
 	  destinationstate = $("#salesorder_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
-      }
     var taxflag=$("#taxapplicable").val();
 
     if (productcode != "") {
 	$.ajax({
-            url: '/salesorder?action=getappliedtax',
+            url: '/invoice?action=getappliedtax',
             type: 'POST',
             dataType: 'json',
             async: false,
@@ -1449,22 +1424,22 @@ $(document).ready(function() {
                if (resp["gkstatus"] == 0) {
 		   //Loads SGST rate.
 		   if('SGST' in resp['tax']){
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(resp['tax']['SGST']).toFixed(2));
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(0).toFixed(2));
+		       $('.salesorder_product_sgstrate:eq(' + curindex + ')').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('.salesorder_product_cgstrate:eq(' + curindex + ')').val(parseFloat(resp['tax']['SGST']).toFixed(2));
+		       $('.salesorder_product_igstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
 		       //Loads CESS rate if avaliable.
 		       if ('CESS' in resp['tax']) {
-			   $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+			   $('.salesorder_product_cesstrate:eq(' + curindex + ')').val(parseFloat(resp['tax']['CESS']).toFixed(2));
 		       }
 		   }
 		   //Loads IGST rate.
 		   else if('IGST' in resp['tax']){
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(11) input').val(parseFloat(resp['tax']['IGST']).toFixed(2));
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(0).toFixed(2));
-		       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(9) input').val(parseFloat(0).toFixed(2));
+		       $('.salesorder_product_igstrate:eq(' + curindex + ')').val(parseFloat(resp['tax']['IGST']).toFixed(2));
+		       $('.salesorder_product_sgstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
+		       $('.salesorder_product_cgstrate:eq(' + curindex + ')').val(parseFloat(0).toFixed(2));
 		       //Loads CESS rate.
 		       if ('CESS' in resp['tax']) {
-			   $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(resp['tax']['CESS']).toFixed(2));
+			   $('.salesorder_product_cesstrate:eq(' + curindex + ')').val(parseFloat(resp['tax']['CESS']).toFixed(2));
 		       }
 		   }
 	       }
@@ -1482,7 +1457,7 @@ $(document).ready(function() {
              console.log("complete");
            });
     $.ajax({
-      url: '/salesorder?action=getproduct',
+      url: '/invoice?action=getproduct',
       type: 'POST',
       dataType: 'json',
       async: false,
@@ -1495,19 +1470,19 @@ $(document).ready(function() {
        console.log("success");
        if (resp["gkstatus"] == 0) {
 
-         $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .salesorder_product_hsncode').text(resp["gscode"]);
+         $('.salesorder_product_hsncode:eq(' + curindex + ')').text(resp["gscode"]);
          if (resp["gsflag"]==7){
-           $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
-             $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text(resp["unitname"]);
-	     $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", false);
-               $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
+           $('.unitaddon_quantity_gst:eq(' + curindex + ')').text(resp["unitname"]);
+             $('.unitaddon_freequantity_gst:eq(' + curindex + ')').text(resp["unitname"]);
+	     $('.salesorder_product_quantity_gst:eq(' + curindex + ')').prop("disabled", false);
+               $('.salesorder_product_freequantity_gst:eq(' + curindex + ')').prop("disabled", false);
 
          }
 	   else {
-	       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true).val("0.00");
-               $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true).val("0.00");
-	       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
-	       $('#salesorder_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
+	       $('.unitaddon_quantity_gst:eq(' + curindex + ')').text("");
+             $('.unitaddon_freequantity_gst:eq(' + curindex + ')').text("");
+	       $('.salesorder_product_quantity_gst:eq(' + curindex + ')').prop("disabled", true).val(0.00);
+               $('.salesorder_product_freequantity_gst:eq(' + curindex + ')').prop("disabled", true).val(0.00);
 	   }
 
 

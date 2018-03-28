@@ -86,10 +86,11 @@ def showaddpurchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"status":True,"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"], "states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
+    return {"status":True,"suppliers": suppliers.json()["gkresult"],"products": products.json()["gkresult"], "productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"], "states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
 
 
 
@@ -98,10 +99,11 @@ def showaddsalesorder(request):
     header={"gktoken":request.headers["gktoken"]}
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"status":True,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
+    return {"status":True,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"],"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="purchaseorder",request_param="action=save",renderer="json")
 def savepurchaseorder(request):
@@ -121,17 +123,3 @@ def getuser(request):
 	usern = requests.get("http://127.0.0.1:6543/users?user=single", headers=header)
 	username = usern.json()["gkresult"]["username"]
 	return {"status":True,"username":username}
-
-@view_config(route_name="purchaseorder",request_param="action=getproduct",renderer="json")
-def getproduct(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
-    unit = result.json()["gkresult"]
-    return {"gkstatus": result.json()["gkstatus"],"unitname":unit["unitname"]}
-
-
-@view_config(route_name="purchaseorder",request_param="action=getproducts",renderer="json")
-def getproducts(request):
-    header={"gktoken":request.headers["gktoken"]}
-    products = requests.get("http://127.0.0.1:6543/products", headers=header)
-    return {"gkstatus": products.json()["gkstatus"],"products": products.json()["gkresult"]}
