@@ -33,7 +33,6 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-from odslib import ODS
 from pyramid.response import Response
 import os
 import calendar
@@ -102,11 +101,8 @@ def printtrialbalance(request):
         elif trialbalancetype == 3:
             result = requests.get("http://127.0.0.1:6543/report?type=extendedtrialbalance&calculateto=%s&financialstart=%s"%(calculateto,financialstart), headers=header)
         records = result.json()["gkresult"]
-        # A workbook is opened.
         trialbalancewb = openpyxl.Workbook()
-        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = trialbalancewb.active
-        # Title of the sheet self.assertNotIn(member, container)d width of columns are set.
         sheet.title = "Trial Balance of %s" %(str(orgname))
         # Condition for Net Trial Balance
         if trialbalancetype == 1:
