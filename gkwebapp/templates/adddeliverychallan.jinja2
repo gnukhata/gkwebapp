@@ -196,7 +196,7 @@
 		      {% endif %}
 		    </option>
 		    {% for supplier in suppliers %}
-		      <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+		      <option value="{{supplier['custid']}}" name="{{supplier["custname"]}}">{{supplier["custname"]}}</option>
 		    {% endfor %}
 		  </select>
 		</div>
@@ -239,6 +239,11 @@
 		    {% endif %}
 		  </label>
 		  <label class="col-sm-8 nopadding" id="deliverychallan_customeraddr"></label>
+		</div>
+		<div class="form-group form-inline">
+		  <div class="col-sm-12">
+		    <input name="samedetails" type="checkbox" id="samedetails"><label>Click if Customer/Supplier Details are same for Details Of Consignee.</label>
+		  </div>
 		</div>
 	      </div>
 

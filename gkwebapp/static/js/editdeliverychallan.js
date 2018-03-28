@@ -225,6 +225,7 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
+	//If selected delivery note have godown then only it display.
 	if(resp.delchaldata.delchaldata.goname){
 	    $('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
 	}

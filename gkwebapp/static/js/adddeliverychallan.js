@@ -400,6 +400,15 @@ $(document).ready(function() {
     }
   });
 
+    //CheckBox
+    $("#samedetails").click(function(event){
+	$("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
+	$("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
+	$("#statecodeofconsignee").val($("#statecodeofcustomer").val());
+	console.log($("#deliverychallan_customeraddr").val());
+	$("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").val());
+    });
+
     //Change Event For 'State'.
     //invoice_customerstate
     $("#invoicestate").change(function(event) {
