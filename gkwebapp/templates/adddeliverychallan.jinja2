@@ -240,11 +240,13 @@
 		  </label>
 		  <label class="col-sm-8 nopadding" id="deliverychallan_customeraddr"></label>
 		</div>
-		<div class="form-group form-inline">
-		  <div class="col-sm-12">
-		    <input name="samedetails" type="checkbox" id="samedetails"><label>Click if Customer/Supplier Details are same for Details Of Consignee.</label>
+		{% if gkstatus == "out" %}
+		  <div class="form-group form-inline">
+		    <div class="col-sm-12">
+		      <input name="consigneedetails" type="checkbox" id="consigneedetails">&nbsp &nbsp<label>Click if Billing Details same as a Shipping Details.</label>
+		    </div>
 		  </div>
-		</div>
+		{% endif %}
 	      </div>
 
 	      <!-- Details Of Consignee -->

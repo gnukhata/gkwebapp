@@ -57,6 +57,7 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
 
+    var vatorgstflag = sessionStorage.vatorgstflag;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
 	$(".tinfield").show();
@@ -400,13 +401,41 @@ $(document).ready(function() {
     }
   });
 
-    //CheckBox
-    $("#samedetails").click(function(event){
-	$("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
-	$("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
-	$("#statecodeofconsignee").val($("#statecodeofcustomer").val());
-	console.log($("#deliverychallan_customeraddr").val());
-	$("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").val());
+    /*If Billing Details same as Shipping Details then autopopulate them in Shipping Details.*/
+    $("#consigneedetails").change(function(){
+	console.log(vatorgstflag);
+	if($(this).prop('checked') == true){
+	    $("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
+	    $("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
+	    $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	    $("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").text());
+	    if(invoicedate >= gstdate){
+		$("#gstinconsignee").val($("#gstin").text());
+	    }else{
+		$("#tinconsignee").val($("#tin").text());
+	    }
+	}
+	else{
+	    $("#consigneename").val("");
+	    $("#consigneestate").val("");
+	    $("#statecodeofconsignee").text("");
+	    $("#deliverychallan_consigneeaddr").val("");
+	    if(vatorgstflag == 7){
+		$("#gstinconsignee").val("");
+	    }else{
+		$("#tinconsignee").val("");
+	    }
+	}
+    });
+
+    //Keydown event for 'Consignee Details'.
+    $("#consigneedetails").keydown(function(event) {
+	if (event.which == 13) {
+	    $("#consigneename").focus();
+	}
+	if(event.which == 38){
+	    $("#deliverychallan_customerstate").focus();
+	}
     });
 
     //Change Event For 'State'.
@@ -449,7 +478,7 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
-
+	
     });
     $("#invoicestate").change();
 
@@ -502,8 +531,12 @@ $(document).ready(function() {
 	$('#consigneestate').focus();
     }
     if (event.which==38) {
-      event.preventDefault();
-      $("#deliverychallan_customerstate").focus().select();
+	event.preventDefault();
+	if ($("#consigneedetails").is(":visible")){
+	    $("#consigneedetails").focus();
+	}else{
+	$("#deliverychallan_customerstate").focus().select();
+	}
     }
   });
   $("#consigneestate").keydown(function(event) {
@@ -762,7 +795,11 @@ $(document).ready(function() {
     //Keydown for customer and supplier state.
     $("#deliverychallan_customerstate").keydown(function(event) {
 	if (event.which == 13) {
-	    $("#consigneename").focus();
+	    if ($("#consigneedetails").is(":visible")){
+		$("#consigneedetails").focus();
+	    }else{
+		$("#consigneename").focus();
+	    }
 	}
 	if(event.which == 38){
 	    if ($("#deliverychallan_customerstate option:visible").first().is(":selected") || $("#deliverychallan_customerstate option:first").is(":selected")) {

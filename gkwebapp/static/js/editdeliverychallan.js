@@ -207,15 +207,16 @@ $(document).ready(function() {
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
 		$("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
 		$("#deliverychallan_customerstate").text(resp.delchaldata.destinationstate);
+		$("#statecodeofcustomer").text(resp.delchaldata.taxstatecode);
 	}
 	    else {
 		$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
+		$("#statecodeofcustomer").text(resp.delchaldata.sourcestatecode);
 	    $("#invoicestate").text(resp.delchaldata.destinationstate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
-	$("#statecodeofcustomer").text(resp.delchaldata.custSupDetails.custsupstatecode);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
 	}else{
@@ -225,7 +226,7 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
-	//If selected delivery note have godown then only it display.
+	//If selected delivery note have godown then display the godown.
 	if(resp.delchaldata.delchaldata.goname){
 	    $('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
 	}
