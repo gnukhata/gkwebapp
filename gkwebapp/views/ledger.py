@@ -151,107 +151,51 @@ def printmonthlyledgerreport(request):
 
 @view_config(route_name="printledgerreport", renderer="")
 def printLedgerReport(request):
-    accountcode = int(request.params["accountcode"])
-    calculatefrom = request.params["calculatefrom"]
-    calculateto = request.params["calculateto"]
-    fystart = request.params["fystart"]
-    fyend = request.params["fyend"]
-    orgname = str(request.params["orgname"])
-    orgtype = str(request.params["orgtype"])
-    projectcode = request.params["projectcode"]
-    header={"gktoken":request.headers["gktoken"]}
-    if projectcode=="":
-        result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,fystart), headers=header)
-    else:
-        result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,fystart, int(projectcode)), headers=header)
-    headerrow = result.json()["ledgerheader"]
-    result = result.json()["gkresult"]
-
-    calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
-    calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
-    fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
-
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.getRow(0).setHeight("23pt")
-    sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,7,1)
-    sheet.getRow(1).setHeight("18pt")
-    sheet.getCell(0,1).stringValue("Account: "+headerrow["accountname"] +" (Period: "+calculatefrom+" to "+calculateto+")").setBold(True).setAlignHorizontal("center").setFontSize("14pt")
-    ods.content.mergeCells(0,1,7,1)
-    row = 2
-    if headerrow["projectname"]!="":
-        if orgtype == "Profit Making":
-            sheet.getRow(row).setHeight("16pt")
-            sheet.getCell(0,row).stringValue("Cost Center: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
-            ods.content.mergeCells(0,row,8,1)
-            row += 1
-        else :
-            sheet.getRow(row).setHeight("16pt")
-            sheet.getCell(0,row).stringValue("Project: "+headerrow["projectname"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
-            ods.content.mergeCells(0,row,8,1)
-            row += 1
-    sheet.getColumn(0).setWidth("2cm")
-    sheet.getColumn(1).setWidth("1cm")
-    sheet.getColumn(2).setWidth("3cm")
-    sheet.getColumn(3).setWidth("8cm")
-    sheet.getColumn(4).setWidth("3cm")
-    sheet.getColumn(5).setWidth("3cm")
-    sheet.getColumn(6).setWidth("3cm")
-    sheet.getCell(0,row).stringValue("Date").setBold(True)
-    sheet.getCell(1,row).stringValue("V.No.").setBold(True)
-    sheet.getCell(2,row).stringValue("Voucher Type").setBold(True)
-    sheet.getCell(3,row).stringValue("Particulars").setBold(True)
-    sheet.getCell(4,row).stringValue("Debit").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(5,row).stringValue("Credit").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(6,row).stringValue("Balance").setBold(True).setAlignHorizontal("right")
-    for transaction in result:
-        row += 1
-        sheet.getCell(0,row).stringValue(transaction["voucherdate"])
-        sheet.getCell(1,row).stringValue(transaction["vouchernumber"])
-        if transaction["advflag"]==1:
-            sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
-            sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right").setBold(True).setFontColor("#ff0000")
+    #try:
+        accountcode = int(request.params["accountcode"])
+        calculatefrom = request.params["calculatefrom"]
+        calculateto = request.params["calculateto"]
+        fystart = request.params["fystart"]
+        fyend = request.params["fyend"]
+        orgname = str(request.params["orgname"])
+        orgtype = str(request.params["orgtype"])
+        projectcode = request.params["projectcode"]
+        header={"gktoken":request.headers["gktoken"]}
+        if projectcode=="":
+            result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode="%(accountcode,calculatefrom,calculateto,fystart), headers=header)
         else:
-            sheet.getCell(4,row).stringValue(transaction["Dr"]).setAlignHorizontal("right")
-            sheet.getCell(5,row).stringValue(transaction["Cr"]).setAlignHorizontal("right")
-
-        sheet.getCell(6,row).stringValue(transaction["balance"]).setAlignHorizontal("right")
-
-        if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
-            sheet.getCell(2,row).stringValue(transaction["vouchertype"].title())
-        elif transaction["vouchertype"]=="debitnote":
-            sheet.getCell(2,row).stringValue("Debit Note")
-        elif transaction["vouchertype"]=="creditnote":
-            sheet.getCell(2,row).stringValue("Credit Note")
-        elif transaction["vouchertype"]=="salesreturn":
-            sheet.getCell(2,row).stringValue("Sale Return")
-        elif transaction["vouchertype"]=="purchasereturn":
-            sheet.getCell(2,row).stringValue("Purchase Return")
-        else:
-            sheet.getCell(2,row).stringValue(transaction["vouchertype"])
-        particulars=""
-        length = len(transaction["particulars"])
-        for i,k in enumerate(transaction['particulars']):
-            if k.has_key('amount'):
-                sheet.getCell(3,row).stringValue(k['accountname']+' ('+k['amount']+')')
-            else:
-                sheet.getCell(3,row).stringValue(k['accountname'])
-            if(i<length-1):
-                row += 1
-        narration = transaction["narration"]
-        if narration!="":
-            row += 1
-            sheet.getCell(3,row).stringValue("("+narration+")").setItalic(True).setFontSize("8.5pt").setAlignVertical("center")
-
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
-
+            result = requests.get("http://127.0.0.1:6543/report?type=ledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=%d"%(accountcode,calculatefrom,calculateto,fystart, int(projectcode)), headers=header)
+        headrerrow = result.json()["ledgerheader"]
+        result = result.json()["gkresult"]
+        ledgerwb = openpyxl.Workbook()
+        sheet = ledgerwb.active
+        sheet.column_dimensions['A'].width = 10
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 26
+        sheet.column_dimensions['E'].width = 16
+        sheet.column_dimensions['F'].width = 16
+        sheet.column_dimensions['G'].width = 16
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:G2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + datetime.strptime(request.params["fystart"],'%Y-%m-%d').strftime('%d-%m-%Y') + ' to ' + fyend +')'
+        sheet.merge_cells('A3:G3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'Account : %s (Period : %s to %s)'%(str(headerrow["accountname"]),datetime.strptime(request.params["calculatefrom"],'%Y-%m-%d').strftime('%d-%m-%Y') , datetime.strptime(request.params["calculateto"],'%Y-%m-%d').strftime('%d-%m-%Y'))
+        ledgerwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    #except:
+        print "File not found"
 
 @view_config(route_name="showviewledger", renderer="gkwebapp:templates/viewledger.jinja2")
 def showviewledger(request):
