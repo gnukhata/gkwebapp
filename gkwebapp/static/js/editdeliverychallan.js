@@ -144,6 +144,7 @@ $(document).ready(function() {
 	    $("#invoice_product_table_vat").hide();
 	    $(".gstinfield").show();
 	    $(".tinfield").hide();
+	    $(".vatfield").hide();
 	    if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
 		$(".igstfield").hide();
 		$(".igstfield").css('border','');
@@ -224,7 +225,9 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
-	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
+	if(resp.delchaldata.delchaldata.goname){
+	    $('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
+	}
 	$('#deliverychallan_edit_consignment').text(typeoftrans);
 	if(resp.delchaldata.delchaldata.consignee) {
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
