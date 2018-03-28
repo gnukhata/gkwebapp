@@ -57,12 +57,21 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false}); //Prevents negative values in the field.
   //Key events for transfer note. Focus moves forward on pressing 'Enter' key and backward on 'Up' arrow.
-  $("#transfernote_no").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_date").focus().select();
-    }
-  });
+    $("#transfernote_no").keydown(function(event) {
+      if (event.which==13 || event.which==9) {
+
+	    if ($.trim($('#transfernote_no').val())=="") {
+		$("#tnno-blank-alert").alert();
+		$("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tnno-blank-alert").hide();
+		});
+		$('#transfernote_no').focus();
+		return false;
+	    }
+	  event.preventDefault();
+	  $("#tn_date").focus().select();
+      }
+    });
 
     //If No godowns to select then alert message will display.
     var fromgod =$("#tn_from_godown option").length;
@@ -78,8 +87,17 @@ $(document).ready(function() {
     
 
   $("#tn_date").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+      if (event.which==13) {
+	  event.preventDefault();
+	   if ($.trim($('#tn_date').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#tn_date').focus();
+      return false;
+    }
+     
       $("#tn_month").focus().select();
     }
     if (event.which==38) {
@@ -89,39 +107,75 @@ $(document).ready(function() {
   });
 
   $("#tn_month").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_year").focus().select();
-    }
+      if (event.which==13) {
+	  event.preventDefault();
+	   if ($.trim($('#tn_month').val())=="") {
+	       $("#date-blank-alert").alert();
+	       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#date-blank-alert").hide();
+	       });
+	       $('#tn_month').focus();
+	       return false;
+	   } else {
+	       $("#tn_year").focus().select();
+	   }
+      }
     if (event.which==38) {
       event.preventDefault();
       $("#tn_date").focus().select();
     }
   });
-  $("#tn_year").keydown(function(event) {
-    if (event.which==13) {
-	event.preventDefault();
-	if(fromgod==1 && togod==1){
-	    $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+    
+    $("#tn_year").keydown(function(event) {
+	if (event.which==13 || event.which==9){
+	    event.preventDefault();
+	    if ($.trim($('#tn_year').val())=="") {
+		$("#date-blank-alert").alert();
+		$("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#date-blank-alert").hide();
+	      });
+		$('#tn_year').focus();
+		return false;
+	    }
+
+	    if(($.trim($('#tn_date').val())=="") ||($.trim($('#tn_month').val())=="") || ($.trim($('#tn_year').val())==""))
+	    {
+		$("#date-blank-alert").alert();
+		$("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#date-blank-alert").hide();
+		});
+		$('#tn_date').focus();
+		return false;
+	    }
+	    if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy") && !Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyy")){
+		$("#date-alert").alert();
+		$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#date-alert").hide();
+		});
+		$('#tn_date').focus().select();
+		return false;
+	    } 
+	    if(fromgod==1 && togod==1){
+		$('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+	    }
+	    $("#tn_from_godown").focus().select();
 	}
-	$("#tn_from_godown").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#tn_month").focus().select();
-    }
+      if (event.which==38) {
+	  event.preventDefault();
+	  $("#tn_month").focus().select();
+      }
   });
 
-  $("#transport_mode").keydown(function(event) {
-    if (event.which==13) {
+    $("#transport_mode").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#name_issuer").focus().select();
+	}
+	if (event.which==38) {
       event.preventDefault();
-      $("#name_issuer").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#no_of_packet").focus().select();
-    }
-  });
+	    $("#no_of_packet").focus().select();
+	}
+    });
 
   $("#tn_from_godown").keydown(function(event) {
     if (event.which==13) {
