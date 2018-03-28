@@ -41,6 +41,49 @@
      width: calc( 100% - 0.75em );
  }
 
+ #salesorder_product_table_gst tbody tr {
+     display:table;
+     width:100%;
+     table-layout:fixed;
+ }
+ #salesorder_product_table_gst tbody {
+     display:block;
+     width:100%;
+     height: calc(100vh - 31em);
+ }
+ #salesorder_product_table_gst_heading thead {
+     display:table;
+     width: calc( 100% - 0.75em );
+     table-layout:fixed;
+ }
+ #salesorder_product_table_gst_tfoot tfoot {
+     display:block;
+     width: calc( 100% - 0.75em );
+ }
+ #salesorder_product_table_total tbody {
+     display:block;
+     height: calc(100vh - 31em);
+     overflow-y:scroll;
+ }
+ #salesorder_product_table_total tbody tr {
+     display:table;
+     width:100%;
+     table-layout:fixed;
+ }
+ #salesorder_product_table_total tfoot {
+     display:block;
+     width:calc( 100% - 0.75em );
+ }
+ #salesorder_product_table_vat tbody {
+     display:block;
+     height: calc(100vh - 31em);
+     overflow-y:scroll;
+ }
+ #salesorder_product_table_vat tfoot {
+     display:table;
+     width: calc( 100% - 0.75em );
+ }
+
  .nopadding{
      padidng:0 !important;
      padding:0 !important;
@@ -73,19 +116,19 @@
      width:6%
  }
  .totalwrap {
-     width:46%;
+     width:56%;
  }
  .mdvwrap{
-     width:19.5%;
+     width:20%;
  }
  .smvwrap{
-     width:9.75%;
+     width:9%;
  }
  .ratewrap {
-     width: 6.75%;
+     width: 8%;
  }
  .qtyvwrap {
-     width: 11.25%;
+     width: 9%;
  }
  .unitaddon {
      overflow:hidden;
@@ -112,7 +155,7 @@
      min-width: 100% !important;
      width: 100% !important;
  }
- #purchaseorder_customer, #purchaseorder_deliverynote {
+ #purchaseorder_customer, #togodown {
      max-width: 180px !important;
  }
  .borderdiv {
