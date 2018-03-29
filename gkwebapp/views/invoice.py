@@ -35,7 +35,9 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from PIL import Image
+import base64
 import cStringIO
+from odslib import ODS
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
@@ -312,9 +314,7 @@ def listofinvspreadsheet(request):
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"])
         invflag = int(request.params["flag"])
-        # A workbook is opened.
         invoicewb = openpyxl.Workbook()
-        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = invoicewb.active
         sheet.column_dimensions['A'].width = 8
         sheet.column_dimensions['B'].width = 12
@@ -327,7 +327,6 @@ def listofinvspreadsheet(request):
         sheet.column_dimensions['I'].width = 10
         sheet.column_dimensions['J'].width = 10
         sheet.column_dimensions['K'].width = 16
-        # Cells of first two rows are merged to display organisation details properly.
         sheet.merge_cells('A1:K2')
         # Name and Financial Year of organisation is fetched to be displayed on the first row.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
@@ -358,7 +357,7 @@ def listofinvspreadsheet(request):
         sheet['D5'] = 'DC No. '
         sheet['E5'] = 'DC Date'
         if invflag == 0:
-            sheet['F5'] = 'Cust/Suppl Name'
+            sheet['F5'] = 'Cust/Supp Name'
         elif invflag == 1:
             sheet['F5'] = 'Customer Name'
         elif invflag == 2:
