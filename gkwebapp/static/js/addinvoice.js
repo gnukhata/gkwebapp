@@ -410,19 +410,7 @@ $(document).ready(function() {
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
-	    } else {
-		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -431,7 +419,7 @@ $(document).ready(function() {
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
 		}
-	    }
+	    
 	}	
 	$(".product_name_vat, .product_name_gst").change();
 	
