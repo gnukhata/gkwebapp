@@ -148,11 +148,19 @@
 		<h4>{% trans %}Details of Receiver | Bill to{% endtrans %} :</h4>
 		<div class="form-group form-inline">
 		  <label class="col-sm-4 fsize" for="salesorder_customer">
-		    {% trans %}Customer{% endtrans %} :
+		    {% if status|int == 16 %}
+		      {% trans %}Supplier{% endtrans %} :
+		    {% else %}
+		      {% trans %}Customer{% endtrans %} :
+		    {% endif %}
 		  </label>
 		  <select class="form-control input-sm col-sm-8 fsize" id="salesorder_customer" accesskey="">
 		    <option value="" disabled hidden selected>
-		      {% trans %}Select Customer{% endtrans %}
+		      {% if status|int == 16 %}
+			{% trans %}Select Supplier{% endtrans %} :
+		      {% else %}
+			{% trans %}Select Customer{% endtrans %} :
+		      {% endif %}
 		    </option>
 		    {% for customer in customers %}
 		      <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
@@ -161,7 +169,11 @@
 		</div>
 		<div class="form-group form-inline">
 		  <label for="salesorder_customerstate" class="col-sm-4 fsize">
-		    {% trans %}Customer State{% endtrans %}:
+		    {% if status|int == 16 %}
+		      {% trans %}Supplier State{% endtrans %} :
+		    {% else %}
+		      {% trans %}Customer State{% endtrans %} :
+		    {% endif %}
 		  </label>
 		  <select id="salesorder_customerstate" class="form-control input-sm col-sm-8">
 		    {% for state in states %}
