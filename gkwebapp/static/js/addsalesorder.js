@@ -192,6 +192,14 @@ $(document).ready(function() {
     $("#salesorder_challanno").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+	    if ($("#salesorder_challanno").val() == "") {
+		$("#challanno-blank-alert").alert();
+		$("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#challanno-blank-alert").hide();
+		});
+		$('#salesorder_challanno').focus();
+		return false;
+	    }
 	    $("#salesorder_date").focus().select();  //Focus shifts to Salesorder Date when Enter key is pressed down.
 	}
 	if (event.which == 38) {
@@ -328,27 +336,14 @@ $(document).ready(function() {
 	$("#orggstin").text("");
 	$("#statecodeforsalesorder").text($("#salesorderstate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#salesorderstate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+	    if ($("#salesorder_customerstate option:selected").val() == $("#salesorderstate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".igstfield").css('border','');
+		$(".sgstfield").show();
 	    } else {
-		if ($("#salesorder_customerstate option:selected").val() == $("#salesorderstate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		} else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+		$(".sgstfield").hide();
+		$(".sgstfield").css('border','');
+		$(".igstfield").show();
 	    }
 	}	
 	$(".product_name_vat, .product_name_gst").change();
@@ -357,6 +352,7 @@ $(document).ready(function() {
 	//ajax for autopopulating address for selected state.
 	var invstate = $("#salesorderstate option:selected").val();
 	var invstateid=$("#salesorderstate option:selected").attr("stateid");//statecode
+	if($("#status").val() == 16){
 	$.ajax({
 	    url: '/existingorg?type=getaddress',
                     type: 'POST',
@@ -382,7 +378,7 @@ $(document).ready(function() {
             .always(function() {
                 console.log("complete");
             });
-
+	}
 	//ajax for autopopulating gstin for selected state.
 	var gstinstateid=$("#salesorderstate option:selected").attr("stateid");
 	 $.ajax({
@@ -416,29 +412,14 @@ $(document).ready(function() {
     $("#salesorderstate").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#status").val()  == 15) {
+	    if ($("#status").val()  == 16) {
 		if($("#originaddress").is(":disabled")){
 		    $("#salesorder_issuer_name").focus().select();
 		}
 		$("#originaddress").focus().select();
 	    }
 	    else {
-		if ($("#salesorder_customer").is(":disabled")) {
-		    if($("#consigneename").is(":disabled")) {
-			if(sessionStorage.vatorgstflag == '22' ){
-			    $("#tinconsignee").focus();
-			}
-			else {
-			    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
-			}
-		    }
-		    else{
-			$("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
-		    }
-		}
-		else {
-		    $("#salesorder_customer").focus();  //Focus shifts to Customer.
-		}
+		$("#payterms").focus();
 	    }
 	}
 	else if (event.which == 38) {
@@ -459,19 +440,63 @@ $(document).ready(function() {
 		$("#originaddress").focus();
 		return false;
 	    }
-	    $("#salesorder_issuer_name").focus().select();
+	    $("#payterms").focus().select();
 	}
 	else if(event.which ==38){
 	    $("#salesorderstate").focus();
 	}
     });
-    
-    
+    $("#payterms").keydown(function(event){
+	if(event.which ==13){
+	    event.preventDefault();
+	    $("#creditperiod").focus().select();
+	}
+	else if(event.which ==38){
+	    if ($("#status").val() == 16) {
+		$("#originaddress").focus().select();
+	    }
+	    else{
+		$("#salesorderstate").focus().select();
+	    }
+	}
+    });
+    $("#creditperiod").keydown(function(event){
+	if(event.which ==13){
+	    event.preventDefault();
+	    $("#togodown").focus();
+	}
+	else if(event.which ==38){
+	    $("#payterms").focus();
+	}
+    });
+    $("#togodown").keydown(function(event){
+	if(event.which ==13){
+	    event.preventDefault();
+	    if ($("#status").val() == 16) {
+		$("#purchaseorder_issuer_name").focus().select();
+	    }
+	    else {
+		$("#salesorder_customer").focus();
+	    }
+	}
+	else if(event.which ==38){
+	    if ($("#togodown option:selected").val() == 0) {
+		$("#creditperiod").focus().select();
+	    }
+	}
+    });
     //Key Events for Issuer Name.
-    $("#salesorder_issuer_name").keydown(function(event) {
+    $("#purchaseorder_issuer_name").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#salesorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+	    if ($("#purchaseorder_issuer_name").val() == "") {
+		$("#issuer-blank-alert").alert();
+	      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#issuer-blank-alert").hide();
+	      });
+	      return false;
+	    }
+	    $("#purchaseorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
 	    if($("#originaddress").is(":disabled")){
@@ -482,24 +507,17 @@ $(document).ready(function() {
     });
 
     //Key Events for Designation of Issuer.
-    $("#salesorder_issuer_designation").keydown(function(event){
+    $("#purchaseorder_issuer_designation").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#salesorder_customer").is(":disabled")) {
-		if($("#consigneename").is(":disabled")){
-		    if ($("#taxapplicable").val() == 22) {
-			$("#tinconsignee").focus();
-		    } else {
-			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
-		    }
-		}
-		else {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
-		}
+	    if ($("#purchaseorder_issuer_designation").val() == "") {
+		$("#issuer-blank-alert").alert();
+	      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#issuer-blank-alert").hide();
+	      });
+	      return false;
 	    }
-	    else {
-		$("#salesorder_customer").focus();  //Focus shifts to Customer.
-	    }
+	    $("#salesorder_customer").focus();  //Focus shifts to Customer.
 	}
 	else if (event.which == 38) {
 	    $("#salesorder_issuer_name").focus().select();  //Focus shifts to Issuer Name
@@ -2433,9 +2451,7 @@ if (event.which == 13) {
 	  salesordertotal = $.trim($('#total_product_gst').html());
       }
       //For sales salesorder store address.
-      if($("#status").val() == 15){
-	  address = $("#originaddress").val();
-      }   
+      var address = $("#originaddress").val();
       var form_data = new FormData();
       form_data.append("csid", $("#salesorder_customer option:selected").val());
       if ($("#togodown option:selected").val() > 0) {

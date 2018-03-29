@@ -35,7 +35,7 @@
           </div>
           <div class="alert alert-danger" id="issuer-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label >{% trans %}Please enter issuer's name!{% endtrans %}</label>
+            <label >{% trans %}Please enter issuer's details!{% endtrans %}</label>
           </div>
           <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
@@ -62,8 +62,12 @@
           </div>
           <form class="form-horizontal" >
 	    <div class="col-md-12">
-		<div class="form-inline">
+	      <div class="form-inline">
+		{% if status|int == 19 %}
 		  {% trans %}<h4>Details of Sales Order: </h4>{% endtrans %}
+		{% else %}
+		  {% trans %}<h4>Details of Purchase Order: </h4>{% endtrans %}
+		{% endif %}
 		</div>
 	    </div>
 	    <div class="col-md-12">
@@ -92,10 +96,12 @@
 		  <label class="fsize col-sm-4" for="statecodeforsalesorder">{% trans %}State Code{% endtrans %} :</label>
 		  <label class="nopadding fsize col-sm-8" id="statecodeforsalesorder"></label>
 		</div>
-		<div class="form-group form-inline">
-		  <label for="originaddress" class="fsize col-md-4">{% trans %}Address :{% endtrans %}</label>
-		  <input type="text" id="originaddress" class="form-control input-sm col-sm-8" name="originaddress" size="30"></input>
-		</div>
+		{% if status|int == 16 %}
+		  <div class="form-group form-inline">
+		    <label for="originaddress" class="fsize col-md-4">{% trans %}Address :{% endtrans %}</label>
+		    <input type="text" id="originaddress" class="form-control input-sm col-sm-8" name="originaddress" size="30"></input>
+		  </div>
+		{% endif %}
 	      </div>
 	      <div class="col-md-6 borderdiv">
 		  {% if resultgstvat != '22' %}
@@ -122,9 +128,19 @@
 		      {% endfor %}
 		    </select>
 		  </div>
+		  {% if status|int == 16 %}
+		    <div class="form-group form-inline purchaseorder_issuer">
+		      <label class="col-sm-4 fsize" for="purchaseorder_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+		      <input class="form-control input-sm col-sm-8" id="purchaseorder_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}" accesskey="a" aria-label="{% trans %}Issuer's Name{% endtrans %}">
+		    </div>
+		    <div class="form-inline form-group purchaseorder_issuer">
+		      <label class="col-sm-4 fsize">{% trans %}Designation{% endtrans %} :</label>
+		      <input class="form-control input-sm col-sm-8" id="purchaseorder_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
+		    </div>
+		    {% endif %}
 	      </div>
 	    </div>
-	    <div class="col-md-12 hborderdiv">
+	    <div class="col-md-12 hborderdiv" style="margin-top:10px;">
 	      <div class="col-md-6 nopadding">
 		<h4>{% trans %}Details of Receiver | Bill to{% endtrans %} :</h4>
 		<div class="form-group form-inline">
@@ -218,7 +234,7 @@
 		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
 		{% endif %}
 	      </div>
-		<input type="hidden" id="status" value="19">
+		<input type="hidden" id="status" value="{{status}}">
 	    </div>
 	    <div class="col-md-12">
 	      <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
