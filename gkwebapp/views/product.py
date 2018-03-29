@@ -41,6 +41,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
 
+
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
 def showproducttab(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -537,158 +538,216 @@ def printablestockreport(request):
 
 @view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
 def stockreportspreadsheet(request):
-    header={"gktoken":request.headers["gktoken"]}
-    godownflag = int(request.params["godownflag"])
-    goid = int(request.params["goid"])
-    goname = request.params["goname"]
-    if godownflag==1:
-        goaddr = request.params["goaddr"]
-    productcode = int(request.params["productcode"])
-    calculatefrom = request.params["calculatefrom"]
-    calculateto = request.params["calculateto"]
-    scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
-    scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
-    productdesc = request.params["productdesc"]
-    if godownflag > 0:
-        result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&productcode=%d&startdate=%s&enddate=%s&goid=%d&godownflag=%d"%(productcode, scalculatefrom, scalculateto, goid, godownflag),headers=header)
-    else:
-        result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
-    result = result.json()["gkresult"]
-    fystart = str(request.params["fystart"]);
-    ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
-    fyend = str(request.params["fyend"]);
-    orgname = str(request.params["orgname"])
-    orgname += " (FY: " + ystart+" to "+fyend +")"
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.setSheetName("Product Report")
-    sheet.getRow(0).setHeight("23pt")
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        godownflag = int(request.params["godownflag"])
+        goid = int(request.params["goid"])
+        goname = request.params["goname"]
+        if godownflag==1:
+            goaddr = request.params["goaddr"]
+        productcode = int(request.params["productcode"])
+        calculatefrom = request.params["calculatefrom"]
+        calculateto = request.params["calculateto"]
+        scalculatefrom = datetime.strptime(calculatefrom, '%d-%m-%Y').strftime('%Y-%m-%d')
+        scalculateto = datetime.strptime(calculateto, '%d-%m-%Y').strftime('%Y-%m-%d')
+        productdesc = request.params["productdesc"]
+        if godownflag > 0:
+            result = requests.get("http://127.0.0.1:6543/report?type=godownstockreport&productcode=%d&startdate=%s&enddate=%s&goid=%d&godownflag=%d"%(productcode, scalculatefrom, scalculateto, goid, godownflag),headers=header)
+        else:
+            result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
+        result = result.json()["gkresult"]
+        fystart = str(request.params["fystart"]);
+        ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        # A workbook is opened.
+        prowb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = prowb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "Product Report"
+        sheet.column_dimensions['A'].width = 10
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 22
+        sheet.column_dimensions['D'].width = 18
+        sheet.column_dimensions['E'].width = 12
+        sheet.column_dimensions['F'].width = 12
+        sheet.column_dimensions['G'].width = 12
+        sheet.column_dimensions['H'].width = 12
+        sheet.column_dimensions['I'].width = 12
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:I2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        #sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:I3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet.merge_cells('A4:I4')
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        
+        if godownflag > 0:
+            sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+            sheet['A3'] = "Godown Wise Product Report  (Period : "+calculatefrom+" to "+calculateto+")"
+            sheet['A4'] = "Name of the Product: "+productdesc
+            sheet.merge_cells('A5:I5')
+            sheet['A5'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A5'].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['A5'] = "Name of the Godown : "+goname+", Godown Address: "+goaddr
+            sheet['A6'] = "Date"
+            sheet['B6'] = "Particulars"
+            sheet['C6'] = "Document Type"
+            sheet['D6'] = "Deli Note No."
+            sheet['E6'] = "INV No."
+            sheet['F6'] = "TN No."
+            sheet['G6'] = "Inward"
+            sheet['H6'] = "Outward"
+            sheet['I6'] = "Balance"
+            titlerow = sheet.row_dimensions[6]
+            titlerow.font = Font(name='Liberation Serif',size=12,bold=True)                          
 
-    if godownflag > 0:
-        sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-        ods.content.mergeCells(0,0,9,1)
-        sheet.getRow(1).setHeight("18pt")
-        sheet.getCell(0,1).stringValue("Godown Wise Product Report  (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-        ods.content.mergeCells(0,1,9,1)
-        sheet.getRow(2).setHeight("16pt")
-        sheet.getCell(0,2).stringValue("Name of the Product: "+productdesc).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-        ods.content.mergeCells(0,2,9,1)
-        sheet.getRow(3).setHeight("16pt")
-        sheet.getCell(0,3).stringValue("Name of the Godown : "+goname+", Godown Address: "+goaddr).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-        ods.content.mergeCells(0,3,9,1)
-        sheet.getColumn(1).setWidth("8cm")
-        sheet.getColumn(2).setWidth("4cm")
-        sheet.getColumn(3).setWidth("4cm")
-        sheet.getColumn(4).setWidth("2cm")
-        sheet.getCell(0,4).stringValue("Date").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(1,4).stringValue("Particulars").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(2,4).stringValue("Document Type").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(3,4).stringValue("Deli Note No.").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(4,4).stringValue("INV No.").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(5,4).stringValue("TN No.").setBold(True).setAlignHorizontal("center")
-        #sheet.getCell(6,4).stringValue("RN No.").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(6,4).stringValue("Inward").setBold(True).setAlignHorizontal("right")
-        sheet.getCell(7,4).stringValue("Outward").setBold(True).setAlignHorizontal("right")
-        sheet.getCell(8,4).stringValue("Balance").setBold(True).setAlignHorizontal("right")
-        row = 5
-        for stock in result:
-            if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
-                sheet.getCell(0, row).stringValue("")
-                sheet.getCell(1, row).stringValue(stock["particulars"].title())
-                sheet.getCell(2, row).stringValue("")
-                sheet.getCell(3, row).stringValue("")
-                sheet.getCell(4, row).stringValue("")
-                sheet.getCell(5, row).stringValue("")
-                #sheet.getCell(6, row).stringValue("")
-                sheet.getCell(6, row).stringValue(stock["inward"]).setAlignHorizontal("right")
-                sheet.getCell(7, row).stringValue("")
-                sheet.getCell(8, row).stringValue("")
-            if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["tnno"]!="" or stock["rnno"] != "") and stock["date"]!="":
-                sheet.getCell(0, row).stringValue(stock["date"])
-                sheet.getCell(1, row).stringValue(stock["particulars"])
-                sheet.getCell(2, row).stringValue(stock["trntype"])
-                sheet.getCell(3, row).stringValue(stock["dcno"])
-                sheet.getCell(4, row).stringValue(stock["invno"])
-                sheet.getCell(5, row).stringValue(stock["tnno"])
-                #sheet.getCell(6, row).stringValue(stock["rnno"])
-                sheet.getCell(6, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(7, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(8, row).stringValue(stock["balance"]).setAlignHorizontal("right")
-            if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
-                sheet.getCell(0, row).stringValue("")
-                sheet.getCell(1, row).stringValue(stock["particulars"])
-                sheet.getCell(2, row).stringValue("")
-                sheet.getCell(3, row).stringValue("")
-                sheet.getCell(4, row).stringValue("")
-                sheet.getCell(5, row).stringValue("")
-                #sheet.getCell(6, row).stringValue("")
-                sheet.getCell(6, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(7, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(8, row).stringValue("")
-            row += 1
-    else:
-        sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-        ods.content.mergeCells(0,0,8,1)
-        sheet.getRow(1).setHeight("18pt")
-        sheet.getCell(0,1).stringValue("Product Report (Period : "+calculatefrom+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-        ods.content.mergeCells(0,1,8,1)
-        sheet.getRow(2).setHeight("16pt")
-        sheet.getCell(0,2).stringValue("Name of the Product: "+productdesc).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-        ods.content.mergeCells(0,2,8,1)
-        sheet.getColumn(1).setWidth("4cm")
-        sheet.getColumn(2).setWidth("5cm")
-        sheet.getColumn(3).setWidth("4cm")
-        sheet.getColumn(4).setWidth("3cm")
-        sheet.getCell(0,3).stringValue("Date").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(1,3).stringValue("Particulars").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(2,3).stringValue("Document Type").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(3,3).stringValue("Deli Note No.").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(4,3).stringValue("INV No.").setBold(True).setAlignHorizontal("center")
-        #sheet.getCell(5,3).stringValue("RN No.").setBold(True).setAlignHorizontal("center")
-        sheet.getCell(5,3).stringValue("Inward").setBold(True).setAlignHorizontal("right")
-        sheet.getCell(6,3).stringValue("Outward").setBold(True).setAlignHorizontal("right")
-        sheet.getCell(7,3).stringValue("Balance").setBold(True).setAlignHorizontal("right")
-        row = 4
-        for stock in result:
-            if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
-                sheet.getCell(0, row).stringValue("")
-                sheet.getCell(1, row).stringValue(stock["particulars"].title())
-                sheet.getCell(2, row).stringValue("")
-                sheet.getCell(3, row).stringValue("")
-                sheet.getCell(4, row).stringValue("")
-                #sheet.getCell(5, row).stringValue("")
-                sheet.getCell(5, row).stringValue(stock["inward"]).setAlignHorizontal("right")
-                sheet.getCell(6, row).stringValue("")
-                sheet.getCell(7, row).stringValue("")
-            if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["rnid"] != "") and stock["date"]!="":
-                sheet.getCell(0, row).stringValue(stock["date"])
-                sheet.getCell(1, row).stringValue(stock["particulars"])
-                sheet.getCell(2, row).stringValue(stock["trntype"])
-                sheet.getCell(3, row).stringValue(stock["dcno"])
-                sheet.getCell(4, row).stringValue(stock["invno"])
-                #sheet.getCell(5, row).stringValue(stock["rnno"])
-                sheet.getCell(5, row).stringValue(stock["inwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(6, row).stringValue(stock["outwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(7, row).stringValue(stock["balance"]).setAlignHorizontal("right")
-            if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
-                sheet.getCell(0, row).stringValue("")
-                sheet.getCell(1, row).stringValue(stock["particulars"])
-                sheet.getCell(2, row).stringValue("")
-                sheet.getCell(3, row).stringValue("")
-                sheet.getCell(4, row).stringValue("")
-                #sheet.getCell(5, row).stringValue("")
-                sheet.getCell(5, row).stringValue(stock["totalinwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(6, row).stringValue(stock["totaloutwardqty"]).setAlignHorizontal("right")
-                sheet.getCell(7, row).stringValue("")
-            row += 1
+            row = 7
+            for stock in result:
+                if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
+                     sheet['A'+str(row)] =""
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"].title()
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] =""
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] =""
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] =""
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] =""
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] =stock["inward"]
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] =""
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)] =""
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["tnno"]!="" or stock["rnno"] != "") and stock["date"]!="":
+                     sheet['A'+str(row)] = stock["date"]
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"]
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] = stock["trntype"]
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] = stock["dcno"]
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] = stock["invno"]
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] = stock["tnno"]
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] = stock["inwardqty"]
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] = stock["outwardqty"]
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)] = stock["balance"]
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
+                     sheet['A'+str(row)] =""
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"].title()
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] =""
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] =""
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] =""
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] =""
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] = stock["totalinwardqty"]
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] = stock["totaloutwardqty"]
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)] =""
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                row  += 1
+        else:
+            sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+            sheet['A3'] = "Product Report (Period : "+calculatefrom+" to "+calculateto+")"
+            sheet['A4'] = "Name of the Product: "+productdesc
+            sheet['A5'] = "Date"
+            sheet['B5'] = "Particulars"
+            sheet['C5'] = "Document Type"
+            sheet['D5'] = "Deli Note No."
+            sheet['E5'] = "INV No."
+            sheet['F5'] = "Inward"
+            sheet['G5'] = "Outward"
+            sheet['H5'] = "Balance"
+            titlerow = sheet.row_dimensions[5]
+            titlerow.font = Font(name='Liberation Serif',size=12,bold=True)                          
 
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
+            row = 6
+            for stock in result:
+                if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
+                     sheet['A'+str(row)] =""
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"].title()
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] =""
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] =""
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] =""
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] =stock["inward"]
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] =""
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] =""
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["rnid"] != "") and stock["date"]!="":
+                     sheet['A'+str(row)] = stock["date"]
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"]
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] = stock["trntype"]
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] = stock["dcno"]
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] = stock["invno"]
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] = stock["inwardqty"]
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] = stock["outwardqty"]
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] = stock["balance"]
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
+                     sheet['A'+str(row)] =""
+                     sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['B'+str(row)] = stock["particulars"].title()
+                     sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['C'+str(row)] =""
+                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['D'+str(row)] =""
+                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['E'+str(row)] =""
+                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['F'+str(row)] = stock["totalinwardqty"]
+                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['G'+str(row)] = stock["totaloutwardqty"]
+                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['H'+str(row)] =""
+                     sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                row += 1
+        prowb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    except:
+        print "file not found"
+        return {"gkstatus":3}
 
 
 @view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
