@@ -194,12 +194,12 @@ def printLedgerReport(request):
             if orgtype == "Profit Making":
                 sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
                 sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
-                sheet['A4'+str(row)] = 'Cost Center :' + headerrow["projectname"]
+                sheet['A4'] = 'Cost Center : ' + headerrow["projectname"]
                 row += 1
             else:
                 sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
                 sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
-                sheet['A4'+str(row)] = 'Project :' + headerrow["projectname"]
+                sheet['A4'] = 'Project :' + headerrow["projectname"]
                 row += 1
         sheet['A5'] = 'Date'
         sheet['B5'] = 'V. No.'
@@ -255,28 +255,36 @@ def printLedgerReport(request):
             if transaction["vouchertype"]=="contra" or transaction["vouchertype"]=="purchase" or transaction["vouchertype"]=="sales" or transaction["vouchertype"]=="receipt" or transaction["vouchertype"]=="payment" or transaction["vouchertype"]=="journal":
                 sheet['C'+str(row)] = transaction['vouchertype'].title()
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             elif transaction["vouchertype"]=="debitnote":
                 sheet['C'+str(row)] = "Debit Note"
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             elif transaction["vouchertype"]=="creditnote":
                 sheet['C'+str(row)] = "Credit Note"
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             elif transaction["vouchertype"]=="salesreturn":
                 sheet['C'+str(row)] = "Sale Return"
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             elif transaction["vouchertype"]=="purchasereturn":
                 sheet['C'+str(row)] = "Purchase Return"
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             else:
                 sheet['C'+str(row)] = transaction['vouchertype']
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             particulars=""
             length = len(transaction["particulars"])
             for i,k in enumerate(transaction["particulars"]):
                 if k.has_key('amount'):
                     sheet['D'+str(row)] = k["accountname"]+' ('+k["amount"]+')'
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 else :
                     sheet['D'+str(row)] = k["accountname"]
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                     if(i<length-1):
                         row += 1
             narration = transaction["narration"]
