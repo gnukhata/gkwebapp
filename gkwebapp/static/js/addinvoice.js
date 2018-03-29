@@ -1001,7 +1001,8 @@ $(document).ready(function() {
 	    })
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
-			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+			//details of customer and supplier
+			$("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			if(resp["delchal"]["delchaldata"]["consignee"]){

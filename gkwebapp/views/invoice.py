@@ -171,7 +171,6 @@ def updateinvoice(request):
 def getdeliverynote(request):
     header={"gktoken":request.headers["gktoken"]}
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
-    print delchal.json()["gkresult"]
     return {"gkstatus": delchal.json()["gkstatus"],"delchal": delchal.json()["gkresult"]}
 
 @view_config(route_name="invoice",request_param="action=gettax",renderer="json")
