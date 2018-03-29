@@ -60,6 +60,9 @@
             {% trans %}Please enter Address!{% endtrans %}
 
           </div>
+	  <div class="alert alert-danger" id="packages-more-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Number of Packages in schedule must be less than Total Number of Packages!{% endtrans %}
+          </div>
           <form class="form-horizontal" >
 	    <div class="col-md-12">
 	      <div class="form-inline">
