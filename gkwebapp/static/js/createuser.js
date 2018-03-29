@@ -120,7 +120,7 @@ $(document).ready(function(){
   });
 
   $("#name").keydown(function(e){
-    if (e.which==13 ||e.which==9)
+    if (e.which==13)
       {
 	  if ($.trim($("#name").val())=="") {
               $("#username-blank-alert").alert();
@@ -137,7 +137,15 @@ $(document).ready(function(){
 
     $("#password").keydown(function(e){
       if (e.which==13)
-      {
+	{
+	  if ($.trim($("#password").val())=="") {
+          $("#password-blank-alert").alert();
+          $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#password-blank-alert").hide();
+          });
+          $("#password").focus();
+          return false;
+        }   
         e.preventDefault();
         $("#confirm_password").focus();
       }
@@ -149,18 +157,36 @@ $(document).ready(function(){
 
     $("#confirm_password").keydown(function(e){
       if (e.which==13)
-      {
-        e.preventDefault();
-        $("#userrole").focus();
-      }
-      if (e.which==38) {
-        $("#password").focus();
+	{
+            if ($.trim($("#confirm_password").val())=="") {
+		$("#cnfpass-blank-alert").alert();
+		$("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#cnfpass-blank-alert").hide();
+		});
+		$("#confirm_password").focus();
+		return false;
+            }
+	    
+            e.preventDefault();
+            $("#userrole").focus();
+	}
+	if (e.which==38) {
+            $("#password").focus();
       }
     });
 
     $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
 
         if (e.which == 13 || e.which == 9) {
+
+	     if ($.trim($("#userrole").val())=="") {
+          $("#role-blank-alert").alert();
+          $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#role-blank-alert").hide();
+          });
+          $("#userrole").focus();
+          return false;
+        }
           e.preventDefault();
          if ($(this).val()==3) {
            $("#latable tbody tr:first td:first input").focus().select();
@@ -189,15 +215,24 @@ $(document).ready(function(){
         }
       });
 
-      $("#question").keydown(function(e){
-        if (e.which==13)
-        {
-          e.preventDefault();
-          $("#answer").focus();
-        }
+    $("#question").keydown(function(e){
+          if (e.which==13)
+          {
+              if ($.trim($("#question").val())=="") {
+		  $("#secque-blank-alert").alert();
+		  $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#secque-blank-alert").hide();
+		  });
+		  $("#question").focus();
+		  return false;
+              }
+	      
+              e.preventDefault();
+              $("#answer").focus();
+          }
         if (e.which==38) {
-          e.preventDefault();
-          $("#userrole").focus();
+            e.preventDefault();
+            $("#userrole").focus();
         }
       });
 
