@@ -79,7 +79,7 @@ $("#subsidiary_div").hide();
                 global: false,
                 async: false,
                 datatype: "json",
-                data: {"username":$("#user").val(), "userpassword":$("#pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
+                data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
                 success: function(resp)
                 {
                   if(resp["gkstatus"]==0)
