@@ -333,9 +333,9 @@ $(document).off("click","#confirm").on('click', '#confirm', function(event) {
 
 //Authentication modal show and hidden code
 $('#authenticate').on('shown.bs.modal', function() {
-    $('#user').val("");
-    $('#pwd').val("");
-      $('#user').focus();
+    $('#user_name').val("");
+    $('#user_pwd').val("");
+      $('#user_name').focus();
 
       $("#user_name").keydown(function(event) {
           if (event.which == 13) {
@@ -345,7 +345,7 @@ $('#authenticate').on('shown.bs.modal', function() {
                 $("#user-alert").alert();
                 $("#user-alert").fadeTo(1000, 500).slideUp(100, function(){
                 $("#user-alert").hide();
-                $('#user').focus();
+                $('#user_name').focus();
               });
               }
               else{
@@ -372,15 +372,15 @@ $('#authenticate').on('shown.bs.modal', function() {
               }
               if (event.which==38) {
                 event.preventDefault();
-                $('#user').focus();
+                $('#user_name').focus();
               }
       });
   });
 
   $('#authenticate').on('hidden.bs.modal', function() {
 
-    $('#user').val("");
-    $('#pwd').val("");
+    $('#user_name').val("");
+    $('#user_pwd').val("");
   });
   $(document).off("click","#cancel_btn").on('click', '#cancel_btn', function(event) {
     $.ajax(
