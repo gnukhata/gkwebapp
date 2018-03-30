@@ -41,20 +41,11 @@ def showviewpurchaseorder(request):
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 
-@view_config(route_name="purchaseorder",request_param="type=details", renderer="gkwebapp:templates/viewpurchaseorderdetails.jinja2")
+@view_config(route_name="purchaseorder",request_param="type=details", renderer="gkwebapp:templates/viewsinglepurchaseorder.jinja2")
 def purchaseorderdetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
-    podetails = result.json()["gkresult"]
-    supplierid = podetails["csid"]
-    supplier = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(supplierid)), headers=header)
-    togoid = podetails["togodown"]
-    if togoid:
-          togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-          return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown.json()["gkresult"]}
-    else:
-        togodown=""
-        return{"gkresult":result.json()["gkresult"], "supplier":supplier.json()["gkresult"], "schedule":podetails["schedule"],"togodown":togodown}
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 
 @view_config(route_name="salesorder",request_param="type=details", renderer="gkwebapp:templates/viewsalesorderdetails.jinja2")

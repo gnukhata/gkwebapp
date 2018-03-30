@@ -21,7 +21,7 @@ $(document).ready(function() {
       $(this).val(parseFloat($(this).val()).toFixed(2));
     }
   });
-
+    var purchaseorderid="";
   $("#purchaseorder_select").change(function(event) {
     /* Act on the event */
      purchaseorderid = $("#purchaseorder_select option:selected").val();
