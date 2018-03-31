@@ -57,6 +57,7 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var salesorderdatestring = "";
     var salesorderdate = "";
+    var numbertowords = "";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#salesorder_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -129,6 +130,25 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	let numbertowords = "";
+	var res = totalamount.toString();
+	var str = res.split(".");
+	var len = str[1];
+	if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -167,6 +187,25 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	let numbertowords = "";
+	var res = totalamount.toString();
+	var str = res.split(".");
+	var len = str[1];
+	if(totalamount!=0){
+		if(str[1] != undefined){
+		    if(len.length == 1){
+			str[1] = str[1]+0;
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }else{
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+		    }
+		}else{
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+
+		}
+	    }else{
+		numbertowords = "Zero"+" "+ "rupees";
+	    }
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -2445,7 +2484,8 @@ if (event.which == 13) {
       form_data.append("taxflag", $("#taxapplicable").val());
       form_data.append("modeoftransport", $("#modeoftransport").val());
       form_data.append("vehicleno", $("#vehicleno").val());
-      form_data.append("psflag",psflag);  
+      form_data.append("psflag",psflag);
+      form_data.append("pototalwords", numbertowords);
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
       if (dateofsupply != "") {
 	  form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
