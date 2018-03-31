@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
+"Prajkta Patkar"<prajkta@riseup.net>
 */
 
 $(document).ready(function()
@@ -32,6 +33,19 @@ $(document).ready(function()
   $("#msspinmodal").modal("hide");
   $(".closebooks").show();
   console.log(sessionStorage);
+
+  if (sessionStorage.booksclosedflag == 1 && sessionStorage.roflag ==0){
+    $(".closebooks").hide();
+    $(".closebooks").remove();
+
+    
+  }
+
+  if (sessionStorage.booksclosedflag == 0 && sessionStorage.roflag == 1){
+    $(".closebooks").show();
+    $(".rodiv").hide();
+    
+  }
   /*
   if (sessionStorage.booksclosedflag==1)
   {
