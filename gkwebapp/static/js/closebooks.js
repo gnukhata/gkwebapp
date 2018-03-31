@@ -30,6 +30,9 @@ Contributors:
 $(document).ready(function()
 {
   $("#msspinmodal").modal("hide");
+  $(".closebooks").show();
+  console.log(sessionStorage);
+  /*
   if (sessionStorage.booksclosedflag==1)
   {
     $(".closebooks").hide();
@@ -40,7 +43,7 @@ $(document).ready(function()
   {
     $(".closebooks").show();
     $('.dis').attr('disabled', true);
-  }
+  }*/
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
