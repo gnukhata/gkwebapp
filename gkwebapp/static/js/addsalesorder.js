@@ -2364,7 +2364,7 @@ if (event.which == 13) {
 		  $(".salesorder_product_quantity_gst:eq(" + i + ")").focus().select();
 		  return false;
 	      }
-	      if ($(".product_name_gst:eq(" + i + ")").attr("gsflag") == 7) {
+	      if ($(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == 7) {
 	    if (parseFloat(parseFloat($(".salesorder_product_discount_gst:eq(" + i + ")").val()).toFixed(2)) > (parseFloat(parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()).toFixed(2)) * parseFloat(parseFloat($(".salesorder_product_per_price_gst:eq(" + i + ")").val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2562,10 +2562,10 @@ if (event.which == 13) {
     event.preventDefault();
     /* Act on the event */
     if ($("#status").val() == '9') {
-      $("#salesorder_record").click();
+      $("#purchaseorder_record").click();
 
     } else {
-      $("#salesorder_create").click();
+      $("#purchaseorder_create").click();
     }
   });
     $("#backbutton").click(function(event){
