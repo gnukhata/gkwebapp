@@ -2469,10 +2469,7 @@ if (event.which == 13) {
       form_data.append("vehicleno", $("#vehicleno").val());
       form_data.append("psflag",psflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
-      if (dateofsupply == "") {
-	  form_data.append("dateofsupply", dateofsupply);
-      }
-      else {
+      if (dateofsupply != "") {
 	  form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
       }
       if ($("#rev1radio").is(":checked")) {
