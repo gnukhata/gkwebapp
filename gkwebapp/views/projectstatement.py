@@ -35,84 +35,89 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from odslib import ODS
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import calendar
 
 @view_config(route_name="printprojectstatementreport", renderer = "")
 def printprojectstatementreport(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["fystart"]
-	projectcode = int(request.params["projectcode"])
-	projectname = request.params["projectname"]
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
-	result = result.json()["gkresult"]
-	fystart = str(request.params["fystart"]);
-	fyend = str(request.params["fyend"]);
-	fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
-	fyend = fyend[8:10]+fyend[4:8]+fyend[0:4]
-	calculateto = str(request.params["calculateto"])
-	calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
-	orgname = str(request.params["orgname"])
-	ods = ODS()
-	sheet = ods.content.getSheet(0)
-	sheet.setSheetName("Project Statement ("+projectname+")")
-	sheet.getRow(0).setHeight("23pt")
+    #try:
+        calculateto = request.params["calculateto"]
+        financialstart = request.params["fystart"]
+        projectcode = int(request.params["projectcode"])
+        projectname = request.params["projectname"]
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
+        result = result.json()["gkresult"]
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        fystart = fystart[8:10]+fystart[4:8]+fystart[0:4]
+        fyend = fyend[8:10]+fyend[4:8]+fyend[0:4]
+        calculateto = str(request.params["calculateto"])
+        calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+        orgname = str(request.params["orgname"])
+        projstmtwb = openpyxl.Workbook()
+        sheet = projstmtwb.active
+        sheet.title = "Project Statement ("+projectname+")"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 18
+        sheet.column_dimensions['D'].width = 16
+        sheet.column_dimensions['E'].width = 16
+        sheet.merge_cells('A1:E2')
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:E3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'Statement for :'+projectname+ " ("+fystart+" to "+calculateto+")"
+        sheet['A4'] = 'Sr. No. '
+        sheet['B4'] = 'Account Name'
+        sheet['C4'] = 'Group Name'
+        sheet['D4'] = 'Total Outgoing'
+        sheet['E4'] = 'Total Incoming'
+        row = 3
+        for transaction in result:
+            sheet['A'+str(row)] = transaction["srno"]
+            sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
 
-	sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-	ods.content.mergeCells(0,0,5,1)
-	sheet.getRow(1).setHeight("18pt")
-	sheet.getCell(0,1).stringValue("Statement for: "+projectname+ " ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-	ods.content.mergeCells(0,1,5,1)
-	sheet.getColumn(1).setWidth("8cm")
-	sheet.getColumn(2).setWidth("4cm")
-	sheet.getColumn(3).setWidth("3cm")
-	sheet.getColumn(4).setWidth("3cm")
-	sheet.getCell(0,2).stringValue("Sr. No.").setBold(True)
-	sheet.getCell(1,2).stringValue("Account Name").setBold(True)
-	sheet.getCell(2,2).stringValue("Group Name").setBold(True)
-	sheet.getCell(3,2).stringValue("Total Outgoing").setBold(True)
-	sheet.getCell(4,2).stringValue("Total Incoming").setBold(True)
-	row = 3;
-	for transaction in result:
-		sheet.getCell(0, row).stringValue(transaction["srno"])
-		sheet.getCell(1, row).stringValue(transaction["accountname"])
-		sheet.getCell(2, row).stringValue(transaction["groupname"])
-		sheet.getCell(3, row).stringValue(transaction["totalout"]).setAlignHorizontal("right")
-		sheet.getCell(4, row).stringValue(transaction["totalin"]).setAlignHorizontal("right")
-		row += 1
+        projstmtwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    #except:
+        print "File not found"
+        return {"gkstatus":3}
 
-	ods.save("response.ods")
-	repFile = open("response.ods")
-	rep = repFile.read()
-	repFile.close()
-	headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-	os.remove("response.ods")
-	return Response(rep, headerlist=headerList.items())
 
 
 @view_config(route_name="showviewprojectstatement", renderer="gkwebapp:templates/viewprojectstatement.jinja2")
 def showviewprojectstatement(request):
-	header={"gktoken":request.headers["gktoken"]}
-	projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
-	return {"projects":projects.json()["gkresult"]}
+    header={"gktoken":request.headers["gktoken"]}
+    projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
+    return {"projects":projects.json()["gkresult"]}
 
 @view_config(route_name="showprojectstatementreport")
 def showprojectstatementreport(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	projectcode = int(request.params["projectcode"])
-	projectname = request.params["projectname"]
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
-	return render_to_response("gkwebapp:templates/projectstatementreport.jinja2",{"records":result.json()["gkresult"],"projectcode":projectcode,"projectname":projectname,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    projectcode = int(request.params["projectcode"])
+    projectname = request.params["projectname"]
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
+    return render_to_response("gkwebapp:templates/projectstatementreport.jinja2",{"records":result.json()["gkresult"],"projectcode":projectcode,"projectname":projectname,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 @view_config(route_name="printprojectstatement")
 def printprojectstatement(request):
-	calculateto = request.params["calculateto"]
-	financialstart = request.params["financialstart"]
-	projectcode = int(request.params["projectcode"])
-	projectname = request.params["projectname"]
-	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
-	return render_to_response("gkwebapp:templates/printprojectstatement.jinja2",{"records":result.json()["gkresult"],"projectcode":projectcode,"projectname":projectname,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    calculateto = request.params["calculateto"]
+    financialstart = request.params["financialstart"]
+    projectcode = int(request.params["projectcode"])
+    projectname = request.params["projectname"]
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
+    return render_to_response("gkwebapp:templates/printprojectstatement.jinja2",{"records":result.json()["gkresult"],"projectcode":projectcode,"projectname":projectname,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
