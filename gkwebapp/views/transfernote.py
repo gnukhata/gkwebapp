@@ -38,7 +38,8 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from odslib import ODS
+import openpyxl
+from openpyxl.styles import Font, Alignment
 
 @view_config(route_name="transfernotes",renderer="gkwebapp:templates/transfernote.jinja2")
 def showtransfernote(request):
@@ -91,89 +92,126 @@ def printlistoftransfernotes(request):
 
 @view_config(route_name="transfernotes",request_param="action=generatespreadsheet", renderer="")
 def listoftransfernotesspreadsheet(request):
-    header={"gktoken":request.headers["gktoken"]}
-    fystart = str(request.params["fystart"]);
-    fyend = str(request.params["fyend"]);
-    orgname = str(request.params["orgname"])
-    orgname += " (FY: " + fystart+" to "+fyend +")"
-    startDate =str(request.params["startdate"])
-    endDate =str(request.params["enddate"])
-    godownname = ""
-    godownaddress = ""
-    goid = 0
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.setSheetName("List of Transfer Notes")
-    sheet.getRow(0).setHeight("23pt")
+    #try :
+        header={"gktoken":request.headers["gktoken"]}
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        orgname += " (FY: " + fystart+" to "+fyend +")"
+        startDate =str(request.params["startdate"])
+        endDate =str(request.params["enddate"])
+        godownname = ""
+        godownaddress = ""
+        goid = 0
+        transfernotewb = openpyxl.Workbook()
+        sheet = transfernotewb.active
+        sheet.title = "List of Transfer Notes"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 12
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 24
+        sheet.column_dimensions['F'].width = 20
+        sheet.column_dimensions['G'].width = 16
+        sheet.column_dimensions['H'].width = 14
+        sheet.merge_cells('A1:H2')
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname
+        sheet.merge_cells('A3:H3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'List of Transfer Notes'
+        sheet.merge_cells('A4:H4')
+        sheet['A4'] = 'Period: ' + startDate + ' to ' + endDate
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        titlerow = 5
+        if request.params.has_key("goid"):
+            goid = int(request.params["goid"])
+            transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
+            godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+            godownname = godown.json()["gkresult"]["goname"]
+            godownaddress = godown.json()["gkresult"]["goaddr"]
+            nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
+            sheet.merge_cells('A5:H5')
+            sheet['A5'] = nameofgodown
+            sheet['A5'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A5'].alignment = Alignment(horizontal = 'center', vertical='center')
+            titlerow =6
+        else:
+            transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
+        transfernotes = transfernotes.json()["gkresult"]
+        sheet['A'+str(titlerow)] = 'Sr. No.'
+        sheet['B'+str(titlerow)] = 'TN No.'
+        sheet['C'+str(titlerow)] = 'Date'
+        sheet['D'+str(titlerow)] = 'Dispatch From'
+        sheet['E'+str(titlerow)] = 'To be Delivered At'
+        sheet['F'+str(titlerow)] = 'Products'
+        sheet['G'+str(titlerow)] = 'Quantity'
+        sheet['H'+str(titlerow)] = 'Status'
+        sheet['A'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['B'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['C'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['D'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['E'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['F'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['G'+str(titlerow)].alignment = Alignment(horizontal='right')
+        sheet['H'+str(titlerow)].alignment = Alignment(horizontal='center')
+        sheet['A'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['B'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['C'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['D'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['E'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['G'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['H'+str(titlerow)].font = Font(name='Liberation Serif',size=12,bold=True)
+        row = titlerow + 1
+        for transfernote in transfernotes:
+            sheet['A'+str(row)] = transfernote["srno"]
+            sheet['A'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = transfernote["transfernoteno"]
+            sheet['B'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = transfernote["transfernotedate"]
+            sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = transfernote["fromgodown"]
+            sheet['D'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = transfernote["togodown"]
+            sheet['E'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            subrow = row
+            for productqty in transfernote["productqty"]:
+                sheet['F'+str(subrow)] = productqty["productdesc"]
+                sheet['F'+str(subrow)].alignment = Alignment(horizontal='center')
+                sheet['F'+str(subrow)].font = Font(name='Liberation Serif', size='12', bold=False)
+                subrow +=1
+            if transfernote["receivedflag"]:
+                sheet.getCell(7, row).stringValue("Received").setAlignHorizontal("center")
+            else:
+                sheet.getCell(7, row).stringValue("Pending").setAlignHorizontal("center")
+            if subrow == row:
+                row += 1
+            if subrow == row:
+                row += 1
+            else:
+                row = subrow
 
-    sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,8,1)
-    sheet.getRow(1).setHeight("18pt")
-    sheet.getCell(0,1).stringValue("List Of Transfer Notes").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,8,1)
-    sheet.getRow(2).setHeight("16pt")
-    sheet.getCell(0,2).stringValue("Period: " + startDate + " to " + endDate).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,2,8,1)
-    titlerow = 3
-    if request.params.has_key("goid"):
-        goid = int(request.params["goid"])
-        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
-        godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
-        godownname = godown.json()["gkresult"]["goname"]
-        godownaddress = godown.json()["gkresult"]["goaddr"]
-        nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
-        ods.content.mergeCells(0,3,8,1)
-        sheet.getRow(3).setHeight("16pt")
-        sheet.getCell(0,3).stringValue(nameofgodown).setBold(True).setFontSize("12pt").setAlignHorizontal("center")
-        titlerow = 4
-    else:
-        transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
-    transfernotes = transfernotes.json()["gkresult"]
-    sheet.getColumn(0).setWidth("1.5cm")
-    sheet.getColumn(1).setWidth("2cm")
-    sheet.getColumn(2).setWidth("2cm")
-    sheet.getColumn(3).setWidth("7cm")
-    sheet.getColumn(4).setWidth("7cm")
-    sheet.getColumn(5).setWidth("7cm")
-    sheet.getColumn(6).setWidth("3cm")
-    sheet.getColumn(7).setWidth("2cm")
-    sheet.getCell(0,titlerow).stringValue("Sr. No.").setBold(True)
-    sheet.getCell(1,titlerow).stringValue("TN No.").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(2,titlerow).stringValue("Date").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(3,titlerow).stringValue("Dispatched From").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(4,titlerow).stringValue("To be Delivered At").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(5,titlerow).stringValue("Products").setBold(True).setAlignHorizontal("center")
-    sheet.getCell(6,titlerow).stringValue("Quantity").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(7,titlerow).stringValue("Status").setBold(True).setAlignHorizontal("center")
-    row = titlerow + 1
-    for transfernote in transfernotes:
-        sheet.getCell(0, row).stringValue(transfernote["srno"])
-        sheet.getCell(1, row).stringValue(transfernote["transfernoteno"]).setAlignHorizontal("center")
-        sheet.getCell(2, row).stringValue(transfernote["transfernotedate"]).setAlignHorizontal("center")
-        sheet.getCell(3, row).stringValue(transfernote["fromgodown"])
-        sheet.getCell(4, row).stringValue(transfernote["togodown"])
-        subrow = row
-        for productqty in transfernote["productqty"]:
-            sheet.getCell(5, subrow).stringValue(productqty["productdesc"])
-            sheet.getCell(6, subrow).stringValue(productqty["quantity"] + " " + productqty["uom"]).setAlignHorizontal("right")
-            subrow +=1
-        if transfernote["receivedflag"]:
-            sheet.getCell(7, row).stringValue("Received").setAlignHorizontal("center")
-        else:
-            sheet.getCell(7, row).stringValue("Pending").setAlignHorizontal("center")
-        if subrow == row:
-            row += 1
-        if subrow == row:
-            row += 1
-        else:
-            row = subrow
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
+        transfernotewb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    #except:
+        print "File not found"
+        return{"gkstatus":3}
+    
 
 @view_config(route_name="transfernotes",request_param="action=showlist",renderer="gkwebapp:templates/listoftransfernotes.jinja2")
 def showlistoftransfernotes(request):
