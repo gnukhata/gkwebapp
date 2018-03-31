@@ -30,7 +30,7 @@ from pyramid.renderers import render_to_response
 def purchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
-    result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
+    result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=19",headers=header)
     return{"numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
 
 
@@ -47,28 +47,10 @@ def purchaseorderdetails(request):
     result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
-
-@view_config(route_name="salesorder",request_param="type=details", renderer="gkwebapp:templates/viewsalesorderdetails.jinja2")
-def salesorderdetails(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params['orderid'])),headers=header)
-    sodetails = result.json()["gkresult"]
-    customerid = sodetails["csid"]
-    customer = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(customerid)), headers=header)
-    togoid = sodetails["togodown"]
-    if togoid:
-        togodown=requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(togoid)), headers=header)
-        return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown.json()["gkresult"]}
-    else:
-        togodown=""
-        return{"gkresult":result.json()["gkresult"], "customer":customer.json()["gkresult"], "schedule":sodetails["schedule"],"togodown":togodown}
-
-
-
 @view_config(route_name="salesorder",request_param="type=showview",renderer="gkwebapp:templates/viewsalesorder.jinja2")
 def showviewsalesorder(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
+    result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=19",headers=header)
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 

@@ -11,7 +11,7 @@
         <select class = "form-control"  name = "salesorderno" id="salesorder_select" >
           <option value="" disabled selected hidden>{% trans %}Select Sales Order{% endtrans %}</option>
           {% for so in gkresult %}
-          <option value="{{so['orderid']}}">{{so["orderno"]}}, {{so["orderdate"]}}, {{so["custname"]}}</option>
+          <option value="{{so['orderid']}}">{{so["orderno"]}}, {{so["orderdate"]}}, {{so["customer"]}}</option>
           {% endfor %}
         </select>
 
