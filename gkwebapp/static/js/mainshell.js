@@ -554,14 +554,23 @@ $(".businessmenu").keydown(function(event){
 	 $(".intauditor").remove();
 	 $("#fevoucher").text("Find Voucher");
      }
-     if (resp["gkresult"]["booksclosedflag"]==1) {
+     console.log(resp["gkresult"])
+     
+     if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
        $(".closebooks").remove();
        $("#fevoucher").text("Find Voucher");
        $("#findvouchertb").text("Find Voucher - F10");
      }
-     if (resp["gkresult"]["roflag"]==1) {
-       $(".rollover").remove();
+     if (resp["gkresult"]["roflag"]==1 && resp["gkresult"]["booksclosedflag"]==0) {
+       $("#showclosebooks").text("Close Books");
        $("#showviewlog").remove();
+     }
+
+     if (resp["gkresult"]["roflag"]==0 && resp["gkresult"]["booksclosedflag"]== 1) {
+       $("#showclosebooks").text("Roll Over");
+       $("#showviewlog").remove();
+       $("#fevoucher").text("Find Voucher");
+       $("#findvouchertb").text("Find Voucher - F10");
      }
 
      if(resp["gkresult"]["userrole"]==-1) {
