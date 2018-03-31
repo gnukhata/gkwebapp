@@ -122,9 +122,12 @@
          	    <input id="creditperiod" type="text" class="form-control input-sm col-sm-8" name="creditperiod" size="30"></input>
          	  </div>
 		  <div class="form-group form-inline">
-		    <label for="togodown" class="col-sm-4">{% trans %} From Godown:{% endtrans %}</label>
-		    <select class="form-control input-sm col-sm-8" id="togodown" accesskey="">
-
+		    {% if status|int == 19 %}
+		      <label for="togodown" class="col-sm-4">{% trans %}To be Dispatched From{% endtrans %} :</label>
+		    {% else %}
+		    <label for="togodown" class="col-sm-4">{% trans %}To be Received At{% endtrans %} :</label>
+		    {% endif %}
+		      <select class="form-control input-sm col-sm-8" id="togodown">
 		      <option value="0">None</option>
 		      {% for godown in godowns %}
 			<option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>

@@ -81,13 +81,18 @@ def showaddsalesorder(request):
 @view_config(route_name="purchaseorder",request_param="action=save",renderer="json")
 def savepurchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
-    purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"], "modeoftransport":request.params["modeoftransport"],"issuername":request.params["issuername"],"designation":request.params["designation"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"], "tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "sourcestate":request.params["sourcestate"], "taxstate":request.params["taxstate"], "orgstategstin":request.params["orgstategstin"], "consignee":json.loads(request.params["consignee"]), "freeqty":json.loads(request.params["freeqty"]), "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"], "discount":json.loads(request.params["discount"]), "paymentmode":request.params["paymentmode"], "address":request.params["address"], "purchaseordertotal":request.params["purchaseordertotal"]}
+    purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"], "modeoftransport":request.params["modeoftransport"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"], "tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "sourcestate":request.params["sourcestate"], "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "consignee":json.loads(request.params["consignee"]), "freeqty":json.loads(request.params["freeqty"]), "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"], "discount":json.loads(request.params["discount"]), "paymentmode":request.params["paymentmode"], "purchaseordertotal":request.params["purchaseordertotal"]}
     if "togodown" in request.params:
         purchaseorderdata["togodown"] = request.params["togodown"]
     if "bankdetails" in request.params:
         purchaseorderdata["bankdetails"] = json.loads(request.params["bankdetails"])
     if  "dateofsupply" in request.params:
         purchaseorderdata["dateofsupply"] = request.params["dateofsupply"]
+    if "address" in request.params:
+        purchaseorderdata["address"] = request.params["address"]
+    if "issuername" in request.params:
+        purchaseorderdata["issuername"] = request.params["issuername"]
+        purchaseorderdata["designation"] = request.params["designation"]
     result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 

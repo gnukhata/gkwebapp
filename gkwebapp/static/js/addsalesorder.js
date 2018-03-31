@@ -2341,7 +2341,7 @@ if (event.which == 13) {
 	    discount[productcode] = $.trim($(".salesorder_product_discount_vat:eq(" + i + ")").val());
 	}
     }
-	salesordertotal = $.trim($(".salesorder_product_total_vat:eq(" + i + ")").val());
+	salesordertotal = $.trim($("#total_product_vat").val());
 
     }
 
@@ -2408,7 +2408,6 @@ if (event.which == 13) {
 	  salesordertotal = $.trim($('#total_product_gst').html());
       }
       //For sales salesorder store address.
-      var address = $("#originaddress").val();
       var form_data = new FormData();
       form_data.append("csid", $("#salesorder_customer option:selected").val());
       if ($("#togodown option:selected").val() > 0) {
@@ -2421,11 +2420,13 @@ if (event.which == 13) {
       form_data.append("schedule", JSON.stringify(schedule));
       form_data.append("tax", JSON.stringify(tax));
       form_data.append("cess", JSON.stringify(cess));
-      form_data.append("issuername", issuername);
       form_data.append("orgstategstin",$("#orggstin").text() );
-      form_data.append("designation", designation);
       form_data.append("purchaseordertotal", salesordertotal);
-      form_data.append("address", address);
+      if ($("#status").val() == 16) {
+	  form_data.append("address", $("#originaddress").val());
+	  form_data.append("issuername", $("#purchaseorder_issuer_name").val());
+	  form_data.append("designation", $("#purchaseorder_issuer_designation").val());
+      }
       form_data.append("taxstate", $("#salesorder_customerstate option:selected").val());
       form_data.append("sourcestate", $("#salesorderstate option:selected").val());
       form_data.append("freeqty", JSON.stringify(freeqty));
