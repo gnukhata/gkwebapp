@@ -2440,8 +2440,8 @@ if (event.which == 13) {
 	      obj["packages"] = $(".salesorder_product_noofpackages_gst:eq(" + i + ")").val();
 	      obj["quantity"] = $(".salesorder_product_quantity_gst:eq(" + i + ")").val();
 	      schedule[productcode] = obj;
-	      tax[productcode] = parseFloat($(".salesorder_product_sgstamount:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_cgstamount:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_igstamount:eq(" + i + ")").val());
-	      cess[productcode] = parseFloat($(".salesorder_product_cessamount:eq(" + i + ")").val());
+	      tax[productcode] = parseFloat($(".salesorder_product_sgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_cgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_igstrate:eq(" + i + ")").val());
+	      cess[productcode] = parseFloat($(".salesorder_product_cessrate:eq(" + i + ")").val());
 	      freeqty[productcode] = $(".salesorder_product_freequantity_gst:eq(" + i + ")").val();
 	      discount[productcode] = $(".salesorder_product_discount_gst:eq(" + i + ")").val();
 	  }
