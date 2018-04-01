@@ -133,3 +133,11 @@ def getattachment(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/purchaseorder?attach=image&orderid=%d"%(int(request.params["orderid"])), headers=header)
     return {"attachment":result.json()["gkresult"],"orderid":request.params["orderid"],"orderno":result.json()["orderno"]}
+
+@view_config(route_name="purchaseorder",request_param="action=print",renderer="gkwebapp:templates/printpurchaseorder.jinja2")
+def PurchaseOrderPrint(request):
+    header={"gktoken":request.headers["gktoken"]}
+    purchaseorderdata = requests.get("http://127.0.0.1:6543/purchaseorder?poso=single&orderid=%d"%(int(request.params["orderid"])), headers=header)
+    statecode = purchaseorderdata.json()["gkresult"]["sourcestatecode"]
+    org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
+    return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":purchaseorderdata.json()["gkresult"]}

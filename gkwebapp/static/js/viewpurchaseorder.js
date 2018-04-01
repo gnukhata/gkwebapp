@@ -90,6 +90,27 @@ $(document).ready(function() {
             });
 
     });
+    $("#po_print").click(function(event) {
+        $.ajax({
+                url: '/purchaseorder?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"orderid":$("#purchaseorder_select option:selected").val()},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#info').html(resp);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
 $(document).on('click', '#poreset', function(event) {
   event.preventDefault();
   /* Act on the event */
