@@ -137,16 +137,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	$("#totalValueInWord").text(numbertowords);
     }
@@ -195,16 +195,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	$("#totalValueInWord").text(numbertowords);
     }
@@ -2375,7 +2375,7 @@ if (event.which == 13) {
             obj["rateperunit"] = $.trim($(".salesorder_product_per_price_vat:eq(" + i + ")").val());
 	    obj["packages"] = $.trim($(".salesorder_product_noofpackages_vat:eq(" + i + ")").val());
             obj["quantity"] = $.trim($(".salesorder_product_quantity_vat:eq(" + i + ")").val());
-            tax[productcode] = $.trim($(".product_name_vat:eq(" + i + ")").val());
+            tax[productcode] = $.trim($(".salesorder_product_tax_rate_vat:eq(" + i + ")").val());
 	    schedule[productcode] = obj;
             freeqty[productcode] = $.trim($(".salesorder_product_freequantity_vat:eq(" + i + ")").val());
 	    discount[productcode] = $.trim($(".salesorder_product_discount_vat:eq(" + i + ")").val());
