@@ -57,7 +57,6 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
     var salesorderdatestring = "";
     var salesorderdate = "";
-    var numbertowords = "";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#salesorder_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -149,6 +148,7 @@ $(document).ready(function() {
 	    }else{
 		numbertowords = "Zero"+" "+ "rupees";
 	    }
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -206,6 +206,7 @@ $(document).ready(function() {
 	    }else{
 		numbertowords = "Zero"+" "+ "rupees";
 	    }
+	$("#totalValueInWord").text(numbertowords);
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -2000,7 +2001,7 @@ if (event.which == 13) {
 	    $("#vehiclenodiv").hide();
 	}
     });
-    $("#transportationmode").change();
+    $("#modeoftransport").change();
 
     $("#supply_date").blur(function(event) {
 	$(this).val(pad($(this).val(), 2));
@@ -2485,7 +2486,7 @@ if (event.which == 13) {
       form_data.append("modeoftransport", $("#modeoftransport").val());
       form_data.append("vehicleno", $("#vehicleno").val());
       form_data.append("psflag",psflag);
-      form_data.append("pototalwords", numbertowords);
+      form_data.append("pototalwords", $("#totalValueInWord").text());
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
       if (dateofsupply != "") {
 	  form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));

@@ -25,6 +25,10 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
+from PIL import Image
+import base64
+import cStringIO
+import os
 
 @view_config(route_name="purchaseorder",request_param="type=tab",renderer="gkwebapp:templates/purchaseorder.jinja2")
 def purchaseorder(request):
@@ -93,6 +97,26 @@ def savepurchaseorder(request):
     if "issuername" in request.params:
         purchaseorderdata["issuername"] = request.params["issuername"]
         purchaseorderdata["designation"] = request.params["designation"]
+    try:
+        files = {}
+        count = 0
+        for i in request.POST.keys():
+            if "file" not in i:
+                continue
+            else:
+                img = request.POST[i].file
+                image = Image.open(img)
+                imgbuffer = cStringIO.StringIO()
+                image.save(imgbuffer, format="JPEG")
+                img_str = base64.b64encode(imgbuffer.getvalue())
+                image.close()
+                files[count] = img_str
+                count += 1
+        if len(files)>0:
+            purchaseorderdata["attachment"] = files
+            purchaseorderdata["attachmentcount"] = len(purchaseorderdata["attachment"])
+    except:
+        print "no attachment found"
     result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
@@ -103,3 +127,9 @@ def getuser(request):
 	usern = requests.get("http://127.0.0.1:6543/users?user=single", headers=header)
 	username = usern.json()["gkresult"]["username"]
 	return {"status":True,"username":username}
+
+@view_config(route_name="purchaseorder", request_param="action=getattachment", renderer="gkwebapp:templates/viewpurchaseorderattachment.jinja2")
+def getattachment(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/purchaseorder?attach=image&orderid=%d"%(int(request.params["orderid"])), headers=header)
+    return {"attachment":result.json()["gkresult"],"orderid":request.params["orderid"],"orderno":result.json()["orderno"]}

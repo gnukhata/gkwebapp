@@ -24,8 +24,8 @@ $(document).ready(function() {
 
 
        $("#salesorder_select").change(function(event) {
-         /* Act on the event */
-         console.log("change");
+           /* Act on the event */
+	   $("#viewpofooter, #viewattach").hide();
           var salesorderid = $("#salesorder_select option:selected").val();
            $.ajax({
              url: '/purchaseorder?type=details',
@@ -44,7 +44,10 @@ $(document).ready(function() {
            .done(function(resp)
            {
              $("#salesorderdetails").html("");
-             $("#salesorderdetails").html(resp);
+               $("#salesorderdetails").html(resp);
+	       if ($("#salesorder_select option:selected").attr("attachmentcount") > 0) {
+		   $("#viewpofooter, #viewattach").show();
+	       }
              console.log("success");
            })
            .fail(function() {
