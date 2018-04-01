@@ -68,18 +68,29 @@
       <ul class="nav nav-pills nav-tabs " role="tablist">
 	<li role="presentation" class="active nopadding" role="presentation"><a href="" id="purchaseorder_create" role="tab" data-toggle="pill" accesskey="1">{% trans %}Add Purchase Order{% endtrans %}</a></li>
 	<li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_create"  data-toggle="pill" accesskey="2">{% trans %}Add Sales Order{% endtrans %}</a></li>
-	{% if numberofpurchaseorders > 0 %}
           <li role="presentation" class="nopadding" role="presentation"><a href="" id="purchaseorder_view"   data-toggle="pill" accesskey="3">{% trans %}View Purchase Order{% endtrans %}</a></li>
-	{% endif %}
-	{% if numberofsalesorders > 0 %}
           <li role="presentation" class="nopadding" role="presentation"><a href="" id="salesorder_view"   data-toggle="pill" accesskey="4">{% trans %}View Sales Order{% endtrans %}</a></li>
-	{% endif %}
-
       </ul>
       <div class="tab-content">
 	<div role="tabpanel" class="tab-pane active" id="purchaseorder_div">
 
 	</div>
+      </div>
+    </div>
+    <div id="viewinvdiv" hidden>
+      <div class="panel editblank">
+	<div class="panel-body editblank">
+	  <div id="invload">
+	    
+	  </div>
+	  <div id="printload">
+	    
+	  </div>
+	</div>
+      </div>
+      <div class="col-sm-3 col-sm-offset-4" id="buttondiv">
+	<button type="button" class="btn btn-sm btn-danger pull-right" id="backbutton" accesskey="b" style="margin-left:10px;"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}<u>B</u>ack{% endtrans %}</button>
+	<button type="button" class="btn btn-sm btn-primary pull-right" id="printbutton" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
       </div>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/purchaseorder.js')}}"></script>

@@ -4,6 +4,9 @@
       <div class="panel-body">
 	<div class="container-fluid row">
 	  <div class="form-group  col-sm-12">
+	    {% if numberofsalesorders|int < 1 %}
+	      <label class="text-danger">{% trans %}No Sales Order Found!{% endtrans %}</label>
+	    {% else %}
 	    <label for="salesorderselect">{% trans %}Sales order{% endtrans %} :</label>
             <select class = "form-control input-sm"  name = "salesorderno" id="salesorder_select" >
               <option value="" disabled selected hidden>{% trans %}Select Sales order{% endtrans %}</option>
@@ -11,6 +14,7 @@
 		<option value="{{po['orderid']}}" attachmentcount="{{po["attachmentcount"]}}">{{po["orderno"]}}, {{po["orderdate"]}}, {{po["customer"]}}</option>
               {% endfor %}
             </select>
+	    {% endif %}
 	  </div>
 	</div>
 	<div class="nopadding" id="salesorderdetails">

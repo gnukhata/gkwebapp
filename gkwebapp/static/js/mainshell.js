@@ -877,11 +877,7 @@ $(".businessmenu").keydown(function(event){
       type: 'POST',
       global: false,
       async: false,
-      datatype: 'text/html',
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
+      datatype: 'text/html'
     })
      .done(function(resp) {
        $("#info").html(resp);

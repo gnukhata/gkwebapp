@@ -32,17 +32,14 @@ import os
 
 @view_config(route_name="purchaseorder",request_param="type=tab",renderer="gkwebapp:templates/purchaseorder.jinja2")
 def purchaseorder(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
-    result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=19",headers=header)
-    return{"numberofpurchaseorders":len(result.json()["gkresult"]),"numberofsalesorders":len(result1.json()["gkresult"]),"gkstatus":result.json()["gkstatus"]}
+    return{"gkstatus":True}
 
 
 @view_config(route_name="purchaseorder",request_param="type=showview",renderer="gkwebapp:templates/viewpurchaseorder.jinja2")
 def showviewpurchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
-    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"numberofpurchaseorders":len(result.json()["gkresult"])}
 
 
 @view_config(route_name="purchaseorder",request_param="type=details", renderer="gkwebapp:templates/viewsinglepurchaseorder.jinja2")
@@ -55,7 +52,7 @@ def purchaseorderdetails(request):
 def showviewsalesorder(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=19",headers=header)
-    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
+    return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"], "numberofsalesorders":len(result.json()["gkresult"])}
 
 
 @view_config(route_name="purchaseorder",request_param="action=showadd",renderer="gkwebapp:templates/addsalesorder.jinja2")

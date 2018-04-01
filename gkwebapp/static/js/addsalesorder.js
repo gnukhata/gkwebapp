@@ -2533,35 +2533,16 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#success-alert").hide();
-			    /*let orderid = resp.gkresult;
-			    $.ajax({
-				type: "POST",
-				url: "/salesorder?action=showps",
-				global: false,
-				async: false,
-				datatype: "text/html",
-				data: {
-				    "invid": invid
-				},
-				beforeSend: function(xhr) {
-				    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-				}
-			    })
-				.done(function(resp) {
-				    $("#invload").html("");
-				    $("#invload").html(resp);
-				    $("#backbutton").attr("psflag", psflag);
-				    $("#editbutton").attr("orderid",orderid);
-				    $("#printbutton").hide();
-				    $("#listdiv").hide();
-				    $("#viewinvdiv").show();
-				    $('#salesorder_div').html("");
-				});*/
+			    if ($("#status").val()==16) {
+				$("#purchaseorder_create").click();
+			    }
+			    else{
+				$("#salesorder_create").click();
+			    }
                         });
                         return false;
                     } else if (resp["gkstatus"] == 1) {

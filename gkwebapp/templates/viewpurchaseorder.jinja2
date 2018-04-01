@@ -4,13 +4,17 @@
       <div class="panel-body">
 	<div class="container-fluid row">
 	  <div class="form-group  col-sm-12">
-	    <label for="purchaseorderselect">{% trans %}Purchase order{% endtrans %} :</label>
-            <select class = "form-control input-sm"  name = "purchaseorderno" id="purchaseorder_select" >
-              <option value="" disabled selected hidden>{% trans %}Select Purchase order{% endtrans %}</option>
-              {% for po in gkresult %}
-		<option value="{{po['orderid']}}" attachmentcount="{{po["attachmentcount"]}}">{{po["orderno"]}}, {{po["orderdate"]}}, {{po["customer"]}}</option>
-              {% endfor %}
-            </select>
+	    {% if numberofpurchaseorders|int < 1 %}
+	      <label class="text-danger">{% trans %}No Purchase Order Found!{% endtrans %}</label>
+	    {% else %}
+	      <label for="purchaseorderselect">{% trans %}Purchase order{% endtrans %} :</label>
+              <select class = "form-control input-sm"  name = "purchaseorderno" id="purchaseorder_select" >
+		<option value="" disabled selected hidden>{% trans %}Select Purchase order{% endtrans %}</option>
+		{% for po in gkresult %}
+		  <option value="{{po['orderid']}}" attachmentcount="{{po["attachmentcount"]}}">{{po["orderno"]}}, {{po["orderdate"]}}, {{po["customer"]}}</option>
+		{% endfor %}
+              </select>
+	    {% endif %}
 	  </div>
 	</div>
 	<div class="nopadding" id="purchaseorderdetails">
