@@ -665,8 +665,12 @@
 		</div>
 
 		<div  class="row col-sm-12">
-		  <div class="form-group form-inline reversepurchase" hidden>
-		    <label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
+		  {% if resultgstvat == '29' or resultgstvat == '22' %}
+		    <div class="form-group form-inline reversepurchase" hidden>
+		  {% else %}
+		      <div class="form-group form-inline reversepurchase">
+			{% endif %}
+			<label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
 		    {#<input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>#}
 		    <div class="form-group col-sm-7 nopadding">
 		      <div class="radio">

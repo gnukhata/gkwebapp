@@ -319,6 +319,9 @@ $(document).ready(function() {
 		$(".gstinfield").show();
 		$(".vatfield").hide();
 		$(".gstfield").show();
+		if ($("#status").val() == 16) {
+		    $(".reversepurchase").show();
+		}
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
@@ -330,6 +333,7 @@ $(document).ready(function() {
 		$("#vathelp").show();
 		$(".gstfield").hide();
 		$(".vatfield").show();
+		$(".reversepurchase").hide();
 	    }
 	}
     });

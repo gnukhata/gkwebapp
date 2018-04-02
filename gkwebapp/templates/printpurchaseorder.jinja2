@@ -528,6 +528,16 @@
 		  {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
 		</td>
 	      </tr>
+	      <tr>
+		{% if gkresult["psflag"] == 16 and gkresult["taxflag"] == 7 %}
+		<td>
+		  <label for="supply_date">{% trans %}Reverse Charge{% endtrans %}:</label>
+		</td>
+		<td>
+		  {% if gkresult["reversecharge"]|int == 1 %}Y{% else %}N{% endif %}
+		</td>
+	      </tr>
+		{% endif %}
 	    </tbody>
 	  </table>
 	</div>

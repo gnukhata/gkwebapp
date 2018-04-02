@@ -1,4 +1,4 @@
-<link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
+<link href="{{request.static_url('gkwebapp:static/css/purchaseorder.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
@@ -448,11 +448,11 @@
 	      {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
 	    </div>
 	  </div>
-	  {% if gkresult["psflag"] == 16 %}
+	  {% if gkresult["psflag"] == 16 and gkresult["taxflag"] == 7 %}
 	    <div class="row col-sm-12">
 	      <div class="form-group form-inline">
 		<label for="inv">{% trans %}Reverse Charge{% endtrans %}:</label>
-		{% if gkresult["reversecharge"]|int == 1 %}Y{% endif %}
+		{% if gkresult["reversecharge"]|int == 1 %}Y{% else %}N{% endif %}
 	      </div>
 	    </div>
 	  {% endif %}
