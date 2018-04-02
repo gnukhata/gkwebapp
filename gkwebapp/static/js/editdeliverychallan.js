@@ -59,7 +59,9 @@ $(document).ready(function() {
 	}
 	}
     }
-   var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
+   //var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
+  $(".deliverychallan_OLD_div").hide();
+    var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
     var inoutflag;
     if(sessionStorage.vatorgstflag == '22' ){
@@ -526,7 +528,6 @@ if(event.which==13)
 	$("#deliverychallanout_edit_list option:first").prop("selected",true);
 	$("#deliverychallanout_edit_list").change();
     });
-
     //this is the change event written for radio buttons in delivery note. 
     //on change event one of the deliverychallan note will be hidden. 
     //also keydown performed.
