@@ -473,6 +473,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
      });
 
     //validation for done button of bankdetails field.
+    $("#accnum").numeric();
     $(document).off("click","#bankdel_done").on("click","#bankdel_done",function(event){
 	if($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="" )
 	{
