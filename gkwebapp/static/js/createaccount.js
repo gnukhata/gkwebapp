@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Sanket Kolnoorkar" <sanketf123@gmail.com>
 */
 
 $(document).ready(function()
@@ -142,14 +143,40 @@ $("#openbal").keydown(function(event){
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
 	if(event.which==13) {
+	    if ($.trim($("#subgroupname option:selected").val())=="New"){
 	    event.preventDefault();
+	    $("#newsubgroup").focus().select();
+	    }
+	    else {
+		event.preventDefault();
 	    $("#maccounts").focus().select();
+	    }
 	}
 	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
       event.preventDefault();
       $("#groupname").focus().select();
-    }
+	    }
+    });
 
+//key down event for newsubgroup.
+    $("#newsubgroup").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($("#newsubgroup").val())=="") {
+		$("#nsblank-alert").alert();
+		$("#nsblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#nsblank-alert").hide();
+		});
+		$("#newsubgroup").focus().select();
+		return false;
+	    }
+	    event.preventDefault();
+      $("#maccounts").focus().select();
+	}
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#subgroupname").focus().select();
+	}
     });
     // Keydown event for Create Multiple Accounts Checkbox.  
      $("#maccounts").keydown(function(event){
@@ -158,9 +185,14 @@ $("#openbal").keydown(function(event){
 	    $("#accountname").focus().select();
 	}
 	 else if (event.which == 38){
-	event.preventDefault();
-	$("#subgroupname").focus().select();
-    }
+	     event.preventDefault();
+	     if ($("#newsubgroup").is(':visible')) {
+		 $("#newsubgroup").focus().select();
+	     }
+	     else {
+		 $("#subgroupname").focus().select();
+	     }
+	     }
      });
     // Keydown event for Account Name.
     //Validations for Account Name.
@@ -289,13 +321,9 @@ $("#openbal").keydown(function(event){
     }
   );
 
-
-
-
   e.preventDefault();
 }
 );
-
 
 $('#maccounts').change(function() {
   if ($.trim($("#groupname option:selected").val())=="") {
@@ -330,7 +358,6 @@ $('#maccounts').change(function() {
 
   }
 
-
   $.ajax({
     type: "POST",
     url: "/showmultiacc",
@@ -357,18 +384,11 @@ $('#maccounts').change(function() {
       $("#multiaccount_modal").html("");
       $("#reset").click();
 
-
     });
 
   })
   .fail(function() {
     alert("failed");
   });
-
-
-
-
 });
-
-
 });
