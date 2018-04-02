@@ -31,8 +31,8 @@ $(document).ready(function() {
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
     
-    $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
-    $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
+   // $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
+   // $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
   $("#msspinmodal").modal("hide");
     $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:eq(1) a').focus();

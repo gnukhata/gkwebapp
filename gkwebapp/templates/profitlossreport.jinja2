@@ -87,36 +87,22 @@
           </tr>
         </thead>
         <tbody>
-          {% for rcrecord in expense %}
-            {% if rcrecord["amount"]=="."  %}
-              <tr  data-value="blank">
-	    {% else  %}
-		<tr  data-value="{{rcrecord['accountcode']}}">
-	    {% endif %}
-            <td class="col-xs-1">
-              {{rcrecord['toby']}}
-            </td>
-            <td class="col-xs-9">
-	      {%if rcrecord['accountcode']=="" and rcrecord['accountname'] == "DIRECT EXPENSE"%}
-		<a class="rcaccname degroup" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {%if rcrecord['accountcode']=="" and rcrecord["accountname"] == "INDIRECT EXPENSE"  %}
-		<a class="rcaccname iegroup" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {%if rcrecord['accountcode']!=""%}
-		<a class="rcaccname account" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {% if (rcrecord['accountcode']=="") and (rcrecord['accountname'] != "DIRECT EXPENSE" and rcrecord['accountname'] != "INDIRECT EXPENSE")  %}
-		<a class="rcaccname" href="#" style="text-decoration: none;" >{{rcrecord['accountname']}}</a>
-	      {% endif %}
-            </td>
-            {% if rcrecord["amount"]=="." %}
-              <td class="col-xs-2 ralign">&nbsp</td>
-            {% else %}
-              <td class="col-xs-2 ralign">
-		{{rcrecord["amount"]}}
+	  <tr>
+	    <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >Direct Expense</a> </td>
+	    <td></td>
+	    <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{DirectExpense["direxpbal"]}}</a> </td>
+	  </tr>
+	  {% for rcrecord in DirectExpense %}
+            <tr>
+	      <td class="col-xs-8"> <a  href="#">{{rcrecord}}</a> </td>
+	      <td class="col-xs-4 text-right">
+		{{DirectExpense[rcrecord]}}
               </td>
-            {% endif %}
+	    </tr>
+	    <tr  data-value="{{rcrecord}}">
+	      
+             
+            
           </tr>
           {% endfor %}
         </tbody>
