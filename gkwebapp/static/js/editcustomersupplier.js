@@ -195,13 +195,6 @@ $(document).ready(function() {
       $("#edit_cussup_email").focus().select();
     }
   });
-
-    
-    /*$("#edit_state").change(function(event) {
-	var availstate =  $("#edit_state").val();
-	$(".gstinstate").val(availstate);
-	$(".statecode").val($("#edit_state option:selected").attr("stateid"));
-    });*/
     
   $("#edit_state").keydown(function(event) {
     if (event.which==13) {
@@ -812,7 +805,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	}
 	
 	
-  /*    if ($.trim($("#edit_cussup_tan").val())==""){
+  /*if ($.trim($("#edit_cussup_tan").val())==""){
       $("#both-blank-alert").alert();
       $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#both-blank-alert").hide();
@@ -847,7 +840,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    allow = 0;
 	    return false;
 	}
-	/*else if(gstinstring != ""){
+	else if(gstinstring != ""){
 	    if(gstinstring.length != 15){
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -857,7 +850,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		allow = 0;
 		return false;
 	    }
-	    }*/
+	}
 	if(gstinstring.length == 15){
 	    gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;
 	}

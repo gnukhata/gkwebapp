@@ -739,7 +739,7 @@ else{
 	    allow = 0;
 	    return false;
 	}
-	else if(gstinstring != ""){
+	/*else if(gstinstring != ""){
 	    if(gstinstring.length != 15){
 		$("#improper-gstin-alert").alert();
 		$("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -749,10 +749,11 @@ else{
 		allow = 0;
 		return false;
 	    }
+	}*/
+
+	if(gstinstring.length == 15){
+            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
 	}
-
-
-        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
     }
       });
       var custtan  = "";
