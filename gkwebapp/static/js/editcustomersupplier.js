@@ -499,7 +499,8 @@ $(document).ready(function() {
 		$("#cussup_edit_save").focus();
 	    }
 	}
-  });
+    });
+    $("#edit_accountno").numeric();
     $("#edit_accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
