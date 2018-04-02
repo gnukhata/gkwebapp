@@ -108,6 +108,15 @@ $(document).ready(function() {
       $("#add_cussup_email").focus().select();
     }
   });
+
+    //Selected customer/supplier state autopopulate in gstin state and statecode.
+    $("#add_state").change(function(event) {
+        var availstate =  $("#add_state").val();
+	$(".gstinstate").val(availstate);
+	$(".statecode").val($("#add_state option:selected").attr("stateid"));
+    });
+    
+    
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
     	event.preventDefault();

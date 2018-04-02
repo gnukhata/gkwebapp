@@ -118,6 +118,13 @@ $(document).ready(function() {
     }
   });
 
+    //Selected customer/supplier state autopopulate in gstin state and statecode.
+    $("#add_state").change(function(event) {
+        var availstate =  $("#add_state").val();
+	$(".gstinstate").val(availstate);
+	$(".statecode").val($("#add_state option:selected").attr("stateid"));
+    });
+    
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
     	event.preventDefault();
@@ -137,8 +144,7 @@ $("#add_state").keydown(function(event) {
           $("#add_cussup_phone").focus().select();
         }
 });
-
-
+    
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
   var curindex = $(this).closest('tr').index();
@@ -739,6 +745,7 @@ if($("#vatorgstflag").val() == '22'){
 
 	//Validation for GSTIN on save button 
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    console.log("1st");
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
@@ -748,6 +755,7 @@ if($("#vatorgstflag").val() == '22'){
 	    return false;
 	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
+	    console.log("2nd");
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
@@ -756,8 +764,9 @@ if($("#vatorgstflag").val() == '22'){
 	    allow = 0;
 	    return false;
 	}
-	else if(gstinstring != ""){
+	/*else if(gstinstring != ""){
 	    if(gstinstring.length != 15){
+		console.log("3rd");
 		$("#gstin-improper-alert").alert();
 		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#gstin-improper-alert").hide();
@@ -766,9 +775,11 @@ if($("#vatorgstflag").val() == '22'){
 		allow = 0;
 		return false;
 	    }
-	}
+	}*/
 
-        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+	if(gstinstring.length == 15){
+            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+	}
     }
       });
       var custtan  = "";
