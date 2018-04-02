@@ -5,8 +5,11 @@
 <body style="padding-right:1%;">
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
-
-      {% trans %}Sales Order saved.{% endtrans %}
+      {% if status|int == 16%}
+	{% trans %}Purchase Order saved.{% endtrans %}
+      {% else %}
+	{% trans %}Sales Order saved.{% endtrans %}
+	{% endif %}
     </div>
     <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
