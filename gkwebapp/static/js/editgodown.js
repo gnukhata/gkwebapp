@@ -158,15 +158,16 @@ $(document).ready(function() {
             $("#goaddress").focus().select();
           }
         });
-        $("#gocontact").keydown(function(e){
-          if (e.which == 13) {
+    $("#gocontact").numeric();
+    $("#gocontact").keydown(function(e){
+        if (e.which == 13) {
             e.preventDefault();
             $("#egdnsubmit").click();
-          }
-          if (e.which == 38) {
+        }
+        if (e.which == 38) {
             $("#gocontactname").focus().select();
-          }
-        });
+        }
+    });
 
     $("#editgoddet").keyup(function(e) {
         if ($(".editgodownform").is(':visible')) {
