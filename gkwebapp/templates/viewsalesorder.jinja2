@@ -1,33 +1,31 @@
 <body>
-<div class="container-fluid" style="padding:1 !important; margin:0 !important;">
-    <div class='panel '>
-
-  <div class="panel-body">
-    <form id="viewsalesorderform">
-      <div class="container-fluid row">
-    <div class="form-group  col-sm-12">
-
-      <label for="salesorderselect">{% trans %}Sales Order{% endtrans %} :</label>
-        <select class = "form-control"  name = "salesorderno" id="salesorder_select" >
-          <option value="" disabled selected hidden>{% trans %}Select Sales Order{% endtrans %}</option>
-          {% for so in gkresult %}
-          <option value="{{so['orderid']}}">{{so["orderno"]}}, {{so["orderdate"]}}, {{so["custname"]}}</option>
-          {% endfor %}
-        </select>
-
-
-    </div>
-  </div>
-      <div class="container-fluid" id="salesorderdetails" style="padding:1 !important; margin:0 !important;" disabled >
-
+  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+    <div class='panel'>
+      <div class="panel-body">
+	<div class="container-fluid row">
+	  <div class="form-group  col-sm-6">
+	    {% if numberofsalesorders|int < 1 %}
+	      <label class="text-danger">{% trans %}No Sales Order Found!{% endtrans %}</label>
+	    {% else %}
+	    <label for="salesorderselect">{% trans %}Sales order{% endtrans %} :</label>
+            <select class = "form-control input-sm"  name = "salesorderno" id="salesorder_select" >
+              <option value="" disabled selected hidden>{% trans %}Select Sales order{% endtrans %}</option>
+              {% for po in gkresult %}
+		<option value="{{po['orderid']}}" attachmentcount="{{po["attachmentcount"]}}">{{po["orderno"]}}, {{po["orderdate"]}}, {{po["customer"]}}</option>
+              {% endfor %}
+            </select>
+	    {% endif %}
+	  </div>
+	</div>
+	<div class="nopadding" id="salesorderdetails">
+	</div>
       </div>
-    </form>
+      <div class="panel-footer" id="viewpofooter" hidden>
+	<div class="container-fluid btndisablediv">
+	  <button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h" style="display:none;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
+        </div>
       </div>
-
-
-
-
     </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewsalesorder.js')}}"></script>
-  </body>
+</body>

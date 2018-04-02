@@ -24,12 +24,11 @@ $(document).ready(function() {
 
 
        $("#salesorder_select").change(function(event) {
-         /* Act on the event */
-         console.log("change");
-          salesorderid = $("#salesorder_select option:selected").val();
-          console.log(salesorderid);
+           /* Act on the event */
+	   $("#viewpofooter, #viewattach").hide();
+          var salesorderid = $("#salesorder_select option:selected").val();
            $.ajax({
-             url: '/salesorder?type=details',
+             url: '/purchaseorder?type=details',
              type: 'POST',
              global: false,
              async: false,
@@ -45,7 +44,10 @@ $(document).ready(function() {
            .done(function(resp)
            {
              $("#salesorderdetails").html("");
-             $("#salesorderdetails").html(resp);
+               $("#salesorderdetails").html(resp);
+	       if ($("#salesorder_select option:selected").attr("attachmentcount") > 0) {
+		   $("#viewpofooter, #viewattach").show();
+	       }
              console.log("success");
            })
            .fail(function() {
