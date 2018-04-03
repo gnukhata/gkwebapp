@@ -91,14 +91,24 @@ $(document).ready(function() {
     var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
       {
-        var nextIndex = f.index(this) + 1;
-        if(nextIndex < n){
+	 if ($("#viewbankrecon_accname").val()==null) {
+      $("#account-blank-alert").alert();
+      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#account-blank-alert").hide();
+      });
+	$('#viewbankrecon_accname').focus();
+      return false;
+    }  
+
+     else {
+	 var nextIndex = f.index(this) + 1;
+	 if(nextIndex < n){
           e.preventDefault();
           f[nextIndex].focus();
           f[nextIndex].select();
         }
-      }
-      if (e.which == 38 )
+	  }}
+     if (e.which == 38 )
       {
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){
