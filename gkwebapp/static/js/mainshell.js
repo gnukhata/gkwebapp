@@ -554,10 +554,10 @@ $(".businessmenu").keydown(function(event){
 	 $(".intauditor").remove();
 	 $("#fevoucher").text("Find Voucher");
      }
-     console.log(resp["gkresult"])
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
-       $(".closebooks").remove();
+	 $(".closebooks").remove();
+	 $(".rollover").remove();
        $("#fevoucher").text("Find Voucher");
        $("#findvouchertb").text("Find Voucher - F10");
      }

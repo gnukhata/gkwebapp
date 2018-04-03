@@ -65,7 +65,7 @@ $(document).ready(function()
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {
@@ -77,7 +77,7 @@ $(document).ready(function()
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 
@@ -104,23 +104,23 @@ $(document).ready(function()
 
   $('.modal-backdrop').remove();
   $('.crdate').autotab('number');
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#cbfromday").val(fromdatearray[2])
-  $("#cbfrommonth").val(fromdatearray[1])
-  $("#cbfromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#cbtoday").val(todatearray[2])
-  $("#cbtomonth").val(todatearray[1])
-  $("#cbtoyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#cbfromday").val(fromdatearray[2]);
+    $("#cbfrommonth").val(fromdatearray[1]);
+    $("#cbfromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#cbtoday").val(todatearray[2]);
+    $("#cbtomonth").val(todatearray[1]);
+    $("#cbtoyear").val(todatearray[0]);
 
 
-  $("#rbfromday").val(fromdatearray[2])
-  $("#rbfrommonth").val(fromdatearray[1])
-  $("#rbfromyear").val(fromdatearray[0])
+    $("#rbfromday").val(fromdatearray[2]);
+    $("#rbfrommonth").val(fromdatearray[1]);
+    $("#rbfromyear").val(fromdatearray[0]);
 
-  $("#rbtoday").val(todatearray[2])
-  $("#rbtomonth").val(todatearray[1])
-  $("#rbtoyear").val(todatearray[0])
+    $("#rbtoday").val(todatearray[2]);
+    $("#rbtomonth").val(todatearray[1]);
+    $("#rbtoyear").val(todatearray[0]);
 
 
 if(sessionStorage.newfstartday)
@@ -325,7 +325,7 @@ $("#closebooks").click(function(event)
   sessionStorage.newfendmonth = endmonth2;
   sessionStorage.newfendyear= endyear2;
   event.preventDefault();
-  $(".closebooks").attr("disabled",true)
+  //$(".closebooks").attr("disabled",true);
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
