@@ -119,6 +119,12 @@
 		    </tr>
 		  {% endif %}
 		{% endfor %}
+		{% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
+		      <tr>
+			<td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+			<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
+		      </tr>
+		{% endif %}
 	      {% endif %}
 	    {% endfor %}
 	    <tr>
@@ -139,6 +145,12 @@
 		    </tr>
 		  {% endif %}
 		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup] %}
+		  <tr>
+		    <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]}}</span></td>
+		  </tr>
 	      {% endif %}
 	    {% endfor %}
           </tbody>
@@ -192,6 +204,38 @@
 		    </tr>
 		  {% endif %}
 		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "Sales" and subgroup != "dirincmbal" and "balance" not in DirectIncome[subgroup] %}
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
+	    {% endfor %}
+	    <tr>
+	      <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >INDIRECT INCOME</a> </td>
+	      <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{InDirectIncome["indirincmbal"]}}</a> </td>
+	    </tr>
+            {% for subgroup in InDirectIncome %}
+	      {% if "balance" in InDirectIncome[subgroup] %}
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in InDirectIncome[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{InDirectIncome[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup] %}
+		  <tr>
+		    <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]}}</span></td>
+		  </tr>
 	      {% endif %}
 	    {% endfor %}
           </tbody>

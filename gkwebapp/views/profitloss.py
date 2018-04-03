@@ -111,7 +111,7 @@ def showprofitlossreport(request):
 
     result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
     DirectIncome = result.json()["gkresult"]["Direct Income"]
-    InDiretIncome = result.json()["gkresult"]["Indirect Income"]
+    InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
     net = {}
@@ -121,4 +121,4 @@ def showprofitlossreport(request):
         net["netloss"] = result.json()["gkresult"]["netloss"]
     
     
-    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"InDiretIncome":InDiretIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
+    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
