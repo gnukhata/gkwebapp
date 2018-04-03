@@ -114,14 +114,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-      var acccode = $(this).attr('data-value');
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
       let curindex = $(this).index();
-    if (acccode!="")
-    {
-     var todatearray = $("#ledtodate").val().split("-");
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
      var fromdatearray = $("#ledfromdate").val().split("-");
      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-     var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -138,6 +155,8 @@ $(document).ready(function() {
         .done(function(resp)
         {
           $("#info").html(resp);
+        }
+      );
         }
       );
     }
@@ -229,14 +248,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-      var acccode = $(this).attr('data-value');
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
       let curindex = $(this).index();
-    if (acccode!="")
-    {
-    var todatearray = $("#ledtodate").val().split("-");
-    var fromdatearray = $("#ledfromdate").val().split("-");
-    var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
+     var fromdatearray = $("#ledfromdate").val().split("-");
+     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -253,6 +289,8 @@ $(document).ready(function() {
         .done(function(resp)
         {
           $("#info").html(resp);
+        }
+      );
         }
       );
     }
