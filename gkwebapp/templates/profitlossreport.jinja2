@@ -81,27 +81,27 @@
               </th>
             </tr>
             <tr>
-              <th class="col-xs-1">&nbsp</th>
-              <th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
               <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
             </tr>
           </thead>
           <tbody>
 	    <tr>
-	      <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >Direct Expense</a> </td>
-	      <td></td>
+	      <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >DIRECT EXPENSE</a> </td>
 	      <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{DirectExpense["direxpbal"]}}</a> </td>
 	    </tr>
 	    
 	      {% if "Purchase" in DirectExpense %}
 		<tr>
-		  <td class="col-xs-8"> <a  href="#"> Purchase</a> </td>
-		  <td class="col-xs-4 text-right">{{DirectExpense["Purchase"]["balance"]}}</td>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">PURCHASE</a></span></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense["Purchase"]["balance"]}}</span></td>
 		</tr>
 		{% for purch in DirectExpense["Purchase"] %}
 		  {% if purch != "balance" %}
-		  <td class="col-xs-8"> <a  href="#"> {{purch}}</a> </td>
-		  <td class="col-xs-4 text-right">{{DirectExpense["Purchase"][purch]}}</td>
+		    <tr>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</a></span></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense["Purchase"][purch]}}</span></td>
+		    </tr>
 		  {% endif %}
 		  {% endfor %}
 		{% endif %}
@@ -119,8 +119,7 @@
               </th>
             </tr>
             <tr>
-              <th class="col-xs-1">&nbsp</th>
-              <th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
               <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
             </tr>
           </thead>
