@@ -121,7 +121,26 @@
 		{% endfor %}
 	      {% endif %}
 	    {% endfor %}
-            
+	    <tr>
+	      <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </td>
+	      <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{DirectExpense["indirexpbal"]}}</a> </td>
+	    </tr>
+            {% for subgroup in InDirectExpense %}
+	      {% if "balance" in InDirectExpense[subgroup] %}
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in InDirectExpense[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{InDirectExpense[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	    {% endfor %}
           </tbody>
 	</table>
       </div>
