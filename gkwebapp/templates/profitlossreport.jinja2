@@ -93,18 +93,34 @@
 	    
 	      {% if "Purchase" in DirectExpense %}
 		<tr>
-		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">PURCHASE</a></span></td>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">PURCHASE</span></a></td>
 		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense["Purchase"]["balance"]}}</span></td>
 		</tr>
 		{% for purch in DirectExpense["Purchase"] %}
 		  {% if purch != "balance" %}
 		    <tr>
-		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</a></span></td>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
 		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense["Purchase"][purch]}}</span></td>
 		    </tr>
 		  {% endif %}
-		  {% endfor %}
+		{% endfor %}
+	      {% endif %}
+	      {% for subgroup in DirectExpense %}
+		{% if subgroup != "Purchase" and "balance" in DirectExpense[subgroup] %}
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in DirectExpense[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense[subgroup][account]}}</span></td>
+		    </tr>
+		    {% endif %}
+		{% endfor %}
 		{% endif %}
+	      {% endfor %}
            
           </tbody>
 	</table>
