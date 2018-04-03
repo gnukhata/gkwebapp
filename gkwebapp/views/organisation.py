@@ -130,8 +130,7 @@ def getOrgcode(request):
 def closebooks(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/rollclose?task=closebooks&financialend=%s"%(request.params["financialend"]), headers=header)
-    print result.json()["gkstatus"]
-
+    
     return {"gkstatus":result.json()["gkstatus"]}
 
 
@@ -139,7 +138,6 @@ def closebooks(request):
 def rollover(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/rollclose?task=rollover&financialend=%s&financialstart=%s"%(request.params["financialend"],request.params["financialstart"]), headers=header)
-    print result.json()["gkstatus"]
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="deleteorg", renderer="json")
