@@ -239,7 +239,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
 	  if($('#status').val()=='9'){
-	      $("#cust_accountno").focus();
+	      $("#checkbnkpop").focus();
 	  } else {
 	      $("#cussup_save").focus();
 	  }

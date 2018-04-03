@@ -412,7 +412,7 @@ $(document).ready(function() {
       event.preventDefault();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
 	  if ($("#edit_cussup").val() == "Supplier"){
-	      $("#edit_accountno").focus();
+	      $("#checkbnk").focus();
 	  } else {
 	      $("#cussup_edit_save").focus();
 	  }

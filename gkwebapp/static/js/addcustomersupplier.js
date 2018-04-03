@@ -265,7 +265,7 @@ $("#add_state").keydown(function(event) {
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
 	  if($("#add_cussup").val() == '19'){
-	      $("#accountno").focus();
+	      $("#checkbnk").focus();
 	  } else {
 	      $("#cussup_save").focus();
 	  }
