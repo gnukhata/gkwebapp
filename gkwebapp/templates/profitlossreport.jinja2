@@ -31,13 +31,19 @@
 	 height: calc(100vh - 16em);
 	 overflow-y:scroll;
      }
-     .fixed-table thead,.fixed-table tbody tr {
+     .fixed-table thead,.fixed-table tbody tr  {
 	 display:table;
 	 width:100%;
 	 table-layout:fixed;
      }
      .fixed-table thead {
 	 width: calc( 100% - 0.8em );
+     }
+     .fixed-table tfoot tr {
+	 display:table;
+	 width: calc( 100% - 0.8em );
+	 table-layout:fixed;
+	 height:30px !important;
      }
      .nopadding{
 	 padidng:0 !important;
@@ -120,10 +126,10 @@
 		  {% endif %}
 		{% endfor %}
 		{% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
-		      <tr>
-			<td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
-			<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
-		      </tr>
+		  <tr>
+		    <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
+		  </tr>
 		{% endif %}
 	      {% endif %}
 	    {% endfor %}
@@ -147,13 +153,19 @@
 		{% endfor %}
 	      {% endif %}
 	      {% if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup] %}
-		  <tr>
-		    <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
-		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]}}</span></td>
-		  </tr>
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]}}</span></td>
+		</tr>
 	      {% endif %}
 	    {% endfor %}
           </tbody>
+	  <tfoot>
+	    <tr>
+	      <td class="col-xs-8">{% if net["netprofit"] %}Net Profit{% endif %}</td>
+	      <td class="col-xs-4 text-right">{% if net["netprofit"] %}{{net["netprofit"]}}{% endif %}</td>
+	    </tr>
+	  </tfoot>
 	</table>
       </div>
       <div class="table-responsive col-xs-6 nopadding">
@@ -232,13 +244,19 @@
 		{% endfor %}
 	      {% endif %}
 	      {% if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup] %}
-		  <tr>
-		    <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
-		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]}}</span></td>
-		  </tr>
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]}}</span></td>
+		</tr>
 	      {% endif %}
 	    {% endfor %}
           </tbody>
+	  <tfoot>
+	    <tr>
+	      <td class="col-xs-8">{% if net["netloss"] %}Net Loss{% endif %}</td>
+	      <td class="col-xs-4 text-right">{% if net["netloss"] %}{{net["netloss"]}}{% endif %}</td>
+	    </tr>
+	  </tfoot>
 	</table>
       </div>
 
