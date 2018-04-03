@@ -130,7 +130,6 @@ def getOrgcode(request):
 def closebooks(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/rollclose?task=closebooks&financialend=%s"%(request.params["financialend"]), headers=header)
-    
     return {"gkstatus":result.json()["gkstatus"]}
 
 
