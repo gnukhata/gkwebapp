@@ -91,22 +91,22 @@
 	      <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{DirectExpense["direxpbal"]}}</a> </td>
 	    </tr>
 	    
-	      {% if "Purchase" in DirectExpense %}
-		<tr>
-		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">PURCHASE</span></a></td>
-		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense["Purchase"]["balance"]}}</span></td>
-		</tr>
-		{% for purch in DirectExpense["Purchase"] %}
-		  {% if purch != "balance" %}
-		    <tr>
-		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
-		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense["Purchase"][purch]}}</span></td>
-		    </tr>
-		  {% endif %}
-		{% endfor %}
-	      {% endif %}
-	      {% for subgroup in DirectExpense %}
-		{% if subgroup != "Purchase" and "balance" in DirectExpense[subgroup] %}
+	    {% if "Purchase" in DirectExpense %}
+	      <tr>
+		<td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">PURCHASE</span></a></td>
+		<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense["Purchase"]["balance"]}}</span></td>
+	      </tr>
+	      {% for purch in DirectExpense["Purchase"] %}
+		{% if purch != "balance" %}
+		  <tr>
+		    <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense["Purchase"][purch]}}</span></td>
+		  </tr>
+		{% endif %}
+	      {% endfor %}
+	    {% endif %}
+	    {% for subgroup in DirectExpense %}
+	      {% if subgroup != "Purchase" and "balance" in DirectExpense[subgroup] %}
 		<tr>
 		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
 		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]["balance"]}}</span></td>
@@ -117,11 +117,11 @@
 		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
 		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense[subgroup][account]}}</span></td>
 		    </tr>
-		    {% endif %}
+		  {% endif %}
 		{% endfor %}
-		{% endif %}
-	      {% endfor %}
-           
+	      {% endif %}
+	    {% endfor %}
+            
           </tbody>
 	</table>
       </div>
@@ -140,38 +140,41 @@
             </tr>
           </thead>
           <tbody>
-            {% for pyrecord in income %}
-	      {% if pyrecord["amount"]=="."  %}
-		<tr  data-value="blank">
-	      {% else  %}
-		  <tr  data-value="{{pyrecord['accountcode']}}">
-	      {% endif %}
-              <td class="col-xs-1">
-		{{pyrecord['toby']}}
-              </td>
-              <td class="col-xs-9">
-		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "DIRECT INCOME" %}
-		  <a class="pyaccname digroup" href="#">{{pyrecord['accountname']}}</a>
-		{% endif %}
-		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "INDIRECT INCOME" %}
-		  <a class="pyaccname iigroup" href="#">{{pyrecord['accountname']}}</a>
-		{% endif %}
-		{%if pyrecord['accountcode']!=""%}
-		  <a class="pyaccname account1" href="#">{{pyrecord['accountname']}}</a>
-		{% endif %}
-		{% if (pyrecord['accountcode']=="") and (pyrecord['accountname'] != "DIRECT INCOME" and pyrecord['accountname'] != "INDIRECT INCOME")  %}
-		  <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
-		{% endif %}
-              </td>
-              {% if pyrecord["amount"]=="." %}
-		<td class="col-xs-2 ralign">&nbsp</td>
-              {% else %}
-		<td class="col-xs-2 ralign">
-		  {{pyrecord["amount"]}}
-		</td>
-              {% endif %}
+            <tr>
+	      <td class="col-xs-8"> <a  href="#" style="text-decoration: none;" >DIRECT INCOME</a> </td>
+	      <td  class="col-xs-4 text-right"> <a  href="#" style="text-decoration: none;" >{{DirectIncome["dirincmbal"]}}</a> </td>
+	    </tr>
+	    
+	    {% if "Sales" in DirectIncome %}
+	      <tr>
+		<td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">SALES</span></a></td>
+		<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome["Sales"]["balance"]}}</span></td>
+	      </tr>
+	      {% for purch in DirectIncome["Sales"] %}
+		{% if purch != "balance" %}
+		  <tr>
+		    <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectIncome["Sales"][purch]}}</span></td>
 		  </tr>
-            {% endfor %}
+		{% endif %}
+	      {% endfor %}
+	    {% endif %}
+	    {% for subgroup in DirectIncome %}
+	      {% if subgroup != "Sales" and "balance" in DirectIncome[subgroup] %}
+		<tr>
+		  <td class="col-xs-8"><a  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in DirectIncome[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr>
+		      <td class="col-xs-8"><a  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectIncome[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	    {% endfor %}
           </tbody>
 	</table>
       </div>
