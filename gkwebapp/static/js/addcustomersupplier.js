@@ -321,6 +321,7 @@ $("#add_state").keydown(function(event) {
  });
 
     // Keydown events for bank details
+    $("#accountno").numeric();
     $("#accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();

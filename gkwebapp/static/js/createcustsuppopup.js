@@ -292,6 +292,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 });
 
     // Keydown events for bank details
+    $("#cust_accountno").numeric();
     $("#cust_accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
@@ -307,16 +308,16 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	if (event.which==13) {
 	    event.preventDefault();
 	    if ($("#cust_accountno").val() != "" && $("#cust_bankname").val() == "" ) {
-		$("#bankname-blank-alert").alert();
-		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#bankname-blank-alert").hide();
+		$("#bankname-blank-alert-popup").alert();
+		$("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert-popup").hide();
 		    $("#cust_bankname").focus();
 		});
 		return false;
 	    } else if ($("#cust_accountno").val() == "" && $("#cust_bankname").val() != "" ) {
-		$("#accountno-blank-alert").alert();
-		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#accountno-blank-alert").hide();
+		$("#accountno-blank-alert-popup").alert();
+		$("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert-popup").hide();
 		});
 		$("#cust_accountno").focus();
 		return false;
@@ -341,16 +342,16 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 		});
 		return false;
 	    } else if($("#cust_accountno").val() == "" && $("#cust_branchname").val() != ""){
-		$("#accountno-blank-alert").alert();
-		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#accountno-blank-alert").hide();
+		$("#accountno-blank-alert-popup").alert();
+		$("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert-popup").hide();
 		    $("#cust_accountno").focus();
 		});
 		return false;
 	    }else if($("#cust_bankname").val() == "" && $("#cust_branchname").val() != ""){
-		$("#bankname-blank-alert").alert();
-		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#bankname-blank-alert").hide();
+		$("#bankname-blank-alert-popup").alert();
+		$("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert-popup").hide();
 		    $("#cust_bankname").focus();
 		});
 		return false;
@@ -368,23 +369,23 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	if (event.which==13) {
 	    event.preventDefault();
 	    if ($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() != "" && $("#cust_ifsc").val() == "") {
-		$("#ifsc-blank-alert").alert();
-		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#ifsc-blank-alert").hide();
+		$("#ifsc-blank-alert-popup").alert();
+		$("#ifsc-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert-popup").hide();
 		    $("#cust_ifsc").focus();
 		});
 		return false;
 	    } else if($("#cust_accountno").val() == "" && $("#cust_ifsc").val() != ""){
-		$("#accountno-blank-alert").alert();
-		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#accountno-blank-alert").hide();
+		$("#accountno-blank-alert-popup").alert();
+		$("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert-popup").hide();
 		    $("#cust_accountno").focus();
 		});
 		return false;
 	    } else if($("#cust_bankname").val() == "" && $("#cust_ifsc").val() != ""){
-		$("#bankname-blank-alert").alert();
-		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#bankname-blank-alert").hide();
+		$("#bankname-blank-alert-popup").alert();
+		$("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert-popup").hide();
 		    $("#cust_bankname").focus();
 		});
 		return false;
@@ -410,17 +411,17 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     $("#cust_bankname").change(function(event) {
 	event.preventDefault();
 	if ($("#cust_accountno").val() == "" && $("#cust_bankname").val() != "" ) {
-	    $("#accountno-blank-alert").alert();
-	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#accountno-blank-alert").hide();
+	    $("#accountno-blank-alert-popup").alert();
+	    $("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert-popup").hide();
 		$("#cust_accountno").focus();
 	    });
 	    return false;
 	}
 	else if ($("#cust_accountno").val() != "" && $("#cust_bankname").val() == "" ) {
-	    $("#bankname-blank-alert").alert();
-	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#bankname-blank-alert").hide();
+	    $("#bankname-blank-alert-popup").alert();
+	    $("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert-popup").hide();
 		$("#cust_bankname").focus();
 	    });
 	    return false;
@@ -441,16 +442,16 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 	    });
 	    return false;
 	} else if($("#cust_accountno").val() == "" && $("#cust_branchname").val() != ""){ //working
-	    $("#accountno-blank-alert").alert();
-	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#accountno-blank-alert").hide();
+	    $("#accountno-blank-alert-popup").alert();
+	    $("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-popup").hide();
 		$("#cust_accountno").focus();
 	    });
 	    return false;
 	}else if($("#cust_bankname").val() == "" && $("#cust_branchname").val() != ""){ //working
-	    $("#bankname-blank-alert").alert();
-	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#bankname-blank-alert").hide();
+	    $("#bankname-blank-alert-popup").alert();
+	    $("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert-popup").hide();
 		$("#cust_bankname").focus();
 	    });
 	    return false;
@@ -464,23 +465,23 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     $("#cust_ifsc").change(function(event) {
 	event.preventDefault();
 	if($("#cust_accounno").val() != "" && $("#cust_bankname").val() != "" && $("#cust_branchname").val() != "" && $("#cust_ifsc").val() == "") {
-	    $("#ifsc-blank-alert").alert();
-	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#ifsc-blank-alert").hide();
+	    $("#ifsc-blank-alert-popup").alert();
+	    $("#ifsc-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#ifsc-blank-alert-popup").hide();
 		$("#cust_ifsc").focus();
 	    });
 	    return false;
 	} else if($("#cust_accountno").val() == "" && $("#cust_ifsc").val() != ""){
-		$("#accountno-blank-alert").alert();
-		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#accountno-blank-alert").hide();
+		$("#accountno-blank-alert-popup").alert();
+		$("#accountno-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert-popup").hide();
 		    $("#cust_accountno").focus();
 		});
 	    return false;
 	} else if($("#cust_bankname").val() == "" && $("#cust_ifsc").val() != ""){
-	    $("#bankname-blank-alert").alert();
-	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#bankname-blank-alert").hide();
+	    $("#bankname-blank-alert-popup").alert();
+	    $("#bankname-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert-popup").hide();
 		$("#cust_bankname").focus();
 	    });
 	    return false;
@@ -700,7 +701,7 @@ else{
 	    });
 	    $("#cust_accountno").focus();
 	       return false;
-	   }
+	  }
 	}
       
       var gobj = {}; // Creating a dictionary for storing statecode with gstin.
