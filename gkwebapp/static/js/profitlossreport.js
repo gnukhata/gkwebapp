@@ -35,8 +35,8 @@ $(document).ready(function() {
    // $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
   $("#msspinmodal").modal("hide");
     $("#realprintpnl").hide();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+  $('#expensetbl tbody tr:first-child td:first a').focus();
+  $('#expensetbl tbody tr:first-child td:first a').closest('tr').addClass('selected');
     var rcindex = 0;
     var pyindex = 0;
 
@@ -69,20 +69,20 @@ $(document).ready(function() {
     if (event.which==40)
     {
       event.preventDefault();
-      $('#expensetbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#expensetbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
         event.preventDefault();
-        $('#expensetbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#expensetbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==39)
     {
 
-      $('#incometbl tbody tr:eq('+pyindex+') td:eq(1) a').focus();
+      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
     }
   });
 
@@ -202,19 +202,19 @@ $(document).ready(function() {
         if (event.which==40)
     {
 
-      $('#incometbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#incometbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
-        $('#incometbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#incometbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==37)
     {
 
-      $('#expensetbl tbody tr:eq('+rcindex+') td:eq(1) a').focus();
+      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
     }
 
 
