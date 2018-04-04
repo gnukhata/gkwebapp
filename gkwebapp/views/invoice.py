@@ -35,9 +35,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from PIL import Image
-import base64
 import cStringIO
-from odslib import ODS
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
@@ -445,110 +443,62 @@ def listofinvspreadsheet(request):
 
 @view_config(route_name="invoice",request_param="type=spreadsheet", renderer="")
 def registerspreadsheet(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom=%s&calculateto=%s"%(int(request.params["flag"]), str(request.params["calculatefrom"]), str(request.params["calculateto"])), headers=header)
-    taxcolumns = result.json()["taxcolumns"]
-    totalrow = result.json()["totalrow"]
-    result = result.json()["gkresult"]
-    fystart = str(request.params["fystart"]);
-    fyend = str(request.params["fyend"]);
-    orgname = str(request.params["orgname"])
-    orgname += " (FY: " + fystart+" to "+fyend +")"
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    if request.params["flag"] == "0":
-           sheet.setSheetName("Sales Register")
-    else:
-        sheet.setSheetName("Purchase Register")
-    sheet.getRow(0).setHeight("23pt")
-    sheet.getRow(1).setHeight("18pt")
-    sheet.getRow(2).setHeight("15pt")
-    sheet.getCell(0,0).stringValue(orgname).setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,7,1)
-    if request.params["flag"] == "0":
-        sheet.getCell(0,1).stringValue("Sales Register").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    else:
-        sheet.getCell(0,1).stringValue("Purchase Register").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,7,1)
-    sheet.getCell(0,2).stringValue("Period: "+request.params["calculatefrom"]+" To "+request.params["calculateto"]).setBold(True).setAlignHorizontal("center").setFontSize("12pt")
-    ods.content.mergeCells(0,2,7,1)
-    sheet.getColumn(1).setWidth("4cm")
-    sheet.getColumn(2).setWidth("4cm")
-    sheet.getColumn(3).setWidth("4cm")
-    sheet.getColumn(4).setWidth("4cm")
-    sheet.getColumn(5).setWidth("4cm")
-    sheet.getColumn(6).setWidth("4cm")
-    sheet.getColumn(7).setWidth("4cm")
-    sheet.getColumn(8).setWidth("4cm")
-    sheet.getCell(0,3).stringValue("Sr. No.").setBold(True)
-    sheet.getCell(1,3).stringValue("Invoice No.").setBold(True)
-    sheet.getCell(2,3).stringValue("Invoice Dt.").setBold(True)
-    if request.params["flag"] == "0":
-           sheet.getCell(3,3).stringValue("Cust. Name").setBold(True)
-           sheet.getCell(4,3).stringValue("Cust. TIN").setBold(True)
-           sheet.getCell(5,3).stringValue("Cust. GSTIN").setBold(True)
-    else:
-        sheet.getCell(3,3).stringValue("Suppl. Name").setBold(True)
-        sheet.getCell(4,3).stringValue("Suppl. TIN").setBold(True)
-        sheet.getCell(5,3).stringValue("Suppl. GSTIN").setBold(True)
-    sheet.getCell(6,3).stringValue("Gross Amt.").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(7,3).stringValue("TAX Free").setBold(True).setAlignHorizontal("right")
-    i = 9
-    for taxc in taxcolumns:
-        sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue("Net @" + taxc ).setBold(True).setAlignHorizontal("right")
-        i += 1
-        sheet.getColumn(i).setWidth("4cm")
-        sheet.getCell(i-1,3).stringValue(taxc).setBold(True).setAlignHorizontal("right")
-        i += 1
-    row = 4
-    for invoice in result:
-        sheet.getCell(0, row).stringValue(invoice["srno"])
-        sheet.getCell(1, row).stringValue(invoice["invoiceno"])
-        sheet.getCell(2, row).stringValue(invoice["invoicedate"])
-        sheet.getCell(3, row).stringValue(invoice["customername"])
-        sheet.getCell(4, row).stringValue(invoice["customertin"])
-        if invoice.has_key("custgstin"):
-           sheet.getCell(5, row).stringValue(invoice["custgstin"])
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/report?type=register&flag=%d&calculatefrom=%s&calculateto=%s"%(int(request.params["flag"]), str(request.params["calculatefrom"]), str(request.params["calculateto"])), headers=header)
+        taxcolumns = result.json()["taxcolumns"]
+        totalrow = result.json()["totalrow"]
+        result = result.json()["gkresult"]
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        orgname += " (FY: " + fystart+" to "+fyend +")"
+        registerwb = openpyxl.Workbook()
+        sheet = registerwb.active
+        if request.params["flag"] == "0":
+            sheet.title= "Sales Register"
         else:
-            sheet.getCell(5, row).stringValue("")
-
-        sheet.getCell(6, row).stringValue(invoice["grossamount"]).setAlignHorizontal("right")
-        sheet.getCell(7, row).stringValue(invoice["taxfree"]).setAlignHorizontal("right")
-        i = 8
-        for taxc in taxcolumns:
-            if taxc in invoice["tax"]:
-                sheet.getCell(i,row).stringValue(invoice["tax"][taxc]).setAlignHorizontal("right")
-            else:
-                sheet.getCell(i,row).stringValue("0.00").setAlignHorizontal("right")
-            i += 1
-            if taxc in invoice["taxamount"]:
-                sheet.getCell(i,row).stringValue(invoice["taxamount"][taxc]).setAlignHorizontal("right")
-            else:
-                sheet.getCell(i,row).stringValue("0.00").setAlignHorizontal("right")
-            i += 1
-        row += 1
-    sheet.getCell(0, row).stringValue("Total").setBold(True).setAlignHorizontal("right")
-    ods.content.mergeCells(0,row,6,1)
-    sheet.getCell(6, row).stringValue(totalrow["grossamount"]).setBold(True).setAlignHorizontal("right")
-    sheet.getCell(7, row).stringValue(totalrow["taxfree"]).setBold(True).setAlignHorizontal("right")
-    i = 8
-    for taxc in taxcolumns:
-        if taxc in totalrow["tax"]:
-            sheet.getCell(i,row).stringValue(totalrow["tax"][taxc]).setBold(True).setAlignHorizontal("right")
+            sheet.title = "Purchase Register"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 12
+        sheet.column_dimensions['C'].width = 10
+        sheet.column_dimensions['D'].width = 16
+        sheet.column_dimensions['E'].width = 18
+        sheet.column_dimensions['F'].width = 18
+        sheet.column_dimensions['G'].width = 10
+        sheet.merge_cells('A1:G2')
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A1'] = orgname
+        sheet.merge_cells('A3:G3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        if request.params["flag"] == "0":
+            sheet['A3'] = 'Sales Register'
         else:
-            sheet.getCell(i,row).stringValue("0.00").setBold(True).setAlignHorizontal("right")
-        i += 1
-        if taxc in totalrow["taxamount"]:
-            sheet.getCell(i,row).stringValue(totalrow["taxamount"][taxc]).setBold(True).setAlignHorizontal("right")
+            sheet['A3'] = 'Purchase Register'
+        sheet.merge_cells('A4:G4')
+        sheet['A4'] = 'Period: ' + request.params["calculatefrom"] + ' to ' + request.params["calculateto"]
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A5'] = 'Sr. No. '
+        sheet['B5'] = 'Inv No'
+        sheet['C5'] = 'Inv Date'
+        if request.params["flag"] == "0":
+            sheet['D5'] = 'Cust. Name '
+            sheet['E5'] = 'Cust. TIN'
+            sheet['F5'] = 'Cust. GSTIN'
         else:
-            sheet.getCell(i,row).stringValue("0.00").setBold(True).setAlignHorizontal("right")
-        i += 1
-
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
+            sheet['D5'] = 'Suppl. Name '
+            sheet['E5'] = 'Suppl. TIN'
+            sheet['F5'] = 'Suppl. GSTIN'
+        registerwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    except:
+        print "File not found"
+        {"gkstatus":3}
