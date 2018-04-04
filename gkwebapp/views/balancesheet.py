@@ -28,6 +28,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Parabjyot Singh" <parabjyot1996@gmail.com>
 "Rahul Chaurasiya" <crahul4133@gmail.com>
+"Reshma Bhatawadekar" <reshma_b@riseup.net>
 """
 
 from pyramid.view import view_config
@@ -71,10 +72,8 @@ def printconvbalsheetreport(request):
         sheet.column_dimensions['G'].width = 12
         sheet.column_dimensions['H'].width = 12
         sheet.merge_cells('A1:H2')
-        # Name and Financial Year of organisation is fetched to be displayed on the first row.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
-        # Organisation name and financial year are displayed.
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet.merge_cells('A3:H3')
         if orgtype == "Profit Making":
@@ -98,6 +97,10 @@ def printconvbalsheetreport(request):
         sheet['H4'] = "Amount"
         sheet['H4'].alignment = Alignment(horizontal='right')
         sheet['H4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        """ 
+        Looping each dictionaries in list sources to store data in cells and apply styles.
+        If the advflag = 1 then 'amount' will be displayed in 'RED' color
+        """
         row = 4
         for record in sources:
             if record["groupAccname"]!="":
@@ -145,6 +148,10 @@ def printconvbalsheetreport(request):
                         sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
                 row += 1
+        """ 
+        Looping each dictionaries in list applications to store data in cells and apply styles.
+        If the advflag = 1 then 'amount' will be displayed in 'RED' color
+        """
         row = 4
         for record in applications:
             if record["groupAccname"]!="":
