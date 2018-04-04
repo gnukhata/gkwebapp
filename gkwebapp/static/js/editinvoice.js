@@ -566,6 +566,9 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
+		$("#Consignee").focus(); //Focus shifts to Consignee Checkbox when delivernote selected with no consignee details 
+	    }
+	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
 		    if ($("#taxapplicable").val() == 22) {
 			$("#tinconsignee").focus();
@@ -573,10 +576,7 @@ $(document).ready(function() {
 			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
 		    }
 		}
-		else {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
-		}
-	    }
+            }
 	    else {
 		$("#invoice_customer").focus();  //Focus shifts to Customer.
 	    }
@@ -697,11 +697,51 @@ $(document).ready(function() {
     $("#invoice_customerstate").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	    $("#Consignee").focus();  //Focus Shifts to Consignee Checkbox.
 	}
 	if (event.which == 38) {
 	    if ($("#invoice_customerstate option:visible").first.is(":selected")) {
 		$("#invoice_customer").select();  //Focus shifts to Customer.
+	    }
+	}
+    });
+  //key down event for consignee checkbox
+     $("#Consignee").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if($("#Consignee").prop('checked') == true) {
+		if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+		
+	    }else{
+		$("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	    }
+	}
+	if (event.which == 38) {
+	    if ($("#invoice_customerstate").is(":disabled")) {
+		if ($("#status").val() == 15) {
+		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer in Sale Invoice if Delivery Note is selected.
+		}
+		else {
+		    $("#invoicestate").focus();  //Focus Shifts to Invoice State in Purchase Invoice if Delivery Note is selected.
+		}
+	    }
+	    else {
+		$("#invoice_customerstate").focus();  //Focus shifts to Customer State.
 	    }
 	}
     });
@@ -721,17 +761,7 @@ $(document).ready(function() {
 	    $("#consigneestate").focus();
 	}
 	else if (event.which == 38) {
-	    if ($("#invoice_customerstate").is(":disabled")) {
-		if ($("#status").val() == 15) {
-		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer in Sale Invoice if Delivery Note is selected.
-		}
-		else {
-		    $("#invoicestate").focus();  //Focus Shifts to Invoice State in Purchase Invoice if Delivery Note is selected.
-		}
-	    }
-	    else {
-		$("#invoice_customerstate").focus();  //Focus shifts to Customer State.
-	    }
+	    $("#Consignee").focus();
 	}
     });
 
@@ -995,7 +1025,7 @@ $(document).ready(function() {
 	    })
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
-			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+			$("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			if(resp["delchal"]["delchaldata"]["consignee"]){
@@ -1028,6 +1058,11 @@ $(document).ready(function() {
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
 				    $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+				    //disable Consignee checkbox when delivery note selected and consignee details present 
+				    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
+					$("#Consignee").attr("disabled", true);  }
+				    else{
+					$("#Consignee").attr("disabled", false); }
 				}
 			    })
 			    .fail(function() {
