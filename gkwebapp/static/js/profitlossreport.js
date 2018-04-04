@@ -30,9 +30,7 @@ $(document).ready(function() {
   var oninvoice = 0;
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
-    
-   // $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
-   // $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
+    $("tbody tr:not('.group')").hide();
   $("#msspinmodal").modal("hide");
     $("#realprintpnl").hide();
   $('#expensetbl tbody tr:first-child td:first a').focus();
@@ -52,11 +50,6 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-    var previndex;
-    var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
-    var directintlindex = $('#incometbl tbody tr:visible').eq(2).index();
-    var indirectintlindex = $('#incometbl tbody tr:visible').eq(4).index();
-    var indirectEttlindex = $('#expensetbl tbody tr:visible').eq(5).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
@@ -168,11 +161,25 @@ $(document).ready(function() {
 	The limits are from next row to the row before the total is displayed. Upper limit is not included.
 	Then we toggle the selected elements.
        */
-      if ($(this).find("a").hasClass("degroup")) {
-	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
+      if ($(this).hasClass("degroup")) {
+	  $('.subgroupofdegroup, .accountofdegroup').toggle();
+	  $('.accountofsubgroupofdegroup').hide();
       }
-      if ($(this).find("a").hasClass("iegroup")) {
-	  $('#expensetbl tbody tr').slice(curindex + 1, indirectEttlindex -1).toggle();
+      if ($(this).hasClass("subgroupofdegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+      if ($(this).hasClass("iegroup")) {
+	  $('.subgroupofiegroup, .accountofiegroup').toggle();
+	  $('.accountofsubgroupofiegroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
       }
   });
 
@@ -294,13 +301,25 @@ $(document).ready(function() {
         }
       );
     }
-      //For documentation refer line number 144
-      if ($(this).find("a").hasClass("digroup")) {
-	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
+      if ($(this).hasClass("digroup")) {
+	  $('.subgroupofdigroup, .accountofdigroup').toggle();
+	  $('.accountofsubgroupofdigroup').hide();
       }
-	//Formula for setting limits is a bit different because Gross Profit B/F is displayed in the beginning.
-      if ($(this).find("a").hasClass("iigroup")) {
-	  $('#incometbl tbody tr').slice(curindex + 2, indirectintlindex).toggle();
+      if ($(this).hasClass("subgroupofdigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+      if ($(this).hasClass("iigroup")) {
+	  $('.subgroupofiigroup, .accountofiigroup').toggle();
+	  $('.accountofsubgroupofiigroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
       }
   });
 
