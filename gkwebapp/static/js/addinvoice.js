@@ -556,16 +556,7 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
-		if($("#consigneename").is(":disabled")){
-		    if ($("#taxapplicable").val() == 22) {
-			$("#tinconsignee").focus();
-		    } else {
-			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
-		    }
-		}
-		else {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
-		}
+		$("#Consignee").focus();
 	    }
 	    else {
 		$("#invoice_customer").focus();  //Focus shifts to Customer.
