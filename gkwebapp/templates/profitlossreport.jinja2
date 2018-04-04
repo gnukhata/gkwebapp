@@ -128,13 +128,13 @@
 		    </tr>
 		  {% endif %}
 		{% endfor %}
-		{% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
+	      {% endif %}
+	      {% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
 		  <tr class="accountfield accountofdegroup">
 		    <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
 		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
 		  </tr>
 		{% endif %}
-	      {% endif %}
 	    {% endfor %}
 	    <tr class="group iegroup">
 	      <td class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </td>
