@@ -398,7 +398,7 @@ def printsourcesandappfundreport(request):
         applications = result.json()["gkresult"]["rightlist"]
         srcandappfundwb = openpyxl.Workbook()
         sheet = srcandappfundwb.active
-        sheet.title = "Statement of Sources and Applications of Funds"
+        sheet.title = "Src & Appl of Funds"
         sheet.column_dimensions['A'].width = 30
         sheet.column_dimensions['B'].width = 14
         sheet.column_dimensions['C'].width = 14
