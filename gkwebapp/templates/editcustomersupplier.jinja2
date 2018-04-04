@@ -121,30 +121,66 @@
 
             <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
           </div>
-          <div class="container-fluid row">
-	    
-            <div class="form-group col-md-6">
-	      {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
+
+
+	  <div class="col-sm-12">
+
+
+	    {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
+
+	      <div class="form-group form-inline col-sm-9" id="delchal">
 		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
-	      {%else%}
-		<label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
-		<select class="form-control input-sm" id="edit_cussup_list" >
-		  <option value="" disabled hidden selected>Select Customer/Supplier</option>
-		  <optgroup label="Customers" id="custgroup">
-                    {% for customer in customers %}
-                      <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-                    {% endfor %}
-		  </optgroup>
-		  <optgroup label="Suppliers" id="supgroup">
-                    {% for supplier in suppliers %}
-                      <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                    {% endfor %}
-		  </optgroup>
-		</select>
-	      {%endif%}
-           
-	    </div>
+		
+	      </div>
+            {%else%}
+	      <div class="form-group form-inline col-sm-3">
+		<div class="radio">
+		  <label><input type="radio" class="custsupradio" name="delradio" id="custradio" aria-label="Customer" checked> Customer</label>
+		</div>
+		<div class="radio">
+		  <label><input type="radio" class="custsupradio" name="delradio" id="supradio" aria-label="Supplier"> Supplier</label>
+		</div>
+	      </div>
+	      <div class="form-group form-inline col-sm-9" id="custo">
+		{%if noofcustomer|int == 0 %}
+		  <label class="text-danger">{% trans %}No Customer Found!{% endtrans %}</label>
+		{%else%}
+		  <label for="deliverychallan_edit_list">{% trans %}List of <u>C</u>ustomer{% endtrans %} :</label>
+		  <select class="form-control input-sm" id="Customer_edit_list" accesskey="D">
+		    <option value="" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
+                    <optgroup label="Customers" id="custgroup">
+                      {% for customer in customers %}
+			<option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+                      {% endfor %}
+		    </optgroup>
+		  </select>
+		  <br>
+		  <small id="textareahelp" class="form-text text-muted" style="margin:129px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		{%endif%}
+	      </div>
+	      
+	      
+	      <div class="form-group form-inline col-sm-9" id="suppl">
+		{%if noofsupplier|int == 0 %}
+		  <label class="text-danger">{% trans %}No Supplier Found!{% endtrans %}</label>
+		{%else%}
+		  <label for="deliverychallan_edit_list">{% trans %}List of <u>S</u>upplier{% endtrans %} :</label>
+		  <select class="form-control input-sm" id="Supplier_edit_list"  accesskey="D">
+		    <option value="" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
+		    <optgroup label="Suppliers" id="supgroup">
+                      {% for supplier in suppliers %}
+			<option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+                      {% endfor %}
+		    </optgroup>
+		  </select>
+		  <br>
+		  <small id="textareahelp" class="form-text text-muted" style="margin:120px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		{%endif%}
+	      </div>
+            {%endif%}	
           </div>
+
+	  
 	  <div id="scrollbar" class="hidden-load" hidden>
             <div class="col-md-6">
 	      <div class="row">
