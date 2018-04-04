@@ -168,6 +168,10 @@
 	      <td class="col-xs-8">{% if net["netprofit"] %}Net Profit{% endif %}</td>
 	      <td class="col-xs-4 text-right">{% if net["netprofit"] %}{{net["netprofit"]}}{% endif %}</td>
 	    </tr>
+	    <tr>
+	      <td class="col-xs-8">Total</td>
+	      <td class="col-xs-4 text-right">{{Total}}</td>
+	    </tr>
 	  </tfoot>
 	</table>
       </div>
@@ -258,6 +262,10 @@
 	    <tr>
 	      <td class="col-xs-8">{% if net["netloss"] %}Net Loss{% endif %}</td>
 	      <td class="col-xs-4 text-right">{% if net["netloss"] %}{{net["netloss"]}}{% endif %}</td>
+	    </tr>
+	    <tr>
+	      <td class="col-xs-8">Total</td>
+	      <td class="col-xs-4 text-right">{{Total}}</td>
 	    </tr>
 	  </tfoot>
 	</table>
