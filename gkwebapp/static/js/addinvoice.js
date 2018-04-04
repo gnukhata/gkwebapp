@@ -557,7 +557,7 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
 		$("#Consignee").focus();//Focus shifts to Consignee Checkbox when delivernote selected with no consignee details
-	    }
+	   } 
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
 		    if ($("#taxapplicable").val() == 22) {
@@ -686,7 +686,11 @@ $(document).ready(function() {
     $("#invoice_customerstate").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#Consignee").focus().select();  //Focus Shifts to consignee checkbox
+	     if($("#status").val()==15){
+		 $("#Consignee").focus().select();  //Focus Shifts to consignee checkbox when sale invoice
+	    }else{
+		$("#consigneename").focus();   //Focus Shifts to consigneename when purchase invoice
+	    }
 	}
 	if (event.which == 38) {
 	    if ($("#invoice_customerstate option:visible").first.is(":selected")) {

@@ -697,7 +697,11 @@ $(document).ready(function() {
     $("#invoice_customerstate").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#Consignee").focus();  //Focus Shifts to Consignee Checkbox.
+	     if($("#status").val()==15){
+		 $("#Consignee").focus().select();  //Focus Shifts to consignee checkbox when sale invoice
+	    }else{
+		$("#consigneename").focus();   //Focus Shifts to consigneename when purchase invoice
+	    }
 	}
 	if (event.which == 38) {
 	    if ($("#invoice_customerstate option:visible").first.is(":selected")) {
