@@ -220,12 +220,14 @@
 			  <label class="col-sm-8 nopadding" id="invoice_customeraddr" ></label>
 			</div>
 			<!-- checkbox to know whether billing and shipping address same or not -->
-			<div class="form-group form-inline">
+			{% if status == "out" %}
+			  <div class="form-group form-inline">
 			  <div class="col-sm-12">
 			    <input type="checkbox" id="Consignee" >
 			    <label for="Consignee">{%trans%}Shipping address is same as billing address{%endtrans%}</label>
 			  </div>
-			</div>
+			  </div>
+			  {% endif %}
 		      </div>
 		      <div class="col-md-4 borderdiv">
 			<h4>Details of Consignee | Shipped to: </h4>
