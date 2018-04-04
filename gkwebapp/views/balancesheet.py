@@ -206,116 +206,167 @@ def printconvbalsheetreport(request):
 
 @view_config(route_name="printconvbalsheetreport" , request_param="type=consolidatedbalancesheet")
 def printconsbalsheetreport(request):
-    calculateto = request.params["calculateto"]
-    header={"gktoken":request.headers["gktoken"]}
-    fystart = str(request.params["fystart"]);
-    orgname = str(request.params["orgname"])
-    fyend = str(request.params["fyend"]);
-    orgtype = str(request.params["orgtype"])
-    sorgname = json.loads(request.params["sorgname"])
-    listofselectedorg = json.loads(request.params["selectedorg"])
-    result = requests.get("http://127.0.0.1:6543/report?type=consolidatedbalancesheet&calculateto=%s&financialStart=%s&orgtype=%s"%(calculateto,fystart,orgtype),data=json.dumps({"listoforg":listofselectedorg}), headers=header)
-    calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
-    sources = result.json()["gkresult"]["leftlist"]
-    applications = result.json()["gkresult"]["rightlist"]
+    #try:
+        calculateto = request.params["calculateto"]
+        header={"gktoken":request.headers["gktoken"]}
+        fystart = str(request.params["fystart"]);
+        orgname = str(request.params["orgname"])
+        fyend = str(request.params["fyend"]);
+        orgtype = str(request.params["orgtype"])
+        sorgname = json.loads(request.params["sorgname"])
+        listofselectedorg = json.loads(request.params["selectedorg"])
+        result = requests.get("http://127.0.0.1:6543/report?type=consolidatedbalancesheet&calculateto=%s&financialStart=%s&orgtype=%s"%(calculateto,fystart,orgtype),data=json.dumps({"listoforg":listofselectedorg}), headers=header)
+        fystart = fystart[8:10] + fystart[4:8] + fystart[0:4]
+        fyend = fyend[8:10] + fyend[4:8] + fyend[0:4]
+        calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+        sources = result.json()["gkresult"]["leftlist"]
+        applications = result.json()["gkresult"]["rightlist"]
+        consolidationwb = openpyxl.Workbook()
+        sheet = consolidationwb.active
+        sheet.column_dimensions['A'].width = 30
+        sheet.column_dimensions['B'].width = 12
+        sheet.column_dimensions['C'].width = 12
+        sheet.column_dimensions['D'].width = 12
+        sheet.column_dimensions['E'].width = 30
+        sheet.column_dimensions['F'].width = 12
+        sheet.column_dimensions['G'].width = 12
+        sheet.column_dimensions['H'].width = 12
+        sheet.merge_cells('A1:H2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:H3')
+        if orgtype == "Profit Making":
+            sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['A3'] = "Consolidated Balance Sheet as on "+calculateto
+            sheet['A4'] = "Capital and Liabilities"
+            sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        if orgtype == "Not For Profit":
+            sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+            sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['A3'] = "Consolidated Statement of Affairs as on "+calculateto
+            sheet['A4'] = "Corpus and Liabilities"
+            sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['D4'] = "Amount"
+        sheet['D4'].alignment = Alignment(horizontal='right')
+        sheet['D4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['E4'] = "Property and Assets"
+        sheet['E4'].alignment = Alignment(horizontal='left')
+        sheet['E4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['H4'] = "Amount"
+        sheet['H4'].alignment = Alignment(horizontal='right')
+        sheet['H4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        row = 4
+        for record in sources:
+            if record["groupAccname"]!="":
+                if record["groupAccname"]!="Sources:":
+                    if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+                        sheet['A'+str(row)] = record["groupAccname"].upper()
+                        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                    elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+                        sheet['A'+str(row)]= "             "+record["groupAccname"]
+                        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
+                    elif record["groupAccflag"]==1 :
+                        sheet['A'+str(row)].font = "                         "+record["groupAccname"]
+                        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
+                    elif record["groupAccflag"]==2:
+                        sheet['A'+str(row)] = "                         "+record["groupAccname"]
+                        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
+                    else:
+                        sheet['A'+str(row)] = record["groupAccname"].upper()
+                        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
 
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.getRow(0).setHeight("23pt")
-    sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,8,1)
-    sheet.getRow(1).setHeight("18pt")
-    ods.content.mergeCells(0,1,8,1)
-    sheet.getColumn(0).setWidth("8cm")
-    sheet.getColumn(1).setWidth("2.5cm")
-    sheet.getColumn(2).setWidth("2.5cm")
-    sheet.getColumn(3).setWidth("2.5cm")
-    sheet.getColumn(4).setWidth("8cm")
-    sheet.getColumn(5).setWidth("2.5cm")
-    sheet.getColumn(6).setWidth("2.5cm")
-    sheet.getColumn(7).setWidth("2.5cm")
-    if orgtype == "Profit Making":
-        sheet.getCell(0,1).stringValue("Consolidated Balance Sheet as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-        sheet.getCell(0,2).stringValue("Capital and Liabilities").setBold(True)
-    if orgtype == "Not For Profit":
-        sheet.getCell(0,1).stringValue("Consolidated Statement of Affairs as on "+calculateto).setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-        sheet.getCell(0,2).stringValue("Corpus and Liabilities").setBold(True)
-    sheet.getCell(3,2).stringValue("Amount").setBold(True)
-    sheet.getCell(4,2).stringValue("Property and Assets").setBold(True)
-    sheet.getCell(7,2).stringValue("Amount").setBold(True)
-    row = 2
-    for record in sources:
-        if record["groupAccname"]!="":
-            if record["groupAccname"]!="Sources:":
-                if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
-                    sheet.getCell(0,row).stringValue(record["groupAccname"].upper()).setBold(True)
+                if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+                    if record["advflag"]==1:
+                        sheet['B'+str(row)] = record["amount"]
+                        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['B'+str(row)] = record["amount"]
+                        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-                    sheet.getCell(0,row).stringValue("             "+record["groupAccname"])
-                elif record["groupAccflag"]==1 :
-                    sheet.getCell(0,row).stringValue("                         "+record["groupAccname"])
-                elif record["groupAccflag"]==2:
-                    sheet.getCell(0,row).stringValue("                         "+record["groupAccname"])
+                    if record["advflag"]==1:
+                        sheet['C'+str(row)] = record["amount"]
+                        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['C'+str(row)] = record["amount"]
+                        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 else:
-                    sheet.getCell(0,row).stringValue(record["groupAccname"].upper())
+                    if record["advflag"]==1:
+                        sheet['D'+str(row)] = record["amount"]
+                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['D'+str(row)] = record["amount"]
+                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                row += 1
 
-            if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-                if record["advflag"]==1:
-                    sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(1,row).stringValue(record["amount"]).setAlignHorizontal("right")
-            elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-                if record["advflag"]==1:
-                    sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(2,row).stringValue(record["amount"]).setAlignHorizontal("right")
-            else:
-                if record["advflag"]==1:
-                    sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(3,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
-            row += 1
+        row = 4
+        for record in applications:
+            if record["groupAccname"]!="":
+                if record["groupAccname"]!="Applications:":
+                    if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
+                        sheet['E'+str(row)] = record["groupAccname"].upper()
+                        sheet['E'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                    elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
+                        sheet['E'+str(row)] = "            "+record["groupAccname"]
+                        sheet['E'+str(row)].font = Font(name='Liberation Serif',size='12')
+                    elif record["groupAccflag"]==1 :
+                        sheet['E'+str(row)] = "            "+record["groupAccname"]
+                        sheet['E'+str(row)].font = Font(name='Liberation Serif',size='12')
+                    elif record["groupAccflag"]==2:
+                        sheet['E'+str(row)] = "            "+record["groupAccname"]
+                        sheet['E'+str(row)].font = Font(name='Liberation Serif',size='12')
+                    else:
+                        sheet['E'+str(row)] = record["groupAccname"].upper()
+                        sheet['E'+str(row)].font = Font(name='Liberation Serif',size='12')
 
-    row = 2
-    for record in applications:
-        if record["groupAccname"]!="":
-            if record["groupAccname"]!="Applications:":
-                if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" :
-                    sheet.getCell(4,row).stringValue(record["groupAccname"].upper()).setBold(True)
+                if record["groupAccflag"]==2 or record["groupAccflag"]==1:
+                    if record["advflag"]==1:
+                        sheet['F'+str(row)] = record["amount"]
+                        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['F'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['F'+str(row)] = record["amount"]
+                        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['F'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-                    sheet.getCell(4,row).stringValue("             "+record["groupAccname"])
-                elif record["groupAccflag"]==1 :
-                    sheet.getCell(4,row).stringValue("                         "+record["groupAccname"])
-                elif record["groupAccflag"]==2:
-                    sheet.getCell(4,row).stringValue("                         "+record["groupAccname"])
+                    if record["advflag"]==1:
+                        sheet['G'+str(row)] = record["amount"]
+                        sheet['G'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['G'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['G'+str(row)] = record["amount"]
+                        sheet['G'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['G'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 else:
-                    sheet.getCell(4,row).stringValue(record["groupAccname"].upper())
-
-            if record["groupAccflag"]==2 or record["groupAccflag"]==1:
-                if record["advflag"]==1:
-                    sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(5,row).stringValue(record["amount"]).setAlignHorizontal("right")
-            elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
-                if record["advflag"]==1:
-                    sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(6,row).stringValue(record["amount"]).setAlignHorizontal("right")
-            else:
-                if record["advflag"]==1:
-                    sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setFontColor("#ff0000").setBold(True)
-                else:
-                    sheet.getCell(7,row).stringValue(record["amount"]).setAlignHorizontal("right").setBold(True)
-            row += 1
-
-
-    ods.save("response.ods")
-    repFile = open("response.ods")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
-    return Response(rep, headerlist=headerList.items())
-
+                    if record["advflag"]==1:
+                        sheet['H'+str(row)] = record["amount"]
+                        sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    else:
+                        sheet['H'+str(row)] = record["amount"]
+                        sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                row += 1
+        consolidationwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())        
+    #except:
+        print "File not Found"
+        {"gkstatus":3}
+            
 '''
 This function returns a spreadsheet form of Statement of Sources and Applications of Funds Report(Vertical format report).
 In the Vertical format capital & liabilities are shown in the upper part and assets are shown in the lower part.
