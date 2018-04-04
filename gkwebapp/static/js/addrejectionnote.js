@@ -279,11 +279,8 @@ $(document).ready(function() {
     $("#rejectionnote_year").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
-	    if(sessionStorage.vatorgstflag == '22' ){
-		$('#invoice_product_table_vat tbody tr:first td:eq(2) input').focus().select();
-	    }else{
-		$('#invoice_product_table_gst tbody tr:first td:eq(3) input').focus().select();
-	    }
+	    $(".rejection_product_rejquantity_gst:first").focus().select();
+	    $(".rejectionnote_product_rejected_quantity:first").focus().select();
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
 	if (event.which==38) {
@@ -627,13 +624,6 @@ $(document).ready(function() {
 			    $("#totaligst_product_gst").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
 			    $("#totalcess_product_gst").text(parseFloat(resp.invDetails.totalcessamt).toFixed(2));
 			    $("#total_product_gst").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-			    $("#taxableamount").text(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
-			    $("#totalinvoicevalue").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-			    $("#totalsgtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-			    $("#totalcgtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-			    $("#totaligtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-			    $("#totalinvdiscount").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
-			    $("#totalinvcess").text(parseFloat(resp.invDetails.totalcessamt).toFixed(2));
 			    $(".vatfied").hide();
 			    $(".gstfield").show();
 			}else if(resp.invDetails.taxflag == 22){
@@ -647,7 +637,8 @@ $(document).ready(function() {
 				$('.product_name:eq(' + curindex + ')').val(value.productdesc).attr("data-productcode",key);
 				$('.rejectionnote_product_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 				$('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
-				$('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+				$('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+				
 				$('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
 				$('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 				$('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
@@ -663,10 +654,6 @@ $(document).ready(function() {
 			    $("#taxablevaluetotal_product_vat").val(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
 			    $("#totaltax").val(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
 			    $("#total_product_vat").val(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-			    $("#totalinvtax").text(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
-			    $("#totalinvoicevalue").text(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
-			    $("#totalinvdiscount").text(parseFloat(resp.invDetails.totaldiscount).toFixed(2));
-			    $("#taxableamount").text(parseFloat(resp.invDetails.totaltaxablevalue).toFixed(2));
 			    $(".gstfield").hide();
 			    $(".vatfield").show();
 			}    			    
@@ -1018,11 +1005,11 @@ $(document).ready(function() {
 		    return false;
 		}
 		productcode.push($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode"));
-		products = {};
-		productcodes = $("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode");
-		ppu = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(3) input").val()).toFixed(2);
-		products[ppu] = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
-		rejprods[productcode] = products;
+		var products_vat = {};
+		var productcodes_vat = $("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(0) input").attr("data-productcode");
+		var ppu_vat = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(3) input").val()).toFixed(2);
+		products_vat[ppu_vat] = parseFloat($("#invoice_product_table_vat tbody tr:eq("+i+") td:eq(2) input").val()).toFixed(2);
+		rejprods[productcodes_vat] = products_vat;
 	    }
 	    if(i == 0){
 		$("#product-blank-alert").alert();

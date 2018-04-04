@@ -88,7 +88,7 @@ $(document).ready(function() {
         $("#rgodown").show();
       }
 
-	$("#invoice_noteno").val(resp.gkresult.invid);
+	$("#invoice_noteno").val(resp.gkresult.rejinvdata.invno);
 	var invdatearray = resp.gkresult.rejinvdata.invdate.split(/\s*\-\s*/g);
 	$("#invoice_date").val(invdatearray[0]);
 	$("#invoice_month").val(invdatearray[1]);
@@ -97,7 +97,6 @@ $(document).ready(function() {
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
 	$("#issuer_name").val(resp.gkresult.rejinvdata.issuername);
-	console.log(resp.gkresult.rejinvdata.inotflag);
 	if(resp.gkresult.rejinvdata.inoutflag == 15){
 	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
@@ -141,7 +140,6 @@ $(document).ready(function() {
 	  $(".tinfield").hide();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-	      console.log(value.productdesc);
 	      $('.product_name_gst:eq(' + curindex + ')').val(value.proddesc);
 	      $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 	      $('.rejection_product_rejquantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
