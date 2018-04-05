@@ -873,6 +873,17 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    $("#edit_cussup_pan").focus();
 	    return false;
 	}
+	// Validation for proper email.
+	editemail = $("#edit_cussup_email").val();
+	if ((!editemail.match(editemailExp)) && editemail!= "") {
+	    $("#email-editimproper-alert").alert();
+	    $("#email-editimproper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#email-editimproper-alert").hide();
+	    });
+	    $("#edit_cussup_email").focus().select();
+	    return false;
+	}
+	
 
     if ($.trim($("#edit_cussup_name").val())=="") {
       $("#name-blank-alert").alert();
