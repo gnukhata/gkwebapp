@@ -419,8 +419,7 @@ $(document).ready(function() {
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
 		}
-	    
-	}	
+	 }	
 	$(".product_name_vat, .product_name_gst").change();
 	
 	//In create 'sale invoice' if user selected 'state' has address in orgnisation then it will be autopopulated in address field.

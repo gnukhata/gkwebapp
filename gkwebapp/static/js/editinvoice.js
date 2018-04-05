@@ -408,19 +408,7 @@ $(document).ready(function() {
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
-	    } else {
-		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -429,7 +417,7 @@ $(document).ready(function() {
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
 		}
-	    }
+	    
 	}
 	
 	$(".product_name_vat, .product_name_gst").change();
@@ -2458,6 +2446,15 @@ if (event.which == 13) {
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
 			    // Loading other details of invoice.
+			    console.log("from log");
+			    console.log(resp.invoicedata);
+			    //Loading consignee details when deliverynote selected
+			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
+			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
+			    $("#statecodeofconsignee").val(resp.invoicedata.consignee.consigneestatecode);
+			    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+			    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
+			    $("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
 			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
@@ -2513,14 +2510,10 @@ if (event.which == 13) {
 				    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
 				    console.log(resp.invoicedata.taxname);
 				    if(resp.invoicedata.taxname == 'IGST'){
-					console.log("from igst===",value.taxrate);
-					console.log("from igst",value.taxamount);
 					$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 				    }
 				    else{
-					console.log("from sgst and cgst",value.taxrate);
-					console.log("from s c",value.taxamount);
 					$('.invoice_product_sgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_sgstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
 					$('.invoice_product_cgstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
