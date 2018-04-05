@@ -23,15 +23,32 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 Contributors:
    "Krishnakant Mane" <kk@dff.org.in>
    "Prajkta Patkar"<prajkta@riseup.net>
+   "Pravin Dake" <pravindake24@gmail.com>
 */
 
 $(document).ready(function() {
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
+    $('#printgstsummary').hide();
 
+    $("#cfback").click(function(event) {
+	$("#gstsummary").click();
+    });
+    
+    // Click event to see Printableversion of GSTSummaryreport.
+    $('#viewprintversion').click(function(event){	
+	$("#rptt").unbind('dblclick');
+	$(".fixed-table-toolbar").remove();
+	$('table a').contents().unwrap();
+	$("table").removeClass('fixed-table').addClass('table-striped');
+	$('#printgstsummary').show();
+	$('#viewprintversion').hide();
 
+    });
 
-    	$("#cfback").click(function(event) {
-	    $("#gstsummary").click();
-	});
+    // Click event to Print of GSTSummaryreport
+    $('#printgstsummary').click(function(event){
+	window.print();
+    });
+    
 });

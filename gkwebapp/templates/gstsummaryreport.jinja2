@@ -6,13 +6,13 @@
      .shadow {
 	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      }
-     #rptt td {
+     td {
 	 font-size: 75%;
 	 padding: 4 !important;
 	 margin: 4 !important;
      }
 
-     #rptt th {
+     th {
 	 font-size: 85%;
      }
      .card-view .title {
@@ -21,7 +21,7 @@
 	 min-width: 20%;
 	 text-align: left !important;
      }
-     #rptt tbody {
+     .fixed-table tbody {
 	 display:block;
 	 width: 100%;
 	 height: calc(100vh - 17em);
@@ -29,12 +29,12 @@
 	 overflow-y:scroll;
 
      }
-     #rptt thead,#rptt tbody tr {
+     .fixed-table thead,.fixed-table tbody tr {
 	 display:table;
 	 width:100%;
 	 table-layout:fixed;
      }
-     #rptt thead {
+     .fixed-table thead {
 	 width: calc( 99%)
      }
      .rpttcess{
@@ -83,7 +83,7 @@
     </div>
     <div class="rpttcess">
       <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="rclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="rptt" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+      <table id="rptt" class="table shadow fixed-table table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
 
 	<thead class="bg-primary">
           <tr>
@@ -318,8 +318,11 @@
 	</tbody>
       </table>
     </div>
-    <span style="margin:auto; display:table;">
-      <button type="button" class="btn btn-sm btn-danger" id="cfback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button></span>
+    <span class="hidden-print" style="margin:auto; display:table;">
+      <button type="button" class="btn btn-sm btn-danger" id="cfback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary" id="viewprintversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-primary" id="printgstsummary" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+    </span>
     
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/gstsummaryreport.js')}}"></script>
  
