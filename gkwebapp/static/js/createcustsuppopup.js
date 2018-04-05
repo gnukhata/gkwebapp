@@ -685,19 +685,28 @@ else{
       //save event for saving the customer/supplier
       event.preventDefault();
       //Validation for PAN
-        var allow = 1;
-        var cuss_pan = $("#add_cussup_pan").val();
-        var panno1= $(".panno").val();
-	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
-    
-	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
-	    $("#pan-incorrect-alert").alert();
-	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#pan-incorrect-alert").hide();
-	    });
-	    $("#add_cussup_pan").focus();
-	    return false;
-	}
+      var allow = 1;
+      var cuss_pan = $("#add_cussup_pan").val();
+      var panno1= $(".panno").val();
+      var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+      if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	  $("#pan-incorrect-alert").alert();
+	  $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#pan-incorrect-alert").hide();
+	  });
+	  $("#add_cussup_pan").focus();
+	  return false;
+      }
+      // Validation for proper email.
+      email = $("#add_cussup_email").val();
+      if ((!email.match(emailExp)) && email!="") {
+	  $("#improper-email-alert").alert();
+	  $("#improper-email-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#improper-email-alert").hide();
+          });
+	  $("#add_cussup_email").focus().select();
+	  return false;
+      }
       
     var custsupval;
       if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9' || $("#status").val()=="16" ){
