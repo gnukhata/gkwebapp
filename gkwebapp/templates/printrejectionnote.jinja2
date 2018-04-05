@@ -154,7 +154,7 @@
 		  <div class="form-inline form-group col-xs-12 nopadding">
 		    <label for="inv_addr">{% trans %}Address{% endtrans %} : </label>
 		    {% if gkresult["rejinvdata"]["inoutflag"]==15 %}{{ gkresult["rejinvdata"]["address"] }}
-		    {% else %}{{ org["orgaddr"]}} {{ org["orgcity"] }},{{ org["orgstate"] }} ,{{ org["orgpincode"] }}
+		    {% elif org["orgaddr"] %}{{ org["orgaddr"]}} {{ org["orgcity"] }},{{ org["orgstate"] }} ,{{ org["orgpincode"] }}
 		      {% endif %}
 		  </div>
 	      </td>
@@ -233,7 +233,7 @@
 	    </tbody>
 	    <tfoot>
 	      <tr>
-		<td colspan="4" class="text-right">
+		<td colspan="3" class="text-right">
 		  {% trans %}Total{% endtrans %}
 		</td>
 		<td class="text-right">
@@ -317,7 +317,7 @@
 	    </tbody>
 	    <tfoot>
 	      <tr>
-		<td colspan="5" class="text-right" style="vertical-align:middle; font-size:75%">Total</td>
+		<td colspan="4" class="text-right" style="vertical-align:middle; font-size:75%">Total</td>
 		<td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
 		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}

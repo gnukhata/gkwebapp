@@ -583,6 +583,7 @@ $(document).ready(function() {
 			    $('#invoice_product_table_gst tbody').empty();
 			    $('#invoice_product_table_total tbody').empty();
 			    $(".vatfield").hide();
+			    $(".gsttable").show();
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				$('.product_name_gst:eq(' + curindex + ')').val(value.productdesc).attr("data-productcode",key);
@@ -679,7 +680,11 @@ $(document).ready(function() {
 			    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
 			    var userrole = dict[resp.invDetails.designation];
 			    $("#issuer_designation").val(userrole);
-			    $("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
+			    if(resp["orgdata"]["orgaddr"]){
+				$("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
+			    }else{
+				$("#invoice_addr").val("");
+			    }
 			}
 			$("#cussup_state").val(resp["delchal"]["custstate"]);
 			$("#rejectionnote_customer").val(resp["delchal"]["custname"]);

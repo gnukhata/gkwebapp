@@ -101,7 +101,11 @@ $(document).ready(function() {
 	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
 	}else{
-	    $("invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
+	    if(resp["orgdata"]["orgaddr"]){
+		$("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
+	    }else{
+		$("#invoice_addr").val("");
+	    }
 	    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
 	    var userrole = dict[resp.gkresult.rejinvdata.designation];
 	    $("#issuer_designation").val(userrole);
@@ -138,6 +142,7 @@ $(document).ready(function() {
 	  $(".vatfield").hide();
 	  $(".gstinfield").show();
 	  $(".tinfield").hide();
+	  $(".gsttable").show();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 	      $('.product_name_gst:eq(' + curindex + ')').val(value.proddesc);
