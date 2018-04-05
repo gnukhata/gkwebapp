@@ -1028,11 +1028,15 @@ $(document).ready(function() {
 			if(resp["delchal"]["delchaldata"]["consignee"]){
 			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
 			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
-			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);
+			    $("#gstinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["gstinconsignee"]).prop("disabled", true);
+			    $("#tinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["tinconsignee"]).prop("disabled", true);	
 			} else {
 			    $("#consigneename").val("").prop("disabled", false);
 			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
 			    $("#consigneeaddress").val("").prop("disabled", false);
+			    $("#gstinconsignee").val("").prop("disabled", false);
+			    $("#tinconsignee").val("").prop("disabled", false);
 			}
 			$("#consigneestate").change();
 			$.ajax({
@@ -2710,6 +2714,7 @@ if (event.which == 13) {
 		}
 	    });
 	}
+	
 	if(consigneeflag == true){
 	    $(".consigneefield").prop("disabled", true);
 	}
