@@ -638,6 +638,11 @@ $(document).ready(function() {
       	else {
       	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
       	}
+		    //disable Consignee checkbox when delivery note selected and consignee details present 
+		    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
+			$("#Consignee").attr("disabled", true);  }
+		    else{
+			$("#Consignee").attr("disabled", false); }
 		    //GSTIN of customer in default state is selected.
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 
@@ -2384,7 +2389,6 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
-			    console.log(resp.invoicedata);
 			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
@@ -2421,7 +2425,11 @@ if (event.which == 13) {
 				})
 				    .done(function(response) {
 					if (response["gkstatus"] == 0) {
-					    delchalproducts = response["delchal"]["stockdata"]["items"];
+					    if (response["delchal"]["stockdata"]){
+						delchalproducts = response["delchal"]["stockdata"];
+					    }else{
+						delchalproducts = response["delchal"]["delchalContents"];
+					    }
 					    if(response["delchal"]["delchaldata"]["consignee"]){
 						consigneeflag = true;
 					    } else {
@@ -2446,8 +2454,6 @@ if (event.which == 13) {
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
 			    // Loading other details of invoice.
-			    console.log("from log");
-			    console.log(resp.invoicedata);
 			    //Loading consignee details when deliverynote selected
 			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
 			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
@@ -2508,7 +2514,6 @@ if (event.which == 13) {
 				    $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
 				    $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
 				    $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
-				    console.log(resp.invoicedata.taxname);
 				    if(resp.invoicedata.taxname == 'IGST'){
 					$('.invoice_product_igstrate:eq(' + curindex + ')').val(parseFloat(value.taxrate).toFixed(2));
 					$('.invoice_product_igstamount:eq(' + curindex + ')').val(parseFloat(value.taxamount).toFixed(2));
