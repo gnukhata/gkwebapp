@@ -140,7 +140,7 @@ def listoftransfernotesspreadsheet(request):
             godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
             godownname = godown.json()["gkresult"]["goname"]
             godownaddress = godown.json()["gkresult"]["goaddr"]
-            nameofgodown = "Name of Godown: "+godownname+" Godown Address: "+godownaddress
+            nameofgodown = "Name of Godown: "+godownname+"           Godown Address: "+godownaddress
             sheet.merge_cells('A5:H5')
             sheet['A5'] = nameofgodown
             sheet['A5'].font = Font(name='Liberation Serif',size='14',bold=True)
