@@ -33,19 +33,33 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#edit_cussup_list").focus();
     $(".panel-footer").hide();
-    
+    $("#custradio").click().focus();
+    $("#suppl").hide();
+    $("#scrollbar").hide();
     var gstinstring = ""; //for concatination of 'gstin'.
      for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
    var custsupdata = $("#edit_cussup").val();
-    $("#edit_cussup_list").change(function(event) {
+
+
+    //code for change event of edit lists dcid as variable taken and conditions are applied.
+    $("#Customer_edit_list, #Supplier_edit_list").change(function(event) {
+	var custid;
+	if ($("#custradio").is(":checked"))
+	{
+	    custid=parseInt($("#Customer_edit_list option:selected").val());
+	   
+	}
+	else {
+	    custid=parseInt($("#Supplier_edit_list option:selected").val());
+	}
 	$.ajax({
 	    url: '/customersuppliers?action=get',
 	    type: 'POST',
 	    dataType: 'json',
 	    async : false,
-	    data: {"custid": $("#edit_cussup_list option:selected").val()},
+	    data: {"custid": custid},
 	    beforeSend: function(xhr)
 	    {
 		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -135,10 +149,10 @@ $(document).ready(function() {
 
     })
     .fail(function() {
-      console.log("error");
+      console.log("errorrrrrrrrr");
     })
     .always(function() {
-      console.log("complete");
+      console.log("completeeeeeeee");
     });
 
     });
@@ -349,7 +363,47 @@ $(document).ready(function() {
   }
 });
 
-//Change event on GSTIN State
+    // keydown event for radiobutton
+    $("#custradio").keydown(function(event) {
+	if (event.which==13) {
+	    $("#Customer_edit_list").focus().select();
+	}
+    });
+    $("#supradio").keydown(function(event) {
+	if (event.which==13) {
+	    $("#Supplier_edit_list").focus().select();
+	}
+    });
+
+    //change event for radio buttons to get first selected option
+    $(document).off('focusin', '.custsupradio').on('focusin', '.custsupradio', function(event) {
+    $("#Customer_edit_list option:first").prop("selected",true);
+    $("#Customer_edit_list").change();
+    $("#Supplier_edit_list option:first").prop("selected",true);
+    $("#Supplier_edit_list").change();
+    });
+    
+
+    //this is the change event written for radio buttons in customer supplier. 
+//on change event one of the list will be hidden. 
+//also keydown performed.
+
+$(document).off("change",".custsupradio").on("change",".custsupradio",function(event) {
+	//Checking which radio button is selected.
+        if ($("#custradio").is(":checked")) {
+	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+                $("#custo").show();
+		$("#suppl").hide();
+
+        } else {
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#custo").hide();
+		$("#suppl").show();
+            }
+        });
+
+
+    //Change event on GSTIN State
     $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();

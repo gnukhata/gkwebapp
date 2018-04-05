@@ -128,7 +128,7 @@
 
 	    {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
 
-	      <div class="form-group form-inline col-sm-9" id="delchal">
+	      <div class="form-group form-inline col-sm-9" id="custosuppl">
 		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
 		
 	      </div>
@@ -150,7 +150,7 @@
 		    <option value="" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
                     <optgroup label="Customers" id="custgroup">
                       {% for customer in customers %}
-			<option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+			<option value="{{customer["custid"]}}">{{customer["custname"]}}</option>
                       {% endfor %}
 		    </optgroup>
 		  </select>
@@ -169,7 +169,7 @@
 		    <option value="" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
 		    <optgroup label="Suppliers" id="supgroup">
                       {% for supplier in suppliers %}
-			<option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+			<option value="{{supplier["custid"]}}">{{supplier["custname"]}}</option>
                       {% endfor %}
 		    </optgroup>
 		  </select>
