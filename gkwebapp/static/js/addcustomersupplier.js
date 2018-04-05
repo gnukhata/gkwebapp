@@ -98,7 +98,7 @@ $(document).ready(function() {
         }
   });
 
-    var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+    var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //Expression to check proper email.
     var email="";
     
   $("#add_cussup_email").keydown(function(event) {
@@ -702,8 +702,17 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var curindex1 = $(this).closest('tr').index();
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-    
-	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+   
+    	email = $("#add_cussup_email").val();  // Validation for email.
+	if ((!email.match(emailExp)) && email!="") {
+	    $("#email-improper-alert").alert();
+            $("#email-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#email-improper-alert").hide();
+            });
+	    $("#add_cussup_email").focus().select();
+	    return false;
+	}
+	    if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
 	    $("#pan-incorrect-alert").alert();
 	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#pan-incorrect-alert").hide();
