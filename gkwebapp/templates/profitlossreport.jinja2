@@ -274,10 +274,12 @@
     </div>
     <span class="hidden-print" style="margin:auto; display:table;">
       <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-success expandbutton" id="expandall" accesskey="e"><i class="fa fa-toggle-down" aria-hidden="true"></i> {% trans %}<u>E</u>xpand All{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-warning expandbutton" id="compress" accesskey="e"><i class="fa fa-toggle-up" aria-hidden="true"></i> {% trans %}Compr<u>e</u>ss All{% endtrans %}</button>
       <!-- 
-      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-      <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-      <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+	   <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+	   <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+	   <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
       -->
     </span>
     <input type="hidden" id="ledtodate" value="{{to}}">

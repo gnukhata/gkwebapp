@@ -32,7 +32,7 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("tbody tr:not('.group')").hide();
   $("#msspinmodal").modal("hide");
-    $("#realprintpnl").hide();
+    $("#realprintpnl, #compress").hide();
   $('#expensetbl tbody tr:first-child td:first a').focus();
   $('#expensetbl tbody tr:first-child td:first a').closest('tr').addClass('selected');
     var rcindex = 0;
@@ -396,6 +396,10 @@ $(document).ready(function() {
     });
 
 
+    $(".expandbutton").click(function(event) {
+	$("tbody tr, .expandbutton").toggle();
+	$('.group').show();
+    });
     $("#printpnl").click(function(event) {
 // Displays a printable version of the report.
       $("#incometbl").unbind('dblclick');
