@@ -461,11 +461,12 @@ def registerspreadsheet(request):
             sheet.title = "Purchase Register"
         sheet.column_dimensions['A'].width = 8
         sheet.column_dimensions['B'].width = 12
-        sheet.column_dimensions['C'].width = 10
+        sheet.column_dimensions['C'].width = 12
         sheet.column_dimensions['D'].width = 16
         sheet.column_dimensions['E'].width = 18
         sheet.column_dimensions['F'].width = 18
-        sheet.column_dimensions['G'].width = 10
+        sheet.column_dimensions['G'].width = 18
+        sheet.column_dimensions['H'].width = 18
         sheet.merge_cells('A1:G2')
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -482,7 +483,7 @@ def registerspreadsheet(request):
         sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['A5'] = 'Sr. No. '
-        sheet['B5'] = 'Inv No'
+        sheet['B5'] = 'Inv No.'
         sheet['C5'] = 'Inv Date'
         if request.params["flag"] == "0":
             sheet['D5'] = 'Cust. Name '
@@ -492,6 +493,31 @@ def registerspreadsheet(request):
             sheet['D5'] = 'Suppl. Name '
             sheet['E5'] = 'Suppl. TIN'
             sheet['F5'] = 'Suppl. GSTIN'
+        sheet['G5'] = 'Gross Amt.'
+        sheet['H5'] = 'TAX Free'
+        sheet['A5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['B5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['C5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['D5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['E5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['F5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['G5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['H5'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A5'].alignment = Alignment(horizontal='center')
+        sheet['B5'].alignment = Alignment(horizontal='center')
+        sheet['C5'].alignment = Alignment(horizontal='center')
+        sheet['D5'].alignment = Alignment(horizontal='center')
+        sheet['E5'].alignment = Alignment(horizontal='center')
+        sheet['F5'].alignment = Alignment(horizontal='center')
+        sheet['G5'].alignment = Alignment(horizontal='right')
+        sheet['H5'].alignment = Alignment(horizontal='right')
+        row = 5
+        col = 9
+        for taxc in taxcolumns:
+            sheet.column_dimensions[str(col)].width = 18
+            print str(col)
+            print str(row)
+            #sheet.getCell(i-1,3).stringValue("Net @" + taxc ).setBold(True).setAlignHorizontal("right")
         registerwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
