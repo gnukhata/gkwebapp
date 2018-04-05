@@ -228,6 +228,12 @@ def getaccdetails(request):
 
 	return {"gkresult":accdetails}
 
+@view_config(route_name="getaccdetails", request_param="getAccCode", renderer="json")
+def getAccCode(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/accounts?type=getAccCode&accountname=%s"%(request.params["accountname"]), headers=header)
+    return {"accountcode":result.json()["accountcode"]}
+    
 
 @view_config(route_name="getsubgroup", renderer="json")
 def getsubgroup(request):

@@ -30,13 +30,11 @@ $(document).ready(function() {
   var oninvoice = 0;
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
-    
-    $('#expensetbl tbody tr[data-value!=""], #incometbl tbody tr[data-value!=""]').hide();
-    $('#expensetbl tbody tr[data-value ="blank"], #incometbl tbody tr[data-value ="blank"]').hide();
+    $("tbody tr:not('.group')").hide();
   $("#msspinmodal").modal("hide");
-    $("#realprintpnl").hide();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+    $("#realprintpnl, #compress").hide();
+  $('#expensetbl tbody tr:first-child td:first a').focus();
+  $('#expensetbl tbody tr:first-child td:first a').closest('tr').addClass('selected');
     var rcindex = 0;
     var pyindex = 0;
 
@@ -52,11 +50,6 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-    var previndex;
-    var directEttlindex = $('#expensetbl tbody tr:visible').eq(2).index();
-    var directintlindex = $('#incometbl tbody tr:visible').eq(2).index();
-    var indirectintlindex = $('#incometbl tbody tr:visible').eq(4).index();
-    var indirectEttlindex = $('#expensetbl tbody tr:visible').eq(5).index();
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
@@ -69,20 +62,20 @@ $(document).ready(function() {
     if (event.which==40)
     {
       event.preventDefault();
-      $('#expensetbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#expensetbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
         event.preventDefault();
-        $('#expensetbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#expensetbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==39)
     {
 
-      $('#incometbl tbody tr:eq('+pyindex+') td:eq(1) a').focus();
+      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
     }
   });
 
@@ -114,14 +107,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-      var acccode = $(this).attr('data-value');
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
       let curindex = $(this).index();
-    if (acccode!="")
-    {
-     var todatearray = $("#ledtodate").val().split("-");
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
      var fromdatearray = $("#ledfromdate").val().split("-");
      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-     var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -140,6 +150,8 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
+        }
+      );
     }
       /*
 	We need to find out if the row contains groups or not.
@@ -149,11 +161,25 @@ $(document).ready(function() {
 	The limits are from next row to the row before the total is displayed. Upper limit is not included.
 	Then we toggle the selected elements.
        */
-      if ($(this).find("a").hasClass("degroup")) {
-	  $('#expensetbl tbody tr').slice(curindex + 1, directEttlindex -1).toggle();
+      if ($(this).hasClass("degroup")) {
+	  $('.subgroupofdegroup, .accountofdegroup').toggle();
+	  $('.accountofsubgroupofdegroup').hide();
       }
-      if ($(this).find("a").hasClass("iegroup")) {
-	  $('#expensetbl tbody tr').slice(curindex + 1, indirectEttlindex -1).toggle();
+      if ($(this).hasClass("subgroupofdegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+      if ($(this).hasClass("iegroup")) {
+	  $('.subgroupofiegroup, .accountofiegroup').toggle();
+	  $('.accountofsubgroupofiegroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
       }
   });
 
@@ -183,19 +209,19 @@ $(document).ready(function() {
         if (event.which==40)
     {
 
-      $('#incometbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#incometbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
-        $('#incometbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#incometbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==37)
     {
 
-      $('#expensetbl tbody tr:eq('+rcindex+') td:eq(1) a').focus();
+      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
     }
 
 
@@ -229,14 +255,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-      var acccode = $(this).attr('data-value');
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
       let curindex = $(this).index();
-    if (acccode!="")
-    {
-    var todatearray = $("#ledtodate").val().split("-");
-    var fromdatearray = $("#ledfromdate").val().split("-");
-    var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
+     var fromdatearray = $("#ledfromdate").val().split("-");
+     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -255,14 +298,28 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
+        }
+      );
     }
-      //For documentation refer line number 144
-      if ($(this).find("a").hasClass("digroup")) {
-	  $('#incometbl tbody tr').slice(curindex + 1, directintlindex -1).toggle();
+      if ($(this).hasClass("digroup")) {
+	  $('.subgroupofdigroup, .accountofdigroup').toggle();
+	  $('.accountofsubgroupofdigroup').hide();
       }
-	//Formula for setting limits is a bit different because Gross Profit B/F is displayed in the beginning.
-      if ($(this).find("a").hasClass("iigroup")) {
-	  $('#incometbl tbody tr').slice(curindex + 2, indirectintlindex).toggle();
+      if ($(this).hasClass("subgroupofdigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+      if ($(this).hasClass("iigroup")) {
+	  $('.subgroupofiigroup, .accountofiigroup').toggle();
+	  $('.accountofsubgroupofiigroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
       }
   });
 
@@ -339,6 +396,10 @@ $(document).ready(function() {
     });
 
 
+    $(".expandbutton").click(function(event) {
+	$("tbody tr, .expandbutton").toggle();
+	$('.group').show();
+    });
     $("#printpnl").click(function(event) {
 // Displays a printable version of the report.
       $("#incometbl").unbind('dblclick');

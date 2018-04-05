@@ -1,189 +1,290 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  {% if orgtype=="Profit Making" %}
-    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Profit & Loss{% endtrans %}</title>
-  {% else %}
-    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Income & Expenditure{% endtrans %}</title>
-  {% endif %}
+  <head>
+    {% if orgtype=="Profit Making" %}
+      <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Profit & Loss{% endtrans %}</title>
+    {% else %}
+      <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Income & Expenditure{% endtrans %}</title>
+    {% endif %}
 
-<style type="text/css">
-.shadow {
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-#incometbl td,#expensetbl td {
-  font-size: 75%;
-  padding: 4 !important;
-  margin: 4 !important;
-}
-#incometbl th,#expensetbl th {
-  font-size: 85%;
-}
+    <style type="text/css">
+     .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     #incometbl td,#expensetbl td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+     #incometbl th,#expensetbl th {
+	 font-size: 85%;
+     }
 
-.card-view .title {
-  font-weight: bold;
-  display: inline-block;
-  min-width: 30%;
-  text-align: left !important;
-}
-.fixed-table tbody {
-  display:block;
-  height: calc(100vh - 16em);
-  overflow-y:scroll;
-}
-.fixed-table thead,.fixed-table tbody tr {
-  display:table;
-  width:100%;
-  table-layout:fixed;
-}
-.fixed-table thead {
-  width: calc( 100% - 0.8em );
-}
-.nopadding{
-	padidng:0 !important;
-	padding:0 !important;
-}
-.ralign{
-  text-align:right;
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 30%;
+	 text-align: left !important;
+     }
+     .fixed-table tbody {
+	 display:block;
+	 height: calc(100vh - 20em);
+	 overflow-y:scroll;
+     }
+     .fixed-table thead,.fixed-table tbody tr  {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     .fixed-table thead {
+	 width: calc( 100% - 0.8em );
+     }
+     .fixed-table tfoot tr {
+	 display:table;
+	 width: calc( 100% - 0.8em );
+	 table-layout:fixed;
+	 height:30px !important;
+     }
+     tfoot tr {
+	 height:30px !important;
+     }
+     .nopadding{
+	 padidng:0 !important;
+	 padding:0 !important;
+     }
+     .ralign{
+	 text-align:right;
 
-}
-.cred{
-  color:red;
-}
-.calign{
-  text-align:center;
-}
-.row {
-  margin-top: 5px;
-}
-</style>
-</head>
-<body>
-  {% if orgtype=="Profit Making" %}
-    <input type="hidden" id="headingprofit" value="Profit & Loss">
-    <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
-  {% else %}
+     }
+     .cred{
+	 color:red;
+     }
+     .calign{
+	 text-align:center;
+     }
+     .row {
+	 margin-top: 5px;
+     }
+    </style>
+  </head>
+  <body>
+    {% if orgtype=="Profit Making" %}
+      <input type="hidden" id="headingprofit" value="Profit & Loss">
+      <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+    {% else %}
       <input type="hidden" id="headingprofit" value="Income & Expenditure Account">
-    <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
-  {% endif %}
-  <div class="row">
-    <div class="table-responsive col-xs-6 nopadding">
-      <button class="btn btn-sm btn-danger pull-left" type="button" style="margin-right: 15px;display:none;" id="pllclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
-        <thead class="bg-primary">
-          <tr >
-            <th colspan="3" class="visible-print text-left col-xs-12" style="font-size:80%">
-              {% if orgtype=="Profit Making" %}
-                {% trans %}Profit & Loss Account{% endtrans %}
-              {% else %}
-              {% trans %}Income & Expenditure Account{% endtrans %}
-              {% endif %}
-            </th>
-          </tr>
-          <tr>
-            <th class="col-xs-1">&nbsp</th>
-            <th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for rcrecord in expense %}
-            {% if rcrecord["amount"]=="."  %}
-              <tr  data-value="blank">
-	    {% else  %}
-		<tr  data-value="{{rcrecord['accountcode']}}">
+      <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+    {% endif %}
+    <div class="row">
+      <div class="table-responsive col-xs-6 nopadding">
+	<button class="btn btn-sm btn-danger pull-left" type="button" style="margin-right: 15px;display:none;" id="pllclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+	<table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
+          <thead class="bg-primary">
+            <tr >
+              <th colspan="3" class="visible-print text-left col-xs-12" style="font-size:80%">
+		{% if orgtype=="Profit Making" %}
+                  {% trans %}Profit & Loss Account{% endtrans %}
+		{% else %}
+		  {% trans %}Income & Expenditure Account{% endtrans %}
+		{% endif %}
+              </th>
+            </tr>
+            <tr>
+              <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
+            </tr>
+          </thead>
+          <tbody>
+	    <tr class="group degroup">
+	      <td class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >DIRECT EXPENSE</a> </td>
+	      <td  class="col-xs-4 text-right">{{DirectExpense["direxpbal"]}}</td>
+	    </tr>
+	    
+	    {% if "Purchase" in DirectExpense %}
+	      <tr class="subgroupofdegroup" data-numberofaccounts="{{DirectExpense["Purchase"]|length}}">
+		<td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">PURCHASE</span></a></td>
+		<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense["Purchase"]["balance"]}}</span></td>
+	      </tr>
+	      {% for purch in DirectExpense["Purchase"] %}
+		{% if purch != "balance" %}
+		  <tr class="accountfield accountofsubgroupofdegroup" style="display:none">
+		    <td class="col-xs-8"><a class="rcaccname" href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense["Purchase"][purch]}}</span></td>
+		  </tr>
+		{% endif %}
+	      {% endfor %}
 	    {% endif %}
-            <td class="col-xs-1">
-              {{rcrecord['toby']}}
-            </td>
-            <td class="col-xs-9">
-	      {%if rcrecord['accountcode']=="" and rcrecord['accountname'] == "DIRECT EXPENSE"%}
-		<a class="rcaccname degroup" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {%if rcrecord['accountcode']=="" and rcrecord["accountname"] == "INDIRECT EXPENSE"  %}
-		<a class="rcaccname iegroup" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {%if rcrecord['accountcode']!=""%}
-		<a class="rcaccname account" href="#">{{rcrecord['accountname']}}</a>
-	      {% endif %}
-	      {% if (rcrecord['accountcode']=="") and (rcrecord['accountname'] != "DIRECT EXPENSE" and rcrecord['accountname'] != "INDIRECT EXPENSE")  %}
-		<a class="rcaccname" href="#" style="text-decoration: none;" >{{rcrecord['accountname']}}</a>
-	      {% endif %}
-            </td>
-            {% if rcrecord["amount"]=="." %}
-              <td class="col-xs-2 ralign">&nbsp</td>
-            {% else %}
-              <td class="col-xs-2 ralign">
-		{{rcrecord["amount"]}}
-              </td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
-    <div class="table-responsive col-xs-6 nopadding">
-      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="plrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
-        <thead class="bg-primary">
-          <tr >
-            <th colspan="3" class="visible-print text-right col-xs-12" style="font-size:80%">
-              {% trans %}Period{% endtrans %} : {{from}} {% trans %}to{% endtrans %} {{to}}
-            </th>
-          </tr>
-          <tr>
-            <th class="col-xs-1">&nbsp</th>
-            <th class="col-xs-9">{% trans %}Particulars{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for pyrecord in income %}
-	    {% if pyrecord["amount"]=="."  %}
-              <tr  data-value="blank">
-	    {% else  %}
-		<tr  data-value="{{pyrecord['accountcode']}}">
+	    {% for subgroup in DirectExpense %}
+	      {% if subgroup != "Purchase" and "balance" in DirectExpense[subgroup] %}
+		<tr class="subgroupofdegroup" data-numberofaccounts="{{DirectExpense[subgroup]|length}}">
+		  <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in DirectExpense[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr class="accountfield accountofsubgroupofdegroup">
+		      <td class="col-xs-8"><a class="rcaccname" class="libg" href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectExpense[subgroup][account]}}</span></td>
+		    </tr>
 		  {% endif %}
-              <td class="col-xs-1">
-		{{pyrecord['toby']}}
-              </td>
-              <td class="col-xs-9">
-		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "DIRECT INCOME" %}
-		  <a class="pyaccname digroup" href="#">{{pyrecord['accountname']}}</a>
+		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
+		  <tr class="accountfield accountofdegroup">
+		    <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
+		  </tr>
 		{% endif %}
-		{%if pyrecord['accountcode']=="" and pyrecord['accountname'] == "INDIRECT INCOME" %}
-		  <a class="pyaccname iigroup" href="#">{{pyrecord['accountname']}}</a>
+	    {% endfor %}
+	    <tr class="group iegroup">
+	      <td class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </td>
+	      <td  class="col-xs-4 text-right">{{InDirectExpense["indirexpbal"]}}</td>
+	    </tr>
+            {% for subgroup in InDirectExpense %}
+	      {% if "balance" in InDirectExpense[subgroup] %}
+		<tr class="subgroupofiegroup" data-numberofaccounts="{{InDirectExpense[subgroup]|length}}">
+		  <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in InDirectExpense[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr class="accountfield accountofsubgroupofiegroup">
+		      <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{InDirectExpense[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup] %}
+		<tr class="accountfield accountofiegroup">
+		  <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectExpense[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
+	    {% endfor %}
+          </tbody>
+	  <tfoot>
+	    <tr>
+	      <td class="col-xs-8">{% if net["netprofit"] %}Net Profit{% endif %}</td>
+	      <td class="col-xs-4 text-right">{% if net["netprofit"] %}{{net["netprofit"]}}{% endif %}</td>
+	    </tr>
+	    <tr>
+	      <td class="col-xs-8">Total</td>
+	      <td class="col-xs-4 text-right">{{Total}}</td>
+	    </tr>
+	  </tfoot>
+	</table>
+      </div>
+      <div class="table-responsive col-xs-6 nopadding">
+	<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="plrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+	<table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+          <thead class="bg-primary">
+            <tr >
+              <th colspan="3" class="visible-print text-right col-xs-12" style="font-size:80%">
+		{% trans %}Period{% endtrans %} : {{from}} {% trans %}to{% endtrans %} {{to}}
+              </th>
+            </tr>
+            <tr>
+              <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="group digroup">
+	      <td class="col-xs-8"> <a class="pyaccname"  href="#" style="text-decoration: none;" >DIRECT INCOME</a> </td>
+	      <td  class="col-xs-4 text-right">{{DirectIncome["dirincmbal"]}}</td>
+	    </tr>
+	    
+	    {% if "Sales" in DirectIncome %}
+	      <tr class="subgroupofdigroup" data-numberofaccounts="{{DirectIncome["Sales"]|length}}">
+		<td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:3em;">SALES</span></a></td>
+		<td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome["Sales"]["balance"]}}</span></td>
+	      </tr>
+	      {% for purch in DirectIncome["Sales"] %}
+		{% if purch != "balance" %}
+		  <tr class="accountfield accountofsubgroupofdigroup">
+		    <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:6em;">{{purch}}</span></a></td>
+		    <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectIncome["Sales"][purch]}}</span></td>
+		  </tr>
 		{% endif %}
-		{%if pyrecord['accountcode']!=""%}
-		  <a class="pyaccname account1" href="#">{{pyrecord['accountname']}}</a>
-		{% endif %}
-		{% if (pyrecord['accountcode']=="") and (pyrecord['accountname'] != "DIRECT INCOME" and pyrecord['accountname'] != "INDIRECT INCOME")  %}
-		  <a class="pyaccname" href="#" style="text-decoration: none;" >{{pyrecord['accountname']}}</a>
-		{% endif %}
-            </td>
-            {% if pyrecord["amount"]=="." %}
-            <td class="col-xs-2 ralign">&nbsp</td>
-            {% else %}
-            <td class="col-xs-2 ralign">
-              {{pyrecord["amount"]}}
-            </td>
-            {% endif %}
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
-    </div>
+	      {% endfor %}
+	    {% endif %}
+	    {% for subgroup in DirectIncome %}
+	      {% if subgroup != "Sales" and "balance" in DirectIncome[subgroup] %}
+		<tr class="subgroupofdigroup" data-numberofaccounts="{{DirectIncome[subgroup]|length}}">
+		  <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in DirectIncome[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr class="accountfield accountofsubgroupofdigroup">
+		      <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{DirectIncome[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "Sales" and subgroup != "dirincmbal" and "balance" not in DirectIncome[subgroup] %}
+		<tr class="accountfield accountofdigroup">
+		  <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectIncome[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
+	    {% endfor %}
+	    <tr class="group iigroup">
+	      <td class="col-xs-8"> <a class="pyaccname"  href="#" style="text-decoration: none;" >INDIRECT INCOME</a> </td>
+	      <td  class="col-xs-4 text-right">{{InDirectIncome["indirincmbal"]}}</td>
+	    </tr>
+            {% for subgroup in InDirectIncome %}
+	      {% if "balance" in InDirectIncome[subgroup] %}
+		<tr class="subgroupofiigroup" data-numberofaccounts="{{InDirectIncome[subgroup]|length}}">
+		  <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:3em;">{{ subgroup|upper }}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]["balance"]}}</span></td>
+		</tr>
+		{% for account in InDirectIncome[subgroup] %}
+		  {% if account != "balance" %}
+		    <tr class="accountfield accountofsubgroupofiigroup">
+		      <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:6em;">{{account}}</span></a></td>
+		      <td class="col-xs-4 text-right"><span style="margin-right:6em;">{{InDirectIncome[subgroup][account]}}</span></td>
+		    </tr>
+		  {% endif %}
+		{% endfor %}
+	      {% endif %}
+	      {% if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup] %}
+		<tr class="accountfield accountofiigroup">
+		  <td class="col-xs-8"><a class="pyaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{InDirectIncome[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
+	    {% endfor %}
+          </tbody>
+	  <tfoot>
+	    <tr>
+	      <td class="col-xs-8">{% if net["netloss"] %}Net Loss{% endif %}</td>
+	      <td class="col-xs-4 text-right">{% if net["netloss"] %}{{net["netloss"]}}{% endif %}</td>
+	    </tr>
+	    <tr>
+	      <td class="col-xs-8">Total</td>
+	      <td class="col-xs-4 text-right">{{Total}}</td>
+	    </tr>
+	  </tfoot>
+	</table>
+      </div>
 
-  </div>
-  <span class="hidden-print" style="margin:auto; display:table;">
-    <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
-    <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-    <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-    <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
-  </span>
-  <input type="hidden" id="ledtodate" value="{{to}}">
-  <input type="hidden" id="ledfromdate" value="{{from}}">
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/profitlossreport.js')}}"></script>
+    </div>
+    <span class="hidden-print" style="margin:auto; display:table;">
+      <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-success expandbutton" id="expandall" accesskey="e"><i class="fa fa-toggle-down" aria-hidden="true"></i> {% trans %}<u>E</u>xpand All{% endtrans %}</button>
+      <button type="button" class="btn btn-sm btn-warning expandbutton" id="compress" accesskey="e"><i class="fa fa-toggle-up" aria-hidden="true"></i> {% trans %}Compr<u>e</u>ss All{% endtrans %}</button>
+      <!-- 
+	   <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+	   <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+	   <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      -->
+    </span>
+    <input type="hidden" id="ledtodate" value="{{to}}">
+    <input type="hidden" id="ledfromdate" value="{{from}}">
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/profitlossreport.js')}}"></script>
 </body>
 </html>
