@@ -56,7 +56,7 @@ var userrole1;
       $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
-      $(".businessmenu").show();	 
+      $(".businessmenu").hide();	 
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -305,9 +305,13 @@ var userrole1;
     }
   });
   $(".transactionmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#business").click();
-    }
+      if(event.which == 39){
+	  if (sessionStorage.invsflag ==1){
+	      $("#business").click();
+	  }else{
+	      $("#report").click();
+	  }
+      }
     if(event.which == 37){
       if (sessionStorage.invflag ==1)
         {
@@ -334,9 +338,13 @@ $(".businessmenu").keydown(function(event){
     if(event.which == 39){
       $("#administration").click();
     }
-    if(event.which == 37){
-      $("#business").click();
-    }
+      if(event.which == 37){
+	  if (sessionStorage.invsflag ==1){
+	      $("#business").click();
+	  }else{
+	      $("#transaction").click();
+	  }
+      }
   });
   $(".administrationmenu").keydown(function(event){
     if(event.which == 39){
@@ -531,6 +539,8 @@ $(".businessmenu").keydown(function(event){
        $("#tallyimport").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
+       $("#gstsummary").remove();
+       $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
@@ -553,6 +563,7 @@ $(".businessmenu").keydown(function(event){
 	 $(".administrationmenu").remove();
 	 $(".intauditor").remove();
 	 $("#fevoucher").text("Find Voucher");
+	 $("#business").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
