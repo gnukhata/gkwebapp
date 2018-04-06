@@ -203,7 +203,7 @@ $(document).ready(function() {
 	      //$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      $('.product_name:eq(' + curindex + ')').val(value.proddesc);
 	      $('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
-	      $('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+	      $('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
 	      $('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
 	      $('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 	      $('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
