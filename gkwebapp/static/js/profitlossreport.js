@@ -401,14 +401,37 @@ $(document).ready(function() {
 	$('.group').show();
     });
     $("#printpnl").click(function(event) {
-// Displays a printable version of the report.
-      $("#incometbl").unbind('dblclick');
-      $("#expensetbl").unbind('dblclick');
-      $('table a').contents().unwrap();
-      $("table").removeClass('fixed-table').addClass('table-striped');
-      $(".fixed-table-toolbar").remove();
-      $("#printpnl").hide();
-      $("#realprintpnl").show();
+	// Displays a printable version of the report.
+	$("#msspinmodal").modal("show");
+	var todatearray = $("#ledtodate").val().split("-");
+	var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	$.ajax(
+	    {
+		type: "POST",
+		url: "/showprofitlossreport?type=print",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		}
+	    })
+	    .done(function(resp) {
+		$("#msspinmodal").modal("hide");
+		$('.modal-backdrop').remove();
+		$("#info").html(resp);
+		$('tr').show();
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	$("#printpnl").hide();
+	$("#realprintpnl").show();
     });
     $("#realprintpnl").click(function(event) {
       window.print();

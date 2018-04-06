@@ -11,40 +11,6 @@
      .shadow {
 	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      }
-     #incometbl td,#expensetbl td {
-	 font-size: 75%;
-	 padding: 4 !important;
-	 margin: 4 !important;
-     }
-     #incometbl th,#expensetbl th {
-	 font-size: 85%;
-     }
-
-     .card-view .title {
-	 font-weight: bold;
-	 display: inline-block;
-	 min-width: 30%;
-	 text-align: left !important;
-     }
-     .fixed-table tbody {
-	 display:block;
-	 height: calc(100vh - 20em);
-	 overflow-y:scroll;
-     }
-     .fixed-table thead,.fixed-table tbody tr  {
-	 display:table;
-	 width:100%;
-	 table-layout:fixed;
-     }
-     .fixed-table thead {
-	 width: calc( 100% - 0.8em );
-     }
-     .fixed-table tfoot tr {
-	 display:table;
-	 width: calc( 100% - 0.8em );
-	 table-layout:fixed;
-	 height:26px !important;
-     }
      tfoot tr {
 	 height:26px !important;
      }
@@ -52,46 +18,23 @@
 	 padidng:0 !important;
 	 padding:0 !important;
      }
-     .ralign{
-	 text-align:right;
-
-     }
-     .cred{
-	 color:red;
-     }
-     .calign{
-	 text-align:center;
-     }
-     .row {
-	 margin-top: 5px;
-     }
     </style>
   </head>
   <body>
     {% if orgtype=="Profit Making" %}
       <input type="hidden" id="headingprofit" value="Profit & Loss">
-      <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+      <span style="margin:auto; display:table;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
     {% else %}
       <input type="hidden" id="headingprofit" value="Income & Expenditure Account">
-      <span class="hidden-print" style="margin:auto; display:table;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+      <span style="margin:auto; display:table;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
     {% endif %}
     <div class="row">
-      <div class="table-responsive col-xs-6 nopadding">
-	<button class="btn btn-sm btn-danger pull-left" type="button" style="margin-right: 15px;display:none;" id="pllclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-	<table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
+      <div clas="col-sm-6">
+	<table id="expensetbl" class="table table-condensed table-bordered">
           <thead class="bg-primary">
-            <tr >
-              <th colspan="3" class="visible-print text-left col-xs-12" style="font-size:80%">
-		{% if orgtype=="Profit Making" %}
-                  {% trans %}Profit & Loss Account{% endtrans %}
-		{% else %}
-		  {% trans %}Income & Expenditure Account{% endtrans %}
-		{% endif %}
-              </th>
-            </tr>
             <tr>
               <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
-              <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
+              <th class="col-xs-2 text-right">{% trans %}Amount{% endtrans %}</th>
             </tr>
           </thead>
           <tbody>
@@ -130,11 +73,11 @@
 		{% endfor %}
 	      {% endif %}
 	      {% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
-		  <tr class="accountfield accountofdegroup">
-		    <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
-		    <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
-		  </tr>
-		{% endif %}
+		<tr class="accountfield accountofdegroup">
+		  <td class="col-xs-8"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
 	    {% endfor %}
 	    <tr class="group iegroup">
 	      <td class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </td>
@@ -175,18 +118,12 @@
 	  </tfoot>
 	</table>
       </div>
-      <div class="table-responsive col-xs-6 nopadding">
-	<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="plrclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-	<table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+      <div class="col-sm-6">
+	<table id="incometbl" class="table table-bordered table-condensed">
           <thead class="bg-primary">
-            <tr >
-              <th colspan="3" class="visible-print text-right col-xs-12" style="font-size:80%">
-		{% trans %}Period{% endtrans %} : {{from}} {% trans %}to{% endtrans %} {{to}}
-              </th>
-            </tr>
             <tr>
               <th class="col-xs-10 text-center">{% trans %}Particulars{% endtrans %}</th>
-              <th class="col-xs-2 ralign">{% trans %}Amount{% endtrans %}</th>
+              <th class="col-xs-2 text-right">{% trans %}Amount{% endtrans %}</th>
             </tr>
           </thead>
           <tbody>
@@ -270,16 +207,9 @@
 	  </tfoot>
 	</table>
       </div>
-
     </div>
     <span class="hidden-print" style="margin:auto; display:table;">
       <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-success expandbutton" id="expandall" accesskey="e"><i class="fa fa-toggle-down" aria-hidden="true"></i> {% trans %}<u>E</u>xpand All{% endtrans %}</button>
-      <button type="button" class="btn btn-sm btn-warning expandbutton" id="compress" accesskey="e"><i class="fa fa-toggle-up" aria-hidden="true"></i> {% trans %}Compr<u>e</u>ss All{% endtrans %}</button>
-      <!-- 
-	   <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-      -->
-	   <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
 	   <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
     </span>
     <input type="hidden" id="ledtodate" value="{{to}}">
