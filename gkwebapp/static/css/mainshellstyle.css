@@ -46,3 +46,22 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
     outline: 2px #1f0e5e solid !important;
     
 }
+@media (min-width: 767px) {
+    nav, .navbar-collapse, .navbar-fixed-top, .navbar-header, nav > li, .navbar-brand {
+	min-height:35px !important;
+	height:35px !important;
+    }
+
+    nav > li > a, , .navbar-brand{
+	padding-top:7px !important;
+	padding-bottom:7px !important;
+    }
+    .navbar-nav > li > a {
+	padding-top:7px !important;
+	padding-bottom:7px !important;
+    }
+    #mainshellticker {
+	margin-top: 37px;
+	margin-bottom:1px;
+    }
+}
