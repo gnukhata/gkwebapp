@@ -328,15 +328,12 @@ def listofinvspreadsheet(request):
         sheet.column_dimensions['J'].width = 10
         sheet.column_dimensions['K'].width = 16
         sheet.merge_cells('A1:K2')
-        # Name and Financial Year of organisation is fetched to be displayed on the first row.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
-        # Organisation name and financial year are displayed.
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet.merge_cells('A3:K3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        # Title of the sheet and width of columns are set.
         if invflag == 0:
             sheet.title = "List of All Invoices"
             sheet['A3'] = "List of All Invoices"
