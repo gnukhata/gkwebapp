@@ -27,6 +27,7 @@ Contributors:
 "Rohini Baraskar" <robaraskar@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 "Aditya Shukla" <adityashukla9158.as@gmail.com>
+"Pravin Dake" <pravindake24@gmail.com>
 */
 
 // This script is for the add cashmemo page
@@ -333,23 +334,66 @@ $(document).ready(function() {
     $("#invoice_state").keydown(function(event) {
         if (event.which == 13) {
             event.preventDefault();
-            if ($("#taxapplicable").val() == 7) {
-         $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
-           }
-           else {
-         $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
-           }
-
-        }
+	    if ($("#taxapplicable").val() == 7) {
+		$("#gstin_panno").focus();
+	    }else {
+		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }	    
+	}
         if (event.which == 38 && (document.getElementById('#invoice_state').selectedIndex == 0)) {
             event.preventDefault();
-
-
             $("#invoice_year").focus();
-
-
         }
     });
+    
+    //Validation for GSTIN fields.
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
+    $("#gstin_panno").keydown(function(event) {
+	panno = $(this).val();
+        if (event.which == 13 && ($("#taxapplicable").val() == 7)) {
+	    event.preventDefault();
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno != ""){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$(this).focus().select();
+	    }else {
+		$("#gstin").focus();
+	    }
+	}
+	if (event.which == 39) {
+	    event.preventDefault();
+	    $("#gstin").focus().select();
+	}
+    });
+    $("#gstin").keydown(function(event) {
+        if (event.which == 13) {
+	    let gstinstring=$("#gstin_panno").val() + $("#gstin").val(); //Concatinating
+	    event.preventDefault();
+	    if ($("#taxapplicable").val() == 7) {
+		if(gstinstring != ''){
+  		    if(gstinstring.length !=13){
+  			$("#gstin-improper-modal").alert();
+			$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#gstin-improper-modal").hide();
+  			    $("#gstin_panno").focus().select();
+			});
+  			return false;
+		    }
+		}
+		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }
+            else {
+		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+            }
+	}
+	if (event.which == 37) {
+	    event.preventDefault();
+	    $("#gstin_panno").focus().select();
+	}
+	});
 
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
         event.preventDefault();
@@ -381,6 +425,7 @@ $(document).ready(function() {
         $(".product_name_vat").change();
 	$("#orggstin").text("");
 	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
+	$("#gstin_statecode").val(gstinstateid);
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
@@ -394,7 +439,9 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		$("#orggstin").text(resp["gkresult"]);
+		var gstincode=resp["gkresult"];
+		$("#gstin_panno").val(gstincode.substring(2, 12));
+		$("#gstin").val(gstincode.substring(12,15));
          	  }
                 })
                 .fail(function() {
@@ -1070,9 +1117,9 @@ $(document).off("keyup").on("keyup", function(event) {
     return false;
   }
 });
-    console.log($("#status").val());
+    
     $("#invoice_save").click(function(event) {
-        // validations start below
+        // Validations start below
         event.stopPropagation();
 
         var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
@@ -1126,6 +1173,39 @@ $(document).off("keyup").on("keyup", function(event) {
             $('#invoice_date').focus().select();
             return false;
         }
+
+	//Validation for GSTIN on Save Button.
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var panno1= $("#gstin_panno").val();
+	let gstinstring=$("#gstin_panno").val() + $("#gstin").val();
+	 if ($("#taxapplicable").val() == 7) {
+	     if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+		 $("#gstin-improper-modal").alert();
+		 $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		     $("#gstin-improper-modal").hide();
+		     $("#gstin_panno").focus();
+		 });
+		 return false;
+	     }
+	else if(panno1 !="" && $("#gstin").val() ==""){
+	    $("#gstin-improper-modal").alert();
+	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-modal").hide();
+		$("#gstin").focus();
+	    });
+	    return false;
+	}
+	else if(gstinstring != ""){
+	    if(gstinstring.length != 13){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		    $("#gstin_panno").focus();
+		});
+		return false;
+	    }
+	}
+	 }
 
         var tax = {};
 	var cess = {};
@@ -1271,8 +1351,8 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
-	
-       var form_data = new FormData();
+
+	var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
         form_data.append("contents", JSON.stringify(contents));
@@ -1283,12 +1363,16 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("taxstate", $("#invoice_state option:selected").val());
         form_data.append("sourcestate", $("#invoice_state option:selected").val());
         form_data.append("taxflag",$("#taxapplicable").val() );
-	form_data.append("orgstategstin",$("#orggstin").text() );
 	form_data.append("freeqty", JSON.stringify(freeqty));
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
 	form_data.append("invoicetotalword", numbertowords);
-	
+	let gstinstr= $("#gstin_panno").val() + $("#gstin").val();
+	if(gstinstr != ''){
+  	    if(gstinstr.length == 13){
+		form_data.append("orgstategstin",$("#gstin_statecode").val() + $("#gstin_panno").val() + $("#gstin").val());
+	    }
+	}
 	//Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
         if ($("#chkcash").is(":checked")) {
 	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
@@ -1323,7 +1407,36 @@ $(document).off("keyup").on("keyup", function(event) {
 		   }else{ $("#cashmemo_record").click();}
                $("#success-alert").alert();
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                 $("#success-alert").hide();
+		   $("#success-alert").hide();
+		   let invid = resp["gkresult"];
+		   if (inoutflag == "15") {
+		       $.ajax({
+			   url: '/cashmemos?action=showcashmemo',
+			   type: 'POST',
+			   dglobal: false,
+			   async: false,
+			   data: {"invid": invid},
+			   datatype: "text/html",
+			   beforeSend: function(xhr) {
+                               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			   }
+                       })
+			   .done(function(resp) {
+			       $("#cashmemoload").html("");
+			       $("#cashmemoload").html(resp);
+			       $("#viewcashmemo_div").show();
+			       $("#cashmemodiv").hide();
+			       $("#editbutton").hide();
+			       $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
+			       $("#cashmemo_div").html("");
+			   })
+			   .fail(function() {
+			       console.log("error");
+			   })
+			   .always(function() {
+			       console.log("complete");
+			   });
+		   }
                });
                return false;
              } else if (resp["gkstatus"] == 1) {
@@ -1359,201 +1472,7 @@ $(document).off("keyup").on("keyup", function(event) {
     $("#confirm_yes").on('hidden.bs.modal', function(event) {
         $("#invoice_challanno").focus();
     });
-    // Function to save and print the cash memo
-    // All details from the current page is sent to the print view in server
-    /*$("#invoice_saveprint").click(function(event) {
-        event.stopPropagation();
-        var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-        if ($.trim($('#invoice_challanno').val()) == "") {
-            $("#challanno-blank-alert").alert();
-            $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#challanno-blank-alert").hide();
-            });
-            $('#invoice_challanno').focus();
-            return false;
-        }
-
-        if ($.trim($('#invoice_date').val()) == "") {
-            $("#date-blank-alert").alert();
-            $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#date-blank-alert").hide();
-            });
-            $('#invoice_date').focus();
-            return false;
-        }
-        if ($.trim($('#invoice_month').val()) == "") {
-            $("#date-blank-alert").alert();
-            $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#date-blank-alert").hide();
-            });
-            $('#invoice_month').focus();
-            return false;
-        }
-        if ($.trim($('#invoice_year').val()) == "") {
-            $("#date-blank-alert").alert();
-            $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#date-blank-alert").hide();
-            });
-            $('#invoice_year').focus();
-            return false;
-        }
-        if (!Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy")) {
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#date-alert").hide();
-            });
-            $('#invoice_date').focus().select();
-            return false;
-        }
-        var curdate = Date.parseExact($("#invoice_year").val() + $("#invoice_month").val() + $("#invoice_date").val(), "yyyyMMdd");
-        if (!curdate.between(financialstart, financialend)) {
-            $("#between-date-alert").alert();
-            $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
-                $("#between-date-alert").hide();
-            });
-            $('#invoice_date').focus().select();
-            return false;
-        }
-        var tax = {};
-        var contents = {};
-        var stock = {};
-        var freeqty = {};
-        var items = {};
-        for (var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
-            if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
-                $("#product-blank-alert").alert();
-                $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                    $("#product-blank-alert").hide();
-                });
-                $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select").focus();
-                return false;
-            }
-            if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val() == 0) {
-                $("#quantity-blank-alert").alert();
-                $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                    $("#quantity-blank-alert").hide();
-                });
-                $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").focus();
-                return false;
-            }
-            if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val() == "" || $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val() == 0) {
-                $("#price-blank-alert").alert();
-                $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-                    $("#price-blank-alert").hide();
-                });
-                $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").focus();
-                return false;
-            }
-            var obj = {};
-            var productcode = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val();
-            var ppu = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-            obj[ppu] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-            tax[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val();
-            contents[productcode] = obj;
-            items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
-            freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
-        }
-        stock["items"] = items;
-
-
-        stock["inout"] = 15;
-
-
-        event.preventDefault();
-        $('.modal-backdrop').remove();
-        $('.modal').modal('hide');
-        $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function(e) {
-            $.ajax({
-                    url: '/cashmemos?action=save',
-                    type: 'POST',
-                    dataType: 'json',
-                    async: false,
-                    data: {
-                        "invoiceno": $("#invoice_challanno").val(),
-                        "invoicedate": $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val(),
-                        "invoicetotal": $("#invoice_product_table tfoot tr:last td:eq(5) input").val(),
-                        "contents": JSON.stringify(contents),
-                        "taxstate": $("#invoice_state option:selected").val(),
-                        "tax": JSON.stringify(tax),
-                        "stock": JSON.stringify(stock),
-                        "freeqty": JSON.stringify(freeqty),
-                        "taxflag":$("#taxapplicable").val()
-                    },
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-                })
-                .done(function(resp) {
-                    if (resp["gkstatus"] == 0) {
-                        printset = [];
-                        subtotal = 0;
-                        for (var i = 0; i < $("#invoice_product_table tbody tr").length; i++) {
-                            var obj = {};
-                            //List of dictionaries with the table details to be sent to the print page
-                            obj.productdesc = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
-                            obj.qty = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) input").val();
-                            obj.freeqty = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(2) input").val();
-                            obj.ppu = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(3) input").val();
-                            obj.unitname = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(1) span").text();
-                            subtotal += +((obj.qty - obj.freeqty) * obj.ppu);
-                            obj.taxrate = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(4) input").val();
-                            obj.taxamt = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(5) input").val();
-                            obj.rowtotal = $("#invoice_product_table tbody tr:eq(" + i + ") td:eq(6) input").val();
-                            printset.push(obj);
-                        }
-                        $.ajax({
-                                url: '/cashmemos?action=print',
-                                type: 'POST',
-                                dataType: 'html',
-                                data: {
-                                    "invoiceno": $("#invoice_challanno").val(),
-                                    "invoicedate": $("#invoice_date").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_year").val(),
-                                    "printset": JSON.stringify(printset),
-                                    "subtotal": parseFloat(subtotal).toFixed(2),
-                                    "taxtotal": $("#invoice_product_table tfoot tr:first td:eq(4) input").val(),
-                                    "gtotal": $("#invoice_product_table tfoot tr:first td:eq(5) input").val()
-                                },
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                                }
-                            })
-                            .done(function(resp) {
-                                console.log("success");
-                                $('#info').html(resp);
-                            })
-                            .fail(function() {
-                                console.log("error");
-                            })
-                            .always(function() {
-                                console.log("complete");
-                            });
-                    } else if (resp["gkstatus"] == 1) {
-                        $("#invoice_challanno").focus();
-                        $("#duplicate-alert").alert();
-                        $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#duplicate-alert").hide();
-                        });
-                        return false;
-                    } else {
-                        $("#invoice_challanno").focus();
-                        $("#failure-alert").alert();
-                        $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#failure-alert").hide();
-                        });
-                        return false;
-                    }
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
-        });
-
-
-
-    });*/
+    
     $("#confirm_yes_print").on('shown.bs.modal', function(event) {
         $("#tn_save_noprint").focus();
 
@@ -1894,7 +1813,36 @@ $(document).off("keyup").on("keyup", function(event) {
                 $("#cash").hide();
 		$("#bank").show();
             }
-        });
+    });
+    
+    //Printing cashmemo
+    $("#printbutton").click(function(event) {
+        $.ajax({
+                url: '/cashmemos?action=print',
+                type: 'POST',
+                dataType: 'html',
+                data: {"invid":$("#printbutton").attr("invid")},  //Accesing invoiceid sent while showing cashmemo.  
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+		$('#printload').html("");
+                $('#printload').html(resp);
+		$("#cashmemoload").hide();
+		$("#buttondiv").hide();
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
+
+    $("#backbutton").click(function(event) {
+    $("#addcashmemo").click();
+  });
     
 });
-

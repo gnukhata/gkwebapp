@@ -1,11 +1,6 @@
 
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
   <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
-</head>
-
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
@@ -43,6 +38,15 @@
     <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Rate must not be empty or zero!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Please enter proper GSTIN!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
+      {% trans %}Improper GSTIN!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Please Enter GSTIN.{% endtrans %}	
     </div>
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
@@ -83,14 +87,14 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Cash Memo No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter Cash Memo No{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -126,7 +130,7 @@
             </div>
 
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <div class="form-group">
 	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
@@ -139,8 +143,15 @@
 	    </div>
           </div>
 	  {% if resultgstvat != '22' %}
-	    <div class="col-sm-12 gstinfield">
-	      <label class="gstinfield"> GSTIN : </label><label class="gstinfield" style="font-size: 175%" id="orggstin"></label>	    
+	    <div class="col-md-2 gstinfield">
+	      <label class="gstinfield"> GSTIN : </label>
+	      <div class="form-inline nopadding">
+		<div class="form-group nopadding">
+		  <input type="text" id="gstin_statecode" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled style="text-align:center" >
+		  <input type="text" id="gstin_panno" class="form-control input-sm nopadding panno" style="text-align:center" size="10" maxlength="10">
+		  <input type="text" id="gstin" class="form-control input-sm nopadding gstin" style="text-align:center" size="3" maxlength="3">
+		</div>
+	      </div>  
 	    </div>
 	  {% endif %}
           {% if gkstatus=="out" %}

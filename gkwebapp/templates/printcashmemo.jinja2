@@ -123,9 +123,9 @@
       </div>
 
 {% if gkresult["taxflag"] == 22 %}
-      <div class="row">
+      <div class="col-md-12">
 	<br>
-	<table id="invoice_product_table_vat" class=" table table-condensed table-bordered">
+	<table class=" table table-condensed table-bordered">
 	  <thead class="bg-primary">
 	    <tr>
 	      <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
@@ -151,7 +151,6 @@
 		<td class="qtyvwrap text-right">
 		  <small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
 		</td>
-
 		<td class="smvwrap text-right">
 		  <small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
 		</td>
@@ -161,16 +160,15 @@
 		<td class="smvwrap text-right">
 		  <small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
 		</td>
-	    </td>
-	    <td class="ratewrap text-right">
-	      <small>{{ gkresult["invcontents"][product]["taxrate"] }}</small>
-	    </td>
-	    <td class="smvwrap text-right">
-	      <small>{{ gkresult["invcontents"][product]["taxamount"] }}</small>
-	    </td>
-	    <td class="smvwrap text-right">
-	      {{ gkresult["invcontents"][product]["totalAmount"] }}
-	    </td>
+		<td class="ratewrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["taxrate"] }}</small>
+		</td>
+		<td class="smvwrap text-right">
+		  <small>{{ gkresult["invcontents"][product]["taxamount"] }}</small>
+		</td>
+		<td class="smvwrap text-right">
+		  {{ gkresult["invcontents"][product]["totalAmount"] }}
+		</td>
 	      </tr>
 	    {% endfor %}
 	  </tbody>
@@ -202,7 +200,7 @@
  {% else %}
    <br>
       <div class="row">
-	<table id="invoice_product_table_gst" class="table table-condensed table-bordered">
+	<table class="table table-condensed table-bordered">
 	  <thead class="bg-primary">
 	    <tr>
 	      <th rowspan="2" class="mdwrap text-center"><small>{% trans %}Product{% endtrans %}</small></th>

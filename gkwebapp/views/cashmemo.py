@@ -74,7 +74,10 @@ def getproducts(request):
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
 def savecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"invoicetotalword":request.params["invoicetotalword"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"orgstategstin":request.params["orgstategstin"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"]}
+    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"invoicetotalword":request.params["invoicetotalword"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"]}
+
+    if request.params.has_key("orgstategstin"):
+        cashmemodata["orgstategstin"]=request.params["orgstategstin"]
     if request.params.has_key("discount"):
         cashmemodata["discount"]=json.loads(request.params["discount"])
     if request.params.has_key("bankdetails"):
@@ -83,7 +86,7 @@ def savecashmemo(request):
     invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 
     result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
-    return {"gkstatus":result.json()["gkstatus"]}
+    return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
 
 

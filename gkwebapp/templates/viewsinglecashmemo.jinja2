@@ -6,8 +6,12 @@
        display:block;
        overflow:hidden;
    }
+   .table{
+       margin-bottom: 0px !important;
+   }
   </style>
 </head>
+<body>
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
 <form class="form-inline cashborder">
   <br>
@@ -34,7 +38,7 @@
       {% endif %}
     </div>
   </div>
-  {% if gkresult["taxflag"] == 7 %}
+  {% if gkresult["taxflag"] == 7 and gkresult["orgstategstin"] %}
     <div class="form-group form-inline col-sm-12">
       <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
       {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}
@@ -105,7 +109,6 @@
 	      {{ gkresult["totaltaxablevalue"] }}
 	    </td>
 	    <td class="smvwrap">
-
 	    </td>
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxamt"] }}
@@ -200,6 +203,7 @@
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    <td colspan="2" class="text-right taxwrap">{{ gkresult["totalcessamt"] }}</td>
+		  </tr>
 		</tfoot>
 	      </table>
 	    </div>
@@ -364,4 +368,4 @@
 
     </div>
 </form>
-
+</body>
