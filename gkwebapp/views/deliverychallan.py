@@ -293,8 +293,12 @@ def unbillspreadsheet(request):
 @view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
 def deliveryprint(request):
     header={"gktoken":request.headers["gktoken"]}
-    org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     delchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(request.params["dcid"])), headers=header)
+    if delchaldata.json()["gkresult"]["delchalflag"] ==15:
+        org = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+    else:
+        statecode = delchaldata.json()["gkresult"]["sourcestatecode"]
+        org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
     cust = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(delchaldata.json()["gkresult"]["custSupDetails"]["custid"])), headers=header)
     if delchaldata.json()["gkresult"]["delchaldata"]["goid"]:
         godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(delchaldata.json()["gkresult"]["delchaldata"]["goid"])), headers=header)

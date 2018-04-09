@@ -144,27 +144,15 @@ $(document).ready(function() {
 	    $("#invoice_product_table_vat").hide();
 	    $(".gstinfield").show();
 	    $(".tinfield").hide();
-	    if(resp.delchaldata.delchaldata.consignee){
-		if (resp.delchaldata.delchaldata.consignee.consigneestate == resp.delchaldata.sourcestate) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+	    $(".vatfield").hide();
+	    if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
+		$(".igstfield").hide();
+		$(".igstfield").css('border','');
+		$(".sgstfield").show();
 	    } else {
-		if (resp.delchaldata.custSupDetails.custsupstate == resp.delchaldata.delchaldata.sourcestate) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		} else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
+		$(".sgstfield").hide();
+		$(".sgstfield").css('border','');
+		$(".igstfield").show();
 	    }
 	}
 	    else if(resp.delchaldata.delchaldata.taxflag == '22'){
@@ -217,16 +205,18 @@ $(document).ready(function() {
 	    $("#statecodeforinvoice").text(resp.delchaldata.sourcestatecode);
 	    $(".invoice_issuer").show();
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
-	    $("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
+		$("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
+		$("#deliverychallan_customerstate").text(resp.delchaldata.destinationstate);
+		$("#statecodeofcustomer").text(resp.delchaldata.taxstatecode);
 	}
 	    else {
+		$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
+		$("#statecodeofcustomer").text(resp.delchaldata.sourcestatecode);
 	    $("#invoicestate").text(resp.delchaldata.destinationstate);
 	    $("#statecodeforinvoice").text(resp.delchaldata.taxstatecode);
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
-	$("#deliverychallan_customerstate").text(resp.delchaldata.custSupDetails.custsupstate);
-	$("#statecodeofcustomer").text(resp.delchaldata.custSupDetails.custsupstatecode);
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#tin").text(resp.delchaldata.custSupDetails.custtin);
 	}else{
@@ -236,7 +226,10 @@ $(document).ready(function() {
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
-	$('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
+	//If selected delivery note have godown then display the godown.
+	if(resp.delchaldata.delchaldata.goname){
+	    $('#deliverychallan_edit_godown').text(resp.delchaldata.delchaldata.goname +","+resp.delchaldata.delchaldata.goaddr);
+	}
 	$('#deliverychallan_edit_consignment').text(typeoftrans);
 	if(resp.delchaldata.delchaldata.consignee) {
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
@@ -300,7 +293,6 @@ $(document).ready(function() {
 		$('.invoice_product_cessrate:eq(' + curindex + ')').text(parseFloat(value.cessrate).toFixed(2));
 		$('.invoice_product_cessamount:eq(' + curindex + ')').text(parseFloat(value.cess).toFixed(2));
 		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		$('.invoice_product_total_gst:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
 		curindex = curindex + 1;
 	    });
@@ -332,7 +324,6 @@ $(document).ready(function() {
 	    let curindex = 0;
 	    $.each(resp.delchaldata.delchalContents, function(key, value) {
 		$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-		$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		$('.product_name_vat:eq(' + curindex + ')').text(value.proddesc).prop("disabled", true);
 		$('.invoice_product_quantity_vat:eq(' + curindex + ')').text(value.qty).attr("data", value.qty);
 		$('.invoice_product_freequantity_vat:eq(' + curindex + ')').text(value.freeqty).attr("data", value.freeqty);
@@ -465,7 +456,7 @@ $(document).ready(function() {
         '</div>'+
         '</td>'+
         '<td class="col-xs-1">'+
-        '<a href="#" class="product_del deliverychallan_edit_disable"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+        '<a href="#" class="product_del deliverychallan_edit_disable"></a>'+
         '</td>'+
         '</tr>');
       });

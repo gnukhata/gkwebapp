@@ -57,6 +57,7 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
 
+    var vatorgstflag = sessionStorage.vatorgstflag;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
 	$(".tinfield").show();
@@ -297,7 +298,7 @@ $(document).ready(function() {
 	if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
             $("#custsup-blank-alert").alert();
             $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#custsup-blank-alert();ert").hide();
+		$("#custsup-blank-alert();").hide();
             });
             $('#deliverychallan_customer').focus();
             return false;
@@ -400,36 +401,59 @@ $(document).ready(function() {
     }
   });
 
-    //Change Event For 'State'.
+    /*If Billing Details same as Shipping Details then autopopulate them in Shipping Details.*/
+    $("#consigneedetails").change(function(){
+	console.log(vatorgstflag);
+	if($(this).prop('checked') == true){
+	    $("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
+	    $("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
+	    $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	    $("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").text());
+	    if(invoicedate >= gstdate){
+		$("#gstinconsignee").val($("#gstin").text());
+	    }else{
+		$("#tinconsignee").val($("#tin").text());
+	    }
+	}
+	else{
+	    $("#consigneename").val("");
+	    $("#consigneestate").val("");
+	    $("#statecodeofconsignee").text("");
+	    $("#deliverychallan_consigneeaddr").val("");
+	    if(vatorgstflag == 7){
+		$("#gstinconsignee").val("");
+	    }else{
+		$("#tinconsignee").val("");
+	    }
+	}
+    });
 
+    //Keydown event for 'Consignee Details'.
+    $("#consigneedetails").keydown(function(event) {
+	if (event.which == 13) {
+	    $("#consigneename").focus();
+	}
+	if(event.which == 38){
+	    $("#deliverychallan_customerstate").focus();
+	}
+    });
+
+    //Change Event For 'State'.
+    //invoice_customerstate
     $("#invoicestate").change(function(event) {
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    if ($("#deliverychallan_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
 	    } else {
-		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		} else {
 		    $(".sgstfield").hide();
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
 		}
-	    }
-	}
-	
-	$(".product_name_vat, .product_name_gst").change();
+	  }
+	$ (".product_name_vat, .product_name_gst").change();
 
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
 	 $.ajax({
@@ -454,7 +478,7 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
-
+	
     });
     $("#invoicestate").change();
 
@@ -507,8 +531,12 @@ $(document).ready(function() {
 	$('#consigneestate').focus();
     }
     if (event.which==38) {
-      event.preventDefault();
-      $("#deliverychallan_customerstate").focus().select();
+	event.preventDefault();
+	if ($("#consigneedetails").is(":visible")){
+	    $("#consigneedetails").focus();
+	}else{
+	$("#deliverychallan_customerstate").focus().select();
+	}
     }
   });
   $("#consigneestate").keydown(function(event) {
@@ -767,7 +795,11 @@ $(document).ready(function() {
     //Keydown for customer and supplier state.
     $("#deliverychallan_customerstate").keydown(function(event) {
 	if (event.which == 13) {
-	    $("#consigneename").focus();
+	    if ($("#consigneedetails").is(":visible")){
+		$("#consigneedetails").focus();
+	    }else{
+		$("#consigneename").focus();
+	    }
 	}
 	if(event.which == 38){
 	    if ($("#deliverychallan_customerstate option:visible").first().is(":selected") || $("#deliverychallan_customerstate option:first").is(":selected")) {
@@ -780,22 +812,6 @@ $(document).ready(function() {
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
 	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	if ($("#status").val() == 15) {
-	    if($("#statecodeofconsignee").text() in gstins) {
-		var custgstin = gstins[$("#statecodeofconsignee").text()];
-		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    } else {$("#gstin").text("");}
-	    if ($("#taxapplicable").val() == 7){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".igstfield").show();
-		}
-	    }
-	}
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
@@ -858,16 +874,10 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#deliverychallan_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
-	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#deliverychallan_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
       }
     var taxflag=$("#taxapplicable").val();
 
@@ -980,16 +990,10 @@ $(document).ready(function() {
 	if ($("#status").val() == 9) {
 	    destinationstate = $("#invoicestate option:selected").val();
 	    sourcestate = $("#deliverychallan_customerstate").val();
-	    if ($("#consigneename").val() != "") {
-		sourcestate = $("#consigneestate option:selected").val();
-	    }
 	}
 	else if ($("#status").val() ==  15) {
 	    sourcestate = $("#invoicestate option:selected").val();
 	    destinationstate = $("#deliverychallan_customerstate").val();
-	    if ($("#consigneename").val() != "") {
-		destinationstate = $("#consigneestate option:selected").val();
-	    }
 	}
 	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
@@ -2308,7 +2312,6 @@ else {
            })
            .done(function(resp) {
              var custs = resp["customers"];
-             console.log("inside ajax done.");
              $("#deliverychallan_customer").empty();
              for (i in custs){
                $("#deliverychallan_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
@@ -2765,18 +2768,10 @@ else {
       //Delivery In
       if ($("#status").val() == 9) {
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
-	  }
+	  form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
       }//Delivery Out
       else if ($("#status").val() ==  15) {
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
-	  }
+	  form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
       }
 
@@ -2823,7 +2818,6 @@ else {
       }
     })
     .done(function(resp) {
-	console.log(resp["gkstatus"]);
 	if(resp["gkstatus"] == 0){
             if ($("#deliverychallan_edit").length == 0) {
 		$("#deliverychallan").click();
@@ -2835,7 +2829,6 @@ else {
             else {
 		$("#deliverychallan_create").click();
             }
-	    console.log("Only Save");
             $("#success-alert").alert();
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#success-alert").hide();
@@ -2843,7 +2836,6 @@ else {
             return false;
 	}
 	else if(resp["gkstatus"] == 1) {
-	    console.log("Only Save Dup");
             $("#deliverychallan_challanno").focus();
             $("#duplicate-alert").alert();
             $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -3236,18 +3228,10 @@ else {
       //Delivery In
 	if ($("#status").val() == 9) {
 	    dataset["taxstate"] = $("#invoicestate option:selected").val();
-	    if ($("#consigneename").val() != "") {
-		dataset["sourcestate"] = $("#consigneestate option:selected").val();
-	    } else {
-		dataset["sourcestate"] = $("#deliverychallan_customerstate option:selected").val();
-	    }
+	    dataset["sourcestate"] = $("#deliverychallan_customerstate option:selected").val();
 	}//Delivery Out
 	else if ($("#status").val() ==  15) {
-	    if ($("#consigneename").val() != "") {
-		dataset["taxstate"] = $("#consigneestate option:selected").val();
-	    } else {
-		dataset["taxstate"] = $("#deliverychallan_customerstate option:selected").val();
-	    }
+	    dataset["taxstate"] = $("#deliverychallan_customerstate option:selected").val();
 	    dataset["sourcestate"] = $("#invoicestate option:selected").val();
 	}
       
@@ -3314,10 +3298,8 @@ else {
 				console.log("complete");
 			    });
 		    }
-		    console.log("Nooooo");
 		}
 		else if(resp["gkstatus"] == 1) {
-		    console.log("Saveprint dup");
 		    $("#deliverychallan_challanno").focus();
 		    $("#duplicate-alert").alert();
 		    $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){

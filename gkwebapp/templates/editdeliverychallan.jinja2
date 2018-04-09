@@ -226,7 +226,6 @@
 			  <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 			  <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
 			  <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
-			  <th class="crosswrap"></th>
 			</tr>
 		      </thead>
 		      <tbody>
@@ -264,8 +263,6 @@
 			  <td class="smvwrap">
 			    <label class="invoice_product_total form-control input-sm text-right numtype"></label>
 			  </td>
-			  <td class="crosswrap">
-			  </td>
 			</tr>
 		      </tbody>
 		      <tfoot>
@@ -287,8 +284,6 @@
 			  </td>
 			  <td class="smvwrap">
 			    <label id="total_product_vat" class=" form-control input-sm text-right"></label>
-			  </td>
-			  <td class="crosswrap">
 			  </td>
 			</tr>
 		      </tfoot>
@@ -465,7 +460,7 @@
 		      <div class="row hborderdiv">
 			<div class="form-group form-inline">
 			  <div class="col-sm-6">
-			    <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+			    <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Value{% endtrans %} :</label>
 			  </div>
 			  <div class="col-sm-6 text-right">
 			    <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
@@ -518,7 +513,7 @@
 			  </div>
 			</div>
 		      </div>
-		      <div class="row hborderdiv vatfield">
+		      <div class="row vatfield hborderdiv">
 			<div class="form-group form-inline">
 			  <div class="col-sm-6">
 			    <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
