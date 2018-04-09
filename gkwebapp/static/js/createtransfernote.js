@@ -177,26 +177,58 @@ $(document).ready(function() {
 	}
     });
 
-  $("#tn_from_godown").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      if ($.trim($('#tn_from_godown').val())=="") {
-        $("#godown-blank-alert").alert();
-        $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#godown-blank-alert").hide();
-        });
-        $('#tn_from_godown').focus();
-        return false;
-      }
-      else {
-        $("#tn_to_godown").focus().select();
-      }
-    }
-    if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
-      event.preventDefault();
-      $("#tn_year").focus().select();
-    }
-  });
+   
+   //Validation for Issuer Name.
+    $("#name_issuer").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($('#name_issuer').val())=="") {
+		$("#issuer-name-blank-alert").alert();
+		$("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#issuer-name-blank-alert").hide();
+		    $('#name_issuer').focus();
+		});
+	    }
+	    $("#designation").focus().select();
+	    return false;
+	}
+    });
+
+    //Validation for Designation.
+    $("#designation").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($('#designation').val())=="") {
+		$("#designation-blank-alert").alert();
+		$("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#designation-blank-alert").hide();
+		    $('#designation').focus();
+		});
+	    }
+	    $("#tn_duedate").focus().select();
+	    return false;
+	}
+    });
+    $("#tn_from_godown").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($('#tn_from_godown').val())=="") {
+		$("#godown-blank-alert").alert();
+		$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#godown-blank-alert").hide();
+		});
+		$('#tn_from_godown').focus();
+		return false;
+	    }
+	    else {
+		$("#tn_to_godown").focus().select();
+	    }
+	}
+	if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
+	    event.preventDefault();
+	    $("#tn_year").focus().select();
+	}
+    });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
