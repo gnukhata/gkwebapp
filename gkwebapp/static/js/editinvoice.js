@@ -38,6 +38,26 @@ $(document).ready(function() {
     $("select:first").focus();
     $("#invoice_editprint").hide();
     $(".uploadclass").hide();
+
+    //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
+      $("#Consignee").change(function() {
+          if($(this).prop('checked') == true) {
+	      $("#consigneename").val($("#invoice_customer option:selected").text());
+	      $("#consigneestate").val($("#invoice_customerstate option:selected").text());
+	      $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	      $("#gstinconsignee").val($("#gstin").text());
+	      $("#tinconsignee").val($("#tin").text());
+	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
+	  } else {
+	      $("#consigneename").val("");
+	      $("#consigneestate").val("");
+	      $("#statecodeofconsignee").text("");
+	      $("#gstinconsignee").val("");
+	      $("#tinconsignee").val("");
+	      $("#consigneeaddress").val("");
+	  }
+      });
+
      //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -388,19 +408,7 @@ $(document).ready(function() {
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
 	if ($("#taxapplicable").val() == 7){
-	    if($("#consigneename").val() != ""){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".sgstfield").css('border','');
-		    $(".igstfield").show();
-		}
-	    } else {
-		if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
 		    $(".sgstfield").show();
@@ -409,7 +417,7 @@ $(document).ready(function() {
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
 		}
-	    }
+	    
 	}
 	
 	$(".product_name_vat, .product_name_gst").change();
@@ -486,6 +494,22 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
+			if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
 			if(sessionStorage.vatorgstflag == '22' ){
 			    $("#tinconsignee").focus();
 			}
@@ -546,17 +570,28 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
+		$("#Consignee").focus(); //Focus shifts to Consignee Checkbox when delivernote selected with no consignee details 
+	    }
+	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
-		    if ($("#taxapplicable").val() == 22) {
-			$("#tinconsignee").focus();
-		    } else {
-			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    if ($("#taxapplicable").val() == 7) {
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+			    $(".invoice_product_quantity_gst:first").focus().select();
+			}
+			else {
+			    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+			}
+		    }
+		    else {
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+			    $(".invoice_product_quantity_vat:first").focus().select();
+			}
+			else {
+			    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+			}
 		    }
 		}
-		else {
-		    $("#consigneename").focus().select();  //Focus shifts to Consignee Name as Customer's fields are disabled when delivery note is selected.
-		}
-	    }
+            }
 	    else {
 		$("#invoice_customer").focus();  //Focus shifts to Customer.
 	    }
@@ -630,6 +665,11 @@ $(document).ready(function() {
       	else {
       	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
       	}
+		    //disable Consignee checkbox when delivery note selected and consignee details present 
+		    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
+			$("#Consignee").attr("disabled", true);  }
+		    else{
+			$("#Consignee").attr("disabled", false); }
 		    //GSTIN of customer in default state is selected.
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 
@@ -677,7 +717,11 @@ $(document).ready(function() {
     $("#invoice_customerstate").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	     if($("#status").val()==15){
+		 $("#Consignee").focus().select();  //Focus Shifts to consignee checkbox when sale invoice
+	    }else{
+		$("#consigneename").focus();   //Focus Shifts to consigneename when purchase invoice
+	    }
 	}
 	if (event.which == 38) {
 	    if ($("#invoice_customerstate option:visible").first.is(":selected")) {
@@ -685,39 +729,33 @@ $(document).ready(function() {
 	    }
 	}
     });
-
-    //Change event for Consignee State.
-    $("#consigneestate").change(function(event) {
-	event.preventDefault();
-	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
-	if ($("#status").val() == 15) {
-	    if($("#statecodeofconsignee").text() in gstins) {
-		var custgstin = gstins[$("#statecodeofconsignee").text()];
-		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    } else {$("#gstin").text("");}
-	    
-	    if ($("#taxapplicable").val() == 7){
-		if ($("#consigneestate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".sgstfield").show();
-		}
-		else {
-		    $(".sgstfield").hide();
-		    $(".igstfield").show();
-		}
-	    }
-	}
-	$(".product_name_vat, .product_name_gst").change();
-    });
-    $("#consigneestate").change();
-
-    //Key down event for Consignee Name.
-    $("#consigneename").keydown(function(event) {
+  //key down event for consignee checkbox
+     $("#Consignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#consigneestate").focus();
+	    if($("#Consignee").prop('checked') == true) {
+		if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+		
+	    }else{
+		$("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
+	    }
 	}
-	else if (event.which == 38) {
+	if (event.which == 38) {
 	    if ($("#invoice_customerstate").is(":disabled")) {
 		if ($("#status").val() == 15) {
 		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer in Sale Invoice if Delivery Note is selected.
@@ -729,6 +767,25 @@ $(document).ready(function() {
 	    else {
 		$("#invoice_customerstate").focus();  //Focus shifts to Customer State.
 	    }
+	}
+    });
+
+    //Change event for Consignee State.
+    $("#consigneestate").change(function(event) {
+	event.preventDefault();
+	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
+	$(".product_name_vat, .product_name_gst").change();
+    });
+    $("#consigneestate").change();
+
+    //Key down event for Consignee Name.
+    $("#consigneename").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#consigneestate").focus();
+	}
+	else if (event.which == 38) {
+	    $("#Consignee").focus();
 	}
     });
 
@@ -891,16 +948,10 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      sourcestate = $("#consigneestate option:selected").val();
-	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
       }
 	var taxflag=$("#taxapplicable").val();
 	if (productcode != "") {
@@ -998,17 +1049,21 @@ $(document).ready(function() {
 	    })
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
-			$("#invoice_customer").val(resp["delchal"]["delchaldata"]["custid"]);
+			$("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			if(resp["delchal"]["delchaldata"]["consignee"]){
 			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
 			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
-			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);			    
+			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);
+			    $("#gstinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["gstinconsignee"]).prop("disabled", true);
+			    $("#tinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["tinconsignee"]).prop("disabled", true);	
 			} else {
 			    $("#consigneename").val("").prop("disabled", false);
 			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
 			    $("#consigneeaddress").val("").prop("disabled", false);
+			    $("#gstinconsignee").val("").prop("disabled", false);
+			    $("#tinconsignee").val("").prop("disabled", false);
 			}
 			$("#consigneestate").change();
 			$.ajax({
@@ -1031,6 +1086,11 @@ $(document).ready(function() {
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
 				    $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+				    //disable Consignee checkbox when delivery note selected and consignee details present 
+				    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
+					$("#Consignee").attr("disabled", true);  }
+				    else{
+					$("#Consignee").attr("disabled", false); }
 				}
 			    })
 			    .fail(function() {
@@ -1640,16 +1700,10 @@ $(document).ready(function() {
       if ($("#status").val() == 9) {
 	  destinationstate = $("#invoicestate option:selected").val();
 	  sourcestate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	   sourcestate = $("#consigneestate option:selected").val();
-	  }
       }
       else if ($("#status").val() ==  15) {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
-	  if ($("#consigneename").val() != "") {
-	      destinationstate = $("#consigneestate option:selected").val();
-	  }
       }
     var taxflag=$("#taxapplicable").val();
 
@@ -2366,7 +2420,6 @@ if (event.which == 13) {
 		    success: function(resp)
 		    {
 			if(resp.gkstatus == 0){
-			    console.log(resp.invoicedata);
 			    // Div that has all fields of invoice is shown.
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
@@ -2403,7 +2456,11 @@ if (event.which == 13) {
 				})
 				    .done(function(response) {
 					if (response["gkstatus"] == 0) {
-					    delchalproducts = response["delchal"]["stockdata"]["items"];
+					    if (response["delchal"]["stockdata"]){
+						delchalproducts = response["delchal"]["stockdata"];
+					    }else{
+						delchalproducts = response["delchal"]["delchalContents"];
+					    }
 					    if(response["delchal"]["delchaldata"]["consignee"]){
 						consigneeflag = true;
 					    } else {
@@ -2428,6 +2485,13 @@ if (event.which == 13) {
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
 			    // Loading other details of invoice.
+			    //Loading consignee details when deliverynote selected
+			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
+			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
+			    $("#statecodeofconsignee").val(resp.invoicedata.consignee.consigneestatecode);
+			    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+			    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
+			    $("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
 			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
@@ -2440,10 +2504,17 @@ if (event.which == 13) {
 				$("#originaddress").val(resp.invoicedata.address);
 				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
 				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
+				//when customer state changed
+				$("#invoice_customerstate").val(resp.invoicedata.destinationstate);
+				$("#statecodeofcustomer").text(resp.invoicedata.taxstatecode);
+			    
 			    }
 			    else {
 				$("#invoicestate").val(resp.invoicedata.destinationstate);
 				$("#statecodeforinvoice").text(resp.invoicedata.taxstatecode);
+				//when supplier state changed
+				$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
+				$("#statecodeofcustomer").text(resp.invoicedata.sourcestatecode);
 			    }
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
@@ -2453,8 +2524,7 @@ if (event.which == 13) {
 				    $(this).prop("selected", true);
 				}
 			    });
-			    $("#invoice_customerstate").val(resp.invoicedata.custSupDetails.custsupstate);
-			    $("#statecodeofcustomer").text(resp.invoicedata.custSupDetails.custsupstatecode);
+
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
 			    // Loading tax and product data based on taxflag(VAT or GST)
@@ -2671,8 +2741,10 @@ if (event.which == 13) {
 		}
 	    });
 	}
+	
 	if(consigneeflag == true){
 	    $(".consigneefield").prop("disabled", true);
+	    $("#Consignee").attr("disabled", true);
 	}
 	else {
 	    $(".consigneefield").prop("disabled", false);
@@ -3130,12 +3202,7 @@ if (event.which == 13) {
 	      sourcestate = $("#consigneestate option:selected").val();
 	  }*/
 	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("sourcestate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
-	  }
-
+	  form_data.append("sourcestate", $("#invoice_customerstate option:selected").val());
       }
       else if ($("#status").val() ==  15) {
 	  /*let sourcestate = $("#invoicestate option:selected").val();
@@ -3145,11 +3212,7 @@ if (event.which == 13) {
 	      }*/
 	  //appending address to the form_data.	  
 	  form_data.append("address", address);
-	  if ($("#consigneename").val() != "") {
-	      form_data.append("taxstate", $("#consigneestate option:selected").val());
-	  } else {
-	      form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
-	  }
+	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
     form_data.append("freeqty", JSON.stringify(freeqty));

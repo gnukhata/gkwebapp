@@ -219,6 +219,15 @@
 			  </label>
 			  <label class="col-sm-8 nopadding" id="invoice_customeraddr" ></label>
 			</div>
+			<!-- checkbox to know whether billing and shipping address same or not -->
+			{% if status == "out" %}
+			  <div class="form-group form-inline">
+			  <div class="col-sm-12">
+			    <input type="checkbox" id="Consignee" >
+			    <label for="Consignee">{%trans%}Shipping address is same as billing address{%endtrans%}</label>
+			  </div>
+			  </div>
+			  {% endif %}
 		      </div>
 		      <div class="col-md-4 borderdiv">
 			<h4>Details of Consignee | Shipped to: </h4>
@@ -242,11 +251,11 @@
 			</div>
 			<div class="form-group form-inline tinfield" hidden>
 			  <label for="tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-			  <input type="text" id="tinconsignee" class="col-sm-8 form-control input-sm delreset" name="tinconsignee"></input>
+			  <input type="text" id="tinconsignee" class="consigneefield col-sm-8 form-control input-sm delreset" name="tinconsignee"></input>
 			</div>
 			<div class="form-group form-inline gstinfield">
 			  <label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-			  <input type="text" id="gstinconsignee" class="col-sm-8 form-control input-sm gstin delreset" name="gstinconsignee" maxlength="15"></input>
+			  <input type="text" id="gstinconsignee" class="consigneefield col-sm-8 form-control input-sm gstin delreset" name="gstinconsignee" maxlength="15"></input>
 			</div>
 			<div class="form-group form-inline">
 			  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>

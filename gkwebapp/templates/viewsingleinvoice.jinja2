@@ -82,31 +82,17 @@
 	    {% trans %}Customer State{% endtrans %} :
 	  {% endif %}
 	</label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["inoutflag"] == 9 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"] }}
-	  {% endif %}
-	  {% if gkresult["inoutflag"] == 15 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"]}}
-	  {% endif %}
-	{% else %}
 	  {% if gkresult["inoutflag"] == 9 %}
 	    {{ gkresult["sourcestate"] }}
 	  {% endif %}
 	  {% if gkresult["inoutflag"] == 15 %}
 	    {{ gkresult["destinationstate"] }}
 	  {% endif %}
-	{% endif %}
       </div>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-	  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-	{% else %}
-	  {% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}
-	  {% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
-        {% endif %}
+	{% if gkresult["inoutflag"] == 9 %}{{ gkresult["sourcestatecode"] }}{% endif %}
+	{% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
       </div>
       {% if gkresult["taxflag"] == 22 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
@@ -116,11 +102,11 @@
 	<input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
       {% endif %}
       {% if gkresult["taxflag"] == 7 %}
-      <div class="form-group form-inline col-sm-12 nopadding">
-	<label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
-	{{ gkresult["custSupDetails"]["custgstin"] }}
-      </div>
-      <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="gstin" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} : </label>
+	  {{ gkresult["custSupDetails"]["custgstin"] }}
+	</div>
+	<input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
       {% endif %}
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label>
