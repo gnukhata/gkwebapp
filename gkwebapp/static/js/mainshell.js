@@ -1816,9 +1816,7 @@ $('#listofaccounts').click(function (e) {
   $('#tallyimport').click(function (e) {// calls tally import page.
     $("#info").load("/import?action=show");
   });
-});
-
-$('#show_unbilled_deliveries').click(function (e) {
+    $('#show_unbilled_deliveries').click(function (e) {
   //
   $.ajax(
     {
@@ -1860,5 +1858,27 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
     $("#info").load("/drcrnote");
     $("#drcrnote_div").show();
 });
-    
+    //setup before functions
+    var typingTimer;                //timer identifier
+    var doneTypingInterval = 500;  //time in ms, 5 second for example
+    $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
+	let searchtext = $("#reportsearch").val();
+	$("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+    });
+    $(document).off('keyup' ,'#reportsearch').on('keyup' ,'#reportsearch',function(e) {
+	clearTimeout(typingTimer);
+	typingTimer = setTimeout(function(){
+	    let searchtext = $("#reportsearch").val();
+	    $("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+	    $("table tbody tr:contains('" + searchtext + "')").show();
+	    if (e.which == 27) {
+		$("#reportsearch").val("");
+		$("tr").show();
+	    }
+	    if (e.which == 13) {
+		$("tbody tr:visible").first().find('a').focus();
+	    }
+	}, doneTypingInterval);
+    });
+});   
      
