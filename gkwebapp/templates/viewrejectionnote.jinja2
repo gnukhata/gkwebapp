@@ -40,9 +40,7 @@
    }
    #invoice_product_table_vat tfoot {
        display:table;
-       width: calc( 100% - 0.70em );
    }
-
    .nopadding{
        padidng:0 !important;
        padding:0 !important;
@@ -81,7 +79,7 @@
        width:19.5%;
    }
    .smvwrap{
-       width:8.60%;
+       width:14.00%;
    }
    .ratewrap {
        width: 6.85%;
@@ -136,6 +134,11 @@
    .noborder {
        border-style: none !important;
    }
+   .fixed-table tfoot tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
   </style>
 </head>
 <body>
@@ -178,19 +181,19 @@
 	      </div>
 	      <div class="col-xs-6">
 		<label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
-		<input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
+		<input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a" disabled>
 	      </div>
 	      <div class="col-xs-6">
 		<label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
 		<div class="form-inline">
 		  <div class="form-group ">
-		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v">
+		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v" disabled>
 		  </div>
 		  <div class="form-group">
-		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v">
+		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="MM" id="rejectionnote_month" accesskey="v" disabled>
 		  </div>
 		  <div class="form-group">
-		    <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v">
+		    <input type="text" class="form-control input-sm rndate" size="4" maxlength="4" placeholder="YYYY" id="rejectionnote_year" accesskey="v" disabled>
 		  </div>
 		</div>
 	      </div>
@@ -354,7 +357,7 @@
 		    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 		    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
 		    <th class="smvwrap text-center">{% trans %}Total{% endtrans %}</th>
-		    <th class="crosswrap"></th>
+		    <!-- <th class="crosswrap"></th> -->
 		  </tr>
 		</thead>
 		<tbody>
@@ -364,8 +367,8 @@
 		    </td>
 		    <td class="qtyvwrap">
 		      <div class="input-group">
-			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00">
-			<span class="input-group-addon input-sm" id="unitaddon_freeqty_vat"></span>
+			<input type="text" class="rejectionnote_product_rejected_quantity form-control input-sm text-right" value="0.00" disabled>
+			<span class="input-group-addon input-sm unitaddon_freeqty_vat" id="unitaddon_freeqty_vat"></span>
 		      </div>
 		    </td>
 		    <td class="smvwrap">
@@ -383,8 +386,7 @@
 		    <td class="smvwrap">
 		      <input size="10" type="text" class="rejection_product_total form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
 		    </td>
-		    <td class="crosswrap">
-		    </td>
+		    <!-- <td class="crosswrap"></td> -->
 		  </tr>
 		</tbody>
 		<tfoot>
@@ -396,14 +398,13 @@
 		      <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
 		    <td class="ratewrap">
+
 		    </td>
 		    <td class="smvwrap">
 		      <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
 		    </td>
 		    <td class="smvwrap">
 		      <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
-		    </td>
-		    <td class="crosswrap">
 		    </td>
 		  </tr>
 		</tfoot>
@@ -506,22 +507,17 @@
 		  <thead>
 		    <tr>
 		      <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
-		      <th class="col-xs-4"></th>
 		    </tr>
 		  </thead>
 		  <tbody>
 		    <tr>
 		      <td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
-		      <td class="col-xs-4 text-center">
-		      </td>
+		      <td class="col-xs-4 text-center"></td>
 		    </tr>
 		  </tbody>
 		  <tfoot>
 		    <td class="col-xs-8 text-right">
 		      <span id="total_product_gst" class="input-sm text-right" size="9"></span>
-		    </td>
-		    <td class="col-xs-4">
-
 		    </td>
 		  </tfoot>
 		</table>
@@ -614,7 +610,7 @@
 	    <div class="row hborderdiv" style="border-bottom-style:solid;">
 	      <div class="form-group form-inline">
 		<div class="col-sm-6">
-		  <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		  <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
 		</div>
 		<div class="col-sm-6 text-right">
 		  <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>

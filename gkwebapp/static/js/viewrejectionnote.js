@@ -88,20 +88,24 @@ $(document).ready(function() {
         $("#rgodown").show();
       }
 
-	$("#invoice_noteno").val(resp.gkresult.invid);
+	$("#invoice_noteno").val(resp.gkresult.rejinvdata.invno);
 	var invdatearray = resp.gkresult.rejinvdata.invdate.split(/\s*\-\s*/g);
 	$("#invoice_date").val(invdatearray[0]);
 	$("#invoice_month").val(invdatearray[1]);
 	$("#invoice_year").val(invdatearray[2]);
-	$("#invoice_state").val(resp.gkresult.rejinvdata.sourcestate);
-	$("#invoice_addr").val(resp.gkresult.rejinvdata.address);
+	$("#invoice_state").val(resp.gkresult.rejinvdata.sourcestate);	
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
 	$("#issuer_name").val(resp.gkresult.rejinvdata.issuername);
-	console.log(resp.gkresult.rejinvdata.inotflag);
 	if(resp.gkresult.rejinvdata.inoutflag == 15){
+	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
 	}else{
+	    if(resp["orgdata"]["orgaddr"]){
+		$("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
+	    }else{
+		$("#invoice_addr").val("");
+	    }
 	    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
 	    var userrole = dict[resp.gkresult.rejinvdata.designation];
 	    $("#issuer_designation").val(userrole);
@@ -138,16 +142,16 @@ $(document).ready(function() {
 	  $(".vatfield").hide();
 	  $(".gstinfield").show();
 	  $(".tinfield").hide();
+	  $(".gsttable").show();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-	      console.log(value.productdesc);
 	      $('.product_name_gst:eq(' + curindex + ')').val(value.proddesc);
 	      $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 	      $('.rejection_product_rejquantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
 	      $('.invoice_product_freequantity_gst:eq(' + curindex + ')').val(value.freeqty).attr("data", value.freeqty);
 	      $('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
 	      $('.invoice_product_per_price_gst:eq(' + curindex + ')').val(value.priceperunit);
-				$('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
+	      $('.invoice_product_discount_gst:eq(' + curindex + ')').val(value.discount);
 	      $('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').val(value.taxableamount);
 	      if(value.taxname == 'IGST'){
 		  $(".sgstfield").hide();
@@ -166,7 +170,6 @@ $(document).ready(function() {
 	      $('.invoice_product_cessrate:eq(' + curindex + ')').val(parseFloat(value.cessrate).toFixed(2));
 	      $('.invoice_product_cessamount:eq(' + curindex + ')').val(parseFloat(value.cess).toFixed(2));
 	      $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-	      $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      $('.invoice_product_total:eq(' + curindex + ')').val(parseFloat(value.totalAmount).toFixed(2));
 	      curindex = curindex + 1;
 	  });
@@ -197,10 +200,10 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody').empty();
 	  $.each(resp.gkresult.rejcontents, function(key, value) {
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-	      $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	      //$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      $('.product_name:eq(' + curindex + ')').val(value.proddesc);
 	      $('.rejectionnote_product_rejected_quantity:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
-	      $('#unitaddon_qty_vat:eq(' + curindex + '), #unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
+	      $('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
 	      $('.rejection_product_per_price_vat:eq(' + curindex + ')').val(value.priceperunit);
 	      $('.rejection_product_discount_vat:eq(' + curindex + ')').val(value.discount);
 	      $('.rejection_product_taxablevalue_vat:eq(' + curindex + ')').val(value.taxableamount);
