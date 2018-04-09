@@ -494,6 +494,22 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
+			if ($("#taxapplicable").val() == 7) {
+			    if ($("#invoice_deliverynote option:selected").val() != '') {
+				$(".invoice_product_quantity_gst:first").focus().select();
+			    }
+			    else {
+				$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+			    }
+			}
+			else {
+			    if ($("#invoice_deliverynote option:selected").val() != '') {
+				$(".invoice_product_quantity_vat:first").focus().select();
+			    }
+			    else {
+				$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+			    }
+			}
 			if(sessionStorage.vatorgstflag == '22' ){
 			    $("#tinconsignee").focus();
 			}
@@ -559,11 +575,22 @@ $(document).ready(function() {
 	   } 
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
-		    if ($("#taxapplicable").val() == 22) {
-			$("#tinconsignee").focus();
-		    } else {
-			$("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delevery note is selected.
+		    if ($("#taxapplicable").val() == 7) { 
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+			    $(".invoice_product_quantity_gst:first").focus().select();
+			}
+			else {
+			    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+			}
 		    }
+		    else {
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+			    $(".invoice_product_quantity_vat:first").focus().select();
+			}
+			else {
+			    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
 		}
             }
 	    else {
