@@ -515,9 +515,66 @@ def registerspreadsheet(request):
         col = 9
         for taxc in taxcolumns:
             sheet.column_dimensions[str(col)].width = 18
-            print str(col)
-            print str(row)
-            #sheet.getCell(i-1,3).stringValue("Net @" + taxc ).setBold(True).setAlignHorizontal("right")
+            #print str(col)
+            #print str(row)
+            sheet.cell(col,row).value = "Net @" + taxc
+            sheet.column_dimensions[str(col)].width = 18
+            print "TAXC"
+            print taxc
+            sheet.cell(col,row).value = taxc
+            print "After"
+            print taxc
+        row = 6
+        for invoice in result:
+            sheet['A'+str(row)] = invoice["srno"]
+            sheet['B'+str(row)] = invoice["invoiceno"]
+            print invoice["invoiceno"]
+            sheet['C'+str(row)] = invoice["invoicedate"]
+            sheet['D'+str(row)] = invoice["customername"]
+            sheet['E'+str(row)] = invoice["customertin"]
+            if invoice.has_key("custgstin"):
+                sheet['F'+str(row)] = invoice["custgstin"]
+            else:
+                sheet['F'+str(row)] = " "
+            sheet['G'+str(row)] = invoice["grossamount"]
+            sheet['F'+str(row)] = invoice["taxfree"]
+        col = 8
+        for taxc in taxcolumns:
+            if taxc in invoice["tax"]:
+                sheet.cell(col,row).value = invoice["tax"][taxc]
+                print "Tax TaxC"
+                print invoice["tax"][taxc]
+            else:
+                sheet.cell(col,row).value ="0.00"
+            col += 1
+            if taxc in invoice["taxamount"]:
+                sheet.cell(col,row).value = invoice["taxamount"][taxc]
+            else:
+                sheet.cell(col,row).value ="0.00"
+            col += 1
+        row += 1
+        sheet.merge_cells('A'+str(row),'G'+str(row))
+        sheet['A'+str(row)] = "Total"
+        sheet['A'+str(row)].alignment = Alignment(horizontal='right')
+        sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
+        sheet['G'+str(row)] = totalrow["grossamount"]
+        sheet['G'+str(row)].alignment = Alignment(horizontal='right')
+        sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
+        sheet['H'+str(row)] = totalrow["taxfree"]
+        sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+        sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
+        col = 8
+        for taxc in taxcolumns:
+            if taxc in totalrow["tax"]:
+                sheet.cell(col,row).value = totalrow["tax"][taxc]
+            else:
+                sheet.cell(col,row).value = "0.00"
+            col += 1
+            if taxc in totalrow["taxamount"]:
+                sheet.cell(col,row).value = totalrow["taxamount"][taxc]
+            else:
+                sheet.cell(col,row).value = "0.00"
+            col += 1
         registerwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
