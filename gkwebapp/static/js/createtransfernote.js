@@ -177,26 +177,71 @@ $(document).ready(function() {
 	}
     });
 
-  $("#tn_from_godown").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      if ($.trim($('#tn_from_godown').val())=="") {
-        $("#godown-blank-alert").alert();
-        $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#godown-blank-alert").hide();
-        });
-        $('#tn_from_godown').focus();
-        return false;
-      }
-      else {
-        $("#tn_to_godown").focus().select();
-      }
-    }
-    if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
-      event.preventDefault();
-      $("#tn_year").focus().select();
-    }
-  });
+   
+   //Validation for Issuer Name.
+    $("#name_issuer").keydown(function(event) {
+	if (event.which==13||event.which==9) {
+	    event.preventDefault();
+	    if ($.trim($('#name_issuer').val())=="") {
+		$('#name_issuer').focus();	
+		$("#issuer-name-blank-alert").alert();
+		$("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#issuer-name-blank-alert").hide();
+		    	
+		});
+	    }
+	    else {
+		$("#designation").focus().select();
+		return false;
+	    }
+	}
+	    if (event.which==38) {
+		event.preventDefault();
+		$("#transport_mode").focus().select();
+	    }
+    });
+
+    //Validation for Designation.
+    $("#designation").keydown(function(event) {
+	if (event.which==13||event.which==9) {
+	    event.preventDefault();
+	    if ($.trim($('#designation').val())=="") {
+		$("#designation-blank-alert").alert();
+		$("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#designation-blank-alert").hide();
+		    $('#designation').focus();
+		});
+	    }
+	    else {
+		$("#tn_duedate").focus().select();
+		return false;
+	    }
+	}
+	if (event.which==38) {
+	    event.preventDefault();
+	    $("#name_issuer").focus().select();
+	}
+    });
+    $("#tn_from_godown").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($('#tn_from_godown').val())=="") {
+		$("#godown-blank-alert").alert();
+		$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#godown-blank-alert").hide();
+		});
+		$('#tn_from_godown').focus();
+		return false;
+	    }
+	    else {
+		$("#tn_to_godown").focus().select();
+	    }
+	}
+	if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
+	    event.preventDefault();
+	    $("#tn_year").focus().select();
+	}
+    });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
@@ -213,27 +258,6 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       $("#transport_mode").focus();
-    }
-  });
-  $("#name_issuer").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#designation").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#transport_mode").focus().select();
-    }
-  });
-
-  $("#designation").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_duedate").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#name_issuer").focus().select();
     }
   });
 
@@ -680,6 +704,23 @@ $(document).ready(function() {
       $('#tn_year').focus();
       return false;
     }
+      if ($.trim($('#name_issuer').val())=="") {
+	  $("#issuer-name-blank-alert").alert();
+	  $("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#issuer-name-blank-alert").hide();
+	  });
+	  $('#name_issuer').focus();
+	  return false;
+      }
+      if ($.trim($('#designation').val())=="") {
+	  $("#designation-blank-alert").alert();
+	  $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#designation-blank-alert").hide();
+	  });
+	  $('#designation').focus();
+	  return false;
+      }
+
     if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -722,6 +763,7 @@ $(document).ready(function() {
       $('#tn_from_godown').focus();
       return false;
     }
+      
     //Validations for product details.
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
