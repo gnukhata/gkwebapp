@@ -180,23 +180,30 @@ $(document).ready(function() {
    
    //Validation for Issuer Name.
     $("#name_issuer").keydown(function(event) {
-	if (event.which==13) {
+	if (event.which==13||event.which==9) {
 	    event.preventDefault();
 	    if ($.trim($('#name_issuer').val())=="") {
+		$('#name_issuer').focus();	
 		$("#issuer-name-blank-alert").alert();
 		$("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#issuer-name-blank-alert").hide();
-		    $('#name_issuer').focus();
+		    	
 		});
 	    }
-	    $("#designation").focus().select();
-	    return false;
+	    else {
+		$("#designation").focus().select();
+		return false;
+	    }
 	}
+	    if (event.which==38) {
+		event.preventDefault();
+		$("#transport_mode").focus().select();
+	    }
     });
 
     //Validation for Designation.
     $("#designation").keydown(function(event) {
-	if (event.which==13) {
+	if (event.which==13||event.which==9) {
 	    event.preventDefault();
 	    if ($.trim($('#designation').val())=="") {
 		$("#designation-blank-alert").alert();
@@ -205,8 +212,14 @@ $(document).ready(function() {
 		    $('#designation').focus();
 		});
 	    }
-	    $("#tn_duedate").focus().select();
-	    return false;
+	    else {
+		$("#tn_duedate").focus().select();
+		return false;
+	    }
+	}
+	if (event.which==38) {
+	    event.preventDefault();
+	    $("#name_issuer").focus().select();
 	}
     });
     $("#tn_from_godown").keydown(function(event) {
@@ -245,27 +258,6 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       $("#transport_mode").focus();
-    }
-  });
-  $("#name_issuer").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#designation").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#transport_mode").focus().select();
-    }
-  });
-
-  $("#designation").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_duedate").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#name_issuer").focus().select();
     }
   });
 
