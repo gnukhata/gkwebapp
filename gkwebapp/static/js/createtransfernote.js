@@ -712,6 +712,23 @@ $(document).ready(function() {
       $('#tn_year').focus();
       return false;
     }
+      if ($.trim($('#name_issuer').val())=="") {
+	  $("#issuer-name-blank-alert").alert();
+	  $("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#issuer-name-blank-alert").hide();
+	  });
+	  $('#name_issuer').focus();
+	  return false;
+      }
+      if ($.trim($('#designation').val())=="") {
+	  $("#designation-blank-alert").alert();
+	  $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#designation-blank-alert").hide();
+	  });
+	  $('#designation').focus();
+	  return false;
+      }
+
     if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -754,6 +771,7 @@ $(document).ready(function() {
       $('#tn_from_godown').focus();
       return false;
     }
+      
     //Validations for product details.
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
