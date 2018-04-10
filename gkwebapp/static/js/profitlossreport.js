@@ -73,9 +73,13 @@ $(document).ready(function() {
       }
     }
     else if (event.which==39)
-    {
-
-      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
+      {
+	  if ($('#incometbl tbody tr:eq('+pyindex+') td:first a').is(":visible")) {
+	      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#incometbl tbody tr:visible').first().find('a').focus();
+	  }
     }
   });
 
@@ -219,9 +223,13 @@ $(document).ready(function() {
       }
     }
     else if (event.which==37)
-    {
-
-      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
+      {
+	  if ($('#expensetbl tbody tr:eq('+rcindex+') td:first a').is(":visible")) {
+	      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#expensetbl tbody tr:visible').first().find('a').focus();
+	  }
     }
 
 
