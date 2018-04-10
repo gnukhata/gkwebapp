@@ -575,11 +575,23 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       $("#orgfax").focus().select();
     }
   });
-
+    var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/; //Expression to check proper email.
+    var email="";
    $("#orgemail").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#orgfax").focus().select();
+	event.preventDefault();
+	email= $(this).val();
+	if((!email.match(emailExp)) && email!=""){
+	    $("#email-incorrect-alert").alert();
+	    $("#email-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#email-incorrect-alert").hide();
+		$("#orgemail").focus().select();
+	    });
+	}
+	else{
+	    $("#orgfax").focus().select();
+	    return false;
+	}
     }
      if (event.which==38)  {
          event.preventDefault();
@@ -949,7 +961,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           return false;
         }
       }
-    }
+    }  
 
    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
       if (($("#orgpan").val().length != 10 || !$("#orgpan").val().match(regExp)) && $.trim($("#orgpan").val())!="") {
