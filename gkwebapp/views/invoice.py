@@ -515,13 +515,15 @@ def registerspreadsheet(request):
         col = 9
         for taxc in taxcolumns:
             sheet.column_dimensions[str(col)].width = 18
-            #print str(col)
-            #print str(row)
+            print str(col)
+            print str(row)
             sheet.cell(col,row).value = "Net @" + taxc
+            col +=1
             sheet.column_dimensions[str(col)].width = 18
             print "TAXC"
             print taxc
             sheet.cell(col,row).value = taxc
+            col +=1
             print "After"
             print taxc
         row = 6
@@ -542,7 +544,7 @@ def registerspreadsheet(request):
         for taxc in taxcolumns:
             if taxc in invoice["tax"]:
                 sheet.cell(col,row).value = invoice["tax"][taxc]
-                print "Tax TaxC"
+                print "Tax TaxC uniu"
                 print invoice["tax"][taxc]
             else:
                 sheet.cell(col,row).value ="0.00"
@@ -567,11 +569,15 @@ def registerspreadsheet(request):
         for taxc in taxcolumns:
             if taxc in totalrow["tax"]:
                 sheet.cell(col,row).value = totalrow["tax"][taxc]
+                print "Last For If Tax"
+                print totalrow["tax"][taxc]
             else:
                 sheet.cell(col,row).value = "0.00"
             col += 1
             if taxc in totalrow["taxamount"]:
                 sheet.cell(col,row).value = totalrow["taxamount"][taxc]
+                print "Last For If Amount"
+                print totalrow["taxamount"][taxc]
             else:
                 sheet.cell(col,row).value = "0.00"
             col += 1
