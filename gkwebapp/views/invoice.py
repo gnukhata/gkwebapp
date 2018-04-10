@@ -514,12 +514,12 @@ def registerspreadsheet(request):
         row = 5
         col = 9
         for taxc in taxcolumns:
-            sheet.column_dimensions[str(col)].width = 18
+            sheet.column_dimensions[get_column_letter(col)].width = 18
             print str(col)
             print str(row)
             sheet.cell(col,row).value = "Net @" + taxc
             col +=1
-            sheet.column_dimensions[str(col)].width = 18
+            sheet.column_dimensions[get_column_letter(col)].width = 18
             print "TAXC"
             print taxc
             sheet.cell(col,row).value = taxc
