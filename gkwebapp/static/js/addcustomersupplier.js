@@ -623,6 +623,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	}
 	else{
 	    $(".panno").val($("#add_cussup_pan").val());
+	    $(".panno").prop("disabled",true);
 	}
     });
 
