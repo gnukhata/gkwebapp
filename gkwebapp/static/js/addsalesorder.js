@@ -2285,6 +2285,7 @@ if (event.which == 13) {
 		  $("#bankdetails-blank-alert").hide();
 	      });
 	      $("#accountno").focus();
+	      return false;
 	  }
       }
 	      
