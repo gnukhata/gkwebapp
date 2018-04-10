@@ -511,21 +511,24 @@ def registerspreadsheet(request):
         sheet['F5'].alignment = Alignment(horizontal='center')
         sheet['G5'].alignment = Alignment(horizontal='right')
         sheet['H5'].alignment = Alignment(horizontal='right')
-        row = 5
-        col = 9
+        cellCounter = 5
+        colvar = 8
         for taxc in taxcolumns:
-            sheet.column_dimensions[get_column_letter(col)].width = 18
-            print str(col)
-            print str(row)
-            sheet.cell(col,row).value = "Net @" + taxc
+            sheet.column_dimensions[get_column_letter(colvar+1)].width = 18
+            print get_column_letter(colvar+1)
+            sheet.cell(column = colvar, row=cellCounter).value = "Net @" + taxc
             col +=1
+            """print "COL"
+            print col
             sheet.column_dimensions[get_column_letter(col)].width = 18
-            print "TAXC"
-            print taxc
+            #print "TAXC"
+            #print taxc
             sheet.cell(col,row).value = taxc
             col +=1
-            print "After"
-            print taxc
+            print "COLTAXC"
+            print col
+            #print "After"
+            #print taxc"""
         row = 6
         for invoice in result:
             sheet['A'+str(row)] = invoice["srno"]
