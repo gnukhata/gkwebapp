@@ -1509,7 +1509,6 @@ $(document).off("keyup").on("keyup", function(event) {
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#success-alert").hide();
 		   let invid = resp["gkresult"];
-		   if (inoutflag == "15") {
 		       $.ajax({
 			   url: '/cashmemos?action=showcashmemo',
 			   type: 'POST',
@@ -1527,6 +1526,9 @@ $(document).off("keyup").on("keyup", function(event) {
 			       $("#viewcashmemo_div").show();
 			       $("#cashmemodiv").hide();
 			       $("#editbutton").hide();
+			       if(inoutflag==9){
+				   $("#printbutton").hide();
+			       }
 			       $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
 			       $("#cashmemo_div").html("");
 			   })
@@ -1536,7 +1538,7 @@ $(document).off("keyup").on("keyup", function(event) {
 			   .always(function() {
 			       console.log("complete");
 			   });
-		   }
+		   
                });
                return false;
              } else if (resp["gkstatus"] == 1) {
