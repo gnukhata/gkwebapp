@@ -114,7 +114,10 @@ $(document).ready(function() {
 
 
 	}
-	    $("#add_cussup_phone").focus().select();
+	else{
+	$("#add_cussup_phone").focus().select();
+	    return false;
+	}
     }
     if (event.which==38) {
       event.preventDefault();

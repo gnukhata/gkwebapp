@@ -102,10 +102,11 @@ $(document).ready(function() {
 		$("#improper-email-alert").hide();
 		$("#add_cussup_email").focus().select();
             });   
-
-
+		}
+	else{
+	    $("#add_cussup_phone").focus().select();
+	    return false;
 	}
-	$("#add_cussup_phone").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();

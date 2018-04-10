@@ -228,9 +228,11 @@ $(document).ready(function() {
 			$("#edit_cussup_email").focus().select();
 		    });
 		}
-		    
-		    $("#edit_cussup_phone").focus().select();
-		}
+	else{	    
+	    $("#edit_cussup_phone").focus().select();
+	    return false;
+	}
+    }
     if (event.which==38){
       event.preventDefault();
       $("#edit_cussup_name").focus().select();
