@@ -133,16 +133,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }}
 
 	//Total of various columns are displayed on the footer.
@@ -196,16 +196,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -2726,6 +2726,7 @@ if (event.which == 13) {
     $("#invoice_edit").click(function(event){
 	editflag = false;
 	$("#invoice_save").show();
+	$("#tviw").show();
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();

@@ -140,16 +140,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	}
 
@@ -205,16 +205,16 @@ $(document).ready(function() {
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"paise";
+			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
 		    }
 		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"rupees";
+		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
 
 		}
 	    }else{
-		numbertowords = "Zero"+" "+ "rupees";
+		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	}
 	//Total of various columns are displayed on the footer.
