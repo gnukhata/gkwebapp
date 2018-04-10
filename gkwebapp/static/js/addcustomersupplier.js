@@ -611,6 +611,21 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
   });
 
+    $("#add_cussup_pan").change(function(event) {
+	var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan_change = $(this).val();
+	if ((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && $.trim($("#add_cussup_pan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+		$("#add_cussup_pan").focus();
+	    });
+	}
+	else{
+	    $(".panno").val($("#add_cussup_pan").val());
+	}
+    });
+
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
