@@ -445,7 +445,7 @@ def listofstockitemsspreadsheet(request):
                 row +=1
                 srno +=1
         else:
-            row = 6
+            row = 5
             for stock in result:
                 sheet['A'+str(row)] = srno
                 sheet['A'+str(row)].alignment = Alignment(horizontal='left')
