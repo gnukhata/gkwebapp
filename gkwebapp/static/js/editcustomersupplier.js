@@ -127,7 +127,7 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	$(".gstinstate, .statecode, .panno, .gstin").prop("disabled", true);
+	$(".gstinstate, .statecode, .panno, .gstin, .state_del").prop("disabled", true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
@@ -195,6 +195,7 @@ $(document).ready(function() {
       $("#edit_cussup_email").focus().select();
     }
   });
+    
   $("#edit_state").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
@@ -411,7 +412,7 @@ $(document).ready(function() {
       event.preventDefault();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
 	  if ($("#edit_cussup").val() == "Supplier"){
-	      $("#edit_accountno").focus();
+	      $("#checkbnk").focus();
 	  } else {
 	      $("#cussup_edit_save").focus();
 	  }
@@ -736,7 +737,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
-      $(".gstinstate, .panno, .gstin").prop("disabled",false);
+      $(".gstinstate, .panno, .gstin, .state_del").prop("disabled",false);
       $("#edit_state").prop("disabled", false);
       $("#edit_accountno").prop("disabled", false);
       $("#edit_bankname").prop("disabled", false);
@@ -804,7 +805,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	}
 	
 	
-  /*    if ($.trim($("#edit_cussup_tan").val())==""){
+  /*if ($.trim($("#edit_cussup_tan").val())==""){
       $("#both-blank-alert").alert();
       $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#both-blank-alert").hide();
@@ -849,8 +850,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		allow = 0;
 		return false;
 	    }
-	}       
-        gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;
+	}
+	if(gstinstring.length == 15){
+	    gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;
+	}
       }
       });
       let custtan = "";
