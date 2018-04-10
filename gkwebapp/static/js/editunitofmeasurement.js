@@ -108,9 +108,12 @@ $(document).ready(function() {
         $("#sub_unit_edit").focus();
       }
     });
-
+//click event for reset button so that focus will be shifted to unit_dit_list.
   $("#unit_reset").click(function(event) {
-    $("a[href ='#unit_edit']").click();
+      $("a[href ='#unit_edit']").click();
+      event.preventDefault();
+      $('#unit_edit_list').focus();
+      return false;
   });
 
   $("#edit_btn").click(function(event) {
@@ -129,7 +132,8 @@ $(document).ready(function() {
       return false;
     }
   });
-  $("#unit_edit_save").click(function(event) {
+//click event for save button so that the focus will be shifted to unit_edit_list.
+    $("#unit_edit_save").click(function(event) {
     if ($.trim($('#unit_edit_name').val())=="") {
       $("#unit-blank-alert").alert();
       $("#unit-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -183,7 +187,9 @@ $(document).ready(function() {
         $("a[href='#unit_edit']").click();
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#success-alert").hide();
+            $("#success-alert").hide();
+	    event.preventDefault();
+	    $("#unit_edit_list").focus().select();
         });
         return false;
       }
@@ -212,7 +218,8 @@ $(document).ready(function() {
       console.log("complete");
     });
     event.stopPropogation();
-  });
+    });
+    //click event for delete button so that to shift the focus on unit_edit_list.
   $("#unit_delete").click(function(event) {
     event.preventDefault();
     $('.modal-backdrop').remove();
@@ -238,9 +245,12 @@ $(document).ready(function() {
               $("#delsuccess-alert").alert();
               $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#delsuccess-alert").hide();
-              $("a[href ='#unit_edit']").click();
+		  $("a[href ='#unit_edit']").click();
+		   event.preventDefault();
+		  $("#unit_edit_list").focus().select();
               });
-            }
+            
+	    }
             else {
               $("#unit_edit_name").focus();
               $("#subunit-alert").alert();
@@ -249,10 +259,9 @@ $(document).ready(function() {
               });
               return false;
             }
-
-
+	      
           }
-
+	
         });
 
     });
