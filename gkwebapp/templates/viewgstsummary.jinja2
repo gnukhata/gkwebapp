@@ -238,11 +238,13 @@
 	      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
 		<p>   <font color=" #566573"> {%trans%}
-		  Receipt & Payment Account or Cash Flow </br>
-		  This report can be viewed for any period.</br>
-		  Drill Down facility is available. You can double click or press enter key on any row to see the ledger for that account.</br>
-		  All users can view this report.
-		  .{% endtrans %} </font>
+		  This report is a summary of all tax input and output under GST.</br>
+
+		  This report requires the state for which the summary is generated, period and list of accounts to be taken into consideration.</br> 
+		  Dropdowns are provided for each type of tax - SGST, CGST and IGST(both input and output).</br>
+		  There is a checkbox beside each account name which can be checked so that it is marked for GST calculation.</br>
+		  Once state is selected, date is entered and accounts are selected click 'View' button to view the report.
+		  {% endtrans %} </font>
 
 		</p>
 	      </div>
@@ -251,6 +253,7 @@
 	  </div>
 	</div>
     </div>
+    
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewgstsummary.js')}}"></script>
   </body>
 </html>
