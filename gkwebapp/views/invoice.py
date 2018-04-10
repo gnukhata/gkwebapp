@@ -511,79 +511,99 @@ def registerspreadsheet(request):
         sheet['F5'].alignment = Alignment(horizontal='center')
         sheet['G5'].alignment = Alignment(horizontal='right')
         sheet['H5'].alignment = Alignment(horizontal='right')
-        cellCounter = 5
         colvar = 8
         for taxc in taxcolumns:
             sheet.column_dimensions[get_column_letter(colvar+1)].width = 18
-            print get_column_letter(colvar+1)
-            sheet.cell(column = colvar, row=cellCounter).value = "Net @" + taxc
-            col +=1
-            """print "COL"
-            print col
-            sheet.column_dimensions[get_column_letter(col)].width = 18
-            #print "TAXC"
-            #print taxc
-            sheet.cell(col,row).value = taxc
-            col +=1
-            print "COLTAXC"
-            print col
-            #print "After"
-            #print taxc"""
-        row = 6
+            sheet.cell(column = colvar+1, row=5).value = "Net @" + taxc
+            sheet.cell(column = colvar+1, row=5).font = Font(name='Liberation Serif',size='12',bold=True)
+            sheet.cell(column = colvar+1, row=5).alignment = Alignment(horizontal='right')
+            colvar +=1
+            sheet.column_dimensions[get_column_letter(colvar+1)].width = 18
+            sheet.cell(column = colvar+1, row=5).font = Font(name='Liberation Serif',size='12',bold=True)
+            sheet.cell(column = colvar+1, row=5).alignment = Alignment(horizontal='right')
+            sheet.cell(column = colvar+1, row=5).value = taxc
+            colvar +=1
+        rowCount= 6
         for invoice in result:
-            sheet['A'+str(row)] = invoice["srno"]
-            sheet['B'+str(row)] = invoice["invoiceno"]
-            print invoice["invoiceno"]
-            sheet['C'+str(row)] = invoice["invoicedate"]
-            sheet['D'+str(row)] = invoice["customername"]
-            sheet['E'+str(row)] = invoice["customertin"]
+            sheet['A'+str(rowCount)] = invoice["srno"]
+            sheet['A'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['A'+str(rowCount)].alignment = Alignment(horizontal='center')
+            sheet['B'+str(rowCount)] = invoice["invoiceno"]
+            sheet['B'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['B'+str(rowCount)].alignment = Alignment(horizontal='center')
+            sheet['C'+str(rowCount)] = invoice["invoicedate"]
+            sheet['C'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['C'+str(rowCount)].alignment = Alignment(horizontal='center')
+            sheet['D'+str(rowCount)] = invoice["customername"]
+            sheet['D'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['D'+str(rowCount)].alignment = Alignment(horizontal='center')
+            sheet['E'+str(rowCount)] = invoice["customertin"]
+            sheet['E'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['E'+str(rowCount)].alignment = Alignment(horizontal='center')
             if invoice.has_key("custgstin"):
-                sheet['F'+str(row)] = invoice["custgstin"]
+                sheet['F'+str(rowCount)] = invoice["custgstin"]
+                sheet['F'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+                sheet['F'+str(rowCount)].alignment = Alignment(horizontal='center')
             else:
-                sheet['F'+str(row)] = " "
-            sheet['G'+str(row)] = invoice["grossamount"]
-            sheet['F'+str(row)] = invoice["taxfree"]
-        col = 8
-        for taxc in taxcolumns:
-            if taxc in invoice["tax"]:
-                sheet.cell(col,row).value = invoice["tax"][taxc]
-                print "Tax TaxC uniu"
-                print invoice["tax"][taxc]
-            else:
-                sheet.cell(col,row).value ="0.00"
-            col += 1
-            if taxc in invoice["taxamount"]:
-                sheet.cell(col,row).value = invoice["taxamount"][taxc]
-            else:
-                sheet.cell(col,row).value ="0.00"
-            col += 1
-        row += 1
-        sheet.merge_cells('A'+str(row),'G'+str(row))
-        sheet['A'+str(row)] = "Total"
-        sheet['A'+str(row)].alignment = Alignment(horizontal='right')
-        sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
-        sheet['G'+str(row)] = totalrow["grossamount"]
-        sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-        sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
-        sheet['H'+str(row)] = totalrow["taxfree"]
-        sheet['H'+str(row)].alignment = Alignment(horizontal='right')
-        sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True)
-        col = 8
+                sheet['F'+str(rowCount)] = " "
+            sheet['G'+str(rowCount)] = invoice["grossamount"]
+            sheet['G'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['G'+str(rowCount)].alignment = Alignment(horizontal='right')
+            sheet['H'+str(rowCount)] = invoice["taxfree"]
+            sheet['H'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
+            sheet['H'+str(rowCount)].alignment = Alignment(horizontal='right')
+            colvar = 9
+            for taxc in taxcolumns:
+                if taxc in invoice["tax"]:
+                    sheet.cell(column = colvar, row=rowCount).value = invoice["tax"][taxc]
+                    sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                    sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+                else:
+                    sheet.cell(column = colvar, row=rowCount).value ="0.00"
+                    sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                    sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+                colvar += 1
+                if taxc in invoice["taxamount"]:
+                    sheet.cell(column = colvar, row=rowCount).value = invoice["taxamount"][taxc]
+                    sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                    sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+                else:
+                    sheet.cell(column = colvar, row=rowCount).value ="0.00"
+                    sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                    sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+                colvar += 1
+            rowCount += 1
+            colvar = 9
+        sheet.merge_cells(start_row= rowCount, start_column = 1, end_row = rowCount, end_column = 6)
+        sheet['A'+str(rowCount)] = "Total"
+        sheet['A'+str(rowCount)].alignment = Alignment(horizontal='right')
+        sheet['A'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
+        sheet['G'+str(rowCount)] = totalrow["grossamount"]
+        sheet['G'+str(rowCount)].alignment = Alignment(horizontal='right')
+        sheet['G'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
+        sheet['H'+str(rowCount)] = totalrow["taxfree"]
+        sheet['H'+str(rowCount)].alignment = Alignment(horizontal='right')
+        sheet['H'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
         for taxc in taxcolumns:
             if taxc in totalrow["tax"]:
-                sheet.cell(col,row).value = totalrow["tax"][taxc]
-                print "Last For If Tax"
-                print totalrow["tax"][taxc]
+                sheet.cell(column = colvar, row=rowCount).value = totalrow["tax"][taxc]
+                sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             else:
-                sheet.cell(col,row).value = "0.00"
-            col += 1
+                sheet.cell(column = colvar, row=rowCount).value = "0.00"
+                sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+            colvar += 1
             if taxc in totalrow["taxamount"]:
-                sheet.cell(col,row).value = totalrow["taxamount"][taxc]
-                print "Last For If Amount"
-                print totalrow["taxamount"][taxc]
+                sheet.cell(column = colvar, row=rowCount).value = totalrow["taxamount"][taxc]
+                sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             else:
-                sheet.cell(col,row).value = "0.00"
-            col += 1
+                sheet.cell(column = colvar, row=rowCount).value = "0.00"
+                sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
+                sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
+            colvar += 1
+            
         registerwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         reportxslx = xlsxfile.read()
