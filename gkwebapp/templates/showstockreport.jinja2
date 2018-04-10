@@ -136,6 +136,7 @@
         </td>
         <td class="col-xs-1 calign" >
         </td>
+	
         {% if godown != "" %}
         <td class="col-xs-2 calign" >
         </td>
@@ -184,10 +185,7 @@
           {% if record["trntype"] == "transfer note" %}
             Transfer Note
           {% endif %}
-          {#{% if record["trntype"] == "Rejection Note" %}
-          Rejection Note
-          {% endif %}#}
-	  {% if record["trntype"] == "Rejection Note" %}
+          {% if record["trntype"] == "Rejection Note" %}
             Rejection Note
           {% endif %}
 
@@ -202,6 +200,11 @@
             {{record["invno"]}}
           {% endif %}
         </td>
+	<td value="{{record["rnid"]}}" class="col-xs-1 calign" >
+          {% if record["rnno"] != "" %}
+            {{record["rnno"]}}
+          {% endif %}
+        </td>
         {% if godown != "" %}
           <td value="{{record["tnid"]}}" class="col-xs-2 calign" >
             {% if record["tnno"] != "" %}
@@ -209,17 +212,7 @@
             {% endif %}
           </td>
         {% endif %}
-        {#<td value="{{record["rnid"]}}" class="col-xs-1 calign" >
-        {% if record["rnno"] != "" %}
-        {{record["rnno"]}}
-        {% endif %}
-        </td>#}
-	<td value="{{record["rnid"]}}" class="col-xs-1 calign" >
-          {% if record["rnno"] != "" %}
-            {{record["rnno"]}}
-          {% endif %}
-        </td>
-        <td class="col-xs-1 rightlist">
+       	<td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}
         </td>
         <td class="col-xs-1 rightlist" >
@@ -247,14 +240,13 @@
         </td>
         <td class="col-xs-1 calign" >
         </td>
+	<td class="col-xs-1 calign" >
+        </td>
+        
         {% if godown != "" %}
           <td class="col-xs-2 calign" >
           </td>
         {% endif %}
-        {#<td class="col-xs-1 calign" >
-        </td>#}
-	<td class="col-xs-1 calign" >
-        </td>
         <td class="col-xs-1 rightlist">
           {{record["totalinwardqty"]}}
         </td>
@@ -272,10 +264,10 @@
     <small>
         <b>Deli Note No. : </b> Delivery Note Number, &nbsp
         <b>INV No. :</b> Invoice Number, &nbsp
+	<b>RN No. :</b> Rejection Note Number<br><br>
         {% if godown != "" %}
         <b>TN No. :</b> Transfer Note Number
         {% endif %}
-        <b>RN No. :</b> Rejection Note Number<br><br>
     </small>
 </div>
   <span style="margin:auto; display:table;">

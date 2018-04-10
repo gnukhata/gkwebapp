@@ -701,7 +701,6 @@ def stockreportspreadsheet(request):
                      sheet['G'+str(row)] =""
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='center')
-                     
                      sheet['H'+str(row)] = stock["totalinwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
@@ -751,15 +750,18 @@ def stockreportspreadsheet(request):
                      sheet['E'+str(row)] =""
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['F'+str(row)] =stock["inward"]
+                     sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['G'+str(row)] =""
+                     sheet['G'+str(row)] =stock["inward"]
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['H'+str(row)] =""
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['I'+str(row)] =""
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["rnid"] != "") and stock["date"]!="":
                      sheet['A'+str(row)] = stock["date"]
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
