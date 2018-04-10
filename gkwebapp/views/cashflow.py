@@ -83,7 +83,7 @@ def printcashflowreport(request):
         result = requests.get("http://127.0.0.1:6543/report?type=cashflow&calculateto=%s&financialstart=%s&calculatefrom=%s"%(calculateto,financialstart,calculatefrom), headers=header)
         receipt = result.json()["rcgkresult"]
         payment = result.json()["pygkresult"]
-        fystart = str(request.params["fystart"]);
+        fystart = datetime.strptime(request.params["fystart"],'%Y-%m-%d').strftime('%d-%m-%Y')
         orgname = str(request.params["orgname"])
         calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
         calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
