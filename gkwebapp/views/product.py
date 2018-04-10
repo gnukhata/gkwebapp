@@ -29,6 +29,7 @@ Contributors:
 "Mohd. Talha Pawaty" <mtalha456@gmail.com>
 "Ravishankar Purne" <ravismail96@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+"Sakshi Agrawal" <agrawalsakshi1850@gmail.com>
 """
 
 from pyramid.view import view_config
