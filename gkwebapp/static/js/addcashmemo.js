@@ -974,10 +974,6 @@ $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').foc
   }
 });
 
-///
-
-///
-
 $(document).off("keydown", ".invoice_product_tax_rate_vat").on("keydown", ".invoice_product_tax_rate_vat", function(event) {
   var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1 + 1;
@@ -1051,23 +1047,25 @@ var curindex = $(this).closest('tr').index();
 var nextindex = curindex + 1;
 var previndex = curindex - 1;
 if ($("#invoice_product_table_vat tbody tr").length > 1) {
-  $(this).closest('tr').fadeOut(200, function() {
-    $(this).closest('tr').remove(); //closest method gives the closest element productified
-    $("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
-  });
+    $(this).closest('tr').fadeOut(200, function() {
+	$(this).closest('tr').remove(); //closest method gives the closest element productified
+	$("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
+	calculatevataxamt(curindex);
+    });
 }
     if ($("#invoice_product_table_vat tbody tr").length == 1) {
   $("#invoice_product_table_vat tbody tr:eq(0) td:eq(9)").empty();
     }
 
     if ($("#invoice_product_table_gst tbody tr").length > 1) {
-  $(this).closest('tr').remove();
-  $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
-  $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	$(this).closest('tr').remove();
+	$("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
+	$("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
+	calculategstaxamt(curindex);
     }
-    if ($("#invoice_product_table_gst tbody tr").length == 1) {
-  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
-    }
+	if ($("#invoice_product_table_gst tbody tr").length == 1) {
+	    $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+	}
 });
 
 $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
@@ -1117,7 +1115,98 @@ $(document).off("keyup").on("keyup", function(event) {
     return false;
   }
 });
+
+    //Validation for 'Bank Deatils'.
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+            if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())!="") {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
+            }
+            else if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="") {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		});
+		$("#bankname").focus();
+		return false;
+            } 
+	}
+    });
+
+    $("#branchname").keydown(function(event) {
+	if (event.which==13) {
+	    if ($.trim($("#accountno").val())=="" && $.trim($("#branchname").val())!="" ) {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
+            }
+
+	    if ( $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())!="" ) {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		});
+		$("#bankname").focus();
+		return false;
+            }
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branchname").val())=="" ) {
+		$("#branch-blank-alert").alert();
+		$("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branch-blank-alert").hide();
+		});
+		$("#branchname").focus();
+		return false;
+            }    
+	}
+    });
     
+
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+            if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())=="" && $.trim($("#ifsc").val())!="" ) {
+		$("#accountno_bankname_branch-blank-alert").alert();
+		$("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno_bankname_branch-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
+            }
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())=="" && $.trim($("#ifsc").val())!="" ) {
+		$("#bankname_branch-blank-alert").alert();
+		$("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname_branch-blank-alert").hide();
+		});
+		$("#bankname").focus();
+		return false;
+            }
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branchname").val())=="" && $.trim($("#ifsc").val())=="" ) {
+		$("#branch-blank-alert").alert();
+		$("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branch-blank-alert").hide();
+		});
+		$("#branchname").focus();
+		return false;
+            }
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branchname").val())!="" && $.trim($("#ifsc").val())=="" ) {
+		$("#ifsc-blank-alert").alert();
+		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert").hide();
+		});
+		$("#ifsc").focus();
+		return false;
+            } 
+	}
+    });
+
     $("#invoice_save").click(function(event) {
         // Validations start below
         event.stopPropagation();
@@ -1173,6 +1262,17 @@ $(document).off("keyup").on("keyup", function(event) {
             $('#invoice_date').focus().select();
             return false;
         }
+	/* Bank Details Validation */
+	if (!($("#accountno").val() == "" && $("#bankname").val() == "" && $("#branchname").val() == "" && $("#ifsc").val() == "")){
+	   if ($("#accountno").val() == "" || $("#bankname").val() == "" || $("#branchname").val() == "" || $("#ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	       return false;
+	   }
+	}
 
 	//Validation for GSTIN on Save Button.
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;

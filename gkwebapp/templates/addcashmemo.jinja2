@@ -405,6 +405,27 @@
 		</div>
 	      </div>
               <div class="col-md-6 row " id="bank" style="display: none">
+		<div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an account  number.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Bank Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="accountno_bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Account Number, Bank Name and the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Bank Name and the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an IFSC Code{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+		</div>
             <table class="table  table-condensed table-bordered ">
               <tbody>
 		<label>Bank Details :</label>
@@ -536,7 +557,7 @@
       <div class="container-fluid">
 
         <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true" accesskey="e"></i> R<u>e</u>set{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
         <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
       </div>
     </div>
