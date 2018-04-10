@@ -579,23 +579,24 @@ def stockreportspreadsheet(request):
         sheet.column_dimensions['G'].width = 12
         sheet.column_dimensions['H'].width = 12
         sheet.column_dimensions['I'].width = 12
+        sheet.column_dimensions['J'].width = 12
         # Cells of first two rows are merged to display organisation details properly.
         sheet.merge_cells('A1:I2')
         # Name and Financial Year of organisation is fetched to be displayed on the first row.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
         # Organisation name and financial year are displayed.
-        sheet.merge_cells('A3:I3')
+        sheet.merge_cells('A3:J3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet.merge_cells('A4:I4')
+        sheet.merge_cells('A4:J4')
         sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
         if godownflag > 0:
             sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
             sheet['A3'] = "Godown Wise Product Report  (Period : "+calculatefrom+" to "+calculateto+")"
             sheet['A4'] = "Name of the Product: "+productdesc
-            sheet.merge_cells('A5:I5')
+            sheet.merge_cells('A5:J5')
             sheet['A5'].font = Font(name='Liberation Serif',size='14',bold=True)
             sheet['A5'] = "Name of the Godown : "+goname+", Godown Address: "+goaddr
             sheet['A6'] = "Date"
@@ -603,19 +604,20 @@ def stockreportspreadsheet(request):
             sheet['C6'] = "Document Type"
             sheet['D6'] = "Deli Note No."
             sheet['E6'] = "INV No."
-            sheet['F6'] = "TN No."
-            sheet['G6'] = "Inward"
-            sheet['H6'] = "Outward"
-            sheet['I6'] = "Balance"
+            sheet['F6'] = "RN No."
+            sheet['G6'] = "TN No."
+            sheet['H6'] = "Inward"
+            sheet['I6'] = "Outward"
+            sheet['J6'] = "Balance"
             titlerow = sheet.row_dimensions[6]
             titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
             titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
-            sheet['G6'].alignment = Alignment(horizontal='right')
-            sheet['G6'].font = Font(name='Liberation Serif',size=12,bold=True)
             sheet['H6'].alignment = Alignment(horizontal='right')
             sheet['H6'].font = Font(name='Liberation Serif',size=12,bold=True)
             sheet['I6'].alignment = Alignment(horizontal='right')
             sheet['I6'].font = Font(name='Liberation Serif',size=12,bold=True)
+            sheet['J6'].alignment = Alignment(horizontal='right')
+            sheet['J6'].font = Font(name='Liberation Serif',size=12,bold=True)
             row = 7
             for stock in result:
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
@@ -636,15 +638,18 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['G'+str(row)] =stock["inward"]
+                     sheet['G'+str(row)] =""
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] =""
+                     sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+                     sheet['H'+str(row)] =stock["inward"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['I'+str(row)] =""
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['J'+str(row)] =""
+                     sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["tnno"]!="" or stock["rnno"] != "") and stock["date"]!="":
                      sheet['A'+str(row)] = stock["date"]
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -660,18 +665,21 @@ def stockreportspreadsheet(request):
                      sheet['E'+str(row)] = stock["invno"]
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['F'+str(row)] = stock["tnno"]
+                     sheet['F'+str(row)] = stock["rnno"]
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['G'+str(row)] = stock["inwardqty"]
+                     sheet['G'+str(row)] = stock["tnno"]
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] = stock["outwardqty"]
+                     sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+                     sheet['H'+str(row)] = stock["inwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['I'+str(row)] = stock["balance"]
+                     sheet['I'+str(row)] = stock["outwardqty"]
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['J'+str(row)] = stock["balance"]
+                     sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -690,15 +698,19 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['G'+str(row)] = stock["totalinwardqty"]
+                     sheet['G'+str(row)] =""
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] = stock["totaloutwardqty"]
+                     sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+                     
+                     sheet['H'+str(row)] = stock["totalinwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['I'+str(row)] =""
+                     sheet['I'+str(row)] = stock["totaloutwardqty"]
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['J'+str(row)] =""
+                     sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 row  += 1
         else:
             sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
@@ -709,18 +721,19 @@ def stockreportspreadsheet(request):
             sheet['C5'] = "Document Type"
             sheet['D5'] = "Deli Note No."
             sheet['E5'] = "INV No."
-            sheet['F5'] = "Inward"
-            sheet['G5'] = "Outward"
-            sheet['H5'] = "Balance"
+            sheet['F5'] = "RN No."
+            sheet['G5'] = "Inward"
+            sheet['H5'] = "Outward"
+            sheet['I5'] = "Balance"
             titlerow = sheet.row_dimensions[5]
             titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
             titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
-            sheet['F5'].alignment = Alignment(horizontal='right')
-            sheet['F5'].font = Font(name='Liberation Serif',size=12,bold=True)
             sheet['G5'].alignment = Alignment(horizontal='right')
             sheet['G5'].font = Font(name='Liberation Serif',size=12,bold=True)
             sheet['H5'].alignment = Alignment(horizontal='right')
             sheet['H5'].font = Font(name='Liberation Serif',size=12,bold=True)
+            sheet['I5'].alignment = Alignment(horizontal='right')
+            sheet['I5'].font = Font(name='Liberation Serif',size=12,bold=True)
             row = 6
             for stock in result:
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
@@ -762,15 +775,18 @@ def stockreportspreadsheet(request):
                      sheet['E'+str(row)] = stock["invno"]
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['F'+str(row)] = stock["inwardqty"]
+                     sheet['F'+str(row)] = stock["rnno"]
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['G'+str(row)] = stock["outwardqty"]
+                     sheet['G'+str(row)] = stock["inwardqty"]
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] = stock["balance"]
+                     sheet['H'+str(row)] = stock["outwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['I'+str(row)] = stock["balance"]
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -786,15 +802,18 @@ def stockreportspreadsheet(request):
                      sheet['E'+str(row)] =""
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['F'+str(row)] = stock["totalinwardqty"]
+                     sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['G'+str(row)] = stock["totaloutwardqty"]
+                     sheet['F'+str(row)].alignment = Alignment(horizontal='center')
+                     sheet['G'+str(row)] = stock["totalinwardqty"]
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] =""
+                     sheet['H'+str(row)] = stock["totaloutwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+                     sheet['I'+str(row)] =""
+                     sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                     sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 row += 1
         prowb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
