@@ -1816,9 +1816,7 @@ $('#listofaccounts').click(function (e) {
   $('#tallyimport').click(function (e) {// calls tally import page.
     $("#info").load("/import?action=show");
   });
-});
-
-$('#show_unbilled_deliveries').click(function (e) {
+    $('#show_unbilled_deliveries').click(function (e) {
   //
   $.ajax(
     {
@@ -1860,5 +1858,41 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
     $("#info").load("/drcrnote");
     $("#drcrnote_div").show();
 });
-    
+
+    $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
+	let searchtext = $("#reportsearch").val();
+	$("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+	$("table tbody tr:contains('" + searchtext + "')").show();
+    });
+    $(document).off('keyup' ,'#reportsearch').on('keyup' ,'#reportsearch',function(e) {
+	//String to search for is stored in searchtext variable.
+	    let searchtext = $("#reportsearch").val();
+	    //When search field is blank the clear search button is hidden.
+	    if (searchtext == "") {
+		$("#reportclearsearchspan").hide();
+	    }
+	    //When there is some text in the field clear search button is shown.
+	    if (searchtext != "") {
+		$("#reportclearsearchspan").show();
+	    }
+	    //Table rows containing search text are shown and others hidden.
+	    $("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+	    $("table tbody tr:contains('" + searchtext + "')").show();
+	    //Pressing 'Esc' button clears search.
+	    if (e.which == 27) {
+		$("#reportsearch").val("");
+		$("tr").show();
+	    }
+	    //Pressing Enter key shifts focus to first row.
+	    if (e.which == 13) {
+		$("tbody tr:visible").first().find('a').focus();
+	    }
+    });
+    $(document).off('click' ,'#reportclearsearchspan').on('click' ,'#reportclearsearchspan',function(e) {
+	$("#reportsearch").val("");
+	$("table tbody tr").show();
+	$("#reportclearsearchspan").hide();
+	$("tbody tr:visible").first().find('a').focus();
+    });
+});   
      

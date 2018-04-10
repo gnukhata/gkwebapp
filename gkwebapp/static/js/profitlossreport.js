@@ -73,9 +73,13 @@ $(document).ready(function() {
       }
     }
     else if (event.which==39)
-    {
-
-      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
+      {
+	  if ($('#incometbl tbody tr:eq('+pyindex+') td:first a').is(":visible")) {
+	      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#incometbl tbody tr:visible').first().find('a').focus();
+	  }
     }
   });
 
@@ -219,9 +223,13 @@ $(document).ready(function() {
       }
     }
     else if (event.which==37)
-    {
-
-      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
+      {
+	  if ($('#expensetbl tbody tr:eq('+rcindex+') td:first a').is(":visible")) {
+	      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#expensetbl tbody tr:visible').first().find('a').focus();
+	  }
     }
 
 
@@ -323,52 +331,6 @@ $(document).ready(function() {
       }
   });
 
-// Functions to clear search fields.
-  $('#plrclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-    $("#plrclearfields").hide();
-		$(".search").children(".form-control").focus();
-  });
-  $('#pllclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-    $("#pllclearfields").hide();
-		$(".search").children(".form-control").focus();
-  });
-
-  $(".search").children(".form-control").keyup(function(event){
-		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
-			$("#pllclearfields").show();
-		}
-		else {
-			$("#pllclearfields").hide();
-		}
-    if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
- 		 $("#plrclearfields").show();
- 		}
- 		else {
- 			$("#plrclearfields").hide();
- 		}
-    if (event.keyCode == 27) {
-      if ($(this).parent(".search").hasClass("pull-right")) {
-        $(".rcaccname:visible").first().focus();
-      }
-      else if($(this).parent(".search").hasClass("pull-left")) {
-        $(".pyaccname:visible").first().focus();
-      }
-      $(this).val("");
-      $("#pllclearfields").hide();
-      $("#plrclearfields").hide();
-    }
-    else if (event.which == 13) {
-      if ($(this).parent(".search").hasClass("pull-right")) {
-        $(".rcaccname:visible").first().focus();
-      }
-      else if($(this).parent(".search").hasClass("pull-left")) {
-        $(".pyaccname:visible").first().focus();
-      }
-    }
-    });
-
   $("#print").click(function(event){
 // Function to serve spreadsheet of the report.
       var todatearray = $("#ledtodate").val().split("-");
@@ -401,14 +363,37 @@ $(document).ready(function() {
 	$('.group').show();
     });
     $("#printpnl").click(function(event) {
-// Displays a printable version of the report.
-      $("#incometbl").unbind('dblclick');
-      $("#expensetbl").unbind('dblclick');
-      $('table a').contents().unwrap();
-      $("table").removeClass('fixed-table').addClass('table-striped');
-      $(".fixed-table-toolbar").remove();
-      $("#printpnl").hide();
-      $("#realprintpnl").show();
+	// Displays a printable version of the report.
+	$("#msspinmodal").modal("show");
+	var todatearray = $("#ledtodate").val().split("-");
+	var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	$.ajax(
+	    {
+		type: "POST",
+		url: "/showprofitlossreport?type=print",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		}
+	    })
+	    .done(function(resp) {
+		$("#msspinmodal").modal("hide");
+		$('.modal-backdrop').remove();
+		$("#info").html(resp);
+		$('tr').show();
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	$("#printpnl").hide();
+	$("#realprintpnl").show();
     });
     $("#realprintpnl").click(function(event) {
       window.print();
