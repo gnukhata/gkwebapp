@@ -561,8 +561,7 @@ def stockreportspreadsheet(request):
         else:
             result = requests.get("http://127.0.0.1:6543/report?type=stockreport&productcode=%d&startdate=%s&enddate=%s"%(productcode, scalculatefrom, scalculateto),headers=header)
         result = result.json()["gkresult"]
-        fystart = str(request.params["fystart"]);
-        ystart = datetime.strptime(fystart, '%Y-%m-%d').strftime('%d-%m-%Y')
+        fystart = datetime.strptime(request.params["fystart"],'%Y-%m-%d').strftime('%d-%m-%Y')
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"])
         # A workbook is opened.
