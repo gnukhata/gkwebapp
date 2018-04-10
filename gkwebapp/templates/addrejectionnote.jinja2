@@ -55,7 +55,7 @@
 	    {% endif %}
 	    <div class="row">
 	      <div class="col-xs-12">
-		<label for="rejectionnote_invoice"> {% trans %}Invoice{% endtrans %} : </label>
+		<label for="rejectionnote_invoice"> {% trans %}Invoice{% endtrans %} : </label> <label for="rejectionnote_invoice" style="color:red;font-size:120%;">*</label>
 		<select class="form-control input-sm" id="rejectionnote_invoice" accesskey="">
 		  <option value="" selected disabled hidden>Select Invoice</option>
 		  <option value="" dcno = "" >None</option>
@@ -95,11 +95,11 @@
 	  <div class="form-group">
 	    <div class="row">
 	      <div class="col-xs-6">
-		<label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label>
+		<label for="rejectionnote_noteno">{% trans %}Note No{% endtrans %} :</label> <label for="rejectionnote_noteno" style="color:red;font-size:120%;">*</label>
 		<input class="form-control input-sm" id="rejectionnote_noteno" placeholder="{% trans %}Enter Note No{% endtrans %}" accesskey="a">
 	      </div>
 	      <div class="col-xs-6">
-		<label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label>
+		<label for="rejectionnote_date">{% trans %}Note Date{% endtrans %} :</label> <label for="rejectionnote_date" style="color:red;font-size:120%;">*</label>
 		<div class="form-inline">
 		  <div class="form-group ">
 		    <input type="text" class="form-control input-sm rndate" size="2" maxlength="2" placeholder="DD" id="rejectionnote_date" accesskey="v">
@@ -141,46 +141,46 @@
 	    <div class="delchal" hidden>
 	      {% trans %}<h4>Details of Delivery Note: </h4>{% endtrans %}
 	    </div>
-	  <div class="row">
-	    <div class="col-xs-6">
-	      <label class="inv" for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
-	      <label class="delchal" for="invoice_noteno" hidden>{% trans %}Delivery Note No{% endtrans %} :</label>
-	      <input class="form-control input-sm" id="invoice_noteno" disabled>
-	    </div>
-	    <div class="col-xs-6">
-	      <label class="inv" for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
-	      <label class="delchal" for="invoice_date" hidden>{% trans %}Delivery Note Date{% endtrans %} :</label>
-	      <div class="form-inline">
-		<div class="form-group ">
-		  <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v" disabled>
-		</div>
-		<div class="form-group">
-		  <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v" disabled>
-		</div>
-		<div class="form-group">
-		  <input type="text" class="form-control input-sm invdate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v" disabled>
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label class="inv" for="invoice_noteno">{% trans %}Invoice No{% endtrans %} :</label>
+		<label class="delchal" for="invoice_noteno" hidden>{% trans %}Delivery Note No{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_noteno" disabled>
+	      </div>
+	      <div class="col-xs-6">
+		<label class="inv" for="invoice_date">{% trans %}Invoice Date{% endtrans %} :</label>
+		<label class="delchal" for="invoice_date" hidden>{% trans %}Delivery Note Date{% endtrans %} :</label>
+		<div class="form-inline">
+		  <div class="form-group ">
+		    <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="DD" id="invoice_date" accesskey="v" disabled>
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm invdate" size="2" maxlength="2" placeholder="MM" id="invoice_month" accesskey="v" disabled>
+		  </div>
+		  <div class="form-group">
+		    <input type="text" class="form-control input-sm invdate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v" disabled>
+		  </div>
 		</div>
 	      </div>
 	    </div>
 	  </div>
-	  </div>
 	  <div class="form-group">
-	  <div class="row">
-	    <div class="col-xs-6">
-	      <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
-	      <input class="form-control input-sm" id="invoice_state" disabled>
+	    <div class="row">
+	      <div class="col-xs-6">
+		<label for="invoice_state">{% trans %}State{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_state" disabled>
+	      </div>
+	      <div class="col-xs-6 gstinfield">
+		<label for="invoice_gstin">
+		  {% trans %}GSTIN{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	      </div>
+	      <div class="col-xs-6 tinfield" hidden>
+		<label for="invoice_gstin">
+		  {% trans %}TIN{% endtrans %} :</label>
+		<input class="form-control input-sm" id="invoice_gstin" disabled>
+	      </div>
 	    </div>
-	    <div class="col-xs-6 gstinfield">
-	      <label for="invoice_gstin">
-		{% trans %}GSTIN{% endtrans %} :</label>
-	      <input class="form-control input-sm" id="invoice_gstin" disabled>
-	    </div>
-	    <div class="col-xs-6 tinfield" hidden>
-	      <label for="invoice_gstin">
-		{% trans %}TIN{% endtrans %} :</label>
-	      <input class="form-control input-sm" id="invoice_gstin" disabled>
-	    </div>
-	  </div>
 	  </div>
 	  <div class="form-group">
 	    <div class="row">
@@ -240,16 +240,16 @@
 	  <div class="form-group">
 	    <div class="row">
 	      <div class="col-xs-12">
-	      {% if gkstatus == "in" %}
-		<label for="rejectionnote_customeraddr">
-		  {% trans %}Customer Address{% endtrans %} :
-		</label>
-	      {% else %}
-		<label for="rejectionnote_supplieraddr">
-		  {% trans %}Supplier Address{% endtrans %} :
-		</label>
-	      {% endif %}
-	      <input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
+		{% if gkstatus == "in" %}
+		  <label for="rejectionnote_customeraddr">
+		    {% trans %}Customer Address{% endtrans %} :
+		  </label>
+		{% else %}
+		  <label for="rejectionnote_supplieraddr">
+		    {% trans %}Supplier Address{% endtrans %} :
+		  </label>
+		{% endif %}
+		<input class="form-control input-sm" id="rejectionnote_customeraddr" placeholder="{% trans %}None{% endtrans %}" accesskey="" disabled>
 	      </div>
 	    </div >
 	  </div>
@@ -269,11 +269,11 @@
 	  <div class="panel">
 	    <!-- VAT Table start -->
 	    <div class="vatfield">
-	    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp">
-	      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-	      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Rejection Note. Press 'Esc' key to exit from the table.</small>
-	    </div>
-	    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
+	      <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp">
+		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Rejection Note. Press 'Esc' key to exit from the table.</small>
+	      </div>
+	      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		<thead class="bg-primary">
 		  <tr>
 		    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
@@ -351,7 +351,7 @@
 		    </td>
 		  </tr>
 		</tfoot>
-	    </table><!-- VAT table end -->
+	      </table><!-- VAT table end -->
 	    </div>
 	    <!-- GST Table -->
 	    <div class="gsttable">
@@ -537,47 +537,47 @@
 	    </div>
 	    <div class="row gstfield igstfield">
 	      <div class="form-group hborderdiv igstfield form-inline">
-	      <div class="col-sm-6">
-		<label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
-	      </div>
-	    </div>
-	  </div>
-	  <div class="row hborderdiv gstfield">
-	    <div class="form-group form-inline">
-	      <div class="col-sm-6">
-		<label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+		<div class="col-sm-6">
+		  <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
 	      </div>
 	    </div>
-	  </div>
-	  <div class="row hborderdiv vatfield">
-	    <div class="form-group form-inline">
-	      <div class="col-sm-6">
-		<label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	    <div class="row hborderdiv gstfield">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
 	      </div>
 	    </div>
-	  </div>
-	  <div class="row hborderdiv" style="border-bottom-style:solid;">
-	    <div class="form-group form-inline">
-	      <div class="col-sm-6">
-		<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
+	    <div class="row hborderdiv vatfield">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
 	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+	    </div>
+	    <div class="row hborderdiv" style="border-bottom-style:solid;">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+		</div>
 	      </div>
 	    </div>
 	  </div>
 	</div>
-      </div>
-      <!-- Summary End -->
+	<!-- Summary End -->
       </div><!-- panel div close -->
       
       <div>
@@ -594,28 +594,28 @@
 	</div>
       </div>
     </div><!-- panal close -->
-    </div>
-    <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-	<div class="modal-dialog modal-sm vertical-align-center">
-	  <div class="modal-content">
-	    <div class="modal-header">
-	      <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
-	    </div>
-	    <div class="modal-body">
-	      <p>{% trans %}Are you sure?{% endtrans %}</p>
-	    </div>
-	    <div class="modal-footer">
-	      <button type="button" id="rn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-	      <button type="button" id="rn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
-	    </div>
+  </div>
+  <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-sm vertical-align-center">
+	<div class="modal-content">
+	  <div class="modal-header">
+	    <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
 	  </div>
-	  <!-- /.modal-content -->
+	  <div class="modal-body">
+	    <p>{% trans %}Are you sure?{% endtrans %}</p>
+	  </div>
+	  <div class="modal-footer">
+	    <button type="button" id="rn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+	    <button type="button" id="rn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+	  </div>
 	</div>
-	<!-- /.modal-dialog -->
+	<!-- /.modal-content -->
       </div>
+      <!-- /.modal-dialog -->
     </div>
-    <!-- /.modal -->
+  </div>
+  <!-- /.modal -->
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addrejectionnote.js')}}"></script>
 </body>

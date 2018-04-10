@@ -100,7 +100,7 @@
 		   <h4>{% trans %}Details of Debit Note: {% endtrans %}</h4>
 		 {% endif %}
 		 <div class="form-group form-inline" id="invoicerow">
-		   <label class="col-sm-4 fsize" for="drcrnote_invoice">{% trans %}Invoice No.{% endtrans %} :</label>
+		   <label class="col-sm-4 fsize" for="drcrnote_invoice">{% trans %}Invoice No.{% endtrans %} : <label for="drcrnote_invoice" style="color:red;font-size:120%;">*</label></label>
 		   <!-- sale invoice select -->
 		   <select class="form-control input-sm col-sm-8 selectfieldwidth"  id="drcrnote_invoice">
                      <option value="" invoiceno = "" selected>Select Invoice</option>
@@ -118,17 +118,17 @@
 		 </div>
 		 <div class="form-group form-inline">
 		   {% if drcrflag == "3" %}
-		     <label class="col-sm-4 fsize" for="crnote_no">{% trans %}Cr Note No.{% endtrans %} :</label>
+		     <label class="col-sm-4 fsize" for="crnote_no">{% trans %}Cr Note No.{% endtrans %} : <label for="crnote_no" style="color:red;font-size:120%;">*</label></label>
 		   {% else %}
-		     <label class="col-sm-4 fsize" for="drnote_no">{% trans %}Dr Note No.{% endtrans %} :</label>
+		     <label class="col-sm-4 fsize" for="drnote_no">{% trans %}Dr Note No.{% endtrans %} : <label for="drnote_no" style="color:red;font-size:120%;">*</label></label>
 		   {% endif %}
 		   <input class="form-control input-sm col-sm-8" size="15" id="drcrnote_no" >
 		 </div>
 		 <div class="form-group form-inline">
 		   {% if drcrflag == "3" %}
-		     <label for="crnote_date" class="col-sm-4 fsize">{% trans %}Cr Note Date{% endtrans %} :</label>
+		     <label for="crnote_date" class="col-sm-4 fsize">{% trans %}Cr Note Date{% endtrans %} : <label for="crnote_date" style="color:red;font-size:120%;">*</label></label>
 		   {% else %}
-		     <label for="drnote_date" class="col-sm-4 fsize">{% trans %}Dr Note Date{% endtrans %} :</label>
+		     <label for="drnote_date" class="col-sm-4 fsize">{% trans %}Dr Note Date{% endtrans %} : <label for="drnote_date" style="color:red;font-size:120%;">*</label></label>
 		   {% endif %}
 		   <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="DD" id="drcrnote_date" accesskey="v">
                    <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month" accesskey="v">
@@ -144,18 +144,18 @@
 		 </div>
 		 <div class="form-group form-inline ref " hidden >
 		     {% if drcrflag == "3" %}
-		       <label class="col-sm-4 fsize" for="crnote_no" >{% trans %}Dr Note No.{% endtrans %} :</label>
+		       <label class="col-sm-4 fsize" for="crnote_no" >{% trans %}Dr Note No.{% endtrans %} : <label for="crnote_no" style="color:red;font-size:120%;">*</label></label>
 		     {% else %}
-		       <label class="col-sm-4 fsize" for="drnote_no" >{% trans %}Cr Note No.{% endtrans %} :</label>
+		       <label class="col-sm-4 fsize" for="drnote_no" >{% trans %}Cr Note No.{% endtrans %} : <label for="drnote_no" style="color:red;font-size:120%;">*</label></label>
 		     {% endif %}
 		     <input class="form-control input-sm col-sm-8" size="15" id="drcrnote_no_ref"  >
 		 </div>
 		 
 		   <div class="form-group form-inline ref " hidden>
 		   {% if drcrflag == "3" %}
-		     <label for="crnote_date" class="col-sm-4 fsize" >{% trans %}Dr Note Date{% endtrans %} :</label>
+		     <label for="crnote_date" class="col-sm-4 fsize" >{% trans %}Dr Note Date{% endtrans %} : <label for="crnote_date" style="color:red;font-size:120%;">*</label></label>
 		   {% else %}
-		     <label for="drnote_date" class="col-sm-4 fsize" >{% trans %}Cr Note Date{% endtrans %} :</label>
+		     <label for="drnote_date" class="col-sm-4 fsize" >{% trans %}Cr Note Date{% endtrans %} : <label for="drnote_date" style="color:red;font-size:120%;">*</label></label>
 		   {% endif %}
 		   <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="DD" id="drcrnote_date_ref" accesskey="v" >
                    <input type="text" class="form-control input-sm drcrnotedate" size="2" maxlength="2" placeholder="MM" id="drcrnote_month_ref" accesskey="v">

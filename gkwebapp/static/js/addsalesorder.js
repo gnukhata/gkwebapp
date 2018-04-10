@@ -2285,6 +2285,7 @@ if (event.which == 13) {
 		  $("#bankdetails-blank-alert").hide();
 	      });
 	      $("#accountno").focus();
+	      return false;
 	  }
       }
 	      
@@ -2639,7 +2640,7 @@ if (event.which == 13) {
     });
     $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
         if(event.which==13){
-        $("#transportationmode").focus();
+        $("#modeoftransport").focus();
         }
     });
 
