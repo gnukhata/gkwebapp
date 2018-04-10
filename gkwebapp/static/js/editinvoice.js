@@ -2726,6 +2726,7 @@ if (event.which == 13) {
     $("#invoice_edit").click(function(event){
 	editflag = false;
 	$("#invoice_save").show();
+	$("#tviw").show();
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
