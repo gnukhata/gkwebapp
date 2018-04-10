@@ -75,9 +75,9 @@
               , {{org["orgcity"]}}
 	    {% endif %}
 	    {% if org["orgpincode"] %}
-	      - {{org["orgpincode"]}},
+	      - {{org["orgpincode"]}}
             {% endif %}
-            {% if org["orgstate"]!='' %}
+            {% if org["orgstate"]!='' and org["orgstate"] !=null %}
               , {{org["orgstate"]}}.
             {% endif %}
 	    <br>
