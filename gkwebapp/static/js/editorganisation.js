@@ -961,7 +961,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           return false;
         }
       }
-    }  
+    }
+      	email = $("#orgemail").val();  // Validation for email.
+	if ((!email.match(emailExp)) && email!="") {
+	    $("#email-incorrect-alert").alert();
+            $("#email-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#email-incorrect-alert").hide();
+            });
+	    $("#orgemail").focus().select();
+	    return false;
+	}
 
    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
       if (($("#orgpan").val().length != 10 || !$("#orgpan").val().match(regExp)) && $.trim($("#orgpan").val())!="") {
