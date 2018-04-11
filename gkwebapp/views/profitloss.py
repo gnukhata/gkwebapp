@@ -246,7 +246,7 @@ def printprofitandloss(request):
                     sheet["F" + str(row)] = DirectIncome[subgroup][subgroupaccount]
                     sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
-        if subgroup != "Sales" and subgroup != "direxpbal" and "balance" not in DirectIncome[subgroup]:
+        if subgroup != "Sales" and subgroup != "dirincmbal" and "balance" not in DirectIncome[subgroup]:
             sheet["E" + str(row)] = "        " + subgroup
             sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["G" + str(row)] = DirectIncome[subgroup]
@@ -278,7 +278,7 @@ def printprofitandloss(request):
                     sheet["F" + str(row)] = InDirectIncome[subgroup][subgroupaccount]
                     sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
-        if subgroup != "indirexpbal" and "balance" not in InDirectIncome[subgroup]:
+        if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup]:
             sheet["E" + str(row)] = "        " + subgroup
             sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["G" + str(row)] = InDirectIncome[subgroup]
