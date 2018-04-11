@@ -35,7 +35,8 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from odslib import ODS
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import calendar
 
 @view_config(route_name = "printprofitandloss", renderer = "")
