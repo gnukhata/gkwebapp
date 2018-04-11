@@ -206,7 +206,7 @@ $("#grpbtn").click(function(event){
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt},
+            data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":0},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
