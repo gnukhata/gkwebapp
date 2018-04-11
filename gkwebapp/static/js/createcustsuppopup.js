@@ -528,9 +528,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if ( thisKeypressTime - lastKeypressTime <= delta )
       {
           if ($.trim($("#add_cussup_address").val())=="") {
-            $("#address-blank-alert").alert();
-            $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#address-blank-alert").hide();
+            $("#address-blank-alert-popup").alert();
+            $("#address-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+              $("#address-blank-alert-popup").hide();
             });
             $("#add_cussup_address").focus();
             return false;
@@ -708,9 +708,9 @@ else{
       return false;
     }
     if ($.trim($("#add_cussup_address").val())=="") {
-      $("#address-blank-alert").alert();
-      $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#address-blank-alert").hide();
+      $("#address-blank-alert-popup").alert();
+      $("#address-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+        $("#address-blank-alert-popup").hide();
       });
       $("#add_cussup_address").focus();
       return false;
