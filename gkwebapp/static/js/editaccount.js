@@ -171,19 +171,25 @@ $("#editaccountname").keyup(function(e) {
 $("#accountname").keydown(function(event) {
   /* Act on the event */
 
-  if (event.which==40)
-  {
+    if (event.which==40)
+    {
 
-    $("#openingbal").select().focus();
-  }
-  if (event.which==13) {
-    if (!$("#openingbal").is(':disabled')) {
-
-      event.preventDefault();
-      $("#openingbal").focus();
-      $("#openingbal").select();
+	$("#openingbal").select().focus();
     }
-  }
+    if (event.which==13) {
+	if (!$("#openingbal").is(':disabled')) {
+	    event.preventDefault();
+	    if ($.trim($("#accountname").val())=="") {
+		$("#blank-alert").alert();
+		$("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#blank-alert").hide();
+		});
+		$("#accountname").focus().select();
+		return false;
+	    };
+	    $("#openingbal").focus().select();
+	}
+    }
 });
 
 $("#openingbal").keydown(function(event) {
