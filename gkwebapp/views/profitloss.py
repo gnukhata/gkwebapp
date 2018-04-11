@@ -125,14 +125,14 @@ def printprofitandloss(request):
         sheet["C" + str(row)] = DirectExpense["Purchase"]["balance"]
         sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
-    # Purchase accounts
-    for purchaseaccount in DirectExpense["Purchase"]:
-        if purchaseaccount != "balance":
-            sheet["A" + str(row)] = "                " + purchaseaccount
-            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
-            sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
-            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
-            row = row + 1
+        # Purchase accounts
+        for purchaseaccount in DirectExpense["Purchase"]:
+            if purchaseaccount != "balance":
+                sheet["A" + str(row)] = "                " + purchaseaccount
+                sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
+                sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                row = row + 1
     #Loading other subgroups
     for subgroup in DirectExpense:
         if subgroup != "Purchase" and "balance" in DirectExpense[subgroup]:
@@ -221,13 +221,13 @@ def printprofitandloss(request):
         sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
     
-    for purchaseaccount in DirectIncome["Sales"]:
-        if purchaseaccount != "balance":
-            sheet["E" + str(row)] = "                " + purchaseaccount
-            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
-            sheet["F" + str(row)] = DirectIncome["Sales"][purchaseaccount]
-            sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
-            row = row + 1
+        for salesaccount in DirectIncome["Sales"]:
+            if salesaccount != "balance":
+                sheet["E" + str(row)] = "                " + salesaccount
+                sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                sheet["F" + str(row)] = DirectIncome["Sales"][salesaccount]
+                sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
+                row = row + 1
 
     for subgroup in DirectIncome:
         if subgroup != "Sales" and "balance" in DirectIncome[subgroup]:
