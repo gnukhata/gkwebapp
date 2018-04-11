@@ -192,6 +192,20 @@ def printprofitandloss(request):
             sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
+    #If there is Net Profit it is shown in Expense side
+    if "netprofit" in net:
+        sheet["A" + str(row)] = "Net Profit"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["D" + str(row)] = net["netprofit"]
+        sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    sheet["A" + str(row)] = "Total"
+    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["D" + str(row)] = Total
+    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+
     #Loading data for Direct Income group
     sheet['E5'] = "DIRECT INCOME"
     sheet['H5'] = DirectIncome["dirincmbal"]
@@ -271,6 +285,19 @@ def printprofitandloss(request):
             sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
+    #If there is Net Loss it is shown in Income side
+    if "netloss" in net:
+        sheet["E" + str(row)] = "Net Loss"
+        sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["H" + str(row)] = net["netloss"]
+        sheet["H" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["H" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    sheet["E" + str(row)] = "Total"
+    sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["H" + str(row)] = Total
+    sheet["H" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["H" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     pandlwb.save("response.xlsx")
     repFile = open("response.xlsx")
     rep = repFile.read()
