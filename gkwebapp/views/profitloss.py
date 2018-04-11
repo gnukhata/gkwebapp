@@ -35,7 +35,8 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import os
-from odslib import ODS
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import calendar
 
 @view_config(route_name = "printprofitandloss", renderer = "")
@@ -43,57 +44,260 @@ def printprofitandloss(request):
     calculateto = request.params["calculateto"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
+    fystart = str(request.params["fystart"])
     fyend = str(request.params["fyend"])
-    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
-    expense = result.json()["expense"]
-    income = result.json()["income"]
-    fystart = str(request.params["fystart"]);
     orgname = str(request.params["orgname"])
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
     calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
+    DirectIncome = result.json()["gkresult"]["Direct Income"]
+    InDirectIncome = result.json()["gkresult"]["Indirect Income"]
+    DirectExpense = result.json()["gkresult"]["Direct Expense"]
+    InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    net = {}
+    try:
+        net["netprofit"] = result.json()["gkresult"]["netprofit"]
+    except:
+        net["netloss"] = result.json()["gkresult"]["netloss"]
+    Total = result.json()["gkresult"]["Total"]
+    # A workbook is opened.
+    pandlwb = openpyxl.Workbook()
+    # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+    sheet = pandlwb.active
+    # Title of the sheet and width of columns are set.
+    if orgtype == "Profit Making":
+        sheet.title = 'Profit and Loss'
+    else:
+        sheet.title = 'Income and Expenditure'
+    sheet.column_dimensions['A'].width = 50
+    sheet.column_dimensions['B'].width = 12
+    sheet.column_dimensions['C'].width = 50
+    sheet.column_dimensions['D'].width = 12
+    # Cells of first two rows are merged to display organisation details properly.
+    sheet.merge_cells('A1:D2')
+    # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+    sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+    sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+    # Organisation name and financial year are displayed.
+    sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+    sheet.merge_cells('A3:D3')
+    sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+    sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+    # Setting heading of spreadsheet
+    if orgtype == "Profit Making":
+        sheet['A3'] = 'Profit and Loss (' + fystart + ' to ' + calculateto + ')'
+    else:
+        sheet['A3'] = 'Income and Expenditure (' + fystart + ' to ' + calculateto + ')'
+    # Setting title for columns.
+    sheet['A4'] = 'Particulars'
+    sheet['B4'] = 'Amount'
+    sheet['B4'].alignment = Alignment(horizontal = "right")
+    sheet['A4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['B4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['C4'] = 'Particulars'
+    sheet['D4'] = 'Amount'
+    sheet['D4'].alignment = Alignment(horizontal = "right")
+    sheet['C4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['D4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    '''
+    Conventions for presenting data:-
+    Group - Bold, Capitals
+    Subgroup - Normal, Capitals
+    Account - Normal, Italics
+    Spaces are used for indentation.
+    '''
+    #Loiading data for Direct Expense group
+    sheet['A5'] = "DIRECT EXPENSE"
+    sheet['B5'] = DirectExpense["direxpbal"]
+    sheet["B5"].alignment = Alignment(horizontal = "right")
+    sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = 6
+    # If Purchase accounts are there they are displayed on the top
+    if "Purchase" in DirectExpense:
+        sheet["A" + str(row)] = "        PURCHASE"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+        sheet["B" + str(row)] = DirectExpense["Purchase"]["balance"]
+        sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+        row = row + 1
+        # Purchase accounts
+        for purchaseaccount in DirectExpense["Purchase"]:
+            if purchaseaccount != "balance":
+                sheet["A" + str(row)] = "                " + purchaseaccount
+                sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
+                sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                row = row + 1
+    #Loading other subgroups
+    for subgroup in DirectExpense:
+        if subgroup != "Purchase" and "balance" in DirectExpense[subgroup]:
+            try:
+                sheet["A" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["B" + str(row)] = DirectExpense[subgroup]["balance"]
+            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            #Loading accounts of each subgroup
+            for subgroupaccount in DirectExpense[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["A" + str(row)] = "                " + subgroupaccount
+                    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["B" + str(row)] = DirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        # Loading accounts that are not part of any subgroup
+        if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup]:
+            sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["B" + str(row)] = DirectExpense[subgroup]
+            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
 
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.getRow(0).setHeight("23pt")
-    sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,6,1)
-    sheet.getRow(1).setHeight("18pt")
-    if orgtype=="Profit Making":
-        sheet.setSheetName("Profit & Loss")
-        sheet.getCell(0,1).stringValue("Profit & Loss ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    if orgtype=="Not For Profit":
-        sheet.setSheetName("Income & Expenditure")
-        sheet.getCell(0,1).stringValue("Income & Expenditure ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,6,1)
-    sheet.getColumn(0).setWidth("1cm")
-    sheet.getColumn(1).setWidth("8cm")
-    sheet.getColumn(2).setWidth("3cm")
-    sheet.getColumn(3).setWidth("1cm")
-    sheet.getColumn(4).setWidth("8cm")
-    sheet.getColumn(5).setWidth("3cm")
-    sheet.getCell(1,2).stringValue("Particulars").setBold(True)
-    sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(4,2).stringValue("Particulars").setBold(True)
-    sheet.getCell(5,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-    row = 3
-    for account in expense:
-        sheet.getCell(0, row).stringValue(account["toby"])
-        sheet.getCell(1, row).stringValue(account["accountname"])
-        sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
-        row += 1
+    #Loading data for Indirect Expense group.
+    sheet["A" + str(row)] = "INDIRECT EXPENSE"
+    sheet["B" + str(row)] = InDirectExpense["indirexpbal"]
+    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    
+    for subgroup in InDirectExpense:
+        if "balance" in InDirectExpense[subgroup]:
+            try:
+                sheet["A" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["B" + str(row)] = InDirectExpense[subgroup]["balance"]
+            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in InDirectExpense[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["A" + str(row)] = "                " + subgroupaccount
+                    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["B" + str(row)] = InDirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup]:
+            sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["B" + str(row)] = InDirectExpense[subgroup]
+            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
 
-    row = 3
-    for account in income:
-        sheet.getCell(3, row).stringValue(account["toby"])
-        sheet.getCell(4, row).stringValue(account["accountname"])
-        sheet.getCell(5, row).stringValue(account["amount"]).setAlignHorizontal("right")
-        row += 1
+    #If there is Net Profit it is shown in Expense side
+    if "netprofit" in net:
+        sheet["A" + str(row)] = "Net Profit"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["B" + str(row)] = net["netprofit"]
+        sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    sheet["A" + str(row)] = "Total"
+    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["B" + str(row)] = Total
+    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
 
-    ods.save("response.ods")
-    repFile = open("response.ods")
+    #Loading data for Direct Income group
+    sheet['C5'] = "DIRECT INCOME"
+    sheet['D5'] = DirectIncome["dirincmbal"]
+    sheet['D5'].alignment = Alignment(horizontal = "right")
+    sheet["C5"].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["D5"].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = 6
+    # If Sales accounts are there they are displayed on the top
+    if "Sales" in DirectIncome:
+        sheet["C" + str(row)] = "        SALES"
+        sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+        sheet["D" + str(row)] = DirectIncome["Sales"]["balance"]
+        sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+        row = row + 1
+    
+        for salesaccount in DirectIncome["Sales"]:
+            if salesaccount != "balance":
+                sheet["C" + str(row)] = "                " + salesaccount
+                sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                sheet["D" + str(row)] = DirectIncome["Sales"][salesaccount]
+                sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+                row = row + 1
+
+    for subgroup in DirectIncome:
+        if subgroup != "Sales" and "balance" in DirectIncome[subgroup]:
+            try:
+                sheet["C" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["C" + str(row)] = "        " + subgroup
+            sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["D" + str(row)] = DirectIncome[subgroup]["balance"]
+            sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in DirectIncome[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["C" + str(row)] = "                " + subgroupaccount
+                    sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["D" + str(row)] = DirectIncome[subgroup][subgroupaccount]
+                    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "Sales" and subgroup != "dirincmbal" and "balance" not in DirectIncome[subgroup]:
+            sheet["C" + str(row)] = "        " + subgroup
+            sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["D" + str(row)] = DirectIncome[subgroup]
+            sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    #Loading data for Indirect Income group.
+    sheet["C" + str(row)] = "INDIRECT INCOME"
+    sheet["D" + str(row)] = InDirectIncome["indirincmbal"]
+    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    
+    for subgroup in InDirectIncome:
+        if "balance" in InDirectIncome[subgroup]:
+            try:
+                sheet["C" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["C" + str(row)] = "        " + subgroup
+            sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["D" + str(row)] = InDirectIncome[subgroup]["balance"]
+            sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in InDirectIncome[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["C" + str(row)] = "                " + subgroupaccount
+                    sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["D" + str(row)] = InDirectIncome[subgroup][subgroupaccount]
+                    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup]:
+            sheet["C" + str(row)] = "        " + subgroup
+            sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["D" + str(row)] = InDirectIncome[subgroup]
+            sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    #If there is Net Loss it is shown in Income side
+    if "netloss" in net:
+        sheet["C" + str(row)] = "Net Loss"
+        sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["D" + str(row)] = net["netloss"]
+        sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    sheet["C" + str(row)] = "Total"
+    sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["D" + str(row)] = Total
+    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+    sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    pandlwb.save("response.xlsx")
+    repFile = open("response.xlsx")
     rep = repFile.read()
     repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
+    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+    os.remove("response.xlsx")
     return Response(rep, headerlist=headerList.items())
 
 
