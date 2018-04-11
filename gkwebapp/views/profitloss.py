@@ -174,11 +174,89 @@ def printprofitandloss(request):
                     sheet["B" + str(row)] = InDirectExpense[subgroup][subgroupaccount]
                     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
-        if subgroup != "Purchase" and subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup]:
+        if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup]:
             sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["C" + str(row)] = InDirectExpense[subgroup]
             sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    #Loading data for Direct Income group
+    sheet['E5'] = "DIRECT INCOME"
+    sheet['H5'] = DirectIncome["dirincmbal"]
+    sheet["H5"].alignment = Alignment(horizontal = "right")
+    grouprow = sheet.row_dimensions[5]
+    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    row = 6
+    # If Sales accounts are there they are displayed on the top
+    if "Sales" in DirectIncome:
+        sheet["E" + str(row)] = "        SALES"
+        sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+        sheet["G" + str(row)] = DirectIncome["Sales"]["balance"]
+        sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
+        row = row + 1
+    
+    for purchaseaccount in DirectIncome["Sales"]:
+        if purchaseaccount != "balance":
+            sheet["E" + str(row)] = "                " + purchaseaccount
+            sheet["F" + str(row)] = DirectIncome["Sales"][purchaseaccount]
+            sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    for subgroup in DirectIncome:
+        if subgroup != "Sales" and "balance" in DirectIncome[subgroup]:
+            try:
+                sheet["E" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["E" + str(row)] = "        " + subgroup
+            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["G" + str(row)] = DirectIncome[subgroup]["balance"]
+            sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in DirectIncome[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["E" + str(row)] = "                " + subgroupaccount
+                    sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["F" + str(row)] = DirectIncome[subgroup][subgroupaccount]
+                    sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "Sales" and subgroup != "direxpbal" and "balance" not in DirectIncome[subgroup]:
+            sheet["E" + str(row)] = "        " + subgroup
+            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["G" + str(row)] = DirectIncome[subgroup]
+            sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    #Loading data for Indirect Income group.
+    sheet["E" + str(row)] = "INDIRECT EXPENSE"
+    sheet["H" + str(row)] = InDirectIncome["indirincmbal"]
+    sheet["H" + str(row)].alignment = Alignment(horizontal = "right")
+    grouprow = sheet.row_dimensions[5]
+    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    
+    for subgroup in InDirectIncome:
+        if "balance" in InDirectIncome[subgroup]:
+            try:
+                sheet["E" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["E" + str(row)] = "        " + subgroup
+            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["G" + str(row)] = InDirectIncome[subgroup]["balance"]
+            sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in InDirectIncome[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["E" + str(row)] = "                " + subgroupaccount
+                    sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["F" + str(row)] = InDirectIncome[subgroup][subgroupaccount]
+                    sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "indirexpbal" and "balance" not in InDirectIncome[subgroup]:
+            sheet["E" + str(row)] = "        " + subgroup
+            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["G" + str(row)] = InDirectIncome[subgroup]
+            sheet["G" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
     pandlwb.save("response.xlsx")
