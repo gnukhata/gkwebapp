@@ -44,8 +44,11 @@ def printprofitandloss(request):
     calculateto = request.params["calculateto"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
+    fystart = str(request.params["fystart"])
     fyend = str(request.params["fyend"])
+    orgname = str(request.params["orgname"])
     result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
     DirectIncome = result.json()["gkresult"]["Direct Income"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
@@ -56,9 +59,6 @@ def printprofitandloss(request):
     except:
         net["netloss"] = result.json()["gkresult"]["netloss"]
     Total = result.json()["gkresult"]["Total"]
-    fystart = str(request.params["fystart"])
-    orgname = str(request.params["orgname"])
-    calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
     # A workbook is opened.
     pandlwb = openpyxl.Workbook()
     # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
@@ -88,21 +88,22 @@ def printprofitandloss(request):
     sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
     # Setting heading of spreadsheet
     if orgtype == "Profit Making":
-        sheet['A3'] = 'Profit and Loss'
+        sheet['A3'] = 'Profit and Loss (' + fystart + ' to ' + calculateto + ')'
     else:
-        sheet['A3'] = 'Income and Expenditure'
+        sheet['A3'] = 'Income and Expenditure (' + fystart + ' to ' + calculateto + ')'
     # Setting title for columns.
     sheet['A4'] = 'Particulars'
-    sheet['D4'] = 'Amount'
-    sheet['D4'].alignment = Alignment(horizontal = "right")
+    sheet['B4'] = 'Amount'
+    sheet['B4'].alignment = Alignment(horizontal = "right")
+    sheet['A4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['B4'].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet.merge_cells('B4:D4')
     sheet.merge_cells('F4:H4')
     sheet['E4'] = 'Particulars'
     sheet['F4'] = 'Amount'
     sheet['F4'].alignment = Alignment(horizontal = "right")
-    titlerow = sheet.row_dimensions[4]
-    # Making text bold for titles.
-    titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['E4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['F4'].font = Font(name='Liberation Serif',size=12,bold=True)
     #Loiading data for Direct Expense group
     sheet['A5'] = "DIRECT EXPENSE"
     sheet['D5'] = DirectExpense["direxpbal"]
@@ -121,6 +122,7 @@ def printprofitandloss(request):
     for purchaseaccount in DirectExpense["Purchase"]:
         if purchaseaccount != "balance":
             sheet["A" + str(row)] = "                " + purchaseaccount
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
@@ -199,6 +201,7 @@ def printprofitandloss(request):
     for purchaseaccount in DirectIncome["Sales"]:
         if purchaseaccount != "balance":
             sheet["E" + str(row)] = "                " + purchaseaccount
+            sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["F" + str(row)] = DirectIncome["Sales"][purchaseaccount]
             sheet["F" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
