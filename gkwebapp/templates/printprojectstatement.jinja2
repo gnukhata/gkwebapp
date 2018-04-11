@@ -81,36 +81,37 @@
 			</span>
 		</div>
 		<script type="text/javascript">
-			$(document).ready(function() {
-				oninvoice = 0;
-				$("title").html("GNUKhata");
-				$("#printback").click(function(event) {
-					var date = $("#calculateto").val().split("-");
-			    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
-					$("#msspinmodal").modal("hide");
-					$.ajax(
+		 $(document).ready(function() {
+		   $("#msspinmodal").modal("hide");
+		   oninvoice = 0;
+		   $("title").html("GNUKhata");
+		   $("#printback").click(function(event) {
+		     var date = $("#calculateto").val().split("-");
+		     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+		     $("#msspinmodal").modal("hide");
+		     $.ajax(
+		       {
+		         type: "POST",
+		         url: "/showprojectstatementreport",
+		         global: false,
+		         async: false,
+		         datatype: "text/html",
+		         data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
+		         beforeSend: function(xhr)
+		         {
+		           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		         },
+		       })
+		      .done(function(resp)
 		        {
-		          type: "POST",
-		          url: "/showprojectstatementreport",
-		          global: false,
-		          async: false,
-		          datatype: "text/html",
-		          data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
-		          beforeSend: function(xhr)
-		          {
-		            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-		          },
-		        })
-		          .done(function(resp)
-		          {
-		            $("#info").html(resp);
-		          }
-		        );
-				});
-				$("#realprint").click(function(event) {
-					window.print();
-				});
-			});
+		          $("#info").html(resp);
+		        }
+		      );
+		   });
+		   $("#realprint").click(function(event) {
+		     window.print();
+		   });
+		 });
 		</script>
 	</body>
 </html>
