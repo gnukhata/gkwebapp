@@ -142,7 +142,7 @@
 			{% trans %}Dispatch From{% endtrans %} :
 		      {% endif %}
 		    </label>
-		    {{gkresult["delchaldata"]["goname"]}},{{gkresult["delchaldata"]["goaddr"]}}
+		    {% if gkresult["delchaldata"]["goname"] %}{{gkresult["delchaldata"]["goname"]}},{{gkresult["delchaldata"]["goaddr"]}}{% endif %}
 		  </div>
 		  <div class="form-group form-inline col-xs-12 nopadding">
 		    <label for="deliverychallan_consignment">{% trans %}Type of transaction:{% endtrans %}</label>
