@@ -107,8 +107,8 @@ def printprofitandloss(request):
     sheet['A5'] = "DIRECT EXPENSE"
     sheet['D5'] = DirectExpense["direxpbal"]
     sheet["D5"].alignment = Alignment(horizontal = "right")
-    grouprow = sheet.row_dimensions[5]
-    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['D5'].font = Font(name='Liberation Serif',size=12,bold=True)
     row = 6
     # If Purchase accounts are there they are displayed on the top
     if "Purchase" in DirectExpense:
@@ -153,8 +153,8 @@ def printprofitandloss(request):
     sheet["A" + str(row)] = "INDIRECT EXPENSE"
     sheet["D" + str(row)] = InDirectExpense["indirexpbal"]
     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
-    grouprow = sheet.row_dimensions[5]
-    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     row = row + 1
     
     for subgroup in InDirectExpense:
@@ -185,8 +185,8 @@ def printprofitandloss(request):
     sheet['E5'] = "DIRECT INCOME"
     sheet['H5'] = DirectIncome["dirincmbal"]
     sheet["H5"].alignment = Alignment(horizontal = "right")
-    grouprow = sheet.row_dimensions[5]
-    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["E5"].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["H5"].font = Font(name='Liberation Serif',size=12,bold=True)
     row = 6
     # If Sales accounts are there they are displayed on the top
     if "Sales" in DirectIncome:
@@ -231,8 +231,8 @@ def printprofitandloss(request):
     sheet["E" + str(row)] = "INDIRECT EXPENSE"
     sheet["H" + str(row)] = InDirectIncome["indirincmbal"]
     sheet["H" + str(row)].alignment = Alignment(horizontal = "right")
-    grouprow = sheet.row_dimensions[5]
-    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["E" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet["H" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     row = row + 1
     
     for subgroup in InDirectIncome:
