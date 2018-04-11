@@ -64,41 +64,123 @@ def printprofitandloss(request):
     # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
     sheet = pandlwb.active
     # Title of the sheet and width of columns are set.
-    sheet.title = "List of Accounts"
-    sheet.column_dimensions['A'].width = 40
-    sheet.column_dimensions['B'].width = 15
-    sheet.column_dimensions['C'].width = 40
-    sheet.column_dimensions['D'].width = 15
+    if orgtype == "Profit Making":
+        sheet.title = 'Profit and Loss'
+    else:
+        sheet.title = 'Income and Expenditure'
+    sheet.column_dimensions['A'].width = 30
+    sheet.column_dimensions['B'].width = 12
+    sheet.column_dimensions['C'].width = 12
+    sheet.column_dimensions['D'].width = 12
+    sheet.column_dimensions['E'].width = 30
+    sheet.column_dimensions['F'].width = 12
+    sheet.column_dimensions['G'].width = 12
+    sheet.column_dimensions['H'].width = 12
     # Cells of first two rows are merged to display organisation details properly.
-    sheet.merge_cells('A1:D2')
+    sheet.merge_cells('A1:H2')
     # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
     sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
     sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
     # Organisation name and financial year are displayed.
     sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
-    sheet.merge_cells('A3:D3')
+    sheet.merge_cells('A3:H3')
     sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
     sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+    # Setting heading of spreadsheet
     if orgtype == "Profit Making":
         sheet['A3'] = 'Profit and Loss'
     else:
         sheet['A3'] = 'Income and Expenditure'
-    sheet.merge_cells('A3:G3')
+    # Setting title for columns.
     sheet['A4'] = 'Particulars'
-    sheet['B4'] = 'Amount'
-    sheet['C4'] = 'Particulars'
     sheet['D4'] = 'Amount'
+    sheet['D4'].alignment = Alignment(horizontal = "right")
+    sheet.merge_cells('B4:D4')
+    sheet.merge_cells('F4:H4')
+    sheet['E4'] = 'Particulars'
+    sheet['F4'] = 'Amount'
+    sheet['F4'].alignment = Alignment(horizontal = "right")
     titlerow = sheet.row_dimensions[4]
+    # Making text bold for titles.
     titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+    #Loiading data for Direct Expense group
     sheet['A5'] = "DIRECT EXPENSE"
-    sheet['B5'] = DirectExpense["direxpbal"]
+    sheet['D5'] = DirectExpense["direxpbal"]
+    sheet["D5"].alignment = Alignment(horizontal = "right")
     grouprow = sheet.row_dimensions[5]
     grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
     row = 6
+    # If Purchase accounts are there they are displayed on the top
     if "Purchase" in DirectExpense:
-        sheet["A" + str(row)] = "PURCHASE"
-        sheet["B" + str(row)] = DirectExpense["Purchase"]["balance"]
+        sheet["A" + str(row)] = "        PURCHASE"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+        sheet["C" + str(row)] = DirectExpense["Purchase"]["balance"]
+        sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
+    
+    for purchaseaccount in DirectExpense["Purchase"]:
+        if purchaseaccount != "balance":
+            sheet["A" + str(row)] = "                " + purchaseaccount
+            sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
+            sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    for subgroup in DirectExpense:
+        if subgroup != "Purchase" and "balance" in DirectExpense[subgroup]:
+            try:
+                sheet["A" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["C" + str(row)] = DirectExpense[subgroup]["balance"]
+            sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in DirectExpense[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["A" + str(row)] = "                " + subgroupaccount
+                    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["B" + str(row)] = DirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup]:
+            sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["C" + str(row)] = DirectExpense[subgroup]
+            sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
+    #Loading data for Indirect Expense group.
+    sheet["A" + str(row)] = "INDIRECT EXPENSE"
+    sheet["D" + str(row)] = InDirectExpense["indirexpbal"]
+    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+    grouprow = sheet.row_dimensions[5]
+    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    row = row + 1
+    
+    for subgroup in InDirectExpense:
+        if "balance" in InDirectExpense[subgroup]:
+            try:
+                sheet["A" + str(row)] = "        " + subgroup.upper()
+            except:
+                sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
+            sheet["C" + str(row)] = InDirectExpense[subgroup]["balance"]
+            sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+            for subgroupaccount in InDirectExpense[subgroup]:
+                if subgroupaccount != "balance":
+                    sheet["A" + str(row)] = "                " + subgroupaccount
+                    sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+                    sheet["B" + str(row)] = InDirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+                    row = row + 1
+        if subgroup != "Purchase" and subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup]:
+            sheet["A" + str(row)] = "        " + subgroup
+            sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+            sheet["C" + str(row)] = InDirectExpense[subgroup]
+            sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
+            row = row + 1
+
     pandlwb.save("response.xlsx")
     repFile = open("response.xlsx")
     rep = repFile.read()
