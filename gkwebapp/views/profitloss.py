@@ -46,55 +46,65 @@ def printprofitandloss(request):
     header={"gktoken":request.headers["gktoken"]}
     fyend = str(request.params["fyend"])
     result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
-    expense = result.json()["expense"]
-    income = result.json()["income"]
-    fystart = str(request.params["fystart"]);
+    DirectIncome = result.json()["gkresult"]["Direct Income"]
+    InDirectIncome = result.json()["gkresult"]["Indirect Income"]
+    DirectExpense = result.json()["gkresult"]["Direct Expense"]
+    InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    net = {}
+    try:
+        net["netprofit"] = result.json()["gkresult"]["netprofit"]
+    except:
+        net["netloss"] = result.json()["gkresult"]["netloss"]
+    Total = result.json()["gkresult"]["Total"]
+    fystart = str(request.params["fystart"])
     orgname = str(request.params["orgname"])
     calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
-
-    ods = ODS()
-    sheet = ods.content.getSheet(0)
-    sheet.getRow(0).setHeight("23pt")
-    sheet.getCell(0,0).stringValue(orgname+" (FY: "+fystart+" to "+fyend+")").setBold(True).setAlignHorizontal("center").setFontSize("16pt")
-    ods.content.mergeCells(0,0,6,1)
-    sheet.getRow(1).setHeight("18pt")
-    if orgtype=="Profit Making":
-        sheet.setSheetName("Profit & Loss")
-        sheet.getCell(0,1).stringValue("Profit & Loss ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    if orgtype=="Not For Profit":
-        sheet.setSheetName("Income & Expenditure")
-        sheet.getCell(0,1).stringValue("Income & Expenditure ("+fystart+" to "+calculateto+")").setBold(True).setFontSize("14pt").setAlignHorizontal("center")
-    ods.content.mergeCells(0,1,6,1)
-    sheet.getColumn(0).setWidth("1cm")
-    sheet.getColumn(1).setWidth("8cm")
-    sheet.getColumn(2).setWidth("3cm")
-    sheet.getColumn(3).setWidth("1cm")
-    sheet.getColumn(4).setWidth("8cm")
-    sheet.getColumn(5).setWidth("3cm")
-    sheet.getCell(1,2).stringValue("Particulars").setBold(True)
-    sheet.getCell(2,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-    sheet.getCell(4,2).stringValue("Particulars").setBold(True)
-    sheet.getCell(5,2).stringValue("Amount").setBold(True).setAlignHorizontal("right")
-    row = 3
-    for account in expense:
-        sheet.getCell(0, row).stringValue(account["toby"])
-        sheet.getCell(1, row).stringValue(account["accountname"])
-        sheet.getCell(2, row).stringValue(account["amount"]).setAlignHorizontal("right")
-        row += 1
-
-    row = 3
-    for account in income:
-        sheet.getCell(3, row).stringValue(account["toby"])
-        sheet.getCell(4, row).stringValue(account["accountname"])
-        sheet.getCell(5, row).stringValue(account["amount"]).setAlignHorizontal("right")
-        row += 1
-
-    ods.save("response.ods")
-    repFile = open("response.ods")
+    # A workbook is opened.
+    pandlwb = openpyxl.Workbook()
+    # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+    sheet = pandlwb.active
+    # Title of the sheet and width of columns are set.
+    sheet.title = "List of Accounts"
+    sheet.column_dimensions['A'].width = 40
+    sheet.column_dimensions['B'].width = 15
+    sheet.column_dimensions['C'].width = 40
+    sheet.column_dimensions['D'].width = 15
+    # Cells of first two rows are merged to display organisation details properly.
+    sheet.merge_cells('A1:D2')
+    # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+    sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+    sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+    # Organisation name and financial year are displayed.
+    sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+    sheet.merge_cells('A3:D3')
+    sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+    sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+    if orgtype == "Profit Making":
+        sheet['A3'] = 'Profit and Loss'
+    else:
+        sheet['A3'] = 'Income and Expenditure'
+    sheet.merge_cells('A3:G3')
+    sheet['A4'] = 'Particulars'
+    sheet['B4'] = 'Amount'
+    sheet['C4'] = 'Particulars'
+    sheet['D4'] = 'Amount'
+    titlerow = sheet.row_dimensions[4]
+    titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+    sheet['A5'] = "DIRECT EXPENSE"
+    sheet['B5'] = DirectExpense["direxpbal"]
+    grouprow = sheet.row_dimensions[5]
+    grouprow.font = Font(name='Liberation Serif',size=12,bold=True)
+    row = 6
+    if "Purchase" in DirectExpense:
+        sheet["A" + str(row)] = "PURCHASE"
+        sheet["B" + str(row)] = DirectExpense["Purchase"]["balance"]
+        row = row + 1
+    pandlwb.save("response.xlsx")
+    repFile = open("response.xlsx")
     rep = repFile.read()
     repFile.close()
-    headerList = {'Content-Type':'application/vnd.oasis.opendocument.spreadsheet ods' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.ods', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.ods")
+    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+    os.remove("response.xlsx")
     return Response(rep, headerlist=headerList.items())
 
 
