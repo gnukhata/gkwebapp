@@ -104,6 +104,13 @@ def printprofitandloss(request):
     sheet['F4'].alignment = Alignment(horizontal = "right")
     sheet['E4'].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet['F4'].font = Font(name='Liberation Serif',size=12,bold=True)
+    '''
+    Conventions for presenting data:-
+    Group - Bold, Capitals
+    Subgroup - Normal, Capitals
+    Account - Normal, Italics
+    Spaces are used for indentation.
+    '''
     #Loiading data for Direct Expense group
     sheet['A5'] = "DIRECT EXPENSE"
     sheet['D5'] = DirectExpense["direxpbal"]
@@ -118,7 +125,7 @@ def printprofitandloss(request):
         sheet["C" + str(row)] = DirectExpense["Purchase"]["balance"]
         sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
-    
+    # Purchase accounts
     for purchaseaccount in DirectExpense["Purchase"]:
         if purchaseaccount != "balance":
             sheet["A" + str(row)] = "                " + purchaseaccount
@@ -126,7 +133,7 @@ def printprofitandloss(request):
             sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
-
+    #Loading other subgroups
     for subgroup in DirectExpense:
         if subgroup != "Purchase" and "balance" in DirectExpense[subgroup]:
             try:
@@ -137,6 +144,7 @@ def printprofitandloss(request):
             sheet["C" + str(row)] = DirectExpense[subgroup]["balance"]
             sheet["C" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
+            #Loading accounts of each subgroup
             for subgroupaccount in DirectExpense[subgroup]:
                 if subgroupaccount != "balance":
                     sheet["A" + str(row)] = "                " + subgroupaccount
@@ -144,6 +152,7 @@ def printprofitandloss(request):
                     sheet["B" + str(row)] = DirectExpense[subgroup][subgroupaccount]
                     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
+        # Loading accounts that are not part of any subgroup
         if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup]:
             sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
