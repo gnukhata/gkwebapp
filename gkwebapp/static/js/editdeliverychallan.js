@@ -44,6 +44,7 @@ $(document).ready(function() {
   $("#deliverychallan_editprint").hide();
   $("#delinradio").click().focus();
   $("#delchalout").hide();
+  $('.panel-footer').hide();  
   $(".deliverychallan_OLD_div").hide();
    var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
@@ -498,11 +499,20 @@ if(event.which==13)
     });
 
     //change event for radio buttons to get first selected option
-    $(document).off('focusin', '.delchalradio').on('focusin', '.delchalradio', function(event) {
-    $("#deliverychallanin_edit_list option:first").prop("selected",true);
-    $("#deliverychallanin_edit_list").change();
-    $("#deliverychallanout_edit_list option:first").prop("selected",true);
-    $("#deliverychallanout_edit_list").change();
+    $(document).off('focusin', '#delinradio').on('focusin', '#delinradio', function(event) {
+	$(".deliverychallan_edit_div").hide();
+	$('.deliverychallan_OLD_div').hide();
+	$('.panel-footer').hide();  
+	$("#deliverychallanin_edit_list option:first").prop("selected",true);
+	$("#deliverychallanin_edit_list").change();
+    });
+    $(document).off('focusin', '#deloutradio').on('focusin', '#deloutradio', function(event) {
+	$(".deliverychallan_edit_div").hide();
+	$("#deliverychallan_editprint").hide();
+	$('.deliverychallan_OLD_div').hide();
+	$('.panel-footer').hide();  
+	$("#deliverychallanout_edit_list option:first").prop("selected",true);
+	$("#deliverychallanout_edit_list").change();
     });
 
     //this is the change event written for radio buttons in delivery note. 
