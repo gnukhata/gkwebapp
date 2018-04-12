@@ -133,7 +133,14 @@ $(document).ready(function() {
     });
   });
 
-  $("#print").click(function(event) {
+
+    //For redirecting to the homepage
+    $("#backbutton").click(function(event) {
+	location.reload();
+    });
+    
+    
+    $("#print").click(function(event) {
   // serves a spreadsheet file to the client of this report.
         event.preventDefault();
         var xhr = new XMLHttpRequest();

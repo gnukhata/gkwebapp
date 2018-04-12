@@ -1,43 +1,50 @@
 <body>
-<div class="container-fluid" style="padding:1 !important; margin:0 !important;">
-    <div class='panel '>
-
-
-
-  <div class="panel-body">
-    <form id="editprodform">
-      <div class="container-fluid row nopadding" style="width: 48%;">
-
-    <div class="form-group  col-sm-6">
-
-
-      <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
-      <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
-        <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
-          <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
-          {% for prod in gkresult %}
-          <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
-          {% endfor %}
-        </select>
-</div>
-
+  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+    
+    <div class="alert alert-danger" id="pro-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Product Name cannot be blank!{% endtrans %}
     </div>
-  </div>
-      <div class="container-fluid" id="proddetails" style="padding:1 !important; margin:0 !important;" disabled >
+    <div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
+      
+      {% trans %}Please select Product!{% endtrans %}
+    </div>
+    <div class='panel '>
+      <div class="panel-body">
+	<form id="editprodform">
+	  <div class="container-fluid row nopadding" style="width: 48%;">
 
-      </div>
-    </form>
+	    <div class="form-group  col-sm-6">
+	      <div class="form-group col-sm-11" style="margin-left: -6%; width: 212%;">
+		{% if numberofproducts ==0 %}
+		  <label class="text-danger">No Product/Service Found!</label>
+		{% else %}
+		  <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
+		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
+		    <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
+		    {% for prod in gkresult %}
+		      <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
+		    {% endfor %}
+		{% endif %}
+		  </select>
+	      </div>
+
+	    </div>
+	  </div>
+	  <div class="container-fluid" id="proddetails" style="padding:1 !important; margin:0 !important;" disabled >
+
+	  </div>
+	</form>
       </div>
       <div class="btn-group-sm pbutn panel-footer" hidden>
         <div class="container-fluid">
 
-          <button class="btn btn-success btn-sm" id="epsubmit" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
-          <button id="epedit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}
-            Edit{% endtrans %}</button>
-          <button id="epdelete" class="btn btn-danger btn-sm"></i> {% trans %}Delete{% endtrans %}</button>
-          <button id="epreset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
-          <button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-      </div>
+          <button class="btn btn-success btn-sm" id="epsubmit" accesskey="s" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+          <button id="epedit" class="btn btn-primary btn-sm" accesskey="e"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}
+            <u>E</u>dit{% endtrans %}</button>
+          <button id="epdelete" class="btn btn-danger btn-sm" accesskey="d"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+          <button id="epreset" class="btn btn-warning btn-sm" accesskey="t"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
+          {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
+	</div>
 
       </div>
       <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">

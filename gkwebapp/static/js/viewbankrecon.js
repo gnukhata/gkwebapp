@@ -33,14 +33,14 @@ $(document).ready(function() {
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   // Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewbankrecon_fromdate").val(fromdatearray[2])
-  $("#viewbankrecon_frommonth").val(fromdatearray[1])
-  $("#viewbankrecon_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewbankrecon_todate").val(todatearray[2])
-  $("#viewbankrecon_tomonth").val(todatearray[1])
-  $("#viewbankrecon_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewbankrecon_fromdate").val(fromdatearray[2]);
+    $("#viewbankrecon_frommonth").val(fromdatearray[1]);
+    $("#viewbankrecon_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewbankrecon_todate").val(todatearray[2]);
+    $("#viewbankrecon_tomonth").val(todatearray[1]);
+    $("#viewbankrecon_toyear").val(todatearray[0]);
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -48,7 +48,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {//to add leading 20 or 200 to year
@@ -60,7 +60,7 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 
@@ -86,19 +86,47 @@ $(document).ready(function() {
   });
 
 
-  $('input:text:enabled,input:checkbox:enabled,select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
+
+  $('select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
     var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
       {
-        var nextIndex = f.index(this) + 1;
-        if(nextIndex < n){
+	  if ($("#viewbankrecon_accname").val()==null) {
+	      $("#account-blank-alert").alert();
+	      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#account-blank-alert").hide();
+	  	  $('#viewbankrecon_accname').focus();
+
+	      });
+	      return false;
+	  }
+	  else {
+	      var nextIndex = f.index(this) + 1;
+	      if(nextIndex < n){
+		  e.preventDefault();
+		  f[nextIndex].focus();
+		  f[nextIndex].select();
+              }
+	  }
+      
+      }
+    });
+
+    
+    $('input:text:enabled,input:checkbox:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
+    var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
+    var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
+      if (e.which == 13)
+      {
+	 var nextIndex = f.index(this) + 1;
+	 if(nextIndex < n){
           e.preventDefault();
           f[nextIndex].focus();
           f[nextIndex].select();
-        }
+         }
       }
-      if (e.which == 38 )
+     if (e.which == 38 )
       {
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){
@@ -110,19 +138,20 @@ $(document).ready(function() {
     });
   $("#viewbankrecon_nar").keydown(function(event) {
     if (event.which==13) {
-      $("#viewbankrecon_submit").click();
+	$("#viewbankrecon_submit").focus();
+	return false;
     }
   });
 
 
   $("#viewbankrecon_submit").click(function(event) {
     // --------------------starting validations------------------
-    if ($("#viewbankrecon_accname").val()==null) {
+      if ($("#viewbankrecon_accname").val()==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
-      $('#viewbankrecon_accname').focus()
+	$('#viewbankrecon_accname').focus();
       return false;
     }
     if ($("#viewbankrecon_fromyear").val()==0 ||$("#viewbankrecon_frommonth").val()==0 ||$("#viewbankrecon_fromdate").val()==0 ) {

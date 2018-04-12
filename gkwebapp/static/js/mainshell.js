@@ -1,21 +1,23 @@
 /*
-   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-   This file is part of GNUKhata:A modular,robust and Free Accounting System.
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
-   GNUKhata is Free Software; you can redistribute it and/or modify
-   it under the terms of the GNU Affero General Public License as
-   published by the Free Software Foundation; either version 3 of
-   the License, or (at your option) any later version.
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-   GNUKhata is distributed in the hope that it will be useful, but
-   WITHOUT ANY WARRANTY; without even the implied warranty of
-   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-   GNU Affero General Public License for more details.
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
 
-   You should have received a copy of the GNU Affero General Public
-   License along with GNUKhata (COPYING); if not, write to the
-   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc.,51 Franklin Street, 
+  Fifth Floor, Boston, MA 02110, United States
 
 
    Contributors:
@@ -28,7 +30,7 @@
    "Parabjyot Singh" <parabjyot1996@gmail.com>
    "Rahul Chaurasiya" <crahul4133@gmail.com>
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
-   "prajkta Patkar" <prajakta@dff.org.in>
+   "prajkta Patkar" <prajkta@riseup.net>
    "Reshma Bhatawadekar" <reshma@dff.org.in>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
@@ -50,9 +52,11 @@ var userrole1;
       $('.inventorymenu').hide();
       $('.invsbill').hide();
       $("#customersupplier").hide();
+      $("#showviewregister").hide();
       $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
+      $(".businessmenu").hide();	 
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -62,7 +66,9 @@ var userrole1;
         $(".uominmaster").show();
         $(".inventorymenu").hide();
         $('.inventory_hide').hide();
+	$("#showviewregister").show();
         $("#showbillwiseaccounting").hide();
+	$(".businessmenu").show();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -72,7 +78,9 @@ var userrole1;
       $(".uominmaster").show();
       $("#showbillwiseaccounting").show();
       $('.inventorymenu').hide();
-    	$('.inventory_hide').hide();
+      $('.inventory_hide').hide();
+      $("#showviewregister").show();
+      $(".businessmenu").show();
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -80,10 +88,12 @@ var userrole1;
       $('.invsbill').show();
       $("#customersupplier").show();
       $('.inventory_hide').show();
+      $("#showviewregister").show();
       $("#showbillwiseaccounting").show();
       $(".productinmaster").hide();
       $(".categoryinmaster").hide();
       $(".uominmaster").hide();
+      $(".businessmen").show();
     }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -115,6 +125,11 @@ var userrole1;
       $("#transaction").click();
       event.preventDefault();
     }
+    if(event.ctrlKey && event.keyCode == 67) {
+      $("#business").click();
+      event.preventDefault();
+    }
+      
     if(event.ctrlKey && event.keyCode == 82) {
       $("#report").click();
       event.preventDefault();
@@ -290,9 +305,13 @@ var userrole1;
     }
   });
   $(".transactionmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#report").click();
-    }
+      if(event.which == 39){
+	  if (sessionStorage.invsflag ==1){
+	      $("#business").click();
+	  }else{
+	      $("#report").click();
+	  }
+      }
     if(event.which == 37){
       if (sessionStorage.invflag ==1)
         {
@@ -304,13 +323,28 @@ var userrole1;
         }
     }
   });
-  $(".reportmenu").keydown(function(event){
+
+$(".businessmenu").keydown(function(event){
     if(event.which == 39){
-      $("#administration").click();
+      $("#report").click();
     }
     if(event.which == 37){
       $("#transaction").click();
     }
+  });
+  
+    
+  $(".reportmenu").keydown(function(event){
+    if(event.which == 39){
+      $("#administration").click();
+    }
+      if(event.which == 37){
+	  if (sessionStorage.invsflag ==1){
+	      $("#business").click();
+	  }else{
+	      $("#transaction").click();
+	  }
+      }
   });
   $(".administrationmenu").keydown(function(event){
     if(event.which == 39){
@@ -397,6 +431,9 @@ var userrole1;
   $('#transactiondropdown').on('shown.bs.dropdown', function () {
     $("#showreceipt").focus();
   });
+  $('#businessdropdown').on('shown.bs.dropdown',function() {
+    $("#addcashmemo").focus();  
+  });  
   $('#reportdropdown').on('shown.bs.dropdown', function () {
     $("#addaccount").focus();
   });
@@ -412,6 +449,7 @@ var userrole1;
   $('#administrationdropdown').on('shown.bs.dropdown', function () {
     $("#createuser").focus();
   });
+    
   $('#helpdropdown').on('shown.bs.dropdown', function () {
     $("#manual").focus();
   });
@@ -494,12 +532,15 @@ var userrole1;
        $("#listofaccounts").remove();
        $("#showdeletedvoucher").remove();
        $("#createuser").remove();
+       $("#user").remove();
        $("#REMOVEuser").remove();
        $("#showclosebooks").remove();
        $("#deleteorg").remove();
        $("#tallyimport").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
+       $("#gstsummary").remove();
+       $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
@@ -515,17 +556,32 @@ var userrole1;
        $("#orgpref").remove();
      }
      if(resp["gkresult"]["userrole"]==2) {
-       $("#showviewlog").remove();
-       $("#orgpref").remove();
+	 $("#showviewlog").remove();
+	 $("#orgpref").remove();
+	 $(".mastermenu").remove();
+	 $(".inventorymenu").remove();
+	 $(".administrationmenu").remove();
+	 $(".intauditor").remove();
+	 $("#fevoucher").text("Find Voucher");
+	 $("#business").remove();
      }
-     if (resp["gkresult"]["booksclosedflag"]==1) {
-       $(".closebooks").remove();
+     
+     if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
+	 $(".closebooks").remove();
+	 $(".rollover").remove();
        $("#fevoucher").text("Find Voucher");
        $("#findvouchertb").text("Find Voucher - F10");
      }
-     if (resp["gkresult"]["roflag"]==1) {
-       $(".rollover").remove();
+     if (resp["gkresult"]["roflag"]==1 && resp["gkresult"]["booksclosedflag"]==0) {
+       $("#showclosebooks").text("Close Books");
        $("#showviewlog").remove();
+     }
+
+     if (resp["gkresult"]["roflag"]==0 && resp["gkresult"]["booksclosedflag"]== 1) {
+       $("#showclosebooks").text("Roll Over");
+       $("#showviewlog").remove();
+       $("#fevoucher").text("Find Voucher");
+       $("#findvouchertb").text("Find Voucher - F10");
      }
 
      if(resp["gkresult"]["userrole"]==-1) {
@@ -576,8 +632,10 @@ var userrole1;
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
-  var orgdata = orname + " (" + ortype + ")"+"\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
+  var orgdata = orname + " (" + ortype + ")";	
+  var userdata = "\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
+    
   // organisation details are stored in items that are only visible in print.
   $("title").append(orname);
   $("#printorgname").append(orname);
@@ -652,7 +710,7 @@ var userrole1;
 	// get binary data as a response
 	var blob = this.response;
 	var url = window.URL.createObjectURL(blob);
-	window.location.assign(url)
+	window.location.assign(url);
       }
     };
     xhr.send();
@@ -690,7 +748,8 @@ var userrole1;
 
 
        $("#orgprefsave").click(function(event){
-         if ($("#invinvsbillradio").is(":checked"))
+	   var invflag,billflag,invsflag;
+	 if ($("#invinvsbillradio").is(":checked"))
          {
            invflag=1;
            invsflag=1;
@@ -838,11 +897,7 @@ var userrole1;
       type: 'POST',
       global: false,
       async: false,
-      datatype: 'text/html',
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
+      datatype: 'text/html'
     })
      .done(function(resp) {
        $("#info").html(resp);
@@ -870,7 +925,6 @@ var userrole1;
       },
       success: function(resp)
       {
-        console.log(resp);
         $('#info').html(resp);
       }
     });
@@ -990,11 +1044,15 @@ var userrole1;
     }
   );
 
-  $('#consolidatedbalancesheet').click(function (e) {
+
+$('#listofaccounts').click(function (e) {
+    // calls list of accounts report.
+    $("#msspinmodal").modal("show");
     $.ajax(
       {
+
         type: "POST",
-        url: "/showconsolidationpopup",
+        url: "/showlistofaccounts",
         global: false,
         async: false,
         datatype: "text/html",
@@ -1005,7 +1063,27 @@ var userrole1;
         success: function(resp)
         {
           $("#info").html(resp);
-          //$("#holdingorg").modal("show");
+        }
+      }
+    );
+  });
+
+   
+  $('#gstsummary').click(function (e) {
+    $.ajax(
+      {
+        type: "POST",
+        url: "/gstsummary",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
         }
       });
   });
@@ -1120,10 +1198,12 @@ var userrole1;
       }
     );
   });
-  $('#stockonhandreport').click(function (e) {
-    // calls view page for stock report.
+
+    $('#stockonhandreport').click(function (e) {
+    // calls view page for stock on hand report.
     $.ajax(
       {
+
         type: "POST",
         url: "/product?type=viewstockonhandreport",
         global: false,
@@ -1140,6 +1220,29 @@ var userrole1;
       }
     );
   });
+    
+  $('#consolidatedbalancesheet').click(function (e) {
+    // calls view page for consolidate balance sheet report.
+    $.ajax(
+      {
+        type: "POST",
+        url: "/showconsolidationpopup",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
+    
   $('#categorywisestockonhandreport').click(function (e) {
       // calls view page for stock report.
         $.ajax(
@@ -1186,10 +1289,11 @@ var userrole1;
   });
 
 
-  if(orgdata!=""||yeardata!="")// sets the organisation name, type and year in the status bar below navbar.
+  if(orgdata!=""||yeardata!=""||userdata!="")// sets the organisation name & type, User name & role and year in the status bar below navbar.
     {
       $("#orgdata").html(orgdata);
       $("#yeardata").html(yeardata);
+      $("#userdata").html(userdata); 
     }
   $('#addaccount').click(function (e) {
     // calls add account page.
@@ -1214,21 +1318,37 @@ var userrole1;
     );
   });
 
-  $('#createuser').click(function (e) {
+  /*$('#createuser').click(function (e) {
     // calls create user page.
     $("#msspinmodal").modal("show");
     $.ajax({
       url: '/showuser',
       type: 'POST',
       datatype: 'text/html',
-
     })
      .done(function(resp) {
        $("#info").html(resp);
-     })
+     }*/
 
-  });
 
+  $('#user').click(function (e) { // This calls user page.
+    $("#msspinmodal").modal("show");
+      $.ajax({
+      type: 'POST',
+      url: '/showuser?type=usertab',
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+    });
+    });
 
   $("#showdeletedvoucher").click(function (e){
     // shows deleted vouchers report.
@@ -1445,6 +1565,28 @@ var userrole1;
         }
       }
     );
+    });
+
+    $('#listofunpaidinvoices').click(function (e) {
+    // calls list of invoices report
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/billwise?action=viewlistofunpaidinvoices",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
 
   $('#listoftransfernotes').click(function (e) {
@@ -1488,6 +1630,26 @@ var userrole1;
   });
   $('#createtransfernote').click(function (e) {// calls base transfer note page.
     $("#info").load("/transfernotes");
+  });
+
+    $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
+    $.ajax(
+      {
+      type: "POST",
+      url: "/rejectionnote",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+      }
+    );
   });
 
   $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
@@ -1621,6 +1783,11 @@ var userrole1;
   $('#orgdata').click(function(){// clicking on organisation name and type in status bar will call edit organisation details page.
     $('#showeditorg').click();
   });
+
+  $('#userdata').click(function(){// clicking on user name and role in status bar will call change password page.
+    $('#showedituser').click();
+  });
+    
   $('#yeardata').click(function(){
     return false;
   });
@@ -1649,9 +1816,7 @@ var userrole1;
   $('#tallyimport').click(function (e) {// calls tally import page.
     $("#info").load("/import?action=show");
   });
-});
-
-$('#show_unbilled_deliveries').click(function (e) {
+    $('#show_unbilled_deliveries').click(function (e) {
   //
   $.ajax(
     {
@@ -1686,3 +1851,48 @@ $('#show_unbilled_deliveries').click(function (e) {
     }
   );
   });
+
+//debit credit note tab
+
+$('#drcrnote').click(function (e) {// calls base drcrnote page.
+    $("#info").load("/drcrnote");
+    $("#drcrnote_div").show();
+});
+
+    $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
+	let searchtext = $("#reportsearch").val();
+	$("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+	$("table tbody tr:contains('" + searchtext + "')").show();
+    });
+    $(document).off('keyup' ,'#reportsearch').on('keyup' ,'#reportsearch',function(e) {
+	//String to search for is stored in searchtext variable.
+	    let searchtext = $("#reportsearch").val();
+	    //When search field is blank the clear search button is hidden.
+	    if (searchtext == "") {
+		$("#reportclearsearchspan").hide();
+	    }
+	    //When there is some text in the field clear search button is shown.
+	    if (searchtext != "") {
+		$("#reportclearsearchspan").show();
+	    }
+	    //Table rows containing search text are shown and others hidden.
+	    $("table tbody tr:not(:contains('" + searchtext + "'))").hide();
+	    $("table tbody tr:contains('" + searchtext + "')").show();
+	    //Pressing 'Esc' button clears search.
+	    if (e.which == 27) {
+		$("#reportsearch").val("");
+		$("tr").show();
+	    }
+	    //Pressing Enter key shifts focus to first row.
+	    if (e.which == 13) {
+		$("tbody tr:visible").first().find('a').focus();
+	    }
+    });
+    $(document).off('click' ,'#reportclearsearchspan').on('click' ,'#reportclearsearchspan',function(e) {
+	$("#reportsearch").val("");
+	$("table tbody tr").show();
+	$("#reportclearsearchspan").hide();
+	$("tbody tr:visible").first().find('a').focus();
+    });
+});   
+     

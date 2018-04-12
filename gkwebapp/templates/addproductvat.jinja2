@@ -53,8 +53,9 @@
             <div class="row" id="specdiv" hidden>
         </div>
       </div>
-            <div class="col-sm-6" id="rightdiv">
-             <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+      <div class="col-sm-6" id="rightdiv">
+        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
+	{% if userrole|int != 3 %}
               <div class="row">
                 <div class="form-group" style="margin-top: 3%;">
             <div class="panel">
@@ -131,14 +132,15 @@
               <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
               <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
 	      {% if not godown %}
-		<small  class="form-text text-muted productclass">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Opening Stock or from Opening Stock to 'Save' button.</small>
+		<small  class="form-text text-muted productclass">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
               {% else %}
-		<small  class="form-text text-muted " id="godownmsg">Press 'Esc' key to shift focus from Tax Rate or Tax Name  to Godown Name or from Godown Opening Stock to 'Save' button.</small>
+		<small  class="form-text text-muted " id="godownmsg">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
               {% endif %}	      
             </div>
             <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-          </div>
-        </div>
+		</div>
+              </div>
+	{% endif %}
         <div class="row noinventory">
           <div class="row  productclass">
             {% if not godown %}
@@ -148,7 +150,7 @@
                 </input>
                 <input type="text" id="godownpresence" value="0" hidden>
                 <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-              </div>
+		</div>
                 <div  id="openingstockdiv" class="form-group" hidden>
                   <div class="panel">
                     <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
@@ -165,7 +167,7 @@
                             <select class="form-control input-sm godown_name">
                               <option value="" disabled hidden selected>Select Godown</option>
                               {% for record in godown %}
-                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+				<option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
                               {% endfor %}
                             </select>
                           </td>
@@ -180,71 +182,83 @@
                   </div>
                 </div>
               </div>
-            <div id="nogodown">
-              <div class="form-group pds col-sm-6">
-                <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-                <div class="input-group">
-                  <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                  <span class="input-group-addon input-sm" id="unitaddon"></span>
-                </div>
+              <div id="nogodown">
+		<div class="form-group pds col-sm-6">
+                  <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+                  <div class="input-group">
+                    <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                    <span class="input-group-addon input-sm" id="unitaddon"></span>
+                  </div>
+		</div>
               </div>
-            </div>
-              {% else %}
-              <div class="form-group col-sm-12">
-                <input type="checkbox" name="godownflag" id="godownflag" value=0>
-              </input>
-              <input type="text" id="godownpresence" value="1" hidden="">
-              <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-            </div>
-            <div id="nogodown" class="form-group pds col-sm-6">
-              <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-              <div class="input-group">
-                <input type='text' class="form-control text-right input-sm" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                <span class="input-group-addon input-sm" id="unitaddon"></span>
+            {% else %}
+              {% if userrole|int != 3 %}
+		<div class="form-group col-sm-12">
+                  <input type="checkbox" name="godownflag" id="godownflag" value=0>
+		</input>
+		<input type="text" id="godownpresence" value="1" hidden="">
+		<label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+		</div>
+		<div id="nogodown" class="form-group pds col-sm-6 noinventory">
+		  <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+		  <div class="input-group">
+                    <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+                    <span class="input-group-addon input-sm" id="unitaddon"></span>
+		  </div>
+		</div>
+		<div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+	      {% else %}
+		  <input type="hidden" name="godownflag" id="godownflag" value="1">
+		</input>
+		<input type="text" id="godownpresence" value="1" hidden>
+		<div  id="openingstockdiv" class="form-group col-sm-12">
+	      {% endif %}
+		<div class="panel">
+                  <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+			<th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+			<td class="col-xs-8">
+                          <select class="form-control input-sm godown_name">
+                            <option value="" disabled hidden selected>Select Godown</option>
+                            {% for record in godown %}
+                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                            {% endfor %}
+                          </select>
+			</td>
+			<td class="col-xs-3">
+                          <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+			</td>
+			<td class="col-xs-1">
+			</td>
+                      </tr>
+                    </tbody>
+                  </table>
+		</div>
               </div>
-            </div>
-            <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
-              <div class="panel">
-                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-                  <thead class="bg-primary input-sm">
-                    <tr>
-                      <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-                      <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-                      <th class="col-xs-1"></th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="col-xs-8">
-                        <select class="form-control input-sm godown_name">
-                          <option value="" disabled hidden selected>Select Godown</option>
-                          {% for record in godown %}
-                          <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-                          {% endfor %}
-                        </select>
-                      </td>
-                      <td class="col-xs-3">
-                        <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
-                      </td>
-                      <td class="col-xs-1">
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
             {% endif %}
-            </div>
+          </div>
         </div>
       </div>
 	</form>
       </div>
-    <div class="btn-group-sm panel-footer">
-      <div class="container-fluid">
-        <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
-        <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-        <button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>
-      </div>
+      <div class="btn-group-sm panel-footer">
+	<div class="container-fluid">
+          <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
+          <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+          {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
+
+	  {%if userrole|int==3%}
+	    <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	    </td>
+	  {% endif %}
+	</div>
     </div>
     </div>
     </div>
@@ -263,11 +277,14 @@
         <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
           <p>   <font color=" #566573"> {%trans%}
-            This module lets you add Products.{% endtrans %}
-            </br> {% trans %}If you have created Categories (at least one is highly recommended) you can select a suitable Category for a Product. When you select a Category the screen immediately changes and presents you the specifications list where you can enter the details pertaning to the product.{% endtrans %}
-            </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
-            You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one. </br>
-            you can also enter the details of taxes for the product. {%endtrans %} </font>
+            This module is for creating products. {% endtrans %}
+            </br> {% trans %}To create a Product, we have to provide Product Name, Unit of Measurement and Tax. We can have products under categories. To use this feature create categories and then while creating products we can choose a category they will belong to.
+{% endtrans %}
+              </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+	      You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one.
+ {%endtrans %} </br>
+ {% trans %}Products can have opening stock. If inventory is enabled for this organisation and we have godowns we can add them using a popup which can be activated by clicking Add Godown button. Godowns can also be added using the Create Godown Module.
+{%endtrans %}</font>
 
           </p>
         </div>
@@ -275,5 +292,26 @@
       </div>
     </div>
     </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
 </body>
+
+
+  <!--  for adding stock to existing Product-->
+  
+  <div id="addstockmodal" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+	  <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <div class="modal-title">
+	    {% trans %}Add stock to existing product{% endtrans %} :
+          </div>
+        </div>
+	<div class="modal-body" id="vatstkmodal">
+	</div>
+	</div>
+      </div>
+  </div>
+
+
+  

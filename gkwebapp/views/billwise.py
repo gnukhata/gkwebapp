@@ -1,6 +1,8 @@
 
 """
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
@@ -30,7 +32,10 @@ from pyramid.view import view_config
 import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
-
+from pyramid.response import Response
+import openpyxl
+from openpyxl.styles import Font, Alignment
+import os
 '''
 This function brings data of unpaid bills and unadjusted amounts.
 This could be either called after a voucher is created or from the Unadjusted Amounts module.
@@ -99,6 +104,10 @@ def updatepayment(request):
     result = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(dataset),headers = header)
     return {"gkstatus":result.json()["gkstatus"]}
 
+'''
+The below function returns a list of customers and suppliers.
+This is used in the Unudjusted Amounts module where a user is presented with this list to choose a customer/supplier.
+'''
 @view_config(route_name="billwise", request_param = "action=showcustomersupplierlist", renderer="gkwebapp:templates/customersupplierlist.jinja2")
 def getCustomerSupplierList(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -106,6 +115,9 @@ def getCustomerSupplierList(request):
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     return {"customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"]}
 
+'''
+This function returns a list of unadjusted invoices and vouchers that can be used to adjust them.
+'''
 @view_config(route_name="billwise", request_param = "action=showunadjustedamounts", renderer="gkwebapp:templates/unadjustedamount.jinja2")
 def getunadjustedamounts(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -118,3 +130,135 @@ def getunadjustedamounts(request):
         totalamtpending = totalamtpending + float(inv["balanceamount"])
         
     return {"invoices":invs, "vouchers":unadjustedamounts.json()["vouchers"],"totalinv":"%.2f"%(totalinv),"totalamtpending":"%.2f"%(totalamtpending)}
+
+'''
+Function to render list of unpaid invoices report view page.
+Number of invoices is also checked and returned.
+'''
+@view_config(route_name="billwise", request_param = "action=viewlistofunpaidinvoices", renderer="gkwebapp:templates/viewlistofunpaidinvoices.jinja2")
+def viewListofInvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    invoices = requests.get("http://127.0.0.1:6543/billwise?type=all",headers=header)
+    return {"status":True,"numberofinvoices":len(invoices.json()["invoices"])}
+
+'''
+Function to render list of unpaid invoices report.
+It takes order, type, period and inoutflag from javascript and sends a request to backend to fetch data for the report.
+This is presented in a tabular form.
+'''
+@view_config(route_name="billwise", request_param="action=showlist", renderer="gkwebapp:templates/listofunpaidinvoices.jinja2")
+def listofUnpaidInvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&inoutflag=%d&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "type": result.json()["type"], "order": result.json()["order"], "inout": result.json()["inout"], "inoutflag":int(request.params["inoutflag"]), "orderflag": request.params["orderflag"], "typeflag": request.params["typeflag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
+
+'''
+This function returns a printable view of list of unpaid invoices report.
+'''
+@view_config(route_name="billwise", request_param="action=printlist", renderer="gkwebapp:templates/printlistofunpaidinvoices.jinja2")
+def printListofUnpaidInvoices(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&inoutflag=%d&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "type": result.json()["type"], "order": result.json()["order"], "inout": result.json()["inout"], "inoutflag":int(request.params["inoutflag"]), "orderflag": request.params["orderflag"], "typeflag": request.params["typeflag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"]}
+
+'''
+This function returns a spreadsheet form of List of Unpaid Invoices Report.
+The spreadsheet in XLSX format is generated by the backend and sent in base64 encoded format.
+It is decoded and returned along with mime information.
+'''
+@view_config(route_name="billwise", request_param="type=spreadsheet", renderer="")
+def unpaidInvoicesSpreadsheet(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/billwise?type=onlybillsforall&inoutflag=%d&orderflag=%d&typeflag=%d&startdate=%s&enddate=%s"%(int(request.params["inoutflag"]), int(request.params["orderflag"]),int(request.params["typeflag"]), request.params["fromdate"], request.params["todate"]), headers=header)
+        inoutflag = int(request.params["inoutflag"])
+        orderflag = int(request.params["orderflag"])
+        typeflag = int(request.params["typeflag"])
+        inouts= {9:"Purchase", 15:"Sale"}
+        orders = {1:"Ascending", 2:"Descending"}
+        types = {1:"Amount Wise", 3:"Party Wise", 4:"Due Wise"}
+        inout = inouts[inoutflag]
+        order = orders[orderflag]
+        reporttype = types[typeflag]
+        startdate =datetime.strptime(str(request.params["fromdate"]),"%d-%m-%Y").strftime("%Y-%m-%d")
+        enddate =datetime.strptime(str(request.params["todate"]),"%d-%m-%Y").strftime("%Y-%m-%d")
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"]);
+        # A workbook is opened.
+        billwisewb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = billwisewb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "List of Unpaid Invoices"
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 16
+        sheet.column_dimensions['F'].width = 16
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:F3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        invtype = 'Sale'
+        if inoutflag == 9:
+            invtype = 'Purchase'
+        sheet['A3'] = '%s List of Outstanding %s Invoices in %s Order'%(str(reporttype), str(inout), str(order))
+        sheet.merge_cells('A4:F4')
+        sheet['A4'] = 'Period: ' + str(request.params["fromdate"]) + ' to ' + str(request.params["todate"])
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A5'] = 'Sr. No. '
+        sheet['B5'] = 'Invoice No'
+        sheet['C5'] = 'Invoice Date'
+        custhead = "Customer Name"
+        if inoutflag == 9:
+            custhead = "Supplier Name"
+        sheet['D5'] = custhead
+        sheet['E5'] = 'Invoice Amount'
+        sheet['F5'] = 'Amount Pending'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['E5'].alignment = Alignment(horizontal='right')
+        sheet['F5'].alignment = Alignment(horizontal='right')
+        sheet['E5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        unAdjInvoices = result.json()["invoices"]
+        row = 6
+        # Looping each dictionaries in list unAdjInvoices to store data in cells and apply styles.
+        srno = 1
+        for uninv in unAdjInvoices:
+            sheet['A'+str(row)] = srno
+            sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = uninv['invoiceno']
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = uninv['invoicedate']
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = uninv['custname']
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = uninv['invoiceamount']
+            sheet['F'+str(row)] = uninv['balanceamount']
+            sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            row = row + 1
+            srno = srno + 1
+        billwisewb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    except:
+        print "file not found"
+        return {"gkstatus":3}

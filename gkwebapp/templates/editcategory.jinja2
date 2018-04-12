@@ -47,19 +47,22 @@
 
       <div class="panel-body">
         <div class="alert alert-danger" id="category-blank-alert"  aria-live="rude" role="alert" hidden>
-
           <label for="vno">{% trans %}Category name cannot be left blank!{% endtrans %}</label>
         </div>
         <form>
           <div class="container-fluid row">
             <div class="col-md-6 selcat">
               <div class="form-group">
-                <label for="category_edit_list" id="category_edit_list_lbl">{% trans %}List of Categories :{% endtrans %}</label>
+		{% if category ==0 %}
+		  <label class="text-danger">{% trans %}No Category Found!{% endtrans %}</label>
+		  {% else %}
+                  <label for="category_edit_list" id="category_edit_list_lbl">{% trans %}List of Categories :{% endtrans %}</label>
                 <select class="form-control input-sm" id="category_edit_list">
                   <option value="" disabled selected hidden>{% trans %}Select Category{% endtrans %}</option>
                   {% for categories in gkresult %}
                   <option value="{{categories['categorycode']}}">{{categories["categoryname"]}} ({{categories["subcount"]}})</option>
                   {% endfor %}
+		  {% endif %}
                 </select>
               </div>
             </div>
@@ -124,6 +127,10 @@
 
               {% trans %}Duplicate Tax!{% endtrans %}
             </div>
+            <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}CVAT/GST/CESS can be applied only once.{% endtrans %}
+            </div>
             <div class="form-group">
               <div class="panel">
                   <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
@@ -148,7 +155,8 @@
                             {% else %}
                               <option value="VAT">VAT</option>
                               <option value="CVAT">CVAT</option>
-			      <option value="IGST">IGST</option>
+			      <option value="IGST">GST</option>
+            <option value="CESS">CESS</option>
                             {% endif%}
 
                           </select>
@@ -185,10 +193,10 @@
         </div>
         <div class="panel-footer" hidden>
           <div class="container-fluid">
-          <button class="btn btn-primary btn-sm" id="category_edit_edit"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edit{% endtrans %}</button>
-          <button class="btn btn-success category_edit_disable btn-sm" id="category_edit_savespecs" disabled data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
-          <button class="btn btn-danger btn-sm" id="category_edit_delete"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}Delete{% endtrans %}</button>
-          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey=""><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
+            <button class="btn btn-primary btn-sm" id="category_edit_edit" accesskey="e"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>
+            <button class="btn btn-success category_edit_disable btn-sm" id="category_edit_savespecs" accesskey="s" disabled data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert key anywhere on the current screen to save{% endtrans %}">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> <u>S</u>ave{% endtrans %}</button>
+          <button class="btn btn-danger btn-sm" id="category_edit_delete" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+          <button class="btn btn-warning btn-sm" id="category_edit_reset" accesskey="t"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
         </div>
         </div>
       </div>

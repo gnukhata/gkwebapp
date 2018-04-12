@@ -1,11 +1,6 @@
 
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>{% trans %}GNUKhata | Cash Memo{% endtrans %}</title>
   <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
-</head>
-
 <body>
   <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
     <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
@@ -22,19 +17,36 @@
     </div>
     <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+      <label for="vno">{% trans %}Please select a product/service!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-warning" id="notax-alert"  aria-live="rude" role="alert" hidden>
+
+      {% trans %}You have not entered tax for product(s)!{% endtrans %}
     </div>
     <div class="alert alert-danger" id="product-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-<label >{% trans %}A product/service can be selected only once!{% endtrans %}</label>
+      <label >{% trans %}A product/service can be selected only once!{% endtrans %}</label>
     </div>
     <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
       <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
     </div>
+    <div class="alert alert-danger" id="discount-more-alert"  aria-live="rude" role="alert" hidden>
+
+      <label >{% trans %}Discount is more than Rate!{% endtrans %}</label>
+    </div>
     <div class="alert alert-danger" id="price-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <label for="vno">{% trans %}Please enter the price per unit!{% endtrans %}</label>
+      <label for="vno">{% trans %}Rate must not be empty or zero!{% endtrans %}</label>
+    </div>
+    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Please enter proper GSTIN!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
+      {% trans %}Improper GSTIN!{% endtrans %}
+    </div>
+    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+      {% trans %}Please Enter GSTIN.{% endtrans %}	
     </div>
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
@@ -49,6 +61,12 @@
               {% endif %}
             </label>
           </div>
+	  <!-- These are hidden fields which decide Record or Create Cash Memo -->
+	  {% if gkstatus=="in" %}
+	    <input type="hidden" id="status" value="9">
+	  {% else %}
+	    <input type="hidden" id="status" value="15">
+	  {% endif %}
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter date!{% endtrans %}</label>
@@ -69,15 +87,14 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
-
-          <div class="col-md-3">
+          <div class="col-md-2">
 
             <div class="form-group">
               <label for="invoice_challanno">{% trans %}Cash Memo No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter Cash Memo No{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
 
             <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
@@ -106,28 +123,37 @@
 
                 {% for state in states %}
                   {% for key, value in state.items() %}
-                  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+                    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
                   {% endfor %}
                 {% endfor %}
               </select>
             </div>
 
           </div>
-          <div class="col-md-3">
+          <div class="col-md-2">
             <div class="form-group">
-	    <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-      {% if resultgstvat == '29' or resultgstvat == '7' %}
-  		  <label class="form-control" id="taxapplicabletext">GST</label>
-  		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
-  		{% else %}
-  		  <label class="form-control" id="taxapplicabletext">VAT</label>
-  		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
-  		  {% endif %}
-      </div>
+	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+	      {% if resultgstvat == '29' or resultgstvat == '7' %}
+  		<label class="form-control" id="taxapplicabletext">GST</label>
+  		<input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+  	      {% else %}
+  		<label class="form-control" id="taxapplicabletext">VAT</label>
+  		<input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+	      {% endif %}
+	    </div>
           </div>
-
-
-
+	  {% if resultgstvat != '22' %}
+	    <div class="col-md-2 gstinfield">
+	      <label class="gstinfield"> GSTIN : </label>
+	      <div class="form-inline nopadding">
+		<div class="form-group nopadding">
+		  <input type="text" id="gstin_statecode" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled style="text-align:center" >
+		  <input type="text" id="gstin_panno" class="form-control input-sm nopadding panno" style="text-align:center" size="10" maxlength="10">
+		  <input type="text" id="gstin" class="form-control input-sm nopadding gstin" style="text-align:center" size="3" maxlength="3">
+		</div>
+	      </div>  
+	    </div>
+	  {% endif %}
           {% if gkstatus=="out" %}
 
             <input type="hidden" id="status" value="15">
@@ -247,180 +273,296 @@
 		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Cash Memo. Press 'Esc' key to exit from the table.</small>
 	      </div>
-	    <div class="col-sm-10" style="overflow-x:scroll;">
-	      <div class="row">
-		<table id="invoice_product_table_gst_heading" class="table table-condensed table-bordered" style="width:140%; max-width:140%; padding:0 !important; margin:0 !important;"">
-		  <thead class="bg-primary">
+	      <div class="col-sm-10" style="overflow-x:scroll;">
+		<div class="row">
+		  <table id="invoice_product_table_gst_heading" class="table table-condensed table-bordered" style="width:140%; max-width:140%; padding:0 !important; margin:0 !important;"">
+		    <thead class="bg-primary">
+		      <tr>
+			<th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
+			<th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
+			<th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
+			<th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
+		      </tr>
+
+		      <tr>
+			<th class="sgstfield text-center">{%trans%}Rate{%endtrans%} %</th>
+			<th class="sgstfield text-center">{%trans%}Amount{%endtrans%}</th>
+			<th class="sgstfield text-center">{%trans%}Rate{%endtrans%} %</th>
+			<th class="sgstfield text-center">{%trans%}Amount{%endtrans%}</th>
+			<th class="text-center">{% trans %}Rate{% endtrans %} %</th>
+			<th class="text-center">{% trans %}Amount{% endtrans %}</th>
+                      </tr>
+		    </thead>
+		  </table>
+		</div>
+		<div class="row">
+		  <table id="invoice_product_table_gst" class="table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll; padding:0 !important; margin:0 !important;">
+		    <tbody>
+		      <tr>
+			<td class="mdwrap">
+			  <select class="form-control input-sm product_name_gst">
+			    <option value="" disabled hidden selected>Select Product</option>
+			    {% for product in productsnservices %}
+			      <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
+			    {% endfor %}
+			  </select>
+			</td>
+			<td class="smwrap text-center">
+			  <label class="invoice_product_hsncode text-center"{% trans %} {% endtrans %} </label>
+			</td>
+			<td class="qtywrap">
+			  <div class="input-group">
+			    <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
+			    <span class="input-group-addon input-sm unitaddon"></span>
+			  </div>
+			</td>
+			<td class="qtywrap">
+			  <div class="input-group">
+			    <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
+			    <span class="input-group-addon input-sm unitaddon"></span>
+			  </div>		      </td>
+
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			</td>
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+			</td>
+			<td class="smwrap">
+			  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
+			</td>
+
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
+
+			<td class="taxcell  sgstfield"><input type="text" class="invoice_product_sgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell sgstfield"><input type="text" class="invoice_product_sgstamount tamount input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+			<td class="taxcell">
+                          <input type="text" class="invoice_product_cessrate trate input-sm text-right trate form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+                          <td class="taxcell"><input type="text" class="invoice_product_cessamount tamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+                          </td>
+                      </tr>
+                    </tbody>
+		  </table>
+		</div>
+		<div class="row">
+  		  <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+  		    <tfoot>
+  		      <tr>
+  			<td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+  			<td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8"></span></td>
+  			<td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8"></span></td>
+  			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8"></span></td>
+  			<td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8"></span></td>
+			<td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8"></span></td>
+		      </tr>
+  		  </table>
+  		</div>
+	      </div>
+	      <div class="col-sm-2 nopadding">
+		<table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
+		  <thead>
 		    <tr>
-		      <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
-		      <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
-		      <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
-		      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
-		      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
-		      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST{% endtrans %}</th>
-
-		    </tr>
-
-		    <tr>
-		      <th class="sgstfield text-center">{%trans%}Rate{%endtrans%} %</th>
-		      <th class="sgstfield text-center">{%trans%}Amount{%endtrans%}</th>
-		      <th class="sgstfield text-center">{%trans%}Rate{%endtrans%} %</th>
-		      <th class="sgstfield text-center">{%trans%}Amount{%endtrans%}</th>
-
+		      <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
+		      <th class="col-xs-4"></th>
 		    </tr>
 		  </thead>
-		</table>
-	      </div>
-	      <div class="row">
-		<table id="invoice_product_table_gst" class="table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll; padding:0 !important; margin:0 !important;">
 		  <tbody>
 		    <tr>
-		      <td class="mdwrap">
-			<select class="form-control input-sm product_name_gst">
-			  <option value="" disabled hidden selected>Select Product</option>
-			  {% for product in productsnservices %}
-			    <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
-			  {% endfor %}
-			</select>
+		      <td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
+		      <td class="col-xs-4 text-center">
 		      </td>
-		      <td class="smwrap text-center">
-			<label class="invoice_product_hsncode text-center"{% trans %} {% endtrans %} </label>
-		      </td>
-		      <td class="qtywrap">
-			<div class="input-group">
-			  <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm unitaddon"></span>
-			</div>
-		      </td>
-		      <td class="qtywrap">
-			<div class="input-group">
-			  <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddon">
-			  <span class="input-group-addon input-sm unitaddon"></span>
-			</div>		      </td>
-
-		      <td class="smwrap">
-			<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
-		      </td>
-		      <td class="smwrap">
-			<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
-		      </td>
-		      <td class="smwrap">
-			<input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
-		      </td>
-
-		      <td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstrate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-		      <td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
-
-		      <td class="taxcell  sgstfield"><input type="text" class="invoice_product_sgstrate  form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-		      <td class="taxcell sgstfield"><input type="text" class="invoice_product_sgstamount  input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-
 		    </tr>
 		  </tbody>
+		  <tfoot>
+		    <td class="col-xs-8 text-right">
+		      <span id="total_product_gst" class="text-right input-sm" size="9"></span>
+		    </td>
+		    <td class="col-xs-4">
+
+		    </td>
+		  </tfoot>
 		</table>
 	      </div>
-        <div class="row">
-  		    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
-  		      <tfoot>
-  			<tr>
-  			  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-  			  <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-  			  <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-  			  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-  			  <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-group-addon input-sm" size="8"></span></td>
-  		    </table>
-  		  </div>
 	    </div>
-	    <div class="col-sm-2 nopadding">
-	      <table id="invoice_product_table_total" class="table table-condensed table-bordered fixed-table fixed-tablepurchase">
-		<thead>
-		  <tr>
-		    <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
-		    <th class="col-xs-4"></th>
-		  </tr>
-		</thead>
-		<tbody>
-		  <tr>
-		    <td class="col-xs-8"><input type="text" class="invoice_product_total form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
-		    <td class="col-xs-4 text-center">
-		    </td>
-		  </tr>
-		</tbody>
-		<tfoot>
-		  <td class="col-xs-8">
-		    <span id="total_product_gst" class="input-group-addon input-sm" size="9"></span>
-		  </td>
-		  <td class="col-xs-4">
-
-		  </td>
-		</tfoot>
-	      </table>
-	    </div>
-	  </div>
-    {% endif %}
-	</div>
-
-
-          <div class="row col-md-12">
-            <div class="col-md-6">
+	  {% endif %}
+	      </div> 
+	      <div class="row">
+		<div class="form-inline col-sm-6"> 
+		  <label for="inv">{% trans %}Payment Details{% endtrans %}:</label>
+		  <div class="radio">
+        	    <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkcash" aria-label="" checked>&nbsp{% trans %}Cash{% endtrans %}.</label>
+        	  </div>
+		  <div class="radio">
+        	    <label><input type="radio" class="form-control input-sm nopadding" name="chkpaymentmode" id="chkbank" aria-label="">&nbsp {% trans %}Bank{% endtrans %}.</label>
+        	  </div>
+		</div>
+	      </div>
+              <div class="col-md-6 row " id="bank" style="display: none">
+		<div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an account  number.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Bank Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="accountno_bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Account Number, Bank Name and the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="bankname_branch-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter Bank Name and the Branch Name.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please enter an IFSC Code{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+		  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+		</div>
             <table class="table  table-condensed table-bordered ">
-            <tbody>
-            <h4>Bank Details :</h4>
-            <tr>
-              <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
-              <td colspan="2"><input type="text" id="accountno" class="numtype lastfield form-control input-sm" name="accountno" ></input></td>
+              <tbody>
+		<label>Bank Details :</label>
+		<tr>
+		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
+		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
+		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
+		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
+		</tr>
+		<tr>
+		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
+		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
-              <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
-              <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
-            </tr>
-            <tr>
-
-              <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
-              <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-              <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
-              <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-
-            </tr>
-
-            </tbody>
+		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
+		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
+		</tr>
+              </tbody>
             </table>
-
-            </div>
-	    <div class ="col-md-6" >
-	      <br> <br>
-	      <label for="cashmemo total"><h4>{% trans %}Total amount{% endtrans %} :</h4></label>
-	      <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue"></label>
-	  </div>
-	    </div>
+              </div>
+	      <div class="row">
+		<div class ="col-md-4 pull-right">
+		  <div class="row hborderdiv">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield sgstfield">
+		    <div class="form-group sgstfield form-inline">
+		      <div class="col-sm-6">
+			<label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield sgstfield">
+		    <div class="form-group sgstfield form-inline">
+		      <div class="col-sm-6">
+			<label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv gstfield">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv vatfield">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="row hborderdiv" style="border-bottom-style:solid;">
+		    <div class="form-group form-inline">
+		      <div class="col-sm-6">
+			<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		<div class="col-md-4" style='display:none align:right;' id="cash">
+		  <label style="font-size:120% !important">CASH RECEIVED</label>
+		</div>
+		<div class ="col-sm-12">
+		  <div class ="col-sm-4 ">
+		  </div>
+		  <div class ="col-sm-8">
+		    <div>
+		      <br>
+		      <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Grand Total In Words {% endtrans %} :</label>
+		      <i><label id="totalValueInWord" style="font-size:100% !important;">&emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp; &emsp;&emsp; &emsp; &emsp;&emsp; </label></i>
+		      <br>
+		    </div>
+		  </div>
+		</div>
+	      </div>
+	      
+	    
 	    <!--
-            <div class="col-md-6" >
+		 <div class="col-md-6" >
 
-    		<table class="table  table-condensed table-bordered table-striped">
-    		  <tbody>
+    		 <table class="table  table-condensed table-bordered table-striped">
+    		 <tbody>
 
-    		    <tr>
-    		      <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
-    		      <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">	      </label></td>
-    		    </tr>
-    		  </tbody>
-    		</table>
+    		 <tr>
+    		 <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
+    		 <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">	      </label></td>
+    		 </tr>
+    		 </tbody>
+    		 </table>
 
-            </div> -->
+		 </div> -->
       </div>
+		      
 
     <div class="panel-footer">
       <div class="container-fluid">
 
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Save{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>
+        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
+        <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
         <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
       </div>
     </div>
 
-  </div>
+    </div>
 
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
@@ -434,8 +576,8 @@
                 <p>{% trans %}Are you sure?{% endtrans %}</p>
               </div>
               <div class="modal-footer">
-                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
-                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+                <button type="button" id ="tn_save_no" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
+                <button type="button" id="tn_save_yes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
               </div>
             </div><!-- /.modal-content -->
           </div><!-- /.modal-dialog -->
@@ -463,5 +605,6 @@
   </div>
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcashmemo.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
 </body>
 </html>

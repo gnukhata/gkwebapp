@@ -1,3 +1,52 @@
+[12 April 2018 Release 5.0]
+* New menu "Documents".	
+* Godown keeper can access list of all products and can add opening stock.
+* Importing data from other software made more easy.
+* Bankdetails in edit orgnisation page for organisation.
+* GST compliant delivery chalan.
+* GST compliant Purchase and sales order.
+* GST compliant Rejection note.	
+* GST compliant Debit and credit note.
+* GST compatible register report. 	
+* GST summary report.
+* Rules corrected in invoice and cash memo to comply with GST.
+* View of record cash memo, invoice after saving. 		
+* Tree structured format of Profit and loss statement.
+* All reports available in xlsx spreadsheet format.
+* View of recorded cash memo , invoice .
+* Report of list of outstanding invoices.
+* Added more context sensitive help.	
+* UI & UX enhancement done.	
+* Fixed minor bugs.
+	
+	
+[10 January 2018 Release 4.50]
+* Importing data from other software made more easy.
+* Edit facility for Invoice.
+* Edit facility for User(Admin Only).
+* Consignee details can be added in Delivery Note.
+* Fixed bugs in interface for creating Invoice, Cash memo and Delivery Note.
+* Fixed save and print in Delivery Note.
+* Fix for View Invoice and Print of Invoice.
+* Fixed alignment in Print of Cash Memo.
+* Consignee details get loaded from Delivery Note.
+* List of unpaid invoices in Add Receipt/Payment Voucher interface.
+* Amount Paid in Invoice gets automatically updated in Receipt/Payment Voucher if Invoice is selected.
+* Fixed export to spreadsheet and modified labels in Unbilled Deliveries report.
+* Clicking on username in ticker takes user to change password page.
+
+[10-November-2017 Release 4.25 Update]
+* GSTIN added in orgnisation details.
+* Validation for PAN and GSTIN added.
+* Organisation GSTIN added in Invoice and cashmemo.
+* Cess added in product.
+* Tax calculated considering cess in Invoice and Cash memo.
+* Cess tax added in Registers.
+* Context sensitive help for bill wise accounting.
+* Provision to add 0 tax in gst for taxfree products.
+* Permissions to godown in-charge modified.
+* Minor bugs solved.	
+	
 [25-September-2017 Release 4.25]
 * Invoice and Cash Memo are now GST compatible.
 * Provision to add Services.

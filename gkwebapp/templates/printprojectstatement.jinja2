@@ -76,41 +76,42 @@
         </tbody>
       </table>
 			<span style="margin:auto; display:table;">
-				<button class="btn btn-sm btn-danger hidden-print" type="button" id="printback" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+			  <button class="btn btn-sm btn-danger hidden-print" type="button" id="printback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
 				<button class="btn btn-sm btn-info hidden-print" type="button"	id="realprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
 			</span>
 		</div>
 		<script type="text/javascript">
-			$(document).ready(function() {
-				oninvoice = 0;
-				$("title").html("GNUKhata");
-				$("#printback").click(function(event) {
-					var date = $("#calculateto").val().split("-");
-			    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
-					$("#msspinmodal").modal("hide");
-					$.ajax(
+		 $(document).ready(function() {
+		   $("#msspinmodal").modal("hide");
+		   oninvoice = 0;
+		   $("title").html("GNUKhata");
+		   $("#printback").click(function(event) {
+		     var date = $("#calculateto").val().split("-");
+		     var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+		     $("#msspinmodal").modal("hide");
+		     $.ajax(
+		       {
+		         type: "POST",
+		         url: "/showprojectstatementreport",
+		         global: false,
+		         async: false,
+		         datatype: "text/html",
+		         data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
+		         beforeSend: function(xhr)
+		         {
+		           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		         },
+		       })
+		      .done(function(resp)
 		        {
-		          type: "POST",
-		          url: "/showprojectstatementreport",
-		          global: false,
-		          async: false,
-		          datatype: "text/html",
-		          data: {"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val()},
-		          beforeSend: function(xhr)
-		          {
-		            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-		          },
-		        })
-		          .done(function(resp)
-		          {
-		            $("#info").html(resp);
-		          }
-		        );
-				});
-				$("#realprint").click(function(event) {
-					window.print();
-				});
-			});
+		          $("#info").html(resp);
+		        }
+		      );
+		   });
+		   $("#realprint").click(function(event) {
+		     window.print();
+		   });
+		 });
 		</script>
 	</body>
 </html>

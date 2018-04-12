@@ -38,6 +38,7 @@
   <span style="margin:auto; margin-bottom: 10px; display:table; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span><span id="messagespan" class="sr-only" aria-live="rude"></span>
   {% if numberofcategories < 1 %}
     <span style="margin:auto; margin-bottom: 10px; display:table;">{% trans %}No category has been created yet.{% endtrans %}</span>
+    <center><button type="button" id="backbutton" accesskey="k" style="margin:auto; margin-top: 50px;" class="btn btn-sm btn-danger">Bac<u>k</u></button></center>
     {% else %}
     <div class="container-fluid">
       <small style="margin-bottom: 10px;  display:table;" class="form-text text-muted">This is a Tree View of the Categories. Click on arrow to expand or collapse the view.</small>
@@ -59,7 +60,8 @@
   </div>
 
   <div class="row">
-      <button class="btn btn-sm btn-primary" type="button" style="margin:auto; margin-top: 20px; margin-left:46%;" id="tvtoloc" accesskey="v">{% trans %}<i class="fa fa-table" aria-hidden="true"></i> Columnar <u>V</u>iew{% endtrans %}</button>
+    <center><button type="button" id="backbutton" accesskey="k" style="margin:auto; margin-top: 50px;" class="btn btn-sm btn-danger">Bac<u>k</u></button>
+      <button class="btn btn-sm btn-primary" type="button" style="margin:auto;  margin-top: 50px;" id="tvtoloc" accesskey="v">{% trans %}<i class="fa fa-table" aria-hidden="true"></i> Columnar <u>V</u>iew{% endtrans %}</button></center>
   </div>
 {% endif %}
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/treeviewofcategories.js')}}"></script>

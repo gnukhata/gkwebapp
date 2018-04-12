@@ -102,14 +102,14 @@ $(document).ready(function() {
 
 
 // Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewbalsht_fromday").val(fromdatearray[2])
-  $("#viewbalsht_frommonth").val(fromdatearray[1])
-  $("#viewbalsht_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewbalsht_today").val(todatearray[2])
-  $("#viewbalsht_tomonth").val(todatearray[1])
-  $("#viewbalsht_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewbalsht_fromday").val(fromdatearray[2]);
+    $("#viewbalsht_frommonth").val(fromdatearray[1]);
+    $("#viewbalsht_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewbalsht_today").val(todatearray[2]);
+    $("#viewbalsht_tomonth").val(todatearray[1]);
+    $("#viewbalsht_toyear").val(todatearray[0]);
   $("#viewbalsht_today").select();
   $('input:text:enabled,select:visible').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select:visible").length;

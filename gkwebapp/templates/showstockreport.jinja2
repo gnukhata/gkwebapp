@@ -92,14 +92,18 @@
         <th class="col-xs-1 calign" >
           {% trans %}INV No.{% endtrans %}
         </th>
+	<th class="col-xs-1 calign" >
+          {% trans %}RN No.{% endtrans %}
+        </th>
+	
         {% if godown != "" %}
-        <th class="col-xs-1 calign" >
+        <th class="col-xs-2 calign" >
           {% trans %}TN No.{% endtrans %}
         </th>
         {% endif %}
-        <th class="col-xs-1 calign" >
+        {#<th class="col-xs-1 calign" >
           {% trans %}RN No.{% endtrans %}
-        </th>
+        </th>#}
         <th class="col-xs-1 rightlist" >
           {% trans %}Inward{% endtrans %}
         </th>
@@ -128,14 +132,17 @@
         </td>
         <td class="col-xs-2 calign" >
         </td>
+	<td class="col-xs-1 calign" >
+        </td>
         <td class="col-xs-1 calign" >
         </td>
+	
         {% if godown != "" %}
-        <td class="col-xs-1 calign" >
+        <td class="col-xs-2 calign" >
         </td>
         {% endif %}
-        <td class="col-xs-1 calign" >
-        </td>
+        {#<td class="col-xs-1 calign" >
+        </td>#}
         <td class="col-xs-1 rightlist">
           {{record["inward"]}}
         </td>
@@ -167,19 +174,19 @@
         </td>
         <td class="col-xs-2 calign" >
           {% if record["trntype"] == "delchal" %}
-              Delivery Note
+            Delivery Note
           {% endif %}
           {% if record["trntype"] == "invoice" %}
-              Invoice
+            Invoice
           {% endif %}
           {% if record["trntype"] == "delchal&invoice" %}
-              Delivery Note & Invoice
+            Delivery Note & Invoice
           {% endif %}
           {% if record["trntype"] == "transfer note" %}
-              Transfer Note
+            Transfer Note
           {% endif %}
           {% if record["trntype"] == "Rejection Note" %}
-              Rejection Note
+            Rejection Note
           {% endif %}
 
         </td>
@@ -193,19 +200,19 @@
             {{record["invno"]}}
           {% endif %}
         </td>
-        {% if godown != "" %}
-        <td value="{{record["tnid"]}}" class="col-xs-1 calign" >
-          {% if record["tnno"] != "" %}
-            {{record["tnno"]}}
-          {% endif %}
-        </td>
-        {% endif %}
-        <td value="{{record["rnid"]}}" class="col-xs-1 calign" >
+	<td value="{{record["rnid"]}}" class="col-xs-1 calign" >
           {% if record["rnno"] != "" %}
             {{record["rnno"]}}
           {% endif %}
         </td>
-        <td class="col-xs-1 rightlist">
+        {% if godown != "" %}
+          <td value="{{record["tnid"]}}" class="col-xs-2 calign" >
+            {% if record["tnno"] != "" %}
+              {{record["tnno"]}}
+            {% endif %}
+          </td>
+        {% endif %}
+       	<td class="col-xs-1 rightlist">
           {{record["inwardqty"]}}
         </td>
         <td class="col-xs-1 rightlist" >
@@ -233,12 +240,13 @@
         </td>
         <td class="col-xs-1 calign" >
         </td>
+	<td class="col-xs-1 calign" >
+        </td>
+        
         {% if godown != "" %}
-        <td class="col-xs-1 calign" >
-        </td>
+          <td class="col-xs-2 calign" >
+          </td>
         {% endif %}
-        <td class="col-xs-1 calign" >
-        </td>
         <td class="col-xs-1 rightlist">
           {{record["totalinwardqty"]}}
         </td>
@@ -256,10 +264,10 @@
     <small>
         <b>Deli Note No. : </b> Delivery Note Number, &nbsp
         <b>INV No. :</b> Invoice Number, &nbsp
+	<b>RN No. :</b> Rejection Note Number<br><br>
         {% if godown != "" %}
-        <b>TN No. :</b> Transfer Note Number, &nbsp
+        <b>TN No. :</b> Transfer Note Number
         {% endif %}
-        <b>RN No. :</b> Rejection Note Number<br><br>
     </small>
 </div>
   <span style="margin:auto; display:table;">

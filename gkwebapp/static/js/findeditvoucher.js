@@ -43,7 +43,7 @@ $(document).ready(function() {
           return str.length < max ? pad("0" + str, max) : str;
         }
         else{
-          return str
+            return str;
         }
       }
       function yearpad (str, max) {
@@ -55,7 +55,7 @@ $(document).ready(function() {
           return str.length < max ? pad("20" + str, max) : str;
         }
         else{
-          return str
+            return str;
         }
       }
 
@@ -84,14 +84,14 @@ $(document).ready(function() {
 
 
 
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#fday").val(fromdatearray[2])
-  $("#fmonth").val(fromdatearray[1])
-  $("#fyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#tday").val(todatearray[2])
-  $("#tmonth").val(todatearray[1])
-  $("#tyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#fday").val(fromdatearray[2]);
+    $("#fmonth").val(fromdatearray[1]);
+    $("#fyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#tday").val(todatearray[2]);
+    $("#tmonth").val(todatearray[1]);
+    $("#tyear").val(todatearray[0]);
 
 
 

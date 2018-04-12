@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -27,15 +27,16 @@ Contributors:
 */
 // This script is for the profit and loss report.
 $(document).ready(function() {
-  oninvoice = 0;
+  var oninvoice = 0;
   $(".fixed-table-loading").remove();
-  $('.modal-backdrop').remove();
+    $('.modal-backdrop').remove();
+    $("tbody tr:not('.group')").hide();
   $("#msspinmodal").modal("hide");
-  $("#realprintpnl").hide();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').focus();
-  $('#expensetbl tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
-  var rcindex = 0
-  var pyindex = 0
+    $("#realprintpnl, #compress").hide();
+  $('#expensetbl tbody tr:first-child td:first a').focus();
+  $('#expensetbl tbody tr:first-child td:first a').closest('tr').addClass('selected');
+    var rcindex = 0;
+    var pyindex = 0;
 
 // Add and remove selected class to the row on focus and blur respectively for expensetbl.
   $(document).off('focus' ,'.rcaccname').on('focus' ,'.rcaccname',function() {
@@ -49,33 +50,36 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-  var previndex;
   var date = $("#ledtodate").val().split("-");
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
 // Navigation function for table rows for expensetbl
   $(document).off('keydown' ,'.rcaccname').on('keydown' ,'.rcaccname',function(event) {
-    curindex = $(this).closest('tr').index();
+    var currentrow = $(this).closest('tr');
     rcindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+     nextindex = $(currentrow).nextAll("tr:visible:first").index();
+     previndex = $(currentrow).prevAll("tr:visible:first").index();
     if (event.which==40)
     {
       event.preventDefault();
-      $('#expensetbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#expensetbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
         event.preventDefault();
-        $('#expensetbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#expensetbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==39)
-    {
-
-      $('#incometbl tbody tr:eq('+pyindex+') td:eq(1) a').focus();
+      {
+	  if ($('#incometbl tbody tr:eq('+pyindex+') td:first a').is(":visible")) {
+	      $('#incometbl tbody tr:eq('+pyindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#incometbl tbody tr:visible').first().find('a').focus();
+	  }
     }
   });
 
@@ -107,15 +111,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for expensetbl.
   $("#expensetbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
-    if (acccode=="")
-    {
-        return false;
-    }
-     var todatearray = $("#ledtodate").val().split("-");
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
+      let curindex = $(this).index();
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
      var fromdatearray = $("#ledfromdate").val().split("-");
      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-     var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -134,9 +154,37 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
+        }
+      );
+    }
+      /*
+	We need to find out if the row contains groups or not.
+	We have given classes to these rows - degroup for Direct Expense, iegroup for Indirect Expense, digroup for Direct Income, digroup for Direct Income and iigroup for Indirect Income.
+	jQuery has hasClass method that lets one select all elements with a class.
+	Then we use slice function to select elements in a range.
+	The limits are from next row to the row before the total is displayed. Upper limit is not included.
+	Then we toggle the selected elements.
+       */
+      if ($(this).hasClass("degroup")) {
+	  $('.subgroupofdegroup, .accountofdegroup').toggle();
+	  $('.accountofsubgroupofdegroup').hide();
+      }
+      if ($(this).hasClass("subgroupofdegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+      if ($(this).hasClass("iegroup")) {
+	  $('.subgroupofiegroup, .accountofiegroup').toggle();
+	  $('.accountofsubgroupofiegroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiegroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#expensetbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
   });
 
 // Add and remove selected class to the row on focus and blur respectively for incometbl.
@@ -157,26 +205,31 @@ $(document).ready(function() {
 
 // Navigation function for table rows for incometbl
   $(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
-    curindex = $(this).closest('tr').index();
+   
+    curindex = $(this).closest('tr');
     pyindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
-    if (event.which==40)
+    nextindex = $(curindex).nextAll("tr:visible:first").index();
+    previndex = $(curindex).prevAll("tr:visible:first").index();
+        if (event.which==40)
     {
 
-      $('#incometbl tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+      $('#incometbl tbody tr:eq('+nextindex+') td:first a').focus();
     }
     else if (event.which==38)
     {
       if(previndex>-1)
       {
-        $('#incometbl tbody tr:eq('+previndex+') td:eq(1) a').focus();
+        $('#incometbl tbody tr:eq('+previndex+') td:first a').focus();
       }
     }
     else if (event.which==37)
-    {
-
-      $('#expensetbl tbody tr:eq('+rcindex+') td:eq(1) a').focus();
+      {
+	  if ($('#expensetbl tbody tr:eq('+rcindex+') td:first a').is(":visible")) {
+	      $('#expensetbl tbody tr:eq('+rcindex+') td:first a').focus();
+	  }
+	  else {
+	      $('#expensetbl tbody tr:visible').first().find('a').focus();
+	  }
     }
 
 
@@ -210,15 +263,31 @@ $(document).ready(function() {
 // Function to drill down to account ledger of the selected account for incometbl.
   $("#incometbl").off('dblclick','tr').on('dblclick','tr',function(e){
     e.preventDefault();
-    var acccode = $(this).attr('data-value');
-    if (acccode=="")
-    {
-        return false;
-    }
-    var todatearray = $("#ledtodate").val().split("-");
-    var fromdatearray = $("#ledfromdate").val().split("-");
-    var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
-    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+      var accname = $.trim($(this).find('td:first').text());
+      var acccode = "";
+      let curindex = $(this).index();
+      if (accname!="" && $(this).hasClass("accountfield"))
+      {
+	  $.ajax(
+      {
+        type: "POST",
+        url: "/getaccdetails?getAccCode",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"accountname":accname},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          var todatearray = $("#ledtodate").val().split("-");
+     var fromdatearray = $("#ledfromdate").val().split("-");
+     var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	    var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+	    acccode = resp["accountcode"];
     $.ajax(
       {
         type: "POST",
@@ -237,56 +306,30 @@ $(document).ready(function() {
           $("#info").html(resp);
         }
       );
-
-
-
-  });
-
-// Functions to clear search fields.
-  $('#plrclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-    $("#plrclearfields").hide();
-		$(".search").children(".form-control").focus();
-  });
-  $('#pllclearfields').click(function(){
-    $(this).siblings(".bootstrap-table").find(".form-control").val("");
-    $("#pllclearfields").hide();
-		$(".search").children(".form-control").focus();
-  });
-
-  $(".search").children(".form-control").keyup(function(event){
-		if ($(this).parent(".search").hasClass("pull-right") && $(this).val() !="") {
-			$("#pllclearfields").show();
-		}
-		else {
-			$("#pllclearfields").hide();
-		}
-    if($(this).parent(".search").hasClass("pull-left")&& $(this).val() !="") {
- 		 $("#plrclearfields").show();
- 		}
- 		else {
- 			$("#plrclearfields").hide();
- 		}
-    if (event.keyCode == 27) {
-      if ($(this).parent(".search").hasClass("pull-right")) {
-        $(".rcaccname:visible").first().focus();
-      }
-      else if($(this).parent(".search").hasClass("pull-left")) {
-        $(".pyaccname:visible").first().focus();
-      }
-      $(this).val("");
-      $("#pllclearfields").hide();
-      $("#plrclearfields").hide();
+        }
+      );
     }
-    else if (event.which == 13) {
-      if ($(this).parent(".search").hasClass("pull-right")) {
-        $(".rcaccname:visible").first().focus();
+      if ($(this).hasClass("digroup")) {
+	  $('.subgroupofdigroup, .accountofdigroup').toggle();
+	  $('.accountofsubgroupofdigroup').hide();
       }
-      else if($(this).parent(".search").hasClass("pull-left")) {
-        $(".pyaccname:visible").first().focus();
+      if ($(this).hasClass("subgroupofdigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
       }
-    }
-    });
+      if ($(this).hasClass("iigroup")) {
+	  $('.subgroupofiigroup, .accountofiigroup').toggle();
+	  $('.accountofsubgroupofiigroup').hide();
+      }
+      if ($(this).hasClass("subgroupofiigroup")) {
+	  let subgroupindex = $(this).index() + 1;
+	  let numberofaccounts = $(this).data("numberofaccounts") - 1;
+	  let lastaccountindex = subgroupindex + numberofaccounts;
+	  $('#incometbl tbody tr').slice(subgroupindex, lastaccountindex).toggle();
+      }
+  });
 
   $("#print").click(function(event){
 // Function to serve spreadsheet of the report.
@@ -315,15 +358,42 @@ $(document).ready(function() {
     });
 
 
+    $(".expandbutton").click(function(event) {
+	$("tbody tr, .expandbutton").toggle();
+	$('.group').show();
+    });
     $("#printpnl").click(function(event) {
-// Displays a printable version of the report.
-      $("#incometbl").unbind('dblclick');
-      $("#expensetbl").unbind('dblclick');
-      $('table a').contents().unwrap();
-      $("table").removeClass('fixed-table').addClass('table-striped');
-      $(".fixed-table-toolbar").remove();
-      $("#printpnl").hide();
-      $("#realprintpnl").show();
+	// Displays a printable version of the report.
+	$("#msspinmodal").modal("show");
+	var todatearray = $("#ledtodate").val().split("-");
+	var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+	$.ajax(
+	    {
+		type: "POST",
+		url: "/showprofitlossreport?type=print",
+		global: false,
+		async: false,
+		datatype: "text/html",
+		data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		}
+	    })
+	    .done(function(resp) {
+		$("#msspinmodal").modal("hide");
+		$('.modal-backdrop').remove();
+		$("#info").html(resp);
+		$('tr').show();
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	$("#printpnl").hide();
+	$("#realprintpnl").show();
     });
     $("#realprintpnl").click(function(event) {
       window.print();

@@ -64,8 +64,8 @@ tfoot{
         </tr>
 				<tr>
 					<th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
-					<th class="col-xs-3">{% trans %}Delchal No.{% endtrans %}</th>
-					<th class="col-xs-2">{% trans %}Delchal Date{% endtrans %}</th>
+					<th class="col-xs-3">{% trans %}Deli. Note No.{% endtrans %}</th>
+					<th class="col-xs-2">{% trans %}Deli. Note Date{% endtrans %}</th>
 					{% if inout == "9" %}
 					<th class="col-xs-2">{% trans %}Supplier Name{% endtrans %}</th>
 					{% elif inout == "15" %}
@@ -106,7 +106,7 @@ tfoot{
 		</table>
 	</div>
 	<span style="margin:auto; display:table;">
-		<button type="button" class="btn btn-sm btn-danger hidden-print" id="tbback" accesskey="b">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> <u>B</u>ack{% endtrans %}</button>
+	  <button type="button" class="btn btn-sm btn-danger hidden-print" id="tbback" accesskey="k">{% trans %}<i class="fa fa-arrow-left" aria-hidden="true"></i> Bac<u>k</u>{% endtrans %}</button>
 		<button type="button" class="btn btn-sm btn-info hidden-print" id="unbill_del_print" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t</u>{% endtrans %}</button>
 	</span>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">

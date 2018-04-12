@@ -1,0 +1,173 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
+    <style type="text/css">
+     .shadow {
+         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     #latable td {
+         font-size: 75%;
+         padding: 4 !important;
+         margin: 4 !important;
+     }
+     #latable th {
+         font-size: 85%;
+     }
+     .card-view .title {
+         font-weight: bold;
+         display: inline-block;
+         min-width: 30%;
+         text-align: left !important;
+     }
+     #latable tbody {
+         display:block;
+         height: calc(100vh - 18em);
+         overflow-y:scroll;
+     }
+     #latable thead,#latable tbody tr {
+         display:table;
+         width:100%;
+         table-layout:fixed;
+     }
+     #latable thead {
+         width: calc( 100% - 0.65em );
+     }
+     .biglwrap {
+         width:20%;
+     }
+     .mdlwrap {
+         width:30%;
+     }
+     .smlwrap {
+         width:20%;
+     }
+     .qtylwrap {
+         width:8%
+     }
+     .srnowrap {
+         width:10%;
+     }
+     .modaltext {
+         font-size: 0.8em;
+     }
+     .nopadding {
+	 padding: 0 !important;
+	 margin: 0 !important;
+     }
+
+     .fixed-table td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+     .fixed-table th {
+	 font-size: 85%;
+     }
+
+     .fixed-tablepurchase tbody {
+	 display:block;
+	 height: calc(100vh - 35.5em);
+	 min-height: 160px;
+	 overflow-y:scroll;
+     }
+
+     .fixed-tablesale tbody {
+	 display:block;
+	 height: calc(100vh - 35.5em);
+	 min-height: 140px;
+	 overflow-y:scroll;
+     }
+     .fixed-table thead ,.fixed-table tbody tr,.fixed-table tfoot tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     .fixed-table thead {
+	 width: calc( 100% - 0.75em );
+     }
+
+     .fixed-table tfoot {
+	 display:block;
+	 width: calc( 100% - 0.75em );
+     }
+    </style>
+   </head>
+   <body>
+     <div id="listdiv">
+       <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
+       <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
+       <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
+       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
+       <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
+      <br>
+      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; display:none" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+      <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+         <thead class="bg-primary">
+            <tr>
+               <th class="srnowrap text-center" >
+                  {% trans %}Sr.No.{% endtrans %}
+               </th>
+               <th class="srnowrap text-center" >
+                  {% trans %}Invoice No.{% endtrans %}
+               </th>
+               <th class="smlwrap text-center" >
+                  {% trans %}Invoice Date{% endtrans %}
+               </th>
+               <th class="mdlwrap text-center" >
+		 {% if inoutflag|int == 9 %}
+                   {% trans %}Supplier Name{% endtrans %}
+		 {% else %}
+		   {% trans %}Customer Name{% endtrans %}
+		 {% endif %}
+               </th>
+               <th class="smlwrap text-right" >
+                  {% trans %}Invoice Amount{% endtrans %}
+               </th>
+               <th class="smlwrap text-right" >
+                  {% trans %}Pending Amount{% endtrans %}
+               </th>
+            </tr>
+         </thead>
+         <tbody>
+           {% for invoice in gkresult %}
+             <tr data-invid="{{invoice["invid"]}}">
+            <td class="srnowrap text-center">{{loop.index}}</td>
+            <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
+            <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
+            <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
+            <td class="smlwrap text-right">{{invoice["invoiceamount"]}}</td>
+            <td class="smlwrap text-right">{{invoice["balanceamount"]}}</td>
+            </tr>
+            {% endfor %}
+         </tbody>
+      </table>
+      <span style="margin:auto; display:table;">
+         <nbsp>
+         <nbsp>
+         <button type="button" class="btn btn-sm btn-warning" id="viewanotherlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
+         <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+         <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="e"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Vi<u>e</u>w Printable Version{% endtrans %}</button>
+      </span>
+     </div>
+     <div id="viewinvdiv" hidden>
+       <div class="panel">
+	 <div class="panel-body">
+	   <div id="invload">
+	     
+	   </div>
+	   <div id="printload">
+	     
+	   </div>
+	 </div>
+       </div>
+       <div class="col-sm-3 col-sm-offset-3" id="buttondiv">
+	 <button type="button" class="btn btn-sm btn-primary pull-right" id="backbutton" accesskey="b" style="margin-left:10px;">{% trans %}<u>B</u>ack{% endtrans %}</button>
+	 <button type="button" class="btn btn-sm btn-danger pull-right" id="printbutton" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+       </div>
+     </div>     
+      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofunpaidinvoices.js')}}"></script>
+   </body>
+</html>

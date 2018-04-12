@@ -1,3 +1,29 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+ Contributors:
+ "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+ "Sachin Patil" <sachin619patil@rediffmail.com>
+*/
+
 $(document).ready(function() {
   $('#unit_name').focus();
   $("#conversion_rate").numeric();
@@ -5,7 +31,15 @@ $(document).ready(function() {
 
   $("#unit_name").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
+	event.preventDefault();
+	   if ($.trim($('#unit_name').val())=="") {
+      $("#unit-blank-alert").alert();
+      $("#unit-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#unit-blank-alert").hide();
+      });
+      $('#unit_name').focus().select();
+      return false;
+    }
       $("#sub_unit_of").focus().select();
     }
   });
@@ -13,7 +47,7 @@ $(document).ready(function() {
   $("#sub_unit_of").keydown(function(event) {
     if (event.which==13 && $("#sub_unit_of option:selected").val()=='') {
       event.preventDefault();
-      $("#unit_save").click();
+	$("#unit_save").click();
     }
     else if(event.which==13 && $("#sub_unit_of option:selected").val()!='') {
       event.preventDefault();
@@ -28,7 +62,7 @@ $(document).ready(function() {
   $("#conversion_rate").keydown(function(event) {
     if (event.which==13){
       event.preventDefault();
-      $("#unit_save").click();
+	$("#unit_save").click();
     }
     if (event.which==38){
       event.preventDefault();

@@ -38,6 +38,14 @@
 
           <label>{% trans %}Please select a Godown!{% endtrans %}</label>
         </div>
+
+	<div class="panel-body">
+	  {% if not gkresult %}
+	    <div class="bg-danger col-xs-12" style="padding:10;">
+	      <label class="text-danger">No Product Found </label>
+	    </div>  
+	</div>
+	{% else %}
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
           <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
@@ -118,6 +126,7 @@
 
       </div>
     </div>
+    {% endif %}
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewstockreport.js')}}"></script>
 </body>

@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Invoices{% endtrans %}</title>
+    <style type="text/css">
+
+     td {
+  	 font-size: 65%;
+  	 color: black;
+     }
+
+     th {
+  	 font-size: 70%;
+     }
+
+     @page {
+	 size : 21cm 29.7cm;
+	 margin : 10mm 10mm 20mm 10mm
+     }
+     thead{
+	 display: table-header-group;
+     }
+     tfoot{
+	 display: table-footer-group;
+     }
+     .bigwrap {
+	 width:20%;
+     }
+     .mdwrap {
+	 width:12%;
+     }
+     .smwrap {
+	 width:9%;
+     }
+     .qtywrap {
+	 width:8%
+     }
+     .srnowrap {
+	 width:6%;
+     }
+
+    </style>
+  </head>
+  <body>
+    <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
+    <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
+    <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
+    <div class="hidden-print">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
+      <span style="margin-left: 32%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
+    </div>
+
+    <div class="table-responsive printorgdetails">
+      <table class="table table-condensed table-bordered table-striped shadow">
+	<thead class="bg-primary">
+          <tr class="visible-print">
+            <th colspan="11" style="text-align:center; font-size:80%;">
+              List of Unpaid Invoices
+	      <br>
+	      <i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong>
+            </th>
+          </tr>
+	  <tr>
+            <th class="srnowrap text-center" >
+              {% trans %}Sr.No.{% endtrans %}
+            </th>
+            <th class="srnowrap text-center" >
+              {% trans %}Invoice No.{% endtrans %}
+            </th>
+            <th class="smlwrap text-center" >
+              {% trans %}Invoice Date{% endtrans %}
+            </th>
+            <th class="mdlwrap text-center" >
+              {% if inoutflag|int == 9 %}
+                {% trans %}Supplier Name{% endtrans %}
+	      {% else %}
+		{% trans %}Customer Name{% endtrans %}
+	      {% endif %}
+            </th>
+            <th class="smlwrap text-right" >
+              {% trans %}Invoice Amount{% endtrans %}
+            </th>
+            <th class="smlwrap text-right" >
+              {% trans %}Pending Amount{% endtrans %}
+            </th>
+          </tr>
+	</thead>
+	<tbody>
+          {% for invoice in gkresult %}
+            <tr data-invid="{{invoice["invid"]}}">
+	      <td class="srnowrap text-center">{{loop.index}}</td>
+              <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
+              <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
+              <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
+              <td class="smlwrap text-right">{{invoice["invoiceamount"]}}</td>
+              <td class="smlwrap text-right">{{invoice["balanceamount"]}}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      <span style="margin:auto; display:table;">
+  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+  	<button type="button" class="btn btn-sm btn-info hidden-print" id="loiprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      </span>
+    </div>
+    <script type="text/javascript">
+     $(document).ready(function() {
+
+       oninvoice = 0;
+
+       $("#msspinmodal").modal("hide");
+
+       $("title").html("GNUKhata")
+       $("#loiprint").click(function(event) {
+         window.print();
+       });
+       $("#loiback").click(function(event) {
+         $("#msspinmodal").modal("show");
+	 var dataset = {"inoutflag":$("#reportinoutselect").val(),"orderflag":$("#reportorderselect").val(), "typeflag":$("#reporttypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
+	 $.ajax(
+	   {
+	     type: "POST",
+	     url: "/billwise?action=showlist",
+	     global: false,
+	     async: false,
+	     datatype: "text/html",
+	     data: dataset,
+	     beforeSend: function(xhr)
+	     {
+	       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	     },
+	   })
+	  .done(function(resp)
+	    {
+	      $("#info").html(resp);
+	    }
+	  );
+       });
+     });
+    </script>
+
+  </body>
+</html>

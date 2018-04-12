@@ -112,13 +112,25 @@
      min-width: 100% !important;
      width: 100% !important;
  }
- #invoice_customer {
+ #invoice_customer, #invoice_deliverynote {
      max-width: 180px !important;
  }
  .borderdiv {
      border-left-style:solid;
      border-width: 1px;
  }
+ .rborderdiv {
+     border-right-style:solid;
+     border-width: 1px;
+ }
+ .hborderdiv {
+     border-top-style:solid;
+     padding-top: 10px;
+     border-width: 1px;
+ }
  label {
      font-size:95% !important; 
+ }
+ .noborder {
+     border-style: none !important;
  }

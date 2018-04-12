@@ -182,8 +182,50 @@ $(".search").children(".form-control").keyup(function(event){
 		else if ($(this).val() == "") {
 			$("#del_unbilled_clearfields").hide();
 		}
-  });
+});
 
+    /*Following ajax will excute when "View Outword deliveries" or "View Inword deliveries" Button click.
+      and it will gives the "Outward deliveries report" or "Inward deliveries report" depending on selected Period and Type of delivery*/
+    
+    var new_date_input = $("#inputdate").attr("value");
+    var del_unbilled_type = $("#del_unbilled_type").attr("value");
+    var inout = $("#inout").attr("value");
+    $(".inoutdel").click(function(event) {
+	if(inout == "9"){
+	    inout = "15";
+	}else if(inout == "15"){
+	    inout = "9";
+	}
+	if(del_unbilled_type == "Purchase"){ 
+	    del_unbilled_type = "Sale";
+	}else if(del_unbilled_type == "Sale"){
+	    del_unbilled_type = "Purchase";
+	}
+	$.ajax(
+	{
+        type: "POST",
+        url: "/show_del_unbilled_report",
+        global: false,
+        async: false,
+        data: {"inputdate": new_date_input, "inout":inout, "del_unbilled_type":del_unbilled_type},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    });
+    
 	//For search data
 	var curindex ;
   var nextindex;
@@ -219,8 +261,7 @@ $(".search").children(".form-control").keyup(function(event){
 		var orgtype = sessionStorage.getItem('orgt');
 		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
 		var xhr = new XMLHttpRequest();
-		console.log(unbdelstring);
-		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.yyyymmddyear1+'&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
+		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.getItem('year1') + '&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		xhr.responseType = 'blob';
 
@@ -230,9 +271,9 @@ $(".search").children(".form-control").keyup(function(event){
     // get binary data as a response
     	var blob = this.response;
 	 		var url = window.URL.createObjectURL(blob);
-			window.location.assign(url)
+	    window.location.assign(url);
   	}
-	};
+		};
 
 	xhr.send();
 

@@ -1,5 +1,7 @@
 /*
    Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -600,11 +602,13 @@ $(document).ready(function() {
             });
             taxes = [];
             $("#category_tax_table tbody tr").each(function() {
-            var obj = {}; // dict for storing tax details
-	    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
-	    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-	    obj.taxrate = $.trim($("input", this).val());
-	    taxes.push(obj);
+		var obj = {}; // dict for storing tax details
+		if($("td:eq(0) select option:selected", this).val() != ""){
+		    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
+                    obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+                    obj.taxrate = $.trim($("input", this).val());
+                    taxes.push(obj);
+		}
         });
             $.ajax({
                     url: '/category?action=save',

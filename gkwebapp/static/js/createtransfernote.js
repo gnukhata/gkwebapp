@@ -1,5 +1,7 @@
 /*
    Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -55,16 +57,47 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   $('.transfernote_product_quantity').numeric({ negative: false}); //Prevents negative values in the field.
   //Key events for transfer note. Focus moves forward on pressing 'Enter' key and backward on 'Up' arrow.
-  $("#transfernote_no").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_date").focus().select();
+    $("#transfernote_no").keydown(function(event) {
+      if (event.which==13 || event.which==9) {
+
+	    if ($.trim($('#transfernote_no').val())=="") {
+		$("#tnno-blank-alert").alert();
+		$("#tnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tnno-blank-alert").hide();
+		});
+		$('#transfernote_no').focus();
+		return false;
+	    }
+	  event.preventDefault();
+	  $("#tn_date").focus().select();
+      }
+    });
+
+    //If No godowns to select then alert message will display.
+    var fromgod =$("#tn_from_godown option").length;
+    var togod =$("#tn_to_godown option").length;
+    if(fromgod==1 && togod==1){
+	$("#nogo").show(); 
+	$("#tn_from_godown").hide();
+	$("#tn_to_godown").hide();
+    }else{
+	$("#tn_from_godown").show();
+	$("#tn_to_godown").show();
     }
-  });
+    
 
   $("#tn_date").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+      if (event.which==13) {
+	  event.preventDefault();
+	   if ($.trim($('#tn_date').val())=="") {
+      $("#date-blank-alert").alert();
+      $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-blank-alert").hide();
+      });
+      $('#tn_date').focus();
+      return false;
+    }
+     
       $("#tn_month").focus().select();
     }
     if (event.which==38) {
@@ -74,57 +107,141 @@ $(document).ready(function() {
   });
 
   $("#tn_month").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_year").focus().select();
-    }
+      if (event.which==13) {
+	  event.preventDefault();
+	   if ($.trim($('#tn_month').val())=="") {
+	       $("#date-blank-alert").alert();
+	       $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#date-blank-alert").hide();
+	       });
+	       $('#tn_month').focus();
+	       return false;
+	   } else {
+	       $("#tn_year").focus().select();
+	   }
+      }
     if (event.which==38) {
       event.preventDefault();
       $("#tn_date").focus().select();
     }
   });
-  $("#tn_year").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_from_godown").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#tn_month").focus().select();
-    }
+    
+    $("#tn_year").keydown(function(event) {
+	if (event.which==13 || event.which==9){
+	    event.preventDefault();
+	    if ($.trim($('#tn_year').val())=="") {
+		$("#date-blank-alert").alert();
+		$("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#date-blank-alert").hide();
+	      });
+		$('#tn_year').focus();
+		return false;
+	    }
+
+	    if(($.trim($('#tn_date').val())=="") ||($.trim($('#tn_month').val())=="") || ($.trim($('#tn_year').val())==""))
+	    {
+		$("#date-blank-alert").alert();
+		$("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#date-blank-alert").hide();
+		});
+		$('#tn_date').focus();
+		return false;
+	    }
+	    if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy") && !Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyy")){
+		$("#date-alert").alert();
+		$("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#date-alert").hide();
+		});
+		$('#tn_date').focus().select();
+		return false;
+	    } 
+	    if(fromgod==1 && togod==1){
+		$('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+	    }
+	    $("#tn_from_godown").focus().select();
+	}
+      if (event.which==38) {
+	  event.preventDefault();
+	  $("#tn_month").focus().select();
+      }
   });
 
-  $("#transport_mode").keydown(function(event) {
-    if (event.which==13) {
+    $("#transport_mode").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#name_issuer").focus().select();
+	}
+	if (event.which==38) {
       event.preventDefault();
-      $("#name_issuer").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#no_of_packet").focus().select();
-    }
-  });
+	    $("#no_of_packet").focus().select();
+	}
+    });
 
-  $("#tn_from_godown").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      if ($.trim($('#tn_from_godown').val())=="") {
-        $("#godown-blank-alert").alert();
-        $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#godown-blank-alert").hide();
-        });
-        $('#tn_from_godown').focus();
-        return false;
-      }
-      else {
-        $("#tn_to_godown").focus().select();
-      }
-    }
-    if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
-      event.preventDefault();
-      $("#tn_year").focus().select();
-    }
-  });
+   
+   //Validation for Issuer Name.
+    $("#name_issuer").keydown(function(event) {
+	if (event.which==13||event.which==9) {
+	    event.preventDefault();
+	    if ($.trim($('#name_issuer').val())=="") {
+		$('#name_issuer').focus();	
+		$("#issuer-name-blank-alert").alert();
+		$("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#issuer-name-blank-alert").hide();
+		    	
+		});
+	    }
+	    else {
+		$("#designation").focus().select();
+		return false;
+	    }
+	}
+	    if (event.which==38) {
+		event.preventDefault();
+		$("#transport_mode").focus().select();
+	    }
+    });
+
+    //Validation for Designation.
+    $("#designation").keydown(function(event) {
+	if (event.which==13||event.which==9) {
+	    event.preventDefault();
+	    if ($.trim($('#designation').val())=="") {
+		$("#designation-blank-alert").alert();
+		$("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#designation-blank-alert").hide();
+		    $('#designation').focus();
+		});
+	    }
+	    else {
+		$("#tn_duedate").focus().select();
+		return false;
+	    }
+	}
+	if (event.which==38) {
+	    event.preventDefault();
+	    $("#name_issuer").focus().select();
+	}
+    });
+    $("#tn_from_godown").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($.trim($('#tn_from_godown').val())=="") {
+		$("#godown-blank-alert").alert();
+		$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#godown-blank-alert").hide();
+		});
+		$('#tn_from_godown').focus();
+		return false;
+	    }
+	    else {
+		$("#tn_to_godown").focus().select();
+	    }
+	}
+	if (event.which==38 && (document.getElementById('tn_from_godown').selectedIndex==1||document.getElementById('tn_from_godown').selectedIndex==0)) {
+	    event.preventDefault();
+	    $("#tn_year").focus().select();
+	}
+    });
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
@@ -141,27 +258,6 @@ $(document).ready(function() {
     if (event.which==13) {
       event.preventDefault();
       $("#transport_mode").focus();
-    }
-  });
-  $("#name_issuer").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#designation").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#transport_mode").focus().select();
-    }
-  });
-
-  $("#designation").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      $("#tn_duedate").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#name_issuer").focus().select();
     }
   });
 
@@ -290,8 +386,8 @@ $(document).ready(function() {
       }
     })
      .done(function(resp) {
-       if (resp["gkstatus"]==0) {
-         $("#tn_to_godown").html(''); //Empty the dropdown
+	 if (resp["gkstatus"]==0) {
+	     $("#tn_to_godown").html(''); //Empty the dropdown
 	 //Filling the dropdown by appending options. Godown id is set as value of each option and godown name and address are displayed.
          $("#tn_to_godown").append('<option value=""  disabled  hidden selected>Select Godown</option>');
          for (godown of resp["godowns"]) {
@@ -608,6 +704,23 @@ $(document).ready(function() {
       $('#tn_year').focus();
       return false;
     }
+      if ($.trim($('#name_issuer').val())=="") {
+	  $("#issuer-name-blank-alert").alert();
+	  $("#issuer-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#issuer-name-blank-alert").hide();
+	  });
+	  $('#name_issuer').focus();
+	  return false;
+      }
+      if ($.trim($('#designation').val())=="") {
+	  $("#designation-blank-alert").alert();
+	  $("#designation-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#designation-blank-alert").hide();
+	  });
+	  $('#designation').focus();
+	  return false;
+      }
+
     if(!Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -650,6 +763,7 @@ $(document).ready(function() {
       $('#tn_from_godown').focus();
       return false;
     }
+      
     //Validations for product details.
     var products = [];
     for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {

@@ -1,22 +1,65 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+GNUKhata is Free Software; you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as
+published by the Free Software Foundation; either version 3 of
+the License, or (at your option) any later version.
+
+GNUKhata is distributed in the hope that it will be useful, but
+WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public
+License along with GNUKhata (COPYING); if not, write to the
+Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@gmail.com>
+"Ishan Masdekar " <imasdekar@dff.org.in>
+"Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar" <prajkta@riseup.net>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
+*/
+
 $(document).ready(function() {
     
-  $('.modal-backdrop').remove();
-  var specday;
-  var specmonth;
-  var specyear;
-  var specdate;
-  var selectedgodown;
-  var selectedtaxname;
-  var selectedtaxstate;
-  $("#prodselect").focus();
-  $(".product_tax_disable").prop('disabled',true);
-    $(".product_cat_tax_disable").prop('disabled',true);
+    $('.modal-backdrop').remove();
+    var specday;
+    var specmonth;
+    var specyear;
+    var specdate;
+    var selectedgodown;
+    var selectedtaxname;
+    var selectedtaxstate;
+    $("#prodselect").focus();
+    $("#prodselect").keydown(function(e){
+    if (e.which == 13) {
+	e.preventDefault();
+	if ($.trim($("#prodselect").val())=="") {
+            $("#blank-alert").alert();
+            $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+		$("#blank-alert").hide();
+            });
+            $("#prodselect").focus();
+            return false;
+        }
+	else {
+	    $(".product_tax_disable").prop('disabled',true);
+	    $(".product_cat_tax_disable").prop('disabled',true);
     
-    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
-    event.preventDefault();
-    /* Act on the event */
-    $(".numtype").numeric();
-
+	    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+		event.preventDefault();
+		/* Act on the event */
+		$(".numtype").numeric();
+	    });
+	}
+    }
   });
 
     
@@ -53,18 +96,25 @@ $(document).ready(function() {
         $("#spec_table tbody tr:first td:eq(1) input:first").focus();
       }
       else {
-        $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+        if ($('#product_edit_tax_table').length > 0) {
+	    $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+	}
+	  else {
+	    $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus();  
+	  }
       }
     }
     if (e.which == 38) {
-      e.preventDefault();
-      if ($("#editcatselect").is(':disabled') || $("#editcatselect").length < 1) {
-        $("#editproddesc").focus().select();
+	e.preventDefault();
+	if ($("#editcatselect").length < 1 || ($("#editcatselect").is(':disabled'))) {
+          $("#editproddesc").focus();
       }
       else {
         $("#editcatselect").focus();
       }
     }
+  
+    
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
@@ -125,16 +175,25 @@ $(document).ready(function() {
   });
   $(document).on('keydown', '#editproddesc', function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      if ($("#editcatselect").length < 1) {
-          $("#edituom").focus();
-      }
-      else if ($("#editcatselect").is(':disabled')) {
-        $("#edituom").focus();
-      }
-      else {
-        $("#editcatselect").focus();
-      }
+	event.preventDefault();
+	if ($("#editproddesc").val()=="") {
+	    $("#pro-blank-alert").alert();
+	    $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#pro-blank-alert").hide();
+		  });
+	    $("#editproddesc").focus();
+	}
+	else{
+	    if ($("#editcatselect").length < 1) {
+		$("#edituom").focus();
+	    }
+	    else if ($("#editcatselect").is(':disabled')) {
+		$("#edituom").focus();
+	    }
+	    else {
+		$("#editcatselect").focus();
+	    }
+	}
     }
     if (event.which==38) {
       event.preventDefault();
@@ -152,6 +211,10 @@ $(document).ready(function() {
     else if (event.which==173) {
       event.preventDefault();
     }
+      else if (event.which==27) {
+	  event.preventDefault();
+	  $("#epsubmit").focus().select();
+      }
     /* Act on the event */
   });
 
@@ -856,9 +919,14 @@ $(document).ready(function() {
         if ($("#editgodownflag").is(':visible')) {
             $("#editgodownflag").focus().select();
         }
-      else {
-        $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
-      }
+	  else {
+	      if ($('#product_edit_tax_table').length > 0) {
+		  $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
+	      }
+	      else {
+		  $("#edituom").focus();
+	      }
+	  }
       }
       if(previndex>-1 && curindex != 0)
       {
@@ -1058,9 +1126,9 @@ $(document).ready(function() {
     if ($("#editproddesc").val()=="")
     {
       $('.modal-backdrop').remove();
-      $("#blank-alert").alert();
-      $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#blank-alert").hide();
+      $("#pro-blank-alert").alert();
+      $("#pro-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#pro-blank-alert").hide();
       });
       $("#editproddesc").focus();
       $("#editproddesc").select();
@@ -1117,7 +1185,7 @@ $(document).ready(function() {
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
-        if ($.trim($(".editgodown_ob",this).val())!="" && $.trim($(".editgodown_ob",this).val())!= "0.00") {
+          if ($.trim($(".editgodown_ob",this).val())!="") {
           obj[$(".editgodown_name",this).val()] = $(".editgodown_ob",this).val();
         }
       }
@@ -1194,35 +1262,35 @@ $(document).ready(function() {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         }
       })
-      .done(function(resp) {
-        if (resp["gkstatus"] ==0) {
-          $('.modal-backdrop').remove();
-          if ($("#prodselect option").length < 3) {
-          $("#product").click();
-          }
-          else {
-            $("#editproduct").click();
-          }
-          $("#deletesuccess-alert").alert();
-          $("#deletesuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#deletesuccess-alert").hide();
-          });
-        }
-        else if(resp["gkstatus"] == 5) {
-          $("#prodselect").focus();
-          $("#failure-delete-alert").alert();
-          $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#failure-delete-alert").hide();
-          });
-          return false;
-        }
-      })
-      .fail(function() {
-        console.log("error");
-      })
-      .always(function() {
-        console.log("complete");
-      });
+	    .done(function(resp) {
+		if (resp["gkstatus"] ==0) {
+		    $('.modal-backdrop').remove();
+		    if ($("#prodselect option").length < 3) {
+			$("#product").click();
+		    }
+		    else {
+			$("#editproduct").click();
+		    }
+		    $("#deleteproduct-success-alert").alert();
+		    $("#deleteproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#deleteproduct-success-alert").hide();
+		    });
+		}
+		else if(resp["gkstatus"] == 5) {
+		    $("#prodselect").focus();
+		    $("#failure-delete-alert").alert();
+		    $("#failure-delete-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#failure-delete-alert").hide();
+		    });
+		    return false;
+		}
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
     });
     $('#m_confirmdel').on('shown.bs.modal', function(event) {
       $("#m_cancel").focus();

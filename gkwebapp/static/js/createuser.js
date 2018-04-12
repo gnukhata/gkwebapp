@@ -1,11 +1,13 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -26,13 +28,18 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $("#msspinmodal").on('hidden.bs.modal', function(event) {
-    $("#name").focus();
+  $("#name").focus();
   });
-  $("#userrole option[value=3]").hide();
+    // for reset Button
+    $("#adduser_reset").click(function()
+     {
+       $("a[href ='#user_create']").click();
+     });
+    
+  //$("#userrole option[value=3]").hide();
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
-
        type: "POST",
        url: "/godown?type=check",
        global: false,
@@ -114,15 +121,31 @@ $(document).ready(function(){
 
   $("#name").keydown(function(e){
     if (e.which==13)
-    {
-      e.preventDefault();
-      $("#password").focus();
-    }
-    });
+      {
+	  if ($.trim($("#name").val())=="") {
+              $("#username-blank-alert").alert();
+              $("#username-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#username-blank-alert").hide();
+              });
+              $("#name").focus();
+              return false;
+          }
+	  e.preventDefault();
+	  $("#password").focus();
+      }
+  });
 
     $("#password").keydown(function(e){
       if (e.which==13)
-      {
+	{
+	  if ($.trim($("#password").val())=="") {
+          $("#password-blank-alert").alert();
+          $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#password-blank-alert").hide();
+          });
+          $("#password").focus();
+          return false;
+        }   
         e.preventDefault();
         $("#confirm_password").focus();
       }
@@ -134,18 +157,36 @@ $(document).ready(function(){
 
     $("#confirm_password").keydown(function(e){
       if (e.which==13)
-      {
-        e.preventDefault();
-        $("#userrole").focus();
-      }
-      if (e.which==38) {
-        $("#password").focus();
+	{
+            if ($.trim($("#confirm_password").val())=="") {
+		$("#cnfpass-blank-alert").alert();
+		$("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#cnfpass-blank-alert").hide();
+		});
+		$("#confirm_password").focus();
+		return false;
+            }
+	    
+            e.preventDefault();
+            $("#userrole").focus();
+	}
+	if (e.which==38) {
+            $("#password").focus();
       }
     });
 
     $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
 
         if (e.which == 13 || e.which == 9) {
+
+	     if ($.trim($("#userrole").val())=="") {
+          $("#role-blank-alert").alert();
+          $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#role-blank-alert").hide();
+          });
+          $("#userrole").focus();
+          return false;
+        }
           e.preventDefault();
          if ($(this).val()==3) {
            $("#latable tbody tr:first td:first input").focus().select();
@@ -174,15 +215,24 @@ $(document).ready(function(){
         }
       });
 
-      $("#question").keydown(function(e){
-        if (e.which==13)
-        {
-          e.preventDefault();
-          $("#answer").focus();
-        }
+    $("#question").keydown(function(e){
+          if (e.which==13)
+          {
+              if ($.trim($("#question").val())=="") {
+		  $("#secque-blank-alert").alert();
+		  $("#secque-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#secque-blank-alert").hide();
+		  });
+		  $("#question").focus();
+		  return false;
+              }
+	      
+              e.preventDefault();
+              $("#answer").focus();
+          }
         if (e.which==38) {
-          e.preventDefault();
-          $("#userrole").focus();
+            e.preventDefault();
+            $("#userrole").focus();
         }
       });
 
@@ -190,7 +240,7 @@ $(document).ready(function(){
         if (e.which==13)
         {
           e.preventDefault();
-          $("#adduser_button").click();
+            $("#adduser_button").click();
         }
         if (e.which==38) {
           e.preventDefault();
@@ -304,7 +354,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==1)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $("#DuplicateEntry-blank-alert").alert();
                 $("#DuplicateEntry-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
                   $("#DuplicateEntry-blank-alert").hide();
@@ -312,7 +363,8 @@ $(document).ready(function(){
                 });
               }
               if(resp["gkstatus"]==4)
-              {
+		{
+		    $("#msspinmodal").modal("hide");
                 $('#adduser')[0].reset();
                 $("#BadPrivilege-blank-alert").alert();
                 $("#BadPrivilege-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -321,11 +373,8 @@ $(document).ready(function(){
                 });
               }
             }
-
           }
         );
-
-        e.preventDefault();
       }
     );
   });

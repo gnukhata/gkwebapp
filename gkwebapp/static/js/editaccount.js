@@ -1,11 +1,12 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,6 +24,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Prajkta Patkar" <prajakta@dff.org.in>
 */
 
 $(document).ready(function()
@@ -43,6 +45,33 @@ $(document).ready(function()
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
+    $.ajax({
+      type: "POST",
+      url: "/getaccdetails",
+      data: {"accountcode":acccode},
+      global: false,
+      async: false,
+      dataType: "json",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(jsonObj)
+      {
+        accdetails=jsonObj["gkresult"];
+        $("#editaccountform").show();
+
+        $("#groupname").val(accdetails["groupname"]);
+        $("#groupname").prop("disabled", true);
+        $("#subgroupname").val(accdetails["subgroupname"]);
+        $("#subgroupname").prop("disabled", true);
+        $("#accountname").val(accdetails["accountname"]);
+        $("#accountname").prop("disabled", true);
+        $("#openingbal").val(accdetails["openingbal"]);
+        $("#openingbal").prop("disabled", true);
+        $("#accountcode").val(accdetails["accountcode"]);
+
+ 
     if(accname=="Income & Expenditure" ||  accname=="Profit & Loss" )
     {
       $("#accnamenoedit").hide();
@@ -78,34 +107,10 @@ $(document).ready(function()
     }
     else {
       $("#openingbal").show();
-      $("#openbal").show()
+	$("#openbal").show();
       $("#baltbl").show();
-    };
-    $.ajax({
-      type: "POST",
-      url: "/getaccdetails",
-      data: {"accountcode":acccode},
-      global: false,
-      async: false,
-      dataType: "json",
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      success: function(jsonObj)
-      {
-        accdetails=jsonObj["gkresult"];
-        $("#editaccountform").show();
-
-        $("#groupname").val(accdetails["groupname"]);
-        $("#groupname").prop("disabled", true);
-        $("#subgroupname").val(accdetails["subgroupname"]);
-        $("#subgroupname").prop("disabled", true);
-        $("#accountname").val(accdetails["accountname"]);
-        $("#accountname").prop("disabled", true);
-        $("#openingbal").val(accdetails["openingbal"]);
-        $("#openingbal").prop("disabled", true);
-        $("#accountcode").val(accdetails["accountcode"]);
+    }
+	  
       }
     });
   });
@@ -166,19 +171,25 @@ $("#editaccountname").keyup(function(e) {
 $("#accountname").keydown(function(event) {
   /* Act on the event */
 
-  if (event.which==40)
-  {
+    if (event.which==40)
+    {
 
-    $("#openingbal").select().focus();
-  }
-  if (event.which==13) {
-    if (!$("#openingbal").is(':disabled')) {
-
-      event.preventDefault();
-      $("#openingbal").focus();
-      $("#openingbal").select();
+	$("#openingbal").select().focus();
     }
-  }
+    if (event.which==13) {
+	if (!$("#openingbal").is(':disabled')) {
+	    event.preventDefault();
+	    if ($.trim($("#accountname").val())=="") {
+		$("#blank-alert").alert();
+		$("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#blank-alert").hide();
+		});
+		$("#accountname").focus().select();
+		return false;
+	    };
+	    $("#openingbal").focus().select();
+	}
+    }
 });
 
 $("#openingbal").keydown(function(event) {
@@ -318,6 +329,7 @@ $("#editaccountform").submit(function(e)
           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#duplicate-alert").hide();
           });
+	    $("#msspinmodal").modal("hide");
           $("#accountname").focus().select();
         }
         else
@@ -326,6 +338,7 @@ $("#editaccountform").submit(function(e)
           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });
+	    $("#msspinmodal").modal("hide");
           $("#accountname").focus().select();
         }
       }

@@ -61,7 +61,8 @@
           </div>
           <br>
           {% if  projects %}
-          <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %} :</label>
+            <label id = "prjnamelbl" for="viewprjstate_prjname">{% trans %}Pro<u>j</u>ect Name{% endtrans %} :</label>
+	    <label for="prjnamelbl" style="color:red;font-size: 120%;">*</label>
           <select class = "form-control input-sm dis" id="viewprjstate_prjname"  name = "viewprjstate_prjname" accesskey="j">
             <option value="" disabled hidden selected>{% trans %}Please select{% endtrans %}</option>
             {% for prj in projects %}

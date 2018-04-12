@@ -3,64 +3,66 @@
 <head>
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Register{% endtrans %}</title>
   <style type="text/css">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #registertable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #registertable td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
 
-  #registertable th {
-    font-size: 85%;
-  }
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 20%;
-      text-align: left !important;
-  }
-  #registertable tbody {
-      display:block;
-      width: 100%;
-      height: calc(100vh - 17em);
+   #registertable th {
+       font-size: 85%;
+   }
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 20%;
+       text-align: left !important;
+   }
+   #registertable tbody {
+       display:block;
+       width: 100%;
+       height: calc(100vh - 17em);
+       overflow-y:scroll;
 
-  }
-  #registertable thead,#registertable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #registertable thead {
-      width: calc( 100% - 0.10em )
-  }
-  .registertablecss{
-    overflow-y:scroll;
-    overflow-x:scroll;
-  }
-  .ralign{
-    text-align:right;
+   }
+   #registertable thead,#registertable tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #registertable thead {
+       width: calc( 99%)
+   }
+   .registertablecss{
+       overflow-y:scroll;
+       overflow-x:scroll;
+       max-height:100%;
+   }
+   .ralign{
+       text-align:right;
 
-  }
-  .cred{
-    color:red;
-  }
-  .calign{
-    text-align:center;
-  }
-  .dtwrap{
-  	width :100px
-  	 }
- .smwrap{
- 	width:80px
- }
- .lngwrap{
- 	width:560px
- }
- .mdwrap{
- 	width:120px
- }
+   }
+   .cred{
+       color:red;
+   }
+   .calign{
+       text-align:center;
+   }
+   .dtwrap{
+       width :100px
+   }
+   .smwrap{
+       width:80px
+   }
+   .lngwrap{
+       width:560px
+   }
+   .mdwrap{
+       width:120px
+   }
 
 
   </style>
@@ -92,13 +94,11 @@
           <th class="dtwrap calign">{% trans %}Suppl TIN{% endtrans %}</th>
 	  <th class="dtwrap calign">{% trans %}Suppl GSTIN{% endtrans %}</th>
           {% endif %}
-          <th class="dtwrap calign">{% trans %}Gross Amt{% endtrans %}</th>
-          <th class="dtwrap calign">{% trans %}TAX Free{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}Gross Amt{% endtrans %}</th>
+          <th class="dtwrap ralign">{% trans %}TAX Free{% endtrans %}</th>
           {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}Net @ {{tax}}%{% endtrans %}</th>
-          {% endfor %}
-          {% for tax in taxcolumns %}
-            <th class="dtwrap calign">{% trans %}{{tax}}% TAX{% endtrans %}</th>
+            <th class="dtwrap ralign">{% trans %}Net @ {{tax}}{% endtrans %}</th>
+            <th class="dtwrap ralign">{% trans %}{{tax}}{% endtrans %}</th>
           {% endfor %}
         </tr>
       </thead>
@@ -124,23 +124,22 @@
 	    <td class="dtwrap calign">
               {{record['custgstin']}}
             </td>
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
               {{record['grossamount']}}
             </td>
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
               {{record['taxfree']}}
             </td>
             {% for tax in taxcolumns %}
-            <td class="dtwrap calign">
+            <td class="dtwrap ralign">
             {% if tax in record["tax"] %}
               {{record['tax'][tax]}}
             {% else %}
               0.00
             {% endif %}
             </td>
-            {% endfor %}
-            {% for tax in taxcolumns %}
-            <td class="dtwrap calign">
+            
+            <td class="dtwrap ralign">
             {% if tax in record["taxamount"] %}
               {{record['taxamount'][tax]}}
             {% else %}
@@ -152,26 +151,24 @@
           {% endfor %}
           <!-- Description: This is for last row i.e. Total of transactions -->
         <tr>
-          <td class="lngwrap calign" colspan="6">
+          <td class="lngwrap ralign" colspan="6">
             <strong> <i>Total </i></strong>
           </td>
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
             {{totalrow['grossamount']}}
           </td>
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
             {{totalrow['taxfree']}}
           </td>
           {% for tax in taxcolumns %}
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
           {% if tax in totalrow["tax"] %}
             {{totalrow['tax'][tax]}}
           {% else %}
             0.00
           {% endif %}
           </td>
-          {% endfor %}
-          {% for tax in taxcolumns %}
-          <td class="dtwrap calign">
+          <td class="dtwrap ralign">
           {% if tax in totalrow["taxamount"] %}
             {{totalrow['taxamount'][tax]}}
           {% else %}

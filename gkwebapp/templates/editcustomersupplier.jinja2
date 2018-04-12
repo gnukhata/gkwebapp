@@ -1,311 +1,405 @@
-<body>
-  <input type="hidden" id="vatorgstflag" name="vatorgstflag" value= "{{vatorgstflag}}"></input>
-  <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
-    <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Edit Customer and Supplier{% endtrans %}</title>
+  </head>
 
-      {% trans %}Supplier details saved with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
+  <body>
+    <input type="hidden" id="vatorgstflag" name="vatorgstflag" value= "{{vatorgstflag}}"></input>
+    <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
+      <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer details saved with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="sup-edit-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier details saved with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier details edited with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-edit-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer details saved with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="sup-edit-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer details edited with its account.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier details edited with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-edit-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Customer Already Exist!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer details edited with its account.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Supplier Already Exist!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Customer Already Exist!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="sup-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Something went wrong!{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="cus-delsuccess-alert"  aria-live="rude" role="alert" hidden>
-      <a href="" class="close" aria-label="close">&times;</a>
-      {% trans %}Customer deleted successfully with its Account.{% endtrans %}
-    </div>
-    <div class="alert alert-success" id="sup-delsuccess-alert"  aria-live="rude" role="alert" hidden>
-      <a href="" class="close" aria-label="close">&times;</a>
-      {% trans %}Supplier deleted successfully with its Account.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="cus-failure-alert"  aria-live="rude" role="alert" hidden>
-      {% trans %}This customer cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="sup-failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Supplier Already Exist!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
-    </div>
+	{% trans %}Something went wrong!{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="cus-delsuccess-alert"  aria-live="rude" role="alert" hidden>
+	<a href="" class="close" aria-label="close">&times;</a>
+	{% trans %}Customer deleted successfully with its Account.{% endtrans %}
+      </div>
+      <div class="alert alert-success" id="sup-delsuccess-alert"  aria-live="rude" role="alert" hidden>
+	<a href="" class="close" aria-label="close">&times;</a>
+	{% trans %}Supplier deleted successfully with its Account.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="cus-failure-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}This customer cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="sup-failure-alert"  aria-live="rude" role="alert" hidden>
 
-    <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
+      </div>
 
-      {% trans %}Please Enter name!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+      <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please select State!{% endtrans %}
+	{% trans %}Please Enter name!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
-    <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please select State!{% endtrans %}
 
-      {% trans %}Please Enter address!{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
+      <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      {% trans %}Please Enter TIN!{% endtrans %}
-    </div>
+	{% trans %}Please Enter address!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-    <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please Enter TIN!{% endtrans %}
+      </div>
 
-      {% trans %}Improper GSTIN!{% endtrans %}
+      <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
+	{% trans %}Improper GSTIN!{% endtrans %}
 
-    <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
 
-      {% trans %}Please enter TIN / GSTIN!{% endtrans %}
+      <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
 
-    </div>
-    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter proper PAN!{% endtrans %}
 
-      {% trans %}Please Enter GSTIN.{% endtrans %}
-    </div>
-    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+      </div>
 
-      {% trans %}Please select a state.{% endtrans %}
-    </div>
-    <div class="panel shadow usomersupplier_panel">
-      <div class="panel-body ">
-        <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+      <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-          <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
-        </div>
-        <div class="container-fluid row">
-          <div class="form-group col-md-6">
-            <label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label><label for="edit_cussup_list" style="color:red;font-size: 120%;">*</label>
-            <select class="form-control input-sm" id="edit_cussup_list" >
-              <option value="" disabled hidden selected>Select Customer/Supplier</option>
-              <optgroup label="Customers" id="custgroup">
-                {% for customer in customers %}
-                  <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
-                {% endfor %}
-              </optgroup>
-              <optgroup label="Suppliers" id="supgroup">
-                {% for supplier in suppliers %}
-                  <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
-                {% endfor %}
-              </optgroup>
-            </select>
+	{% trans %}Please enter proper GSTIN!{% endtrans %}
+
+      </div>
+
+      <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please enter TIN / GSTIN!{% endtrans %}
+
+      </div>
+      <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please Enter GSTIN.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please select a state.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Account No.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Bank Name.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Branch Name.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter IFSC Code.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	{% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+      </div>
+      <div class="panel shadow usomersupplier_panel">
+	<div class="panel-body ">
+          <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label><label for="vno" style="color:red;font-size: 120%;">*</label>
           </div>
-        </div>
-
-        <div class="col-md-6">
-          <div class="form-group hidden-load" hidden>
-            <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label><label for="edit_cussup" style="color:red;font-size: 120%;">*</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
+          <div class="container-fluid row">
+	    
+            <div class="form-group col-md-6">
+	      {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
+		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
+	      {%else%}
+		<label for="edit_cussup_list">{% trans %}List of Customers & Suppliers :{% endtrans %}</label>
+		<select class="form-control input-sm" id="edit_cussup_list" >
+		  <option value="" disabled hidden selected>Select Customer/Supplier</option>
+		  <optgroup label="Customers" id="custgroup">
+                    {% for customer in customers %}
+                      <option value="{{customer['custid']}}">{{customer["custname"]}}</option>
+                    {% endfor %}
+		  </optgroup>
+		  <optgroup label="Suppliers" id="supgroup">
+                    {% for supplier in suppliers %}
+                      <option value="{{supplier['custid']}}">{{supplier["custname"]}}</option>
+                    {% endfor %}
+		  </optgroup>
+		</select>
+	      {%endif%}
+           
+	    </div>
           </div>
-
-
-          <div class="form-group hidden-load" hidden>
-            <label for="edit_cussup_name">{% trans %}New Name of Customer / Supplier :{% endtrans %}</label><label for="edit_cussup_name" style="color:red;font-size: 120%;">*</label>
-            <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
-          </div>
-	  {% if vatorgstflag == '29' or vatorgstflag == '7' %}
-          <div class="row">
-	    <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
-              <input class="form-control input-sm"type="email" id="edit_cussup_email">
-            </div>
-            <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
-            </div>
-	  </div>
-          <div class="row">
-	    <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_state" style="color:red;font-size: 120%;">*</label>
-              <select class="form-control input-sm add-state" id="edit_state">
-		<option value="">Select State</option>
-		{% for state in states %}
-		  {% for key, value in state.items() %}
-		    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-		  {% endfor %}
-		{% endfor %}
-              </select>
-            </select>
-            </div>
-	    <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_address">Address:</label></label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
-              <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
-              <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
-            </div>
-	  </div>
-        </div>
-        <div class="col-md-6">
-          <div class="row">
-	    <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="edit_cussup_fax"></input>
-            </div>
-            <div class="form-group hidden-load col-sm-6" hidden>
-              <label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="edit_cussup_pan"></input>
-            </div>
-	  </div>
-	  {% if vatorgstflag != '7' %}
-          <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label><label for="edit_cussup_tan" style="color:red;font-size: 120%;">*</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
-          </div>
-	  {% endif %}
-	  <div class="form-group hidden-load" hidden>
-            <label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label><label for="edit_cussup_gstin" style="color:red;font-size: 120%;">*</label>
-            <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-              <thead class="bg-primary input-sm">
-                <tr>
-                  <th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
-                  <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
-                  <th class="col-xs-1"></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td class="col-xs-7">
-                    <select class="form-control input-sm gstinstate">
-                      <option value="" disabled hidden selected>Select State</option>
-                      {% for state in states %}
+	  <div id="scrollbar" class="hidden-load" hidden>
+            <div class="col-md-6">
+	      <div class="row">
+		<div class="form-group col-sm-6 hidden-load" hidden>
+		  <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label><label for="edit_cussup" style="color:red;font-size: 120%;">*</label>
+		  <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
+		</div>
+		<div class="form-group col-sm-6 hidden-load" hidden>
+		  <label for="edit_cussup_name" class="custlbl">{% trans %}New Name of Customer :{% endtrans %}</label><label for="edit_cussup_name" class="custlbl" style="color:red;font-size: 120%;">*</label>
+		  <label for="edit_sup_name" class="suplbl">{% trans %}New Name of Supplier :{% endtrans %}</label><label for="edit_cussup_name" class="suplbl" style="color:red;font-size: 120%;">*</label>
+		  <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
+		</div>
+	      </div>
+	      <div class="row">
+		<div class="form-group hidden-load col-sm-6" hidden>
+		  <label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
+		  <input class="form-control input-sm"type="email" id="edit_cussup_email">
+		</div>
+		<div class="form-group hidden-load col-sm-6" hidden>
+		  <label for="edit_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
+		  <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
+		</div>
+	      </div>
+	      {% if vatorgstflag == '29' or vatorgstflag == '7' %}
+		<div class="row">
+		  <div class="form-group hidden-load col-sm-6" hidden>
+		    <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_state" style="color:red;font-size: 120%;">*</label>
+		    <select class="form-control input-sm add-state" id="edit_state">
+		      <option value="">Select State</option>
+		      {% for state in states %}
 			{% for key, value in state.items() %}
 			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 			{% endfor %}
 		      {% endfor %}
-                    </select>
-                  </td>
-                  <td class="col-xs-4">
-                    <input class="form-control input-sm gstin" maxlength="15">
-                  </td>
-                  <td class="col-xs-1">
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-	  {% endif %}
-
-	  {% if vatorgstflag == '22' %}
-	    <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
-              <input class="form-control input-sm"type="email" id="edit_cussup_email">
+		    </select>
+		</select>
+		  </div>
+		  <div class="form-group hidden-load col-sm-6" hidden>
+		    <label for="edit_cussup_address">Address:</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
+		    <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
+		    <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="form-group hidden-load col-sm-6" hidden>
+		    <label for="edit_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
+		    <input class="form-control input-sm" type="text" id="edit_cussup_fax"></input>
+		  </div>
+		  <div class="form-group hidden-load col-sm-6" hidden>
+		    <label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
+		    <input class="form-control input-sm" type="text" id="edit_cussup_pan" maxlength="10"></input>
+		  </div>
+		</div>
+		<small id="textareahelp1" class="form-text text-muted">Press Insert key from anywhere in the screen to Save details.</small>
+	    </div>
+            <div class="col-md-6">
+	      {% if vatorgstflag != '7' %}
+		<div class="form-group hidden-load" hidden>
+		  <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+		  <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
+		</div>
+	      {% endif %}
+	      <div class="form-group hidden-load" hidden style="padding-bottom:0px !important; margin-bottom:0px !important;">
+		<label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
+		<div class ="panel panel-default" style="padding-bottom:0px !important; margin-bottom:0px !important;"> 
+		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
+		    <thead class="bg-primary input-sm">
+                      <tr>
+			<th class="col-xs-7 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
+			<th class="col-xs-1"></th>
+                      </tr>
+		    </thead>
+		    <tbody>
+                      <tr>
+			<td class="col-xs-7">
+			  <select class="form-control input-sm gstinstate">
+			    <option value="" disabled hidden selected>Select State</option>
+			    {% for state in states %}
+			      {% for key, value in state.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			      {% endfor %}
+			    {% endfor %}
+			  </select>
+			</td>
+			<td class="col-xs-4">
+			  <div class="form-inline nopadding">
+			    <div class="form-group nopadding">
+			      <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+			      <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+			      <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+			    </div>
+			  </div>
+			</td>
+			<td class="col-xs-1">
+			</td>
+                      </tr>
+		    </tbody>
+		  </table>
+		</div>
+              </div>
+	      <small id="textareahelp2" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save button.</small>
+	      <small id="textareahelp3" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Account No.</small> 
+	      <div id="edit_bankdetails" class="hidden-load" hidden>
+		<div id="bankcheckboxdiv" hidden>
+		  <input type="checkbox" value=0 id="checkbnk">
+    </input>
+    <label class="" for="bankdiv">{% trans %}Bank Details{% endtrans %}</label>
+		</div>
+		<label id="bankdetailslabel">Bank Details :</label>
+		<div id="bankdetailsdiv" hidden>
+		  <div class="row">
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="accountno" class="bankclass">{% trans %}Account No.{% endtrans %} :</label>
+		      <input type="text" id="edit_accountno" class="form-control input-sm pull-right"></input>
+		    </div>
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="bankname" class="bankclass">{% trans %}Bank Name{% endtrans %} :</label>
+		      <input type="text" id="edit_bankname" class="form-control input-sm pull-right" name="bankname" ></input>
+		    </div>
+		  </div>
+		  <div class="row">
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="branch" class="bankclass">{% trans %}Branch Name{% endtrans %} :</label>
+		      <input type="text" id="edit_branchname" class="form-control input-sm pull-right" ></input>
+		    </div>
+		    <div class="form-group col-sm-6 form-inline">
+		      <label for="ifsc" class="bankclass">{% trans %}IFSC code{% endtrans %} :</label>
+		      <input type="text" id="edit_ifsc" class="form-control input-sm pull-right" name="ifsc" ></input>
+		  </div>
+		</div>
+		</div>
+	      </div>
+	      {% endif %}
+	     
+	      {% if vatorgstflag == '22' %}
+		<div class="row">
+		  <div class="form-group col-sm-6 hidden-load" hidden>
+		    <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
+		    <select class="form-control input-sm add-state" id="edit_state">
+                      <option value="">Select State</option>
+                      <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+                      <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+                      <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+                      <option value="Assam" stateid="4">Assam</option>
+                      <option value="Bihar" stateid="5">Bihar</option>
+                      <option value="Chandigarh" stateid="6">Chandigarh</option>
+                      <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+                      <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+                      <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+                      <option value="Delhi" stateid="10">Delhi</option>
+                      <option value="Goa" stateid="11">Goa</option>
+                      <option value="Gujarat" stateid="12">Gujarat</option>
+                      <option value="Haryana" stateid="13">Haryana</option>
+                      <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+                      <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+                      <option value="Jharkhand" stateid="16">Jharkhand</option>
+                      <option value="Karnataka" stateid="17">Karnataka</option>
+                      <option value="Kerala" stateid="19">Kerala</option>
+                      <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+                      <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+                      <option value="Maharashtra" stateid="22">Maharashtra</option>
+                      <option value="Manipur" stateid="23">Manipur</option>
+                      <option value="Meghalaya" stateid="24">Meghalaya</option>
+                      <option value="Mizoram" stateid="25">Mizoram</option>
+                      <option value="Nagaland" stateid="26">Nagaland</option>
+                      <option value="Odisha" stateid="29">Odisha</option>
+                      <option value="Pondicherry" stateid="31">Pondicherry</option>
+                      <option value="Punjab" stateid="32">Punjab</option>
+                      <option value="Rajasthan" stateid="33">Rajasthan</option>
+                      <option value="Sikkim" stateid="34">Sikkim</option>
+                      <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+                      <option value="Telangana" stateid="36">Telangana</option>
+                      <option value="Tripura" stateid="37">Tripura</option>
+                      <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+                      <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+                      <option value="West Bengal" stateid="41">West Bengal</option>
+		    </select>
+		  </div>
+		  <div class="form-group hidden-load col-sm-6" hidden>
+		    <label for="edit_cussup_address">Address:</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
+		    <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
+		    <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
+		  </div>
+		</div>
+		<div class="form-group hidden-load" hidden>
+		  <label for="edit_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
+		  <input class="form-control input-sm" type="text" id="edit_cussup_fax"></input>
+		</div>
             </div>
-            <div class="form-group hidden-load " hidden>
-              <label for="edit_cussup_phone">{% trans %}Phone No:{% endtrans %}</label>
-              <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
+            <div class="col-md-6">
+	      <div class="form-group hidden-load " hidden>
+		<label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
+		<input class="form-control input-sm" type="text" id="edit_cussup_pan" maxlength="10"></input>
+              </div>
+              <div class="form-group hidden-load " hidden>
+		<label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+		<input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
+              </div>
+	      <div id="edit_bankdetails" class="hidden-load" hidden>
+		<label><h4>Bank Details :</h4></label>
+		<div class="row">
+		  <div class="form-group col-sm-6">
+		    <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		    <input type="text" id="edit_accountno" class="form-control input-sm"></input>
+		  </div>
+		  <div class="form-group col-sm-6">
+		    <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		    <input type="text" id="edit_bankname" class="form-control input-sm" name="bankname" ></input>
+		  </div>
+		</div>
+		<div class="row">
+		  <div class="form-group col-sm-6">
+		    <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		    <input type="text" id="edit_branchname" class="form-control input-sm" ></input>
+		  </div>
+		  <div class="form-group col-sm-6">
+		    <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		    <input type="text" id="edit_ifsc" class="form-control input-sm" name="ifsc" ></input>
+		  </div>
+		</div>
+	      </div>
+	      {% endif  %}
             </div>
-            <div class="form-group hidden-load" hidden>
-              <label for="edit_state">{% trans %}State:{% endtrans %}</label>
-              <select class="form-control input-sm add-state" id="edit_state">
-                <option value="">Select State</option>
-                <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                <option value="Assam" stateid="4">Assam</option>
-                <option value="Bihar" stateid="5">Bihar</option>
-                <option value="Chandigarh" stateid="6">Chandigarh</option>
-                <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                <option value="Delhi" stateid="10">Delhi</option>
-                <option value="Goa" stateid="11">Goa</option>
-                <option value="Gujarat" stateid="12">Gujarat</option>
-                <option value="Haryana" stateid="13">Haryana</option>
-                <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                <option value="Jharkhand" stateid="16">Jharkhand</option>
-                <option value="Karnataka" stateid="17">Karnataka</option>
-                <option value="Kerala" stateid="19">Kerala</option>
-                <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                <option value="Maharashtra" stateid="22">Maharashtra</option>
-                <option value="Manipur" stateid="23">Manipur</option>
-                <option value="Meghalaya" stateid="24">Meghalaya</option>
-                <option value="Mizoram" stateid="25">Mizoram</option>
-                <option value="Nagaland" stateid="26">Nagaland</option>
-                <option value="Odisha" stateid="29">Odisha</option>
-                <option value="Pondicherry" stateid="31">Pondicherry</option>
-                <option value="Punjab" stateid="32">Punjab</option>
-                <option value="Rajasthan" stateid="33">Rajasthan</option>
-                <option value="Sikkim" stateid="34">Sikkim</option>
-                <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                <option value="Telangana" stateid="36">Telangana</option>
-                <option value="Tripura" stateid="37">Tripura</option>
-                <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                <option value="West Bengal" stateid="41">West Bengal</option>
-              </select>
-            </div>
-        </div>
-        <div class="col-md-6">
-          <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_address">Address:</label>
-            <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
-            <small id="textareahelp" class="form-text text-muted">Press Enter Key twice to shift focus to Fax</small>
-          </div>
+	  </div>
+	</div>
 
-          <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup_fax"></input>
-          </div>
-          <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup_pan"></input>
-          </div>
-          <div class="form-group hidden-load " hidden>
-            <label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
-            <input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
-          </div>
-
-	    
-	    {% endif  %}
-
-        </div>
+	<div class="panel-footer">
+          <button class="btn btn-success btn-sm" id="cussup_edit_save" data-toggle="tooltip" data-placement="top" accesskey="v" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}"><i class="fa fa-floppy-o" aria-hidden="true"></i>{% trans %} Sa<u>v</u>e{% endtrans %}</button>
+          <button id="cussup_delete" class="btn btn-danger btn-sm" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+          <button id="edit_cussup_btn" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
+          <button id="edit_cussup_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+	</div>
       </div>
+      <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
+	<div class="vertical-alignment-helper">
+	  <div class="modal-dialog modal-sm vertical-align-center">
+            <div class="modal-content">
+              <div class="modal-header">
 
+		<h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
+              </div>
+              <div class="modal-body">
+		<p>{% trans %}Are you sure?{% endtrans %}</p>
+              </div>
+              <div class="modal-footer">
+		<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+		<button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+              </div>
+            </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div>
+      </div><!-- /.modal -->
 
-      <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="cussup_edit_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i>{% trans %} <u>S</u>ave{% endtrans %}</button>
-        <button id="cussup_delete" class="btn btn-danger btn-sm" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
-        <button id="edit_cussup_btn" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
-        <button id="edit_cussup_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
-      </div>
     </div>
-    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
-      <div class="vertical-alignment-helper">
-	<div class="modal-dialog modal-sm vertical-align-center">
-          <div class="modal-content">
-            <div class="modal-header">
-
-              <h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
-            </div>
-            <div class="modal-body">
-              <p>{% trans %}Are you sure?{% endtrans %}</p>
-            </div>
-            <div class="modal-footer">
-              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
-              <button type="button" id="accdel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
-            </div>
-          </div><!-- /.modal-content -->
-	</div><!-- /.modal-dialog -->
-      </div>
-    </div><!-- /.modal -->
-
-
-  </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcustomersupplier.js')}}"></script>
-</body>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editcustomersupplier.js')}}"></script>
+  </body>
+</html>

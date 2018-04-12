@@ -1,4 +1,40 @@
+/*
+  Copyright (C) 2013, 2014, 2015, 2016, 2017 Digital Freedom Foundation
+  Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+  Contributors:
+  "Abhijith Balan" <abhijithb21@openmailbox.org>
+  "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+  "Ishan Masdekar" <imasdekar@dff.org.in>
+  "Mohd. Talha Pawaty" <mtalha456@gmail.com>
+  "Navin Karkera" <navin@openmailbox.org>
+  "Ravishankar Purne" <ravismail96@gmail.com>
+  "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+  "Rohini Baraskar" <robaraskar@gmail.com>
+  "Sachin Patil" <sachin619patil@rediffmail.com>
+
+*/
+
 $(document).ready(function() {
+    var stkhtml = $('#stocktable tbody tr:first').html();  
+
 
 if (sessionStorage.invflag==0){
   $(".noinventory").hide();
@@ -29,11 +65,13 @@ if (sessionStorage.invflag=='1' ){
     event.preventDefault();
     $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
-  $("#addcatselect").focus();
     if($("#addcatselect").length == 0)
   {
     $("#addproddesc").focus();
   }
+    else{
+	$("#addcatselect").focus();
+    }
   $("#openingstock").numeric();
   $("#godownflag").click(function(e){
     if ($(this).is(":checked")) {
@@ -74,6 +112,19 @@ $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event
   $("#addproddesc").val($("#addproddesc").val().trim());
 
 });
+
+    $("#adduom").change(function(event) {
+  if ($("#adduom option:selected").val()!='') {
+    $("#unitaddon").html($("#adduom option:selected").text());
+  }
+});
+
+$("#openingstock").focus(function(event) {
+  if ($("#adduom option:selected").val()!='') {
+    $("#unitaddon").html($("#adduom option:selected").text());
+  }
+});
+    
 
 $(document).off('keyup').on('keyup',function(event)
 {
@@ -128,7 +179,7 @@ $("#addproddesc").keydown(function(event) {
   }
 });
 
-
+/*opening stock events in addstock popup*/
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
     $("#unitaddon").html($("#adduom option:selected").text());
@@ -141,13 +192,23 @@ $("#openingstock").focus(function(event) {
   }
 });
 
-$(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
-  if (event.which == 13) {
+ // Events for Unit of Measurement field.
+    $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
+	// Events that happen when Enter key is pressed.
+	if (event.which == 13) {
+	    // When specs are present focus shifts to specs table.
     if (!$("#specdiv").is(":hidden")) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
     }
-    else {
-      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	    else {
+		// If Tax is present focus shifts to Tax table.
+	if ($("#product_tax_table").length > 0) {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	}
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+	    $(".godown_name:first").focus();
+	}
     }
   }
   else if (event.which==32)
@@ -177,6 +238,7 @@ $("#godownflag").keydown(function(event){
     $("#product_tax_table tbody tr:last td:eq(2) input").focus();
   }
 });
+    
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
   if (event.which==13) {
     event.preventDefault();
@@ -237,8 +299,20 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
             $('#adduom').append($('<option value='+uom["uomid"]+'>'+uom["unitname"]+'</option>'));
           }
 
-          $("#adduom option").filter(function(i,e){return $(e).text()==unitname}).prop('selected', true);
-          $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+            $("#adduom option").filter(function(i,e){return $(e).text()==unitname;}).prop('selected', true);
+          if (!$("#specdiv").is(":hidden")) {
+      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
+    }
+	    else {
+		// If Tax is present focus shifts to Tax table.
+	if ($("#product_tax_table").length > 0) {
+	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+	}
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+	    $(".godown_name:first").focus();
+	}
+    }
         }
       })
       .fail(function() {
@@ -257,6 +331,238 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   }
 
 });
+/*-------------------------------------Add Stock key events starts here-------------------------------------------------------------*/
+         //For shifting focus of addstock button to select godown button of pop up window
+
+    
+    $('#addstockmodal').on('shown.bs.modal', function() {
+
+	$.ajax({
+	    url: '/product?type=stkmodal&tax=vat',
+            type: "POST",
+            datatype: 'text/html',
+            global: false,
+            async: false,
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+	})
+	    .done(function(resp) {
+		$('#vatstkmodal').html(resp);
+		stkhtml = $('#stocktable tbody tr:first').html();
+	 $("#godown_name").focus();
+         $("#godown_name").val("").focus();
+
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+            });
+
+
+     $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
+	let curindex= $(this).closest('tr').index();
+	$.ajax({
+      url: '/product?type=hsnuom',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'json',
+	     data: {"productcode": $(this).val()},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp)   /*This function will return spec name of the product*/
+	  {
+	      	      
+	      $('.unitname:eq('+ curindex +')').text(resp.gkresult.unitname);
+	      $('.add_product_hsncode:eq('+ curindex +')').html(resp.gkresult.gscode);
+	      
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    });
+
+    $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
+	var gobj = {};
+	var stockallow = 1;
+	 if ($.trim($("#godown_name").val())=="") {
+		stockallow = 0;
+		$("#emptygodownalert").alert();
+  	        $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptygodownalert").hide();
+  	        });
+  	        $("#godown_name").focus();
+  	        return false;
+  	    }
+	$("#stocktable tbody tr").each(function(){
+	    if ($.trim($(".prodstock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyproductalert").alert();
+  	        $("#emptyproductalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyproductalert").hide();
+  	        });
+  	        $(".prodstock",this).focus();
+  	        return false;
+  	    }
+	    if ($.trim($(".open_stock",this).val())=="") {
+		stockallow = 0;
+		$("#emptyopstkalert").alert();
+  	        $("#emptyopstkalert").fadeTo(2250, 500).slideUp(500, function(){
+  	          $("#emptyopstkalert").hide();
+  	        });
+  	        $(".open_stock",this).focus();
+  	        return false;
+  	      }
+	    if ($.trim($(".prodstock",this).val())!="") {
+		if ($.trim($(".open_stock",this).val())!="" ) {
+		    gobj[$(".prodstock",this).val()] = $(".open_stock",this).val(); 
+		}
+	    }
+	});
+	var goid=$("#godown_name option:selected").attr("value");
+	if (stockallow == 1){
+	    $.ajax({
+            type: "POST",
+            url: "/product?type=stockproduct",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"goid":goid, "productdetails":JSON.stringify(gobj)},
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              if(resp["gkstatus"]==0)
+              {
+                $("#stocksuccess").alert();
+                $("#stocksuccess").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#stocksuccess").hide();
+		    $("#vatstkmodal").html("");/*To refresh the modal after saving one or more selected products*/
+		    /*For the rendering of modal after refreshing it*/
+            $.ajax({
+	    url: '/product?type=stkmodal&tax=vat',
+            type: "POST",
+            datatype: 'text/html',
+            global: false,
+            async: false,
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+	})
+	    .done(function(resp) {
+		$('#vatstkmodal').html(resp);
+		stkhtml = $('#stocktable tbody tr:first').html();
+	       $("#godown_name").focus();
+               $("#godown_name").val("").focus();
+
+     })
+     .fail(function() {
+       console.log("error");
+     })
+     .always(function() {
+       console.log("complete");
+     });
+            });
+
+
+              }
+              else if(resp["gkstatus"]==1)
+              {
+                $("#uniquestockalert").alert();
+                $("#uniquestockalert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#uniquestockalert").hide();
+                });
+                $("#openingstock").focus().select();
+              }
+              else
+              {
+                $("#failure-alert").alert();
+                $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#failure-alert").hide();
+                });
+                $("#godownname").focus().select();
+              }
+            }
+
+          });
+	}
+    });
+
+/*Event for deleting a particular row*/    
+    $(document).off("click",".product_del").on("click", ".product_del", function() {
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();//closest method gives the closest element specified
+	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+	
+       
+	    }
+	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
+	});
+	$('#stocktable tbody tr:last td:eq(0) select').select();
+    });
+
+    $(document).off("keydown", "#godown_name").on("keydown", "#godown_name", function(event){
+        if (event.which == 13) {
+            event.preventDefault();
+            $(".prodstock:first").focus().select();
+        }
+
+    });
+
+    /*Event for validation of shifting focus*/
+
+    $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
+    let curindex = $(this).closest('tr').index();
+    let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	console.log(curindex);
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $('.open_stock:eq('+ curindex +')').focus().select();
+	}
+	return false;
+    });
+
+    
+    $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
+	let curindex = $(this).closest('tr').index();
+	var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
+	let nextindex = curindex + 1;
+	let previndex = curindex - 1;
+	if (event.which == 13){
+	    event.preventDefault();
+	    if (selectedpro==""){
+		$("#Product-blank-alert").alert();
+		$("#Product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#Product-blank-alert").hide();
+		});
+		return false;
+	    }
+	    $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
+	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
+	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+	    $('.prodstock:eq('+ nextindex +')').focus().select();
+	}
+  });
+
+
+    
+
 
 $("#addcatselect").change(function(event) {
   /* Act on the event */
@@ -732,7 +1038,11 @@ $(document).off('keydown', '#openingstock').on('keydown', '#openingstock', funct
   else if (event.which == 173) {
     event.preventDefault();
   }
-});
+   else if(event.which==27){
+	event.preventDefault();
+	$("#apsubmit").focus().select();
+       } 
+});    
 /* -----------------------Godown Key events start here----------------------------------------- */
 $(document).off("change",".godown_name").on("change",".godown_name",function(event)
 {
@@ -750,7 +1060,12 @@ $(document).off("keyup",".godown_name").on("keyup",".godown_name",function(event
   if (event.which==188 && event.shiftKey)
   {
     if (curindex==0) {
-      $("#godownflag").focus().select();
+      if($("#godownflag").is(":hidden")){
+	      $("#adduom").focus();
+	  }
+	else{
+	    $("#godownflag").focus().select();
+    }
     }
     if(previndex>-1 && curindex != 0)
     {
@@ -945,8 +1260,10 @@ $("#addgodown").click(function() {
       }
     }
   );
+   
 });
 
+    
 
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
@@ -954,9 +1271,9 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   if ($("#addproddesc").val()=="")
   {
     $('.modal-backdrop').remove();
-    $("#blank-alert").alert();
-    $("#blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#blank-alert").hide();
+    $("#product-blank-alert").alert();
+    $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#product-blank-alert").hide();
     });
     $("#addproddesc").focus();
     $("#addproddesc").select();
@@ -1053,7 +1370,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
-      if ($.trim($(".godown_ob",this).val())!="" &&  $.trim($(".godown_ob",this).val())!= "0.00") {
+	if ($.trim($(".godown_ob",this).val())!="" ) {
         gobj[$(".godown_name",this).val()] = $(".godown_ob",this).val(); //Godown id is key and opening stock is value
       }
     }
@@ -1116,4 +1433,14 @@ $(document).on('click', '#apreset', function(event) {
   /* Act on the event */
   $("#addproduct").click();
 });
+    
+$(document).on('click', '#stockreset', function(event) {
+  event.preventDefault();
+    $("#stocktable tbody").html("");
+    $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+    $("#godown_name").val("").focus();
 });
+
+});
+
+

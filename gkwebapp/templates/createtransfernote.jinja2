@@ -90,8 +90,19 @@
           </div>
           <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please select a product!{% endtrans %}</label>
+            <label for="vno">{% trans %}Please enter a product!{% endtrans %}</label>
           </div>
+
+	  <div class="alert alert-danger" id="issuer-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter Issuer Name!{% endtrans %}</label>
+          </div>
+
+	  <div class="alert alert-danger" id="designation-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter Designation!{% endtrans %}</label>
+          </div>
+	  
           <div class="alert alert-danger" id="quantity-blank-alert"  aria-live="rude" role="alert" hidden>
 
             <label for="vno">{% trans %}Please enter quantity!{% endtrans %}</label>
@@ -104,7 +115,8 @@
 
             <label for="vno">{% trans %}From and To godown can not be same !{% endtrans %}</label>
           </div>
-          <form>
+
+	  <form>
             <div class="form-group">
               <label for="transfernote_no">{% trans %}Transfer Note No:{% endtrans %}</label><label for="transfernote_no" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="transfernote_no" placeholder="{% trans %}Enter Transfer Note no{% endtrans %}" >
@@ -113,86 +125,84 @@
 	  <div class="form-group">
 	    <form class="form-inline">
 	      <label for="transfernote_date">{% trans %}Date :{% endtrans %}</label><label style="color:red;font-size: 120%;">*</label>
-		
-		
-		  <div class="form-group ">
-                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
-		  </div>
-		  <div class="form-group ">
-                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
-		  </div>
-		  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
-		  </div>
-		
-	      </form>
-	    </div>
-	 
-         <form>
+	      
+	      
+	      <div class="form-group ">
+                <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
+	      </div>
+	      <div class="form-group ">
+                <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
+	      </div>
+	      <div class="form-group">
+                <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
+	      </div>
+	      
+	    </form>
+	  </div>
+	  
+          <form>
             <div class="form-group ">
-            <div class="row ">
-              <div class="form-group col-sm-6 ">
-
-                <label for="tn_from_godown">{% trans %} Dispatched From{% endtrans %} :</label>
-
-                <label style="color:red;font-size: 120%;">*</label>
-
-                <select class="form-control input-sm" id="tn_from_godown" accesskey="">
-                  <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
-                  {% for godown in godowns %}
-                  <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                  {% endfor %}
-                </select>
-
-              </div>
-              <div class="form-group col-sm-6">
-                <label for="tn_to_godown">{% trans %} Dispatched To{% endtrans %} :</label><label for="tn_to_godown" style="color:red;font-size: 120%;">*</label>
-                <select class="form-control input-sm" id="tn_to_godown" accesskey="">
-                  <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
-                  {% for godown in godowns %}
-                    <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
-                  {% endfor %}
-                </select>
-
+              <div class="row ">
+		<div class="form-group col-sm-6">
+                  <label for="tn_from_godown">{% trans %} Dispatched From{% endtrans %} :</label>
+                  <label style="color:red;font-size: 120%;">*</label>
+		  <div class="col-xs-12" id="nogo" style="padding:10;" hidden>
+		    <label class="text-danger">No Godowns to select.</label>
+		  </div>
+                  <select class="form-control input-sm" id="tn_from_godown" accesskey="">
+                    <option value=""  disabled hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+		    {% for godown in fromgodowns %}
+		      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                    {% endfor %}
+		  </select>
+		</div>
+		<div class="form-group col-sm-6">
+                  <label for="tn_to_godown">{% trans %} Dispatched To{% endtrans %} :</label><label for="tn_to_godown" style="color:red;font-size: 120%;">*</label>
+                  <select class="form-control input-sm" id="tn_to_godown" accesskey="">
+                    <option value=""  disabled  hidden selected>{% trans %}Select Godown{% endtrans %}</option>
+		    {% for godown in godowns %}
+                      <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
+                    {% endfor %}
+		  </select>
+		</div>
               </div>
             </div>
-            </div>
-         </form>
-         <div class="form-group nopadding">
-           <div class="panel">
-             <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
-               <thead class="bg-primary">
-                 <tr>
-                   <th class="col-xs-7" for="prod_name">{% trans %}Product{% endtrans %}</th>
-                   <th class="col-xs-4 text-center" for="prod_quantity">{% trans %}Quantity{% endtrans %}</th>
-                   <th class="col-xs-1"></th>
-                 </tr>
-               </thead>
-               <tbody>
-                 <tr>
-                   <td class="col-xs-7">
-                     <select class="form-control input-sm product_name">
-                       <option value="" disabled hidden selected>Select Product</option>
-                       {% for product in products %}
-                         <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-                       {% endfor %}
-                     </select>
-                   </td>
-                   <td class="col-xs-4">
-                     <div class="input-group">
-                       <input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
-                       <span class="input-group-addon input-sm" id="unitaddon"></span>
-                     </div>
-                   </td>
-                   <td class="col-xs-1">
+          </form>
+          <div class="form-group nopadding">
+            <div class="panel">
+              <table id="transfernote_product_table" class="table table-condensed shadow table-borderd fixed-table">
+		<thead class="bg-primary">
+                  <tr>
+                    <th class="col-xs-7" for="prod_name">{% trans %}Product{% endtrans %}</th>
+                    <th class="col-xs-4 text-center" for="prod_quantity">{% trans %}Quantity{% endtrans %}</th>
+                    <th class="col-xs-1"></th>
+                  </tr>
+		</thead>
+		<tbody>
+                  <tr>
+                    <td class="col-xs-7">
+                      <select class="form-control input-sm product_name">
+			<option value="" disabled hidden selected>Select Product</option>
+			{% for product in products %}
+                          <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
+			{% endfor %}
+                      </select>
+                    </td>
+                    <td class="col-xs-4">
+                      <div class="input-group">
+			<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">
+			<span class="input-group-addon input-sm" id="unitaddon"></span>
+                      </div>
+                    </td>
+                    <td class="col-xs-1">
 
-                   </td>
-                 </tr>
-               </tbody>
-             </table>
-             <small id="txtareahelp" class="form-text text-muted">Press Esc to Enter No of Packets.</small>
-           </div>
-         </div>
+                    </td>
+                  </tr>
+		</tbody>
+              </table>
+              <small id="txtareahelp" class="form-text text-muted">Press Esc to Enter No of Packets.</small>
+            </div>
+          </div>
         </div>
         <div class="col-md-6" id="transfernote_godown_div">
           <div class="form-group">
@@ -205,11 +215,11 @@
           </div>
 
           <div class="form-group">
-            <label for="name_issuer">{% trans %} Name of Issuer :{% endtrans %}</label>
+            <label for="name_issuer">{% trans %} Name of Issuer :{% endtrans %}</label><label for="name_issuer" style="color:red;font-size: 120%;">*</label>
             <input class="form-control input-sm" id="name_issuer">
           </div>
           <div class="form-group">
-            <label for="designation">{% trans %} Designation :{% endtrans %}</label>
+            <label for="designation">{% trans %} Designation :{% endtrans %}</label><label for="designation" style="color:red;font-size: 120%;">*</label>
             <input class="form-control input-sm" id="designation">
           </div>
 

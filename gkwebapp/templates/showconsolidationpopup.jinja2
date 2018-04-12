@@ -36,7 +36,7 @@
                       </br>
                         <div class="footer">
                         <button type="button" class="btn btn-primary btn-sm" id ="confirm" class="btn" accesskey="s">{% trans %}<u>S</u>ubmit{% endtrans %}</button>
-                        <button type="button" class="btn btn-warning btn-sm" id="cancel_btn" data-dismiss="modal" class="btn">{% trans %}R<u>e</u>set{% endtrans %}</button>
+                        <button type="button" class="btn btn-warning btn-sm" id="cancel_btn" accesskey="e" data-dismiss="modal" class="btn">{% trans %}R<u>e</u>set{% endtrans %}</button>
                         </div>
                       </div>
                       </div>
@@ -53,7 +53,10 @@
   <div class="modal-dialog modal-sm vertical-align-center">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">{% trans %}Authentication for the selected organisation{% endtrans %}</h4>
+        <h4 class="modal-title"><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	  <span aria-hidden="true">&times;</span>
+	</button>{% trans %}Authentication for the selected organisation{% endtrans %}</h4>
+	
       </div>
       <div class="modal-body">
         <div class="container-fluid">
@@ -76,9 +79,9 @@
             Enter Password.
           </div>
         </div>
-        <label>Username: </label><input type="textbox" id="user"/>
+        <label>Username: </label><input type="textbox" id="user_name"/>
       </br>
-        <label>Password: </label><input type="password" id="pwd"/>
+        <label>Password: </label><input type="password" id="user_pwd"/>
       </div>
 
 

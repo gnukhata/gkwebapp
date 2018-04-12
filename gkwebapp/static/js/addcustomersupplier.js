@@ -1,6 +1,8 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-This file is part of GNUKhata:A modular,robust and Free Accounting System.
+  Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
 GNUKhata is Free Software; you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as
@@ -23,13 +25,34 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar"<prajakta@dff.org.in>
+"Reshma Bhatawadekar<reshma@dff.org.in>"
 */
 
 // This script is for the addcustomer/supplier.jinja2
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
+    $("#add_cussup").change(function(event) {
+	event.preventDefault();
+	if($("#add_cussup option:selected").val() == '3'){
+	    $("#bankdetails").hide();
+	    $(".custlbl").show();
+	    $(".suplbl").hide();
+	} else {
+	    $("#bankdetails").show();
+	    $(".custlbl").hide();
+	    $(".suplbl").show();
+	}
+    });
+    $("#add_cussup").change();
+    var gstinstring = "";
 
+    // append remove button to all gstin field added.
+    for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
+	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
+	$("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+    }
+    
   $("#add_cussup").focus().select();
   $("#add_cussup").keydown(function(event) {
       if (event.which==13) {
@@ -37,7 +60,7 @@ $(document).ready(function() {
 	if ($.trim($("#add_cussup").val())=="") {
             $("#role-blank-alert").alert();
             $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#role-blank-alert").hide();
+		$("#role-blank-alert").hide();
             });
             $("#add_cussup").focus();
             return false;
@@ -45,7 +68,21 @@ $(document).ready(function() {
         event.preventDefault();
           $("#add_cussup_name").focus().select();
         }
-      });
+  });
+    
+ $("#checkbnk").click(function(e){
+    if ($(this).is(":checked")) {
+      checkbnk = 1;
+      $("#checkbnk").val(1);
+      $("#bankdiv").show();
+    }
+    else {
+      checkbnk = 0;
+      $("#checkbnk").val(0);
+      $("#bankdiv").hide();
+     
+    }
+  });
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#add_cussup_name").val())=="") {
@@ -81,6 +118,13 @@ $(document).ready(function() {
     }
   });
 
+    //Selected customer/supplier state autopopulate in gstin state and statecode.
+    $("#add_state").change(function(event) {
+        var availstate =  $("#add_state").val();
+	$(".gstinstate").val(availstate);
+	$(".statecode").val($("#add_state option:selected").attr("stateid"));
+    });
+    
 $("#add_state").keydown(function(event) {
     if (event.which==13) {
     	event.preventDefault();
@@ -100,8 +144,7 @@ $("#add_state").keydown(function(event) {
           $("#add_cussup_phone").focus().select();
         }
 });
-
-
+    
   $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(event)
 {
   var curindex = $(this).closest('tr').index();
@@ -121,62 +164,128 @@ $("#add_state").keydown(function(event) {
     event.preventDefault();
   }
   else if (event.which==13) {
-    event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
+      event.preventDefault();
+      if ($.trim($("#add_cussup_pan").val()) !="") {
+	 $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+      }
+      else {
+	   $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+      }
   }
   else if (event.which==27) {
-    event.preventDefault();
-    $("#cussup_save").focus();
+      event.preventDefault();
+      if($("#add_cussup").val() == '19'){
+	  $("#checkbnk").focus();
+      } else {
+	  $("#cussup_save").focus();
+      }
   }
 });
-    $(document).off("focusout",".gstin").on("focusout",".gstin",function(event) {
+    $(document).off("keydown", "#checkbnk").on("keydown", "#checkbnk", function(event) {
+	if(event.which == 13){
+	    event.preventDefault();
+	    $("#accountno").focus().select();
+	}
+	else if(event.which == 38){
+	    if ($("#vatorgstflag").val() == '22'){
+		$("#add_cussup_tan").focus();
+	    } else {
+		$(".gstin").focus().select();
+	    }
+	}
+    });
+
+    
+    //Change event on GSTIN State
+    $(document).off('change', '.gstinstate').on('change', '.gstinstate', function(event) {
+	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
-	var gstin = $(this).val();
-	var gstnint = parseInt(gstin[0] + gstin[1]);
-	if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-	    $("#gstin-improper-alert").alert();
-            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#gstin-improper-alert").hide();
-		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
-            });
-	    return false;
-        }
+	var cusstatecode =  $('#gstintable tbody tr:eq('+curindex+') td:eq(0) select option:selected').attr("stateid");
+	if (cusstatecode.length == 1){
+	    cusstatecode = "0" + cusstatecode; 
+	}
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
+	if ($('#add_cussup_pan').val() != ''){
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
+	}
+	else {
+	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').prop("disabled",false);
+	}
+	
+    });
+
+    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var panno="";
+    //Keydown event on gstin's panno 
+    $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
+	var curindex = $(this).closest('tr').index();
+	var previndex = curindex-1;
+	panno = $(this).val();
+	if (event.which == 13 || event.which ==9) {
+	    event.preventDefault();
+	    if ((panno.length != 10 || !panno.match(regExp)) && panno !="" ) {
+		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-alert").hide();
+		});
+		$(this).focus().select();
+	    }
+	    else{
+		$(this).next('input').focus().select();
+		return false;
+	    }
+	}
+    });
+
+    $(document).off("change",".gstin").on("change",".gstin",function(event) {
+	var curindex = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+          }
+  }
+
     });
     
-$(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
-{
-    var curindex1 = $(this).closest('tr').index();
+    $(document).off("keydown",".gstin").on("keydown",".gstin",function(event){
+	var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
-  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+ var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+	panno = $(this).val();
   if (event.which==13) {
-    event.preventDefault();
-    if (curindex1 != ($("#gstintable tbody tr").length-1)) {
-      $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-    }
-    else {
-      if (numberofstates > 0) {
-        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
-            $("#state-blank-alert").alert();
-          $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#state-blank-alert").hide();
-          });
-          $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
-          return false;
-        }
-        if ($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-          $("#gstin-blank-alert").alert();
-          $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#gstin-blank-alert").hide();
-          });
-          $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus();
-          return false;
-        }
-        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
+      event.preventDefault();
+      gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+	  if($("#add_cussup").val() == '19'){
+	      $("#checkbnk").focus();
+	  } else {
+	      $("#cussup_save").focus();
+	  }
+      }
+      else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
+	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
+	if(gstinstring != ''){
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#gstin-improper-alert").hide();
+  		    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').focus().select();
+		});
+  		return false;
+            }
+	}
+	  if (numberofstates > 0) {
+              $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -201,21 +310,236 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   }
   else if (event.ctrlKey && event.which==188) {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
   }
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-    event.preventDefault();
-    $("#cussup_save").focus();
+      event.preventDefault();
+      if($("#add_cussup").val() == '19'){
+	  $("#checkbnk").focus();
+      } else {
+	  $("#cussup_save").focus();
+      }
   }
-});
+ });
+
+    // Keydown events for bank details
+    $("#accountno").numeric();
+    $("#accountno").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#bankname").focus();
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#checkbnk").focus();
+	}
+
+    });
+    $("#bankname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#accountno").val() != "" && $("#bankname").val() == "" ) {
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#bankname").focus();
+		});
+		return false;
+	    } else if ($("#accountno").val() == "" && $("#bankname").val() != "" ) {
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+		$("#accountno").focus();
+		return false;
+	    } else {
+		$('#branchname').focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#accountno").focus().select();
+	}
+
+    });
+    $("#branchname").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#branchname").focus();
+		});
+		return false;
+	    } else if($("#accountno").val() == "" && $("#branchname").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#accountno").focus();
+		});
+		return false;
+	    }else if($("#bankname").val() == "" && $("#branchname").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#bankname").focus();
+		});
+		return false;
+	    } else {
+		$("#ifsc").focus();
+	    }
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#bankname").focus().select();
+	}
+
+    });
+    $("#ifsc").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {
+		$("#ifsc-blank-alert").alert();
+		$("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#ifsc-blank-alert").hide();
+		    $("#ifsc").focus();
+		});
+		return false;
+	    } else if($("#accountno").val() == "" && $("#ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		    $("#accountno").focus();
+		});
+		return false;
+	    } else if($("#bankname").val() == "" && $("#ifsc").val() != ""){
+		$("#bankname-blank-alert").alert();
+		$("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#bankname-blank-alert").hide();
+		    $("#bankname").focus();
+		});
+		return false;
+	    } else if($("#branchname").val() == "" && $("#ifsc").val() != ""){
+		$("#branchname-blank-alert").alert();
+		$("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#branchname-blank-alert").hide();
+		    $("#branchname").focus();
+		});
+		return false;
+		}else {
+		$("#cussup_save").focus();
+	    } 
+	}
+	else if (event.which==38){
+	    event.preventDefault();
+	    $("#branchname").focus().select();
+	}
+
+    });
+
+    //change event for bank details
+    $("#bankname").change(function(event) {
+	event.preventDefault();
+	if ($("#accountno").val() == "" && $("#bankname").val() != "" ) {
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	    return false;
+	}
+	else if ($("#accountno").val() != "" && $("#bankname").val() == "" ) {
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	}
+	else {
+	    $('#branchname').focus();
+	}
+	
+    });
+
+    $("#branchname").change(function(event) {
+	event.preventDefault();
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() == "") {
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#branchname").focus();
+	    return false;
+	} else if($("#accountno").val() == "" && $("#branchname").val() != ""){ 
+	    $("#accountno-blank-alert").alert();
+	    $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#accountno-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	    return false;
+	}else if($("#bankname").val() == "" && $("#branchname").val() != ""){ 
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	    }
+	else {
+	    $("#ifsc").focus();
+	}
+	
+    });
+
+    $("#ifsc").change(function(event) {
+	event.preventDefault();
+	if($("#accounno").val() != "" && $("#bankname").val() != "" && $("#branchname").val() != "" && $("#ifsc").val() == "") {
+	    $("#ifsc-blank-alert").alert();
+	    $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#ifsc-blank-alert").hide();
+	    });
+	    $("#ifsc").focus();
+	    return false;
+	} else if($("#accountno").val() == "" && $("#ifsc").val() != ""){
+		$("#accountno-blank-alert").alert();
+		$("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#accountno-blank-alert").hide();
+		});
+	    $("#accountno").focus();
+	    return false;
+	} else if($("#bankname").val() == "" && $("#ifsc").val() != ""){
+	    $("#bankname-blank-alert").alert();
+	    $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#bankname-blank-alert").hide();
+	    });
+	    $("#bankname").focus();
+	    return false;
+	} else if($("#branchname").val() == "" && $("#ifsc").val() != ""){
+	    $("#branchname-blank-alert").alert();
+	    $("#branchname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#branchname-blank-alert").hide();
+	    });
+	    $("#branchname").focus();
+	    return false;
+	} else {
+	    $("#cussup_save").focus();
+	} 
+    });	
+
+    
 $(document).off("click",".state_del").on("click", ".state_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
+      $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
+	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+      $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });
@@ -263,11 +587,22 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $("#add_cussup_pan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
-	    $("#add_cussup_tan").focus().select();
+	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan = $(this).val();
+	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#add_cussup_pan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
 	}
 	else {
-	    $(".gstinstate:first").focus();
+	    if($("#vatorgstflag").val() == '22' || $("#vatorgstflag").val() == '29'){
+		$("#add_cussup_tan").focus();
+	    }
+	    else {
+		$(".gstinstate:first").focus();
+	    }
 	}
     }
     if (event.which==38) {
@@ -276,26 +611,41 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
   });
 
-
+    $("#add_cussup_pan").change(function(event) {
+	var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	var txtpan_change = $(this).val();
+	if ((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && $.trim($("#add_cussup_pan").val())!="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+		$("#add_cussup_pan").focus();
+	    });
+	}
+	else{
+	    $(".panno").val($("#add_cussup_pan").val());
+	    $(".panno").prop("disabled",true);
+	}
+    });
 
     $("#add_cussup_tan").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
 	if($("#vatorgstflag").val() == '22'){
-	    	if ($.trim($("#add_cussup_tan").val())=="") {
-            $("#tin-blank-alert").alert();
-            $("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#tin-blank-alert").hide();
-            });
-            $("#add_cussup_tan").focus();
-            return false;
-        }
-          $("#cussup_save").focus();
-}
-else{
-	$(".gstinstate:first").focus();
- }
-
+	    if ($.trim($("#add_cussup_tan").val())=="") {
+		$("#tin-blank-alert").alert();
+		$("#tin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tin-blank-alert").hide();
+		});
+		$("#add_cussup_tan").focus();
+		return false;
+            } else if($("#add_cussup").val() == '19'){
+		$("#checkbnk").focus();
+	    } else {
+	      $("#cussup_save").focus();
+	  }
+	} else{
+	    $(".gstinstate:first").focus();
+	}
    }
     if (event.which==38) {
       event.preventDefault();
@@ -304,28 +654,63 @@ else{
     });
   $("#add_cussup_reset").click(function(event) {
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
-    $("#customersupplier_create").click();
+      $("#customersupplier_create").click();
   });
-  $("#cussup_save").click(function(event) {
+
+    $(document).off("keyup").on("keyup", function(event) {
+        if(event.which == 45) {
+	    event.preventDefault();
+            $("#cussup_save").click();
+        }
+    });
+    
+    $("#cussup_save").click(function(event) {
       //save event for saving the customer/supplier
       event.preventDefault();
-      var allow = 1;
-    var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
+	var allow = 1;
+	var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
-    var groupcode = -1;
+	var groupcode = -1;
+	var cuss_pan = $("#add_cussup_pan").val();
+        var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	var curindex1 = $(this).closest('tr').index();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+    
+	if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	    $("#pan-incorrect-alert").alert();
+	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#pan-incorrect-alert").hide();
+	    });
+	    $("#add_cussup_pan").focus();
+	    return false;
+	}
+
     if (custsupdata == '3'){
       groupcode = $("#debtgroupcode").val();
     }
     else {
       groupcode = $("#credgroupcode").val();
     }
+	// Validation for bank details
+	if (!($("#accountno").val() == "" && $("#bankname").val() == "" && $("#branchname").val() == "" && $("#ifsc").val() == "")){
+	   if ($("#accountno").val() == "" || $("#bankname").val() == "" || $("#branchname").val() == "" || $("#ifsc").val() == ""){
+	    $("#allbank-blank-alert").alert();
+	    $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#allbank-blank-alert").hide();
+	    });
+	    $("#accountno").focus();
+	       return false;
+	   }
+	}
     //validations to check if none of the required fields are left blank
+	    
     if ($.trim($("#add_cussup option:selected").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#cussup-blank-alert").hide();
       });
-      $("#add_cussup").focus();
+      $(".gstinstate").focus();
       return false;
     }
 
@@ -349,35 +734,6 @@ if($("#vatorgstflag").val() == '22'){
     }
 }
 
-if($("#vatorgstflag").val() == '29'){
-  console.log("Abdul Kalam: " + $("#add_cussup_tin").val());
-  if ($.trim($("#add_cussup_tan").val())=="") {
-    for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
-      if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
-           $("#both-blank-alert").alert();
-           $("#both-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-             $("#both-blank-alert").hide();
-           });
-           $("#add_cussup_tin").focus();
-           return false;
-         }
-    }
-  }
-}
-
-if($("#vatorgstflag").val() == '7'){
-  for (var i = 0; i < $('#gstintable tbody tr').length; i++) {
-    if (($('#gstintable tbody tr:eq('+i+') td:eq(1) input').val())=="" ) {
-         $("#gstin-blank-alert").alert();
-         $("#gstin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-           $("#gstin-blank-alert").hide();
-         });
-         $("#add_cussup_tin").focus();
-         return false;
-       }
-  }
-}
-
     if ($.trim($("#add_state").val())=="") {
       $("#state-blank-alert").alert();
       $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -395,48 +751,77 @@ if($("#vatorgstflag").val() == '7'){
       $("#add_cussup_address").focus();
       return false;
     }
-    var gobj = {}; // Creating a dictionary for storing godown wise opening stock
+	
+    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
+	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
-	if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val())!="") {
-	    var gstin = $.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val());
-            var gstnint = parseInt(gstin[0] + gstin[1]);
-            if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-		allow = 0;
-                $("#gstin-improper-alert").alert();
-                $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#gstin-improper-alert").hide();
-                    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').focus().select();
-                });
-                return false;
-            }
-            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input').val();
-      }
+	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+
+	//Validation for GSTIN on save button 
+	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	else if(panno1 !="" && $(".gstin").val() ==""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}
+	
+	if(gstinstring.length == 15){
+            gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+	}
     }
       });
       var custtan  = "";
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
-      }
+      } 
+	var form_data = new FormData();
+	form_data.append("custname", $("#add_cussup_name").val());
+	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
+	form_data.append("custphone", $("#add_cussup_phone").val());
+	form_data.append("custemail", $("#add_cussup_email").val());
+	form_data.append("custfax", $("#add_cussup_fax").val());
+	form_data.append("custpan", $("#add_cussup_pan").val());
+	form_data.append("custtan", custtan);
+	form_data.append("gstin", JSON.stringify(gobj));
+	form_data.append("state", $("#add_state").val());
+	form_data.append("csflag", $("#add_cussup option:selected").val());
+	if ($("#add_cussup option:selected").val() == "19"){
+	    var bankdetails = {}; //for bank details
+	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
+	    bankdetails["accountno"] = $.trim($("#accountno").val());
+	    bankdetails["bankname"] = $.trim($("#bankname").val());
+	    bankdetails["ifsc"] = $.trim($("#ifsc").val());
+	    bankdetails["branchname"] = $.trim($("#branchname").val());
+	    form_data.append("bankdetails", JSON.stringify(bankdetails));
+	}
+	}
     // ajax call for saving the customer/supplier
-      if (allow == 1){
+	if (allow == 1){
+	    var csflag = $("#add_cussup option:selected").val();
 	  $.ajax({
 	      url: '/customersuppliers?action=save',
 	      type: 'POST',
+	      global: false,
+              contentType: false,
+              cache: false,
+              processData: false,
 	      dataType: 'json',
 	      async : false,
-	      data: {"custname": $("#add_cussup_name").val(),
-		     "custaddr": $.trim($("#add_cussup_address").val()),
-		     "custphone": $("#add_cussup_phone").val(),
-		     "custemail": $("#add_cussup_email").val(),
-		     "custfax": $("#add_cussup_fax").val(),
-		     "custpan": $("#add_cussup_pan").val(),
-		     "custtan": custtan,
-		     "gstin": JSON.stringify(gobj),
-		     "state" : $("#add_state").val(),
-		     "csflag": $("#add_cussup option:selected").val()
-		    },
+	      data: form_data,
 	      beforeSend: function(xhr)
 	      {
 		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken); //attaching the jwt token in the header
@@ -463,6 +848,7 @@ if($("#vatorgstflag").val() == '7'){
 				  if(resp["gkstatus"]==0)
 				  {
 				      $("#customersupplier_create").click();
+				      $("#add_cussup").val(csflag);
 				      if (custsupdata == '3') {
 					  $("#cus-success-alert").alert();
 					  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -510,6 +896,7 @@ if($("#vatorgstflag").val() == '7'){
 	      .always(function() {
 		  console.log("complete");
 	      });
-      }
-  });
+	}
+	$("#add_cussup").change();
+    });
 });

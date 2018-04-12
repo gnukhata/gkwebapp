@@ -92,16 +92,25 @@ $("#viewlog_todate").val(pad($("#viewlog_todate").val(),2));
 $("#viewlog_tomonth").val(pad($("#viewlog_tomonth").val(),2));
 $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
   // navigation functions for enter key and up arrow keys.
-  $("#viewlog_type").keydown(function(e){
-    if(e.which==13){
-      e.preventDefault();
-      if ($("#viewlog_type option:selected").val() == 2) {
-        $("#viewlog_username").focus();
+
+    $("#viewlog_type").keydown(function(e){
+      if(e.which==13){
+	  if ($("#viewlog_type").val()==null) {
+	      $("#type-blank-alert").alert();
+	      $("#type-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#type-blank-alert").hide();
+	      });
+	      $('#viewlog_type').focus();
+	      return false;
+	  }
+	  e.preventDefault();
+	  if ($("#viewlog_type option:selected").val() == 2) {
+              $("#viewlog_username").focus();
+	  }
+	  else{
+              $("#viewlog_fromdate").focus().select();
+	  }
       }
-      else{
-        $("#viewlog_fromdate").focus().select();
-      }
-    }
   });
   $("#viewlog_username").keydown(function(e){
     if(e.which==13){
@@ -180,7 +189,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
       $("#type-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#type-blank-alert").hide();
       });
-      $('#viewlog_type').focus()
+	$('#viewlog_type').focus();
       return false;
     }
     if($("#viewlog_type option:selected").val() == 2){
@@ -189,7 +198,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
         $("#user-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#user-blank-alert").hide();
         });
-        $('#viewlog_username').focus()
+          $('#viewlog_username').focus();
         return false;
       }
     }

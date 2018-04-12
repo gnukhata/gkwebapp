@@ -21,7 +21,7 @@ $(document).ready(function() {
       $(this).val(parseFloat($(this).val()).toFixed(2));
     }
   });
-
+    var purchaseorderid="";
   $("#purchaseorder_select").change(function(event) {
     /* Act on the event */
      purchaseorderid = $("#purchaseorder_select option:selected").val();
@@ -41,8 +41,11 @@ $(document).ready(function() {
       })
       .done(function(resp)
       {
-        //$("#purchaseorderdetails").html("");
-        $("#purchaseorderdetails").html(resp);
+          $("#purchaseorderdetails").html(resp);
+	  $("#viewpofooter").show();
+	  if ($("#purchaseorder_select option:selected").attr("attachmentcount") > 0) {
+		   $("#viewattach").show();
+	       }
         console.log("success");
       })
       .fail(function() {
@@ -53,6 +56,61 @@ $(document).ready(function() {
       });
     });
 
+    $("#viewattach").click(function(event) {
+        $.ajax({
+                url: '/purchaseorder?action=getattachment',
+                type: 'POST',
+            datatype: 'json',
+	    data: { "orderid": $("#purchaseorder_select option:selected").val() },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                var x = window.open();
+                if (x) {
+                    //Browser has allowed it to be opened
+                    x.focus();
+                    x.document.open();
+                    x.document.write(resp);
+                    x.document.close();
+                } else {
+                    //Browser has blocked it
+                    alert('Please allow popups and retry');
+                    x.close();
+                }
+
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+
+    });
+    $("#po_print").click(function(event) {
+        $.ajax({
+                url: '/purchaseorder?action=print',
+                type: 'POST',
+                dataType: 'html',
+            data: {"orderid":$("#purchaseorder_select option:selected").val()},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                console.log("success");
+                $('#info').html(resp);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
 $(document).on('click', '#poreset', function(event) {
   event.preventDefault();
   /* Act on the event */

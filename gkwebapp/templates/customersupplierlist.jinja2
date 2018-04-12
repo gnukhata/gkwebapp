@@ -9,6 +9,7 @@
       <div class="panel">
 	<div class="panel-heading">
 	  <strong>Unadjusted Bills</strong><strong><span id="cstitle" hidden> for </span><span id="csname"></span></strong>
+	  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#accModal"></i>
 	</div>
 	<div class="panel-body">
 	  <div class="container-fluid col-sm-12">
@@ -70,13 +71,41 @@
 	  <br>
 	  <div class="container-fluid row" id="billwisediv">
 	  </div>
-	  <small id="txtareahelp" class="form-text text-muted" hidden>Select any voucher using 'Up' / 'Down' key and Press 'Enter' key from a confirm  voucher to right table containing invoices.<br> Press 'Shift + Enter' to shift from invoice table to voucher table. Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons. </small>
+	  <small id="txtareahelp" class="form-text text-muted" hidden>Select any voucher using 'Up' / 'Down' key and press 'Enter' key from a selected voucher to move to Uncleared Invoices.<br> Press 'Shift + Enter' to shift from invoice table to voucher table. Press 'Insert' key from any field on the screen to save changes. Press 'End' key from last input field to shift focus to buttons. </small>
 	</div>
 	<div class="panel-footer" hidden>
           <button type="button" id ="btclose" class="btn footerbutton btn-success"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Done{% endtrans %}</button>
 	  <button type="button" id ="btreset" class="btn footerbutton btn-warning" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         </div>
       </div>
+
+      <div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	<div class="modal-dialog bgcolor " >
+	  <div class="modal-content ">
+	    <div class="modal-header">
+	      {% trans %}<strong>Help!</strong>{% endtrans %}
+	      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	        <span aria-hidden="true">&times;</span>
+	      </button> </div>
+	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+	      <p> <font color=" #566573"> {%trans%}
+		This module lets you adjust amounts against uncleared invoices.</br>
+		First select a customer if you wish to clear receipts or supplier if payments are to be cleared.</br>
+		In either case, you will see a screen with 2 sections.</br>
+		To the left you will see list of vouchers (receipt in case of selected customer and payment in case of supplier).</br>
+		This section is titled amounts to be adjusted.</br>
+		Select any of the voucher/ transaction which you wish to adjust against the invoices shown in the right section, titled uncleared invoices.</br>
+		Note that you can partially or fully clear one or more invoices after selecting the voucher from the left section.</br>
+		{% endtrans %} </font>
+
+	      </p>
+	    </div>
+
+	  </div>
+	</div>
+      </div>
+      
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/customersupplierlist.js')}}"></script>
   </body>

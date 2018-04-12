@@ -17,7 +17,7 @@ $(document).ready(function() {
       }
     })
     .done(function(resp) {
-      var result = resp["gkresult"]
+	var result = resp["gkresult"];
       $("#unit_edit_name").val(result["unitname"]);
       $("#unit_edit_name").prop("disabled", true);
       $("#sub_unit_edit").val(result["subunitof"]);
@@ -27,7 +27,15 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#unit_edit_innerdiv").show();
       $("#unit_edit_save").hide();
-      $("#edit_btn").show();
+	$("#edit_btn").show();
+
+	//condition of delete button for uom which are associated with products. 
+	if(resp["gkresult"]["flag"] == "True"){
+	   $("#unit_delete").hide();
+	}
+	else if(resp["gkresult"]["flag"] == "False"){
+ 	    $("#unit_delete").show();
+	}
 
       if($("#sub_unit_edit option:selected").val()==''){
         $("#edit_conversion_div").hide();
@@ -73,7 +81,7 @@ $(document).ready(function() {
     $("#sub_unit_edit").keydown(function(event) {
       if (event.which==13 && $("#sub_unit_edit option:selected").val()=='') {
         event.preventDefault();
-        $("#unit_edit_save").click();
+          $("#unit_edit_save").focus().select();
       }
       if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
@@ -93,16 +101,19 @@ $(document).ready(function() {
     $("#unit_edit_conversion_rate").keydown(function(event) {
       if (event.which==13){
         event.preventDefault();
-        $("#unit_edit_save").click();
+          $("#unit_edit_save").click();
       }
       if (event.which==38){
         event.preventDefault();
         $("#sub_unit_edit").focus();
       }
     });
-
+//click event for reset button so that focus will be shifted to unit_dit_list.
   $("#unit_reset").click(function(event) {
-    $("a[href ='#unit_edit']").click();
+      $("a[href ='#unit_edit']").click();
+      event.preventDefault();
+      $('#unit_edit_list').focus();
+      return false;
   });
 
   $("#edit_btn").click(function(event) {
@@ -121,7 +132,8 @@ $(document).ready(function() {
       return false;
     }
   });
-  $("#unit_edit_save").click(function(event) {
+//click event for save button so that the focus will be shifted to unit_edit_list.
+    $("#unit_edit_save").click(function(event) {
     if ($.trim($('#unit_edit_name').val())=="") {
       $("#unit-blank-alert").alert();
       $("#unit-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -175,7 +187,9 @@ $(document).ready(function() {
         $("a[href='#unit_edit']").click();
         $("#success-alert").alert();
         $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#success-alert").hide();
+            $("#success-alert").hide();
+	    event.preventDefault();
+	    $("#unit_edit_list").focus().select();
         });
         return false;
       }
@@ -204,7 +218,8 @@ $(document).ready(function() {
       console.log("complete");
     });
     event.stopPropogation();
-  });
+    });
+    //click event for delete button so that to shift the focus on unit_edit_list.
   $("#unit_delete").click(function(event) {
     event.preventDefault();
     $('.modal-backdrop').remove();
@@ -230,22 +245,23 @@ $(document).ready(function() {
               $("#delsuccess-alert").alert();
               $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#delsuccess-alert").hide();
-              $("a[href ='#unit_edit']").click();
+		  $("a[href ='#unit_edit']").click();
+		   event.preventDefault();
+		  $("#unit_edit_list").focus().select();
               });
-            }
+            
+	    }
             else {
               $("#unit_edit_name").focus();
               $("#subunit-alert").alert();
               $("#subunit-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#subunit-alert").hide();
-                $("a[href ='#unit_edit']").click();
               });
               return false;
             }
-
-
+	      
           }
-
+	
         });
 
     });

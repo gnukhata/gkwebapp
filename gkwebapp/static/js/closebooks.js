@@ -1,11 +1,13 @@
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,11 +25,28 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
+"Prajkta Patkar"<prajkta@riseup.net>
 */
 
 $(document).ready(function()
 {
   $("#msspinmodal").modal("hide");
+  $(".closebooks").show();
+  console.log(sessionStorage);
+
+  if (sessionStorage.booksclosedflag == 1 && sessionStorage.roflag ==0){
+    $(".closebooks").hide();
+    $(".closebooks").remove();
+
+    
+  }
+
+  if (sessionStorage.booksclosedflag == 0 && sessionStorage.roflag == 1){
+    $(".closebooks").show();
+    $(".rodiv").hide();
+    
+  }
+  /*
   if (sessionStorage.booksclosedflag==1)
   {
     $(".closebooks").hide();
@@ -38,7 +57,7 @@ $(document).ready(function()
   {
     $(".closebooks").show();
     $('.dis').attr('disabled', true);
-  }
+  }*/
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -46,7 +65,7 @@ $(document).ready(function()
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {
@@ -58,7 +77,7 @@ $(document).ready(function()
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 
@@ -85,23 +104,23 @@ $(document).ready(function()
 
   $('.modal-backdrop').remove();
   $('.crdate').autotab('number');
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#cbfromday").val(fromdatearray[2])
-  $("#cbfrommonth").val(fromdatearray[1])
-  $("#cbfromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#cbtoday").val(todatearray[2])
-  $("#cbtomonth").val(todatearray[1])
-  $("#cbtoyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#cbfromday").val(fromdatearray[2]);
+    $("#cbfrommonth").val(fromdatearray[1]);
+    $("#cbfromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#cbtoday").val(todatearray[2]);
+    $("#cbtomonth").val(todatearray[1]);
+    $("#cbtoyear").val(todatearray[0]);
 
 
-  $("#rbfromday").val(fromdatearray[2])
-  $("#rbfrommonth").val(fromdatearray[1])
-  $("#rbfromyear").val(fromdatearray[0])
+    $("#rbfromday").val(fromdatearray[2]);
+    $("#rbfrommonth").val(fromdatearray[1]);
+    $("#rbfromyear").val(fromdatearray[0]);
 
-  $("#rbtoday").val(todatearray[2])
-  $("#rbtomonth").val(todatearray[1])
-  $("#rbtoyear").val(todatearray[0])
+    $("#rbtoday").val(todatearray[2]);
+    $("#rbtomonth").val(todatearray[1]);
+    $("#rbtoyear").val(todatearray[0]);
 
 
 if(sessionStorage.newfstartday)
@@ -306,7 +325,7 @@ $("#closebooks").click(function(event)
   sessionStorage.newfendmonth = endmonth2;
   sessionStorage.newfendyear= endyear2;
   event.preventDefault();
-  $(".closebooks").attr("disabled",true)
+  //$(".closebooks").attr("disabled",true);
   $('.modal-backdrop').remove();
   $('.modal').modal('hide');
   $('#m_rollb').modal('show').one('click', '#m_remove', function (e)
