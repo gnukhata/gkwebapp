@@ -13,15 +13,15 @@
         </div>
         <div class="panel-body " style="height:74vh; overflow-y:scroll;">
           <p><b> Please read and follow the instructions carefully for smooth and flawless data import .</b></br></br>
-	    <span style="font-size:large;">W</span>elcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and ledgers in a structured spreadsheet.
+	    <span style="font-size:large;">W</span>elcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and vouchers in two different spreadsheet.
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
-              As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done by following the instructions given below.<br>
+              As an example, all you need is to export data from Tally to a spreadsheet in xlsx format.  This can be done by following instructions given below.<br>
 	      <ul>
 		<li> Export list of accounts and add their opening balances.</li>
 		<li> Opening balances should be added in the columns next to the account name itself.</li>
-		<li> In case of a debit opening balance the amount goes in the second column.</li>
-		<li> In case of a credit opening balance the amount goes in the third column.</li>
+		<li> In case of a debit opening balance the amount goes in the second column[column B].</li>
+		<li> In case of a credit opening balance the amount goes in the third column[column C].</li>
 		<li> Day Book should be exported in the next sheet.</li>
 		<li> The date range for Day Book should be for entire financial year.</li>
 		<li> While exporting the Day Book choose following options :
@@ -42,7 +42,7 @@
 		  </ul></li>
 	      </ul>
 	      For more details on how to export, please refer Tally documentation.<br>
-              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets.
+              Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets. These adjustment applies to importing data from any software.
               <br>
               <div class = "mygrid-wrapper ">
               <ul>
@@ -82,7 +82,7 @@
                   If accounts are under a group directly, then the list must follow the group.<br>
                 </li>
                 <li>
-                  All groups must be in bold, accounts in italics and subgroups normal.<br>
+                  All groups must be in bold, accounts in italics and subgroups normal font.<br>
                 </li>
                 <li>
                   This data must be in column A of the sheet.<br>
@@ -98,10 +98,9 @@
                 <li>
                   All additional information must be removed such as Company name, address, fianancial year,etc.<br>
                 </li>
-                <br>
-                  
-                  	After you export the said data, please make the slight changes mentioned above.<br>
-                  	Note that First sheet will require maximum changes, because ledgers are exported by Tally in a definite structure.</p>
+                  The above mentioned changes should be made once data is exported.
+                  	
+                  	</p>
               </ul>
                 </div>
                 <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
