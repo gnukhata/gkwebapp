@@ -430,7 +430,8 @@ $(document).ready(function() {
 	//ajax for autopopulating address for selected state.
 	var invstate = $("#invoicestate option:selected").val();
 	var invstateid=$("#invoicestate option:selected").attr("stateid");
-	$.ajax({
+	if (invstateid && invstateid != "") {
+	    $.ajax({
 	    url: '/existingorg?type=getaddress',
                     type: 'POST',
                     dataType: 'json',
@@ -455,10 +456,12 @@ $(document).ready(function() {
             .always(function() {
                 console.log("complete");
             });
+	}
 
 	//ajax for autopopulating gstin for selected state.
 	var gstinstateid=$("#invoicestate option:selected").attr("stateid");
-	 $.ajax({
+	 if (gstinstateid && gstinstateid != "") {
+	     $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
                     dataType: 'json',
@@ -480,6 +483,7 @@ $(document).ready(function() {
                 .always(function() {
                     console.log("complete");
                 });
+	 }
 	
     });
     $("#invoicestate").change();
