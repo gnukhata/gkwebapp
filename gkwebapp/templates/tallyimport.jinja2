@@ -3,13 +3,6 @@
 <head>
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata | Import Ledgers{% endtrans %}</title>
-   <style type="text/css">
-    .mygrid-wrapper {
-    border: solid gray 0.5px;
-     overflow-y:scroll;
-    height:290px;
-}
-</style>
 </head>
 <body>
   <div class='container-fluid '>
@@ -18,8 +11,9 @@
         <div class="panel-heading">
        <span style="font-size:17px;">  Data Import Wizard </span>
         </div>
-        <div class="panel-body ">
-            <p><span style="font-size:large;">W</span>elcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.  Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and ledgers in a structured spreadsheet.
+        <div class="panel-body " style="height:74vh; overflow-y:scroll;">
+          <p><b> Please read and follow the instructions carefully for smooth and flawless data import .</b></br></br>
+	    <span style="font-size:large;">W</span>elcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and ledgers in a structured spreadsheet.
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
               As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done by following the instructions given below.<br>
@@ -55,12 +49,12 @@
                 <li>
                   First sheet must have list of groups, subgroups and accounts.<br>
                 </li>
-                <li>The main groups exported should be only as follows:
+                <li>The main groups exported should be only amongst the 13 given below:
                   <ul>
                     <li>Capital <i>[for Profit Making]</i> OR Corpus <i>[for Not for Profit]</i></li>
                     <li>Current Assets</li>
-								    <li>Current Liabilities</li>
-								    <li>Direct Expense</li>
+		    <li>Current Liabilities</li>
+		    <li>Direct Expense</li>
                     <li>Direct Income</li>
                     <li>Fixed Assets</li>
                     <li>Indirect Expense</li>
@@ -79,7 +73,7 @@
                   Every subgroup must be followed by it's list of accounts.<br>
                 </li>
                 <li>
-                  Note the Sub Group Bank account under Current Assets must be 'Bank' and Cash in Hand must be 'Cash'
+                  Note the Sub Group Bank account under Current Assets must be 'Bank' and Cash in Hand must be 'Cash'.
                 </li>
                 <li>
                   New Sub Groups can optionally be added under any group.
@@ -94,24 +88,20 @@
                   This data must be in column A of the sheet.<br>
                 </li>
                 <li>
-                  The following 2 columns B and C must have either Dr or Cr opening balance for the account.<br>
+                  The following 2 columns B and C must have either Dr or Cr opening balance respectively for the account.<br>
                 </li>
-                <li>
-                  Every sheet following the first sheet must have a title of the ledger exported.<br>
+		<li>
+                  The Profit & Loss A/c account should be rename to Profit & Loss.<br>
                 </li>
+		<li>The said account should be under the group Direct Income. <br>
+		</li>
                 <li>
-                  Every ledger will be on individual sheet.<br>
-                </li>
-                <li>
-                  All column headers or additional information must be removed.<br>
-                </li>
-                <li>
-                  Unique incremental voucher numbers are asumed to be present.<br>
+                  All additional information must be removed such as Company name, address, fianancial year,etc.<br>
                 </li>
                 <br>
-                  	You can export data from Tally 9 ERP which exports list of accounts and ledgers in a single workbook, Please note that you will have to include <i>narration</i> field for smooth data transfer.<br>
+                  
                   	After you export the said data, please make the slight changes mentioned above.<br>
-                  	Note that First sheet will require maximum changes, because ledgers are exported by Tally ERP 9 in a definite structure.</p>
+                  	Note that First sheet will require maximum changes, because ledgers are exported by Tally in a definite structure.</p>
               </ul>
                 </div>
                 <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
