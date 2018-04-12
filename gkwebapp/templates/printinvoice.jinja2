@@ -48,9 +48,15 @@
     <div class="hidden-print row text-center text-primary">
       <b>{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
     </div>
+    {% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
+    <div class="row text-center">
+      <h5><u> TAX INVOICE</u></h5>
+    </div>
+    {% else %}
     <div class="row text-center">
       <h5><u>INVOICE</u></h5>
     </div>
+    {% endif %}
     <div class="row">
       <div class="col-xs-3" id="logo_div">
 
@@ -184,7 +190,6 @@
 		{% if gkresult["inoutflag"] == 15 %}{{ gkresult["taxstatecode"] }}{% endif %}
 	      </div>
 	      <div class="form-inline form-group col-xs-12 nopadding">
-		<div style="white-space: nowrap; display:table-cell;">
 		  <label>
 		    {% if gkresult["inoutflag"] == 9 %}
 		      {% trans %}Supplier Address{% endtrans %} :
@@ -192,10 +197,7 @@
 		      {% trans %}Customer Address{% endtrans %} :
 		    {% endif %}
 		  </label>
-		</div>
-		<div style="max-width:175px; padding-left:5px; display:table-cell;">
 		  {{ gkresult["custSupDetails"]["custaddr"] }}
-		</div>
 	      </div>
 	    </td>
 	    <td>
@@ -216,12 +218,8 @@
 		</div>
 	      {% endif %}
 	      <div class="form-inline form-group  col-xs-12 nopadding">
-		<div style="white-space: nowrap; display:table-cell;">
 		  <label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
-		</div>
-		<div style="max-width:175px; padding-left:5px; display:table-cell;">
 		  {% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
-		</div>
 	      </div>
 	      <div class="form-inline form-group col-xs-12 nopadding">
 		<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>

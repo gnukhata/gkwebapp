@@ -85,7 +85,6 @@ $(document).ready(function() {
       }
     })
 	.done(function(resp) {
-	    console.log("success", resp);
 	    $(".panel-footer").hide();
 	if(resp.delchaldata.delchalContents){
 	    $(".deliverychallan_OLD_div").hide();
