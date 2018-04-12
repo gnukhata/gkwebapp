@@ -166,15 +166,15 @@
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
         <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
-
-        <li class="dropdown">
-          <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %} </a>
-          <ul class="dropdown-menu">
-            <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
-            <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
-            <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
-          </ul>
-        </li>
+	<!--  
+             <li class="dropdown">
+             <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %} </a>
+             <ul class="dropdown-menu">
+             <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+             <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
+             <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
+             </ul>
+             </li>-->
 
         <li><a class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#Mcsh"></a></li>
 
@@ -197,9 +197,8 @@
 
 	<p>   <font color=" #566573"> {%trans%}
 
-	  This screen provides you with three options: Create Organization, Select Organizations and Select Language. <br>
+	  This screen provides you with two options: Create Organization and Select Organizations. <br>
 	  If you are running GNUKhata for the first time then Create Organization Tab will be active by default.</br>
-	  You can choose language at any time. Presently GNUKhata has English (default), Marathi and Malayalam languages.
 	  In this module you have to enter the name of organization, choose it's type (Profit Making or Not for Profit ) and then enter the financial year.<br>
 	  You can select 4 modes of operations varying in the number of features they provide. <br>The least features comes in the Accounting only option. Choose this if you only wish to maintain books of account.<br>
 	  Choose this option Accounting and Invoicing if you wish to record and create invoices along with book keeping. <br>
