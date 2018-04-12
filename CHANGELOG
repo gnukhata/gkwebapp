@@ -1,8 +1,30 @@
+[12 April 2018 Release 5.0]
+* New menu "Documents".	
+* Godown keeper can access list of all products and can add opening stock.
+* Importing data from other software made more easy.
+* Bankdetails in edit orgnisation page for organisation.
+* GST compliant delivery chalan.
+* GST compliant Purchase and sales order.
+* GST compliant Rejection note.	
+* GST compliant Debit and credit note.
+* GST compatible register report. 	
+* GST summary report.
+* Rules corrected in invoice and cash memo to comply with GST.
+* View of record cash memo, invoice after saving. 		
+* Tree structured format of Profit and loss statement.
+* All reports available in xlsx spreadsheet format.
+* View of recorded cash memo , invoice .
+* Report of list of outstanding invoices.
+* Added more context sensitive help.	
+* UI & UX enhancement done.	
+* Fixed minor bugs.
+	
+	
 [10 January 2018 Release 4.50]
 * Importing data from other software made more easy.
 * Edit facility for Invoice.
 * Edit facility for User(Admin Only).
-* Consgnee details can be added in Delivery Note.
+* Consignee details can be added in Delivery Note.
 * Fixed bugs in interface for creating Invoice, Cash memo and Delivery Note.
 * Fixed save and print in Delivery Note.
 * Fix for View Invoice and Print of Invoice.
