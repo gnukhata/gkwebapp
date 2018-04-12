@@ -353,6 +353,8 @@ $(document).ready(function() {
 		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
+		$(".gstfield").show();
+		$(".vatfield").hide();
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
@@ -362,8 +364,11 @@ $(document).ready(function() {
 		$("#invoice_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
+		$(".gstfield").hide();
+		$(".vatfield").show();
 	    }
 	}
+	$("#invoicestate").change();
     });
 
     //Key Event for Invoice Date Field.
@@ -419,7 +424,6 @@ $(document).ready(function() {
 		}
 	    
 	}
-	
 	$(".product_name_vat, .product_name_gst").change();
 
 	//In create 'sale invoice' if user selected 'state' has address in orgnisation then it will be autopopulated in address field.
@@ -1862,7 +1866,6 @@ $(document).ready(function() {
     event.preventDefault();
       /* Act on the event */
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-      console.log(curindex);
     if ($(this).val() == "") {
       $(this).val(0);
     }
@@ -2579,7 +2582,7 @@ if (event.which == 13) {
 				$("#totalcgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
-				$(".vatfield").hide();
+				$(".vatfied").hide();
 				$(".gstfield").show();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
@@ -2612,7 +2615,7 @@ if (event.which == 13) {
 				$("#discounttotal_product_vat").val(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 				$("#taxablevaluetotal_product_vat").val(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totaltax").val(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
-				$("#total_product_vat").text(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
+				$("#total_product_vat").val(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
 				$("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$(".gstfield").hide();
 				$(".vatfield").show();
