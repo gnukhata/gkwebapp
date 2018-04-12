@@ -201,7 +201,7 @@ $(document).ready(function() {
   });
     
   $("#edit_cussup_name").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13||event.which==9) {
     	if ($.trim($("#edit_cussup_name").val())=="") {
             $("#name-blank-alert").alert();
             $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -250,7 +250,7 @@ $(document).ready(function() {
   });
     
   $("#edit_state").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13||event.which==9) {
       event.preventDefault();
       if ($.trim($("#edit_state").val())=="") {
         $("#state-blank-alert").alert();
@@ -271,7 +271,7 @@ $(document).ready(function() {
   var delta = 500;
   var lastKeypressTime = 0;
   $("#edit_cussup_address").keydown(function(event) {
-    if (event.which==13) {
+    if (event.which==13||event.which==9) {
       var thisKeypressTime = new Date();
 	if ( thisKeypressTime - lastKeypressTime <= delta ){
 	
@@ -290,6 +290,18 @@ $(document).ready(function() {
       }
       lastKeypressTime = thisKeypressTime;
     }
+      if(event.which==9) {
+	  event.preventDefault();
+	  if($.trim($("#edit_cussup_address").val())=="") {
+              $("#address-blank-alert").alert();
+              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#address-blank-alert").hide();
+              });
+              $("#edit_cussup_address").focus();
+              return false;
+          }
+          $("#edit_cussup_fax").focus();
+      }
     if (event.which==38) {
       event.preventDefault();
       $("#edit_state").focus();

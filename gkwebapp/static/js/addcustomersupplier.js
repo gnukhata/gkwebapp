@@ -579,7 +579,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
    instead of the next element. So the below function will detect the event where enter key is pressed twice
    and if so then shift the focus to the next element */
   $("#add_cussup_address").keydown(function(event) {
-    if (event.which==13|| event.which == 9)
+    if (event.which==13)
       {
 	  event.preventDefault();
       var thisKeypressTime = new Date();
@@ -599,7 +599,22 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
         thisKeypressTime = 0;
       }
       lastKeypressTime = thisKeypressTime;
-    }
+      }
+      if (event.which==9)
+      {
+	  event.preventDefault();
+          if ($.trim($("#add_cussup_address").val())=="") {
+              $("#address-blank-alert").alert();
+              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#address-blank-alert").hide();
+            });
+              $("#add_cussup_address").focus();
+              return false;
+	  }
+          $("#add_cussup_fax").focus();
+        // optional - if we'd rather not detect a triple-press
+        // as a second double-press, reset the timestamp
+      }
     if (event.which==38) {
       event.preventDefault();
       $("#add_state").focus();
