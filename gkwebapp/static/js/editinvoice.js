@@ -2579,7 +2579,7 @@ if (event.which == 13) {
 				$("#totalcgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
-				$(".vatfied").hide();
+				$(".vatfield").hide();
 				$(".gstfield").show();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
