@@ -22,7 +22,32 @@
             <p><span style="font-size:large;">W</span>elcome to the Data import wizard of GNUKhata.  It will assist you to import data from any software that exports data to XLSX spreadsheets.  Such software includes  Tally ERP 9 (and GNUKhata itself), which exports list of accounts and ledgers in a structured spreadsheet.
               Note however that a spreadsheet containing data exported from GNUKhata precisely contains list of accounts and vouchers in two separate sheets.  However if the proper specifications are followed, you can get data from other programs too.
               <br>
-              As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done through the gateway function of Tally.  For more details on how to export, please refer Tally documentation.<br>
+              As an example, all you need is to export data from Tally ERP 9 to a spreadsheet in xlsx format.  This can be done by following the instructions given below.<br>
+	      <ul>
+		<li> Export list of accounts and add their opening balances.</li>
+		<li> Opening balances should be added in the columns next to the account name itself.</li>
+		<li> In case of a debit opening balance the amount goes in the second column.</li>
+		<li> In case of a credit opening balance the amount goes in the third column.</li>
+		<li> Day Book should be exported in the next sheet.</li>
+		<li> The date range for Day Book should be for entire financial year.</li>
+		<li> While exporting the Day Book choose following options :
+		  <ul style="list-style-type:circle">
+		    <li>Language : Default(Language).</li>
+		    <li>Format : Excel(Spreadsheet).</li>
+		    <li>Output File Name : Choose your own . </li>
+		    <li>Output Sheet Name : Choose your own .</li>
+		    <li>Format : Detailed</li>
+		    <li>Show Voucher Numbers also ? Yes </li>
+		    <li>Show narrations ? Yes </li>
+		    <li>Show bill wise details ? No </li>
+		    <li>Show Cost Centre details also ? No</li>
+		    <li>Show inventory details ? No</li>
+		    <li>Show additional description of Stock item ? No</li>
+		    <li>Show Bank Details also ? No</li>
+		    <li>Show additional details ? No</li>
+		  </ul></li>
+	      </ul>
+	      For more details on how to export, please refer Tally documentation.<br>
               Once data is exported to the spreadsheet,  it however has to comply with the import specification given below, which need minor adjustment in the sheets.
               <br>
               <div class = "mygrid-wrapper ">
