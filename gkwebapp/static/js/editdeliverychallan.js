@@ -45,7 +45,20 @@ $(document).ready(function() {
   $("#delinradio").click().focus();
   $("#delchalout").hide();
   $('.panel-footer').hide();  
-  $(".deliverychallan_OLD_div").hide();
+    $(".deliverychallan_OLD_div").hide();
+
+    //Function to add leading zeros in statecode fields.
+    function pad(str, max) { 
+	if (str && str!="") {
+	    str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("0" + str, max) : str;
+	}
+	else {
+	    return str;
+	}
+	}
+    }
    var custsup  =$("#deliverychallan_edit_customer").find('optgroup').clone();
     var inout ;
     var inoutflag;
@@ -202,18 +215,18 @@ $(document).ready(function() {
 	//Sourcestate and Destinationstate.
 	    if (inoutflag == 15) {
 	    $("#invoicestate").text(resp.delchaldata.sourcestate);
-	    $("#statecodeforinvoice").text(resp.delchaldata.sourcestatecode);
+		$("#statecodeforinvoice").text(pad(resp.delchaldata.sourcestatecode, 2));
 	    $(".invoice_issuer").show();
 	    $("#delchal_issuer_name").text(resp.delchaldata.delchaldata.issuername);
 		$("#delchal_issuer_designation").text(resp.delchaldata.delchaldata.designation);
 		$("#deliverychallan_customerstate").text(resp.delchaldata.destinationstate);
-		$("#statecodeofcustomer").text(resp.delchaldata.taxstatecode);
+		$("#statecodeofcustomer").text(pad(resp.delchaldata.taxstatecode, 2));
 	}
 	    else {
 		$("#deliverychallan_customerstate").text(resp.delchaldata.sourcestate);
-		$("#statecodeofcustomer").text(resp.delchaldata.sourcestatecode);
+		$("#statecodeofcustomer").text(pad(resp.delchaldata.sourcestatecode, 2));
 	    $("#invoicestate").text(resp.delchaldata.destinationstate);
-	    $("#statecodeforinvoice").text(resp.delchaldata.taxstatecode);
+		$("#statecodeforinvoice").text(pad(resp.delchaldata.taxstatecode, 2));
 	}
 	$('#orggstin').text(resp.delchaldata.delchaldata.orggstin);
 	$("#deliverychallan_customer").text(resp.delchaldata.custSupDetails.custname);
@@ -234,7 +247,7 @@ $(document).ready(function() {
 	if(resp.delchaldata.delchaldata.consignee) {
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
             $('#delchal_consigneestate').text(resp.delchaldata.delchaldata.consignee.consigneestate);
-	    $('#delchal_statecodeofconsignee').text(resp.delchaldata.delchaldata.consignee.consigneestatecode);
+	    $('#delchal_statecodeofconsignee').text(pad(resp.delchaldata.delchaldata.consignee.consigneestatecode, 2));
             $('#delchal_consigneeaddr').text(resp.delchaldata.delchaldata.consignee.consigneeaddress);
 	    if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 		$("#delchal_tinconsignee").text(resp.delchaldata.delchaldata.consignee.tinconsignee);
