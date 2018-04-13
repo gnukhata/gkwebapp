@@ -54,7 +54,7 @@ $(document).ready(function() {
           if($(this).prop('checked') == true) {
 	      $("#consigneename").val($("#invoice_customer option:selected").text());
 	      $("#consigneestate").val($("#invoice_customerstate option:selected").text());
-	      $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	      $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
 	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
 	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
@@ -408,7 +408,7 @@ $(document).ready(function() {
     $("#invoicestate").change(function(event) {
 	event.preventDefault();
 	$("#orggstin").text("");
-	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
 	if ($("#taxapplicable").val() == 7){
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
@@ -467,7 +467,7 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		$("#orggstin").text(resp["gkresult"]);
+		$("#orggstin").text(pad(resp["gkresult"], 2));
          	  }
                 })
                 .fail(function() {
@@ -669,7 +669,7 @@ $(document).ready(function() {
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 
 		    //State Code of Customer State is loaded.
-		    $("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));
+		    $("#statecodeofcustomer").text(pad($("#invoice_customerstate option:selected").attr("stateid"), 2));
 		    //Consignee State is synced with Customer State.
 		    /*if ($("#status").val() == 15) {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
@@ -687,7 +687,7 @@ $(document).ready(function() {
 
     //Change event for customer state.
     $("#invoice_customerstate").change(function(event) {
-	$("#statecodeofcustomer").text($("#invoice_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	$("#statecodeofcustomer").text(pad($("#invoice_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
 	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
@@ -768,7 +768,7 @@ $(document).ready(function() {
     //Change event for Consignee State.
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
-	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
+	$("#statecodeofconsignee").text(pad($("#consigneestate option:selected").attr("stateid"), 2));  //State code of consignee is loaded.
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
