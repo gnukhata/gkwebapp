@@ -425,7 +425,7 @@ $(document).ready(function() {
         $(".product_name_vat").change();
 	$("#orggstin").text("");
 	var gstinstateid=$("#invoice_state option:selected").attr("stateid");
-	$("#gstin_statecode").val(gstinstateid);
+	$("#gstin_statecode").val(pad(gstinstateid, 2));
 	 $.ajax({
                     url: '/existingorg?type=getgstin',
                     type: 'POST',
