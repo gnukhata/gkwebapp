@@ -553,9 +553,9 @@ $(document).ready(function() {
 		    $("#drcrnote_custsuppaddr").text(resp.invoicedata.custSupDetails["custaddr"]);
 		    if(resp.invoicedata.inoutflag == "15") {
 			$("#drcrnote_state").text(resp.invoicedata.sourcestate);
-			$("#statecodefordrcrnote").text(resp.invoicedata.sourcestatecode);
+			$("#statecodefordrcrnote").text(pad(resp.invoicedata.sourcestatecode, 2));
 			$("#drcrnote_custsuppstate").text(resp.invoicedata.custSupDetails["custsupstate"]);
-			$("#statecodeofcustsupp").text(resp.invoicedata.custSupDetails["custsupstatecode"]);
+			$("#statecodeofcustsupp").text(pad(resp.invoicedata.custSupDetails["custsupstatecode"], 2));
 			$("#drcrnote_issuer_name").text(resp.invoicedata.issuername);
 			$("#drcrnote_issuer_designation").text(resp.invoicedata.designation);
 			$('#orggstin').text(resp.invoicedata.orgstategstin);
@@ -566,9 +566,9 @@ $(document).ready(function() {
 		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
 		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
 		    $("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
-		    $("#statecodefordrcrnote_pur").text(resp.invoicedata.taxstatecode);
+			$("#statecodefordrcrnote_pur").text(pad(resp.invoicedata.taxstatecode, 2));
 		    $("#drcrnote_custsuppstate_pur").text(resp.invoicedata.sourcestate);
-		    $("#statecodeofcustsupp_pur").text(resp.invoicedata.sourcestatecode);
+			$("#statecodeofcustsupp_pur").text(pad(resp.invoicedata.sourcestatecode, 2));
 		    $('#orggstin').text(resp.invoicedata.orgstategstin);
 			$.ajax({
 			    url: '/showuser?action=getuser',
