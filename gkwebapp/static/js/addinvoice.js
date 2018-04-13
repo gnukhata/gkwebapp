@@ -469,7 +469,7 @@ $(document).ready(function() {
 	.done(function(resp) {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
-		$("#orggstin").text(pad(resp["gkresult"], 2));
+		$("#orggstin").text(resp["gkresult"]);
          	  }
                 })
                 .fail(function() {

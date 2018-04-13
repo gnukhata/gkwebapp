@@ -250,12 +250,14 @@ $(document).ready(function() {
 
     //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
-	str = str.toString();
+	if (str && str!="") {
+	    str = str.toString();
 	if (str.length == 1) {
 	    return str.length < max ? pad("0" + str, max) : str;
 	}
 	else {
 	    return str;
+	}
 	}
     }
 
@@ -378,7 +380,7 @@ $(document).ready(function() {
     $("#salesorderstate").change(function(event) {
 	event.preventDefault();
 	$("#orggstin").text("");
-	$("#statecodeforsalesorder").text($("#salesorderstate option:selected").attr("stateid"));
+	$("#statecodeforsalesorder").text(pad($("#salesorderstate option:selected").attr("stateid"), 2));
 	if ($("#taxapplicable").val() == 7){
 	    if ($("#salesorder_customerstate option:selected").val() == $("#salesorderstate option:selected").val()) {
 		$(".igstfield").hide();
@@ -626,7 +628,7 @@ $(document).ready(function() {
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#salesorder_customerstate option:selected").attr("stateid")]);
 
 		    //State Code of Customer State is loaded.
-		    $("#statecodeofcustomer").text($("#salesorder_customerstate option:selected").attr("stateid"));
+		    $("#statecodeofcustomer").text(pad($("#salesorder_customerstate option:selected").attr("stateid"), 2));
 		    //Consignee State is synced with Customer State.
 		    /*if ($("#status").val() == 15) {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
@@ -644,7 +646,7 @@ $(document).ready(function() {
 
     //Change event for customer state.
     $("#salesorder_customerstate").change(function(event) {
-	$("#statecodeofcustomer").text($("#salesorder_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	$("#statecodeofcustomer").text(pad($("#salesorder_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
 	if ($("#salesorder_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#salesorder_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
@@ -681,12 +683,8 @@ $(document).ready(function() {
     //Change event for Consignee State.
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
-	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
+	$("#statecodeofconsignee").text(pad($("#consigneestate option:selected").attr("stateid"), 2));  //State code of consignee is loaded.
 	if ($("#status").val() == 15) {
-	    if($("#statecodeofconsignee").text() in gstins) {
-		var custgstin = gstins[$("#statecodeofconsignee").text()];
-		$("#gstin").text(custgstin); // Customer gstin is synced with state code of consignee.
-	    } else {$("#gstin").text("");}
 	    if ($("#taxapplicable").val() == 7){
 		if ($("#consigneestate option:selected").val() == $("#salesorderstate option:selected").val()) {
 		    $(".igstfield").hide();
