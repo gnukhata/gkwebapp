@@ -109,11 +109,23 @@ $(document).ready(function() {
     }
   });
 
+     function pad(str, max) {
+	if (str && str!="") {
+	    str = str.toString();
+	if (str.length == 1) {
+	    return str.length < max ? pad("0" + str, max) : str;
+	}
+	else {
+	    return str;
+	}
+	}
+    }
+
     //Selected customer/supplier state autopopulate in gstin state and statecode.
     $("#add_state").change(function(event) {
         var availstate =  $("#add_state").val();
 	$(".gstinstate").val(availstate);
-	$(".statecode").val($("#add_state option:selected").attr("stateid"));
+	$(".statecode").val(pad($("#add_state option:selected").attr("stateid"),2));
     });
     
     
@@ -178,7 +190,7 @@ $("#add_state").keydown(function(event) {
 	if (cusstatecode.length == 1){
 	    cusstatecode = "0" + cusstatecode; 
 	}
-	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(cusstatecode); //for state code
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val(pad(cusstatecode, 2)); //for state code
 	if ($('#add_cussup_pan').val() != ''){
 	    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val($('#add_cussup_pan').val()).prop("disabled",true); //for pan
 	}
