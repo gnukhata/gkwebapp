@@ -274,12 +274,14 @@ $(document).ready(function() {
 
     //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
-	str = str.toString();
+	if (str && str!="") {
+	    str = str.toString();
 	if (str.length == 1) {
 	    return str.length < max ? pad("0" + str, max) : str;
 	}
 	else {
 	    return str;
+	}
 	}
     }
 
