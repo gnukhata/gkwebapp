@@ -30,7 +30,7 @@
       </div>
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-	{% if gkresult["psflag"] == 19 %}{{ gkresult["sourcestatecode"] }}{% endif %}{% if gkresult["psflag"] == 16 %}{{ gkresult["taxstatecode"] }}{% endif %}
+	{% if gkresult["psflag"] == 19 %}{{ '%02d' | format(gkresult["sourcestatecode"] | int) }}{% endif %}{% if gkresult["psflag"] == 16 %}{{ '%02d' | format(gkresult["taxstatecode"] | int) }}{% endif %}
       </div>
       {% if gkresult["psflag"] == 16 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
@@ -100,31 +100,17 @@
 	    {% trans %}Customer State{% endtrans %} :
 	  {% endif %}
 	</label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["psflag"] == 16 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"] }}
-	  {% endif %}
-	  {% if gkresult["psflag"] == 19 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"]}}
-	  {% endif %}
-	{% else %}
 	  {% if gkresult["psflag"] == 16 %}
 	    {{ gkresult["sourcestate"] }}
 	  {% endif %}
 	  {% if gkresult["psflag"] == 19 %}
 	    {{ gkresult["destinationstate"] }}
 	  {% endif %}
-	{% endif %}
       </div>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["psflag"] == 16 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-	  {% if gkresult["psflag"] == 19 %}{{ gkresult["custSupDetails"]["custsupstatecode"] }}{% endif %}
-	{% else %}
-	  {% if gkresult["psflag"] == 16 %}{{ gkresult["sourcestatecode"] }}{% endif %}
-	  {% if gkresult["psflag"] == 19 %}{{ gkresult["taxstatecode"] }}{% endif %}
-        {% endif %}
+	  {% if gkresult["psflag"] == 16 %}{{ '%02d' | format(gkresult["sourcestatecode"] | int)  }}{% endif %}
+	  {% if gkresult["psflag"] == 19 %}{{ '%02d' | format(gkresult["taxstatecode"] | int)  }}{% endif %}
       </div>
       {% if gkresult["taxflag"] == 22 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
@@ -163,7 +149,7 @@
       </div>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-	{% if gkresult["consignee"]["consigneestatecode"] %}{{ gkresult["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}
+	{% if gkresult["consignee"]["consigneestatecode"] %}{{ '%02d' | format(gkresult["consignee"]["consigneestatecode"]| int) }}{% else %}N/A{% endif %}
       </div>
       {% if gkresult["taxflag"] == 22 %}
 	<div class="form-inline form-group col-sm-12 nopadding">
