@@ -177,8 +177,8 @@
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-		  {% if gkresult["invdata"]["inoutflag"] == 9 %}{{ gkresult["invdata"]["taxstatecode"] }}{% endif %}
-		  {% if gkresult["invdata"]["inoutflag"] == 15 %}{{ gkresult["invdata"]["sourcestatecode"] }}{% endif %}
+		  {% if gkresult["invdata"]["inoutflag"] == 9 %}{{ '%02d' | format(gkresult["invdata"]["taxstatecode"] | int) }}{% endif %}
+		  {% if gkresult["invdata"]["inoutflag"] == 15 %}{{ '%02d' | format(gkresult["invdata"]["sourcestatecode"] | int) }}{% endif %}
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <div style="white-space: nowrap; display:table-cell;">
@@ -235,8 +235,8 @@
 		</div>
 		<div class="form-inline form-group col-xs-12 nopadding">
 		  <label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-		  {% if gkresult["invdata"]["inoutflag"] == 15 %}{{ gkresult["invdata"]["taxstatecode"] }}{% endif %}
-		  {% if gkresult["invdata"]["inoutflag"] == 9 %}{{ gkresult["invdata"]["sourcestatecode"] }}{% endif %}
+		  {% if gkresult["invdata"]["inoutflag"] == 15 %}{{ '%02d' | format(gkresult["invdata"]["taxstatecode"] | int) }}{% endif %}
+		  {% if gkresult["invdata"]["inoutflag"] == 9 %}{{ '%02d' | format(gkresult["invdata"]["sourcestatecode"] | int) }}{% endif %}
 		</div>
 		{% if gkresult["invdata"]["taxflag"] == 22 %}
 		  <div class="form-group form-inline col-xs-12 nopadding">

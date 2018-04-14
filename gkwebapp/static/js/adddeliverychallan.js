@@ -407,7 +407,7 @@ $(document).ready(function() {
 	if($(this).prop('checked') == true){
 	    $("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
 	    $("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
-	    $("#statecodeofconsignee").text($("#statecodeofcustomer").text());
+	    $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
 	    $("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").text());
 	    if(invoicedate >= gstdate){
 		$("#gstinconsignee").val($("#gstin").text());
@@ -441,7 +441,7 @@ $(document).ready(function() {
     //Change Event For 'State'.
     //invoice_customerstate
     $("#invoicestate").change(function(event) {
-	$("#statecodeforinvoice").text($("#invoicestate option:selected").attr("stateid"));
+	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
 	if ($("#taxapplicable").val() == 7){
 	    if ($("#deliverychallan_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
@@ -757,7 +757,7 @@ $(document).ready(function() {
 	    $("#gstin").text(resp["gkresult"]["gstin"][$("#deliverychallan_customerstate option:selected").attr("stateid")]);
 	    
 	    //State Code of Customer State is loaded.
-	    $("#statecodeofcustomer").text($("#deliverychallan_customerstate option:selected").attr("stateid"));
+	    $("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));
 	    
 	}
     })
@@ -771,7 +771,7 @@ $(document).ready(function() {
 
     //Change Event for 'Supplier/customer' state.
     $("#deliverychallan_customerstate").change(function(event) {
-	$("#statecodeofcustomer").text($("#deliverychallan_customerstate option:selected").attr("stateid"));  //State code is loaded.
+	$("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
 	if ($("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#deliverychallan_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
@@ -811,7 +811,7 @@ $(document).ready(function() {
     //Change event for 'consignee state'.
     $("#consigneestate").change(function(event) {
 	event.preventDefault();
-	$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));  //State code of consignee is loaded.
+	$("#statecodeofconsignee").text(pad($("#consigneestate option:selected").attr("stateid"), 2));  //State code of consignee is loaded.
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
