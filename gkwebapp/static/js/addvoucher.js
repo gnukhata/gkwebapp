@@ -145,12 +145,12 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
     var value = $('#invsel option:selected').attr("customername");
     if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1) {
-	$(".dramt:first").val(parseFloat(inv).toFixed(2));
-	$(".cramt:eq(1)").val(parseFloat(inv).toFixed(2));
+	$(".dramt:first").val(parseFloat(inv).toFixed(2)).change();
+	$(".cramt:eq(1)").val(parseFloat(inv).toFixed(2)).change();
     }
     if (($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") && sessionStorage.billflag ==1) {
-	$(".dramt:first").val(parseFloat(invbalance).toFixed(2));
-	$(".cramt:eq(1)").val(parseFloat(invbalance).toFixed(2));
+	$(".dramt:first").val(parseFloat(invbalance).toFixed(2)).change();
+	$(".cramt:eq(1)").val(parseFloat(invbalance).toFixed(2)).change();
     }
     if(value){
 	if ((($('#vtype').val()=="sales" && sessionStorage.invsflag ==1)  || ($('#vtype').val()=="payment") && sessionStorage.billflag == 1))
