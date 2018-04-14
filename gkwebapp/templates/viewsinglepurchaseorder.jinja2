@@ -100,31 +100,17 @@
 	    {% trans %}Customer State{% endtrans %} :
 	  {% endif %}
 	</label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["psflag"] == 16 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"] }}
-	  {% endif %}
-	  {% if gkresult["psflag"] == 19 %}
-	    {{ gkresult["custSupDetails"]["custsupstate"]}}
-	  {% endif %}
-	{% else %}
 	  {% if gkresult["psflag"] == 16 %}
 	    {{ gkresult["sourcestate"] }}
 	  {% endif %}
 	  {% if gkresult["psflag"] == 19 %}
 	    {{ gkresult["destinationstate"] }}
 	  {% endif %}
-	{% endif %}
       </div>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="stcode">{% trans %}State Code{% endtrans %} : </label>
-	{% if gkresult["consignee"]["consigneename"] %}
-	  {% if gkresult["psflag"] == 16 %}{{ '%02d' | format(gkresult["custSupDetails"]["custsupstatecode"] | int)  }}{% endif %}
-	  {% if gkresult["psflag"] == 19 %}{{ '%02d' | format(gkresult["custSupDetails"]["custsupstatecode"] | int)  }}{% endif %}
-	{% else %}
 	  {% if gkresult["psflag"] == 16 %}{{ '%02d' | format(gkresult["sourcestatecode"] | int)  }}{% endif %}
 	  {% if gkresult["psflag"] == 19 %}{{ '%02d' | format(gkresult["taxstatecode"] | int)  }}{% endif %}
-        {% endif %}
       </div>
       {% if gkresult["taxflag"] == 22 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
