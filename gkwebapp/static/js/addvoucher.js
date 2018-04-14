@@ -1453,6 +1453,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       return false;
     }
+      if ($("#invsel option:selected").val()!="") {
+	  if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
+                $("#inv-date-alert").alert();
+                $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#inv-date-alert").hide();
+                });
+                $('#vdate').focus().select();
+                return false;
+              }
+      }
     $("#vtable tbody tr").each(function() { //loop for the rows of the table body
       if ($(".cramt", this).val()==0 && $(".dramt", this).val()=="" || $(".cramt", this).val()=="" && $(".dramt", this).val()==0 ) { //checking whether a row has no amount.
         allow= false;
