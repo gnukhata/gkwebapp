@@ -78,14 +78,17 @@ $(document).ready(function()
           if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
           {
             $('#subgroupname').prepend('<option value="None">None</option>');
+	    $("#subgroupname option:first").attr("selected", "selected");
           }
           $('#subgroupname').append('<option value="New">New Sub-Group</option>');
         }
 
       });
     }
+    
   });
 
+  
   $("#nsgp").hide();
 
   $(".gsselect").bind("change keyup", function(){
