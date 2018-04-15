@@ -307,6 +307,7 @@ $("#findvoucher").submit(function(event) {
       $("#tday").select();
       return false;
     }
+      $('#tyear').val(yearpad($('#tyear').val(),4));
     var todate = $("#tyear").val()+$("#tmonth").val()+$("#tday").val();
     var fromdate = $("#fyear").val()+$("#fmonth").val()+$("#fday").val();
     var fstart = Date.parseExact(sessionStorage.yyyymmddyear1,"yyyy-MM-dd");
@@ -369,7 +370,7 @@ $("#findvoucher").submit(function(event) {
       });
       $('#tyear').focus();
       return false;
-    }
+    }      
 
     if (!Date.parseExact(todate,"yyyyMMdd"))
     {
