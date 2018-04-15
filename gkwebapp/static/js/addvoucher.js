@@ -283,7 +283,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $("#postdate-alert").hide();
     }
 
-          if (details.invid!="")
+          if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy"))
     	     {
 
               if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
@@ -1453,7 +1453,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       return false;
     }
-      if ($("#invsel option:selected").val()!="") {
+      if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy")) {
 	  if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
                 $("#inv-date-alert").alert();
                 $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
