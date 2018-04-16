@@ -271,7 +271,7 @@ $(document).ready(function() {
   var delta = 500;
   var lastKeypressTime = 0;
   $("#edit_cussup_address").keydown(function(event) {
-    if (event.which==13||event.which==9) {
+    if (event.which==13) {
       var thisKeypressTime = new Date();
 	if ( thisKeypressTime - lastKeypressTime <= delta ){
 	

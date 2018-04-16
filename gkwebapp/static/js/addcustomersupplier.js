@@ -612,8 +612,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
               return false;
 	  }
           $("#add_cussup_fax").focus();
-        // optional - if we'd rather not detect a triple-press
-        // as a second double-press, reset the timestamp
       }
     if (event.which==38) {
       event.preventDefault();
