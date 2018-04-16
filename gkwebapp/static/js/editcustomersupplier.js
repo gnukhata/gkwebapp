@@ -337,7 +337,12 @@ $(document).ready(function() {
   else if (event.which==27) {
       event.preventDefault();
       if ($("#edit_cussup").val() == "Supplier") {
-	  $("#edit_accountno").focus();
+	  if ($("#checkbnk").is(":visible")) {
+	      $("#checkbnk").focus();
+	  }
+	  else{
+	      $("#edit_accountno").focus();
+	  }
       } else {
 	  $("#cussup_edit_save").focus();
       }
@@ -470,11 +475,12 @@ $(document).ready(function() {
   }
   else if (event.which==27) {
     event.preventDefault();
-      if ($("#edit_cussup").val() == "Supplier") {
-	  $("#edit_accountno").focus();
-      } else {
-	  $("#cussup_edit_save").focus();
-      }
+      if ($("#checkbnk").is(":visible")) {
+	      $("#checkbnk").focus();
+	  }
+	  else{
+	      $("#edit_accountno").focus();
+	  }
   }
 });
 

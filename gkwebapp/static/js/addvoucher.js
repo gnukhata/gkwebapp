@@ -45,7 +45,7 @@
    Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
  */
 $(document).ready(function() {
-  $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
+    $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
     if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
 	$(".billhide").hide();
@@ -283,7 +283,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $("#postdate-alert").hide();
     }
 
-          if (details.invid!="")
+          if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy"))
     	     {
 
               if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
@@ -1453,7 +1453,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#vdate').focus().select();
       return false;
     }
-      if ($("#invsel option:selected").val()!="") {
+      if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy")) {
 	  if (Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy").compareTo(curdate)==1) {
                 $("#inv-date-alert").alert();
                 $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1994,28 +1994,33 @@ $("#instrumentmodal").modal("show");
       $("#instrument_year").numeric();
       $("#instrument_date").keydown(function(event) {
         if (event.which==13) {
-          event.preventDefault();
+            event.preventDefault();
+	    $(this).val(pad($(this).val(),2));
           $("#instrument_month").focus().select();
         }
         if (event.which==38) {
-          event.preventDefault();
-          $("#transfernote_no").focus().select();
+            event.preventDefault();
+	    $(this).val(pad($(this).val(),2));
+          $("#branchname").focus().select();
         }
       });
 
       $("#instrument_month").keydown(function(event) {
         if (event.which==13) {
-          event.preventDefault();
+            event.preventDefault();
+	    $(this).val(pad($(this).val(),2));
           $("#instrument_year").focus().select();
         }
         if (event.which==38) {
-          event.preventDefault();
+            event.preventDefault();
+	    $(this).val(pad($(this).val(),2));
           $("#instrument_date").focus().select();
         }
       });
       $("#instrument_year").keydown(function(event) {
         if (event.which==13) {
-          event.preventDefault();
+            event.preventDefault();
+	    $(this).val(yearpad($(this).val(),4));
                                     //
                                     let instrumentdate1=Date.parseExact($("#instrument_date").val()+$("#instrument_month").val()+$("#instrument_year").val(), "ddMMyyyy");
 
@@ -2036,7 +2041,8 @@ $("#instrumentmodal").modal("show");
 
         }
         if (event.which==38) {
-          event.preventDefault();
+            event.preventDefault();
+	    $(this).val(yearpad($(this).val(),4));
           $("#instrument_month").focus().select();
         }
       });
@@ -2047,27 +2053,6 @@ if (!($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "paymen
 }
   $('.instrdate').autotab('number');
 
-  function pad (str, max) { //to add leading zeros in date when single number is entered
-    str = str.toString();
-    if (str.length==1) {
-      return str.length < max ? pad("0" + str, max) : str;
-    }
-    else{
-      return str;
-    }
-  }
-  function yearpad (str, max) {
-    str = str.toString();
-    if (str.length==1) {
-      return str.length < max ? pad("200" + str, max) : str;
-    }
-    else if (str.length==2) {
-      return str.length < max ? pad("20" + str, max) : str;
-    }
-    else{
-      return str;
-    }
-  }
   //Leading zeroes are added on loss of focus from date fields
   $("#instrument_date").blur(function(event) {
     $(this).val(pad($(this).val(),2));
