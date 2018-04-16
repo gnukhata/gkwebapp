@@ -65,6 +65,7 @@ $(".serviceclass").hide();
     event.preventDefault();
     $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
   });
+
   /*$("#addcatselect").focus();
   if($("#addcatselect").is(':hidden'))
   {
@@ -935,6 +936,11 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   }
 
 });
+
+    $(document).off("click",".addbtn").on("click", ".addbtn", function() {
+	$('#product_tax_table tbody').append(taxfieldhtml);
+    });
+    
 $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified

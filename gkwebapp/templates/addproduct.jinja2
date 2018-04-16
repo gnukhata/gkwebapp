@@ -104,7 +104,8 @@
                       <tr>
 			<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
 			<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-			<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-1"></th>
 			<th class="col-xs-1"></th>
                       </tr>
                     </thead>
@@ -131,8 +132,11 @@
                             {% endfor %}
                           </select>
                         </td>
-                        <td class="col-xs-3">
+                        <td class="col-xs-2">
 			  <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  value="0.00">
+			</td>
+			<td class="col-xs-1">
+			  <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
 			</td>
 			<td class="col-xs-1">
 			</td>
