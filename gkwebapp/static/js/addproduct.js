@@ -841,6 +841,51 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
   }
 });
 
+    //"+" button added to after on mouse clicking new row is added. 
+    $(document).off("click",".addbtn").on("click", ".addbtn", function() {
+	var curindex1 = $(this).closest('tr').index();
+	var nextindex1 = curindex1+1;
+	if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+	    $("#tax_state-blank-alert").alert();
+	    $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#tax_state-blank-alert").hide();
+	    });
+	    return false;
+	}
+	if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
+	    $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	}
+	else {
+	    if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()==null) {
+		$("#tax-name-blank-alert").alert();
+		$("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-name-blank-alert").hide();
+		});
+		$('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+		return false;
+	    }
+	    if (!$.isNumeric($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val())) {
+		$("#tax-rate-blank-alert").alert();
+		$("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-rate-blank-alert").hide();
+		});
+		$('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
+		return false;
+	    }
+	}
+	$('#product_tax_table tbody').append(taxfieldhtml);
+	$('#product_tax_table tbody tr:eq('+nextindex1+') td:last').append(delhtml);
+	for (let j = 0; j < curindex1 + 1; j++) {
+            var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+            if (selectedtax != "VAT") {
+                for (let i=j+1; i<=curindex1+1;i++){
+                    $('#product_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+                }
+            }
+        }
+	$(".tax_name:last").change();
+    });
+    
 $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 {
   var curindex1 = $(this).closest('tr').index();
@@ -937,10 +982,6 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 
 });
 
-    $(document).off("click",".addbtn").on("click", ".addbtn", function() {
-	$('#product_tax_table tbody').append(taxfieldhtml);
-    });
-    
 $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
