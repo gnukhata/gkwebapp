@@ -2097,13 +2097,12 @@ if (event.which == 13) {
 	    $("#salesorder_save").focus();
 	}
     });
-
   $("#salesorder_addcust").click(function() {
     var statusinout;
-    if ($("#status").val() == '9') {
+    if ($("#status").val() == '19') {
       statusinout = "in";
     }
-    if ($("#status").val() == '15') {
+    if ($("#status").val() == '16') {
       statusinout = "out";
     }
     $.ajax({
