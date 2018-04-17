@@ -200,14 +200,15 @@
 			<table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
 			  <thead class="bg-primary input-sm">
                             <tr>
-                              <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                              <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
                               <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
                               <th class="col-xs-1"></th>
+			      <th class="col-xs-1"></th>
                             </tr>
 			  </thead>
 			  <tbody>
                             <tr>
-                              <td class="col-xs-8">
+                              <td class="col-xs-7">
 				<select class="form-control input-sm godown_name">
 				  <option value="" disabled hidden selected>Select Godown</option>
 				  {% for record in godown %}
@@ -219,6 +220,9 @@
 				<input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                               </td>
                               <td class="col-xs-1">
+				<span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+                              </td>
+			      <td class="col-xs-1">
                               </td>
                             </tr>
 			  </tbody>
@@ -261,14 +265,15 @@
                       <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
 			<thead class="bg-primary input-sm">
 			  <tr>
-			    <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+			    <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
 			    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+			    <th class="col-xs-1"></th>
 			    <th class="col-xs-1"></th>
 			  </tr>
 			</thead>
 			<tbody>
 			  <tr>
-			    <td class="col-xs-8">
+			    <td class="col-xs-7">
                               <select class="form-control input-sm godown_name">
 				<option value="" disabled hidden selected>Select Godown</option>
 				{% for record in godown %}
@@ -278,6 +283,9 @@
 			    </td>
 			    <td class="col-xs-3">
                               <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+			    </td>
+			    <td class="col-xs-1">
+			      <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
 			    </td>
 			    <td class="col-xs-1">
 			    </td>
