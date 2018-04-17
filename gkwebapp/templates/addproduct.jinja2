@@ -1,3 +1,10 @@
+<head>
+  <style>
+   span {
+       margin:5.5 auto;
+   }
+  </style>
+</head>
 <body>
 
   <div class="container-fluid " style="padding:1 !important; margin:0 !important;" >
@@ -136,7 +143,9 @@
 			  <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  value="0.00">
 			</td>
 			<td class="col-xs-1">
-			  <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			  <div style="text-align: center;">
+			    <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			  </div>
 			</td>
 			<td class="col-xs-1">
 			</td>
@@ -196,6 +205,9 @@
                 <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		    </div>
                     <div  id="openingstockdiv" class="form-group" hidden>
+		      <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+			{% trans %}Please select a godown.{% endtrans %}
+		      </div>
                       <div class="panel">
 			<table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
 			  <thead class="bg-primary input-sm">
@@ -220,7 +232,9 @@
 				<input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                               </td>
                               <td class="col-xs-1">
-				<span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+				<div style="text-align: center;">
+				  <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+				</div>
                               </td>
 			      <td class="col-xs-1">
                               </td>
@@ -242,26 +256,27 @@
 		{% else %}
 		  {% if userrole|int != 3 %}
 		    <div class="form-group col-sm-12">
-                    <input type="checkbox" name="godownflag" id="godownflag" value=0>
-      </input>
-      <input type="text" id="godownpresence" value="1" hidden="">
-      <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+                      <input type="checkbox" name="godownflag" id="godownflag" value=0></input>
+		      <input type="text" id="godownpresence" value="1" hidden="">
+		      <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		    </div>
 		    <div id="nogodown" class="form-group pds col-sm-6 noinventory">
-		    <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-		    <div class="input-group">
-                      <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                      <span class="input-group-addon input-sm" id="unitaddon"></span>
+		      <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+		      <div class="input-group">
+			<input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+			<span class="input-group-addon input-sm" id="unitaddon"></span>
+		      </div>
 		    </div>
-		  </div>
-		  <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+		    <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
 		  {% else %}
-		    <input type="hidden" name="godownflag" id="godownflag" value="1">
-      </input>
-      <input type="text" id="godownpresence" value="1" hidden>
-      <div  id="openingstockdiv" class="form-group col-sm-12">
+		      <input type="hidden" name="godownflag" id="godownflag" value="1"></input>
+		      <input type="text" id="godownpresence" value="1" hidden>
+		      <div  id="openingstockdiv" class="form-group col-sm-12">
 		  {% endif %}
-		    <div class="panel">
+		  <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+		    {% trans %}Please select a godown.{% endtrans %}
+		  </div>
+		  <div class="panel">
                       <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
 			<thead class="bg-primary input-sm">
 			  <tr>
@@ -285,7 +300,9 @@
                               <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
 			    </td>
 			    <td class="col-xs-1">
-			      <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+			      <div style="text-align: center;">
+				<span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+			      </div>
 			    </td>
 			    <td class="col-xs-1">
 			    </td>

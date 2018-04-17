@@ -875,6 +875,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	}
 	if (curindex_btn == ($("#product_tax_table tbody tr").length-1)) {
 	    $('#product_tax_table tbody').append(taxfieldhtml);
+	    $('#product_tax_table tbody tr:eq('+nextindex_btn+') td:eq(0) select').focus().select();
 	    $('#product_tax_table tbody tr:eq('+nextindex_btn+') td:last').append(delhtml);
 	}
 	for (let j = 0; j < curindex_btn + 1; j++) {
