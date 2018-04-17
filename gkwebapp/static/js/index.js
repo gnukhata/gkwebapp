@@ -30,11 +30,10 @@ $("#selectorg").load("/existingorg");
 $("#createorg").load("/createorg");
   $(document).keydown(function(event) {
     // setting shortcut keys for menu items.
-    if(event.ctrlKey && event.keyCode == 69) {
-      $("#selectnav").click();
-      setTimeout( function() { $("select:first, input:first").focus(); }, 500 );
-
+      if(event.ctrlKey && event.keyCode == 69) {
       event.preventDefault();
+	  $("#selectnav").click();
+	 
       }
     if(event.ctrlKey && event.keyCode == 82) {
       $("#createnav").click();
@@ -50,7 +49,7 @@ $("#createorg").load("/createorg");
     datatype: 'json',
   })
   .done(function(jsonobj) {
-    var orgs = jsonobj["gkresult"]
+      var orgs = jsonobj["gkresult"];
     if (orgs==0) {
       $("#selectnav").hide();
       $("#createnav").click();
@@ -61,16 +60,13 @@ $("#createorg").load("/createorg");
   })
   .fail(function() {
     console.log("error");
-  })
+   })
   .always(function() {
     console.log("complete");
   });
 
 
-  $("#selectnav").click(function(event){
-  setTimeout( function() { $("select:first, input:first").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
-});
-
+ 
 $("#createnav").click(function(event){
 setTimeout( function() { $("#orgname").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 });
