@@ -127,7 +127,8 @@
               <tr>
 		<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
 		<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-		<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-1"></th>
 		<th class="col-xs-1"></th>
 		<th class=""></th>
               </tr>
@@ -157,8 +158,13 @@
 		    <option value="" stateid="">None</option>
 		  </select>
 		</td>
-		<td class="col-xs-3">
+		<td class="col-xs-2">
 		  <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
+		</td>
+		<td class="col-xs-1 product_tax_disable">
+		  <div style="text-align: center;">
+		    <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+		  </div>
 		</td>
 		<td class="col-xs-1 product_tax_disable">
 
@@ -216,14 +222,15 @@
           <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
             <thead class="bg-primary input-sm">
               <tr>
-                <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
                 <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
                 <th class="col-xs-1 text-center"></th>
+		<th class="col-xs-1 text-center"></th>
               </tr>
             </thead>
             <tbody>
                 <tr class="editgodownid">
-                  <td class="col-xs-8">
+                  <td class="col-xs-7">
                     <select class="form-control input-sm editgodown_name">
                       <option value="" disabled selected hidden>Select Godown</option>
                       {% for record in godown %}
@@ -235,6 +242,11 @@
                     <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
                   </td>
                   <td class="col-xs-1">
+		    <div style="text-align: center;">
+		      <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
+		    </div>
+                  </td>
+		  <td class="col-xs-1">
                   </td>
                 </tr>
             </tbody>
@@ -262,14 +274,15 @@
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
         <thead class="bg-primary input-sm">
           <tr>
-            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+            <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
             <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
             <th class="col-xs-1 text-center"></th>
+	    <th class="col-xs-1 text-center"></th>
           </tr>
         </thead>
         <tbody>
             <tr class="editgodownid">
-              <td class="col-xs-8">
+              <td class="col-xs-7">
                 <select class="form-control input-sm editgodown_name">
                   <option value="" disabled selected hidden>Select Godown</option>
                   {% for record in godown %}
@@ -281,6 +294,11 @@
                 <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
               </td>
               <td class="col-xs-1">
+		<div style="text-align: center;">
+		  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
+		</div>
+              </td>
+	      <td class="col-xs-1">
               </td>
             </tr>
         </tbody>
@@ -294,15 +312,16 @@
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
         <thead class="bg-primary input-sm">
           <tr>
-            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+            <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
             <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
             <th class="col-xs-1 text-center"></th>
+	    <th class="col-xs-1 text-center"></th>
           </tr>
         </thead>
         <tbody>
           {% for record in range(numberofgodowns) %}
             <tr class="editgodownid">
-              <td class="col-xs-8">
+              <td class="col-xs-7">
                 <select class="form-control input-sm editgodown_name">
                   {% for record in godown %}
                   <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
@@ -313,6 +332,11 @@
                 <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
               </td>
               <td class="col-xs-1">
+		<div style="text-align: center;">
+		  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
+		</div>
+              </td>
+	      <td class="col-xs-1">
               </td>
             </tr>
           {% endfor %}
