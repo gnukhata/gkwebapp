@@ -1100,26 +1100,29 @@ $(document).ready(function() {
             $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
 	}
 	else {
-            if ($('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select').val()=="") {
-		$("#godown-blank-alert").alert();
-		$("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#godown-blank-alert").hide();
-		});
-		$('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select').focus();
-		return false;
-            }
-	    if(numberofgodowns == 1){
-		$('#epsubmit').focus();
-		return false;
-	    }
+	    if (numberofgodowns > 0 ) {
+		if ($('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) option:selected').val()=="") {
+		    $("#godown-blank-alert").alert();
+		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#godown-blank-alert").hide();
+		    });
+		    $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select').focus();
+		    return false;
+		}
+	    //if(numberofgodowns == 1){
+		//$('#epsubmit').focus();
+		//return false;
+	    //}
 	    $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-            $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+	    $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	    $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
             if (curindex_goaddbtn == 0) {
 		$("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
             }
             $(".editgodown_ob").numeric();
             $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+	    }
+	    else{ $('#epsubmit').focus(); }
 	}
     });
 

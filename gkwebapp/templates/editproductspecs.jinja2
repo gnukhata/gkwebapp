@@ -224,6 +224,9 @@
           <span class="input-group-addon input-sm" id="unitaddon"></span>
         </div>
       </div>
+      <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please select a godown.{% endtrans %}
+      </div>
       <div  id="editopeningstockdiv" class="form-group" hidden>
         <div class="panel">
           <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
@@ -276,7 +279,10 @@
       <span class="input-group-addon input-sm" id="unitaddon"></span>
     </div>
   </div>
-  <div  id="editopeningstockdiv" class="form-group" hidden>
+  <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+    {% trans %}Please select a godown.{% endtrans %}
+  </div>
+  <div id="editopeningstockdiv" class="form-group" hidden>
     <div class="panel">
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
         <thead class="bg-primary input-sm">
@@ -288,32 +294,35 @@
           </tr>
         </thead>
         <tbody>
-            <tr class="editgodownid">
-              <td class="col-xs-7">
-                <select class="form-control input-sm editgodown_name">
-                  <option value="" disabled selected hidden>Select Godown</option>
-                  {% for record in godown %}
+          <tr class="editgodownid">
+            <td class="col-xs-7">
+              <select class="form-control input-sm editgodown_name">
+                <option value="" disabled selected hidden>Select Godown</option>
+                {% for record in godown %}
                   <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
-              </td>
-              <td class="col-xs-1">
-		<div style="text-align: center;">
-		  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
-		</div>
-              </td>
-	      <td class="col-xs-1">
-              </td>
-            </tr>
+                {% endfor %}
+              </select>
+            </td>
+            <td class="col-xs-3">
+              <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+            </td>
+            <td class="col-xs-1">
+	      <div style="text-align: center;">
+		<span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
+	      </div>
+            </td>
+	    <td class="col-xs-1">
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
   </div>
   {% else %}
   <input type="text" name="godownflag" id="editgodownflag" value="1" hidden>
+  <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+    {% trans %}Please select a godown.{% endtrans %}
+  </div>
   <div  id="editopeningstockdiv" class="form-group">
     <div class="panel">
       <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">

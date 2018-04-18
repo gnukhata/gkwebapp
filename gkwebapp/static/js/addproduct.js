@@ -924,7 +924,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
         $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
         return false;
       }
-	$('#product_tax_table tbody').append(taxfieldhtml);
+	  $('#product_tax_table tbody').append(taxfieldhtml);
 	$('#product_tax_table tbody tr:eq('+nextindex1+') td:last').append(delhtml);
 	$(".tax_rate").numeric();
         for (let j = 0; j < curindex1 + 1; j++) {
@@ -1105,7 +1105,6 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 	    $('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select').focus().select();
 	}
 	else {
-	    console.log(numberofgodowns);
 	    if (numberofgodowns > 0 ) {
 		if ($('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(0) select option:selected').val()=="") {
 		    $("#godown-blank-alert").alert();
