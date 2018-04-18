@@ -836,13 +836,13 @@
 	{% else %}
 	    <button id="invoice_addcust" class="btn btn-info btn-sm" accesskey="u"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add S<u>u</u>pplier{% endtrans %}</button>
 	{% endif %}
-	<label class="btn btn-primary btn-sm uploadclass" for="my-file-selector">
+	<label class="btn btn-primary btn-sm uploadclass" for="my-file-selector" id="attachlabel">
 	  <input name="img" accesskey="a" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
 	  {% trans %}<u>A</u>ttach{% endtrans %}
 	</label>
 	<span class='label label-info' id="upload-file-info"></span>
-	<small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
+	<small class="form-text text-danger text-muted" id="img_label">(JPG/JPEG images only.)</small>
 	<button class="btn btn-info btnfocus btn-sm" id="viewattach" accesskey="h" style="display:none;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View Attac<u>h</u>ment{% endtrans %}</button>
       </div>
     </div>
