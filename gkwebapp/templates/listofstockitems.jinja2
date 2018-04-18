@@ -26,7 +26,7 @@
 
      #latable tbody {
 	 display:block;
-	 height: calc(100vh - 16em);
+	 height: calc(69vh);
 	 overflow-y:scroll;
      }
      #latable thead,#latable tbody tr {
@@ -35,7 +35,7 @@
 	 table-layout:fixed;
      }
      #latable thead {
-	 width: calc( 100% - 0.65em );
+	 width: calc( 99.1% );
      }
      .rightlist {
 	 text-align: right;
@@ -63,12 +63,20 @@
     </style>
   </head>
   <body>
-    <span class="pull-right" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#LaModal"></i></span>
+    <div class="col-xs-10 nopadding">
     <span style="margin:auto; display:table; font-size:120%;"><strong>
       {% trans %}List of Products{% endtrans %}
     </strong></span>
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+    </div>
+    <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+      <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+      </span>
+      <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+      <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+      </span>
+      <span class="input-group-addon" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#LaModal"></i></span>
+    </div>
+    <table id="latable" class="table shadow table-bordered" >
       <thead class="bg-primary">
 	<tr>
           <th class="col-xs-1 srno calign" >

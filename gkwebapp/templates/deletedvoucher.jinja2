@@ -24,7 +24,7 @@
      }
      #deletedvouchertable tbody {
 	 display:block;
-	 height: calc(100vh - 16em);
+	 height: calc(66vh);
 	 overflow-y:scroll;
      }
      #deletedvouchertable thead,#deletedvouchertable tbody tr {
@@ -33,7 +33,7 @@
 	 table-layout:fixed;
      }
      #deletedvouchertable thead {
-	 width: calc( 100% - 0.65em )
+	 width: calc( 99.1% )
      }
      .ralign{
 	 text-align:right;
@@ -48,12 +48,21 @@
     </style>
   </head>
   <body>
-    <span class="pull-right" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#DelVModal"></i></span>
+    <div class="col-xs-10 nopadding">
     <span style="margin:auto; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
   </br>
+    </div>
+    <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+      <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+      </span>
+      <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+      <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+      </span>
+      <span class="input-group-addon" ><i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#DelVModal"></i></span>
+    </div>
+      
   <div class="row">
-    <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="clearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-    <table id="deletedvouchertable" class=" table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+    <table id="deletedvouchertable" class=" table shadow table-bordered">
       <thead class="bg-primary">
         <tr>
           <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>

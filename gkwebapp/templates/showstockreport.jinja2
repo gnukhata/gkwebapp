@@ -26,7 +26,7 @@
 
   #latable tbody {
       display:block;
-      height: calc(100vh - 20em);
+      height: calc(62vh);
       overflow-y:scroll;
   }
   #latable thead,#latable tbody tr {
@@ -35,7 +35,7 @@
       table-layout:fixed;
   }
   #latable thead {
-      width: calc( 100% - 0.65em );
+      width: calc( 99.01% );
   }
 
   .rightlist {
@@ -58,19 +58,28 @@
   <input type="hidden" id="goid" name="goid" value="{{stockrefresh["goid"]}}"></input>
   <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
   <input type="hidden" id="goaddr" name="goaddr" value="{{godownadd}}"></input>
-
-
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
-  {% if godown == "" %}
-  <span style="margin-left: 46.4%;"><strong><i>{% trans %}Product Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
-  {% else %}
-  <span style="margin-left: 42.7%;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
-  <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
-  {% endif %}
-  <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-  <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+  <div class="row">
+    <div class="col-xs-10 nopadding">
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
+      {% if godown == "" %}
+	<span style="margin-left: 46.4%;"><strong><i>{% trans %}Product Report{% endtrans %}</i></strong></span>
+	<span style="margin:auto; display:table; width: 100%; text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+      {% else %}
+	<span style="margin-left: 42.7%;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
+	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
+      {% endif %}
+    </div>
+    <div class="pull-right input-group input-group-sm" style="margin-bottom:2px; padding-right:21px;">
+      <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+      </span>
+      <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+      <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+      </span>
+    </div>
+  </div>
+  
+  <table id="latable" class="table shadow table-bordered" >
     <thead class="bg-primary">
       <tr>
         <th class="col-xs-1 calign" >
@@ -264,7 +273,7 @@
     <small>
         <b>Deli Note No. : </b> Delivery Note Number, &nbsp
         <b>INV No. :</b> Invoice Number, &nbsp
-	<b>RN No. :</b> Rejection Note Number<br><br>
+	<b>RN No. :</b> Rejection Note Number, &nbsp
         {% if godown != "" %}
         <b>TN No. :</b> Transfer Note Number
         {% endif %}

@@ -24,7 +24,7 @@
 
 	#gtbtable tbody {
 			display:block;
-			height: calc(100vh - 16em);
+			height: calc(69vh);
 			overflow-y:scroll;
 	}
 	 #gtbtable thead,#gtbtable tbody tr {
@@ -33,7 +33,7 @@
 			table-layout:fixed;
 	}
 	 #gtbtable thead {
-			width: calc( 100% - 0.65em )
+			width: calc( 99.1% )
 	}
 	.ralign{
 		text-align:right;
@@ -63,10 +63,19 @@
 		</style>
 </head>
 <body>
-	<span style="margin:auto; display:table;"><strong>{% trans %}Gross Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+  <div class="col-xs-10 nopadding">
+    <span style="margin:auto; display:table;"><strong>{% trans %}Gross Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+  </div>
+  <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+    <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+    </span>
+    <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+    <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+    </span>
+  </div>
 	<div class="row">
 		<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="gtbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-		<table id="gtbtable" class="table shadow table-bordered trialbaltable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+		<table id="gtbtable" class="table shadow table-bordered trialbaltable">
 			<thead class="bg-primary">
 				<tr>
 					<th class="smwrap calign">{% trans %}Sr.No.{% endtrans %}</th>

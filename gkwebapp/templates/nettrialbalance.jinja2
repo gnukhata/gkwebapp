@@ -2,72 +2,81 @@
 <html lang="en">
 <head>
 	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Net Trial Balance{% endtrans %}</title>
-<style type="text/css">
-.shadow {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-#ntbtable td {
-	font-size: 75%;
-	padding: 4 !important;
-	margin: 4 !important;
-}
+	<style type="text/css">
+	 .shadow {
+	     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	 }
+	 #ntbtable td {
+	     font-size: 75%;
+	     padding: 4 !important;
+	     margin: 4 !important;
+	 }
 
-#ntbtable th {
-	font-size: 85%;
-}
-.card-view .title {
-		font-weight: bold;
-		display: inline-block;
-		min-width: 30%;
-		text-align: left !important;
-}
+	 #ntbtable th {
+	     font-size: 85%;
+	 }
+	 .card-view .title {
+	     font-weight: bold;
+	     display: inline-block;
+	     min-width: 30%;
+	     text-align: left !important;
+	 }
 
-#ntbtable tbody {
-		display:block;
-		height: calc(100vh - 16em);
-		overflow-y:scroll;
-}
-#ntbtable thead,#ntbtable tbody tr {
-		display:table;
-		width:100%;
-		table-layout:fixed;
-}
-#ntbtable thead {
-		width: calc( 100% - 0.65em )
-}
-.ralign{
-	text-align:right;
+	 #ntbtable tbody {
+	     display:block;
+	     height: calc(69vh);
+	     overflow-y:scroll;
+	 }
+	 #ntbtable thead,#ntbtable tbody tr {
+	     display:table;
+	     width:100%;
+	     table-layout:fixed;
+	 }
+	 #ntbtable thead {
+	     width: calc( 99.1% )
+	 }
+	 .ralign{
+	     text-align:right;
 
-}
-.cred{
-	color:red;
-}
-.calign{
-	text-align:center;
-}
-.smwrap{
-width:3%
-}
-.smwrap1{
-width:2.4%
-}
+	 }
+	 .cred{
+	     color:red;
+	 }
+	 .calign{
+	     text-align:center;
+	 }
+	 .smwrap{
+	     width:3%
+	 }
+	 .smwrap1{
+	     width:2.4%
+	 }
 
-.mdwrap{
-width:6%
-}
-.lngwrap{
-width:22%
-}
-.ewrap{
-	width:8%
-}
+	 .mdwrap{
+	     width:6%
+	 }
+	 .lngwrap{
+	     width:22%
+	 }
+	 .ewrap{
+	     width:8%
+	 }
 
-</style>
+	</style>
 </head>
 <body>
-	<span style="margin:auto; display:table;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+  <div class="col-xs-10 nopadding">
+    <span style="margin:auto; display:table;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+  </div>
+  <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+    <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+    </span>
+    <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+    <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+    </span>
+  </div>
 	<div class="row">
-		<table id="ntbtable" class="table shadow table-bordered trialbaltable" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+		<table id="ntbtable" class="table shadow table-bordered trialbaltable" >
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="ntbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 			<thead class="bg-primary">
 				<tr>

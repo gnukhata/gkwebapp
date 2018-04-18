@@ -22,7 +22,7 @@
      }
      #latable tbody {
          display:block;
-         height: calc(100vh - 18em);
+         height: calc(69vh);
          overflow-y:scroll;
      }
      #latable thead,#latable tbody tr {
@@ -31,7 +31,7 @@
          table-layout:fixed;
      }
      #latable thead {
-         width: calc( 100% - 0.65em );
+         width: calc( 99.1% );
      }
      .biglwrap {
          width:20%;
@@ -67,14 +67,14 @@
 
      .fixed-tablepurchase tbody {
 	 display:block;
-	 height: calc(100vh - 35.5em);
+	 height: calc(69vh);
 	 min-height: 160px;
 	 overflow-y:scroll;
      }
 
      .fixed-tablesale tbody {
 	 display:block;
-	 height: calc(100vh - 35.5em);
+	 height: calc(69vh);
 	 min-height: 140px;
 	 overflow-y:scroll;
      }
@@ -84,7 +84,7 @@
 	 table-layout:fixed;
      }
      .fixed-table thead {
-	 width: calc( 100% - 0.75em );
+	 width: calc( 99.1%);
      }
 
      .fixed-table tfoot {
@@ -95,12 +95,20 @@
    </head>
    <body>
      <div id="listdiv">
+       <div class="col-xs-10 nopadding">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
       <br>
-      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px; display:none" id="laclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="latable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true" >
+       </div>
+       <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+	 <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+	 </span>
+	 <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+	 <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+	 </span>	 
+       </div>
+      <table id="latable" class="table shadow table-bordered" >
          <thead class="bg-primary">
             <tr>
                <th class="srnowrap text-center" >
