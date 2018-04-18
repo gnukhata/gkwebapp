@@ -23,9 +23,12 @@
       <div class="panel-body">
         <div class="container-fluid row">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
-
-            <label >
+	    <label >
+              {% if gkstatus=="in" %}
+		{% trans %}Please select a supplier!{% endtrans %}
+              {% else %}
 		{% trans %}Please select a customer!{% endtrans %}
+              {% endif %}
             </label>
           </div>
           <div class="alert alert-danger" id="date-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -802,7 +805,7 @@
 	{% if status|int == 16 %}
 	  <button id="salesorder_addcust" class="btn btn-info btn-sm" accesskey="d"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}A<u>d</u>d Supplier{% endtrans %}</button>
 	{% else %}
-	  <button id="salesorder_addcust" accesskey="u" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add C<u>u</u>stomer{% endtrans %}</button>
+	  <button id="salesorder_addcust" accesskey="d" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}A<u>d</u>d Customer{% endtrans %}</button>
         {% endif %}
 	<label class="btn btn-primary btn-sm" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">

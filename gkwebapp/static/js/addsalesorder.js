@@ -2099,10 +2099,10 @@ if (event.which == 13) {
     });
   $("#salesorder_addcust").click(function() {
     var statusinout;
-    if ($("#status").val() == '19') {
+    if ($("#status").val() == '16') {
       statusinout = "in";
     }
-    if ($("#status").val() == '16') {
+    if ($("#status").val() == '19') {
       statusinout = "out";
     }
     $.ajax({
