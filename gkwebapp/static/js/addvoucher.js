@@ -477,10 +477,19 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#save').focus().select();
       event.preventDefault();
     }
-    if (event.which==13) {
-      event.preventDefault();
+      if (event.which==13) {
+	  $('#bankdetails').focus();
     }
   });
+
+    
+    $('#bankdetails').keydown(function(event){
+	if(event.which==13){
+	    $('#save').focus().select();
+	}
+    });
+
+    
   $('#narration').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
       $('#vtable tbody tr:last input:enabled').focus().select();
