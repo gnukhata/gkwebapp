@@ -686,7 +686,7 @@ else{
 	}
       
     var custsupval;
-    if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
+      if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9' || $("#status").val()=="16" ){
       custsupval= 19;
     }
     else {
