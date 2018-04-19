@@ -984,7 +984,7 @@ $(document).ready(function() {
                  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
              }
          }
-	  else if (resp["gkstatus"] == 1) {
+	  else if (resp["gkstatus"] == 1 && editflag == false) {
 	      $("#notax-alert").alert();
 	      $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		  $("#notax-alert").hide();
@@ -1751,7 +1751,7 @@ $(document).ready(function() {
 		       }
 		   }
 	       }
-	       else if (resp["gkstatus"] == 1) {
+	       else if (resp["gkstatus"] == 1 && editflag == false) {
 		   $("#notax-alert").alert();
 		   $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
 		       $("#notax-alert").hide();
