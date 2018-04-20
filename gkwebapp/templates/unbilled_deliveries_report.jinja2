@@ -81,15 +81,15 @@ width:22%
   <div class="col-xs-10 nopadding">
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+	<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
 		{% else %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+	<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+	<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
 		{% else %}
-	<span style="margin:auto; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+	<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 		{% endif %}
 	{% endif %}
   </div>
