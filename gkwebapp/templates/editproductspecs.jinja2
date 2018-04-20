@@ -128,6 +128,10 @@
   {% if userrole|int != 3 %}
     <div class="row">
       <div class="form-group taxdiv">
+	<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+          {% trans %}Please Specify Tax Name.{% endtrans %}
+        </div>
 	<div class="panel taxinnerdiv">
 	  <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
 	    <thead class="bg-primary input-sm">

@@ -895,7 +895,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
         }
 	else {
-            if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').val()=="") {
+            if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').val()==null) {
 		$("#tax-name-blank-alert").alert();
 		$("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#tax-name-blank-alert").hide();
@@ -915,6 +915,7 @@ $(document).ready(function() {
             $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    $(".product_tax_disable").prop('disabled',false);
             $(".tax_rate").numeric();
+	    //selected tax name removed from list except 'VAT'. 
 	    for (let j = 0; j < curindex_addbtn + 1; j++) {
                 var selectedtax = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
                 if (selectedtax != "VAT") {
@@ -946,7 +947,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
         }
         else {
-          if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+          if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()==null) {
             $("#tax-name-blank-alert").alert();
             $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#tax-name-blank-alert").hide();
@@ -1093,7 +1094,7 @@ $(document).ready(function() {
 	var curindex_goaddbtn = $(this).closest('tr').index();
 	var nextindex_goaddbtn = curindex_goaddbtn+1;
 	var previndex_goaddbtn = curindex_goaddbtn-1;
-	var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:not(:hidden)').length;
+	var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:not(:hidden)').length-1;
 
 	if (curindex_goaddbtn != ($("#editgodown_ob_table tbody tr").length-1)) {
             $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
@@ -1109,16 +1110,17 @@ $(document).ready(function() {
 		    return false;
 		}
 		$('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		//selected godowns name are removed from list. 
 		for (let j = 0; j < curindex_goaddbtn + 1; j++) {
 		    var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+j+') td:eq(0) select option:selected').val();
 		    $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 		}
 		$('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
-	    if (curindex_goaddbtn == 0) {
-	    $('#editgodown_ob_table tbody tr:last td:last').append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-            }
-            $(".editgodown_ob").numeric();
-            $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+		if(numberofgodowns > curindex_goaddbtn) {
+		    $('#editgodown_ob_table tbody tr:last td:last').append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+		}
+		$(".editgodown_ob").numeric();
+		$('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
 	    }
 	    else{ $('#epsubmit').focus(); }
 	}

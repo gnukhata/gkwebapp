@@ -878,6 +878,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	    $('#product_tax_table tbody tr:eq('+nextindex_btn+') td:eq(0) select').focus().select();
 	    $('#product_tax_table tbody tr:eq('+nextindex_btn+') td:last').append(delhtml);
 	}
+	//selected tax name removed from list except 'VAT'.
 	for (let j = 0; j < curindex_btn + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
             if (selectedtax != "VAT") {
@@ -1106,6 +1107,7 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 	}
 	else {
 	    if (numberofgodowns > 0 ) {
+		console.log("Finally");
 		if ($('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(0) select option:selected').val()=="") {
 		    $("#godown-blank-alert").alert();
 		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1127,6 +1129,7 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 		    $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 		}
 		$(".godown_ob").numeric();
+		//selected godowns are removed from list.
 		$('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 		$('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select option[value=""]').prop('selected', true);
 		$('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select').focus().select();

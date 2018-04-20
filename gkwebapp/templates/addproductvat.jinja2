@@ -54,92 +54,101 @@
         </div>
       </div>
       <div class="col-sm-6" id="rightdiv">
+	<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please Specify Tax Name.{% endtrans %}
+        </div>
         <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
 	{% if userrole|int != 3 %}
-              <div class="row">
-                <div class="form-group" style="margin-top: 3%;">
-            <div class="panel">
-              <table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
-                <thead class="bg-primary input-sm">
-                  <tr>
-                    <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-                    <th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
-                    <th class="col-xs-1"></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm tax_name product_new_name">
-                        <option value="" selected hidden disabled>Select Tax</option>
-                        <option value="VAT">VAT</option>
-                        <option value="CVAT">CVAT</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-4">
-                      <select class="form-control input-sm tax_state product_new_state" >
-                        <option value="">None</option>
-                        <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
-                        <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
-                        <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
-                        <option value="Assam" stateid="4">Assam</option>
-                        <option value="Bihar" stateid="5">Bihar</option>
-                        <option value="Chandigarh" stateid="6">Chandigarh</option>
-                        <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
-                        <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
-                        <option value="Daman and Diu" stateid="9">Daman and Diu</option>
-                        <option value="Delhi" stateid="10">Delhi</option>
-                        <option value="Goa" stateid="11">Goa</option>
-                        <option value="Gujarat" stateid="12">Gujarat</option>
-                        <option value="Haryana" stateid="13">Haryana</option>
-                        <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
-                        <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
-                        <option value="Jharkhand" stateid="16">Jharkhand</option>
-                        <option value="Karnataka" stateid="17">Karnataka</option>
-                        <option value="Kerala" stateid="19">Kerala</option>
-                        <option value="Lakshadweep" stateid="20">Lakshadweep</option>
-                        <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
-                        <option value="Maharashtra" stateid="22">Maharashtra</option>
-                        <option value="Manipur" stateid="23">Manipur</option>
-                        <option value="Meghalaya" stateid="24">Meghalaya</option>
-                        <option value="Mizoram" stateid="25">Mizoram</option>
-                        <option value="Nagaland" stateid="26">Nagaland</option>
-                        <option value="Odisha" stateid="29">Odisha</option>
-                        <option value="Pondicherry" stateid="31">Pondicherry</option>
-                        <option value="Punjab" stateid="32">Punjab</option>
-                        <option value="Rajasthan" stateid="33">Rajasthan</option>
-                        <option value="Sikkim" stateid="34">Sikkim</option>
-                        <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
-                        <option value="Telangana" stateid="36">Telangana</option>
-                        <option value="Tripura" stateid="37">Tripura</option>
-                        <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
-                        <option value="Uttarakhand" stateid="39">Uttarakhand</option>
-                        <option value="West Bengal" stateid="41">West Bengal</option>
-                      </select>
-                    </td>
-                    <td class="col-xs-3">
-                      <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="0.00">
-                    </td>
-                    <td class="col-xs-1">
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-            <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
-            <div class="collapse" id="moresmall">
-              <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
-              <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
-	      {% if not godown %}
-		<small  class="form-text text-muted productclass">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-              {% else %}
-		<small  class="form-text text-muted " id="godownmsg">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-              {% endif %}	      
-            </div>
-            <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
-		</div>
+          <div class="row">
+            <div class="form-group" style="margin-top: 3%;">
+              <div class="panel">
+		<table id="product_tax_table" class="table table-condensed table-bordered fixed-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+                      <th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
+                      <th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
+                      <th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+                      <th class="col-xs-1"></th>
+		      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="col-xs-4">
+			<select class="form-control input-sm tax_name product_new_name">
+                          <option value="" selected hidden disabled>Select Tax</option>
+                          <option value="VAT">VAT</option>
+                          <option value="CVAT">CVAT</option>
+			</select>
+                      </td>
+                      <td class="col-xs-4">
+			<select class="form-control input-sm tax_state product_new_state" >
+                          <option value="">None</option>
+                          <option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option>
+                          <option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option>
+                          <option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option>
+                          <option value="Assam" stateid="4">Assam</option>
+                          <option value="Bihar" stateid="5">Bihar</option>
+                          <option value="Chandigarh" stateid="6">Chandigarh</option>
+                          <option value="Chhattisgarh" stateid="7">Chhattisgarh</option>
+                          <option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option>
+                          <option value="Daman and Diu" stateid="9">Daman and Diu</option>
+                          <option value="Delhi" stateid="10">Delhi</option>
+                          <option value="Goa" stateid="11">Goa</option>
+                          <option value="Gujarat" stateid="12">Gujarat</option>
+                          <option value="Haryana" stateid="13">Haryana</option>
+                          <option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option>
+                          <option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option>
+                          <option value="Jharkhand" stateid="16">Jharkhand</option>
+                          <option value="Karnataka" stateid="17">Karnataka</option>
+                          <option value="Kerala" stateid="19">Kerala</option>
+                          <option value="Lakshadweep" stateid="20">Lakshadweep</option>
+                          <option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option>
+                          <option value="Maharashtra" stateid="22">Maharashtra</option>
+                          <option value="Manipur" stateid="23">Manipur</option>
+                          <option value="Meghalaya" stateid="24">Meghalaya</option>
+                          <option value="Mizoram" stateid="25">Mizoram</option>
+                          <option value="Nagaland" stateid="26">Nagaland</option>
+                          <option value="Odisha" stateid="29">Odisha</option>
+                          <option value="Pondicherry" stateid="31">Pondicherry</option>
+                          <option value="Punjab" stateid="32">Punjab</option>
+                          <option value="Rajasthan" stateid="33">Rajasthan</option>
+                          <option value="Sikkim" stateid="34">Sikkim</option>
+                          <option value="Tamil Nadu" stateid="35">Tamil Nadu</option>
+                          <option value="Telangana" stateid="36">Telangana</option>
+                          <option value="Tripura" stateid="37">Tripura</option>
+                          <option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option>
+                          <option value="Uttarakhand" stateid="39">Uttarakhand</option>
+                          <option value="West Bengal" stateid="41">West Bengal</option>
+			</select>
+                      </td>
+                      <td class="col-xs-2">
+			<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate" value="0.00">
+                      </td>
+                      <td class="col-xs-1">
+			<div style="text-align: center;">
+			  <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			</div>
+                      </td>
+		      <td class="col-xs-1">
+                      </td>
+                    </tr>
+                  </tbody>
+		</table>
               </div>
+              <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
+              <div class="collapse" id="moresmall">
+		<small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
+		<small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+		{% if not godown %}
+		  <small  class="form-text text-muted productclass">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
+		{% else %}
+		  <small  class="form-text text-muted " id="godownmsg">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
+		{% endif %}	      
+              </div>
+              <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+	    </div>
+          </div>
 	{% endif %}
         <div class="row noinventory">
           <div class="row  productclass">
@@ -156,14 +165,15 @@
                     <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
                       <thead class="bg-primary input-sm">
                         <tr>
-                          <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                          <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
                           <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
                           <th class="col-xs-1"></th>
+			  <th class="col-xs-1"></th>
                         </tr>
                       </thead>
                       <tbody>
                         <tr>
-                          <td class="col-xs-8">
+                          <td class="col-xs-7">
                             <select class="form-control input-sm godown_name">
                               <option value="" disabled hidden selected>Select Godown</option>
                               {% for record in godown %}
@@ -175,6 +185,11 @@
                             <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                           </td>
                           <td class="col-xs-1">
+			    <div style="text-align: center;">
+			      <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			    </div>
+                          </td>
+			  <td class="col-xs-1">
                           </td>
                         </tr>
                       </tbody>
@@ -213,27 +228,33 @@
 		<input type="text" id="godownpresence" value="1" hidden>
 		<div  id="openingstockdiv" class="form-group col-sm-12">
 	      {% endif %}
-		<div class="panel">
-                  <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-                    <thead class="bg-primary input-sm">
-                      <tr>
-			<th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-			<th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-			<th class="col-xs-1"></th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-			<td class="col-xs-8">
-                          <select class="form-control input-sm godown_name">
-                            <option value="" disabled hidden selected>Select Godown</option>
-                            {% for record in godown %}
-                              <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-                            {% endfor %}
-                          </select>
-			</td>
-			<td class="col-xs-3">
-                          <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+	      <div class="panel">
+                <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+                  <thead class="bg-primary input-sm">
+                    <tr>
+		      <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+		      <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+		      <th class="col-xs-1"></th>
+		      <th class="col-xs-1"></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+		      <td class="col-xs-7">
+                        <select class="form-control input-sm godown_name">
+                          <option value="" disabled hidden selected>Select Godown</option>
+                          {% for record in godown %}
+                            <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+                          {% endfor %}
+                        </select>
+		      </td>
+		      <td class="col-xs-3">
+                        <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+		      </td>
+		      <td class="col-xs-1">
+			<div style="text-align: center;">
+			  <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			</div>
 			</td>
 			<td class="col-xs-1">
 			</td>
