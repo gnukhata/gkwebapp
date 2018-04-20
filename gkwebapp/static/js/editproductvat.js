@@ -311,17 +311,18 @@ $(document).ready(function() {
           if (resp["gkresult"].length > 0) {
 	      taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	      var stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
-              $('#product_edit_tax_table tbody tr').remove();
-          for (tax of resp["gkresult"]) {
+              $('#product_edit_tax_table tbody tr:first').remove();
+              for (tax of resp["gkresult"]) {
               $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
               $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-              $(".product_tax_disable").prop('disabled',true);
+	      $(".product_tax_disable").prop('disabled',true);
 	      $(".tax_del").prop('disabled',true);
 	      $('.addbtn').prop('disabled',true);
               $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
               $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
 	      $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
-        }
+              }
+	      $(".tax_del:first").hide();
       }
         existingnonetax = resp["gkresult"];
       })
@@ -782,6 +783,7 @@ $(document).ready(function() {
     }
   });
 
+    //click event for '+' button in tax table.
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	var curindex_addbtn = $(this).closest('tr').index();
 	var nextindex_addbtn = curindex_addbtn+1;
@@ -792,6 +794,7 @@ $(document).ready(function() {
 	    $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#tax_state-blank-alert").hide();
 	    });
+	    $('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(1) select').focus();
 	    return false;
 	}
 	
@@ -817,7 +820,6 @@ $(document).ready(function() {
             }
 
 	    $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
-	    console.log("here");
             $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    $(".product_tax_disable").prop('disabled',false);
             $(".tax_rate").numeric();
@@ -847,7 +849,8 @@ $(document).ready(function() {
         $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#tax_state-blank-alert").hide();
         });
-        return false;
+	  $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
+          return false;
       }
       if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -869,31 +872,20 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
           return false;
         }
-        $('#product_edit_tax_table tbody').append('<tr value="new">'+
-        '<td class="col-xs-4">'+
-        '<select class="form-control input-sm tax_name product_new_name">'+
-          '<option value="" selected hidden disabled>Select Tax</option>'+
-          '<option value="VAT">VAT</option>'+
-          '<option value="CVAT">CVAT</option>'+
-        '</select>'+
-        '</td>'+
-        '<td class="col-xs-4">'+
-        '<select class="form-control input-sm tax_state product_new_state" >'+
-        '<option value="">None</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>'+
-        '</select>'+
-        '</td>'+
-        '<td class="col-xs-3">'+
-        '<input class="form-control input-sm tax_rate text-right product_new_rate numtype"  placeholder="Rate">'+
-        '</td>'+
-        '<td class="col-xs-1">'+
-        '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-        '</tr>');
-        $(".tax_rate").numeric();
-        if (selectedtaxname == "CVAT") {
-          $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedtaxname+']').prop('hidden', true).prop('disabled', true);
-        }
-        $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+          $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
+          $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	  $(".product_tax_disable").prop('disabled',false);
+          $(".tax_rate").numeric();
+	  for (let j = 0; j < curindex1 + 1; j++) {
+              var selectedtax = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+              if (selectedtax != "VAT") {
+                  for (let i=j+1; i<=curindex1+1;i++){
+                      $('#product_edit_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+                  }
+              }
+          }
+	  $(".tax_name:last").change();
+          $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
     }
     else if(event.which==190 && event.shiftKey)
@@ -1003,6 +995,7 @@ $(document).ready(function() {
     }
   });
 
+    //click event for '+' button in godown table.
     $(document).off("click",".goaddbtn").on("click",".goaddbtn",function(event){
 	var curindex_goaddbtn = $(this).closest('tr').index();
 	var nextindex_goaddbtn = curindex_goaddbtn+1;
@@ -1085,7 +1078,7 @@ $(document).ready(function() {
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	$('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
-        if (curindex1 == 0) {
+        if (numberofgodowns > curindex1) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".editgodown_ob").numeric();

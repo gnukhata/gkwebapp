@@ -406,7 +406,7 @@ $(document).ready(function() {
             $('#product_edit_tax_table tbody tr:first').remove();
         for (tax of resp["gkresult"]) {
             $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
-          $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+            $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
             $(".product_tax_disable").prop('disabled',true);
 	    $(".tax_del").prop('disabled',true);
 	    $('.addbtn').prop('disabled',true);
@@ -1161,7 +1161,7 @@ $(document).ready(function() {
         $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	$('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
-        if (curindex1 == 0) {
+        if (numberofgodowns > curindex1) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
         }
         $(".editgodown_ob").numeric();

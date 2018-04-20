@@ -532,7 +532,6 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
     let curindex = $(this).closest('tr').index();
     let nextindex = curindex + 1;
 	let previndex = curindex - 1;
-	console.log(curindex);
 	if (event.which == 13) {
 	    event.preventDefault();
 	    $('.open_stock:eq('+ curindex +')').focus().select();
@@ -922,6 +921,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
   }
 });
 
+    //Click event for '+' button in tax table.
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	var curindex_addbtn = $(this).closest('tr').index();
 	var nextindex_addbtn = curindex_addbtn+1;
@@ -932,6 +932,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	    $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#tax_state-blank-alert").hide();
 	    });
+	    $('#product_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(1) select').focus();
 	    return false;
 	}
 	if (curindex_addbtn != ($("#product_tax_table tbody tr").length-1)) {
@@ -986,6 +987,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#tax_state-blank-alert").hide();
       });
+      $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
       return false;
     }
     if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
@@ -1140,6 +1142,7 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
   }
 });
 
+    //click event for '+' button in godown table.
     $(document).off("click",".goaddbtn").on("click",".goaddbtn",function(event){
 	var curindex_goaddbtn = $(this).closest('tr').index();
 	var nextindex_goaddbtn = curindex_goaddbtn+1;

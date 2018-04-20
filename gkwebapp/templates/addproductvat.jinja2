@@ -1,3 +1,10 @@
+<head>
+  <style>
+   span {
+       margin:5.5 auto;
+   }
+  </style>
+</head>
 <body>
 
   <div class="container-fluid " style="padding:1 !important; margin:0 !important;" >
@@ -54,9 +61,14 @@
         </div>
       </div>
       <div class="col-sm-6" id="rightdiv">
-	<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
-          {% trans %}Please Specify Tax Name.{% endtrans %}
-        </div>
+	<div class="row">
+	  <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Please Specify Tax Name.{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="tax_state-blank-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Please select a state.{% endtrans %}
+          </div>
+	</div>
         <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#CatModal"></i>
 	{% if userrole|int != 3 %}
           <div class="row">

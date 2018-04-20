@@ -1107,7 +1107,6 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 	}
 	else {
 	    if (numberofgodowns > 0 ) {
-		console.log("Finally");
 		if ($('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(0) select option:selected').val()=="") {
 		    $("#godown-blank-alert").alert();
 		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1397,7 +1396,6 @@ $("#addgodown").click(function() {
 	    }
 	    
 	});
-	console.log(gobj);
 	var goid=$("#godown_name option:selected").attr("value");
 	if (stockallow == 1){
 	    $.ajax({
@@ -1494,7 +1492,6 @@ $("#addgodown").click(function() {
     let curindex = $(this).closest('tr').index();
     let nextindex = curindex + 1;
 	let previndex = curindex - 1;
-	console.log(curindex);
 	if (event.which == 13) {
 	    event.preventDefault();
 	    $('.open_stock:eq('+ curindex +')').focus().select();
