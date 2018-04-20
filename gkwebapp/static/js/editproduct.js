@@ -403,9 +403,7 @@ $(document).ready(function() {
         if (resp["gkresult"].length > 0) {
             taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
-          $('#product_edit_tax_table tbody tr:first').remove();
-
-
+            $('#product_edit_tax_table tbody tr:first').remove();
         for (tax of resp["gkresult"]) {
             $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
           $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');

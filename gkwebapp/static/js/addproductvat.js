@@ -1140,6 +1140,49 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
   }
 });
 
+    $(document).off("click",".goaddbtn").on("click",".goaddbtn",function(event){
+	var curindex_goaddbtn = $(this).closest('tr').index();
+	var nextindex_goaddbtn = curindex_goaddbtn+1;
+	var previndex_goaddbtn = curindex_goaddbtn-1;
+	var selectedgodown = $('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:selected').val();
+	var numberofgodowns = $('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:not(:hidden)').length-1;
+
+	if (curindex_goaddbtn != ($("#godown_ob_table tbody tr").length-1)) {
+	    $('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+	}
+	else {
+	    if (numberofgodowns > 0) {
+		if ($('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:selected').val()=="") {
+		    $("#godown-blank-alert").alert();
+		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#godown-blank-alert").hide();
+		    });
+		    $('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select').focus();
+		    return false;
+		}
+		if ($('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(1) input').val()=="") {
+		    $("#os-blank-alert").alert();
+		    $("#os-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#os-blank-alert").hide();
+		    });
+		    $('#godown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(1) input').focus();
+		    return false;
+		}
+		$('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		if (curindex_goaddbtn == 0) {
+		    $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+		}
+		$(".godown_ob").numeric();
+		$('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+		$('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value=""]').prop('selected', true);
+		$('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+	    }else{
+		$("#apsubmit").focus();
+	    }
+	}
+    });
+    
+
 $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event)
 {
   var curindex1 = $(this).closest('tr').index();

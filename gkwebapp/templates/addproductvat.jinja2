@@ -161,6 +161,9 @@
                 <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		</div>
                 <div  id="openingstockdiv" class="form-group" hidden>
+		  <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+		    {% trans %}Please select a godown.{% endtrans %}
+		  </div>
                   <div class="panel">
                     <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
                       <thead class="bg-primary input-sm">
@@ -186,7 +189,7 @@
                           </td>
                           <td class="col-xs-1">
 			    <div style="text-align: center;">
-			      <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			      <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
 			    </div>
                           </td>
 			  <td class="col-xs-1">
@@ -228,6 +231,9 @@
 		<input type="text" id="godownpresence" value="1" hidden>
 		<div  id="openingstockdiv" class="form-group col-sm-12">
 	      {% endif %}
+	      <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+		{% trans %}Please select a godown.{% endtrans %}
+	      </div>
 	      <div class="panel">
                 <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
                   <thead class="bg-primary input-sm">
@@ -253,7 +259,7 @@
 		      </td>
 		      <td class="col-xs-1">
 			<div style="text-align: center;">
-			  <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
 			</div>
 			</td>
 			<td class="col-xs-1">
