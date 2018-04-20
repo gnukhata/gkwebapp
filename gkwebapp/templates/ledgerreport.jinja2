@@ -80,14 +80,24 @@
   <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
   <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
   <input type="hidden" id="modalindex" value=""></input>
+  <div class="row">
+  <div class="col-xs-10 nopadding">
   {% if ledgerheader["projectname"]!="" %}
   <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
   {% endif %}
   <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
+  <span style="margin-left:50%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
+  </div>
+  <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+    <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+    </span>
+    <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+    <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+    </span>
+  </div>
+  </div>
     <div class="row">
-      <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="lclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
-      <table id="ledgertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
+      <table id="ledgertable" class="table shadow table-bordered">
 	<thead class="bg-primary">
           <tr>
             <th class="dtwrap calign" >
