@@ -31,7 +31,19 @@ $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
     var currentrow = 0;
+    $('.glyphicon').click(function () {
+        $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up"); // toggling the up and down 
+    });
 
+    //Sorting the data in ascending/descending order
+    $("#latable").bootstrapTable({"sortName": "transDate", "sortOrder":"desc"},
+				 {"sortName": "tnNo", "sortOrder":"desc"},
+				 {"sortName": "disFrom", "sortOrder":"desc"},
+				 {"sortName": "delAt", "sortOrder":"desc"},
+				 {"sortName": "transProd", "sortOrder":"desc"},
+				 {"sortName": "prodQty", "sortOrder":"desc"},
+				 {"sortName": "transStatus", "sortOrder":"desc"});
+    
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first td:eq(1) a').addClass('selected');
 

@@ -90,15 +90,15 @@
   </head>
   <body>
     <div class="col-xs-10 nopadding">
-    <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong></span>
-    <span style="margin-left: 46.4%;"><strong>{% trans %}List of Transfer Notes{% endtrans %}</strong></span>
-    {% if godownname!="" and godownname!="" %}
-      <input type="text" id="godownselect" value="1" hidden></input>
-      <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong id="goid" data-goid="{{goid}}">{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
-    {% else %}
-      <input type="text" id="godownselect" value="0" hidden></input>
-    {% endif %}
-    <br>
+      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="startdate" data-startdate="{{startdate}}">{{startdate}}</strong> {% trans %}to{% endtrans %} <strong id="enddate" data-enddate="{{enddate}}">{{enddate}}</strong></span>
+      <span style="margin-left: 46.4%;"><strong>{% trans %}List of Transfer Notes{% endtrans %}</strong></span>
+      {% if godownname!="" and godownname!="" %}
+	<input type="text" id="godownselect" value="1" hidden></input>
+	<span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of Godown{% endtrans %}: </i><strong id="goid" data-goid="{{goid}}">{{godownname}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownaddress}}</strong></span>
+      {% else %}
+	<input type="text" id="godownselect" value="0" hidden></input>
+      {% endif %}
+      <br>
     </div>
     <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
@@ -106,33 +106,41 @@
       <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
       <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
       </span>
-     </div>
+    </div>
     <table id="latable" class="table shadow table-bordered" >
       <thead class="bg-primary">
 	<tr>
-          <th class="srnowrap text-center" >
+          <th class="srnowrap text-center" data-sortable="false">
             {% trans %}Sr. No.{% endtrans %}
           </th>
-          <th class="smwrap text-center" >
+          <th class="smwrap text-center" data-sortable="true" data-field="tnNo" data-sorter="alphanum">
             {% trans %}TN No.{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
+	    {#<span class="glyphicon glyphicon-chevron-up" hidden></span>#}
           </th>
-          <th class="smwrap text-center" >
+          <th class="smwrap text-center" data-sortable="true" data-field="tansDate">
 	    {% trans %}Date{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-          <th class="bigwrap text-center" >
+          <th class="bigwrap text-center" data-sortable="true" data-sorter="alphanum" data-field="disFrom">
 	    {% trans %}Dispatched From{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-          <th class="bigwrap text-center" >
+          <th class="bigwrap text-center" data-sortable="true" data-sorter="alphanum" data-field="delAt">
 	    {% trans %}To be Delivered At{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-          <th class="bigwrap text-center" >
+          <th class="bigwrap text-center" data-sortable="true" data-sorter="alphanum" data-field="transProd">
 	    {% trans %}Products{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-          <th class="qtywrap text-right" >
+          <th class="qtywrap text-right" data-sortable="true" data-sorter="alphanum" data-field="prodQty">
 	    {% trans %}Quantity{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-	  <th class="srnowrap text-center" >
+	  <th class="srnowrap text-center" data-sortable="true" data-field="tansStatus">
 	    {% trans %}Status{% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
 	</tr>
       </thead>
@@ -179,6 +187,7 @@
       </div>
     </div><!-- /.modal -->
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table-natural-sorting.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listoftransfernotes.js')}}"></script>
   </body>
 </html>
