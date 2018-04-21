@@ -1860,13 +1860,24 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 });
 
     $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
-	let searchtext = $("#reportsearch").val();
-	$("table tbody tr:not(:contains('" + searchtext + "'))").hide();
-	$("table tbody tr:contains('" + searchtext + "')").show();
+	let searchtext = $("#reportsearch").val().toLowerCase();
+	if (searchtext != "") {
+	    $("table tbody tr").each(function(index){
+		if (index != 0) {
+		    let rowtext = $(this).text().toLowerCase();
+		    if (rowtext.indexOf(searchtext) != -1) {
+			$(this).show();
+		    }
+		    else {
+			$(this).hide();
+		    }
+		}
+	    });
+	}
     });
     $(document).off('keyup' ,'#reportsearch').on('keyup' ,'#reportsearch',function(e) {
 	//String to search for is stored in searchtext variable.
-	    let searchtext = $("#reportsearch").val();
+	let searchtext = $("#reportsearch").val().toLowerCase();
 	    //When search field is blank the clear search button is hidden.
 	    if (searchtext == "") {
 		$("#reportclearsearchspan").hide();
@@ -1876,8 +1887,19 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 		$("#reportclearsearchspan").show();
 	    }
 	    //Table rows containing search text are shown and others hidden.
-	    $("table tbody tr:not(:contains('" + searchtext + "'))").hide();
-	    $("table tbody tr:contains('" + searchtext + "')").show();
+	    if (searchtext != "") {
+		$("table tbody tr").each(function(index){
+		    if (index != 0) {
+			let rowtext = $(this).text().toLowerCase();
+			if (rowtext.indexOf(searchtext) != -1) {
+			    $(this).show();
+			}
+			else {
+			    $(this).hide();
+			}
+		    }
+		});
+	    }
 	    //Pressing 'Esc' button clears search.
 	    if (e.which == 27) {
 		$("#reportsearch").val("");
