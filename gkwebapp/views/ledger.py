@@ -175,7 +175,7 @@ def printLedgerReport(request):
         sheet.column_dimensions['A'].width = 10
         sheet.column_dimensions['B'].width = 14
         sheet.column_dimensions['C'].width = 16
-        sheet.column_dimensions['D'].width = 30
+        sheet.column_dimensions['D'].width = 42
         sheet.column_dimensions['E'].width = 16
         sheet.column_dimensions['F'].width = 16
         sheet.column_dimensions['G'].width = 16
@@ -291,7 +291,7 @@ def printLedgerReport(request):
             if narration != "":
                 row +=1
                 sheet['D'+str(row)] = "(" + narration + ")"
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', italic=True)
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
                 sheet['D'+str(row)].alignment = Alignment(vertical='center')
             row +=1
         ledgerwb.save('report.xlsx')
