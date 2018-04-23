@@ -60,8 +60,7 @@ $(document).ready(function()
       {
         accdetails=jsonObj["gkresult"];
         $("#editaccountform").show();
-
-        $("#groupname").val(accdetails["groupname"]);
+        $("#groupname").val(accdetails["groupcode"]);
         $("#groupname").prop("disabled", true);
         $("#subgroupname").val(accdetails["subgroupname"]);
         $("#subgroupname").prop("disabled", true);
@@ -131,6 +130,8 @@ $(document).ready(function()
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
       $("#openingbal").focus().select();
+      $("#groupname").prop("disabled", true);
+      $("#subgroupname").prop("disabled", true);	
     }
     else{
       if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
@@ -140,8 +141,10 @@ $(document).ready(function()
         $("#openingbal").prop("disabled", false);
 
       }
+      $("#subgroupname").prop("disabled", false);
+      $("#groupname").prop("disabled", false);
       $("#accountname").prop("disabled",false);
-      $("#accountname").focus().select();
+      $("#groupname").focus().select();
 
     }
 
