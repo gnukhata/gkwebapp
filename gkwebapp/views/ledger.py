@@ -285,8 +285,8 @@ def printLedgerReport(request):
                 else :
                     sheet['D'+str(row)] = k["accountname"]
                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
-                    if(i<length-1):
-                        row += 1
+                if(i<length-1):
+                    row += 1
             narration = transaction["narration"]
             if narration != "":
                 row +=1
