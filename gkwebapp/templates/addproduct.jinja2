@@ -148,6 +148,7 @@
 			  </div>
 			</td>
 			<td class="col-xs-1">
+			    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			</td>
                       </tr>
                     </tbody>
@@ -155,42 +156,42 @@
 		</div>
                 <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
                 <div class="collapse" id="moresmall">
-                    <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
-                    <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
-		    {% if not godown %}
+                  <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
+                  <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+		  {% if not godown %}
                     <small  class="form-text text-muted productclass">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-                    {% else %}
+                  {% else %}
                     <small  class="form-text text-muted " id="godownmsg">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-                    {% endif %}
-		    <small  class="form-text text-muted serviceclass"> When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
+                  {% endif %}
+		  <small  class="form-text text-muted serviceclass"> When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
                 </div>
                 <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
               </div>
-	    <!--
-		<div class="panel col-xs-8 igsttax nopadding" hidden>
-		    <table id="igst_tax_table" class="table table-condensed table-bordered">
-                      <thead class="bg-primary input-sm">
-			<tr>
-			  <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
+	      <!--
+		   <div class="panel col-xs-8 igsttax nopadding" hidden>
+		   <table id="igst_tax_table" class="table table-condensed table-bordered">
+                   <thead class="bg-primary input-sm">
+		   <tr>
+		   <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
 
-			  <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
+		   <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
 
-			</tr>
-                      </thead>
-		      <tbody>
-			<tr>
-			  <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
-			    {% trans %}IGST{% endtrans %}
-			  </td>
-			  <td class="col-xs-6">
-			    <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
-			  </td>
-			</tr>
-		      </tbody>
+		   </tr>
+                   </thead>
+		   <tbody>
+		   <tr>
+		   <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
+		   {% trans %}IGST{% endtrans %}
+		   </td>
+		   <td class="col-xs-6">
+		   <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
+		   </td>
+		   </tr>
+		   </tbody>
 
-		    </table>
-		</div>
-		-->
+		   </table>
+		   </div>
+		 -->
 
             </div>
 	    {% endif %}
@@ -237,6 +238,7 @@
 				</div>
                               </td>
 			      <td class="col-xs-1">
+				  <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
                               </td>
                             </tr>
 			  </tbody>
@@ -305,6 +307,7 @@
 			      </div>
 			    </td>
 			    <td class="col-xs-1">
+				<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			    </td>
 			  </tr>
 			</tbody>

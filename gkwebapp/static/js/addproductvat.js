@@ -958,7 +958,6 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	    if (curindex_addbtn == ($("#product_tax_table tbody tr").length-1)) {
 		$('#product_tax_table tbody').append(taxfieldhtml);
 		$('#product_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-		$('#product_tax_table tbody tr:eq('+nextindex_addbtn+') td:last').append(delhtml);
 	    }
 	    $(".tax_rate").numeric();
 	    for (let j = 0; j < curindex_addbtn + 1; j++) {
@@ -1013,7 +1012,6 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 
 	$('#product_tax_table tbody').append(taxfieldhtml);
 	$('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-	$('#product_tax_table tbody tr:eq('+nextindex1+') td:last').append(delhtml);
 	$(".tax_rate").numeric();
 	for (let j = 0; j < curindex1 + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
@@ -1062,6 +1060,9 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
+    if($('#product_tax_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+	$('#product_tax_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+    }
     $('#product_tax_table tbody tr:last td:eq(0) select').focus().select();
   });
   $('#product_tax_table tbody tr:last td:eq(0) select').select();
@@ -1172,9 +1173,6 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 		    return false;
 		}
 		$('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-		if (curindex_goaddbtn == 0) {
-		    $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-		}
 		$(".godown_ob").numeric();
 		$('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 		$('#godown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value=""]').prop('selected', true);
@@ -1217,9 +1215,6 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
           return false;
         }
         $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        if (curindex1 == 0) {
-          $("#godown_ob_table tbody tr:last td:last").append('<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }
         $(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	$('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
@@ -1262,6 +1257,9 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
 $(document).off("click",".godown_del").on("click", ".godown_del", function() {
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
+    if($('#godown_ob_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+	$('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+    }  
     $('#godown_ob_table tbody tr:last td:eq(0) select').focus().select();
   });
   $('#godown_ob_table tbody tr:last td:eq(0) select').select();
