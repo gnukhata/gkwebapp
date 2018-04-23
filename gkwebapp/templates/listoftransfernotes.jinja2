@@ -118,7 +118,7 @@
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
 	    {#<span class="glyphicon glyphicon-chevron-up" hidden></span>#}
           </th>
-          <th class="smwrap text-center" data-sortable="true" data-field="tansDate">
+          <th class="smwrap text-center" data-sortable="true" data-field="tansDate" data-sorter="alphanum">
 	    {% trans %}Date{% endtrans %}
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
@@ -138,9 +138,8 @@
 	    {% trans %}Quantity{% endtrans %}
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
-	  <th class="srnowrap text-center" data-sortable="true" data-field="tansStatus">
+	  <th class="srnowrap text-center">
 	    {% trans %}Status{% endtrans %}
-	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto;"></span>
           </th>
 	</tr>
       </thead>

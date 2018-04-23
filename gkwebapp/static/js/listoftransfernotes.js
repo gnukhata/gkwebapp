@@ -41,8 +41,7 @@ $(document).ready(function() {
 				 {"sortName": "disFrom", "sortOrder":"desc"},
 				 {"sortName": "delAt", "sortOrder":"desc"},
 				 {"sortName": "transProd", "sortOrder":"desc"},
-				 {"sortName": "prodQty", "sortOrder":"desc"},
-				 {"sortName": "transStatus", "sortOrder":"desc"});
+				 {"sortName": "prodQty", "sortOrder":"desc"});
     
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first td:eq(1) a').addClass('selected');
