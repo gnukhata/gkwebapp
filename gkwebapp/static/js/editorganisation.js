@@ -306,9 +306,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	var previndex_addbtn = curindex_addbtn-1;
 	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
 	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:not(:hidden)').length-1;
-	console.log(gstinstring);
 
-	if (numberofstates > 0) {
+	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
+
+	if($('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val()==""){
+	    $("#gstin_done").focus();
+	}
+	else if (curindex_addbtn != ($("#gstintable tbody tr").length-1)) {
+	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	}
+	else if (numberofstates > 0) {
             $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
             $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
