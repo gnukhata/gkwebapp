@@ -2097,13 +2097,12 @@ if (event.which == 13) {
 	    $("#salesorder_save").focus();
 	}
     });
-
   $("#salesorder_addcust").click(function() {
     var statusinout;
-    if ($("#status").val() == '9') {
+    if ($("#status").val() == '16') {
       statusinout = "in";
     }
-    if ($("#status").val() == '15') {
+    if ($("#status").val() == '19') {
       statusinout = "out";
     }
     $.ajax({
@@ -2127,7 +2126,7 @@ if (event.which == 13) {
         $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
 			      {
 				  modalpresent = 1;
-            if ($("#status").val() == '9') {
+	    if ($("#status").val() == '16') {
               $("#add_cussup").val('19');
             } else {
               $('#add_cussup').val('3');

@@ -37,7 +37,7 @@ $(document).ready(function() {
     }
 
   // Bankdetails will be hidden for Customer
-  if($('#status').val()=='9'){
+  if($('#status').val()=='9' ||$('#status').val()=='16'){
       $("#bankdetails").show();
       $("#textareahelplbl").hide();
   } else {
@@ -250,7 +250,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       event.preventDefault();
       gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
-	  if($('#status').val()=='9'){
+	  if($('#status').val()=='9' || $('#status').val()=="16"){
 	      $("#checkbnkpop").focus();
 	  } else {
 	      $("#cussup_save").focus();
@@ -686,7 +686,7 @@ else{
 	}
       
     var custsupval;
-    if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9') {
+      if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9' || $("#status").val()=="16" ){
       custsupval= 19;
     }
     else {
@@ -788,7 +788,7 @@ else{
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup").val());
-	if ($("#status").val() == "9"){
+      if ($("#status").val() == "9" || $('#status').val()=="16"){
 	    var bankdetails = {}; //dictionary for bank details
 	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
 	    bankdetails["accountno"] = $.trim($("#accountno").val());

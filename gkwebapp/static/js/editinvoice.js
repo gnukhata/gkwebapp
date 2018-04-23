@@ -2411,6 +2411,12 @@ if (event.which == 13) {
 	// Consignee flag is set to false.
 	consigneeflag = false;
 	editflag = true;
+	$("#invoice_save").hide();
+	$("#invoice_addcust").hide();
+	$("#img_label").hide();
+	$("#attachlabel").hide();
+	$("#invoice_edit").show();
+	
         var invid = $("#invselect option:selected").val();
 	// If an invoice is selected its details are fetched.
         if (invid != "") {
@@ -2735,6 +2741,9 @@ if (event.which == 13) {
     $("#invoice_edit").click(function(event){
 	editflag = false;
 	$("#invoice_save").show();
+	$("#invoice_addcust").show();
+	$("#img_label").show();
+	$("#attachlabel").show();
 	$("#tviw").show();
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
