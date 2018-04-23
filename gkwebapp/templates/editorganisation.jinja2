@@ -380,8 +380,9 @@
 		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 		    <thead class="bg-primary input-sm">
 		      <tr>
-			<th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-5 text-center">{% trans %}State{% endtrans %}</th>
 			<th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
+			<th class="col-xs-1"></th>
 			<th class="col-xs-1"></th>
 		      </tr>
 		    </thead>
@@ -390,7 +391,7 @@
 			{% for gstin in gkresult["gstin"] %}
 			  {% set gstinstr = gkresult["gstin"][gstin]%}
 			  <tr>
-			    <td class="col-xs-6">
+			    <td class="col-xs-5">
 			      <select stateid="{{ gstin }}" class="form-control input-sm gstinstate">
 				<option value="" disabled hidden selected>Select State</option>
 				{% for state in states %}
@@ -410,12 +411,17 @@
 			      </div>
 			    </td>
 			    <td class="col-xs-1">
+			      <div style="text-align: center;">
+				<span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			      </div>
+			    </td>
+			    <td class="col-xs-1">
 			    </td>
 			  </tr>
 			{% endfor %}
 		      {% else %}
 			<tr>
-			  <td class="col-xs-6">
+			  <td class="col-xs-5">
 			    <select class="form-control input-sm gstinstate">
 			      <option value="" disabled hidden selected>Select State</option>
 			      {% for state in states %}
@@ -435,8 +441,13 @@
 			    </div>
 			  </td>
 			  <td class="col-xs-1">
-			    
+			    <div style="text-align: center;">
+			      <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			    </div>
 			  </td>
+			  <td class="col-xs-1">
+			    
+			  </td >
 			</tr>
 		      {% endif %}
 		    </tbody>
