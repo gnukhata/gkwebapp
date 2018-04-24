@@ -230,7 +230,7 @@ def getaccdetails(request):
 
 
 
-    accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"]}
+    accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"],"subgroupcode":grprecord["subgroupcode"]}
 
     return {"gkresult":accdetails}
 

@@ -62,7 +62,9 @@ $(document).ready(function()
         $("#editaccountform").show();  
 	$("#groupname option:selected").text(accdetails["groupname"]);
         $("#groupname").prop("disabled", true);  
-        $("#subgroupname option:selected").text(accdetails["subgroupname"]);
+          //$("#subgroupname option:selected").text(accdetails["subgroupname"]);
+	$('#subgroupname').empty();
+	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
         $("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
