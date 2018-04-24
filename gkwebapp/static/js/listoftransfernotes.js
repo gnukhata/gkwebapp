@@ -36,7 +36,7 @@ $(document).ready(function() {
     });
 
     //Sorting the data in ascending/descending order
-    $("#latable").bootstrapTable({"sortName": "transDate", "sortOrder":"desc"},
+    $("#latable").bootstrapTable({"sortName": "transDate", "sortOrder":"desc", "sorters":"alphanum"},
 				 {"sortName": "tnNo", "sortOrder":"desc"},
 				 {"sortName": "disFrom", "sortOrder":"desc"},
 				 {"sortName": "delAt", "sortOrder":"desc"},

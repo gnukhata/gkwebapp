@@ -107,7 +107,7 @@
       <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
       </span>
     </div>
-    <table id="latable" class="table shadow table-bordered" >
+    <table id="latable" class="table shadow table-bordered" data-toggle="table" >
       <thead class="bg-primary">
 	<tr>
           <th class="srnowrap text-center" data-sortable="false">
@@ -118,7 +118,7 @@
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
 	    {#<span class="glyphicon glyphicon-chevron-up" hidden></span>#}
           </th>
-          <th class="smwrap text-center" data-sortable="true" data-field="tansDate" data-sorter="alphanum">
+          <th class="smwrap text-center" data-sortable="true" data-field="tansDate" >
 	    {% trans %}Date{% endtrans %}
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
           </th>
