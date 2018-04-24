@@ -347,3 +347,10 @@ def editaccount(request):
                 gkdata = {"custid":custid}
                 resultdels = requests.put("http://127.0.0.1:6543/customersupplier", data =json.dumps(custdetails),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="addaccount", renderer="json", request_param="abbreviation")
+def abbreviation(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/state?abbreviation&statecode=%d"%(int(request.params["statecode"])), headers=header)
+    abbreviation = result.json()["abbreviation"]
+    return {"gkstatus":result.json()["gkstatus"], "abbreviation":abbreviation}
