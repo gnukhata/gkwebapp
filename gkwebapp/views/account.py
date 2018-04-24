@@ -119,7 +119,6 @@ def showaccount(request):
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     return {"gkresult":grpdata,"baltbl":result.json()["baltbl"], "vatorgstflag":resultgstvat.json()["gkresult"],"states": states.json()["gkresult"]}
 
-
 @view_config(route_name="listofaccountsprint", renderer="gkwebapp:templates/printlistofaccounts.jinja2")
 def listofaccountprint(request):
 
@@ -164,7 +163,12 @@ def showeditaccount(request):
         adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"])}
         accdata.append(adata)
     result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
-    return {"gkresult":accdata, "baltbl":result.json()["baltbl"]}
+    grpdata=[]
+    for record in result.json()["gkresult"]:
+        gdata= {"groupname":str(record["groupname"]),"groupcode":str(record["groupcode"])}
+        grpdata.append(gdata)
+
+    return {"gkresult":accdata, "baltbl":result.json()["baltbl"], "groupdata":grpdata}
 
 
 @view_config(route_name="deleteaccount", renderer="json")
@@ -256,7 +260,6 @@ def addaccount(request):
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
         result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
-
         if result.json()["gkstatus"]==0:
             gkdata["groupcode"] = result.json()["gkresult"]
 
@@ -345,7 +348,6 @@ def addGSTaccounts(request):
                 resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header) 
         
     return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
-
 
 #the functionality to edit customer after editing account and other such functionality should be done in core please make a note of this and change it later.
 @view_config(route_name="editaccount", renderer="json")

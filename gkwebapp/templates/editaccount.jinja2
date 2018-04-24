@@ -85,15 +85,19 @@ th {
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
 						  <label for="groupname" id="gname">{% trans %}Group Name{% endtrans %} :</label>
 						  {#<input type="text" id="groupname" name="groupname" class="form-control input-sm" value=""></input>#}
-						  <select class = "form-control gsselect input-sm" id="groupname"  name = "groupname" accesskey="g">
+						  <select class="form-control gsselect input-sm" id="groupname" name="groupname" accesskey="g">
 						    <option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
 						    {% for grps in groupdata %}
-						      <option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
+						      <option value="{{grps['groupcode']}}" selected>{{grps["groupname"]}}</option>
 						    {% endfor %}
 						  </select>
 							<br/>
 							<label for="subgroupname" id="sname">{% trans %}Sub-Group Name{% endtrans %} :</label>
-							<input type="text" id="subgroupname" name="subgroupname" class="form-control input-sm" value=""></input>
+							{#<input type="text" id="subgroupname" name="subgroupname" class="form-control input-sm" value=""></input>#}
+							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
+							  <option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
+							  <option value="" selected></option>
+							</select>
 							</br>
 							<label for="accountname" id="accname">{% trans %}New Name of <u>A</u>ccount{% endtrans %} :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>

@@ -58,11 +58,11 @@ $(document).ready(function()
       },
       success: function(jsonObj)
       {
-        accdetails=jsonObj["gkresult"];
-        $("#editaccountform").show();
-        $("#groupname").val(accdetails["groupcode"]);
-        $("#groupname").prop("disabled", true);
-        $("#subgroupname").val(accdetails["subgroupname"]);
+        accdetails=jsonObj["gkresult"];  
+        $("#editaccountform").show();  
+	$("#groupname option:selected").text(accdetails["groupname"]);
+        $("#groupname").prop("disabled", true);  
+        $("#subgroupname option:selected").text(accdetails["subgroupname"]);
         $("#subgroupname").prop("disabled", true);
         $("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
@@ -151,7 +151,41 @@ $(document).ready(function()
 
   }
 );
+    //Change event for 'group name'.
+    $("#groupname").bind("change keyup", function(){
+	var gname = $("#groupname option:selected").text();
 
+	var groups = $("#groupname option:selected").val();
+	if (groups != '') {
+	    $.ajax({
+		type: "POST",
+		url: "/getsubgroup",
+		data: {"groupcode":groups},
+		global: false,
+		async: false,
+		dataType: "json",
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		},
+		success: function(jsonObj) {
+		    var subgroups = jsonObj["gkresult"];
+		    $('#subgroupname').empty();
+		    for (i in subgroups ) {
+			$('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+		    }
+		    var grpnam=$("#groupname option:selected").text();
+		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+		    {
+			$('#subgroupname').prepend('<option value="None">None</option>');
+			$("#subgroupname option:first").attr("selected", "selected");
+		    }
+		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+		}
+	    });
+	}
+    });
+    
 $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
