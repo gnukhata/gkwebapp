@@ -574,11 +574,13 @@ $("#addcatselect").change(function(event) {
         $('#product_tax_table tbody tr').remove();
         for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append(taxfieldhtml);
+	    $('#product_tax_table tbody tr:last td:eq(3) span').hide('.glyphicon-plus');
 	    $('#product_tax_table tbody tr:last').attr({value: tax["taxid"]});
-          $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+            $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
             $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
 	    $('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
         }
+	  $('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	  $(".tax_name").change();
 
       }
@@ -843,6 +845,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
     $(document).off("click",".addbtn").on("click", ".addbtn", function(event) {
 	var curindex_btn = $(this).closest('tr').index();
 	var nextindex_btn = curindex_btn+1;
+	var previndex_btn = curindex_btn-1;
 	if ($('#product_tax_table tbody tr:eq('+curindex_btn+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
 	    $("#tax_state-blank-alert").alert();
 	    $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -873,8 +876,8 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	}
 	if (curindex_btn == ($("#product_tax_table tbody tr").length-1)) {
 	    $('#product_tax_table tbody').append(taxfieldhtml);
+	    $('#product_tax_table tbody tr:eq('+curindex_btn+') td:eq(3) span').hide('.glyphicon-plus');
 	    $('#product_tax_table tbody tr:eq('+nextindex_btn+') td:eq(0) select').focus().select();
-	    //$('#product_tax_table tbody tr:eq('+nextindex_btn+') td:last').append(delhtml);
 	}
 	//selected tax name removed from list except 'VAT'.
 	for (let j = 0; j < curindex_btn + 1; j++) {
@@ -924,6 +927,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
         return false;
       }
 	  $('#product_tax_table tbody').append(taxfieldhtml);
+	  $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(3) span').hide('.glyphicon-plus');
 	$(".tax_rate").numeric();
         for (let j = 0; j < curindex1 + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
@@ -987,6 +991,9 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
     if($('#product_tax_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 	$('#product_tax_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+    }
+    if(!($('.addbtn').is(':visible'))){
+	$('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
     }
     $('#product_tax_table tbody tr:last td:eq(0) select').focus().select();
   });
@@ -1106,7 +1113,7 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 	    $('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select').focus().select();
 	}
 	else {
-	    if (numberofgodowns > 0 ) {
+	    if (numberofgodowns >= 0 ) {
 		if ($('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(0) select option:selected').val()=="") {
 		    $("#godown-blank-alert").alert();
 		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1123,7 +1130,12 @@ $(document).off("keydown",".godown_name").on("keydown",".godown_name",function(e
 		    $('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(1) input').focus();
 		    return false;
 		}
-		$('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		if(numberofgodowns > 0){
+		    $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		    $('#godown_ob_table tbody tr:eq('+curindex_gobtn+') td:eq(2) span').hide('.glyphicon-plus');
+		}else{
+		    $("#apsubmit").focus();
+		}
 		$(".godown_ob").numeric();
 		//selected godowns are removed from list.
 		$('#godown_ob_table tbody tr:eq('+nextindex_gobtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
@@ -1150,7 +1162,7 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
       $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
     else {
-      if (numberofgodowns > 0) {
+      if (numberofgodowns >= 0) {
         if ($('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
           $("#godown-blank-alert").alert();
           $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1167,8 +1179,13 @@ $(document).off("keydown",".godown_ob").on("keydown",".godown_ob",function(event
           $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        $(".godown_ob").numeric();
+	if(numberofgodowns > 0){
+            $('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(2) span').hide('.glyphicon-plus');  
+	}else{
+	    $("#apsubmit").focus();
+	}
+	$(".godown_ob").numeric();
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	$('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#godown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -1212,7 +1229,10 @@ $(document).off("click",".godown_del").on("click", ".godown_del", function() {
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
     if($('#godown_ob_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 	$('#godown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-    }  
+    }
+    if(!($('.goaddbtn').is(':visible'))){
+	$('#godown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+    }
     $('#godown_ob_table tbody tr:last td:eq(0) select').focus().select();
   });
   $('#godown_ob_table tbody tr:last td:eq(0) select').select();

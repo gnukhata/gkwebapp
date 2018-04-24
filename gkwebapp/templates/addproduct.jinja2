@@ -3,6 +3,9 @@
    span {
        margin:5.5 auto;
    }
+   .tax_del, .godown_del{
+       color:#000000;
+   }
   </style>
 </head>
 <body>
@@ -148,7 +151,9 @@
 			  </div>
 			</td>
 			<td class="col-xs-1">
+			  <div style="text-align:center;">
 			    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			  </div>
 			</td>
                       </tr>
                     </tbody>
@@ -238,8 +243,10 @@
 				</div>
                               </td>
 			      <td class="col-xs-1">
+				<div style="text-align:center;">
 				  <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-                              </td>
+				</div>
+			      </td>
                             </tr>
 			  </tbody>
 			</table>
@@ -279,36 +286,38 @@
 		    {% trans %}Please select a godown.{% endtrans %}
 		  </div>
 		  <div class="panel">
-                      <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-			<thead class="bg-primary input-sm">
-			  <tr>
-			    <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
-			    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-			    <th class="col-xs-1"></th>
-			    <th class="col-xs-1"></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr>
-			    <td class="col-xs-7">
-                              <select class="form-control input-sm godown_name">
-				<option value="" disabled hidden selected>Select Godown</option>
-				{% for record in godown %}
-				  <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-				{% endfor %}
-                              </select>
-			    </td>
-			    <td class="col-xs-3">
-                              <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
-			    </td>
-			    <td class="col-xs-1">
-			      <div style="text-align: center;">
-				<span class="glyphicon glyphicon glyphicon-plus goaddbtn">
-			      </div>
-			    </td>
-			    <td class="col-xs-1">
-				<a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
-			    </td>
+                    <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+		      <thead class="bg-primary input-sm">
+			<tr>
+			  <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+			  <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+			  <th class="col-xs-1"></th>
+			  <th class="col-xs-1"></th>
+			</tr>
+		      </thead>
+		      <tbody>
+			<tr>
+			  <td class="col-xs-7">
+                            <select class="form-control input-sm godown_name">
+			      <option value="" disabled hidden selected>Select Godown</option>
+			      {% for record in godown %}
+				<option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+			      {% endfor %}
+                            </select>
+			  </td>
+			  <td class="col-xs-3">
+                            <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+			  </td>
+			  <td class="col-xs-1">
+			    <div style="text-align: center;">
+			      <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+			    </div>
+			  </td>
+			  <td class="col-xs-1">
+			    <div style="text-align:center;">
+			      <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			    </div>
+			  </td>
 			  </tr>
 			</tbody>
                       </table>
