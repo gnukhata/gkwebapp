@@ -102,7 +102,12 @@ $(document).ready(function()
     {
       $("#nsgp").hide();
     }
-
+      if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
+	  $('#gstaccountfields').show();
+      }
+      if ($.trim($("#subgroupname option:selected").text()) != 'Duties & Taxes') {
+	  $('#gstaccountfields').hide();
+      }
 
   });
 
@@ -328,7 +333,17 @@ $("#openbal").keydown(function(event){
 }
 );
 
-$('#maccounts').change(function() {
+
+    $('#gstaccount').change(function(){
+	if ($(this).is(":checked")) {
+	    $('#accountname').prop("disabled", true);
+	}
+	else {
+	    $('#accountname').prop("disabled", false);
+	}
+    });
+    
+  $('#maccounts').change(function() {
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();
     $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){

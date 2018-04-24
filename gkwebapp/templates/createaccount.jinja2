@@ -181,10 +181,14 @@ outline: none;
 							</select>
 							<br/>
 							<div id="nsgp" style="margin-bottom: 25px" class="input-group">
-								<label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
-								<input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
+							  <label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
+							  <input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
 							</div>
 
+							<div id="gstaccountfields">
+							  <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+							  <br/>
+							</div>
 							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>
 							<br/>
 							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
