@@ -105,7 +105,7 @@ $(document).ready(function()
       if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
 	  $('#gstaccountfields').show();
       }
-      if ($.trim($("#subgroupname option:selected").text()) != 'Duties & Taxes') {
+      else {
 	  $('#gstaccountfields').hide();
       }
 

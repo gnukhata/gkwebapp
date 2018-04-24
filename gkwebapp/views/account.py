@@ -115,7 +115,9 @@ def showaccount(request):
     for record in result.json()["gkresult"]:
         gdata= {"groupname":str(record["groupname"]),"groupcode":str(record["groupcode"])}
         grpdata.append(gdata)
-    return {"gkresult":grpdata,"baltbl":result.json()["baltbl"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    return {"gkresult":grpdata,"baltbl":result.json()["baltbl"], "vatorgstflag":resultgstvat.json()["gkresult"],"states": states.json()["gkresult"]}
 
 
 @view_config(route_name="listofaccountsprint", renderer="gkwebapp:templates/printlistofaccounts.jinja2")
