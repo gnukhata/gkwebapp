@@ -172,9 +172,14 @@ $(document).ready(function()
 		},
 		success: function(jsonObj) {
 		    var subgroups = jsonObj["gkresult"];
+		    var subgrp = $("#subgroupname").val();
 		    $('#subgroupname').empty();
 		    for (i in subgroups ) {
-			$('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+			if(subgrp == subgroups[i].subgroupcode){
+			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
+			}else{
+			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+			}
 		    }
 		    var grpnam=$("#groupname option:selected").text();
 		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
@@ -192,8 +197,8 @@ $(document).ready(function()
     $("#groupname").keydown(function(event){
 	if(event.which == 13){
 	    $("#subgroupname").focus().select();
+	    $("#groupname").change();
 	}
-	$("#groupname").change();
     });
 
     //Keydown for 'subgroupname'.
@@ -393,6 +398,11 @@ $("#editaccountform").submit(function(e)
   }
   accountcode = $("#accountcode").val();
 
+    var groupname = $("#groupname option:selected").text();
+    var groupcode = $("#groupname option:selected").val();
+    var subgrpname = $("#subgroupname option:selected").text();
+    var subgrpcode = $("#subgroupname option:selected").val();
+    
   $("#msspinmodal").modal("show");
   
   $.ajax(
