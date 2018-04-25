@@ -48,11 +48,11 @@
     <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
       {% trans %}Please Enter GSTIN.{% endtrans %}	
     </div>
+    
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="container-fluid row">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
-
             <label for="vno">
               {% if gkstatus=="in" %}
 		{% trans %}Please select a supplier!{% endtrans %}
@@ -87,16 +87,24 @@
 
             {% trans %}Please enter date within the financial year!{% endtrans %}
           </div>
-          <div class="col-md-2">
-
-            <div class="form-group">
+	  {% if gkstatus=="in" %}
+	    <div id="record" class="row" style="margin-right:10px">
+	      
+	      <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;" data-toggle="modal" data-target="#recordCatModal"></i>
+	    </div>
+	    {% else %}
+	    <div id="create" class="row" style="margin-right:10px">
+	    <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;" data-toggle="modal" data-target="#createCatModal"></i>
+	  </div>
+	  {% endif %}
+	  <div class="col-md-2">
+	    <div class="form-group">
               <label for="invoice_challanno">{% trans %}Cash Memo No{% endtrans %} :</label>
               <input class="form-control input-sm" id="invoice_challanno" placeholder="{% trans %}Enter Cash Memo No{% endtrans %}" accesskey="a">
             </div>
           </div>
-          <div class="col-md-2">
-
-            <div class="form-group">
+	  <div class="col-md-2">
+	    <div class="form-group">
               <label for="invoice_date">{% trans %}Date{% endtrans %} :</label>
               <div class="form-inline ">
                 <div class="form-group">
@@ -109,13 +117,10 @@
                   <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" accesskey="v">
                 </div>
               </div>
-            </div>
-
-          </div>
-
-
-
-          <div class="col-md-3 invstate" >
+	      
+	    </div>
+	  </div>
+	  <div class="col-md-3 invstate" >
 
             <div class="form-group">
               <label for="invoice_state">{% trans %}State{% endtrans %} :</label>
@@ -426,24 +431,24 @@
 		<div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
 		  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
 		</div>
-            <table class="table  table-condensed table-bordered ">
-              <tbody>
-		<label>Bank Details :</label>
-		<tr>
-		  <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
-		  <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
-		  <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
-		  <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
-		</tr>
-		<tr>
-		  <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
-		  <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
+		<table class="table  table-condensed table-bordered ">
+		  <tbody>
+		    <label>Bank Details :</label>
+		    <tr>
+		      <td>  <label for="Account Number" class="col-form-label" id="accountnolabel"><h5>{% trans %}Account No. :{% endtrans %}</h5></label></td>
+		      <td colspan="2"><input type="text" id="accountno" class="lastfield form-control input-sm" name="accountno" ></input></td>
+		      <td>  <label for="Bank Name" class=" col-form-label" id="banknamelabel"><h5>{% trans %}Bank Name :{% endtrans %}</h5></label></td>
+		      <td colspan="2"><input type="text" id="bankname" class="lastfield form-control input-sm" name="bankname" ></input></td>
+		    </tr>
+		    <tr>
+		      <td>  <label for="Branch Name" class=" col-form-label" id="branchnamelabel"><h5>{% trans %}Branch Name :{% endtrans %}</h5></label></td>
+		      <td colspan="2"><input type="text" id="branchname" class="lastfield form-control input-sm" name="ifsc" ></input></td>
 
-		  <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
-		  <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
-		</tr>
-              </tbody>
-            </table>
+		      <td>  <label for="IFSC code" class=" col-form-label" id="ifsclabel"><h5>{% trans %}IFSC code :{% endtrans %}</h5></label></td>
+		      <td colspan="2"><input type="text" id="ifsc" class="lastfield form-control input-sm" name="ifsc" ></input></td>
+		    </tr>
+		  </tbody>
+		</table>
               </div>
 	      <div class="row">
 		<div class ="col-md-4 pull-right">
@@ -535,34 +540,34 @@
 		</div>
 	      </div>
 	      
-	    
-	    <!--
-		 <div class="col-md-6" >
+	      
+	      <!--
+		   <div class="col-md-6" >
 
-    		 <table class="table  table-condensed table-bordered table-striped">
-    		 <tbody>
+    		   <table class="table  table-condensed table-bordered table-striped">
+    		   <tbody>
 
-    		 <tr>
-    		 <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
-    		 <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">	      </label></td>
-    		 </tr>
-    		 </tbody>
-    		 </table>
+    		   <tr>
+    		   <td>  <label style="font-size: 125%" for="total invoice value" class=" col-form-label col-form-label-sm" >{% trans %}Total Amount :{% endtrans %}</label></td>
+    		   <td colspan="2"> <label style="font-size: 175%" for="total invoice value" class=" col-form-label col-form-label-sm" id="totalinvoicevalue">	      </label></td>
+    		   </tr>
+    		   </tbody>
+    		   </table>
 
-		 </div> -->
+		   </div> -->
+	</div>
+	
+
+	<div class="panel-footer">
+	  <div class="container-fluid">
+
+            <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
+            <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
+            <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
+	  </div>
+	</div>
+
       </div>
-		      
-
-    <div class="panel-footer">
-      <div class="container-fluid">
-
-        <button class="btn btn-success btn-sm" id="invoice_save" data-toggle="tooltip" data-placement="top" title="Press Insert to save">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> <u>S</u>ave{% endtrans %}</button>
-        <button id="invoice_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
-        <!--  <button id="invoice_saveprint" class="btn btn-primary btn-sm" >{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Save & Print{% endtrans %}</button>-->
-      </div>
-    </div>
-
-    </div>
 
       <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">
@@ -602,8 +607,62 @@
           </div><!-- /.modal-dialog -->
         </div>
       </div><!-- /.modal -->
-  </div>
+    </div>
+    <div id="recordCatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " >
+	<div class="modal-content ">
+	  <div class="modal-header">
+            {% trans %}<strong>Help!</strong>{% endtrans %}
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+	    
+            <p>   <font color=" #566573"> {%trans%}
+	      
+	      This module lets you record Cash Memos.</br>
+	      Cash memo number, date and state applicable have to be entered first. Depending on the date of cash memo and financial year of organisation, tax applicable is decided. The interface adjusts according to the tax applicable.</br>
+	      There is a table where you can enter product details. Select a product from the dropdown. Unit of Measurement and Tax details if any gets autocompleted. To add a new product press enter from the last field.</br>
+	      Pressing 'Esc' from the product details, table takes you to radio buttons for payment mode. Change value to Bank to enter details of seller's account.</br>
+	      To the right hand side of Payment Mode field, you can see the summary of cash memo you are creating.</br>
+	      After entering all details you can press Save button or 'Insert' key to save the cash memo.</br>
+	      A preview of cash memo appears after it is saved.</br>
+		 {%endtrans %} </font>
 
+            </p>
+	  </div>
+	</div>
+      </div>
+
+    </div>
+    <div id="createCatModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " >
+	<div class="modal-content ">
+	  <div class="modal-header">
+            {% trans %}<strong>Help!</strong>{% endtrans %}
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+	    
+            <p>   <font color=" #566573"> {%trans%}
+	      
+	      This module lets you create Cash Memos.</br>
+	      Cash memo number, date and state applicable have to be entered first. Depending on the date of cash memo and financial year of organisation, tax applicable is decided. The interface adjusts according to the tax applicable.</br>
+	      There is a table where you can enter product details. Select a product from the dropdown. Unit of Measurement and Tax details if any gets autocompleted. To add a new product press enter from the last field.</br>
+	      Pressing 'Esc' from the product details, table takes you to radio buttons for payment mode. Change value to Bank to enter details of your account.</br>
+	      To the right hand side of Payment Mode field, you can see the summary of cash memo you are creating.</br>
+	      After entering all details you can press Save button or 'Insert' key to save the cash memo.</br>
+	      A preview of cash memo appears after it is saved. </br>
+		 {%endtrans %} </font>
+
+            </p>
+	  </div>
+	</div>
+      </div>
+
+    </div>
+    
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addcashmemo.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
 </body>
