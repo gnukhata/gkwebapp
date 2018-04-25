@@ -52,8 +52,13 @@ th {
 
 		<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 
-			{% trans %}Account cannot be deleted!{% endtrans %}
-			{% trans %}There are transactions in this account.{% endtrans %}
+		  {% trans %}Account cannot be deleted!{% endtrans %}
+		  {% trans %}There are transactions in this account.{% endtrans %}
+		</div>
+		
+		<div class="alert alert-danger" id="nsblank-alert"  aria-live="rude" role="alert" hidden>
+
+		  {% trans %}Please enter new sub-group name!{% endtrans %}
 		</div>
 
 		<div style="padding-top:5px" class="mainbox col-md-6">
@@ -98,6 +103,11 @@ th {
 							  <option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
 							</br>
+							<div id="nsgp" style="margin-bottom:5px" class="input-group">
+							  <label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
+							  <input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
+							</div>
+					                </br>
 							<label for="accountname" id="accname">{% trans %}New Name of <u>A</u>ccount{% endtrans %} :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							</br>

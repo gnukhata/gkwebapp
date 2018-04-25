@@ -60,12 +60,12 @@ $(document).ready(function()
       {
         accdetails=jsonObj["gkresult"];  
         $("#editaccountform").show();  
-	$("#groupname option:selected").text(accdetails["groupname"]);
+	$("#groupname").val(accdetails["groupcode"]);
         $("#groupname").prop("disabled", true);  
-          //$("#subgroupname option:selected").text(accdetails["subgroupname"]);
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
+	$("groupname").change();  
         $("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
         $("#openingbal").val(accdetails["openingbal"]);
@@ -100,7 +100,7 @@ $(document).ready(function()
       $("#delete").show();
       $("#edit").show();
     }
-    var grpname= $("#groupname").val();
+    var grpname= $("#groupname option:selected").text();	  
     if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
       $("#openingbal").hide();
       $("#openbal").hide();
@@ -187,6 +187,61 @@ $(document).ready(function()
 	    });
 	}
     });
+
+    //Keydown for 'group name'.
+    $("#groupname").keydown(function(event){
+	if(event.which == 13){
+	    $("#subgroupname").focus().select();
+	}
+	$("#groupname").change();
+    });
+
+    //Keydown for 'subgroupname'.
+    $("#subgroupname").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    if($.trim($("#subgroupname option:selected").val())=="New"){
+		$("#newsubgroup").focus().select();
+	    }else{
+		$("#accountname").focus();
+	    }
+	}
+	if(event.which ==38 && (document.getElementById('subgroupname').selectedIndex==0)){
+	    event.preventDefault();
+	    $("#groupname").focus().select();
+	}
+    });
+
+    $("#newsubgroup").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    if ($.trim($("#newsubgroup").val())=="") {
+		$("#nsblank-alert").alert();
+		$("#nsblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#nsblank-alert").hide();
+		});
+		$("#newsubgroup").focus().select();
+		return false;
+	    }
+	    $("#accountname").focus();
+	}
+	if(event.which == 38){
+	    event.preventDefault();
+	    $("#subgroupname").focus().select();
+	}
+    });
+
+    //New Sub-Group name
+    $("#nsgp").hide();
+    $(".gsselect").bind("change keyup", function(){
+	var sgroups = $("#subgroupname option:selected").val();
+	if(sgroups == "New"){
+	    $("#nsgp").show();
+	}else{
+	    $("#nsgp").hide();
+	}
+    });
+
     
 $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
