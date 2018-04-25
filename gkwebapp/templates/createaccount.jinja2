@@ -189,24 +189,28 @@ outline: none;
 							  {%if vatorgstflag=='7' or vatorgstflag=='29' %}
 							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
 							  <br/>
-							  <div class="row">
+							  <div class="row" id="gstaccountdiv" hidden>
 							    <div class="form-group col-sm-3" style="margin:5px;">
 							      <label>
 								{% trans %}Tax Type{% endtrans %}
 							      </label>
-							      <select class="form-control input-sm tax_name product_new_name">
+							      <select class="form-control input-sm" id="taxtype">
 								<option value="" hidden disabled selected>Select Tax</option>
-								<option value="IGST">SGST</option>
-								<option value="IGST">CGST</option>
-								<option value="IGST">IGST</option>
-								<option value="CESS">CESS</option>
+								<option value="SGSTIN">SGSTIN</option>
+								<option value="SGSTOUT">SGSTOUT</option>
+								<option value="CGSTIN">CGSTIN</option>
+								<option value="CGSTOUT">CGSTOUT</option>
+								<option value="IGSTIN">IGSTIN</option>
+								<option value="IGSTOUT">IGSTOUT</option>
+								<option value="CESSIN">CESSIN</option>
+								<option value="CESSOUT">CESSOUT</option>
 							      </select>
 							    </div>
 							    <div class="form-group col-sm-5" style="margin:5px;">
 							      <label>
 								{% trans %}State{% endtrans %}
 							      </label>
-							      <select class="form-control input-sm tax_state product_new_state" >
+							      <select class="form-control input-sm" id="taxstate">
 								<option value="" hidden disabled selected>Select State</option>
 								{% for state in states %}
 								  {% for key, value in state.items() %}
@@ -216,13 +220,13 @@ outline: none;
 							      </select>
 							    </div>
 							    <div class="form-group col-sm-3" style="margin:5px;">
-								<label>
-								  {% trans %}Rate{% endtrans %}
-								</label>
-								<input class="form-control input-sm" type="text" id="gstrate">
-							      </div>
-							  </div>
+							      <label>
+								{% trans %}Rate{% endtrans %}
+							      </label>
+							      <input class="form-control input-sm" type="text" id="taxrate">
+							    </div>
 							    <br/>
+							  </div>
 							  {%endif%}
 							</div>
 							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>

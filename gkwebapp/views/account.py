@@ -249,7 +249,7 @@ def getsubgroup(request):
 
     return {"gkresult":subgrpdata}
 
-@view_config(route_name="addaccount", renderer="json")
+@view_config(route_name="addaccount", renderer="json",request_param="action=save")
 def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
@@ -269,7 +269,6 @@ def addaccount(request):
         gkdata["groupcode"] = grpcode
     else:
         gkdata["groupcode"] = request.params["subgroupname"]
-
     result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         gkdata = {"activity":request.params["accountname"] + " account created"}
@@ -350,7 +349,7 @@ def editaccount(request):
                 resultdels = requests.put("http://127.0.0.1:6543/customersupplier", data =json.dumps(custdetails),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name="addaccount", renderer="json", request_param="abbreviation")
+@view_config(route_name="addaccount", renderer="json", request_param="type=abbreviation")
 def abbreviation(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/state?abbreviation&statecode=%d"%(int(request.params["statecode"])), headers=header)

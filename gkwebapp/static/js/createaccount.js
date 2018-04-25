@@ -38,7 +38,10 @@ $(document).ready(function()
   $("#baltbl").hide();
   $("#baltbl").hide();
   $("#groupname").focus().select();
-  $("#accountform").validate();
+    $("#accountform").validate();
+    var taxstate = "";
+    var taxtype = "";
+    var taxrate = "";
   $("#groupname").bind("change keyup", function(){
       var gname = $("#groupname option:selected").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
@@ -150,14 +153,18 @@ $("#openbal").keydown(function(event){
       });
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
-	if(event.which==13) {
-	    if ($.trim($("#subgroupname option:selected").val())=="New"){
+	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
+	    if ($.trim($("#subgroupname option:selected").val())=="New"){
 	    $("#newsubgroup").focus().select();
 	    }
 	    else {
-		event.preventDefault();
-	    $("#maccounts").focus().select();
+		if ($("#gstaccount").is(":visible")) {
+		    $("#gstaccount").focus().select();
+		}
+		else{
+		    $("#maccounts").focus().select();
+		}
 	    }
 	}
 	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
@@ -202,6 +209,49 @@ $("#openbal").keydown(function(event){
 	     }
 	     }
      });
+    //Events for creating GST Accounts beigin here.
+    $("#taxtype").change(function(){
+	taxtype = $.trim($("#taxtype option:selected").val());
+    });
+    $("#taxstate").change(function(){
+	let taxstatecode = $("#taxstate option:selected").attr("stateid");
+	if (taxstatecode !== "") {
+	    $.ajax({
+	    url: '/addaccount?type=abbreviation',
+	    type: 'POST',
+	    global: false,
+	    async: false,
+	    datatype: 'json',
+	    data: {"statecode": taxstatecode},
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp)   /*This function will return spec name of the product*/
+		  {
+		      if (resp.gkstatus == 0) {
+			  taxstate = resp.abbreviation;
+		      }
+		      else {
+			  taxstate = "";
+		      }
+		  })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	}
+	else {
+	    taxstate = "";
+	}
+    });
+    $("#taxrate").change(function(){
+	taxrate = $.trim($(this).val());
+	$('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate + "%");
+    });
     // Keydown event for Account Name.
     //Validations for Account Name.
      $("#accountname").keydown(function(event){
@@ -278,17 +328,15 @@ $("#openbal").keydown(function(event){
 
 
   $("#msspinmodal").modal("show");
-
-
   $.ajax(
     {
 
       type: "POST",
-      url: "/addaccount",
+      url: "/addaccount?action=save",
       global: false,
       async: false,
       datatype: "json",
-      data: $("#accountform").serialize(),
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(), "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -333,16 +381,38 @@ $("#openbal").keydown(function(event){
 }
 );
 
-
+    //Events for gst checkbox
+    //Change event - toggling fields when checkbox is checked or unchecked.
     $('#gstaccount').change(function(){
 	if ($(this).is(":checked")) {
 	    $('#accountname').prop("disabled", true);
+	    $("#gstaccountdiv").show();
 	}
 	else {
 	    $('#accountname').prop("disabled", false);
+	    $("#gstaccountdiv").hide();
 	}
     });
-    
+    //Key event for navigation
+    $('#gstaccount').keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#taxtype").focus();
+	    }
+	    else{
+		$('#maccounts').focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#newsubgroup").is(':visible')) {
+		$("#newsubgroup").focus().select();
+	    }
+	    else {
+		$("#subgroupname").focus();
+	    }
+	}
+    });
   $('#maccounts').change(function() {
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();
