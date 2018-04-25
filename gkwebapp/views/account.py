@@ -353,10 +353,28 @@ def addGSTaccounts(request):
 @view_config(route_name="editaccount", renderer="json")
 def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
+    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+    if request.params["subgrpcode"]=="New":
+        gkdatagrp={"groupname":request.params["newgrpname"],"subgroupof":request.params["groupcode"]}
+        #result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdatagrp),headers=header)
+
+        #if result.json()["gkstatus"]==0:
+        #    gkdata["groupcode"] = result.json()["gkresult"]
+        #else:
+        #    return {"gkstatus":False}
+
+    elif request.params["subgrpname"]=="None":
+        '''code of group'''
+        grpcode= request.params["groupcode"]
+
+        gkdata["groupcode"] = grpcode
+    else:
+        '''code of sub group'''
+        gkdata["groupcode"] = request.params["subgrpcode"]
     result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
     accountname = result.json()["gkresult"]["accountname"]
     groupcode = result.json()["gkresult"]["groupcode"]
-    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+    
     result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)

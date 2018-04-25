@@ -154,7 +154,7 @@ $(document).ready(function()
   }
 );
     //Change event for 'group name'.
-    $("#groupname").bind("change keyup", function(){
+    $("#groupname").bind("change", function(){
 	var gname = $("#groupname option:selected").text();
 
 	var groups = $("#groupname option:selected").val();
@@ -177,7 +177,8 @@ $(document).ready(function()
 		    for (i in subgroups ) {
 			if(subgrp == subgroups[i].subgroupcode){
 			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
-			}else{
+			}
+			else{
 			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
 			}
 		    }
@@ -185,7 +186,7 @@ $(document).ready(function()
 		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
 		    {
 			$('#subgroupname').prepend('<option value="None">None</option>');
-			$("#subgroupname option:first").attr("selected", "selected");
+			//$("#subgroupname option:first").attr("selected", "selected");
 		    }
 		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
 		}
@@ -195,9 +196,10 @@ $(document).ready(function()
 
     //Keydown for 'group name'.
     $("#groupname").keydown(function(event){
-	if(event.which == 13){
-	    $("#subgroupname").focus().select();
+	if(event.which == 13 || event.which == 9){
+	    event.preventDefault();
 	    $("#groupname").change();
+	    $("#subgroupname").focus().select();
 	}
     });
 
@@ -287,6 +289,14 @@ $("#accountname").keydown(function(event) {
 		return false;
 	    };
 	    $("#openingbal").focus().select();
+	}
+    }
+    if(event.which == 38){
+	event.preventDefault();
+	if($("#newsubgroup").is(':visible')){
+	    $("#newsubgroup").focus();
+	}else{
+	    $("#subgroupname").focus();
 	}
     }
 });
@@ -386,22 +396,23 @@ $("#editaccountform").submit(function(e)
     $('#openingbal').val("0.00");
   }
   else {
-    openingbal=$("#openingbal").val();
+    var openingbal=$("#openingbal").val();
   }
   var acccode = $("#editaccountname option:selected").val();
   var accname= $("#editaccountname option:selected").text();
   if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
-    accountname=accname;
+     var accountname=accname;
   }
   else{
     accountname=$("#accountname").val();
   }
-  accountcode = $("#accountcode").val();
+    var accountcode = $("#accountcode").val();
 
     var groupname = $("#groupname option:selected").text();
     var groupcode = $("#groupname option:selected").val();
     var subgrpname = $("#subgroupname option:selected").text();
     var subgrpcode = $("#subgroupname option:selected").val();
+    var newgrpname = $("#newsubgroup").val();
     
   $("#msspinmodal").modal("show");
   
@@ -412,7 +423,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-      data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal},
+	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
