@@ -533,8 +533,50 @@ $(document).ready(function() {
       var curindex1 = $(this).closest('tr').index();
       var nextindex1 = curindex1+1;
       var previndex1 = curindex1-1;
-      if (event.which==13) {
-	event.preventDefault();
+      var stock = 0;
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth();
+	month += 1;
+	var date = today.getDate();
+	if (month < 10) {
+	    month = "0" + month;
+	}
+	if(date < 10) {
+	    date = "0" + date;
+	}
+    var reversedate = year + "-" + month + "-" + date;
+      if (event.which==13 || event.which==9) {
+	  event.preventDefault();
+	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
+	      $.ajax(
+        {
+          type: "POST",
+          url: "/transfernotes?type=stock",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+       .done(function(resp)
+         {
+	   //Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
+           if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
+             $("#quantity-excess-alert").alert();
+             $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
+               $("#quantity-excess-alert").hide();
+             });
+             $("#transfernote_product_table tbody tr:eq("+i-1+") td:eq(1) input").focus();
+             stock = 1;
+             return false;
+           }
+         }
+       );
+	  }
 
 	//Alerts to be displayed as a part of validations
 	if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
@@ -651,6 +693,58 @@ $(document).ready(function() {
     });
     $('#transfernote_product_table tbody tr:last td:eq(0) input').select();
   });
+
+    // Change event for quantity exceed alert box.
+    $(document).off("change",".transfernote_product_quantity").on("change",".transfernote_product_quantity",function(){
+	var curindex1 = $(this).closest('tr').index();
+	var nextindex1 = curindex1+1;
+	var previndex1 = curindex1-1;
+	var stock = 0;
+	var today = new Date();
+	var year = today.getFullYear();
+	var month = today.getMonth();
+	month += 1;
+	var date = today.getDate();
+	if (month < 10) {
+	    month = "0" + month;
+	}
+	if(date < 10) {
+	    date = "0" + date;
+	}
+    var reversedate = year + "-" + month + "-" + date;
+      if (event.which==13 || event.which==9) {
+	  event.preventDefault();
+	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
+	      $.ajax(
+        {
+          type: "POST",
+          url: "/transfernotes?type=stock",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        })
+       .done(function(resp)
+         {
+	   //Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
+           if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
+             $("#quantity-excess-alert").alert();
+             $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
+               $("#quantity-excess-alert").hide();
+             });
+             $("#transfernote_product_table tbody tr:eq("+i-1+") td:eq(1) input").focus();
+             stock = 1;
+             return false;
+           }
+         }
+       );
+	  }
+	  }
+    });
 
   //Click event for saving transfer note.
   
