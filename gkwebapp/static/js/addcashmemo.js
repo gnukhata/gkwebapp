@@ -217,7 +217,16 @@ $(document).ready(function() {
     $("#invoice_year").numeric();
 
     $("#invoice_challanno").keydown(function(event) {
-        if (event.which == 13) {
+        if (event.which == 13 || event.which == 9) {
+	    if ($.trim($('#invoice_challanno').val()) == "") {
+            $("#challanno-blank-alert").alert();
+            $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+                $("#challanno-blank-alert").hide();
+            });
+            $('#invoice_challanno').focus();
+            return false;
+        }
+
             event.preventDefault();
             $("#invoice_date").focus().select();
         }
