@@ -33,7 +33,6 @@ $(document).ready(function()
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
     $("#openbal").numeric();
-    $("#taxrate").numeric({negative:false});
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
@@ -213,14 +212,14 @@ $("#openbal").keydown(function(event){
     $("#taxtype").change(function(){
 	taxtype = $.trim($("#taxtype option:selected").val());
 	if (taxtype!="" && taxstate!="" && taxrate!="") {
-	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate + "%");
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
 	    $('#accountname').val("");
 	}
     });
     $("#taxtype").keydown(function(event){
-	if (event.which == 13 || event.which == 9) {
+	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($.trim($("#taxtype option:selected").val())=="") {
                 $("#taxtype-alert").alert();
@@ -258,7 +257,7 @@ $("#openbal").keydown(function(event){
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
 			  if (taxtype!="" && taxstate!="" && taxrate!="") {
-			      $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate + "%");
+			      $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
 			  }
 		      }
 		      else {
@@ -279,7 +278,7 @@ $("#openbal").keydown(function(event){
 	}
     });
     $("#taxstate").keydown(function(event){
-	if (event.which == 13 || event.which == 9) {
+	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($.trim($("#taxstate option:selected").val())=="") {
                 $("#taxstate-alert").alert();
@@ -298,18 +297,18 @@ $("#openbal").keydown(function(event){
 	}
     });
     $("#taxrate").change(function(){
-	taxrate = $.trim($(this).val());
+	taxrate = $.trim($("#taxrate option:selected").val());
 	if (taxtype!="" && taxstate!="" && taxrate!="") {
-	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate + "%");
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
 	    $("#accountname").val("");
 	}
     });
     $("#taxrate").keydown(function(event){
-	if (event.which == 13 || event.which == 9) {
+	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if ($.trim($("#taxrate").val())=="" || parseFloat($("#taxrate").val()) <= 0) {
+	    if ($.trim($("#taxrate option:selected").val())=="") {
                 $("#taxrate-alert").alert();
                 $("#taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#taxrate-alert").hide();
@@ -320,8 +319,8 @@ $("#openbal").keydown(function(event){
 	    $("#openbal").focus();
 	}
 	else if (event.which == 38) {
-	    if ($("#taxtype option:visible").first().is(":selected")) {
-		$("#gstaccount").focus();
+	    if ($("#taxrate option:visible").first().is(":selected")) {
+		$("#taxstate").focus();
 	    }
 	}
     });

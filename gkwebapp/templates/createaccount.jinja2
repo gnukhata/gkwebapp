@@ -198,45 +198,51 @@ outline: none;
 							      {% trans %}Please select State!{% endtrans %}
 							    </div>
 							    <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
-							      {% trans %}Please enter Tax Rate!{% endtrans %}
+							      {% trans %}Please select Tax Rate!{% endtrans %}
 							    </div>
 							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
-							  <br/>
-							  <div class="row" id="gstaccountdiv" hidden>
-							    <div class="form-group col-sm-3" style="margin:5px;">
-							      <label>
-								{% trans %}Tax Type{% endtrans %}
-							      </label>
-							      <select class="form-control input-sm" id="taxtype">
-								<option value="" hidden disabled selected>Select Tax</option>
-								<option value="SGSTIN">SGSTIN</option>
-								<option value="SGSTOUT">SGSTOUT</option>
-								<option value="CGSTIN">CGSTIN</option>
-								<option value="CGSTOUT">CGSTOUT</option>
-								<option value="IGSTIN">IGSTIN</option>
-								<option value="IGSTOUT">IGSTOUT</option>
-								<option value="CESSIN">CESSIN</option>
-								<option value="CESSOUT">CESSOUT</option>
-							      </select>
-							    </div>
-							    <div class="form-group col-sm-5" style="margin:5px;">
-							      <label>
-								{% trans %}State{% endtrans %}
-							      </label>
-							      <select class="form-control input-sm" id="taxstate">
-								<option value="" hidden disabled selected>Select State</option>
-								{% for state in states %}
-								  {% for key, value in state.items() %}
-								    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+							    <br/>
+							    <div class="row" id="gstaccountdiv" hidden>
+							      <div class="form-group col-sm-3" style="margin:5px;">
+								<label>
+								  {% trans %}Tax Type{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxtype">
+								  <option value="" hidden disabled selected>Select Tax</option>
+								  <option value="SGSTIN">SGSTIN</option>
+								  <option value="SGSTOUT">SGSTOUT</option>
+								  <option value="CGSTIN">CGSTIN</option>
+								  <option value="CGSTOUT">CGSTOUT</option>
+								  <option value="IGSTIN">IGSTIN</option>
+								  <option value="IGSTOUT">IGSTOUT</option>
+								  <option value="CESSIN">CESSIN</option>
+								  <option value="CESSOUT">CESSOUT</option>
+								</select>
+							      </div>
+							      <div class="form-group col-sm-5" style="margin:5px;">
+								<label>
+								  {% trans %}State{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxstate">
+								  <option value="" hidden disabled selected>Select State</option>
+								  {% for state in states %}
+								    {% for key, value in state.items() %}
+								      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+								    {% endfor %}
 								  {% endfor %}
-								{% endfor %}
-							      </select>
-							    </div>
-							    <div class="form-group col-sm-3" style="margin:5px;">
-							      <label>
-								{% trans %}Rate{% endtrans %}
-							      </label>
-							      <input class="form-control input-sm" type="text" id="taxrate">
+								</select>
+							      </div>
+							      <div class="form-group col-sm-3" style="margin:5px;">
+								<label>
+								  {% trans %}Rate{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxrate">
+								  <option value="" hidden disabled selected>Select Rate</option>
+								  <option value="5%">5%</option>
+								  <option value="12%">12%</option>
+								  <option value="18%">18%</option>
+								  <option value="28%">28%</option>
+								</select>
 							    </div>
 							    <br/>
 							  </div>
