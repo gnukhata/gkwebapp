@@ -60,9 +60,17 @@ def showeditOrg(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)   
     return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+
+@view_config(route_name="showeditOrg", request_param="getgstgroupcode", renderer="json")
+def getGSTGroupCode(request):
+    header={"gktoken":request.headers["gktoken"]}
+    groupcodedata = requests.get("http://127.0.0.1:6543/organisation?getgstgroupcode", headers=header)
+    groupcode = ""
+    if "groupcode" in groupcodedata.json():
+        groupcode = groupcodedata.json()["groupcode"]
+    return {"groupcode":groupcode}
 
 @view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
 def getorgdata(request):
@@ -164,15 +172,3 @@ def orgbankDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://0.0.0.0:6543/organisation?orgbankdetails", headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkbankdata":result.json()["gkbankdata"]}
-
-@view_config(route_name="showeditOrg", renderer="gkwebapp:templates/gstaccounts.jinja2", request_param="gstaccounts")
-def gstAccounts(request):
-    header={"gktoken":request.headers["gktoken"]}
-    accounts = []
-    taxes = ["SGSTIN", "SGSTOUT", "CGSTIN", "CGSTOUT", "IGSTIN", "IGSTOUT", "CESSIN", "CESSOUT"]
-    for state in json.loads(request.params["states"]):
-        result = requests.get("http://127.0.0.1:6543/state?abbreviation&statecode=%d"%(int(state)), headers=header)
-        abbreviation = result.json()["abbreviation"]
-        for tax in taxes:
-            accounts.append(str(tax) + '_' + str(abbreviation))
-    return {"accounts": accounts}
