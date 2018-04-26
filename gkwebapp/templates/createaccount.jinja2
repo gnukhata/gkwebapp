@@ -184,9 +184,22 @@ outline: none;
 							  <label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
 							  <input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
 							</div>
-
+							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>
+							<br/>
 							<div id="gstaccountfields">
 							  {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+							    <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please enter Tax Type!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please select Tax Type!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxstate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please select State!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please enter Tax Rate!{% endtrans %}
+							    </div>
 							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
 							  <br/>
 							  <div class="row" id="gstaccountdiv" hidden>
@@ -229,8 +242,6 @@ outline: none;
 							  </div>
 							  {%endif%}
 							</div>
-							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>
-							<br/>
 							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							<br/>
