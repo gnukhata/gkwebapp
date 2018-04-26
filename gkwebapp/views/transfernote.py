@@ -230,17 +230,44 @@ def showlistoftransfernotes(request):
                 header={"gktoken":request.headers["gktoken"]}
                 startDate =str(request.params["startdate"])
                 endDate =str(request.params["enddate"])
+                orderFlag=int(request.params["orderflag"])
+                #orderFlag = int(4)
                 godownname = ""
                 godownaddress = ""
                 goid = 0
                 if request.params.has_key("goid"):
                     goid = int(request.params["goid"])
-                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d&orderflag=%d"%(startDate, endDate, goid, orderFlag),headers=header)
+                    print transfernotes.json()["gkresult"]
                     godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
                     godownname = godown.json()["gkresult"]["goname"]
                     godownaddress = godown.json()["gkresult"]["goaddr"]
                 else:
-                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s"%(startDate, endDate),headers=header)
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&orderflag=%d"%(startDate, endDate, orderFlag),headers=header)
+                    print transfernotes.json()["gkresult"]
+                return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress, "goid":goid}
+
+#function for sorting Date
+@view_config(route_name="transfernotes",request_param="action=showascdesc",renderer="json")
+def sortDate(request):
+                header={"gktoken":request.headers["gktoken"]}
+                startDate =str(request.params["startdate"])
+                endDate =str(request.params["enddate"])
+                orderFlag=int(request.params["orderflag"])
+                #orderFlag = int(4)
+                godownname = ""
+                godownaddress = ""
+                goid = 0
+                if request.params.has_key("goid"):
+                    goid = int(request.params["goid"])
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d&orderflag=%d"%(startDate, endDate, goid, orderFlag),headers=header)
+                    print transfernotes.json()["gkresult"]
+                    godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+                    godownname = godown.json()["gkresult"]["goname"]
+                    godownaddress = godown.json()["gkresult"]["goaddr"]
+                else:
+                    transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&orderflag=%d"%(startDate, endDate, orderFlag),headers=header)
+                    print transfernotes.json()["gkresult"]
                 return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress, "goid":goid}
 
 @view_config(route_name="transfernotes",request_param="action=get",renderer="json")

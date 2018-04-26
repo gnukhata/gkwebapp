@@ -36,8 +36,7 @@ $(document).ready(function() {
     });
 
     //Sorting the data in ascending/descending order
-    $("#latable").bootstrapTable({"sortName": "transDate", "sortOrder":"desc", "sorters":"alphanum"},
-				 {"sortName": "tnNo", "sortOrder":"desc"},
+    $("#latable").bootstrapTable({"sortName": "tnNo", "sortOrder":"desc"},
 				 {"sortName": "disFrom", "sortOrder":"desc"},
 				 {"sortName": "delAt", "sortOrder":"desc"},
 				 {"sortName": "transProd", "sortOrder":"desc"},
@@ -81,6 +80,32 @@ $(document).ready(function() {
       }
   });
 
+    // Click event for Date sorting(Ascending/Descending) 
+    $('#transDate').click(function (e) {
+	e.preventDefault();
+	$.ajax({
+	    type: "POST",
+	    url: "/transfernotes?action=showascdesc",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	    .done(function(resp) {
+		$("#info").html(resp);
+	    })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+    });
+    
   var curindex ;
   var nextindex;
   var previndex;
