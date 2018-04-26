@@ -354,6 +354,9 @@ def addGSTaccounts(request):
 def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+    '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
+       return "groupcode" store with 'accountname' in 'accounts' table.
+    ''' 
     if request.params["subgrpcode"]=="New":
         gkdatagrp={"groupname":request.params["newgrpname"],"subgroupof":request.params["groupcode"]}
         result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdatagrp),headers=header)
@@ -363,12 +366,10 @@ def editaccount(request):
         else:
             return {"gkstatus":False}
     elif request.params["subgrpname"]=="None":
-        '''code of group'''
         grpcode= request.params["groupcode"]
 
         gkdata["groupcode"] = grpcode
     else:
-        '''code of sub group'''
         gkdata["groupcode"] = request.params["subgrpcode"]
     result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
     accountname = result.json()["gkresult"]["accountname"]

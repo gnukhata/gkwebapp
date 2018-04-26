@@ -152,7 +152,7 @@ $(document).ready(function()
 
   }
 );
-    //Change event for 'group name'.
+    //Change event for 'group name' field.
     $("#groupname").bind("change keyup", function(){
 	if($("#editaccountname option:selected").val() !=""){
 	    var gname = $("#groupname option:selected").text();
@@ -191,6 +191,7 @@ $(document).ready(function()
 			$('#subgroupname option:first').attr("selected", "selected");
 		    }
 		    for (i in subgroups ) {
+			//assign subgroup name selected if assign 'group name' is not changed.
 			if(subgrp == subgroups[i].subgroupcode){
 			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
 			}
@@ -204,7 +205,7 @@ $(document).ready(function()
 	}
     });
 
-    //Keydown for 'group name'.
+    //Keydown for 'group name' field.
     $("#groupname").keydown(function(event){
 	if(event.which == 13){
 	    event.preventDefault();
@@ -213,7 +214,7 @@ $(document).ready(function()
 	$("#groupname").change();
     });
 
-    //Keydown for 'subgroupname'.
+    //Keydown for 'subgroupname' field.
     $("#subgroupname").keydown(function(event){
 	if(event.which == 13){
 	    event.preventDefault();
@@ -229,6 +230,17 @@ $(document).ready(function()
 	}
     });
 
+    $("#nsgp").hide();
+    $(".gsselect").bind("change keyup", function(){
+	var sgroups = $("#subgroupname option:selected").val();
+	if(sgroups == "New"){
+	    $("#nsgp").show();
+	}else{
+	    $("#nsgp").hide();
+	}
+    });
+
+    //Keydown for 'Newsubgroup name' field.
     $("#newsubgroup").keydown(function(event){
 	if(event.which == 13){
 	    event.preventDefault();
@@ -248,18 +260,6 @@ $(document).ready(function()
 	}
     });
 
-    //New Sub-Group name
-    $("#nsgp").hide();
-    $(".gsselect").bind("change keyup", function(){
-	var sgroups = $("#subgroupname option:selected").val();
-	if(sgroups == "New"){
-	    $("#nsgp").show();
-	}else{
-	    $("#nsgp").hide();
-	}
-    });
-
-    
 $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
@@ -402,13 +402,13 @@ $("#editaccountform").submit(function(e)
     return false;
   };
 
-  var ob = $('#openingbal').val();
+  var ob = $('#openingbal').val();  
   if(ob=="")
   {
-    $('#openingbal').val("0.00");
+      var openingbal=0.00;
   }
   else {
-    var openingbal=$("#openingbal").val();
+      openingbal=$("#openingbal").val();
   }
   var acccode = $("#editaccountname option:selected").val();
   var accname= $("#editaccountname option:selected").text();
