@@ -356,13 +356,12 @@ def editaccount(request):
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
     if request.params["subgrpcode"]=="New":
         gkdatagrp={"groupname":request.params["newgrpname"],"subgroupof":request.params["groupcode"]}
-        #result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdatagrp),headers=header)
+        result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdatagrp),headers=header)
 
-        #if result.json()["gkstatus"]==0:
-        #    gkdata["groupcode"] = result.json()["gkresult"]
-        #else:
-        #    return {"gkstatus":False}
-
+        if result.json()["gkstatus"]==0:
+            gkdata["groupcode"] = result.json()["gkresult"]
+        else:
+            return {"gkstatus":False}
     elif request.params["subgrpname"]=="None":
         '''code of group'''
         grpcode= request.params["groupcode"]

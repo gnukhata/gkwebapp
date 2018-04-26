@@ -100,18 +100,17 @@ $(document).ready(function()
       $("#delete").show();
       $("#edit").show();
     }
-    var grpname= $("#groupname option:selected").text();	  
+    var grpname = $("#groupname option:selected").text();
     if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
-      $("#openingbal").hide();
-      $("#openbal").hide();
-      $("#baltbl").hide();
+	$("#openingbal").hide();
+	$("#openbal").hide();
+	$("#baltbl").hide();
     }
     else {
-      $("#openingbal").show();
+	$("#openingbal").show();
 	$("#openbal").show();
-      $("#baltbl").show();
+	$("#baltbl").show();
     }
-	  
       }
     });
   });
@@ -156,7 +155,18 @@ $(document).ready(function()
     //Change event for 'group name'.
     $("#groupname").bind("change", function(){
 	var gname = $("#groupname option:selected").text();
-
+	if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
+	    console.log("group name");
+	    $("#openingbal").hide();
+	    $("#openbal").hide();
+	    $("#baltbl").hide();
+	}
+	else {
+	    $("#openingbal").show();
+	    $("#openbal").show();
+	    $("#baltbl").show();
+	}
+	
 	var groups = $("#groupname option:selected").val();
 	if (groups != '') {
 	    $.ajax({
@@ -407,7 +417,6 @@ $("#editaccountform").submit(function(e)
     accountname=$("#accountname").val();
   }
     var accountcode = $("#accountcode").val();
-
     var groupname = $("#groupname option:selected").text();
     var groupcode = $("#groupname option:selected").val();
     var subgrpname = $("#subgroupname option:selected").text();
