@@ -249,7 +249,7 @@ def getsubgroup(request):
 
     return {"gkresult":subgrpdata}
 
-@view_config(route_name="addaccount", renderer="json",request_param="action=save")
+@view_config(route_name="addaccount", renderer="json")
 def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}

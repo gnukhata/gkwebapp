@@ -13,6 +13,9 @@
      .img-circle {
 	 border-radius: 50%;
      }
+     .gstrate{
+	 margin:10px;
+     }
     </style>
   </head>
   <body >
@@ -126,7 +129,7 @@
 					  <td>
 					    <input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
 					    <select id="orgstate" class="form-control input-sm col-sm-8" style="width: 100%">
-					      <option value="" hidden disabled selected>Select State</option>
+					      <option value="" hidden disabled selected stateid="">Select State</option>
 					      {% for state in states %}
 						{% for key, value in state.items() %}
 						  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -526,8 +529,28 @@
 	</div>
 	<div style="padding-top:15px" class="mainbox col-md-2"></div>
       </div>
-	
-	{# end bank details #}
+      
+      {# end bank details #}
+      <div id="addgstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
+      </div>
+      <div id="choosegstrates" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+            <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+	      <div class="modal-title">
+		{% trans %}Choose Tax Rates{% endtrans %} :
+	      </div>
+            </div>
+            <div class="modal-body">
+	      <input type="checkbox" class="gstrate" data-taxrate="5%"><label>5%</label>
+	      <input type="checkbox" class="gstrate" data-taxrate="12%"><label>12%</label>
+	      <input type="checkbox" class="gstrate" data-taxrate="18%"><label>18%</label>
+	      <input type="checkbox" class="gstrate" data-taxrate="28%"><label>28%</label>
+	    </div>
+	  </div>
+	</div>
+      </div>
       
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>

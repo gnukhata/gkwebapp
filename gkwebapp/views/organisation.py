@@ -164,3 +164,15 @@ def orgbankDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://0.0.0.0:6543/organisation?orgbankdetails", headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkbankdata":result.json()["gkbankdata"]}
+
+@view_config(route_name="showeditOrg", renderer="gkwebapp:templates/gstaccounts.jinja2", request_param="gstaccounts")
+def gstAccounts(request):
+    header={"gktoken":request.headers["gktoken"]}
+    accounts = []
+    taxes = ["SGSTIN", "SGSTOUT", "CGSTIN", "CGSTOUT", "IGSTIN", "IGSTOUT", "CESSIN", "CESSOUT"]
+    for state in json.loads(request.params["states"]):
+        result = requests.get("http://127.0.0.1:6543/state?abbreviation&statecode=%d"%(int(state)), headers=header)
+        abbreviation = result.json()["abbreviation"]
+        for tax in taxes:
+            accounts.append(str(tax) + '_' + str(abbreviation))
+    return {"accounts": accounts}

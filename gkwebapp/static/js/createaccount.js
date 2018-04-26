@@ -405,7 +405,7 @@ $("#openbal").keydown(function(event){
     {
 
       type: "POST",
-      url: "/addaccount?action=save",
+      url: "/addaccount",
       global: false,
       async: false,
       datatype: "json",
@@ -474,7 +474,7 @@ $("#openbal").keydown(function(event){
 		$("#taxtype").focus();
 	    }
 	    else{
-		$('#openbal').focus();
+		$('#accountname').focus();
 	    }
 	}
 	else if (event.which == 38) {

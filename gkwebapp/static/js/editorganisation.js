@@ -115,6 +115,65 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	$("#gstintable tbody tr:first td:eq(0) select").focus();
     });
 
+    $('#addgstinmodal').on('hidden.bs.modal', function() {
+	$('#choosegstrates').modal("show");
+    });
+    $('#choosegstrates').on('shown.bs.modal', function() {
+	$(".gstrate:first").focus().select();
+    });
+
+    $(document).off("keydown",".gstrate").on("keydown",".gstrate",function(event){
+	let curindex = $(".gstrate").index(this);
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $(".gstrate").eq(curindex + 1).focus().select();
+	}
+	else if (event.which == 38) {
+	    event.preventDefault();
+	    $(".gstrate").eq(curindex - 1).focus().select();
+	}
+    });
+    $('#choosegstrates').on('hidden.bs.modal', function() {
+	// calls gstaccounts table.
+	$("#msspinmodal").modal("show");
+	let states = [];
+	$("#gstintable tbody tr").each(function(index) {
+	    if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
+		states.push($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid"));
+	    }
+	});
+	    if (states[0]) {
+		$.ajax({
+		url: '/showeditOrg?gstaccounts',
+		type: 'POST',
+		global: false,
+		async: false,
+		datatype: 'text/html',
+		data:{"states":JSON.stringify(states)},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    })
+		    .done(function(resp) {
+			states=[];
+		$("#msspinmodal").modal("hide");
+		$('#addgstaccountsmodal').html(resp);
+		$("#addgstaccountsmodal").modal("show");
+	    })
+		.fail(function() {
+		    console.log("error");
+		})
+		.always(function() {
+		    console.log("complete");
+		});
+	    }
+	else {
+	    $("#msspinmodal").modal("hide");
+	    states=[];
+	}
+	});
+
     // add bankdetails modal
     $('#addbankdel').on('shown.bs.modal', function() {
 	//$("#banktable tbody tr:first td:eq(1) select").focus();
