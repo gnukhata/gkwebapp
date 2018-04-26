@@ -10,11 +10,19 @@
      table td {
 	 border-top: none !important;
      }
+     table td #gstratediv {
+	 border:1px solid grey !important;
+	 padding:10px;
+	 border-radius: 2px;
+     }
      .img-circle {
 	 border-radius: 50%;
      }
      .gstrate{
 	 margin:10px;
+     }
+     .small {
+	 font-weight:normal !important;
      }
     </style>
   </head>
@@ -31,7 +39,6 @@
 	  </div>
 
 	  <div style="padding-top:5px" class="panel-body" >
-				</br>
 				<div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
 				  <label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
@@ -163,6 +170,14 @@
 					    <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
 					  </td>
 					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
 				      </tbody>
 				    </table>
 				  </div>
@@ -201,14 +216,6 @@
 					    </td>
 					  </tr>
 					{% endif %}
-					<tr>
-					  <td>
-					    <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
-					  </td>
-					  <td>
-					    <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
-					  </td>
-					</tr>
 					<tr>
 					  <td>
 					    <label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
@@ -267,6 +274,21 @@
 					  </td>
 					  <td>
 					    <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true" accesskey="a"></i> {% trans %}<u>A</u>dd Bank Details{% endtrans %}</button>
+					  </td>
+					</tr>
+					<tr>
+					  <td colspan="2">
+					    <div class="row" id="gstratediv">
+					      <div class="small">
+						Please choose rates from below so that accounts for GST can be created.
+					      </div>
+					      <div class="small">
+						<input type="checkbox" class="gstrate" data-taxrate="5%"><label>5%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="12%"><label>12%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="18%"><label>18%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="28%"><label>28%</label>
+					      </div>
+					    </div>
 					  </td>
 					</tr>
 				      </tbody>
@@ -532,24 +554,6 @@
       
       {# end bank details #}
       <div id="addgstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
-      </div>
-      <div id="choosegstrates" class="modal fade" tabindex="-1" role="dialog">
-	<div class="modal-dialog">
-	  <div class="modal-content">
-            <div class="modal-header">
-	      <button type="button" class="close" data-dismiss="modal">&times;</button>
-	      <div class="modal-title">
-		{% trans %}Choose Tax Rates{% endtrans %} :
-	      </div>
-            </div>
-            <div class="modal-body">
-	      <input type="checkbox" class="gstrate" data-taxrate="5%"><label>5%</label>
-	      <input type="checkbox" class="gstrate" data-taxrate="12%"><label>12%</label>
-	      <input type="checkbox" class="gstrate" data-taxrate="18%"><label>18%</label>
-	      <input type="checkbox" class="gstrate" data-taxrate="28%"><label>28%</label>
-	    </div>
-	  </div>
-	</div>
       </div>
       
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
