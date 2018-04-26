@@ -41,10 +41,11 @@ $(document).ready(function()
   $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
   {
-
+    $("#baltbl").hide();
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
+    if (acccode !=""){  
     $.ajax({
       type: "POST",
       url: "/getaccdetails",
@@ -113,6 +114,7 @@ $(document).ready(function()
     }
       }
     });
+    }
   });
 
   $("#edit").click(function(event)
@@ -126,7 +128,6 @@ $(document).ready(function()
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
-    //$("#editaccountname").hide();
     if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
@@ -153,10 +154,9 @@ $(document).ready(function()
   }
 );
     //Change event for 'group name'.
-    $("#groupname").bind("change", function(){
+    $("#groupname").bind("change keyup", function(){
 	var gname = $("#groupname option:selected").text();
 	if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
-	    console.log("group name");
 	    $("#openingbal").hide();
 	    $("#openbal").hide();
 	    $("#baltbl").hide();
@@ -182,8 +182,14 @@ $(document).ready(function()
 		},
 		success: function(jsonObj) {
 		    var subgroups = jsonObj["gkresult"];
-		    var subgrp = $("#subgroupname").val();
+		    var subgrp = $("#subgroupname option:selected").val();
 		    $('#subgroupname').empty();
+		    var grpnam=$("#groupname option:selected").text();
+		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+		    {
+			$('#subgroupname').prepend('<option value="None" selected>None</option>');
+		    }
+		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
 		    for (i in subgroups ) {
 			if(subgrp == subgroups[i].subgroupcode){
 			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
@@ -192,25 +198,19 @@ $(document).ready(function()
 			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
 			}
 		    }
-		    var grpnam=$("#groupname option:selected").text();
-		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
-		    {
-			$('#subgroupname').prepend('<option value="None">None</option>');
-			//$("#subgroupname option:first").attr("selected", "selected");
-		    }
-		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
 		}
 	    });
 	}
     });
 
     //Keydown for 'group name'.
+    $("#groupname").change();
     $("#groupname").keydown(function(event){
-	if(event.which == 13 || event.which == 9){
+	if(event.which == 13){
 	    event.preventDefault();
-	    $("#groupname").change();
 	    $("#subgroupname").focus().select();
 	}
+	$("#groupname").change();
     });
 
     //Keydown for 'subgroupname'.
