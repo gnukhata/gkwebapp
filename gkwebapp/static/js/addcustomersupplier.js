@@ -51,7 +51,7 @@ $(document).ready(function() {
     // append remove button to all gstin field added.
     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	//$("#gstintable tbody tr:eq(0) td:last").append('<a href="#" class="state_del"><i class="fa fa-refresh" aria-hidden="true"></i></a>');
-	$("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	$("#gstintable tbody tr:last td:last").append('<div style="text-align: center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
     
   $("#add_cussup").focus().select();
@@ -318,6 +318,7 @@ $("#add_state").keydown(function(event) {
 	}
 	  if (numberofstates > 0) {
               $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	      $('#gstintable tbody tr:eq('+curindex1+') td:eq(2) span').hide(".addbtn");
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -356,8 +357,34 @@ $("#add_state").keydown(function(event) {
 	  $("#cussup_save").focus();
       }
   }
- });
+    });
 
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
+	var curindex_addbtn = $(this).closest('tr').index();
+	var nextindex_addbtn = curindex_addbtn+1;
+	var previndex_addbtn = curindex_addbtn-1;
+	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
+	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:not(:hidden)').length-1;
+	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
+
+	if($(".gstin").val()=="" && $(".panno").val()==""){
+	    if($("#add_cussup").val() == '19'){
+		$("#checkbnk").focus();
+	    } else {
+		$("#cussup_save").focus();
+	    }
+	}
+	else if (numberofstates > 0) {
+            $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(2) span').hide(".addbtn");
+            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
+            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	}else{
+	    $("#cussup_save").focus();
+	}
+    });
+    
     // Keydown events for bank details
     $("#accountno").numeric();
     $("#accountno").keydown(function(event) {
@@ -570,6 +597,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+      if(!($('.addbtn').is(':visible'))){
+	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
       }
       $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
