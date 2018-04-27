@@ -315,14 +315,27 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	else if (curindex_addbtn != ($("#gstintable tbody tr").length-1)) {
 	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	}
-	else if (numberofstates > 0) {
-            $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
-	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
-            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-	}
-	else {
-            $("#gstin_done").focus();
+	else{
+	    if(gstinstring != ''){
+  		if(gstinstring.length !=15){
+  		    $("#gstin-improper-modal").alert();
+		    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+			$("#gstin-improper-modal").hide();
+  			$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').focus().select();
+		    });
+  		    return false;
+		}
+	    }
+	    if (numberofstates > 0) {
+		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		$('#gstintable tbody tr:eq('+ curindex_addbtn +') td:eq(2) span').hide(".addbtn");
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	    }
+	    else {
+		$("#gstin_done").focus();
+	    }
 	}
     });
     
@@ -336,7 +349,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
   if (event.which==13) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()==""){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  $("#gstin_done").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
@@ -353,15 +366,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   		return false;
             }
 	}
-	  if (numberofstates > 0) {
-              $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
-	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
-        $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-      }
-      else {
-        $("#gstin_done").focus();
-      }
+	if (numberofstates > 0) {
+            $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#gstintable tbody tr:eq('+ curindex1 +') td:eq(2) span').hide(".addbtn");
+            $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
+            $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	}
+	else {
+            $("#gstin_done").focus();
+	}
     }
   }
   else if(event.which==190 && event.shiftKey)
@@ -392,6 +406,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
 	    if($('#gstintable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    }
+	    if(!($('.addbtn').is(':visible'))){
+		$('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	    }
 	    $('#gstintable tbody tr:last td:eq(0) select').focus().select();
 	});
