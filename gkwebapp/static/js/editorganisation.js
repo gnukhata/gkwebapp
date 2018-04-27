@@ -1105,6 +1105,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			  if(resp["gkstatus"]==0)
 			  {
 			      $("#msspinmodal").modal("hide");
+			      $("#gstaccountsmodal").modal("show");
+			      $.each(accounts, function(index, account) {
+				  $("#gstaccountstable tbody").append("<tr><td>" + account["accountname"] + "</td></tr>");
+			      });
 			  }
 		      }
 		  });

@@ -553,7 +553,28 @@
       </div>
       
       {# end bank details #}
-      <div id="addgstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div id="gstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+            <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-title">
+		{% trans %}GST Accounts{% endtrans %} :
+              </div>
+            </div>
+            <div class="modal-body">
+	      <table id="gstaccountstable" class="table table-condensed table-striped fixed-table">
+		<thead class="bg-primary">
+		  <tr>
+		    <td>
+		      {% trans %}Following accounts for GST have been created.{% endtrans %}
+		    </td>
+		  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+	      </table>
+	    </div>
       </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>
