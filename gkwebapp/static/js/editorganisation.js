@@ -989,12 +989,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	})
 	    .done(function(resp)   /*This function will return spec name of the product*/
 		  {
-		      if (resp.gkstatus == 0) {
-			  groupcode = resp.groupcode;
-		      }
-		      else {
-			  groupcode = "";
-		      }
+		      groupcode = resp.groupcode;
+		      console.log("success");
 		  })
 	    .fail(function() {
 		console.log("error");
@@ -1002,6 +998,56 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    .always(function() {
 		console.log("complete");
 	    });
+      var accounts = [];
+	      var taxes = ["SGSTIN", "SGSTOUT", "CGSTSIN", "CGSTOUT", "IGSTIN", "IGSTOUT", "CESSIN", "CESSOUT"];
+	      var taxstate = "";
+	      var taxtype = "";
+	      var taxrate = "";
+	      var accountname = "";
+	      $("#gstintable tbody tr").each(function(index) {
+		  if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
+		      let statecode = $("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid");
+		      $.ajax({
+		      url: '/addaccount?type=abbreviation',
+		      type: 'POST',
+		      global: false,
+		      async: false,
+		      datatype: 'json',
+		      data: {"statecode": statecode},
+		      beforeSend: function(xhr)
+		      {
+			  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		      }
+		  })
+		      .done(function(resp)   /*This function will return spec name of the product*/
+			    {
+				if (resp.gkstatus == 0) {
+				    taxstate = resp.abbreviation;
+				    $(".gstrate").each(function(index){
+					if ($(this).is(":checked")) {
+					    taxrate = $(this).data("taxrate");
+					}
+					else{
+					    taxrate = "";
+					}
+					$.each(taxes, function(index, tax) {
+					    taxtype = tax;
+					    if (taxrate != "" && taxstate != "") {
+						accountname = taxtype + '_' + taxstate + '@' + taxrate;
+						accounts.push({"accountname":accountname, "subgroupname":groupcode, "openbal":"0.00"});
+					    }
+					});
+				    });
+				}
+			    })
+		      .fail(function() {
+			  console.log("error");
+		      })
+		      .always(function() {
+			  console.log("complete");
+		      });
+		  }
+	      });
       
     $.ajax({
       type: 'POST',
@@ -1031,11 +1077,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	      $.ajax(
 		  {
 		      type: "POST",
-		      url: "/addaccount",
+		      url: "/multiacc",
 		      global: false,
 		      async: false,
 		      datatype: "json",
-		      data:{} ,
+		      data:{"accdetails":JSON.stringify(accounts)} ,
 		      beforeSend: function(xhr)
 		      {
 			  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

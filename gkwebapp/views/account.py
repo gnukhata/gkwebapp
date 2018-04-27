@@ -281,7 +281,6 @@ def addaccount(request):
 def addmultiaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     accdetails = json.loads(request.params["accdetails"])
-
     gkdata = {}
     if accdetails[0]["subgroupname"]=="New":
         gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
