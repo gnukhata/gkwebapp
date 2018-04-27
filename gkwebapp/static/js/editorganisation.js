@@ -1107,7 +1107,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
 			      $.each(accounts, function(index, account) {
-				  $("#gstaccountstable tbody").append("<tr><td>" + account["accountname"] + "</td></tr>");
+				  if (index % 4 == 0) {
+				      $("#gstaccountstable tbody").append("<tr><td>" + account["accountname"] + "</td></tr>");
+				  }
+				  else {
+				      $("#gstaccountstable tbody tr:last").append("<td>" + account["accountname"] + "</td>");
+				  }
 			      });
 			  }
 		      }

@@ -15,6 +15,22 @@
 	 padding:10px;
 	 border-radius: 2px;
      }
+     #gstaccountstable tbody tr td{
+	 font-weight:normal !important;
+	 font-size:80% !important;
+	 padding:15px;
+     }
+     #gstaccountstable tbody tr{
+	 width:100%;
+     }
+     #gstaccountstable tbody{
+	 display:block;
+	 overflow-y:scroll;
+	 height:60vh;
+     }
+     #gstaccountstable thead tr td{
+	 font-size:80% !important;
+     }
      .img-circle {
 	 border-radius: 50%;
      }
@@ -563,10 +579,10 @@
               </div>
             </div>
             <div class="modal-body">
-	      <table id="gstaccountstable" class="table table-condensed table-striped fixed-table">
+	      <table id="gstaccountstable" class="table table-striped fixed-table">
 		<thead class="bg-primary">
 		  <tr>
-		    <td>
+		    <td colspan="2">
 		      {% trans %}Following accounts for GST have been created.{% endtrans %}
 		    </td>
 		  </tr>
