@@ -245,7 +245,8 @@ $(document).ready(function() {
 
 		// creating dataset for retrieving report from the server.
 	    var dataset = {};
-	    dataset = {"startdate":$("#viewlist_fromdate").val()+"-"+$("#viewlist_frommonth").val()+"-"+$("#viewlist_fromyear").val(),"enddate":$("#viewlist_todate").val()+"-"+$("#viewlist_tomonth").val()+"-"+$("#viewlist_toyear").val()};
+	    var orderflag =1;
+	    dataset = {"startdate":$("#viewlist_fromdate").val()+"-"+$("#viewlist_frommonth").val()+"-"+$("#viewlist_fromyear").val(),"enddate":$("#viewlist_todate").val()+"-"+$("#viewlist_tomonth").val()+"-"+$("#viewlist_toyear").val(), "orderflag":orderflag};
 	    if ($("#godownselect option:selected").val() != 0) {
 		dataset["goid"] = $("#godownselect option:selected").val();
 	    }

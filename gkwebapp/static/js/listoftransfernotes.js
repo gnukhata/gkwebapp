@@ -23,19 +23,22 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Reshma Bhatawadekar" <reshma_b@riseup.net>
 */
 // This script is for list of accounts report.
 // refer listofstockitems.js file for documentation.
 $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
-  $(".fixed-table-loading").remove();
+    $(".fixed-table-loading").remove();
+    var orderflag = 1;
     var currentrow = 0;
+
+    //Toggling the up and down arrow for sorting 
     $('.glyphicon').click(function () {
         $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up"); // toggling the up and down 
     });
-
-    //Sorting the data in ascending/descending order
+    //Sorting the data in ascending/descending order using natural sort
     $("#latable").bootstrapTable({"sortName": "tnNo", "sortOrder":"desc"},
 				 {"sortName": "disFrom", "sortOrder":"desc"},
 				 {"sortName": "delAt", "sortOrder":"desc"},
@@ -80,12 +83,22 @@ $(document).ready(function() {
       }
   });
 
-    // Click event for Date sorting(Ascending/Descending) 
+    //click event for sorting Date in Ascending and Descending order.
+    //For ascending order 'orderflag=1' and descending order 'orderflag=4'
     $('#transDate').click(function (e) {
-	e.preventDefault();
+	var order = $(this).attr("data-orderflag");
+	if ( order == 1 ){
+	    orderflag =4;
+	}else{
+	    orderflag =1;
+	}
+	var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate"), "orderflag":orderflag};
+	if ($("#godownselect").val() == 1) {
+	    dataset["goid"] = $("#goid").data("goid");
+	}
 	$.ajax({
 	    type: "POST",
-	    url: "/transfernotes?action=showascdesc",
+	    url: "/transfernotes?action=showlist",
 	    global: false,
 	    async: false,
 	    data: dataset,
@@ -95,15 +108,15 @@ $(document).ready(function() {
 		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 	    },
 	})
-	    .done(function(resp) {
-		$("#info").html(resp);
-	    })
-	    .fail(function() {
-		console.log("error");
-	    })
-	    .always(function() {
-		console.log("complete");
-	    });
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
     });
     
   var curindex ;
