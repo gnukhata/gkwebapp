@@ -67,10 +67,10 @@ def showeditOrg(request):
 def getGSTGroupCode(request):
     header={"gktoken":request.headers["gktoken"]}
     groupcodedata = requests.get("http://127.0.0.1:6543/organisation?getgstgroupcode", headers=header)
-    groupcode = ""
-    if "groupcode" in groupcodedata.json():
-        groupcode = groupcodedata.json()["groupcode"]
-    return {"groupcode":groupcode}
+    if groupcodedata.json()["gkstatus"] == 0:
+        return {"gkstatus":groupcodedata.json()["gkstatus"], "groupcode":groupcodedata.json()["groupcode"], "subgroupcode":groupcodedata.json()["subgroupcode"]}
+    else:
+        return {"gkstatus":groupcodedata.json()["gkstatus"]}
 
 @view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
 def getorgdata(request):

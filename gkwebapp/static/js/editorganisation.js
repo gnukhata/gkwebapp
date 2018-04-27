@@ -976,6 +976,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   if(allow == 1){ 
       $("#msspinmodal").modal("show");
       var groupcode = "";
+      var subgroupcode = "";
+      var newsubgroup = "";
       $.ajax({
 	    url: '/showeditOrg?getgstgroupcode',
 	    type: 'POST',
@@ -989,7 +991,19 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	})
 	    .done(function(resp)   /*This function will return spec name of the product*/
 		  {
-		      groupcode = resp.groupcode;
+		      if (resp.gkstatus == 0) {
+			  groupcode = resp.groupcode;
+			  subgroupcode = resp.subgroupcode;
+			  if (subgroupcode == "New") {
+			      newsubgroup = "Duties & Taxes";
+			  }
+		      }
+		      else {
+			  $("#connectionfailed").alert();
+			  $("#connectionfailed").fadeTo(2250, 500).slideUp(500, function(){
+			      $("#connectionfailed").hide();
+			  });
+		      }
 		      console.log("success");
 		  })
 	    .fail(function() {
@@ -1034,7 +1048,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 					    taxtype = tax;
 					    if (taxrate != "" && taxstate != "") {
 						accountname = taxtype + '_' + taxstate + '@' + taxrate;
-						accounts.push({"accountname":accountname, "subgroupname":groupcode, "openbal":"0.00"});
+						accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
 					    }
 					});
 				    });
