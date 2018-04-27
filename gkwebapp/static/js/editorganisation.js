@@ -1087,11 +1087,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#success-alert").hide();
-	      $("#msspinmodal").modal("show");
+	      if (accounts.length > 0) {
+		  $("#msspinmodal").modal("show");
 	      $.ajax(
 		  {
 		      type: "POST",
-		      url: "/multiacc",
+		      url: "/multiacc?type=GST",
 		      global: false,
 		      async: false,
 		      datatype: "json",
@@ -1106,17 +1107,18 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			  {
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
-			      $.each(accounts, function(index, account) {
+			      $.each(resp.accounts, function(index, account) {
 				  if (index % 4 == 0) {
-				      $("#gstaccountstable tbody").append("<tr><td>" + account["accountname"] + "</td></tr>");
+				      $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
 				  }
 				  else {
-				      $("#gstaccountstable tbody tr:last").append("<td>" + account["accountname"] + "</td>");
+				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
 				  }
 			      });
 			  }
 		      }
 		  });
+	      }
           });
         }
         else

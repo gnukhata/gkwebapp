@@ -307,6 +307,44 @@ def addmultiaccount(request):
             resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
+@view_config(route_name="multiacc", request_param="type=GST", renderer="json")
+def addGSTaccounts(request):
+    header={"gktoken":request.headers["gktoken"]}
+    accdetails = json.loads(request.params["accdetails"])
+    gkdata = {}
+    gstaccounts = []
+    gstaccountslist = requests.get("http://127.0.0.1:6543/organisation?getgstaccounts", headers=header)
+    if gstaccountslist.json()["gkstatus"] == 0:
+        gstaccounts = gstaccountslist.json()["accounts"]
+    if accdetails[0]["subgroupname"]=="New":
+        gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
+        result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
+
+        if result.json()["gkstatus"]==0:
+            gkdata["groupcode"] = result.json()["gkresult"]
+
+        else:
+            return {"gkstatus":False}
+
+    elif accdetails[0]["subgroupname"]=="None":
+        gkdata["groupcode"] = accdetails[0]["groupname"]
+
+    else:
+        gkdata["groupcode"] = accdetails[0]["subgroupname"]
+
+    addedaccounts = []
+    for acc in accdetails:
+        if acc["accountname"] not in gstaccounts:
+            gkdata["accountname"]=acc["accountname"]
+            gkdata["openingbal"]=acc["openbal"]
+            result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
+            if result.json()["gkstatus"] == 0:
+                addedaccounts.append(acc["accountname"])
+                gkdata2 = {"activity":acc["accountname"] + " account created"}
+                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header) 
+        
+    return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
+
 
 #the functionality to edit customer after editing account and other such functionality should be done in core please make a note of this and change it later.
 @view_config(route_name="editaccount", renderer="json")
