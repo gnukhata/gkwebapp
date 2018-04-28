@@ -849,6 +849,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	$("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
 	$(".cessrate:last").focus();
     });
+    $(document).off("focus", ".cessrate").on("focus", ".cessrate", function(event){
+	$(this).numeric({"negative":false});
+    });
     $(document).off("keydown", ".cessrate").on("keydown", ".cessrate", function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -1037,11 +1040,13 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		console.log("complete");
 	    });
       var accounts = [];
-	      var taxes = ["SGSTIN", "SGSTOUT", "CGSTSIN", "CGSTOUT", "IGSTIN", "IGSTOUT", "CESSIN", "CESSOUT"];
-	      var taxstate = "";
-	      var taxtype = "";
-	      var taxrate = "";
-	      var accountname = "";
+      var taxes = ["SGSTIN", "SGSTOUT", "CGSTSIN", "CGSTOUT", "IGSTIN", "IGSTOUT"];
+      var cesses = ["CESSIN", "CESSOUT"];
+      var taxstate = "";
+      var taxtype = "";
+      var taxrate = "";
+      var cessrate = "";
+      var accountname = "";
 	      $("#gstintable tbody tr").each(function(index) {
 		  if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
 		      let statecode = $("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid");
@@ -1069,6 +1074,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 					    taxrate = "";
 					}
 					$.each(taxes, function(index, tax) {
+					    taxtype = tax;
+					    if (taxrate != "" && taxstate != "") {
+						accountname = taxtype + '_' + taxstate + '@' + taxrate;
+						accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
+					    }
+					});
+				    });
+				    $(".cessrate").each(function(index){
+					taxrate = $(this).val();
+					$.each(cesses, function(index, tax) {
 					    taxtype = tax;
 					    if (taxrate != "" && taxstate != "") {
 						accountname = taxtype + '_' + taxstate + '@' + taxrate;
