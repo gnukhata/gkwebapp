@@ -31,9 +31,16 @@ Contributors:
 */
 
 $(document).ready(function(){
-  $("#msspinmodal").modal("hide");
-  $(".regdate").autotab('number');
+    $("#msspinmodal").modal("hide");
+    $(".regdate").autotab('number');
     $(".fcradate").autotab('number');
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"<div class="form-group input-group input-group-sm"><div id="cessratediv"><input class="input-sm form-control cessrate" size="23"></div><span class="glyphicon glyphicon-plus input-group-addon"></span></div></div></div>'
+    });
+    $('[data-toggle="popover"]').on('shown.bs.popover', function(){
+        $(".cessrate").eq(0).focus().select();
+    });
     function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
