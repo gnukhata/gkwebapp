@@ -41,6 +41,12 @@ $(document).ready(function(){
     $('[data-toggle="popover"]').on('shown.bs.popover', function(){
         $(".cessrate").eq(0).focus().select();
     });
+    var cessrates = [];
+    $('[data-toggle="popover"]').on('hide.bs.popover', function(){
+        $(".cessrate").each(function(index){
+	    cessrates.push($(this).val());
+	});
+    });
     function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
@@ -873,6 +879,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     var regno="";
     var fcrano="";
 
+      if ($(".popover").is(":visible")) {
+	  $('[data-toggle="popover"]').click();
+      }
     //validation for bankdetails on save button.  
     if(!($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="")){
         if($("#accnum").val()=="" || $("#branch_name").val()=="" || $("#bank_name").val()=="" || $("#ifsc_code").val()=="" ) {
@@ -1045,7 +1054,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       var taxstate = "";
       var taxtype = "";
       var taxrate = "";
-      var cessrate = "";
       var accountname = "";
 	      $("#gstintable tbody tr").each(function(index) {
 		  if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
@@ -1073,20 +1081,17 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 					else{
 					    taxrate = "";
 					}
-					$.each(taxes, function(index, tax) {
-					    taxtype = tax;
+					$.each(taxes, function(index, taxtype) {
 					    if (taxrate != "" && taxstate != "") {
 						accountname = taxtype + '_' + taxstate + '@' + taxrate;
 						accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
 					    }
 					});
 				    });
-				    $(".cessrate").each(function(index){
-					taxrate = $(this).val();
-					$.each(cesses, function(index, tax) {
-					    taxtype = tax;
-					    if (taxrate != "" && taxstate != "") {
-						accountname = taxtype + '_' + taxstate + '@' + taxrate;
+				    $.each(cessrates, function(index, cessrate){
+					$.each(cesses, function(index, cesstype) {
+					    if (cessrate != "" && taxstate != "") {
+						accountname = cesstype + '_' + taxstate + '@' + cessrate + "%";
 						accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
 					    }
 					});
@@ -1122,7 +1127,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
         if(jsonObj["gkstatus"]==0)
         {
           console.log("success");
-          $("#reset").click();
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#success-alert").hide();
@@ -1158,6 +1162,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		      }
 		  });
 	      }
+	      else{
+		  $("#reset").click();
+	      }
           });
         }
         else
@@ -1171,7 +1178,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     });
   //}
  //});
-  
+
+      $("#gstaccountsmodal").on('hidden.bs.modal', function(event) {
+        $("#reset").click();
+    });
   $.ajax({
           url: '/editorganisation?action=getattachment',
           type: 'POST',
