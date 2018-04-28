@@ -36,7 +36,7 @@ $(document).ready(function(){
     $(".fcradate").autotab('number');
     $('[data-toggle="popover"]').popover({
         html: true,
-        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"<div class="form-group input-group input-group-sm"><div id="cessratediv"><input class="input-sm form-control cessrate" size="23"></div><span class="glyphicon glyphicon-plus input-group-addon"></span></div></div></div>'
+        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"<div class="form-group input-group input-group-sm"><div id="cessratediv"><input class="input-sm form-control cessrate" size="23"></div><span class="glyphicon glyphicon-plus input-group-addon" id="addcessrate"></span></div></div></div>'
     });
     $('[data-toggle="popover"]').on('shown.bs.popover', function(){
         $(".cessrate").eq(0).focus().select();
@@ -844,7 +844,24 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	}
         $('#addgstinmodal').modal('hide');	    
     });
-
+    // Events for popover
+    $(document).off("click", "#addcessrate").on("click", "#addcessrate", function(event){
+	$("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
+	$(".cessrate:last").focus();
+    });
+    $(document).off("keydown", ".cessrate").on("keydown", ".cessrate", function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
+	    $(".cessrate:last").focus(); 
+	}
+	if (event.which == 27) {
+	    $('[data-toggle="popover"]').click();
+	}
+    });
+    $(document).off("click", ".popover-content").on("click", ".popover-content", function(event){
+	$('[data-toggle="popover"]').click();
+    });
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
     var allow =1;
