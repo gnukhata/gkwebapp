@@ -42,6 +42,7 @@ $(document).ready(function()
     var taxstate = "";
     var taxtype = "";
     var taxrate = "";
+    var cessrate = "";
   $("#groupname").bind("change keyup", function(){
       var gname = $("#groupname option:selected").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
@@ -127,7 +128,12 @@ $("#openbal").keydown(function(event){
 	}
     else if (event.which == 38){
 	event.preventDefault();
-	$("#accountname").focus().select();
+	if (!$("#accountname").is(":disabled")) {
+	    $("#accountname").focus().select();
+	}
+	else {
+	    $("#taxrate:visible, #cessrate:visible").focus();
+	}
     }
 });
     // Keydown event for Group Name.
@@ -211,6 +217,14 @@ $("#openbal").keydown(function(event){
     //Events for creating GST Accounts beigin here.
     $("#taxtype").change(function(){
 	taxtype = $.trim($("#taxtype option:selected").val());
+	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+	    $("#taxrate").hide();
+	    $("#cessrate").show();
+	}
+	else {
+	    $("#taxrate").show();
+	    $("#cessrate").hide();
+	}
 	if (taxtype!="" && taxstate!="" && taxrate!="") {
 	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
@@ -288,7 +302,12 @@ $("#openbal").keydown(function(event){
                 $("#taxstate").focus();
                 return false;
             }	
-	    $("#taxrate").focus();
+	    if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+		$("#cessrate").focus();
+	    }
+	    else {
+		$("#taxrate").focus();
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($("#taxtype option:visible").first().is(":selected") || $.trim($("#taxstate option:selected").val())=="") {
@@ -322,6 +341,32 @@ $("#openbal").keydown(function(event){
 	    if ($("#taxrate option:visible").first().is(":selected")) {
 		$("#taxstate").focus();
 	    }
+	}
+    });
+    $("#cessrate").change(function(){
+	cessrate = $.trim($("#cessrate").val());
+	if (taxtype!="" && taxstate!="" && cessrate!="") {
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	}
+	else {
+	    $("#accountname").val("");
+	}
+    });
+    $("#cessrate").keydown(function(event){
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    if ($.trim($("#cessrate").val())=="") {
+                $("#cessrate-alert").alert();
+                $("#cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#cessrate-alert").hide();
+		});
+                $("#cessrate").focus();
+                return false;
+            }
+	    $("#openbal").focus();
+	}
+	else if (event.which == 38) {
+	    $("#taxstate").focus();
 	}
     });
     // Keydown event for Account Name.

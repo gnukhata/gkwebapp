@@ -200,6 +200,9 @@ outline: none;
 							    <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
 							      {% trans %}Please select Tax Rate!{% endtrans %}
 							    </div>
+							    <div class="alert alert-danger" id="cessrate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please enter Cess Rate!{% endtrans %}
+							    </div>
 							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
 							    <br/>
 							    <div class="row" id="gstaccountdiv" hidden>
@@ -243,6 +246,7 @@ outline: none;
 								  <option value="18%">18%</option>
 								  <option value="28%">28%</option>
 								</select>
+								<input type="text" id="cessrate" class="form-control input-sm" name="accountname" accesskey="a" style="display:none">
 							    </div>
 							    <br/>
 							  </div>
