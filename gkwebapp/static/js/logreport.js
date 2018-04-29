@@ -26,6 +26,48 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
+    var orderflag = 1;
+    var currentrow = 0;
+    //Toggling the up and down arrow for sorting 
+    $('.glyphicon').click(function () {
+        $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up"); // toggling the up and down 
+    });
+    //Sorting the data in ascending/descending order using natural sort
+    $("#latable").bootstrapTable({"sortName": "username", "sortOrder":"desc"},
+				 {"sortName": "activity", "sortOrder":"desc"});
+    //click event for sorting Date in Ascending and Descending order.
+    //For ascending order 'orderflag=1' and descending order 'orderflag=4'
+    $('#logDate').click(function (e) {
+	var order = $(this).attr("data-orderflag");
+	if ( order == 1 ){
+	    orderflag =4;
+	}else{
+	    orderflag =1;
+	}
+	var dataset = {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"orderflag":orderflag};
+	$.ajax({
+	    type: "POST",
+	    url: "/log?action=showlogreport",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+    });
+      
   $('#lclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });

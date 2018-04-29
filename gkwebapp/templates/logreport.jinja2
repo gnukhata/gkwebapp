@@ -81,19 +81,24 @@
     <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
   </div>
-  <table id="logtable" class="table shadow table-bordered" >
-      <thead class="bg-primary">
-        <tr>
-          <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
-          {% if typeflag == "1" %}
-          <th class="mdwrap calign">{% trans %}User Name(Role){% endtrans %}</th>
-          {% endif %}
-          <th class="lngwrap">{% trans %}Activity{% endtrans %}</th>
-        </tr>
-      </thead>
-      <tbody>
+  <table id="logtable" class="table shadow table-bordered" data-toggle="table">
+    <thead class="bg-primary">
+      <tr>
+        <th class="dtwrap calign" >{% trans %}Date{% endtrans %}
+	  {% if orderflag == 1 %}
+	    <span id="logDate" class="glyphicon glyphicon-chevron-down pull-right" data-orderflag="{{orderflag}}" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	  {% else %}
+	    <span id="logDate" class="glyphicon glyphicon-chevron-up pull-right" data-orderflag="{{orderflag}}" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	  {% endif %}</th>
         {% if typeflag == "1" %}
-          {% for record in records %}
+          <th class="mdwrap calign" data-sortable="true" data-field="username" data-sorter="alphanum">{% trans %}User Name(Role){% endtrans %}
+	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span></th>             {% endif %}
+	    <th class="lngwrap" data-sortable="true" data-field="activity" data-sorter="alphanum">{% trans %}Activity{% endtrans %}<span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% if typeflag == "1" %}
+        {% for record in records %}
           <tr  data-value="{{record['logid']}}">
             <td class="dtwrap calign">
               {{record['time']}}
@@ -106,9 +111,9 @@
             <td class="lngwrap">
               {{record['activity']}}
             </td>
-          {% endfor %}
-          {% else %}
-          {% for record in records %}
+        {% endfor %}
+      {% else %}
+        {% for record in records %}
           <tr  data-value="{{record['logid']}}">
             <td class="dtwrap calign">
               {{record['time']}}
@@ -117,16 +122,17 @@
             <td class="lngwrap">
               {{record['activity']}}
             </td>
-          {% endfor %}
-        {% endif %}
-      </tbody>
-    </table>
-    <span style="margin:auto; display:table;">
-      <button class="btn btn-sm btn-warning" type="button" id="anotherlog" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew Another log{% endtrans %}</button>
-      <button class="btn btn-sm btn-info" type="button"  id="viewprintablelogreport" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-    </span>
+        {% endfor %}
+      {% endif %}
+    </tbody>
+  </table>
+  <span style="margin:auto; display:table;">
+    <button class="btn btn-sm btn-warning" type="button" id="anotherlog" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew Another log{% endtrans %}</button>
+    <button class="btn btn-sm btn-info" type="button"  id="viewprintablelogreport" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+  </span>
 
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table-natural-sorting.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/logreport.js')}}"></script>
 </body>
 </html>
