@@ -337,6 +337,7 @@ def addGSTaccounts(request):
         if acc["accountname"] not in gstaccounts:
             gkdata["accountname"]=acc["accountname"]
             gkdata["openingbal"]=acc["openbal"]
+            gkdata["sysaccount"]=1
             result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
             if result.json()["gkstatus"] == 0:
                 addedaccounts.append(acc["accountname"])
