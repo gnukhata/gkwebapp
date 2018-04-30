@@ -290,12 +290,12 @@ $("#add_state").keydown(function(event) {
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
- var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+ var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) option:selected:not(:hidden)').length-1;
 	panno = $(this).val();
   if (event.which==13) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()=="" ){
 	  if($("#add_cussup").val() == '19'){
 	      $("#checkbnk").focus();
 	  } else {
@@ -316,7 +316,7 @@ $("#add_state").keydown(function(event) {
   		return false;
             }
 	}
-	  if (numberofstates > 0) {
+	  if (numberofstates >= 0) {
               $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
 	      $('#gstintable tbody tr:eq('+curindex1+') td:eq(2) span').hide(".addbtn");
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
@@ -364,24 +364,37 @@ $("#add_state").keydown(function(event) {
 	var nextindex_addbtn = curindex_addbtn+1;
 	var previndex_addbtn = curindex_addbtn-1;
 	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
-	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:not(:hidden)').length-1;
+	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) option:selected:not(:hidden)').length-1;
 	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
-
-	if($(".gstin").val()=="" && $(".panno").val()==""){
+ 
+	if($('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val()==""){
 	    if($("#add_cussup").val() == '19'){
 		$("#checkbnk").focus();
 	    } else {
 		$("#cussup_save").focus();
 	    }
 	}
-	else if (numberofstates > 0) {
-            $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-	    $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(2) span').hide(".addbtn");
-            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
-	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
-            $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-	}else{
-	    $("#cussup_save").focus();
+	else{
+	    if(gstinstring != ''){
+  		if(gstinstring.length !=15){
+  		    $("#gstin-improper-alert").alert();
+		    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#gstin-improper-alert").hide();
+  			$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').focus().select();
+		    });
+  		    return false;
+		}
+	    }
+	    if (numberofstates >= 0) {
+		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(2) span').hide(".addbtn");
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	    }
+	    else{
+		$("#cussup_save").focus();
+	    }
 	}
     });
     
@@ -687,6 +700,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#add_cussup_pan").change(function(event) {
 	var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
 	var txtpan_change = $(this).val();
+	$(".panno").prop("disabled",false); 
 	if ((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && $.trim($("#add_cussup_pan").val())!="") {
 	    $("#pan-incorrect-alert").alert();
 	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -695,8 +709,13 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    });
 	}
 	else{
-	    $(".panno").val($("#add_cussup_pan").val());
-	    $(".panno").prop("disabled",true);
+	    if($.trim($("#add_cussup_pan").val())!=""){
+		$(".panno").val($("#add_cussup_pan").val());
+		$(".panno").prop("disabled",true);
+	    }else{
+		$(".panno").val("");
+		$(".panno").prop("disabled",false);
+	    }
 	}
     });
 
