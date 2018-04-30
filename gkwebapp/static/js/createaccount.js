@@ -310,7 +310,7 @@ $("#openbal").keydown(function(event){
 	    }
 	}
 	else if (event.which == 38) {
-	    if ($("#taxtype option:visible").first().is(":selected") || $.trim($("#taxstate option:selected").val())=="") {
+	    if ($("#taxstate option:visible").first().is(":selected") || $.trim($("#taxstate option:selected").val())=="") {
 		$("#taxtype").focus();
 	    }
 	}
