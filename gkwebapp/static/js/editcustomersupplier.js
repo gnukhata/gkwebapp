@@ -116,7 +116,7 @@ $(document).ready(function() {
 	$("#edit_cussup_pan").prop("disabled", true);
 	$("#edit_cussup_tan").val(result["custtan"]);
 	$("#edit_cussup_tan").prop("disabled", true);
-	//fetching bank details	
+	//fetching bank details.	
 	$("#edit_accountno").val(result["bankdetails"]["accountno"]);
 	$("#edit_accountno").prop("disabled", true);
 	$("#edit_bankname").val(result["bankdetails"]["bankname"]);
@@ -125,9 +125,9 @@ $(document).ready(function() {
 	$("#edit_branchname").prop("disabled", true);
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
-	
+
 	var rowhtml = $('#gstintable tbody tr:first').html();
-	$('#gstintable tbody').empty();
+	$('#gstintable tbody').empty(); 
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
 	for(var gstin in result["gstin"]){
 	    var gstinstr = result["gstin"][gstin];
@@ -145,7 +145,10 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	$(".gstinstate, .statecode, .panno, .gstin, .state_del").prop("disabled", true);
+	$('#gstintable tbody tr td:eq(2)').empty();
+	$('#gstintable tbody tr:last td:eq(2)').empty();	
+	$('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	$(".gstinstate, .statecode, .panno, .gstin, .state_del, .addbtn").prop("disabled", true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
@@ -525,10 +528,10 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
-  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) option:selected:not(:hidden)').length-1;
   if (event.which==13 /*|| event.which==9*/) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  if ($("#edit_cussup").val() == "Supplier"){
 	      $("#checkbnk").focus();
 	  } else {
@@ -550,12 +553,9 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   		return false;
             }
   }
-      if (numberofstates > 0) {
-        
-        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        /*if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }*/
+      if (numberofstates >= 0) {
+          $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	  $('#gstintable tbody tr:eq('+curindex1+') td:eq(2) span').hide(".addbtn");
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -596,6 +596,44 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
 	  }
   }
 });
+
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
+	var curindex_addbtn = $(this).closest('tr').index();
+	var nextindex_addbtn = curindex_addbtn+1;
+	var previndex__addbtn = curindex_addbtn-1;
+	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
+	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) option:selected:not(:hidden)').length-1;
+	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
+	if($('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val()==""){
+	    if ($("#edit_cussup").val() == "Supplier"){
+		$("#checkbnk").focus();
+	    } else {
+		$("#cussup_edit_save").focus();
+	    }
+	}
+	else{
+	    if(gstinstring != ''){
+		if(gstinstring.length !=15){
+  		    $("#gstin-improper-alert").alert();
+		    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#gstin-improper-alert").hide();
+  			$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').focus().select();
+		    });
+  		    return false;
+		}
+	    }
+	    if (numberofstates >= 0) {
+		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(2) span').hide(".addbtn");
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
+		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	    }
+	    else {
+		$("#cussup_edit_save").focus();
+	    }
+	}
+    });
 
     // Keydown events for bank details
     $("#checkbnk").click(function(e){
@@ -834,6 +872,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
       }
+      if(!($('.addbtn').is(':visible'))){
+	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+      }
     $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
@@ -866,7 +907,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
-      $(".gstinstate, .panno, .gstin, .state_del").prop("disabled",false);
+      $(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled",false);
       $("#edit_state").prop("disabled", false);
       $("#edit_accountno").prop("disabled", false);
       $("#edit_bankname").prop("disabled", false);
