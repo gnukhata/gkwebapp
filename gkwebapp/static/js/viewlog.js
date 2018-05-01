@@ -267,15 +267,14 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
     }
     // -----------------------end of validations---------------------
     $("#msspinmodal").modal("show");
-
-    $.ajax(
+          $.ajax(
       {
         type: "POST",
         url: "/log?action=showlogreport",
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0},
+          data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0, "orderflag":1},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

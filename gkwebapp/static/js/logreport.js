@@ -44,6 +44,7 @@ $(document).ready(function() {
 	}else{
 	    orderflag =1;
 	}
+	console.log("orderflag",orderflag);
 	var dataset = {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"orderflag":orderflag};
 	$.ajax({
 	    type: "POST",
