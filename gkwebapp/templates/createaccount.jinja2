@@ -181,12 +181,77 @@ outline: none;
 							</select>
 							<br/>
 							<div id="nsgp" style="margin-bottom: 25px" class="input-group">
-								<label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
-								<input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
+							  <label for="newsubgroup" id="newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
+							  <input type="text" id="newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
 							</div>
-
 							<label> <input type="checkbox" id="maccounts" accesskey="t"> {% trans %}Crea<u>t</u>e Multiple Accounts{% endtrans %}</label>
 							<br/>
+							<div id="gstaccountfields">
+							  {%if vatorgstflag=='7' or vatorgstflag=='29' %}
+							    <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please enter Tax Type!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please select Tax Type!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxstate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please select State!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please select Tax Rate!{% endtrans %}
+							    </div>
+							    <div class="alert alert-danger" id="cessrate-alert"  aria-live="rude" role="alert" hidden>
+							      {% trans %}Please enter Cess Rate!{% endtrans %}
+							    </div>
+							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+							    <br/>
+							    <div class="row" id="gstaccountdiv" hidden>
+							      <div class="form-group col-sm-3" style="margin:5px;">
+								<label>
+								  {% trans %}Tax Type{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxtype">
+								  <option value="" hidden disabled selected>Select Tax</option>
+								  <option value="SGSTIN">SGSTIN</option>
+								  <option value="SGSTOUT">SGSTOUT</option>
+								  <option value="CGSTIN">CGSTIN</option>
+								  <option value="CGSTOUT">CGSTOUT</option>
+								  <option value="IGSTIN">IGSTIN</option>
+								  <option value="IGSTOUT">IGSTOUT</option>
+								  <option value="CESSIN">CESSIN</option>
+								  <option value="CESSOUT">CESSOUT</option>
+								</select>
+							      </div>
+							      <div class="form-group col-sm-5" style="margin:5px;">
+								<label>
+								  {% trans %}State{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxstate">
+								  <option value="" hidden disabled selected>Select State</option>
+								  {% for state in states %}
+								    {% for key, value in state.items() %}
+								      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+								    {% endfor %}
+								  {% endfor %}
+								</select>
+							      </div>
+							      <div class="form-group col-sm-3" style="margin:5px;">
+								<label>
+								  {% trans %}Rate{% endtrans %}
+								</label>
+								<select class="form-control input-sm" id="taxrate">
+								  <option value="" hidden disabled selected>Select Rate</option>
+								  <option value="5%">5%</option>
+								  <option value="12%">12%</option>
+								  <option value="18%">18%</option>
+								  <option value="28%">28%</option>
+								</select>
+								<input type="text" id="cessrate" class="form-control input-sm" name="accountname" accesskey="a" style="display:none">
+							    </div>
+							    <br/>
+							  </div>
+							  {%endif%}
+							</div>
 							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
 							<br/>

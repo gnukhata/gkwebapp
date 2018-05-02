@@ -10,8 +10,35 @@
      table td {
 	 border-top: none !important;
      }
+     table td #gstratediv {
+	 border:1px solid grey !important;
+	 padding:10px;
+	 border-radius: 2px;
+     }
+     #gstaccountstable tbody tr td{
+	 font-weight:normal !important;
+	 font-size:80% !important;
+	 padding:15px;
+     }
+     #gstaccountstable tbody tr{
+	 width:100%;
+     }
+     #gstaccountstable tbody{
+	 display:block;
+	 overflow-y:scroll;
+	 height:60vh;
+     }
+     #gstaccountstable thead tr td{
+	 font-size:80% !important;
+     }
      .img-circle {
 	 border-radius: 50%;
+     }
+     .gstrate{
+	 margin:10px;
+     }
+     .small {
+	 font-weight:normal !important;
      }
     </style>
   </head>
@@ -28,7 +55,6 @@
 	  </div>
 
 	  <div style="padding-top:5px" class="panel-body" >
-				</br>
 				<div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
 				  <label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
@@ -126,7 +152,7 @@
 					  <td>
 					    <input type="text" id="state"  value="{{gkresult["orgstate"]}}" hidden></input>
 					    <select id="orgstate" class="form-control input-sm col-sm-8" style="width: 100%">
-					      <option value="" hidden disabled selected>Select State</option>
+					      <option value="" hidden disabled selected stateid="">Select State</option>
 					      {% for state in states %}
 						{% for key, value in state.items() %}
 						  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -158,6 +184,14 @@
 					  </td>
 					  <td>
 					    <input type="text" id="orgtelno" class="form-control input-sm" size="11" maxlength="11" name="telephonenumber" value="{{gkresult["orgtelno"]}}" style="width: 100%"></input>
+					  </td>
+					</tr>
+					<tr>
+					  <td>
+					    <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
+					  </td>
+					  <td>
+					    <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
 					  </td>
 					</tr>
 				      </tbody>
@@ -198,14 +232,6 @@
 					    </td>
 					  </tr>
 					{% endif %}
-					<tr>
-					  <td>
-					    <label for="organisationwebsite" id="orgWebsite">{% trans %}Website{% endtrans %} :</label>
-					  </td>
-					  <td>
-					    <input type="text" id="orgwebsite" class="form-control input-sm" name="organisationwebsite" value="{{gkresult["orgwebsite"]}}" style="width: 100%"></input>
-					  </td>
-					</tr>
 					<tr>
 					  <td>
 					    <label for="organisationemail" id="orgEmail">{% trans %}Email{% endtrans %} :</label>
@@ -266,6 +292,28 @@
 					    <button class="btn btn-primary btn-sm bankdel" type="button" id="orgbankdel"  data-toggle="modal" data-target="#addbankdel"><i class="fa fa-plus" aria-hidden="true" accesskey="a"></i> {% trans %}<u>A</u>dd Bank Details{% endtrans %}</button>
 					  </td>
 					</tr>
+					{% if vatorgstflag=='7' or vatorgstflag=='29' %}
+					<tr>
+					  <td colspan="2">
+					    <div class="row" id="gstratediv">
+					      <div class="small">
+						{% trans %}Please choose rates from below so that accounts for GST can be created.{% endtrans %}
+					      </div>
+					      <div class="small">
+						<label>{% trans %}GST Rates{% endtrans %}: </label>
+						<input type="checkbox" class="gstrate" data-taxrate="5%"><label>5%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="12%"><label>12%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="18%"><label>18%</label>
+						<input type="checkbox" class="gstrate" data-taxrate="28%"><label>28%</label>
+						<div class="form-group pull-right">
+						  <label>{% trans %}Cess Rates{% endtrans %}: </label>
+						  <button type="button" class="btn btn-sm btn-primary" data-toggle="popover" title="{% trans %}Add Cess Rates{% endtrans %}:" data-placement="top" data-content="{% trans %}Enter rates in the field below. Click '+' button or press 'Enter' key to add more.{% endtrans %}">{% trans %}Add{% endtrans %} <i class="fa fa-plus" aria-hidden="true" accesskey="a"></i></button>
+						</div>
+					      </div>
+					    </div>
+					  </td>
+					</tr>
+					{% endif %}
 				      </tbody>
 				    </table>
 				  </div>
@@ -526,9 +574,31 @@
 	</div>
 	<div style="padding-top:15px" class="mainbox col-md-2"></div>
       </div>
-	
-	{# end bank details #}
       
+      {# end bank details #}
+      <div id="gstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+            <div class="modal-header">
+	      <button type="button" class="close" data-dismiss="modal">&times;</button>
+              <div class="modal-title">
+		{% trans %}GST Accounts{% endtrans %} :
+              </div>
+            </div>
+            <div class="modal-body">
+	      <table id="gstaccountstable" class="table table-striped fixed-table">
+		<thead class="bg-primary">
+		  <tr>
+		    <td colspan="2">
+		      {% trans %}Following accounts for GST have been created.{% endtrans %}
+		    </td>
+		  </tr>
+		</thead>
+		<tbody>
+		</tbody>
+	      </table>
+	    </div>
+      </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editorganisation.js')}}"></script>
 </body>

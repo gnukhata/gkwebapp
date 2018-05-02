@@ -60,9 +60,17 @@ def showeditOrg(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)   
     return {"gkresult":result.json()["gkdata"],"gkstatus":result.json()["gkstatus"],"states": states.json()["gkresult"],"vatorgstflag":resultgstvat.json()["gkresult"]}
+
+@view_config(route_name="showeditOrg", request_param="getgstgroupcode", renderer="json")
+def getGSTGroupCode(request):
+    header={"gktoken":request.headers["gktoken"]}
+    groupcodedata = requests.get("http://127.0.0.1:6543/organisation?getgstgroupcode", headers=header)
+    if groupcodedata.json()["gkstatus"] == 0:
+        return {"gkstatus":groupcodedata.json()["gkstatus"], "groupcode":groupcodedata.json()["groupcode"], "subgroupcode":groupcodedata.json()["subgroupcode"]}
+    else:
+        return {"gkstatus":groupcodedata.json()["gkstatus"]}
 
 @view_config(route_name="existingorg", request_param="type=getgstin", renderer="json")
 def getorgdata(request):

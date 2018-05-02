@@ -32,13 +32,17 @@ $(document).ready(function()
 {
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
-  $("#openbal").numeric();
+    $("#openbal").numeric();
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
   $("#baltbl").hide();
   $("#groupname").focus().select();
-  $("#accountform").validate();
+    $("#accountform").validate();
+    var taxstate = "";
+    var taxtype = "";
+    var taxrate = "";
+    var cessrate = "";
   $("#groupname").bind("change keyup", function(){
       var gname = $("#groupname option:selected").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
@@ -102,7 +106,12 @@ $(document).ready(function()
     {
       $("#nsgp").hide();
     }
-
+      if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
+	  $('#gstaccountfields').show();
+      }
+      else {
+	  $('#gstaccountfields').hide();
+      }
 
   });
 
@@ -119,7 +128,12 @@ $("#openbal").keydown(function(event){
 	}
     else if (event.which == 38){
 	event.preventDefault();
-	$("#accountname").focus().select();
+	if (!$("#accountname").is(":disabled")) {
+	    $("#accountname").focus().select();
+	}
+	else {
+	    $("#taxrate:visible, #cessrate:visible").focus();
+	}
     }
 });
     // Keydown event for Group Name.
@@ -145,14 +159,13 @@ $("#openbal").keydown(function(event){
       });
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
-	if(event.which==13) {
-	    if ($.trim($("#subgroupname option:selected").val())=="New"){
+	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
+	    if ($.trim($("#subgroupname option:selected").val())=="New"){
 	    $("#newsubgroup").focus().select();
 	    }
 	    else {
-		event.preventDefault();
-	    $("#maccounts").focus().select();
+		    $("#maccounts").focus().select();
 	    }
 	}
 	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
@@ -173,7 +186,6 @@ $("#openbal").keydown(function(event){
 		$("#newsubgroup").focus().select();
 		return false;
 	    }
-	    event.preventDefault();
       $("#maccounts").focus().select();
 	}
 	if (event.which==38) {
@@ -185,7 +197,12 @@ $("#openbal").keydown(function(event){
      $("#maccounts").keydown(function(event){
 	if(event.which==13) {
 	    event.preventDefault();
-	    $("#accountname").focus().select();
+	    if ($("#gstaccount").is(":visible")) {
+		    $("#gstaccount").focus().select();
+		}
+	    else {
+		$("#accountname").focus().select();
+	    }
 	}
 	 else if (event.which == 38){
 	     event.preventDefault();
@@ -197,6 +214,161 @@ $("#openbal").keydown(function(event){
 	     }
 	     }
      });
+    //Events for creating GST Accounts beigin here.
+    $("#taxtype").change(function(){
+	taxtype = $.trim($("#taxtype option:selected").val());
+	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+	    $("#taxrate").hide();
+	    $("#cessrate").show();
+	}
+	else {
+	    $("#taxrate").show();
+	    $("#cessrate").hide();
+	}
+	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
+	}
+	else {
+	    $('#accountname').val("");
+	}
+    });
+    $("#taxtype").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($.trim($("#taxtype option:selected").val())=="") {
+                $("#taxtype-alert").alert();
+                $("#taxtype-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#taxtype-alert").hide();
+		});
+                $("#taxtype").focus();
+                return false;
+            }
+	    $("#taxstate").focus();
+	}
+	else if (event.which == 38) {
+	    if ($("#taxtype option:visible").first().is(":selected") || $.trim($("#taxtype option:selected").val())=="") {
+		$("#gstaccount").focus();
+	    }
+	}
+    });
+    $("#taxstate").change(function(){
+	let taxstatecode = $("#taxstate option:selected").attr("stateid");
+	if (taxstatecode !== "") {
+	    $.ajax({
+	    url: '/addaccount?type=abbreviation',
+	    type: 'POST',
+	    global: false,
+	    async: false,
+	    datatype: 'json',
+	    data: {"statecode": taxstatecode},
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	})
+	    .done(function(resp)   /*This function will return spec name of the product*/
+		  {
+		      if (resp.gkstatus == 0) {
+			  taxstate = resp.abbreviation;
+			  if (taxtype!="" && taxstate!="" && taxrate!="") {
+			      $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
+			  }
+		      }
+		      else {
+			  taxstate = "";
+			  $("#accountname").val("");
+		      }
+		  })
+	    .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	}
+	else {
+	    taxstate = "";
+	    $("#accountname").val("");
+	}
+    });
+    $("#taxstate").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($.trim($("#taxstate option:selected").val())=="") {
+                $("#taxstate-alert").alert();
+                $("#taxstate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#taxstate-alert").hide();
+		});
+                $("#taxstate").focus();
+                return false;
+            }	
+	    if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+		$("#cessrate").focus();
+	    }
+	    else {
+		$("#taxrate").focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#taxstate option:visible").first().is(":selected") || $.trim($("#taxstate option:selected").val())=="") {
+		$("#taxtype").focus();
+	    }
+	}
+    });
+    $("#taxrate").change(function(){
+	taxrate = $.trim($("#taxrate option:selected").val());
+	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
+	}
+	else {
+	    $("#accountname").val("");
+	}
+    });
+    $("#taxrate").keydown(function(event){
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    if ($.trim($("#taxrate option:selected").val())=="") {
+                $("#taxrate-alert").alert();
+                $("#taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#taxrate-alert").hide();
+		});
+                $("#taxrate").focus();
+                return false;
+            }
+	    $("#openbal").focus();
+	}
+	else if (event.which == 38) {
+	    if ($("#taxrate option:visible").first().is(":selected")) {
+		$("#taxstate").focus();
+	    }
+	}
+    });
+    $("#cessrate").change(function(){
+	cessrate = $.trim($("#cessrate").val());
+	if (taxtype!="" && taxstate!="" && cessrate!="") {
+	    $('#accountname').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	}
+	else {
+	    $("#accountname").val("");
+	}
+    });
+    $("#cessrate").keydown(function(event){
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    if ($.trim($("#cessrate").val())=="") {
+                $("#cessrate-alert").alert();
+                $("#cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#cessrate-alert").hide();
+		});
+                $("#cessrate").focus();
+                return false;
+            }
+	    $("#openbal").focus();
+	}
+	else if (event.which == 38) {
+	    $("#taxstate").focus();
+	}
+    });
     // Keydown event for Account Name.
     //Validations for Account Name.
      $("#accountname").keydown(function(event){
@@ -273,8 +445,6 @@ $("#openbal").keydown(function(event){
 
 
   $("#msspinmodal").modal("show");
-
-
   $.ajax(
     {
 
@@ -283,7 +453,7 @@ $("#openbal").keydown(function(event){
       global: false,
       async: false,
       datatype: "json",
-      data: $("#accountform").serialize(),
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(), "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -328,7 +498,39 @@ $("#openbal").keydown(function(event){
 }
 );
 
-$('#maccounts').change(function() {
+    //Events for gst checkbox
+    //Change event - toggling fields when checkbox is checked or unchecked.
+    $('#gstaccount').change(function(){
+	if ($(this).is(":checked")) {
+	    $('#accountname').prop("disabled", true);
+	    $("#gstaccountdiv").show();
+	}
+	else {
+	    $('#accountname').prop("disabled", false);
+	    $("#gstaccountdiv").hide();
+	}
+    });
+    //Key event for navigation
+    $('#gstaccount').keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#taxtype").focus();
+	    }
+	    else{
+		$('#accountname').focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    if ($("#newsubgroup").is(':visible')) {
+		$("#newsubgroup").focus().select();
+	    }
+	    else {
+		$("#maccounts").focus();
+	    }
+	}
+    });
+  $('#maccounts').change(function() {
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();
     $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
