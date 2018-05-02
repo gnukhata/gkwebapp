@@ -1,3 +1,13 @@
+<head>
+  <style>
+   span {
+       margin:5.5 auto;
+   }
+   .tax_del, .godown_del{
+       color:#000000;
+   }
+  </style>
+</head>
 <body>
 
   <div class="container-fluid " style="padding:1 !important; margin:0 !important;" >
@@ -104,7 +114,8 @@
                       <tr>
 			<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
 			<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-			<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-1"></th>
 			<th class="col-xs-1"></th>
                       </tr>
                     </thead>
@@ -131,10 +142,18 @@
                             {% endfor %}
                           </select>
                         </td>
-                        <td class="col-xs-3">
+                        <td class="col-xs-2">
 			  <input class="form-control input-sm tax_rate text-right product_new_rate numtype"  value="0.00">
 			</td>
 			<td class="col-xs-1">
+			  <div style="text-align: center;">
+			    <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
+			  </div>
+			</td>
+			<td class="col-xs-1">
+			  <div style="text-align:center;">
+			    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			  </div>
 			</td>
                       </tr>
                     </tbody>
@@ -142,42 +161,42 @@
 		</div>
                 <small id="taxhelp4" class="form-text text-muted common">Press 'Insert' key from anywhere on the screen to save changes.</small>
                 <div class="collapse" id="moresmall">
-                    <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
-                    <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
-		    {% if not godown %}
+                  <small id="taxhelp2" class="form-text text-muted ">Press 'Ctrl + >' to move forward or 'Ctrl + <' to move backward within a row in a table.</small><br>
+                  <small id="taxhelp" class="form-text text-muted">Press 'Shift + <' to move backward within a Column in a table.</small>
+		  {% if not godown %}
                     <small  class="form-text text-muted productclass">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-                    {% else %}
+                  {% else %}
                     <small  class="form-text text-muted " id="godownmsg">When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
-                    {% endif %}
-		    <small  class="form-text text-muted serviceclass"> When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
+                  {% endif %}
+		  <small  class="form-text text-muted serviceclass"> When on Tax Rate or Tax Name, Press 'Esc' key to shift focus to Opening Stock and from Opening Stock to 'Save' button.</small>
                 </div>
                 <a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
               </div>
-	    <!--
-		<div class="panel col-xs-8 igsttax nopadding" hidden>
-		    <table id="igst_tax_table" class="table table-condensed table-bordered">
-                      <thead class="bg-primary input-sm">
-			<tr>
-			  <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
+	      <!--
+		   <div class="panel col-xs-8 igsttax nopadding" hidden>
+		   <table id="igst_tax_table" class="table table-condensed table-bordered">
+                   <thead class="bg-primary input-sm">
+		   <tr>
+		   <th class="col-xs-6 text-center">{% trans %}Tax Name{% endtrans %}</th>
 
-			  <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
+		   <th class="col-xs-6 text-center">{% trans %}Rate %{% endtrans %}</th>
 
-			</tr>
-                      </thead>
-		      <tbody>
-			<tr>
-			  <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
-			    {% trans %}IGST{% endtrans %}
-			  </td>
-			  <td class="col-xs-6">
-			    <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
-			  </td>
-			</tr>
-		      </tbody>
+		   </tr>
+                   </thead>
+		   <tbody>
+		   <tr>
+		   <td class="col-xs-6 text-center" style = "vertical-align:middle; font-weight: normal; font-size:90%;" >
+		   {% trans %}IGST{% endtrans %}
+		   </td>
+		   <td class="col-xs-6">
+		   <input class="form-control input-sm tax_rate text-right product_new_rate numtype" id ="igstrate"  placeholder="Rate" value="0.00">
+		   </td>
+		   </tr>
+		   </tbody>
 
-		    </table>
-		</div>
-		-->
+		   </table>
+		   </div>
+		 -->
 
             </div>
 	    {% endif %}
@@ -192,18 +211,22 @@
                 <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		    </div>
                     <div  id="openingstockdiv" class="form-group" hidden>
+		      <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+			{% trans %}Please select a godown.{% endtrans %}
+		      </div>
                       <div class="panel">
 			<table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
 			  <thead class="bg-primary input-sm">
                             <tr>
-                              <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
+                              <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
                               <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
                               <th class="col-xs-1"></th>
+			      <th class="col-xs-1"></th>
                             </tr>
 			  </thead>
 			  <tbody>
                             <tr>
-                              <td class="col-xs-8">
+                              <td class="col-xs-7">
 				<select class="form-control input-sm godown_name">
 				  <option value="" disabled hidden selected>Select Godown</option>
 				  {% for record in godown %}
@@ -215,7 +238,15 @@
 				<input class="form-control input-sm godown_ob text-right numtype" value="0.00">
                               </td>
                               <td class="col-xs-1">
+				<div style="text-align: center;">
+				  <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+				</div>
                               </td>
+			      <td class="col-xs-1">
+				<div style="text-align:center;">
+				  <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+				</div>
+			      </td>
                             </tr>
 			  </tbody>
 			</table>
@@ -234,49 +265,59 @@
 		{% else %}
 		  {% if userrole|int != 3 %}
 		    <div class="form-group col-sm-12">
-                    <input type="checkbox" name="godownflag" id="godownflag" value=0>
-      </input>
-      <input type="text" id="godownpresence" value="1" hidden="">
-      <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+                      <input type="checkbox" name="godownflag" id="godownflag" value=0></input>
+		      <input type="text" id="godownpresence" value="1" hidden="">
+		      <label class="" for="godownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
 		    </div>
 		    <div id="nogodown" class="form-group pds col-sm-6 noinventory">
-		    <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-		    <div class="input-group">
-                      <input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
-                      <span class="input-group-addon input-sm" id="unitaddon"></span>
+		      <label for="openingstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+		      <div class="input-group">
+			<input type='text' class="form-control text-right input-sm numtype" name="openingstock"  id="openingstock" value="0.00" aria-describedby="unitaddon">
+			<span class="input-group-addon input-sm" id="unitaddon"></span>
+		      </div>
 		    </div>
-		  </div>
-		  <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
+		    <div  id="openingstockdiv" class="form-group col-sm-12" hidden>
 		  {% else %}
-		    <input type="hidden" name="godownflag" id="godownflag" value="1">
-      </input>
-      <input type="text" id="godownpresence" value="1" hidden>
-      <div  id="openingstockdiv" class="form-group col-sm-12">
+		      <input type="hidden" name="godownflag" id="godownflag" value="1"></input>
+		      <input type="text" id="godownpresence" value="1" hidden>
+		      <div  id="openingstockdiv" class="form-group col-sm-12">
 		  {% endif %}
-		    <div class="panel">
-                      <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
-			<thead class="bg-primary input-sm">
-			  <tr>
-			    <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-			    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-			    <th class="col-xs-1"></th>
-			  </tr>
-			</thead>
-			<tbody>
-			  <tr>
-			    <td class="col-xs-8">
-                              <select class="form-control input-sm godown_name">
-				<option value="" disabled hidden selected>Select Godown</option>
-				{% for record in godown %}
-				  <option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
-				{% endfor %}
-                              </select>
-			    </td>
-			    <td class="col-xs-3">
-                              <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
-			    </td>
-			    <td class="col-xs-1">
-			    </td>
+		  <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+		    {% trans %}Please select a godown.{% endtrans %}
+		  </div>
+		  <div class="panel">
+                    <table id="godown_ob_table" class="table table-condensed table-bordered fixed-table">
+		      <thead class="bg-primary input-sm">
+			<tr>
+			  <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+			  <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+			  <th class="col-xs-1"></th>
+			  <th class="col-xs-1"></th>
+			</tr>
+		      </thead>
+		      <tbody>
+			<tr>
+			  <td class="col-xs-7">
+                            <select class="form-control input-sm godown_name">
+			      <option value="" disabled hidden selected>Select Godown</option>
+			      {% for record in godown %}
+				<option value="{{record["goid"]}}">{{record["goname"]}}({{record["goaddr"]}})</option>
+			      {% endfor %}
+                            </select>
+			  </td>
+			  <td class="col-xs-3">
+                            <input class="form-control input-sm godown_ob text-right numtype" value="0.00">
+			  </td>
+			  <td class="col-xs-1">
+			    <div style="text-align: center;">
+			      <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+			    </div>
+			  </td>
+			  <td class="col-xs-1">
+			    <div style="text-align:center;">
+			      <a href="#" class="godown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			    </div>
+			  </td>
 			  </tr>
 			</tbody>
                       </table>

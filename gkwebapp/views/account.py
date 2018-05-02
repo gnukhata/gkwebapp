@@ -119,7 +119,6 @@ def showaccount(request):
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     return {"gkresult":grpdata,"baltbl":result.json()["baltbl"], "vatorgstflag":resultgstvat.json()["gkresult"],"states": states.json()["gkresult"]}
 
-
 @view_config(route_name="listofaccountsprint", renderer="gkwebapp:templates/printlistofaccounts.jinja2")
 def listofaccountprint(request):
 
@@ -164,7 +163,12 @@ def showeditaccount(request):
         adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"])}
         accdata.append(adata)
     result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
-    return {"gkresult":accdata, "baltbl":result.json()["baltbl"]}
+    grpdata=[]
+    for record in result.json()["gkresult"]:
+        gdata= {"groupname":str(record["groupname"]),"groupcode":str(record["groupcode"])}
+        grpdata.append(gdata)
+
+    return {"gkresult":accdata, "baltbl":result.json()["baltbl"], "groupdata":grpdata}
 
 
 @view_config(route_name="deleteaccount", renderer="json")
@@ -226,7 +230,7 @@ def getaccdetails(request):
 
 
 
-    accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"]}
+    accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"],"groupcode":grprecord["groupcode"],"subgroupcode":grprecord["subgroupcode"]}
 
     return {"gkresult":accdetails}
 
@@ -256,7 +260,6 @@ def addaccount(request):
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
         result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
-
         if result.json()["gkstatus"]==0:
             gkdata["groupcode"] = result.json()["gkresult"]
 
@@ -346,15 +349,32 @@ def addGSTaccounts(request):
         
     return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
 
-
 #the functionality to edit customer after editing account and other such functionality should be done in core please make a note of this and change it later.
 @view_config(route_name="editaccount", renderer="json")
 def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
+    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+    '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
+       return "groupcode" store with 'accountname' in 'accounts' table.
+    ''' 
+    if request.params["subgrpcode"]=="New":
+        gkdatagrp={"groupname":request.params["newgrpname"],"subgroupof":request.params["groupcode"]}
+        result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdatagrp),headers=header)
+
+        if result.json()["gkstatus"]==0:
+            gkdata["groupcode"] = result.json()["gkresult"]
+        else:
+            return {"gkstatus":False}
+    elif request.params["subgrpname"]=="None":
+        grpcode= request.params["groupcode"]
+
+        gkdata["groupcode"] = grpcode
+    else:
+        gkdata["groupcode"] = request.params["subgrpcode"]
     result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
     accountname = result.json()["gkresult"]["accountname"]
     groupcode = result.json()["gkresult"]["groupcode"]
-    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+    
     result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)

@@ -362,7 +362,7 @@ $(document).ready(function() {
         $(".noinventory").hide();
             $("#invflag").val("0");
           $("#taxhelp3").hide();
-          $("#taxhelp5").show();
+          $("#taxhelp5").show();  
 
         }
         $("#unitaddon").html($("#edituom option:selected").text());
@@ -403,18 +403,19 @@ $(document).ready(function() {
         if (resp["gkresult"].length > 0) {
             taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
-          $('#product_edit_tax_table tbody tr:first').remove();
-
-
+            $('#product_edit_tax_table tbody tr:first').remove();
         for (tax of resp["gkresult"]) {
-            $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
-          $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-          $(".product_tax_disable").prop('disabled',true);
+	    $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
+            $(".product_tax_disable").prop('disabled',true);
+	    $(".tax_del").prop('disabled',true);
             $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
           $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
           $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
         }
-	    $(".tax_del:first").hide();
+	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+	    $('.addbtn').prop('disabled',true);
+	    $('.goaddbtn').prop('disabled',true);
       }
           existingnonetax = resp["gkresult"];
       })
@@ -601,6 +602,9 @@ $(document).ready(function() {
     catcode= $("#editcatselect option:selected").val();
     $(".product_cat_tax_disable").prop('disabled',false);
     $(".product_tax_disable").prop('disabled',false);
+    $(".tax_del").prop('disabled',false);
+    $('.addbtn').prop('disabled',false);
+    $('.goaddbtn').prop('disabled',false);  
     $("#product_edit_tax_table tbody tr").each(function() {
       if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='IGST' || $('td:eq(0) select option:selected', this).val() =='CESS' ){
         $('td:eq(1) select', this).prop('disabled', true);
@@ -875,6 +879,57 @@ $(document).ready(function() {
     }
   });
 
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
+	var curindex_addbtn = $(this).closest('tr').index();
+	var nextindex_addbtn = curindex_addbtn+1;
+	var previndex_addbtn = curindex_addbtn-1;
+
+	if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+          $("#tax_state-blank-alert").alert();
+          $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax_state-blank-alert").hide();
+          });
+          return false;
+        }
+	if (curindex_addbtn != ($("#product_edit_tax_table tbody tr").length-1)) {
+          $('#product_edit_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+        }
+	else {
+            if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').val()==null) {
+		$("#tax-name-blank-alert").alert();
+		$("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-name-blank-alert").hide();
+		});
+		$('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').focus();
+		return false;
+            }
+	    if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(2) input').val()=="") {
+            $("#tax-rate-blank-alert").alert();
+            $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tax-rate-blank-alert").hide();
+            });
+            $('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(2) input').focus();
+            return false;
+          }
+	    $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
+	    $('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(3) span').hide('.glyphicon-plus');
+	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	    $(".product_tax_disable").prop('disabled',false);
+            $(".tax_rate").numeric();
+	    //selected tax name removed from list except 'VAT'. 
+	    for (let j = 0; j < curindex_addbtn + 1; j++) {
+                var selectedtax = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+                if (selectedtax != "VAT") {
+                    for (let i=j+1; i<=curindex_addbtn+1;i++){
+                        $('#product_edit_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+                    }
+                }
+            }
+            $(".tax_name:last").change();
+          $('#product_edit_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
+	}
+    });
+    
   $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -893,7 +948,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
         }
         else {
-          if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+          if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()==null) {
             $("#tax-name-blank-alert").alert();
             $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#tax-name-blank-alert").hide();
@@ -910,7 +965,8 @@ $(document).ready(function() {
             return false;
           }
             $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
-            $('#product_edit_tax_table tbody tr:last td:last').append('<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(3) span').hide('.glyphicon-plus');
+	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	    $(".product_tax_disable").prop('disabled',false);
             $(".tax_rate").numeric();
 	    for (let j = 0; j < curindex1 + 1; j++) {
@@ -971,9 +1027,15 @@ $(document).ready(function() {
     }
 
   });
-  $(document).off("click",".tax_del").on("click", ".tax_del", function() {
+    $(document).off("click",".tax_del").on("click", ".tax_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#product_edit_tax_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+	  $('#product_edit_tax_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+	if(!($('.addbtn').is(':visible'))){
+	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	}
       $('#product_edit_tax_table tbody tr:last td:eq(0) select').focus().select();
     });
     $('#product_edit_tax_table tbody tr:last td:eq(0) select').select();
@@ -1036,26 +1098,67 @@ $(document).ready(function() {
     }
   });
 
+    $(document).off("click",".goaddbtn").on("click",".goaddbtn",function(event){
+	var curindex_goaddbtn = $(this).closest('tr').index();
+	var nextindex_goaddbtn = curindex_goaddbtn+1;
+	var previndex_goaddbtn = curindex_goaddbtn-1;
+	var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select option:not(:hidden)').length-1;
+
+	if (curindex_goaddbtn != ($("#editgodown_ob_table tbody tr").length-1)) {
+            $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+	}
+	else {
+	    if (numberofgodowns >= 0 ) {
+		if ($('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) option:selected').val()=="") {
+		    $("#godown-blank-alert").alert();
+		    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#godown-blank-alert").hide();
+		    });
+		    $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(0) select').focus();
+		    return false;
+		}
+		if (numberofgodowns > 0 ) {
+		    $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+		    $('#editgodown_ob_table tbody tr:eq('+curindex_goaddbtn+') td:eq(2) span').hide('.glyphicon-plus');
+		}else{
+		    $('#epsubmit').focus();
+		}
+		//selected godowns name are removed from list. 
+		for (let j = 0; j < curindex_goaddbtn + 1; j++) {
+		    var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+j+') td:eq(0) select option:selected').val();
+		    $('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+		}
+		$('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
+		if(numberofgodowns > curindex_goaddbtn) {
+		    $('#editgodown_ob_table tbody tr:last td:last').append('<div style="text-align: center;"><a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+		}
+		$(".editgodown_ob").numeric();
+		$('#editgodown_ob_table tbody tr:eq('+nextindex_goaddbtn+') td:eq(0) select').focus().select();
+	    }
+	    else{ $('#epsubmit').focus(); }
+	}
+    });
+
   $(document).off("keydown",".editgodown_ob").on("keydown",".editgodown_ob",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val();
-    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length;
-    selectedgodown = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val();
+    var numberofgodowns = $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
     if (event.which==13) {
       event.preventDefault();
       if (curindex1 != ($("#editgodown_ob_table tbody tr").length-1)) {
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
-      else {
-        if ($('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
-          $("#godown-blank-alert").alert();
+	else {
+       if (numberofgodowns >= 0 ) {
+	   if ($('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) option:selected').val()=="") {
+	  $("#godown-blank-alert").alert();
           $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#godown-blank-alert").hide();
           });
-          $('#godown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+          $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
         if ($('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
@@ -1066,18 +1169,26 @@ $(document).ready(function() {
           $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
           return false;
         }
-        if (numberofgodowns == 1) {
-          $('#epsubmit').click();
-          return false;
-        }
-        $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+	if (numberofgodowns > 0 ) {
+            $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#editgodown_ob_table tbody tr:eq('+curindex1+') td:eq(2) span').hide('.glyphicon-plus');  
+	}else{
+	    $('#epsubmit').click();
+	}
+	  for (let j = 0; j < curindex1 + 1; j++) {
+	      selectedgodown = $('#editgodown_ob_table tbody tr:eq('+j+') td:eq(0) select option:selected').val();
+	      $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
+	  }
 	$('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
-        if (curindex1 == 0) {
-          $("#editgodown_ob_table tbody tr:last td:last").append('<a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+        if (numberofgodowns > curindex1) {
+          $("#editgodown_ob_table tbody tr:last td:last").append('<div style="text-align: center;"><a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
         }
         $(".editgodown_ob").numeric();
         $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+       }
+	  else{
+	      $('#epsubmit').click();
+	  }
       }
     }
     else if(event.which==190 && event.shiftKey)
@@ -1111,6 +1222,12 @@ $(document).ready(function() {
   $(document).off("click",".editgodown_del").on("click", ".editgodown_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element specified
+      if($('#editgodown_ob_table tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
+	  $('#editgodown_ob_table tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+      }
+      if(!($('.goaddbtn').is(':visible'))){
+	  $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+      }	
       $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();
     });
     $('#editgodown_ob_table tbody tr:last td:eq(0) select').focus().select();

@@ -1,11 +1,21 @@
+<head>
+  <style>
+   span {
+       margin:5.5 auto;
+   }
+   .tax_del, .editgodown_del{
+       color:#000000;
+   }
+  </style>
+</head>
 <div class="col-sm-6" style="margin-top: -18;">
   <div class="editpr">
     <div class="row">
       <div class="form-group col-sm-11 pd">
-      <label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
-      <input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
+	<label for="editproddesc" class="">{% trans %}New Name of Product{% endtrans %} :</label><label for="editproddesc" style="color:red;font-size: 120%;">*</label>
+	<input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
+      </div>
     </div>
-  </div>
     {% if category|length > 0 %}
       <div class="row">
 	<div class="form-group col-sm-11" id="categorydiv">
@@ -25,74 +35,80 @@
 	</div>
       </div>
     {% endif %}
- 
-  <div class="row">
-    <div class="form-group col-sm-11 pds olduom">
-    <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
-    <select class = "form-control input-sm "  name = "uom" id="edituom" >
-      {% for uom in uom %}
-      {% if uom["uomid"]== proddesc["uomid"] %}
-      <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
-      {% else %}
-      <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+    
+    <div class="row">
+      <div class="form-group col-sm-11 pds olduom">
+	<label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
+	<select class = "form-control input-sm "  name = "uom" id="edituom" >
+	  {% for uom in uom %}
+	    {% if uom["uomid"]== proddesc["uomid"] %}
+	      <option value="{{uom['uomid']}}" selected>{{uom["unitname"]}}</option>
+	    {% else %}
+	      <option value="{{uom['uomid']}}">{{uom["unitname"]}}</option>
+	    {% endif %}
+	  {% endfor %}
+	</select>
+      </div>
+    </div>
+    <div id="extsp" class="row">
+      <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
+      {% if prodspecs|length > 0 %}
+	<div class="col-sm-11">
+	  <div class="panel">
+            <table id="spec_table" class="table table-condensed table-bordered fixed-table">
+              <thead class="bg-primary input-sm">
+		<tr>
+		  <th class="col-xs-2 text-center">{% trans %}Specifications{% endtrans %}</th>
+		  <th class="col-xs-2 text-center">{% trans %}Value{% endtrans %}</th>
+		</tr>
+              </thead>
+              <tbody>
+		{% for spec in prodspecs %}
+		  <tr>
+		    <td>
+		      <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}}</label>
+		      <input type="text" class="spec_name" value="{{spec['spcode']}}" hidden>
+		    </td>
+		    <td>
+		      {% if spec["attrtype"]==0 %}
+
+			<input type="text" class="form-control spec_value spec input-sm" id="{{spec['spcode']}}" placeholder="Alphanumeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
+		      {% elif spec["attrtype"]==1 %}
+			<input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
+		      {% elif spec["attrtype"]==2 %}
+			<div class="form-inline">
+			  <div class="form-group ">
+			    <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][8]+proddesc['specs'][pdesc][9]}}{% endif %}{% endfor %}">
+			  </div>
+			  <div class="form-group ">
+			    <input type="text" class="form-control input-sm spec specmonth specdate" size="2" maxlength="2" placeholder="MM" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][5]+proddesc['specs'][pdesc][6]}}{% endif %}{% endfor %}">
+			  </div>
+			  <div class="form-group">
+			    <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][0]+proddesc['specs'][pdesc][1]+proddesc['specs'][pdesc][2]+proddesc['specs'][pdesc][3]}}{% endif %}{% endfor %}">
+			  </div>
+			  <input type="text" class="spec_value datevalue" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}" hidden>
+			</div>
+		      {% endif %}
+		    </td>
+		  </tr>
+		{% endfor %}
+	      </tbody>
+	    </table>
+	  </div>
+	</div>
       {% endif %}
-      {% endfor %}
-    </select>
     </div>
   </div>
-  <div id="extsp" class="row">
-    <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
-    {% if prodspecs|length > 0 %}
-      <div class="col-sm-11">
-      <div class="panel">
-        <table id="spec_table" class="table table-condensed table-bordered fixed-table">
-          <thead class="bg-primary input-sm">
-            <tr>
-              <th class="col-xs-2 text-center">{% trans %}Specifications{% endtrans %}</th>
-              <th class="col-xs-2 text-center">{% trans %}Value{% endtrans %}</th>
-            </tr>
-          </thead>
-          <tbody>
-            {% for spec in prodspecs %}
-        <tr>
-          <td>
-            <label for="{{spec['spcode']}}" class="">{{spec["attrname"]}}</label>
-            <input type="text" class="spec_name" value="{{spec['spcode']}}" hidden>
-          </td>
-          <td>
-            {% if spec["attrtype"]==0 %}
-
-              <input type="text" class="form-control spec_value spec input-sm" id="{{spec['spcode']}}" placeholder="Alphanumeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
-            {% elif spec["attrtype"]==1 %}
-              <input type="text" class="form-control spec_value spec input-sm numtype" id="{{spec['spcode']}}" placeholder="Numeric" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}">
-            {% elif spec["attrtype"]==2 %}
-              <div class="form-inline">
-		<div class="form-group ">
-                  <input type="text" class="form-control input-sm spec specday specdate" size="2" maxlength="2" placeholder="DD" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][8]+proddesc['specs'][pdesc][9]}}{% endif %}{% endfor %}">
-		</div>
-		<div class="form-group ">
-                  <input type="text" class="form-control input-sm spec specmonth specdate" size="2" maxlength="2" placeholder="MM" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][5]+proddesc['specs'][pdesc][6]}}{% endif %}{% endfor %}">
-		</div>
-		<div class="form-group">
-                  <input type="text" class="form-control input-sm spec specyear specdate" size="4" maxlength="4" placeholder="YYYY" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc][0]+proddesc['specs'][pdesc][1]+proddesc['specs'][pdesc][2]+proddesc['specs'][pdesc][3]}}{% endif %}{% endfor %}">
-		</div>
-		<input type="text" class="spec_value datevalue" value="{% for pdesc in proddesc['specs'] %}{% if pdesc|int == spec['spcode']|int %}{{proddesc['specs'][pdesc]}}{% endif %}{% endfor %}" hidden>
-              </div>
-            {% endif %}
-          </td>
-        </tr>
-            {% endfor %}
-	  </tbody>
-	</table>
-      </div>
-      </div>
-    {% endif %}
-  </div>
-</div>
 </div>
 <div class="col-sm-6" style="margin-top: -67;">
   {% if userrole|int != 3 %}
     <div class="row">
+      <div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
+        {% trans %}Please Specify Tax Name.{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="tax_state-blank-alert"  aria-live="rude" role="alert" hidden>
+        {% trans %}Please select a state.{% endtrans %}
+      </div>
       <div class="form-group taxdiv">
 	<div class="panel taxinnerdiv">
 	  <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
@@ -100,7 +116,8 @@
               <tr>
 		<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
 		<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-		<th class="col-xs-3 text-center">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-1"></th>
 		<th class="col-xs-1"></th>
 		<th class=""></th>
               </tr>
@@ -155,11 +172,16 @@
 		    <option value="West Bengal" stateid="41">West Bengal</option>
 		  </select>
 		</td>
-		<td class="col-xs-3">
+		<td class="col-xs-2">
 		  <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate">
 		</td>
 		<td class="col-xs-1 product_tax_disable">
-
+		  
+		</td>
+		<td class="col-xs-1 product_tax_disable">
+		  <div style="text-align: center;">
+		    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+		  </div>
 		</td>
               </tr>
 	    </tbody>
@@ -180,131 +202,152 @@
     </div>
   {% endif %}
   <div id ="noinventory">
-  <div class="row">
-    {% if not godown %}
-    <input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
-    <input type="text" id="editgodownpresence" value="0" hidden>
-    <div class="form-group pds" id ="beforeaddingfirstgodown">
-      <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-      <div class="input-group col-sm-6">
-        <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
-        <span class="input-group-addon input-sm" id="unitaddon"></span>
-      </div>
-    </div>
-    <div id="newgodownadded" hidden>
-      <div class="form-group">
-        <input type="checkbox" name="godownflag" id="editgodownflag" value="1">
-        <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-      </div>
-      <div id="editnogodown" class="form-group pds noinventory">
-        <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-        <div class="input-group col-sm-6">
-          <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
-          <span class="input-group-addon input-sm" id="unitaddon"></span>
-        </div>
-      </div>
-      <div  id="editopeningstockdiv" class="form-group" hidden>
-        <div class="panel">
-          <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
-            <thead class="bg-primary input-sm">
-              <tr>
-                <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-                <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-                <th class="col-xs-1 text-center"></th>
-              </tr>
-            </thead>
-            <tbody>
-                <tr class="editgodownid">
-                  <td class="col-xs-8">
-                    <select class="form-control input-sm editgodown_name">
-                      <option value="" disabled selected hidden>Select Godown</option>
-                      {% for record in godown %}
-                      <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
-                      {% endfor %}
-                    </select>
-                  </td>
-                  <td class="col-xs-3">
-                    <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
-                  </td>
-                  <td class="col-xs-1">
-                  </td>
-                </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div class="row">
+      {% if not godown %}
+	<input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
+	<input type="text" id="editgodownpresence" value="0" hidden>
+	<div class="form-group pds" id ="beforeaddingfirstgodown">
+	  <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+	  <div class="input-group col-sm-6">
+            <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+            <span class="input-group-addon input-sm" id="unitaddon"></span>
+	  </div>
+	</div>
+	<div id="newgodownadded" hidden>
+	  <div class="form-group">
+            <input type="checkbox" name="godownflag" id="editgodownflag" value="1">
+            <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+	  </div>
+	  <div id="editnogodown" class="form-group pds noinventory">
+            <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+            <div class="input-group col-sm-6">
+              <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+              <span class="input-group-addon input-sm" id="unitaddon"></span>
+            </div>
+	  </div>
+	  <div  id="editopeningstockdiv" class="form-group" hidden>
+	    <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select a godown.{% endtrans %}
+	    </div>
+	    <div class="panel">
+              <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+		<thead class="bg-primary input-sm">
+		  <tr>
+                    <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+                    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+                    <th class="col-xs-1 text-center"></th>
+		    <th class="col-xs-1 text-center"></th>
+		  </tr>
+		</thead>
+		<tbody>
+                  <tr class="editgodownid">
+                    <td class="col-xs-7">
+                      <select class="form-control input-sm editgodown_name">
+			<option value="" disabled selected hidden>Select Godown</option>
+			{% for record in godown %}
+			  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+			{% endfor %}
+                      </select>
+                    </td>
+                    <td class="col-xs-3">
+                      <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+                    </td>
+                    <td class="col-xs-1">
+		      
+                    </td>
+		    <td class="col-xs-1">
+                    </td>
+                  </tr>
+		</tbody>
+              </table>
+            </div>
+	  </div>
 
-    </div>
-    {% else %}
-    <input type="text" id="editgodownpresence" value="1" hidden>
-  {% if numberofgodowns==0 %}
-  <div class="form-group">
-    <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
-    <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
-  </div>
-  <div id="editnogodown" class="form-group pds">
-    <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
-    <div class="input-group col-sm-6">
-      <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
-      <span class="input-group-addon input-sm" id="unitaddon"></span>
-    </div>
-  </div>
-  <div  id="editopeningstockdiv" class="form-group" hidden>
-    <div class="panel">
-      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
-        <thead class="bg-primary input-sm">
-          <tr>
-            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-            <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-            <th class="col-xs-1 text-center"></th>
-          </tr>
-        </thead>
-        <tbody>
-            <tr class="editgodownid">
-              <td class="col-xs-8">
-                <select class="form-control input-sm editgodown_name">
-                  <option value="" disabled selected hidden>Select Godown</option>
-                  {% for record in godown %}
-                  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+	</div>
+      {% else %}
+	<input type="text" id="editgodownpresence" value="1" hidden>
+	{% if numberofgodowns==0 %}
+	  <div class="form-group">
+	    <input type="checkbox" name="godownflag" id="editgodownflag" value="0">
+	    <label class="" for="editgodownflag">{% trans %}Godown Wise Opening Stock{% endtrans %}</label>
+	  </div>
+	  <div id="editnogodown" class="form-group pds">
+	    <label for="editopeningstock" class="">{% trans %}Opening Stock{% endtrans %} :</label>
+	    <div class="input-group col-sm-6">
+	      <input type='text' class="form-control text-right input-sm" name="openingstock"  id="editopeningstock" value="{{proddesc['openingstock']}}" aria-describedby="unitaddon">
+	      <span class="input-group-addon input-sm" id="unitaddon"></span>
+	    </div>
+	  </div>
+	  <div  id="editopeningstockdiv" class="form-group" hidden>
+	    <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select a godown.{% endtrans %}
+	    </div>
+	    <div class="panel">
+	      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+		<thead class="bg-primary input-sm">
+		  <tr>
+		    <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+		    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+		    <th class="col-xs-1 text-center"></th>
+		    <th class="col-xs-1 text-center"></th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr class="editgodownid">
+		    <td class="col-xs-7">
+                      <select class="form-control input-sm editgodown_name">
+			<option value="" disabled selected hidden>Select Godown</option>
+			{% for record in godown %}
+			  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+			{% endfor %}
+                      </select>
+		    </td>
+		    <td class="col-xs-3">
+                      <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
+		    </td>
+		    <td class="col-xs-1">
+		      
+		    </td>
+		    <td class="col-xs-1">
+		    </td>
+		  </tr>
+		</tbody>
+	      </table>
+	    </div>
+	  </div>
+	{% else %}
+	  <input type="text" name="godownflag" id="editgodownflag" value="1" hidden>
+	  <div  id="editopeningstockdiv" class="form-group">
+	    <div class="alert alert-danger" id="godown-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select a godown.{% endtrans %}
+	    </div>
+	    <div class="panel">
+	      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
+		<thead class="bg-primary input-sm">
+		  <tr>
+		    <th class="col-xs-7 text-center">{% trans %}Godown{% endtrans %}</th>
+		    <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
+		    <th class="col-xs-1 text-center"></th>
+		    <th class="col-xs-1 text-center"></th>
+		  </tr>
+		</thead>
+		<tbody>
+		  {% for record in range(numberofgodowns) %}
+		    <tr class="editgodownid">
+		      <td class="col-xs-7">
+			<select class="form-control input-sm editgodown_name">
+			  {% for record in godown %}
+			    <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
+			  {% endfor %}
+			</select>
+		      </td>
+		      <td class="col-xs-3">
+			<input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
               </td>
               <td class="col-xs-1">
+		
               </td>
-            </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-  {% else %}
-  <input type="text" name="godownflag" id="editgodownflag" value="1" hidden>
-  <div  id="editopeningstockdiv" class="form-group">
-    <div class="panel">
-      <table id="editgodown_ob_table" class="table table-condensed table-bordered fixed-table">
-        <thead class="bg-primary input-sm">
-          <tr>
-            <th class="col-xs-8 text-center">{% trans %}Godown{% endtrans %}</th>
-            <th class="col-xs-3 text-center">{% trans %}Opening Stock{% endtrans %}</th>
-            <th class="col-xs-1 text-center"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for record in range(numberofgodowns) %}
-            <tr class="editgodownid">
-              <td class="col-xs-8">
-                <select class="form-control input-sm editgodown_name">
-                  {% for record in godown %}
-                  <option value={{record["goid"]}}>{{record["goname"]}}({{record["goaddr"]}})</option>
-                  {% endfor %}
-                </select>
-              </td>
-              <td class="col-xs-3">
-                <input class="form-control input-sm editgodown_ob text-right numtype" value="0.00">
-              </td>
-              <td class="col-xs-1">
+	      <td class="col-xs-1">
               </td>
             </tr>
           {% endfor %}

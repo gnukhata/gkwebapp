@@ -40,11 +40,11 @@ $(document).ready(function()
   $("#submit").hide();
   $("#delete").hide();
   $("#editaccountname").bind("change keyup", function()
-  {
-
+  {	  
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
+    if (acccode !=""){
     $.ajax({
       type: "POST",
       url: "/getaccdetails",
@@ -58,13 +58,14 @@ $(document).ready(function()
       },
       success: function(jsonObj)
       {
-        accdetails=jsonObj["gkresult"];
-        $("#editaccountform").show();
-
-        $("#groupname").val(accdetails["groupname"]);
-        $("#groupname").prop("disabled", true);
-        $("#subgroupname").val(accdetails["subgroupname"]);
+        accdetails=jsonObj["gkresult"];  
+        $("#editaccountform").show();  
+	$("#groupname").val(accdetails["groupcode"]);
+        $("#groupname").prop("disabled", true);  
+	$('#subgroupname').empty();
+	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
+	$("groupname").change();  
         $("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
         $("#openingbal").val(accdetails["openingbal"]);
@@ -99,20 +100,20 @@ $(document).ready(function()
       $("#delete").show();
       $("#edit").show();
     }
-    var grpname= $("#groupname").val();
-    if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
-      $("#openingbal").hide();
-      $("#openbal").hide();
-      $("#baltbl").hide();
-    }
-    else {
-      $("#openingbal").show();
-	$("#openbal").show();
-      $("#baltbl").show();
-    }
-	  
+    var grpname = $("#groupname option:selected").text();
+	if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
+	    $("#openingbal").hide();
+	    $("#openbal").hide();
+	    $("#baltbl").hide();
+	}
+	else {
+	    $("#openingbal").show();
+	    $("#openbal").show();
+	    $("#baltbl").show();
+	} 
       }
     });
+    }
   });
 
   $("#edit").click(function(event)
@@ -126,11 +127,12 @@ $(document).ready(function()
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
     var accname= $("#editaccountname option:selected").text();
-    //$("#editaccountname").hide();
     if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
       $("#openingbal").focus().select();
+      $("#groupname").prop("disabled", true);
+      $("#subgroupname").prop("disabled", true);	
     }
     else{
       if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
@@ -140,14 +142,123 @@ $(document).ready(function()
         $("#openingbal").prop("disabled", false);
 
       }
+      $("#subgroupname").prop("disabled", false);
+      $("#groupname").prop("disabled", false);
       $("#accountname").prop("disabled",false);
-      $("#accountname").focus().select();
+      $("#groupname").focus().select();
 
     }
 
 
   }
 );
+    //Change event for 'group name' field.
+    $("#groupname").bind("change keyup", function(){
+	if($("#editaccountname option:selected").val() !=""){
+	    var gname = $("#groupname option:selected").text();
+	    if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
+		$("#openingbal").hide();
+		$("#openbal").hide();
+		$("#baltbl").hide();
+	    }
+	    else {
+		$("#openingbal").show();
+		$("#openbal").show();
+		$("#baltbl").show();
+	    }
+	}
+	var groups = $("#groupname option:selected").val();
+	if (groups != '') {
+	    $.ajax({
+		type: "POST",
+		url: "/getsubgroup",
+		data: {"groupcode":groups},
+		global: false,
+		async: false,
+		dataType: "json",
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		},
+		success: function(jsonObj) {
+		    var subgroups = jsonObj["gkresult"];
+		    var subgrp = $("#subgroupname option:selected").val();
+		    $('#subgroupname').empty();
+		    var grpnam=$("#groupname option:selected").text();
+		    if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+		    {
+			$('#subgroupname').prepend('<option value="None">None</option>');
+			$('#subgroupname option:first').attr("selected", "selected");
+		    }
+		    for (i in subgroups ) {
+			//assign subgroup name selected if assign 'group name' is not changed.
+			if(subgrp == subgroups[i].subgroupcode){
+			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
+			}
+			else{
+			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+			}
+		    }
+		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+		}
+	    });
+	}
+    });
+
+    //Keydown for 'group name' field.
+    $("#groupname").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    $("#subgroupname").focus().select();
+	}
+	$("#groupname").change();
+    });
+
+    //Keydown for 'subgroupname' field.
+    $("#subgroupname").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    if($.trim($("#subgroupname option:selected").val())=="New"){
+		$("#newsubgroup").focus().select();
+	    }else{
+		$("#accountname").focus();
+	    }
+	}
+	if(event.which ==38 && (document.getElementById('subgroupname').selectedIndex==0)){
+	    event.preventDefault();
+	    $("#groupname").focus().select();
+	}
+    });
+
+    $("#nsgp").hide();
+    $(".gsselect").bind("change keyup", function(){
+	var sgroups = $("#subgroupname option:selected").val();
+	if(sgroups == "New"){
+	    $("#nsgp").show();
+	}else{
+	    $("#nsgp").hide();
+	}
+    });
+
+    //Keydown for 'Newsubgroup name' field.
+    $("#newsubgroup").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    if ($.trim($("#newsubgroup").val())=="") {
+		$("#nsblank-alert").alert();
+		$("#nsblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#nsblank-alert").hide();
+		});
+		$("#newsubgroup").focus().select();
+		return false;
+	    }
+	    $("#accountname").focus();
+	}
+	if(event.which == 38){
+	    event.preventDefault();
+	    $("#subgroupname").focus().select();
+	}
+    });
 
 $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
@@ -176,7 +287,7 @@ $("#accountname").keydown(function(event) {
 
 	$("#openingbal").select().focus();
     }
-    if (event.which==13) {
+    if (event.which==13) {	
 	if (!$("#openingbal").is(':disabled')) {
 	    event.preventDefault();
 	    if ($.trim($("#accountname").val())=="") {
@@ -189,12 +300,22 @@ $("#accountname").keydown(function(event) {
 	    };
 	    $("#openingbal").focus().select();
 	}
+	if(!$("#openingbal").is(':visible')){
+	    $("#editaccountform").submit();
+	}
+    }
+    if(event.which == 38){
+	event.preventDefault();
+	if($("#newsubgroup").is(':visible')){
+	    $("#newsubgroup").focus();
+	}else{
+	    $("#subgroupname").focus();
+	}
     }
 });
 
 $("#openingbal").keydown(function(event) {
   /* Act on the event */
-
   if (event.which==38)
   {
     $("#accountname").select();
@@ -281,24 +402,29 @@ $("#editaccountform").submit(function(e)
     return false;
   };
 
-  var ob = $('#openingbal').val();
+  var ob = $('#openingbal').val();  
   if(ob=="")
   {
-    $('#openingbal').val("0.00");
+      var openingbal=0.00;
   }
   else {
-    openingbal=$("#openingbal").val();
+      openingbal=$("#openingbal").val();
   }
   var acccode = $("#editaccountname option:selected").val();
   var accname= $("#editaccountname option:selected").text();
   if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
-    accountname=accname;
+     var accountname=accname;
   }
   else{
     accountname=$("#accountname").val();
   }
-  accountcode = $("#accountcode").val();
-
+    var accountcode = $("#accountcode").val();
+    var groupname = $("#groupname option:selected").text();
+    var groupcode = $("#groupname option:selected").val();
+    var subgrpname = $("#subgroupname option:selected").text();
+    var subgrpcode = $("#subgroupname option:selected").val();
+    var newgrpname = $("#newsubgroup").val();
+    
   $("#msspinmodal").modal("show");
   
   $.ajax(
@@ -308,7 +434,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-      data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal},
+	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
