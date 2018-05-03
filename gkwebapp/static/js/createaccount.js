@@ -607,5 +607,11 @@ $("#openbal").keydown(function(event){
   .fail(function() {
     alert("failed");
   });
-});
+  });
+     $(document).off("keyup").on("keyup", function(event) {
+      if (event.which == 45) {
+	event.preventDefault();
+	    $("#submit").click();
+      }
+     });
 });

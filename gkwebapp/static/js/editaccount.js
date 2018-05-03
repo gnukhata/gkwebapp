@@ -475,5 +475,10 @@ $("#editaccountform").submit(function(e)
 
   e.preventDefault();
 });
-
+ $(document).off("keyup").on("keyup", function(event) {
+      if (event.which == 45) {
+	event.preventDefault();
+	    $("#editaccountform").submit();
+      }
+ });
 });
