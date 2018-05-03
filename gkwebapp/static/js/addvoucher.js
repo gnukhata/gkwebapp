@@ -477,10 +477,19 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       $('#save').focus().select();
       event.preventDefault();
     }
-    if (event.which==13) {
-      event.preventDefault();
+      if (event.which==13) {
+	  $('#bankdetails').focus();
     }
   });
+
+    
+    $('#bankdetails').keydown(function(event){
+	if(event.which==13){
+	    $('#save').focus().select();
+	}
+    });
+
+    
   $('#narration').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
       $('#vtable tbody tr:last input:enabled').focus().select();
@@ -495,14 +504,14 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
     }
     if (event.which==13 && $('#project').val()== undefined){
-        if($("#instrumentbtn").is(":hidden"))
+        if($("#bankdetails").is(":hidden"))
         {
           event.preventDefault();
           $('#save').click();
         }
         else {
           event.preventDefault();
-          $("#instrumentbtn").focus();
+          $("#bankdetails").focus();
         }
 
       }
@@ -1626,7 +1635,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bankdetails-alert").hide();
           });
-          $('#instrumentbtn').focus().select();
+          $('#bankdetails').focus().select();
           return false;
 
         }
@@ -1635,7 +1644,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           $("#bankdetails-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#bankdetails-alert").hide();
           });
-          $('#instrumentbtn').focus().select();
+          $('#bankdetails').focus().select();
           return false;
 
         }
@@ -1647,7 +1656,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
             $("#bankdetails-alert").hide();
           });
 
-          $('#instrumentbtn').focus().select();
+          $('#bankdetails').focus().select();
           return false;
         }
         details.bankname=$("#bankname").val();
@@ -1912,10 +1921,11 @@ $("#show"+$("#vtype").val()).click();
       $("#vno").focus().select();
     });
 
-    $(document).off("click","#instrumentbtn").on("click","#instrumentbtn",function(event)
-    {
-      event.preventDefault();
-$("#instrumentmodal").modal("show");
+  $("#bankdetails").change(function() {
+    if($(this).prop('checked') == true) {
+	    $("#instrumentmodal").modal("show");
+	    
+	}
     });
 
       $("#instrumentmodal").on('shown.bs.modal', function(event) {
@@ -2049,7 +2059,8 @@ $("#instrumentmodal").modal("show");
 
 
 if (!($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment")){
-  $("#instrumentbtn").hide();
+    //$("#bankdetails").hide();
+    $(".bankclass").hide();
 }
   $('.instrdate').autotab('number');
 

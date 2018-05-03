@@ -394,7 +394,8 @@
               </div>
 	    {% endif %}
             <div class="form-inline" >
-              <button class="btn btn-primary" type="button" id="instrumentbtn" accesskey="k">{% trans %}Ban<u>k</u> Details{% endtrans %}</button>
+	      <input  class="bankclass" id="bankdetails" type="checkbox">
+              <label class="bankclass" for="bank" id="banklabel">{% trans %}Bank Details{% endtrans %}</label>
               <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}
               </button>
