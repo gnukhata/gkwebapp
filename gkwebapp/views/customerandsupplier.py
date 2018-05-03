@@ -103,17 +103,8 @@ def editcustomersupplier(request):
     if result.json()["gkstatus"] == 0:
         accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
         for acc in accs.json()["gkresult"]:
-            print "for"
-            print request.params["oldcustname"]
-            print acc["accountname"]
             if acc["accountname"] == request.params["oldcustname"]:
-                print "if"
-                print request.params["custname"]
-                print "all data"
-                print acc["openingbal"]
-                print acc["accountcode"]
                 updateacc = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
-                print updateacc
                 resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(updateacc),headers=header)
                 break
     return {"gkstatus": result.json()["gkstatus"],"custsup":request.params["custsup"]}
