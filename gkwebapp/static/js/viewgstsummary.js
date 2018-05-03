@@ -138,107 +138,6 @@ $("#from_date").blur(function(event) {
     }
   });
 
-    // Navigate through tax select box using "ENTER" key
-    
-    $("#sgst_in").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#sgst_out").focus();
-    }
-    });
-
-    $("#sgst_out").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#cgst_in").focus();
-    }
-    });
-    
-    $("#cgst_in").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#cgst_out").focus();
-    }
-    });
-    
-$("#cgst_out").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#igst_in").focus();
-    }
-  });
-
-    $("#igst_in").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#igst_out").focus();
-    }
-  });
-$("#igst_out").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#cess_in").focus();
-    }
-  });
-
-    $("#cess_in").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#cess_out").focus();
-    }
-    });
-
-     $("#cess_out").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#report_view").focus();
-    }
-  });
-/*
-  $("#add_cussup").change(function(event) {
-    event.preventDefault();
-    if($("#add_cussup option:selected").val() == '3'){
-      $("#bankdetails").hide();
-      $(".custlbl").show();
-      $(".suplbl").hide();
-    } else {
-      $("#bankdetails").show();
-      $(".custlbl").hide();
-      $(".suplbl").show();
-    }
-  });
-*/
-  //key event to trigger click of checkbox.
-  $(document).off('keydown', '.dropdownitem').on('keydown',
-						 '.dropdownitem', function(event) {
-        event.preventDefault();
-        if (event.which==32) {
-        $(this).find(".dropdowncheckbox").click();  //Find will select all children of dropdownitem with class dropdowncheckbox.
-    }
-    });
-
-
-    $("#sgstindropdownitem").keydown(function(event) {
-    $("#sgstinsearch").focus(); });
-
-   //Setting up timer to detect when user stops typing.
-    var typingTimer; //timer identifier
-    var doneTypingInterval = 100; //typing interval
-    clearTimeout(typingTimer);  //clearing timeout
-    //Keyup event to trigger search when user stops tiyping.  
-     $('#sgstinsearch').keyup(function(event) {
-     clearTimeout(typingTimer);
-     typingTimer = setTimeout(function(){
-     //We use contains selector from jQuery to match text
-     $(".sgstindropdownitems:not(:contains('" +
-     $('#sgstinsearch').val() + "'))").hide();
-     $(".sgstindropdownitems:contains('" + $('#sgstinsearch').val() +"')").show();
-     if(event.which == 27){
-     $('#sgstinsearch').val("");
-     $(".sgstindropdownitems").show();
-      }
-      }, doneTypingInterval);
-      });
 
 
 
@@ -304,65 +203,6 @@ $("#igst_out").keydown(function(event) {
       $('#to_date').focus().select();
       return false;
     }
-	//Get all accounts from individual list.
-	//List to load accounts.
-	var sgstinaccounts = [];
-        $(".sgstinaccount:checked").each(function() {  //Loop all slected accounts.
-	sgstinaccounts.push($(this).val()); //Push appends values to list.
-
-	});
-
-	  var sgstoutaccounts = [];
-          $(".sgstoutaccount:checked").each(function() {  //Loop all slected accounts.
-	  sgstoutaccounts.push($(this).val()); //Push appends values to list.
-
-	  });
-	
-    var cgstinaccounts = [];
-    $(".cgstinaccount:checked").each(function() {  //Loop all slected accounts.
-	    cgstinaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-    var cgstoutaccounts = [];
-    $(".cgstoutaccount:checked").each(function() {  //Loop all slected accounts.
-	    cgstoutaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-
-	  var igstoutaccounts = [];
-    $(".igstoutaccount:checked").each(function() {  //Loop all slected accounts.
-	    igstoutaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-
-    var igstinaccounts = [];
-    $(".igstinaccount:checked").each(function() {  //Loop all slected accounts.
-	    igstinaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-    var cessinaccounts = [];
-    $(".cessinaccount:checked").each(function() {  //Loop all slected accounts.
-	    cessinaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-
-	var cessoutaccounts = [];
-    $(".cessoutaccount:checked").each(function() {  //Loop all slected accounts.
-	    cessoutaccounts.push($(this).val()); //Push appends values to list.
-
-    });
-	
-	// check all tax accounts are not null
-	if((sgstinaccounts.length == 0) && (sgstoutaccounts.length == 0) && (cgstinaccounts.length == 0 ) && (cgstoutaccounts.length == 0 )&&(igstinaccounts.length == 0 )&& (igstoutaccounts.length == 0 )&&(cessinaccounts.length == 0)&&(cessoutaccounts.length == 0)){
-      $("#select-account").alert();
-      $("#select-account").fadeTo(2250, 500).slideUp(500, function(){
-        $("#select-account").hide();
-      });
-      $('#sgst_in').focus().select();
-      return false;
-}
-	 
-	var result ={"sgstin":sgstinaccounts,"sgstout":sgstoutaccounts,"cgstin":cgstinaccounts,"cgstout":cgstoutaccounts,"igstin":igstinaccounts,"igstout":igstoutaccounts,"cessin":cessinaccounts,"cessout":cessoutaccounts};
 	
 
     $("#msspinmodal").modal("show");
@@ -373,7 +213,7 @@ $("#igst_out").keydown(function(event) {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val(),"tax":JSON.stringify(result),"statename":$("#state option:selected").val()},
+        data: {"calculateto":$("#to_year").val()+"-"+$("#to_month").val()+"-"+$("#to_date").val(),"calculatefrom":$("#from_year").val()+"-"+$("#from_month").val()+"-"+$("#from_date").val(),"statename":$("#state option:selected").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
