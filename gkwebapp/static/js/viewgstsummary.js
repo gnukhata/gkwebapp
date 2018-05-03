@@ -136,6 +136,13 @@ $("#from_date").blur(function(event) {
       event.preventDefault();
       $("#to_year").focus();
     }
+      });
+
+    $("#to_year").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#report_view").focus();
+    }
   });
 
 
