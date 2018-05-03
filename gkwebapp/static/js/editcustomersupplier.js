@@ -27,33 +27,36 @@ Contributors:
 "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
+"Sanket Kolnoorkar" <sanketf123@gmail.com>
 */
 
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#edit_cussup_list").focus();
+  $("#edit_cussup_reset").hide();  
     $(".panel-footer").hide();
-    $("#custradio").click().focus();
+    $("#custradio").focus();    
     $("#suppl").hide();
     $("#scrollbar").hide();
     var gstinstring = ""; //for concatination of 'gstin'.
      for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     }
-   var custsupdata = $("#edit_cussup").val();
-
-
-    //code for change event of edit lists dcid as variable taken and conditions are applied.
+    var custsupdata = $("#edit_cussup").val();
+	
+    //code for change event of edit lists custid as variable taken and conditions are applied. condition is set to call ajax only if custid is not null.
     $("#Customer_edit_list, #Supplier_edit_list").change(function(event) {
 	var custid;
-	if ($("#custradio").is(":checked"))
+	$("#edit_cussup_reset").hide();
+	 if ($("#custradio").is(":checked"))
 	{
-	    custid=parseInt($("#Customer_edit_list option:selected").val());
-	   
+	    custid=$("#Customer_edit_list option:selected").val();
 	}
-	else {
-	    custid=parseInt($("#Supplier_edit_list option:selected").val());
+	else  {
+	    custid=$("#Supplier_edit_list option:selected").val();
+
 	}
+	 	if (custid!=''){
 	$.ajax({
 	    url: '/customersuppliers?action=get',
 	    type: 'POST',
@@ -94,6 +97,7 @@ $(document).ready(function() {
 		    $(".custlbl").hide();
 		    $("#textareahelp3").show();
 		    $("#textareahelp2").hide();
+		    
 		}
 	$("#edit_cussup").prop("disabled", true);
 	$("#edit_cussup_name").val(result["custname"]);
@@ -149,15 +153,16 @@ $(document).ready(function() {
 
     })
     .fail(function() {
-      console.log("errorrrrrrrrr");
+      console.log("error");
     })
     .always(function() {
-      console.log("completeeeeeeee");
+      console.log("complete");
     });
 
+	}	
     });
     
-  $("#edit_cussup_list").keydown(function(event) {
+  $("#Customer_edit_list").keydown(function(event) {
 
     if (event.which==13) {
       event.preventDefault();
@@ -165,16 +170,36 @@ $(document).ready(function() {
     }
 
   });
-  $("#edit_cussup_list").keydown(function(event) {
+  $("#Customer_edit_list").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#edit_cussup_name").focus().select();
     }
     if (event.which==38){
       event.preventDefault();
-      $("#edit_cussup_list").focus().select();
+      $("#Customer_edit_list").focus().select();
     }
   });
+
+    $("#Supplier_edit_list").keydown(function(event) {
+
+    if (event.which==13) {
+      event.preventDefault();
+      $("#edit_cussup_btn").click();
+    }
+
+  });
+  $("#Supplier_edit_list").keydown(function(event) {
+    if (event.which==13) {
+      event.preventDefault();
+      $("#edit_cussup_name").focus().select();
+    }
+    if (event.which==38){
+      event.preventDefault();
+      $("#Customer_edit_list").focus().select();
+    }
+  });
+    
   $("#edit_cussup_name").keydown(function(event) {
     if (event.which==13) {
     	if ($.trim($("#edit_cussup_name").val())=="") {
@@ -363,7 +388,7 @@ $(document).ready(function() {
   }
 });
 
-    // keydown event for radiobutton
+    // keydown event for radiobutton so that the focus will reach to frop down list after enter press.
     $("#custradio").keydown(function(event) {
 	if (event.which==13) {
 	    $("#Customer_edit_list").focus().select();
@@ -375,28 +400,30 @@ $(document).ready(function() {
 	}
     });
 
-    //change event for radio buttons to get first selected option
+    //change event for radio buttons to get first selected option of drop down list.
     $(document).off('focusin', '.custsupradio').on('focusin', '.custsupradio', function(event) {
     $("#Customer_edit_list option:first").prop("selected",true);
     $("#Customer_edit_list").change();
     $("#Supplier_edit_list option:first").prop("selected",true);
-    $("#Supplier_edit_list").change();
+	$("#Supplier_edit_list").change();
+	$(".panel-footer").hide();
+	$("#scrollbar").hide();
     });
     
 
     //this is the change event written for radio buttons in customer supplier. 
-//on change event one of the list will be hidden. 
-//also keydown performed.
+   //on change event one of the list will be hidden. 
+  //also keydown performed.
 
 $(document).off("change",".custsupradio").on("change",".custsupradio",function(event) {
 	//Checking which radio button is selected.
         if ($("#custradio").is(":checked")) {
-	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+	    
                 $("#custo").show();
 		$("#suppl").hide();
 
         } else {
-	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+	    
                 $("#custo").hide();
 		$("#suppl").show();
             }
@@ -459,7 +486,6 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   }
 
     });
-
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
 {
     var curindex1 = $(this).closest('tr').index();
@@ -780,13 +806,23 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });
     $("#edit_cussup_reset").click(function(event) {
-	let selectedcustsup = $("#edit_cussup_list").val(); //Current Customer/Supplier.
-	$("#customersupplier_edit").click();  //Trigger click event of Edit Customer/Supplier.
-	$("#edit_cussup_list").val(selectedcustsup).change(); //Select Current Customer/Supplier and trigger change event.
-  });
+	if($("#Supplier_edit_list option:selected").val()==""){
+	if ($("#Customer_edit_list option:selected").val()!=""){   
+	    let selectedcust = $("#Customer_edit_list").val(); //Current Customer/Supplier.
+	$("#Customer_edit_list").val(selectedcust).change(); //Select Current Customer/Supplier and trigger change event.
+	$("#Customer_edit_list").focus();    
+	}}
+	if($("#Customer_edit_list option:selected").val()==""){
+	if ($("#Supplier_edit_list option:selected").val()!=""){
+	    let selectedsup = $("#Supplier_edit_list").val(); //Current Customer/Supplier.
+	    $("#Supplier_edit_list").val(selectedsup).change(); //Select Current Customer/Supplier and trigger change event.
+	    $("#Supplier_edit_list").focus();
+	}}
+	});
   $("#edit_cussup_btn").click(function(event) {
     $("#edit_cussup_btn").hide();
     $("#cussup_edit_save").show();
+    $("#edit_cussup_reset").show();  
     $("#textareahelp1").show();
     $("#edit_cussup").prop("disabled", true);
     $("#edit_cussup_list").focus().select();
@@ -921,7 +957,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  custtan = $("#edit_cussup_tan").val();
       }
 	var form_data = new FormData();
-	form_data.append("custid", $("#edit_cussup_list option:selected").val());
+	if ($("#custradio").is(":checked")){ 
+	    form_data.append("custid", $("#Customer_edit_list option:selected").val());}
+	else{
+	    form_data.append("custid", $("#Supplier_edit_list option:selected").val());}
 	form_data.append("custname", $("#edit_cussup_name").val());
 	form_data.append("custaddr", $.trim($("#edit_cussup_address").val()));
 	form_data.append("custphone", $("#edit_cussup_phone").val());
@@ -931,7 +970,11 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	form_data.append("custtan", custtan);
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#edit_state").val());
-	form_data.append("oldcustname", $("#edit_cussup_list option:selected").text());
+	if ($("#custradio").is(":checked")){
+	    form_data.append("oldcustname", $("#Customer_edit_list option:selected").text());}
+	else{
+	    form_data.append("oldcustname", $("#Supplier_edit_list option:selected").text());}
+	
 	if ($("#edit_cussup").val() == "Supplier"){
 	    var bankdetails = {}; //for bank details
 	if ($.trim($("#edit_accountno").val()) != "" && $.trim($("#edit_bankname").val()) !="" && $.trim($("#edit_ifsc").val()) !="" && $.trim($("#edit_branchname").val()) !=""){
@@ -1024,14 +1067,21 @@ $("#cussup_delete").click(function(event) {
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
   {
-    $.ajax(
+      var custid;
+      if ($("#custradio").is(":checked")){ 
+	  custid=$("#Customer_edit_list option:selected").val();
+      }
+      else if ($("#supradio").is(":checked")){
+	  custid=$("#Supplier_edit_list option:selected").val();
+      }
+      if (custid!=''){
+      $.ajax(
       {
-
         type: "POST",
         url: '/customersuppliers?action=delete',
         async: false,
         datatype: "json",
-        data:{"custid": $("#edit_cussup_list option:selected").val()},
+        data:{"custid": custid},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -1075,12 +1125,12 @@ $("#cussup_delete").click(function(event) {
           }
         }
 
+	}
 
+      });
       }
-
   });
 
-  });
 });
   $("#confirm_del").on('shown.bs.modal', function(event) {
     $("#m_cancel").focus();

@@ -42,6 +42,7 @@ $(document).ready(function() {
 	    $("#supselectdiv").show();
 	}
     });
+    //keydown event for radio buttons to show perticular drop down list.
     $(document).off('keydown', '.cussup').on('keydown', '.cussup', function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -82,7 +83,8 @@ $(document).ready(function() {
 	  $('#supplierselect option[value="0"]').prop("selected", true);  //If a customer is selected then the list of suppliers is reset.
 	  $("#cstitle").show();  //Displays a the title of the table.
 	  $("#csname").html($("#customerselect option:selected").text());  //Loads customer name into a span to be displayed next to the title.
-	  $("#txtareahelp").show();
+	    $("#txtareahelp").show();
+	    $("#billwisediv").show();
 	}
       }
     );
@@ -100,6 +102,7 @@ $(document).ready(function() {
 	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {
 	     $("#custradio").focus();
 	 }
+	 
      }
   });
   //This is similar to the change event of list of customers.
@@ -126,7 +129,8 @@ $(document).ready(function() {
 	  $('#customerselect option[value="0"]').prop("selected", true);  //Here list of suppliers is reset when a supplier is selected.
 	  $("#cstitle").show();
 	  $("#csname").html($("#supplierselect option:selected").text());
-	  $("#txtareahelp").show();
+	    $("#txtareahelp").show();
+	    $("#billwisediv").show();
         }
       }
     );
@@ -140,11 +144,22 @@ $(document).ready(function() {
 	$("#vouchertable tbody tr:first").addClass("selected");
     }
      else if (event.which == 38) {
-	 if ($("#customerselect option:visible").first().is(":selected") || $("#customerselect option").first().is(":selected")) {
+	 if ($("#supplierselect option:visible").first().is(":selected") || $("#supplierselect option").first().is(":selected")) {
 	     $("#supradio").focus();
 	 }
-     }
+     } 
   });
+
+     //change event for radio buttons to get first selected option.
+    $(document).off('focusin', '.cussup').on('focusin', '.cussup', function(event) {
+    $("#customerselect option:first").prop("selected",true);
+    $("#customerselect").change();
+    $("#supplierselect option:first").prop("selected",true);
+	$("#supplierselect").change();
+	$("#billwisediv").hide();
+	$("#txtareahelp").hide();
+	$(".panel-footer").hide();
+    });
     //Reset button reloads page
     $("#btreset").click(function(){
 	$("#showbillwiseaccounting").click();
