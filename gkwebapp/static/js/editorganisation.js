@@ -1162,6 +1162,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 				  }
 			      });
 			  }
+			  else {
+			      $("#msspinmodal").modal("hide");
+			  }
 		      }
 		  });
 	      }

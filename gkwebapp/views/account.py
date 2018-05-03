@@ -321,13 +321,13 @@ def addGSTaccounts(request):
         gstaccounts = gstaccountslist.json()["accounts"]
     if accdetails[0]["subgroupname"]=="New":
         gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
-        result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
+        addsubgroup = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
 
-        if result.json()["gkstatus"]==0:
-            gkdata["groupcode"] = result.json()["gkresult"]
+        if addsubgroup.json()["gkstatus"]==0:
+            gkdata["groupcode"] = addsubgroup.json()["gkresult"]
 
         else:
-            return {"gkstatus":False}
+            return {"gkstatus":3}
 
     elif accdetails[0]["subgroupname"]=="None":
         gkdata["groupcode"] = accdetails[0]["groupname"]
@@ -345,9 +345,10 @@ def addGSTaccounts(request):
             if result.json()["gkstatus"] == 0:
                 addedaccounts.append(acc["accountname"])
                 gkdata2 = {"activity":acc["accountname"] + " account created"}
-                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header) 
+                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header)
+            return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
         
-    return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
+    return {"gkstatus":3}
 
 #the functionality to edit customer after editing account and other such functionality should be done in core please make a note of this and change it later.
 @view_config(route_name="editaccount", renderer="json")
