@@ -1050,7 +1050,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	      console.log("complete");
 	  });
 	  // GST account will be of the format 'TAX/CESSTYPE_STATEABBREVIATION@RATE%' like 'SGST_KL@12%'
-	  var taxes = ["SGSTIN", "SGSTOUT", "CGSTSIN", "CGSTOUT", "IGSTIN", "IGSTOUT"];
+	  var taxes = ["SGSTIN", "SGSTOUT", "CGSTIN", "CGSTOUT", "IGSTIN", "IGSTOUT"];
 	  var cesses = ["CESSIN", "CESSOUT"];
 	  var taxstate = "";
 	  var taxtype = "";
@@ -1149,7 +1149,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		      },
 		      success: function(resp)
 		      {
-			  if(resp["gkstatus"]==0)
+			  if(resp["accounts"].length>0)
 			  {
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
@@ -1186,6 +1186,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
  //});
 
       $("#gstaccountsmodal").on('hidden.bs.modal', function(event) {
+	  $(".modal-backdrop").remove();
         $("#reset").click();
     });
   $.ajax({

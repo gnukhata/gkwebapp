@@ -346,9 +346,7 @@ def addGSTaccounts(request):
                 addedaccounts.append(acc["accountname"])
                 gkdata2 = {"activity":acc["accountname"] + " account created"}
                 resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header)
-            return {"gkstatus":result.json()["gkstatus"], "accounts":addedaccounts}
-        
-    return {"gkstatus":3}
+    return {"accounts":addedaccounts}
 
 #the functionality to edit customer after editing account and other such functionality should be done in core please make a note of this and change it later.
 @view_config(route_name="editaccount", renderer="json")
