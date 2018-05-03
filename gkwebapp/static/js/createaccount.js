@@ -31,7 +31,8 @@ Contributors:
 $(document).ready(function()
 {
   $("#msspinmodal").modal("hide");
-  $('.modal-backdrop').remove();
+    $('.modal-backdrop').remove();
+    $(".gsselect").change();
     $("#openbal").numeric();
   $("#obal").hide();
   $("#openbal").hide();
@@ -107,10 +108,10 @@ $(document).ready(function()
       $("#nsgp").hide();
     }
       if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
-	  $('#gstaccountfields').show();
+	  $('#gstfielddiv').show();
       }
       else {
-	  $('#gstaccountfields').hide();
+	  $('#gstfielddiv').hide();
       }
 
   });

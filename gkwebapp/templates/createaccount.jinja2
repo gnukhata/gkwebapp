@@ -203,7 +203,9 @@ outline: none;
 							    <div class="alert alert-danger" id="cessrate-alert"  aria-live="rude" role="alert" hidden>
 							      {% trans %}Please enter Cess Rate!{% endtrans %}
 							    </div>
-							    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+							    <div id="gstfielddiv">
+							      <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+							    </div>
 							    <br/>
 							    <div class="row" id="gstaccountdiv" hidden>
 							      <div class="form-group col-sm-3" style="margin:5px;">
