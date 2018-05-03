@@ -75,14 +75,14 @@ th {
           <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
-            <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
+            <option value="{{accs['accountcode']}}" sysaccount="{{accs["sysaccount"]}}">{{accs["accountname"]}}</option>
             {% endfor %}
           </select>
 					<div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
 						<strong>{% trans %}This is a system generated account, it cannot be edited/deleted.{% endtrans %}</strong>
 					</div>
 					<div class="alert alert-warning nopadding" id="accnamenoedit"  aria-live="rude" role="alert" hidden>
-						<strong>{% trans %}Name of this system generated account cannot be edited.{% endtrans %}</strong>
+						<strong>{% trans %}Only opening balance of this system generated account can be edited.{% endtrans %}</strong>
 					</div>
 					<br>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>

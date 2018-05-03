@@ -43,7 +43,8 @@ $(document).ready(function()
   {	  
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
-    var accname= $("#editaccountname option:selected").text();
+      var accname= $("#editaccountname option:selected").text();
+      var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
     if (acccode !=""){
     $.ajax({
       type: "POST",
@@ -84,7 +85,7 @@ $(document).ready(function()
       $("#edit").hide();
 
     }
-    else if(accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
+    else if(accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock" || sysaccount == 1){
 
       $("#accnamenoedit").alert();
       $("#accnamenoedit").show();
@@ -126,8 +127,9 @@ $(document).ready(function()
    
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
-    var accname= $("#editaccountname option:selected").text();
-    if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock"){
+      var accname= $("#editaccountname option:selected").text();
+      var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
+    if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock" || sysaccount == 1){
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
       $("#openingbal").focus().select();
