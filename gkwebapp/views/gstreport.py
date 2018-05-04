@@ -31,8 +31,10 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
+import openpyxl
+from openpyxl.styles import Font, Alignment
 import os
-
+from openpyxl.utils import get_column_letter
 
 @view_config(route_name="gstsummary",renderer="gkwebapp:templates/viewgstsummary.jinja2")
 def viewGstSummary(request):
@@ -60,15 +62,40 @@ def sendReportData(request):
     return{"reportheader":reportheader,"gstData":data,"gkstatus":result.json()["gkstatus"]}
     
 @view_config(route_name="gstsummary",request_param="action=gstsummaryreportspreadsheet", renderer="")
-def listofinvspreadsheet(request):
-    try:
+def gstsummspreadsheet(request):
+    #try:
         print "I am here"
         header={"gktoken":request.headers["gktoken"]}
         gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"statename":request.params["statename"]}
         print gkdata
         result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
         
-    except:
-        print "file not found"
-        return {"gkstatus":3}
+        data = result.json()["gkresult"]
+        data["lenSGSTin"] = len(result.json()["gkresult"]["sgstin"])
+        data["lenSGSTout"] = len(result.json()["gkresult"]["sgstout"])
+        data["lenCGSTin"] =  len(result.json()["gkresult"]["cgstin"])
+        data["lenCGSTout"] = len(result.json()["gkresult"]["cgstout"])
+        data["lenIGSTin"] =  len(result.json()["gkresult"]["igstin"])
+        data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
+        data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
+        data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])
+
+        gstsmwb = openpyxl.Workbook()
+        sheet = gstsmwb.active
+        sheet.title= "GST Summary "
+        sheet.column_dimensions['A'].width = 8
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A1'] = str(request.params["orgname"])
+
+        gstsmwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        
+    #except:
+    #    print "file not found"
+    #    return {"gkstatus":3}
 

@@ -52,7 +52,7 @@ $(document).ready(function() {
     });
 
     $('#sprdsheet').click(function (event) {
-    console.log("in");
+	console.log($("#state").val());
     event.preventDefault();
     var xhr = new XMLHttpRequest();
 	xhr.open('GET','/gstsummary?action=gstsummaryreportspreadsheet&orgname='+ sessionStorage.getItem('orgn')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&statename='+$("#state").val(),true);
