@@ -79,21 +79,28 @@ def gstsummspreadsheet(request):
         data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
         data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
         data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])
-
+        print data
         gstsmwb = openpyxl.Workbook()
         sheet = gstsmwb.active
+        print "wb activated"
         sheet.title= "GST Summary "
         sheet.column_dimensions['A'].width = 8
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['A1'] = str(request.params["orgname"])
-
+        sheet.merge_cells('A3:G3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'Sales Register'
+        print "Title set"
         gstsmwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
+        
         reportxslx = xlsxfile.read()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         xlsxfile.close()
         os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
         
     #except:
     #    print "file not found"
