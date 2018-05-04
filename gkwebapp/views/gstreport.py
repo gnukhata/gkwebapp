@@ -67,7 +67,6 @@ def gstsummspreadsheet(request):
         print "I am here"
         header={"gktoken":request.headers["gktoken"]}
         gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"statename":request.params["statename"]}
-        print gkdata
         result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
         
         data = result.json()["gkresult"]
@@ -79,11 +78,10 @@ def gstsummspreadsheet(request):
         data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
         data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
         data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])
-        print data
         gstsmwb = openpyxl.Workbook()
         sheet = gstsmwb.active
-        print "wb activated"
         sheet.title= "GST Summary "
+        sheet.merge_cells('A1:G2')
         sheet.column_dimensions['A'].width = 8
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -91,8 +89,14 @@ def gstsummspreadsheet(request):
         sheet.merge_cells('A3:G3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Sales Register'
-        print "Title set"
+        sheet['A3'] = 'Statement of GST Calculation '
+        sheet.merge_cells('A4:G4')
+        sheet['A4'].font = Font(name='Liberation Serif',size='10',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A4'] ="State :"+ gkdata["statename"] + "            "+"Peroid :"+ gkdata["startdate"] + "to" +gkdata["enddate"]
+        
+        
+        
         gstsmwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
         
