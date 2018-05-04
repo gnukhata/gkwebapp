@@ -51,7 +51,6 @@
   <body>
     <div class="col-xs-10 nopadding">
     <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
-    <span class="pull-right" style="padding-right:15px"><i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#LaModal"></i></span>
     <span style="margin-left:50%; display:table; font-size:120%;"><strong>{% trans %}List of Accounts{% endtrans %}</strong></h3> </span>
     </div>
     <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
@@ -60,6 +59,7 @@
       <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
       <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
       </span>
+      <span class="input-group-addon" ><i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#LaModal"></i></span>
     </div>
 
     <div class="row">
