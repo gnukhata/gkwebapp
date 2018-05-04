@@ -55,7 +55,7 @@ $(".search").children(".form-control").keyup(function(event){
     console.log("in");
     event.preventDefault();
     var xhr = new XMLHttpRequest();
-    xhr.open('GET', '/invoice?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&flag='+$('#flag').val(), true);
+    xhr.open('GET', '/gstsummary?type=senddata&orgname='+ sessionStorage.getItem('orgn')+'&calculatefrom='+$("#calculatefrom").val()+'&calculateto='+$("#calculateto").val()+'&flag='+$('#flag').val(), true);
     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     xhr.responseType = 'blob';
 
@@ -64,7 +64,7 @@ $(".search").children(".form-control").keyup(function(event){
       // get binary data as a response
         var blob = this.response;
         var url = window.URL.createObjectURL(blob);
-        window.location.assign(url)
+          window.location.assign(url);
       }
     };
     xhr.send();
