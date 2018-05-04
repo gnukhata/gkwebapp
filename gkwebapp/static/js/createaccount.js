@@ -266,11 +266,11 @@ $("#openbal").keydown(function(event){
 	taxtype = $.trim($("#taxtype option:selected").val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $("#taxrate").hide();
-	    $("#cessrate").show();
+	    $("#cessratediv, #cessrate, #cessrateaddon").show();
 	}
 	else {
 	    $("#taxrate").show();
-	    $("#cessrate").hide();
+	    $("#cessratediv, #cessrate, #cessrateaddon").hide();
 	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
 		$("#taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
 		$("#taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
