@@ -32,7 +32,8 @@ $(document).ready(function()
 {
   $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
-    $(".gsselect").change();
+    $("#gstaccount").prop("disabled", true);
+    $("#gstfielddiv").show();
     $("#openbal").numeric();
   $("#obal").hide();
   $("#openbal").hide();
@@ -109,9 +110,11 @@ $(document).ready(function()
     }
       if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
 	  $('#gstfielddiv').show();
+	  $("#gstaccount").prop("disabled", false);
       }
       else {
 	  $('#gstfielddiv').hide();
+	  $("#gstaccount").prop("disabled", true);
       }
 
   });
