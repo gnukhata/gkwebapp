@@ -218,6 +218,7 @@ $(document).ready(function() {
 
     $("#invoice_challanno").keydown(function(event) {
         if (event.which == 13 || event.which == 9) {
+	     event.preventDefault();
 	    if ($.trim($('#invoice_challanno').val()) == "") {
             $("#challanno-blank-alert").alert();
             $("#challanno-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -226,8 +227,6 @@ $(document).ready(function() {
             $('#invoice_challanno').focus();
             return false;
         }
-
-            event.preventDefault();
             $("#invoice_date").focus().select();
         }
 
