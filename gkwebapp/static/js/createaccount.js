@@ -649,7 +649,11 @@ $("#openbal").keydown(function(event){
 	  data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
 	  global: false,
 	  async: false,
-	  datatype: "text/html"
+	  datatype: "text/html",
+	  beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      }
       })
 	  .done(function(resp) {
 	      $("#multiaccount_modal").html("");
@@ -662,6 +666,7 @@ $("#openbal").keydown(function(event){
 		      $(".default:first").focus().select();
 		  }else if ($("#m_gstaccount").is(":visible")) {
 		      $("#m_gstaccount").focus().select();
+		      $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
 		  }
 		  else{
 		      $(".m_accname:enabled:first").focus().select();

@@ -173,9 +173,9 @@
             <table id="m_acctable" class="table table-condensed table-fixedheader">
               <thead class="bg-primary">
                 <tr>
-		  <th class="col-xs-2 gstaccountfields">{% trans %}Tax Type{% endtrans %}</th>
-		  <th class="col-xs-3 gstaccountfields">{% trans %}State{% endtrans %}</th>
-		  <th class="col-xs-2 gstaccountfields">{% trans %}Rate{% endtrans %}</th>
+		  <th class="col-xs-2">{% trans %}Tax Type{% endtrans %}</th>
+		  <th class="col-xs-3">{% trans %}State{% endtrans %}</th>
+		  <th class="col-xs-2">{% trans %}Rate{% endtrans %}</th>
                   <th class="col-xs-2">{% trans %}Account Name{% endtrans %}</th>
                   <th class="col-xs-2">{% trans %}Opening Balance{% endtrans %}</th>
                   <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
@@ -183,8 +183,8 @@
               </thead>
               <tbody>
                 <tr>
-		  <td class="col-xs-2 gstaccountfields">
-                    <select class="form-control input-sm" id="taxtype">
+		  <td class="col-xs-2">
+                    <select class="form-control input-sm  gstaccountfields" id="taxtype">
 		      <option value="" hidden disabled selected>Select Tax</option>
 		      <option value="SGSTIN">SGSTIN</option>
 		      <option value="SGSTOUT">SGSTOUT</option>
@@ -196,8 +196,8 @@
 		      <option value="CESSOUT">CESSOUT</option>
 		    </select>
                   </td>
-		  <td class="col-xs-3 gstaccountfields">
-                    <select class="form-control input-sm" id="taxstate">
+		  <td class="col-xs-3">
+                    <select class="form-control input-sm taxstate  gstaccountfields">
 		      <option value="" hidden disabled selected>Select State</option>
 		      {% for state in states %}
 			{% for key, value in state.items() %}
@@ -206,8 +206,8 @@
 		      {% endfor %}
 		    </select>
                   </td>
-		  <td class="col-xs-2 gstaccountfields">
-                    <select class="form-control input-sm taxrate">
+		  <td class="col-xs-2">
+                    <select class="form-control input-sm taxrate gstaccountfields">
 		      <option value="" hidden disabled selected>Select Rate</option>
 		      <option value="5%">5%</option>
 		      <option value="12%">12%</option>
@@ -215,7 +215,7 @@
 		      <option value="28%">28%</option>
 		    </select>
 		    <div class="input-group cessratediv" hidden>
-		      <input type="text" class="form-control input-sm cessrate" name="accountname" accesskey="a" style="display:none">
+		      <input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a" style="display:none">
 		      <span class="input-group-addon cessrateaddon" style="display:none">%</span>
 		    </div>
                   </td>
