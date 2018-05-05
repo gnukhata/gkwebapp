@@ -151,34 +151,81 @@
 
         </div>
         <div class="modal-body shadow">
+	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="taxstate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select State!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Rate!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="cessrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Cess Rate!{% endtrans %}
+	  </div>
+	  <div id="gstfielddiv">
+	    <label> <input type="checkbox" id="m_gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+	  </div>
           <div class='table-responsive'>
             <table id="m_acctable" class="table table-condensed table-fixedheader">
               <thead class="bg-primary">
                 <tr>
-                  {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
-                  <th class="col-xs-7">{% trans %}Account Name{% endtrans %}</th>
-                  <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
-                  {% else %}
-                  <th class="col-xs-10">{% trans %}Account Name{% endtrans %}</th>
-                  {% endif %}
-                  <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
+		  <th class="col-xs-2 gstaccountfields">{% trans %}Tax Type{% endtrans %}</th>
+		  <th class="col-xs-3 gstaccountfields">{% trans %}State{% endtrans %}</th>
+		  <th class="col-xs-2 gstaccountfields">{% trans %}Rate{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Account Name{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Opening Balance{% endtrans %}</th>
+                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-                  {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
-                  <td class="col-xs-7">
-                    <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+		  <td class="col-xs-2 gstaccountfields">
+                    <select class="form-control input-sm" id="taxtype">
+		      <option value="" hidden disabled selected>Select Tax</option>
+		      <option value="SGSTIN">SGSTIN</option>
+		      <option value="SGSTOUT">SGSTOUT</option>
+		      <option value="CGSTIN">CGSTIN</option>
+		      <option value="CGSTOUT">CGSTOUT</option>
+		      <option value="IGSTIN">IGSTIN</option>
+		      <option value="IGSTOUT">IGSTOUT</option>
+		      <option value="CESSIN">CESSIN</option>
+		      <option value="CESSOUT">CESSOUT</option>
+		    </select>
                   </td>
-                  <td class="col-xs-3">
+		  <td class="col-xs-3 gstaccountfields">
+                    <select class="form-control input-sm" id="taxstate">
+		      <option value="" hidden disabled selected>Select State</option>
+		      {% for state in states %}
+			{% for key, value in state.items() %}
+			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			{% endfor %}
+		      {% endfor %}
+		    </select>
+                  </td>
+		  <td class="col-xs-2 gstaccountfields">
+                    <select class="form-control input-sm taxrate">
+		      <option value="" hidden disabled selected>Select Rate</option>
+		      <option value="5%">5%</option>
+		      <option value="12%">12%</option>
+		      <option value="18%">18%</option>
+		      <option value="28%">28%</option>
+		    </select>
+		    <div class="input-group cessratediv" hidden>
+		      <input type="text" class="form-control input-sm cessrate" name="accountname" accesskey="a" style="display:none">
+		      <span class="input-group-addon cessrateaddon" style="display:none">%</span>
+		    </div>
+                  </td>
+                  <td class="col-xs-2">
+                    <input type="text" class="form-control input-sm m_accname" placeholder="Account Name">
+                  </td>
+                  <td class="col-xs-2">
                     <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
                   </td>
-                  {% else %}
-                  <td class="col-xs-10">
-                    <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
-                  </td>
-                  {% endif %}
-                  <td class="col-xs-2">
+                  <td class="col-xs-1">
                   </td>
                 </tr>
               </tbody>

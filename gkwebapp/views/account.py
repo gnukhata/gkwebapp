@@ -152,6 +152,10 @@ def showmultiacc(request):
 
     return {"gkresult":request.params}
 
+@view_config(route_name="showmultiacc", request_param="taxes",renderer="gkwebapp:templates/multipleaccounts_taxes.jinja2")
+def showMultiAccTaxes(request):
+
+    return {"gkresult":request.params}
 
 @view_config(route_name="showeditaccount", renderer="gkwebapp:templates/editaccount.jinja2")
 def showeditaccount(request):

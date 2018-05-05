@@ -25,8 +25,8 @@ Contributors:
 */
 // This script is for multiple account popup.
 $(document).ready(function() {
-  $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
-
+    $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
+    $(".cessrate").numeric({"negative":false});
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
   // This is the keydown event for account name column fields.

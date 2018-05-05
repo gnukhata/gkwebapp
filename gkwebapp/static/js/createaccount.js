@@ -639,42 +639,44 @@ $("#openbal").keydown(function(event){
 
   }
 
-  $.ajax({
-    type: "POST",
-    url: "/showmultiacc",
-    data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
-    global: false,
-    async: false,
-    datatype: "text/html"
+      var url = "/showmultiacc";
+      if ($("#groupname option:selected").text() == "Current Liabilities" && $("#subgroupname option:selected").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
+	  url = "/showmultiacc?taxes";
+      }
+      $.ajax({
+	  type: "POST",
+	  url: url,
+	  data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+	  global: false,
+	  async: false,
+	  datatype: "text/html"
+      })
+	  .done(function(resp) {
+	      $("#multiaccount_modal").html("");
+	      $('.modal-backdrop').remove();
+	      $('.modal').modal('hide');
+	      $("#multiaccount_modal").html(resp);
+	      $("#m_multiacc").modal('show');
+	      $('#m_multiacc').on('shown.bs.modal', function (e){
+		  if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
+		      $(".default:first").focus().select();
+		  }else if ($("#m_gstaccount").is(":visible")) {
+		      $("#m_gstaccount").focus().select();
+		  }
+		  else{
+		      $(".m_accname:enabled:first").focus().select();
+		  }	  
+	      });
+	      $('#m_multiacc').on('hidden.bs.modal', function (e){
+		  $('#maccounts').attr('checked', false);
+		  $("#multiaccount_modal").html("");
+		  $("#reset").click();
+	      });
 
-  })
-  .done(function(resp) {
-    $("#multiaccount_modal").html("");
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-    $("#multiaccount_modal").html(resp);
-    $("#m_multiacc").modal('show');
-    $('#m_multiacc').on('shown.bs.modal', function (e)
-    {
-	if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
-	    $(".default:first").focus().select();
-	}else{
-	    $(".m_accname:first").focus().select();
-	}
-
-    });
-    $('#m_multiacc').on('hidden.bs.modal', function (e)
-    {
-      $('#maccounts').attr('checked', false);
-      $("#multiaccount_modal").html("");
-      $("#reset").click();
-
-    });
-
-  })
-  .fail(function() {
-    alert("failed");
-  });
+	  })
+	  .fail(function() {
+	      console.log("failed");
+	  });
   });
      $(document).off("keyup").on("keyup", function(event) {
       if (event.which == 45) {
