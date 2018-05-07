@@ -62,8 +62,7 @@ def sendReportData(request):
     
 @view_config(route_name="gstsummary",request_param="action=gstsummaryreportspreadsheet", renderer="")
 def gstsummspreadsheet(request):
-    #try:
-        print "I am here"
+    try:
         header={"gktoken":request.headers["gktoken"]}
         gkdata ={"startdate":request.params["calculatefrom"],"enddate":request.params["calculateto"],"statename":request.params["statename"]}
         result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
@@ -287,7 +286,7 @@ def gstsummspreadsheet(request):
         os.remove("report.xlsx")
         return Response(reportxslx, headerlist=headerList.items())
         
-    #except:
-    #    print "file not found"
-    #    return {"gkstatus":3}
+    except:
+        print "file not found"
+        return {"gkstatus":3}
 
