@@ -22,8 +22,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
 Contributors:
    "Krishnakant Mane" <kk@gmail.com>
-   'Prajkta Patkar'<prajkta@riseup.net>
-   
+   'Prajkta Patkar'<prajkta@riseup.net> 
 """
 
 from pyramid.view import view_config
@@ -70,18 +69,19 @@ def gstsummspreadsheet(request):
         result = requests.get("http://127.0.0.1:6543/report?type=GSTCalc",data =json.dumps(gkdata), headers=header)
         
         data = result.json()["gkresult"]
-        '''
+        
         lenSGSTin = len(result.json()["gkresult"]["sgstin"])
-        data["lenSGSTout"] = len(result.json()["gkresult"]["sgstout"])
-        data["lenCGSTin"] =  len(result.json()["gkresult"]["cgstin"])
-        data["lenCGSTout"] = len(result.json()["gkresult"]["cgstout"])
-        data["lenIGSTin"] =  len(result.json()["gkresult"]["igstin"])
-        data["lenIGSTout"] =  len(result.json()["gkresult"]["igstout"])
-        data["lenCESSin"] =  len(result.json()["gkresult"]["cessin"])
-        data["lenCESSout"] = len(result.json()["gkresult"]["cessout"])'''
+        lenSGSTout = len(result.json()["gkresult"]["sgstout"])
+        lenCGSTin =  len(result.json()["gkresult"]["cgstin"])
+        lenCGSTout = len(result.json()["gkresult"]["cgstout"])
+        lenIGSTin =  len(result.json()["gkresult"]["igstin"])
+        lenIGSTout =  len(result.json()["gkresult"]["igstout"])
+        lenCESSin =  len(result.json()["gkresult"]["cessin"])
+        lenCESSout = len(result.json()["gkresult"]["cessout"])
         gstsmwb = openpyxl.Workbook()
         sheet = gstsmwb.active
         sheet.title= "GST Summary "
+        ft = Font(name='Liberation Serif',size='12')
         sheet.merge_cells('A1:E2')
         sheet.column_dimensions['A'].width = 8
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
@@ -91,7 +91,7 @@ def gstsummspreadsheet(request):
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['A3'] = 'Statement of GST Calculation '
-        sheet.merge_cells('A4:G4')
+        sheet.merge_cells('A4:E4')
         sheet['A4'].font = Font(name='Liberation Serif',size='12',italic=True)
         sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['A4'] ="State :"+ gkdata["statename"] + "                  "+"Peroid :"+ gkdata["startdate"] + "to" +gkdata["enddate"]
@@ -112,22 +112,170 @@ def gstsummspreadsheet(request):
         sheet['D6'] = "Net Tax Amount"
 
         sheet['D7'] = "Payable"
+        sheet['D7'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['D7'].alignment = Alignment(horizontal = 'center', vertical='center')
+    
         sheet['E7'] = "Carried Forward "
+        sheet['E7'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['E7'].alignment = Alignment(horizontal = 'center', vertical='center')
+
 
         sheet.column_dimensions["A"].width = 30
         sheet.column_dimensions["B"].width = 15
         sheet.column_dimensions["C"].width = 15
         sheet.column_dimensions["D"].width = 15
         sheet.column_dimensions["E"].width = 15
-
+        # set row=r count and column =c count
         c = 1
-        r = 7
+        r = 8
         
-        if len(result.json()["gkresult"]["sgstin"]) > 0:
-            sheet.cell(row=r,column=c,value= "SGST")
-            sheet.cell(row=r+1,column=c+1,value= "\tInput Tax")
+        if lenSGSTin > 0:
+            t = sheet.cell(row=r,column=c,value= "SGST")
+            t.font = Font(name='Liberation Serif',bold=True)
+            o = sheet.cell(row=r+1,column=c,value = "    Input Tax") 
+            o.font =ft
+            r = r+2
+            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
+            n = 1
             for sgstinacc in data["sgstin"]:
-                n = 1
+                a = sheet.cell(row=r,column=c,value="        "+sgstinacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["sgstin"][sgstinacc]))).number_format = '0.00'
+                #print (data["sgstin"][sgstinacc])
+                #v.number_format = 'General'
+                if n  == lenSGSTin:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalSGSTIn"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+                
+        if lenSGSTout > 0:
+            o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
+            o.font = ft
+            r = r+2
+            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
+            n = 1
+            for sgstoutacc in data["sgstout"]:
+                a = sheet.cell(row=r,column=c,value="        "+sgstoutacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["sgstout"][sgstoutacc]))).number_format = '0.00'
+                if n  == lenSGSTout:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalSGSTOut"]))).number_format = '0.00'
+                    if 'sgstpayable' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["sgstpayable"]))).number_format = '0.00'
+                    if 'sgstcrdfwd' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["sgstcrdfwd"]))).number_format = '0.00'
+                n = n+1
+                r = r +1
+
+        if lenCGSTin > 0:
+            t = sheet.cell(row=r,column=c,value= "CGST")
+            t.font = Font(name='Liberation Serif',bold=True)
+            i = sheet.cell(row=r+1,column=c,value = "    Input Tax")
+            i.font = Font(name='Liberation Serif')
+            r = r+2
+            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
+            n = 1
+            for cgstinacc in data["cgstin"]:
+                a = sheet.cell(row=r,column=c,value="        "+cgstinacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cgstin"][cgstinacc]))).number_format = '0.00'
+                #print (data["sgstin"][sgstinacc])
+                #v.number_format = 'General'
+                if n  == lenCGSTin:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCGSTIn"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+                
+        if lenCGSTout > 0:
+            o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
+            o.font = ft
+            r = r+2
+            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
+            n = 1
+            for cgstoutacc in data["cgstout"]:
+                a = sheet.cell(row=r,column=c,value="        "+cgstoutacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cgstout"][cgstoutacc]))).number_format = '0.00'
+                #print (data["sgstin"][sgstinacc])
+                #v.number_format = 'General'
+                if n  == lenCGSTout:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCGSTOut"]))).number_format = '0.00'
+                if 'cgstpayable' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["cgstpayable"]))).number_format = '0.00'
+                if 'cgstcrdfwd' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["cgstcrdfwd"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+                
+                
+        if lenIGSTin > 0:
+            t = sheet.cell(row=r,column=c,value= "IGST")
+            t.font = Font(name='Liberation Serif',bold=True)
+            i = sheet.cell(row=r+1,column=c,value = "    Input Tax")
+            i.font = ft
+            r = r+2 
+            n = 1
+            for igstinacc in data["igstin"]:
+                a = sheet.cell(row=r,column=c,value="        "+igstinacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["igstin"][igstinacc]))).number_format = '0.00'
+                if n  == lenIGSTin:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalIGSTIn"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+                
+        if lenIGSTout > 0:
+            o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
+            o.font = ft
+            r = r+2
+            n = 1
+            for igstoutacc in data["igstout"]:
+                a = sheet.cell(row=r,column=c,value="        "+igstoutacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["igstout"][igstoutacc]))).number_format = '0.00'
+                if n  == lenIGSTout:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalIGSTOut"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+
+
+        if lenCESSin > 0:
+            t = sheet.cell(row=r,column=c,value= "CESS")
+            t.font = Font(name='Liberation Serif',bold=True)
+            i = sheet.cell(row=r+1,column=c,value = "    Input Tax")
+            i.font = ft
+            r = r+2 
+            n = 1
+            for cessacc in data["cessin"]:
+                a = sheet.cell(row=r,column=c,value="        "+cessacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cessin"][cessacc]))).number_format = '0.00'
+                if n  == lenCESSin:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCESSIn"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1
+                
+        if lenCESSout > 0:
+            o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
+            o.font = ft
+            r = r+2
+            n = 1
+            for cessoutacc in data["cessout"]:
+                a = sheet.cell(row=r,column=c,value="        "+cessoutacc)
+                a.font = Font(name='Liberation Serif',italic=True)
+                v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cessout"][cessoutacc]))).number_format = '0.00'
+                if n  == lenCESSout:
+                    sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCESSOut"]))).number_format = '0.00'
+                    
+                n = n+1
+                r = r +1 
+                
                 
                 
                 
