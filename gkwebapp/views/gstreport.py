@@ -140,8 +140,6 @@ def gstsummspreadsheet(request):
                 a = sheet.cell(row=r,column=c,value="        "+sgstinacc)
                 a.font = Font(name='Liberation Serif',italic=True)
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["sgstin"][sgstinacc]))).number_format = '0.00'
-                #print (data["sgstin"][sgstinacc])
-                #v.number_format = 'General'
                 if n  == lenSGSTin:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalSGSTIn"]))).number_format = '0.00'
                     
@@ -152,7 +150,6 @@ def gstsummspreadsheet(request):
             o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
             o.font = ft
             r = r+2
-            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
             n = 1
             for sgstoutacc in data["sgstout"]:
                 a = sheet.cell(row=r,column=c,value="        "+sgstoutacc)
@@ -173,7 +170,6 @@ def gstsummspreadsheet(request):
             i = sheet.cell(row=r+1,column=c,value = "    Input Tax")
             i.font = Font(name='Liberation Serif')
             r = r+2
-            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
             n = 1
             for cgstinacc in data["cgstin"]:
                 a = sheet.cell(row=r,column=c,value="        "+cgstinacc)
