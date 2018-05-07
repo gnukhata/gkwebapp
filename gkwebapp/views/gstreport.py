@@ -164,7 +164,7 @@ def gstsummspreadsheet(request):
                     if 'sgstpayable' in data:
                         sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["sgstpayable"]))).number_format = '0.00'
                     if 'sgstcrdfwd' in data:
-                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["sgstcrdfwd"]))).number_format = '0.00'
+                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["sgstcrdfwd"]))).number_format = '0.00'
                 n = n+1
                 r = r +1
 
@@ -180,8 +180,6 @@ def gstsummspreadsheet(request):
                 a = sheet.cell(row=r,column=c,value="        "+cgstinacc)
                 a.font = Font(name='Liberation Serif',italic=True)
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cgstin"][cgstinacc]))).number_format = '0.00'
-                #print (data["sgstin"][sgstinacc])
-                #v.number_format = 'General'
                 if n  == lenCGSTin:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCGSTIn"]))).number_format = '0.00'
                     
@@ -192,20 +190,17 @@ def gstsummspreadsheet(request):
             o = sheet.cell(row=r+1,column=c,value = "    Output Tax")
             o.font = ft
             r = r+2
-            # this variables is for indentifying last row of that tax type . We have to write total of each tax type at the last row of mentioned tax type. 
             n = 1
             for cgstoutacc in data["cgstout"]:
                 a = sheet.cell(row=r,column=c,value="        "+cgstoutacc)
                 a.font = Font(name='Liberation Serif',italic=True)
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cgstout"][cgstoutacc]))).number_format = '0.00'
-                #print (data["sgstin"][sgstinacc])
-                #v.number_format = 'General'
                 if n  == lenCGSTout:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCGSTOut"]))).number_format = '0.00'
-                if 'cgstpayable' in data:
+                    if 'cgstpayable' in data:
                         sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["cgstpayable"]))).number_format = '0.00'
-                if 'cgstcrdfwd' in data:
-                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["cgstcrdfwd"]))).number_format = '0.00'
+                    if 'cgstcrdfwd' in data:
+                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["cgstcrdfwd"]))).number_format = '0.00'
                     
                 n = n+1
                 r = r +1
@@ -239,10 +234,13 @@ def gstsummspreadsheet(request):
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["igstout"][igstoutacc]))).number_format = '0.00'
                 if n  == lenIGSTout:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalIGSTOut"]))).number_format = '0.00'
+                    if 'igstpayable' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["igstpayable"]))).number_format = '0.00'
+                    if 'IgstCrdFwd' in data:
+                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["igstcrdfwd"]))).number_format = '0.00'
                     
                 n = n+1
                 r = r +1
-
 
         if lenCESSin > 0:
             t = sheet.cell(row=r,column=c,value= "CESS")
@@ -272,21 +270,13 @@ def gstsummspreadsheet(request):
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["cessout"][cessoutacc]))).number_format = '0.00'
                 if n  == lenCESSout:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalCESSOut"]))).number_format = '0.00'
+                    if 'cesspayable' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["cesspayable"]))).number_format = '0.00'
+                    if 'cessCrdFwd' in data:
+                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["cessCrdFwd"]))).number_format = '0.00'
                     
                 n = n+1
-                r = r +1 
-                
-                
-                
-                
-
-        
-        
-        
-
-        
-
-        
+                r = r +1
         
         gstsmwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
