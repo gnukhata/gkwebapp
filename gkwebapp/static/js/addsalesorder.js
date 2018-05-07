@@ -2322,7 +2322,7 @@ if (event.which == 13) {
     if ($("#taxapplicable").val() == 22) {
     for (let i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
 	productqtys.push(parseFloat($(".salesorder_product_quantity_vat:eq(" + i + ")").val()));
-      if ($(".product_name_vat:eq(" + i + ")").val() == "") {
+	if ($(".product_name_vat:eq(" + i + ") option:selected").val() == "") {
         $("#product-blank-alert").alert();
         $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
           $("#product-blank-alert").hide();
@@ -2389,7 +2389,7 @@ if (event.which == 13) {
 
       else if ($("#taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#salesorder_product_table_gst tbody tr").length; i++) {
-	      if ($(".product_name_gst:eq(" + i + ")").val() == "") {
+	      if ($(".product_name_gst:eq(" + i + ") option:selected").val() == "") {
 		  $("#product-blank-alert").alert();
 		  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		      $("#product-blank-alert").hide();
@@ -2397,8 +2397,9 @@ if (event.which == 13) {
 		  $(".product_name_gst:eq(" + i + ")").focus();
 		  return false;
 	      }
+	      
 	      let quantity = parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_freequantity_gst:eq(" + i + ")").val());
-	      if (parseFloat(quantity) === 0.00 && $(".product_name_gst:eq(" + i + ")").attr("gsflag") == '7') {
+	      if (parseFloat(quantity) == 0.00 && $(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == '7') {
 		  $("#quantity-blank-alert").alert();
 		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		      $("#quantity-blank-alert").hide();
