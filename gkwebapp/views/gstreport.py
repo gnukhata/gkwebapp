@@ -233,10 +233,10 @@ def gstsummspreadsheet(request):
                 v = sheet.cell(row=r,column=c+1,value=float("%.2f"%float(data["igstout"][igstoutacc]))).number_format = '0.00'
                 if n  == lenIGSTout:
                     sheet.cell(row=r,column=c+2,value=float("%.2f"%float(data["totalIGSTOut"]))).number_format = '0.00'
-                    if 'igstpayable' in data:
-                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["igstpayable"]))).number_format = '0.00'
+                    if 'IgstPayable' in data:
+                        sheet.cell(row=r,column=c+3,value=float("%.2f"%float(data["IgstPayable"]))).number_format = '0.00'
                     if 'IgstCrdFwd' in data:
-                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["igstcrdfwd"]))).number_format = '0.00'
+                        sheet.cell(row=r,column=c+4,value=float("%.2f"%float(data["IgstCrdFwd"]))).number_format = '0.00'
                     
                 n = n+1
                 r = r +1
