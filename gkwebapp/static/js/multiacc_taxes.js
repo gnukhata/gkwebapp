@@ -27,6 +27,7 @@ Contributors:
 $(document).ready(function() {
     $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
     $(".cessrate").numeric({"negative":false});
+    var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
   // This is the keydown event for account name column fields.
@@ -38,36 +39,15 @@ $(document).ready(function() {
 
     if (event.which==40)
     {
-      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
-      {
-        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to next account name.
-        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').focus();
-        $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input').select();
-
-      }
-      else
-      {
         // else it will be shifted to the corresponding opening balance field.
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
         $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
-      }
     }
     if (event.which==38)
     {
-
-      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
-      {
-        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to previous account name.
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').focus();
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(0) input').select();
-
-      }
-      else
-      {
         // else it will be shifted to the previous opening balance field.
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
         $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
-      }
     }
     if (event.which==13)
       {
@@ -117,68 +97,12 @@ $(document).ready(function() {
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.
-    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
+    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
     if (accname == "") {
       $("#acc_add").click();
       return false;
     }
-
-    $.ajax({
-      url: '/accountexists',
-      type: 'POST',
-      datatype: 'json',
-      data: {"accountname": accname},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      }
-    })
-    .done(function(jsonobj)
-    {
-      if (jsonobj["gkstatus"]==1)
-      {
-        $("#m_duplicate-alert").alert();
-        $("#m_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#m_duplicate-alert").hide();
-        });
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').select();
-      }
-      if (jsonobj["gkstatus"]==0)
-      {
-        var m_grpnm = $.trim($("#m_gname").val());
-        if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
-        {
-          // will add row with only account name field as the groups mentioned above do not have opening balance.
-          $("#m_acctable").append('<tr>'+
-          '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
-          '<td class="col-xs-2">'+
-          '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-          '</td>'+
-          '</tr>'
-        );
-      }
-      else
-      {
-      // will add row with both account name and opening balance.
-        $("#m_acctable").append('<tr>'+
-        '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
-        '<td class="col-xs-3">'+
-        '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
-        '</td>'+
-        '<td class="col-xs-2">'+
-        '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-        '</tr>'
-      );
-
-    }
-
-
-    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();// finally focus is set to the account name of the last row.
-  }
-});
-
+      $("#m_acctable").append(accrowhtml);
 }
 
 $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
