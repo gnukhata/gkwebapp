@@ -228,6 +228,14 @@ $("#openbal").keydown(function(event){
 	else {
 	    $("#taxrate").show();
 	    $("#cessrate").hide();
+	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
+		$("#taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
+		$("#taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
+	    }
+	    else {
+		$("#taxrate option.igstopt").prop("disabled", true).prop("hidden", true);
+		$("#taxrate option.sgstopt").prop("disabled", false).prop("hidden", false);
+	    }
 	}
 	if (taxtype!="" && taxstate!="" && taxrate!="") {
 	    $('#accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
