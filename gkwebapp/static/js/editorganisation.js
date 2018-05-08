@@ -1056,6 +1056,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	  var taxtype = "";
 	  var taxrate = "";
 	  var accountname = "";
+	  var newtaxrate = "";
 	  //Looping through GSTIN table rows to fetch state abbreviations.
 	  $("#gstintable tbody tr").each(function(index) {
 	      if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
@@ -1078,6 +1079,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			  $(".gstrate").each(function(index){
 			      if ($(this).is(":checked")) {
 				  taxrate = $(this).data("taxrate");
+				  newtaxrate = parseFloat(taxrate)/2;
+				  newtaxrate = newtaxrate.toString();
 			      }
 			      else{
 				  taxrate = "";
@@ -1085,7 +1088,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			      //For each tax rate accounts are created for all types of tax.
 			      $.each(taxes, function(index, taxtype) {
 				  if (taxrate != "" && taxstate != "") {
-				      accountname = taxtype + '_' + taxstate + '@' + taxrate;
+				      if(taxtype == 'SGSTIN' || taxtype == 'CGSTIN' || taxtype == 'SGSTOUT' || taxtype == 'CGSTOUT'){
+					  accountname = taxtype + '_' + taxstate + '@' + newtaxrate + '%';
+				      }
+				      else{
+					  accountname = taxtype + '_' + taxstate + '@' + taxrate + '%';
+				      }
 				      accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
 				  }
 			      });
