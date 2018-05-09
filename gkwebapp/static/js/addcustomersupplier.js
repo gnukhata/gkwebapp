@@ -73,22 +73,21 @@ $(document).ready(function() {
     
  $("#checkbnk").click(function(e){
     if ($(this).is(":checked")) {
-      checkbnk = 1;
-      $("#checkbnk").val(1);
-      $("#bankdiv").show();
+	$("#bankdiv").show();
     }
-    else {
-      checkbnk = 0;
-      $("#checkbnk").val(0);
-      $("#bankdiv").hide();
-     
-    }
+     else {
+	 $("#accountno").val("");
+	 $("#bankname").val("");
+	 $("#branchname").val("");
+	 $("#ifsc").val("");
+	 $("#bankdiv").hide();
+     }
   });
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13||event.which==9) {
     	if ($.trim($("#add_cussup_name").val())=="") {
             $("#name-blank-alert").alert();
-            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){    
               $("#name-blank-alert").hide();
             });
             $("#add_cussup_name").focus();
