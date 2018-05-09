@@ -46,7 +46,6 @@ def showviewlog(request):
 def showlogreport(request):
     header={"gktoken":request.headers["gktoken"]}
     userid = request.params["userid"]
-    orderFlag=int(request.params["orderflag"])
     calculatefrom = request.params["calculatefrom"]
     calculateto = request.params["calculateto"]
     logcalculatefrom = request.params["calculatefrom"]
@@ -58,13 +57,18 @@ def showlogreport(request):
         logheader = {"calculatefrom":calculatefrom,"calculateto":calculateto,"typeflag": request.params["typeflag"] }
     else:
         logheader = {"calculatefrom":datetime.strptime(calculatefrom, '%Y-%m-%d').strftime('%d-%m-%Y'),"calculateto":datetime.strptime(calculateto, '%Y-%m-%d').strftime('%d-%m-%Y'),"typeflag": request.params["typeflag"]}
-
+    
     if request.params["typeflag"] == "1":
-        result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%s&calculateto=%s"%(logcalculatefrom, logcalculateto), headers=header)
-        return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"], "orderflag":orderFlag,"logheader":logheader, "typeflag": "1"},request=request)
+         if "orderflag" in request.params:
+             print int(request.params["orderflag"])
+             result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%s&calculateto=%s&orderflag=%d"%(logcalculatefrom, logcalculateto,int(request.params["orderflag"])), headers=header)
+         else :
+             print "no of"
+             result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%s&calculateto=%s"%(logcalculatefrom, logcalculateto), headers=header) 
+         return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"],"logheader":logheader, "typeflag": "1"},request=request)
     else:
-        result = requests.get("http://127.0.0.1:6543/report?type=logbyuser&userid=%s&calculatefrom=%s&calculateto=%s"%(userid, logcalculatefrom, logcalculateto), headers=header)
-        return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"], "orderflag":orderFlag,"logheader": logheader, "username": request.params["username"],"userid":userid, "typeflag": "2"},request=request)
+        result = requests.get("http://127.0.0.1:6543/report?type=logbyuser&userid=%s&calculatefrom=%s&calculateto=%s&ordeflag=%d"%(userid, logcalculatefrom, logcalculateto,orderflag), headers=header)
+        return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"],"logheader": logheader, "username": request.params["username"],"userid":userid, "typeflag": "2"},request=request)
 
 @view_config(route_name="log",request_param="action=printableshowlogreport")
 def printableshowlogreport(request):

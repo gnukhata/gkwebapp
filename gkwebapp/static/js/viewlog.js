@@ -37,14 +37,14 @@ $(document).ready(function() {
    console.log(mm);
    var yyyy = todaysdate.getFullYear(); //yields year
 	// Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewlog_fromdate").val(fromdatearray[2])
-  $("#viewlog_frommonth").val(fromdatearray[1])
-  $("#viewlog_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewlog_todate").val(dd)
-  $("#viewlog_tomonth").val(mm)
-  $("#viewlog_toyear").val(yyyy)
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewlog_fromdate").val(fromdatearray[2]);
+    $("#viewlog_frommonth").val(fromdatearray[1]);
+    $("#viewlog_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewlog_todate").val(dd);
+    $("#viewlog_tomonth").val(mm);
+    $("#viewlog_toyear").val(yyyy);
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -274,7 +274,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
         global: false,
         async: false,
         datatype: "text/html",
-          data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0, "orderflag":1},
+          data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

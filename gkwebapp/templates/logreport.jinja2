@@ -84,12 +84,10 @@
   <table id="logtable" class="table shadow table-bordered" data-toggle="table">
     <thead class="bg-primary">
       <tr>
-        <th class="dtwrap calign" >{% trans %}Date{% endtrans %}
-	  {% if orderflag == 1 %}
-	    <span id="logDate" class="glyphicon glyphicon-chevron-down pull-right" data-orderflag="{{orderflag}}" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
-	  {% else %}
-	    <span id="logDate" class="glyphicon glyphicon-chevron-up pull-right" data-orderflag="{{orderflag}}" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
-	  {% endif %}</th>
+        <th class="dtwrap calign" data-field="date" data-sortable="true">{% trans %}Date{% endtrans %}
+	    <span id="logDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	    
+	</th>
         {% if typeflag == "1" %}
           <th class="mdwrap calign" data-sortable="true" data-field="username" data-sorter="alphanum">{% trans %}User Name(Role){% endtrans %}
 	    <span class="glyphicon glyphicon-chevron-down pull-right" style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span></th>             {% endif %}
