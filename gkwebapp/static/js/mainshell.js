@@ -1905,6 +1905,11 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 		$("#reportsearch").val("");
 		$("tr").show();
 	    }
+	    if (e.which == 8) {
+		if($("#reportsearch").val()==""){
+		$("#reportclearsearchspan").trigger("click");
+		}
+	    }
 	    //Pressing Enter key shifts focus to first row.
 	    if (e.which == 13) {
 		$("tbody tr:visible").first().find('a').focus();
