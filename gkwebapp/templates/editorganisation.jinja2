@@ -49,11 +49,16 @@
 
 	<div class="panel shadow" >
 	  <div class="panel-heading">
-	    <div class="panel-title" style="text-align:center;">{% trans %}Edit Organisation{% endtrans %}
-	      <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#OrgModal"></i></div>
+	    {% if gkresult["orgtype"]=="Not For Profit" %}
+	      <div class="panel-title" style="text-align:center;">{% trans %}Organisation Set Up{% endtrans %}
+		<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#OrgModal"></i></div>
+	      {%else%}
+	      <div class="panel-title" style="text-align:center;">{% trans %}Company Set Up{% endtrans %}
+		<i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#OrgModal"></i></div>
+	    {%endif%}
 
 	  </div>
-
+          
 	  <div style="padding-top:5px" class="panel-body" >
 				<div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
