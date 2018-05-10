@@ -31,8 +31,9 @@ Contributors:
 */
 
 $(document).ready(function(){
-    $("#msspinmodal").modal("hide");
-    $(".regdate").autotab('number');
+  $("#msspinmodal").modal("hide");
+  $(".regdate").autotab('number');
+    $("#gstintable tbody tr:last td:eq(2)").append('<div style="align:center"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
     $(".fcradate").autotab('number');
     $('[data-toggle="popover"]').popover({
         html: true,
@@ -302,41 +303,9 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     //Click event for '+'(add button).
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	var curindex_addbtn = $(this).closest('tr').index();
-	var nextindex_addbtn = curindex_addbtn+1;
-	var previndex_addbtn = curindex_addbtn-1;
-	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
-	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:not(:hidden)').length-1;
-
-	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
-
-	if($('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val()==""){
-	    $("#gstin_done").focus();
-	}
-	else if (curindex_addbtn != ($("#gstintable tbody tr").length-1)) {
-	    $('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-	}
-	else{
-	    if(gstinstring != ''){
-  		if(gstinstring.length !=15){
-  		    $("#gstin-improper-modal").alert();
-		    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
-			$("#gstin-improper-modal").hide();
-  			$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').focus().select();
-		    });
-  		    return false;
-		}
-	    }
-	    if (numberofstates > 0) {
-		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-		$('#gstintable tbody tr:eq('+ curindex_addbtn +') td:eq(2) span').hide(".addbtn");
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-	    }
-	    else {
-		$("#gstin_done").focus();
-	    }
-	}
+	var e = jQuery.Event("keydown");
+	e.which=13;
+	$(".gstin").trigger({type:"keydown",which:"13"});
     });
     
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
