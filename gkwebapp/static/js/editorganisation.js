@@ -33,7 +33,7 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
-    $("#gstintable tbody tr:last td:eq(2)").append('<div style="align:center"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+    $("#gstintable tbody tr:last td:eq(2)").append('<div style="text-align:center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
     $(".fcradate").autotab('number');
     $('[data-toggle="popover"]').popover({
         html: true,
@@ -101,7 +101,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
-	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align:center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
 	}
     
   if(sessionStorage.vatorgstflag == '22' ){
@@ -220,9 +220,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
     });
 
-       //change event for bank details
-
-
+    //change event for bank details
     $("#bank_name").change(function(event) {
 	event.preventDefault();
         if(event.which==9){
@@ -304,7 +302,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	var curindex_addbtn = $(this).closest('tr').index();
 	var e = jQuery.Event("keydown");
-	e.which=13;
+	e.which=13;	
 	$(".gstin").trigger({type:"keydown",which:"13"});
     });
     
