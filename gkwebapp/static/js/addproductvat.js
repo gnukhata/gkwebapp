@@ -198,6 +198,13 @@ $("#openingstock").focus(function(event) {
     $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
 	// Events that happen when Enter key is pressed.
 	if (event.which == 13) {
+	    if ($("#adduom option:selected").val()==""){
+		$("#uomblank-alert").alert();
+		$("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#uomblank-alert").hide();
+		});
+		$("#adduom").focus();
+	    }
 	    // When specs are present focus shifts to specs table.
     if (!$("#specdiv").is(":hidden")) {
       $("#spec_table tbody tr:first td:eq(1) input:first").focus();
