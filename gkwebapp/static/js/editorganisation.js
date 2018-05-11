@@ -33,6 +33,7 @@ Contributors:
 $(document).ready(function(){
   $("#msspinmodal").modal("hide");
   $(".regdate").autotab('number');
+    // '+' Button is attach only last record of gstin. 
     $("#gstintable tbody tr:last td:eq(2)").append('<div style="text-align:center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
     $(".fcradate").autotab('number');
     $('[data-toggle="popover"]').popover({
@@ -298,11 +299,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	}
 	    });
 
-    //Click event for '+'(add button).
-    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
-	var curindex_addbtn = $(this).closest('tr').index();
-	var e = jQuery.Event("keydown");
-	e.which=13;	
+    //Click event for '+'(add button) which trigger keydown of 'gstin' field.
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){	
 	$(".gstin").trigger({type:"keydown",which:"13"});
     });
     
