@@ -66,33 +66,33 @@
   <div id="otherdiv">
     <div class="alert alert-danger" id="ua-alert" hidden>
 
-    <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
-  </div>
-  <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
-  <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
-  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerrefresh["calculatefrom"]}}"></input>
-  <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerrefresh["calculateto"]}}"></input>
-  <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh["financialstart"]}}"></input>
-  <input type="hidden" id="monthlyflag" name="monthlyflag" value="{{ledgerrefresh["monthlyflag"]}}"></input>
-  <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
-  <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
-  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
-  <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
-  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
-  <input type="hidden" id="modalindex" value=""></input>
-  <div class="row">
-  <div class="col-xs-10 nopadding">
-  {% if ledgerheader["projectname"]!="" %}
-  <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
-  {% endif %}
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
-  <span style="margin-left:50%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
-  </div>
-  <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
-    <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
-    </span>
-    <input id="reportsearch" class="form-control" type="text" placeholder="{% trans %}Quick Search{% endtrans %}"/>
-    <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+      <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
+    </div>
+    <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
+    <input type="hidden" id="accountcode" name="accountcode" value="{{ledgerrefresh["accountcode"]}}"></input>
+    <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{ledgerrefresh["calculatefrom"]}}"></input>
+    <input type="hidden" id="calculateto" name="calculateto" value="{{ledgerrefresh["calculateto"]}}"></input>
+    <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh["financialstart"]}}"></input>
+    <input type="hidden" id="monthlyflag" name="monthlyflag" value="{{ledgerrefresh["monthlyflag"]}}"></input>
+    <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
+    <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
+    <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+    <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
+    <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
+    <input type="hidden" id="modalindex" value=""></input>
+    <div class="row">
+      <div class="col-xs-10 nopadding">
+	{% if ledgerheader["projectname"]!="" %}
+	  <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
+	{% endif %}
+	<span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
+	<span style="margin-left:50%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
+      </div>
+      <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+	<span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+	</span>
+	<input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+	<span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
   </div>
   </div>

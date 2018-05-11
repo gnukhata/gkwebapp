@@ -32,6 +32,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "Mohd. Talha Pawaty" <mtalha456@gmail.com>
    "prajkta Patkar" <prajkta@riseup.net>
    "Reshma Bhatawadekar" <reshma@dff.org.in>
+   "Pravin Dake" <pravindake24@gmail.com>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -1907,8 +1908,9 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 	    }
 	    if (e.which == 8) {
 		if($("#reportsearch").val()==""){
-		$("#reportclearsearchspan").trigger("click");
+		    $("#reportclearsearchspan").trigger("click");
 		}
+		$("#reportsearch").focus().select();
 	    }
 	    //Pressing Enter key shifts focus to first row.
 	    if (e.which == 13) {
