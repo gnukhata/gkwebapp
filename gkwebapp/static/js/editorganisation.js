@@ -306,12 +306,13 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     {
+	var gstinrow = $('#gstintable tbody tr:first').html();
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
-    gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+    gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();	
   if (event.which==13) {
       event.preventDefault();
       if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
@@ -332,7 +333,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
             }
 	}
 	if (numberofstates > 0) {
-            $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#gstintable tbody').append('<tr>'+gstinrow+'</tr>');
 	    $('#gstintable tbody tr:eq('+ curindex1 +') td:eq(2) span').hide(".addbtn");
             $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
@@ -835,7 +836,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-modal").hide();
-		$(".gstin").focus();
+		$(".panno").focus();
 	    });
 	    return false;
 	}
