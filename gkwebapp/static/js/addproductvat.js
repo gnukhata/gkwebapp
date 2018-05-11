@@ -206,20 +206,20 @@ $("#openingstock").focus(function(event) {
 		$("#adduom").focus();
 	    }
 	    // When specs are present focus shifts to specs table.
-    if (!$("#specdiv").is(":hidden")) {
-      $("#spec_table tbody tr:first td:eq(1) input:first").focus();
-    }
+	    else if (!$("#specdiv").is(":hidden")) {
+		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	    }
 	    else {
 		// If Tax is present focus shifts to Tax table.
-	if ($("#product_tax_table").length > 0) {
-	  $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-	}
+		if ($("#product_tax_table").length > 0) {
+		    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+		}
 		else{
 		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
-	    $(".godown_name:first").focus();
+		    $(".godown_name:first").focus();
+		}
+	    }
 	}
-    }
-  }
   else if (event.which==32)
   {
     event.preventDefault();
