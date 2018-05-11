@@ -160,7 +160,7 @@
 		  {% if gkresult["psflag"]|int == 19 %}
 		    <label for="togodown">{% trans %}To be Dispatched From{% endtrans %} : </label>
 		  {% else %}
-		    <label for="togodown">{% trans %}To be Received At{% endtrans %} : </label>
+		    <label for="togodown">{% trans %}To be Delivered At{% endtrans %} : </label>
 		  {% endif %}
 		  {% if gkresult["goname"] %}
 		    {{ gkresult["goname"] }} ({{ gkresult["goaddr"] }})
