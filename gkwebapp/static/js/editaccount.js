@@ -187,7 +187,7 @@ $(document).ready(function()
 		    var subgrp = $("#subgroupname option:selected").val();
 		    $('#subgroupname').empty();
 		    var grpnam=$("#groupname option:selected").text();
-		    if (grpnam=="Current Assets" ||grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Fixed Assets" ||grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
+		    if (grpnam=="Current Assets" ||grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Fixed Assets" ||grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus" || grpnam=="Investments"|| grpnam=="Current Liabilities" || grpnam=="Loans(Liability)")
 		    {
 			$('#subgroupname').prepend('<option value="None">None</option>');
 			$('#subgroupname option:first').attr("selected", "selected");
