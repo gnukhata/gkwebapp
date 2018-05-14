@@ -107,6 +107,12 @@ var username1;
   $("#msspinmodal").modal("hide"); //Hides the loading spinner.
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.
   $("#"+sessionStorage.gktheme+"span").show();
+    //Setting index after sorting to the Sr. No. column
+    $(document).off('click' ,'.sortableHeader').on('click' ,'.sortableHeader',function(e) {
+	$("table tbody tr").each(function(index){
+	    $('table tbody tr:eq('+index+') td:eq(0)').text(index+1);
+	});
+    });
 
   $(document).keydown(function(event) {
     // Shortcuts

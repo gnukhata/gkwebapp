@@ -31,19 +31,53 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".modal-backdrop").remove();
     $(".fixed-table-loading").remove();
-    var orderflag = 1;
     var currentrow = 0;
-
     //Toggling the up and down arrow for sorting 
     $('.glyphicon').click(function () {
         $(this).toggleClass("glyphicon-chevron-down").toggleClass("glyphicon-chevron-up"); // toggling the up and down 
     });
-    //Sorting the data in ascending/descending order using natural sort
+    //Sorting the data in ascending/descending order
     $("#latable").bootstrapTable({"sortName": "tnNo", "sortOrder":"desc"},
 				 {"sortName": "disFrom", "sortOrder":"desc"},
 				 {"sortName": "delAt", "sortOrder":"desc"},
 				 {"sortName": "transProd", "sortOrder":"desc"},
-				 {"sortName": "prodQty", "sortOrder":"desc"});
+				 {"sortName": "prodQty", "sortOrder":"desc"},
+				 {"sortName":"date"});
+    //Event for sorting Date in Ascending and Descending order.
+    $('#smwrap').click(function (e) {
+	var orderflag = $("#transDate").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#transDate").attr("orderflag",4);
+	    var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate")};
+	}else{
+	    $(this).find("#transDate").attr("orderflag",1);
+	    dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate"),"orderflag":4};
+	}
+	if ($("#godownselect").val() == 1) {
+	    dataset["goid"] = $("#goid").data("goid");
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/transfernotes?action=showlist",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+    });
     
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first td:eq(1) a').addClass('selected');
@@ -83,42 +117,6 @@ $(document).ready(function() {
       }
   });
 
-    //click event for sorting Date in Ascending and Descending order.
-    //For ascending order 'orderflag=1' and descending order 'orderflag=4'
-    $('#transDate').click(function (e) {
-	var order = $(this).attr("data-orderflag");
-	if ( order == 1 ){
-	    orderflag =4;
-	}else{
-	    orderflag =1;
-	}
-	var dataset = {"startdate":$("#startdate").data("startdate"),"enddate":$("#enddate").data("enddate"), "orderflag":orderflag};
-	if ($("#godownselect").val() == 1) {
-	    dataset["goid"] = $("#goid").data("goid");
-	}
-	$.ajax({
-	    type: "POST",
-	    url: "/transfernotes?action=showlist",
-	    global: false,
-	    async: false,
-	    data: dataset,
-	    datatype: "text/html",
-	    beforeSend: function(xhr)
-	    {
-		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-	    },
-	})
-	.done(function(resp) {
-	    $("#info").html(resp);
-	})
-	.fail(function() {
-	    console.log("error");
-	})
-	.always(function() {
-	    console.log("complete");
-	});
-    });
-    
   var curindex ;
   var nextindex;
   var previndex;

@@ -27,13 +27,15 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
     var currentrow = 0;
-    
     //Toggling the up and down arrow for sorting
     $('.glyphicon').click(function () {
 	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
-	    });
-   
-    //click event for sorting Date in Ascending and Descending order.
+    });
+    //Sorting the data in ascending/descending order
+    $("#latable").bootstrapTable({"sortName": "username", "sortOrder":"desc"},
+				 {"sortName": "activity", "sortOrder":"desc"},
+				 {"sortName":"date"});
+    //Event for sorting Date in Ascending and Descending order.
     $('.dtwrap').click(function (e) {
 	var orderflag = $("#logDate").attr("orderflag");
 	if ( orderflag == 1 ){
@@ -64,14 +66,7 @@ $(document).ready(function() {
 	.always(function() {
 	    console.log("complete");
 	});
-   
-   // });
-    });
-
-    //Sorting the data in ascending/descending order using natural sort
-    $("#latable").bootstrapTable({"sortName": "username", "sortOrder":"desc"},
-				 {"sortName": "activity", "sortOrder":"desc"},
-				 {"sortName":"date"});
+       });
     $('#lclearfields').click(function(){
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
