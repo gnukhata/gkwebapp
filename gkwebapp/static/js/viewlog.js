@@ -33,9 +33,8 @@ $(document).ready(function() {
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
   var todaysdate = new Date();
   var dd = todaysdate.getDate(); //yields day
-   var mm = todaysdate.getMonth()+1; //yields month
-   console.log(mm);
-   var yyyy = todaysdate.getFullYear(); //yields year
+  var mm = todaysdate.getMonth()+1; //yields month
+  var yyyy = todaysdate.getFullYear(); //yields year
 	// Setting default date to financialstart and end.
     var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
     $("#viewlog_fromdate").val(fromdatearray[2]);
@@ -223,9 +222,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
 
 
 
-      console.log("financialend "+financialend);
-      console.log("currentdate :"+todaysdate);
-    if(!Date.parseExact(fromdate,"yyyyMMdd")){
+       if(!Date.parseExact(fromdate,"yyyyMMdd")){
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
         $("#date-alert").hide();

@@ -34,20 +34,14 @@ $(document).ready(function() {
 	    });
    
     //click event for sorting Date in Ascending and Descending order.
-    var k=$("#logDate").attr("orderflag");
-    console.log("k",k);
     $('.dtwrap').click(function (e) {
-	 var orderflag = $("#logDate").attr("orderflag");
-	console.log("attr clicked===",orderflag);
-	console.log("first aatr",$("#logDate").attr("orderflag"));
+	var orderflag = $("#logDate").attr("orderflag");
 	if ( orderflag == 1 ){
 	    $(this).find("#logDate").attr("orderflag",4);
-	    console.log("when 1==",orderflag);
 	    var dataset = {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"backflag":1};
 	}else{
 	    $(this).find("#logDate").attr("orderflag",1);
-	    dataset = {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"backflag":1,"orderflag":orderflag};
-	    console.log("when 4==",orderflag);
+	    dataset = {"typeflag":$('#logof').val(),"userid":$('#userid').val(),"username":$('#username').val(), "calculatefrom":$('#calculatefrom').val(),"calculateto":$('#calculateto').val(),"backflag":1,"orderflag":4};
 	}
 	$.ajax({
 	    type: "POST",
@@ -73,6 +67,7 @@ $(document).ready(function() {
    
    // });
     });
+
     //Sorting the data in ascending/descending order using natural sort
     $("#latable").bootstrapTable({"sortName": "username", "sortOrder":"desc"},
 				 {"sortName": "activity", "sortOrder":"desc"},

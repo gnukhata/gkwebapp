@@ -3,59 +3,59 @@
 <head>
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Activity Log{% endtrans %}</title>
   <style type="text/css">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #logtable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #logtable td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
 
-  #logtable th {
-    font-size: 85%;
-  }
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 20%;
-      text-align: left !important;
-  }
-  #logtable tbody {
-      display:block;
-      height: calc(69vh);
-      overflow-y:scroll;
-  }
-  #logtable thead,#logtable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #logtable thead {
-      width: calc( 99.1% )
-  }
-  .ralign{
-    text-align:right;
+   #logtable th {
+       font-size: 85%;
+   }
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 20%;
+       text-align: left !important;
+   }
+   #logtable tbody {
+       display:block;
+       height: calc(69vh);
+       overflow-y:scroll;
+   }
+   #logtable thead,#logtable tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   #logtable thead {
+       width: calc( 99.1% )
+   }
+   .ralign{
+       text-align:right;
 
-  }
-  .cred{
-    color:red;
-  }
-  .calign{
-    text-align:center;
-  }
-  .dtwrap{
-  	width :6%
-  	 }
- .smwrap{
- 	width:4%
- }
- .lngwrap{
- 	width:20%
- }
- .mdwrap{
- 	width:8%
- }
+   }
+   .cred{
+       color:red;
+   }
+   .calign{
+       text-align:center;
+   }
+   .dtwrap{
+       width :6%
+   }
+   .smwrap{
+       width:4%
+   }
+   .lngwrap{
+       width:20%
+   }
+   .mdwrap{
+       width:8%
+   }
 
 
   </style>
@@ -85,8 +85,11 @@
     <thead class="bg-primary">
       <tr>
         <th class="dtwrap calign" data-field="date" data-sortable="true">{% trans %}Date{% endtrans %}
-	    <span id="logDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
-	    
+	  {% if orderflag=="4" %}
+	    <span  id="logDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	  {% else %}
+	  <span  id="logDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	  {% endif %}
 	</th>
         {% if typeflag == "1" %}
           <th class="mdwrap calign" data-sortable="true" data-field="username" data-sorter="alphanum">{% trans %}User Name(Role){% endtrans %}
