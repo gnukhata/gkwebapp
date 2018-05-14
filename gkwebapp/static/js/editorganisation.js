@@ -306,16 +306,14 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     
     $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     {
-	var gstinrow = $('#gstintable tbody tr:first').html();
     var curindex1 = $(this).closest('tr').index();
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
-    var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
     gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();	
   if (event.which==13) {
       event.preventDefault();
-      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  $("#gstin_done").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
@@ -333,9 +331,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
             }
 	}
 	if (numberofstates > 0) {
-	    $('#gstintable tbody').append('<tr>'+gstinrow+'</tr>');
+	    $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	    $('#gstintable tbody tr:eq('+ nextindex1 +') td:eq(1) input:eq(0)').val("");
 	    $('#gstintable tbody tr:eq('+ curindex1 +') td:eq(2) span').hide(".addbtn");
-            $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+	    //selected states are disabled when new row of gstin added.
+	    for (let j = 0; j < curindex1 + 1; j++) {
+		var selectedstate = $('#gstintable tbody tr:eq('+ j +') td:eq(0) select option:selected').attr("stateid");
+                for (let i=j+1; i<=curindex1+1;i++){
+                    $('#gstintable tbody tr:eq('+ i +') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
+                }
+            }
 	    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
             $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
 	}
@@ -832,6 +837,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var curindex1 = $(this).index();
 	var panno1= $(".panno").val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
