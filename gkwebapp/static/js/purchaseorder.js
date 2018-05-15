@@ -45,7 +45,6 @@ $(document).ready(function() {
   );
   });
   $("#purchaseorder_view").click(function() {
-    console.log("view");
     $.ajax(
     {
     type: "POST",
@@ -66,7 +65,6 @@ $(document).ready(function() {
   );
   });
   $("#salesorder_view").click(function() {
-    console.log("view");
     $.ajax(
     {
     type: "POST",

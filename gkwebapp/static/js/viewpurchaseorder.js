@@ -25,7 +25,6 @@ $(document).ready(function() {
   $("#purchaseorder_select").change(function(event) {
     /* Act on the event */
      purchaseorderid = $("#purchaseorder_select option:selected").val();
-     console.log(purchaseorderid);
       $.ajax({
         url: '/purchaseorder?type=details',
         type: 'POST',
