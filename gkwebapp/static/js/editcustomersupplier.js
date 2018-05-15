@@ -40,7 +40,7 @@ $(document).ready(function() {
     $("#scrollbar").hide();
     var gstinstring = ""; //for concatination of 'gstin'.
      for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
-	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	$("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align: center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
     var custsupdata = $("#edit_cussup").val();
 	
@@ -71,6 +71,7 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		var result = resp["gkresult"];
 		$(".hidden-load").show();
+		$('#gstintable tbody tr:last td:eq(2)').empty();
 		$("#edit_cussup").val(result["csflag"]);
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
@@ -145,8 +146,7 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	$('#gstintable tbody tr td:eq(2)').empty();
-	$('#gstintable tbody tr:last td:eq(2)').empty();	
+	//$('#gstintable tbody tr td:eq(2)').empty();	
 	$('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	$(".gstinstate, .statecode, .panno, .gstin, .state_del, .addbtn").prop("disabled", true);
       $(".panel-footer").show();
@@ -985,6 +985,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
 	  if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	      gstinstring =	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	      var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
 	  // Validation for GSTIN on Save Button.
 	      if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
@@ -1004,17 +1005,14 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    });
 	    allow = 0;
 	    return false;
-	}
-	else if(gstinstring != ""){
-	    if(gstinstring.length != 15){
-		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#gstin-improper-alert").hide();
-		    $(".gstin").focus();
-		});
-		allow = 0;
-		return false;
-	    }
+	}else if(panno1 !="" && lastleg.length != 3){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
 	}
 	if(gstinstring.length == 15){
 	    gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;

@@ -871,7 +871,7 @@ if($("#vatorgstflag").val() == '22'){
 	    });
 	    allow = 0;
 	    return false;
-	}else if(lastleg.length < 3){
+	}else if(panno1 !="" && lastleg.length != 3){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
