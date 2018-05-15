@@ -359,43 +359,9 @@ $("#add_state").keydown(function(event) {
   }
     });
 
+    //Click button for '+' that will trigger click event of 'gstin' field.
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
-	var curindex_addbtn = $(this).closest('tr').index();
-	var nextindex_addbtn = curindex_addbtn+1;
-	var previndex_addbtn = curindex_addbtn-1;
-	var selectedstate = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) select option:selected').attr("stateid");
-	var numberofstates = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(0) option:selected:not(:hidden)').length-1;
-	gstinstring = $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val();
- 
-	if($('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').val()==""){
-	    if($("#add_cussup").val() == '19'){
-		$("#checkbnk").focus();
-	    } else {
-		$("#cussup_save").focus();
-	    }
-	}
-	else{
-	    if(gstinstring != ''){
-  		if(gstinstring.length !=15){
-  		    $("#gstin-improper-alert").alert();
-		    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#gstin-improper-alert").hide();
-  			$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(1) input:eq(2)').focus().select();
-		    });
-  		    return false;
-		}
-	    }
-	    if (numberofstates >= 0) {
-		$('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-		$('#gstintable tbody tr:eq('+curindex_addbtn+') td:eq(2) span').hide(".addbtn");
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select option[value=""]').prop('selected', true);
-		$('#gstintable tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
-	    }
-	    else{
-		$("#cussup_save").focus();
-	    }
-	}
+	$(".gstin").trigger({type:"keydown",which:"13"});
     });
     
     // Keydown events for bank details
