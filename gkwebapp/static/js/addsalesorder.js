@@ -968,7 +968,7 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if ($('.product_name_vat:eq(' + curindex + ')').val() == "") {
+	if ($('.product_name_vat:eq(' + curindex + ') option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
             $("#product-blank-alert").hide();
@@ -1549,7 +1549,7 @@ $(document).ready(function() {
     var previndex = curindex - 1;
     if (event.which == 13) {
 	event.preventDefault();
-	if ($('.product_name_gst:eq(' + curindex + ')').val() == "") {
+	if ($('.product_name_gst:eq(' + curindex + ') option:selected').val() == "") {
           $("#product-blank-alert").alert();
           $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
             $("#product-blank-alert").hide();
