@@ -33,7 +33,7 @@ $(document).ready(function() {
     $("#add_cussup_name").focus();
     var gstinstring = "";
     for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
-	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	$("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align: center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
 
   // Bankdetails will be hidden for Customer
@@ -268,10 +268,13 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+    var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+    var txtpan_change = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+
   if (event.which==13) {
       event.preventDefault();
-      gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+      gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  if($('#status').val()=='9' || $('#status').val()=="16"){
 	      $("#checkbnkpop").focus();
 	  } else {
@@ -280,6 +283,13 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else if((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && txtpan_change !="") {
+	  $("#improper-gstin-alert").alert();
+	  $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#improper-gstin-alert").hide();
+	      $(".panno").focus();
+	  });
       }
       else {
 	if(gstinstring != ''){
@@ -295,9 +305,7 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       if (numberofstates > 0) {
 
         $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        /*if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }*/
+	$('#gstintable tbody tr:eq('+curindex1+') td:eq(2) span').hide(".addbtn");  
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -333,6 +341,11 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
       $("#cussup_save").focus();
   }
 });
+
+    //Click button for '+' that will trigger click event of 'gstin' field.
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
+	$(".gstin").trigger({type:"keydown",which:"13"});
+    });
 
     // Keydown events for bank details
     $("#cust_accountno").numeric();
@@ -546,6 +559,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
       }
+      //After delete one row of gstin then attach '+' button to previous row.
+      if(!($('.addbtn').is(':visible'))){
+	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+      }
     $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
@@ -644,8 +661,13 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    });
 	}
 	else{
-	    $(".panno").val($("#add_cussup_pan").val());
-	    $(".panno").prop("disabled",true);
+	    if($.trim($("#add_cussup_pan").val())!=""){
+		$(".panno").val($("#add_cussup_pan").val());
+		$(".panno").prop("disabled",true);
+	    }else{
+		$(".panno").val("");
+		$(".panno").prop("disabled",false);
+	    }
 	}
     });
 
@@ -812,8 +834,9 @@ else{
 	  var gstin1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-	
+	var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+	    console.log("pan number valid");
 	    $("#improper-gstin-alert").alert();
 	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#improper-gstin-alert").hide();
@@ -823,6 +846,14 @@ else{
 	    return false;
 	}
 	else if(panno1 !="" && gstin1 ==""){
+	    $("#improper-gstin-alert").alert();
+	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#improper-gstin-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
+	}else if(panno1 !="" && lastleg.length != 3){
 	    $("#improper-gstin-alert").alert();
 	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#improper-gstin-alert").hide();

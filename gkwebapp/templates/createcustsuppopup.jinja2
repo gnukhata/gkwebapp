@@ -3,28 +3,33 @@
 <head>
   <meta charset="UTF-8">
   <title>{% trans %}GNUKhata | Create Account{% endtrans %}</title>
-<style media="screen">
-.modal-dialog{
-  position: relative;
-  display: table; //This is important
-  overflow-y: auto;
-  overflow-x: auto;
-  width: auto;
-  min-width: 50%;
-}
+  <style media="screen">
+   .modal-dialog{
+       position: relative;
+       display: table; //This is important
+       overflow-y: auto;
+       overflow-x: auto;
+       width: auto;
+       min-width: 50%;
+   }
 
-.shadow {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-td {
-	font-size: 60%;
-}
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   td {
+       font-size: 60%;
+   }
 
-th {
-	font-size: 70%;
-}
-
-</style>
+   th {
+       font-size: 70%;
+   }
+   span {
+       margin:5.5 auto;
+   }
+   .state_del{
+       color:#000000;
+   }
+  </style>
 </head>
 
 <body >
@@ -46,198 +51,207 @@ th {
         <div class="container">
           <div class="container-fluid" style="padding: 1 !important; margin: 0 !important;">
             <input type="hidden" id="vatorgstflag" name="vatorgstflag" value= "{{vatorgstflag}}"></input>
-	      <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-success" id="sup-success-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Supplier account created under Sub-Group Sundry Creditors for Purchase, Group Current Liabilities!{% endtrans %}
-	      </div>
-	      <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Supplier account created under Sub-Group Sundry Creditors for Purchase, Group Current Liabilities!{% endtrans %}
+	    </div>
+	    <div class="alert alert-success" id="cus-success-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Customer account created under Sub-Group Sundry Debtors, Group Current Assets!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Customer account created under Sub-Group Sundry Debtors, Group Current Assets!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="cus-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Customer/Supplier already exists!(Please check Name, FAX, PAN or TIN){% endtrans %}
-	      </div>
+	      {% trans %}Customer/Supplier already exists!(Please check Name, FAX, PAN or TIN){% endtrans %}
+	    </div>
 
-	      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Something went wrong!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Something went wrong!{% endtrans %}
+	    </div>
 
-		{% trans %}Please select Role!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="custname-blank-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-danger" id="role-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select Role!{% endtrans %}
+	    </div>
 
-		{% trans %}Please enter Customer name!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="supname-blank-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-danger" id="custname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please enter Supplier name!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="improper-email-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter Customer name!{% endtrans %}
+	    </div>
 
-		{% trans %}Please enter proper Email!{% endtrans %}
-	      </div>
+	    <div class="alert alert-danger" id="supname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter Supplier name!{% endtrans %}
+	    </div>
+	    
+	    <div class="alert alert-danger" id="improper-email-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please select State!{% endtrans %}
+	      {% trans %}Please enter proper Email!{% endtrans %}
+	    </div>
+	    
+	    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	      </div>
-	      <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select State!{% endtrans %}
 
-		{% trans %}Please enter TIN / GSTIN!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="both-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	      </div>
+	      {% trans %}Please enter TIN / GSTIN!{% endtrans %}
 
-	      <div class="alert alert-danger" id="address-blank-alert-popup"  aria-live="rude" role="alert" hidden>
+	    </div>
 
-		{% trans %}Please enter address!{% endtrans %}
+	    <div class="alert alert-danger" id="address-blank-alert-popup"  aria-live="rude" role="alert" hidden>
 
-	      </div>
+	      {% trans %}Please enter address!{% endtrans %}
 
-	      <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
+	    </div>
 
-		{% trans %}Please enter proper PAN!{% endtrans %}
+	    <div class="alert alert-danger" id="pan-incorrect-alert"  aria-live="rude" role="alert" hidden>
 
-	      </div>
-	      
-	      <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter proper PAN!{% endtrans %}
 
-		{% trans %}Please enter TIN!{% endtrans %}
+	    </div>
+	    
+	    <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	      </div>
-	      <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter TIN!{% endtrans %}
+	    </div>
 
-		{% trans %}Please enter GSTIN!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please select a state!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="improper-gstin-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please Enter GSTIN.{% endtrans %}
+	    </div>
 
-                {% trans %}Improper GSTIN!{% endtrans %}
+	    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
 
-              </div>
-	      <div class="alert alert-danger" id="accountno-blank-alert-popup"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select a state!{% endtrans %}
+	    </div>
+	   
+	    <div class="alert alert-danger" id="improper-gstin-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please enter Account No!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="bankname-blank-alert-popup"  aria-live="rude" role="alert" hidden>
+              {% trans %}Improper GSTIN!{% endtrans %}
+	    </div>
 
-		{% trans %}Please enter Bank Name!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
+	    <div class="alert alert-danger" id="accountno-blank-alert-popup"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please enter Branch Name!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="ifsc-blank-alert-popup"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter Account No.{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="bankname-blank-alert-popup"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please enter IFSC Code!{% endtrans %}
-	      </div>
-	      <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter Bank Name.{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Please fill all the fields of Bank Details!{% endtrans %}
-	      </div>
-	      <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
-	      <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
-	      <div class="panel shadow customersupplier_panel">
-		<div class="panel-body ">
-		  <div class="col-md-6">
-		    <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please enter Branch Name.{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="ifsc-blank-alert-popup"  aria-live="rude" role="alert" hidden>
 
-		      <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label>
+	      {% trans %}Please enter IFSC Code.{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+	    </div>
+	    <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
+	    <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
+	    <div class="panel shadow customersupplier_panel">
+	      <div class="panel-body ">
+		<div class="col-md-6">
+		  <div class="alert alert-danger" id="cussup-blank-alert"  aria-live="rude" role="alert" hidden>
+
+		    <label for="vno">{% trans %}Please select a customer/supplier!{% endtrans %}</label>
+		  </div>
+
+
+		  <div class="form-group">
+		    <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
+		    <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
+		  </div>
+		  <div class="row">
+		    <div class="form-group col-sm-6">
+		      <label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
+		      <input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
 		    </div>
-
-
-		    <div class="form-group">
-		      <label for="add_cussup_name">{% trans %}Name:{% endtrans %}</label><label for="add_cussup_name" style="color:red;font-size: 120%;">*</label>
-		      <input class="form-control input-sm" id="add_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" accesskey="">
+		    <div class="form-group col-sm-6">
+		      <label for="add_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
+		      <input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
 		    </div>
-		    <div class="row">
-		      <div class="form-group col-sm-6">
-			<label for="add_cussup_email">{% trans %}Email:{% endtrans %}</label>
-			<input class="form-control input-sm"type="email" id="add_cussup_email"  accesskey="">
-		      </div>
-		      <div class="form-group col-sm-6">
-			<label for="add_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
-			<input class="form-control input-sm" type="text" id="add_cussup_phone"></input>
-		      </div>
-		    </div>
-		    <div class="row">
-		      <div class="form-group col-sm-6">
-			<label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
-			<select class="form-control input-sm add-state" id="add_state" accesskey="">
-			  <option value="">Select State</option>
-			  {% for state in states %}
-			    {% for key, value in state.items() %}
-			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			    {% endfor %}
+		  </div>
+		  <div class="row">
+		    <div class="form-group col-sm-6">
+		      <label for="add_state">{% trans %}State:{% endtrans %}</label><label for="add_state" style="color:red;font-size: 120%;">*</label>
+		      <select class="form-control input-sm add-state" id="add_state" accesskey="">
+			<option value="">Select State</option>
+			{% for state in states %}
+			  {% for key, value in state.items() %}
+			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 			  {% endfor %}
-			</select>
-		      </div>
-		      <div class="form-group col-sm-6">
-			<label for="add_cussup_address"> Address:
-			</label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
-
-			<textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
-			<small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
-		      </div>
+			{% endfor %}
+		      </select>
 		    </div>
-		    {% if vatorgstflag == '29' or vatorgstflag == '7' %}
-		      <div class="row">
-			<div class="row  col-sm-12 nopadding">
-			  <div class="form-group col-sm-6">
-			    <label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
-			    <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
-			  </div>
-			  <div class="form-group col-sm-6">
-			    <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
-			    <input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
-			  </div>
+		    <div class="form-group col-sm-6">
+		      <label for="add_cussup_address"> Address:
+		      </label><label for="add_cussup_address" style="color:red;font-size: 120%;">*</label>
+
+		      <textarea class="form-control" rows="2" cols="40" id="add_cussup_address" aria-describedby="textareahelp"></textarea>
+		      <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
+		    </div>
+		  </div>
+		  {% if vatorgstflag == '29' or vatorgstflag == '7' %}
+		    <div class="row">
+		      <div class="row  col-sm-12 nopadding">
+			<div class="form-group col-sm-6">
+			  <label for="add_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
+			  <input class="form-control input-sm" type="text" id="add_cussup_fax"></input>
+			</div>
+			<div class="form-group col-sm-6">
+			  <label for="add_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
+			  <input class="form-control input-sm" type="text" id="add_cussup_pan" maxlength="10"></input>
 			</div>
 		      </div>
-		  </div>
-		  <div class="col-md-6">
-		    {% if vatorgstflag != '7' %}
-		      <div class="form-group">
-			<label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
-			<input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
-		      </div>
-		    {% endif %}
-		    <div class="form-group"   id ="gstin">
-		      <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		      <div class="panel panel-default">
-			<table id="gstintable" class="table table-condensed table-bordered">
-			  <thead class="bg-primary input-sm">
-			    <tr>
-			      <th class="col-xs-7 text-center" style="font-size:100%">{% trans %}State{% endtrans %}</th>
-			      <th class="col-xs-4 text-center" style="font-size:100%">{% trans %}GSTIN{% endtrans %}</th>
-			      <th class="col-xs-1"></th>
-			    </tr>
-			  </thead>
-			  <tbody>
-			    <tr>
-			      <td class="col-xs-7">
-				<select class="form-control input-sm gstinstate">
-				  <option value="" disabled hidden selected>Select State</option>
-				  {% for state in states %}
-				    {% for key, value in state.items() %}
-				      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-				    {% endfor %}
+		    </div>
+		</div>
+		<div class="col-md-6">
+		  {% if vatorgstflag != '7' %}
+		    <div class="form-group">
+		      <label for="add_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
+		      <input class="form-control input-sm" type="text" id="add_cussup_tan"></input>
+		    </div>
+		  {% endif %}
+		  <div class="form-group"   id ="gstin">
+		    <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label>
+		    <div class="panel panel-default">
+		      <table id="gstintable" class="table table-condensed table-bordered">
+			<thead class="bg-primary input-sm">
+			  <tr>
+			    <th class="col-xs-6 text-center" style="font-size:100%">{% trans %}State{% endtrans %}</th>
+			    <th class="col-xs-4 text-center" style="font-size:100%">{% trans %}GSTIN{% endtrans %}</th>
+			    <th class="col-xs-1"></th>
+			    <th class="col-xs-1"></th>
+			  </tr>
+			</thead>
+			<tbody>
+			  <tr>
+			    <td class="col-xs-6">
+			      <select class="form-control input-sm gstinstate">
+				<option value="" disabled hidden selected>Select State</option>
+				{% for state in states %}
+				  {% for key, value in state.items() %}
+				    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
 				  {% endfor %}
-				</select>
-			      </td>
-			      <td class="col-xs-4">
-				<div class="form-inline nopadding">
-				  <div class="form-group nopadding">				  
-				    <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
-				    <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
-				    <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
-				  </div>
+				{% endfor %}
+			      </select>
+			    </td>
+			    <td class="col-xs-4">
+			      <div class="form-inline nopadding">
+				<div class="form-group nopadding">				  
+				  <input type="text" class="form-control input-sm nopadding statecode" size="4" maxlength="2" disabled >
+				  <input type="text" class="form-control input-sm nopadding panno" size="12" maxlength="10">
+				  <input type="text" class="form-control input-sm nopadding gstin" size="4" maxlength="3">
 				</div>
+			      </div>
+			    </td>
+			    <td class="col-xs-1">
+			      <div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>
 			    </td>
 			    <td class="col-xs-1">
 			    </td>
