@@ -90,7 +90,14 @@
       <table id="ledgertable" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
 	<thead class="bg-primary">
           <tr>
-            <th class="dtwrap calign" >{% trans %}Date{% endtrans %}</th>
+            <th class="dtwrap calign" >
+	      {% trans %}Date{% endtrans %}
+	      {% if orderflag=="4" %}
+		<span  id="ledgerDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% else %}
+		<span  id="ledgerDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% endif %}
+	    </th>
             <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
             <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
             <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>

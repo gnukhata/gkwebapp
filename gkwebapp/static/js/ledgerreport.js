@@ -32,6 +32,50 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   $(".fixed-table-loading").remove();
 
+  //Toggling the up and down arrow for sorting
+    $('.glyphicon').click(function () {
+	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
+    });
+
+    $('.dtwrap').click(function (e) {
+	var orderflag = $("#ledgerDate").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#ledgerDate").attr("orderflag",4);
+	    var dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()};
+	    if ($("#side").val()!="") {
+		dataset.side=$("#side").val();
+	    }
+	}else{
+	    $(this).find("#ledgerDate").attr("orderflag",1);
+	    dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val(),"orderflag":4};
+	    if ($("#side").val()!="") {
+		dataset.side=$("#side").val();
+	    }
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/showledgerreport",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
+    
   $(' #ledgertable tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -211,7 +255,7 @@ $(document).ready(function() {
           $("#viewvc").html("");
           // A variable is set to indicate from which report this modal is loaded.
           // Depending on the value of #side item, the report is displayed.
-          if ($("#side").val()=="dr") {// if its dr then only drs report is shown after modal is closed.
+          if ($("#side").val()=="dr") {// if its drx then only drs report is shown after modal is closed.
             $.ajax(
               {
                 type: "POST",
@@ -402,7 +446,7 @@ $(".search").children(".form-control").keyup(function(event){
 
 $("#printledger").click(function(event) {
   // shows printable version of the report.
-  var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()}
+    var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()};
   if ($("#side").val()!="") {
     printdata.side=$("#side").val();
   }
