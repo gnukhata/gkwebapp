@@ -76,13 +76,9 @@ $(document).ready(function() {
 	$("#bankdiv").show();
     }
      else {
-	 $("#accountno").val("");
-	 $("#bankname").val("");
-	 $("#branchname").val("");
-	 $("#ifsc").val("");
 	 $("#bankdiv").hide();
      }
-  });
+ });
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13||event.which==9) {
     	if ($.trim($("#add_cussup_name").val())=="") {
