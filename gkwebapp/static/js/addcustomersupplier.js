@@ -291,11 +291,12 @@ $("#add_state").keydown(function(event) {
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) option:selected:not(:hidden)').length-1;
-	panno = $(this).val();
+  var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+  var txtpan_change = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
   if (event.which==13) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()=="" ){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()=="" ){
 	  if($("#add_cussup").val() == '19'){
 	      $("#checkbnk").focus();
 	  } else {
@@ -304,6 +305,13 @@ $("#add_state").keydown(function(event) {
       }
       else if ($(".gstin").val() !="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else if((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && txtpan_change !="") {
+	  $("#gstin-improper-alert").alert();
+	  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#gstin-improper-alert").hide();
+	      $(".panno").focus();
+	  });
       }
       else {
 	if(gstinstring != ''){
@@ -843,6 +851,7 @@ if($("#vatorgstflag").val() == '22'){
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
     if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+        var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
 	//Validation for GSTIN on save button 
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
@@ -862,8 +871,15 @@ if($("#vatorgstflag").val() == '22'){
 	    });
 	    allow = 0;
 	    return false;
+	}else if(lastleg.length < 3){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+		$(".gstin").focus();
+	    });
+	    allow = 0;
+	    return false;
 	}
-	
 	if(gstinstring.length == 15){
             gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
 	}
