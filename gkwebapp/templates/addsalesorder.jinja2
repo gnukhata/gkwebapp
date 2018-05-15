@@ -24,7 +24,7 @@
         <div class="container-fluid row">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
 	    <label >
-              {% if gkstatus=="in" %}
+              {% if status|int ==16 %}
 		{% trans %}Please select a supplier!{% endtrans %}
               {% else %}
 		{% trans %}Please select a customer!{% endtrans %}

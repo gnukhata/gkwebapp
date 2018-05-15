@@ -573,7 +573,16 @@ $(document).ready(function() {
     //Key Events for Customer fields.
     $("#salesorder_customer").keydown(function(event) {
 	if (event.which == 13) {
-	    event.preventDefault();
+	    event.preventDefault();	    
+	    if ($.trim($('#salesorder_customer option:selected').val()) == "") {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+		$("#custsup-blank-alert").alert();
+		$("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#custsup-blank-alert").hide();
+		});
+		$('#salesorder_customer').focus();
+		return false;
+	    }
 	    $("#salesorder_customerstate").focus();  //Focus shifts to Customer State.
 	}
 	if (event.which == 38) {
