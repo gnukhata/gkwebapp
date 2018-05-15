@@ -163,7 +163,7 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
 });
 
 $("#addproddesc").keydown(function(event) {
-  if (event.which==13) {
+  if (event.which==13 || event.which==9) {
     event.preventDefault();
     if ($(this).val()=="") {
       $("#product-blank-alert").alert();
@@ -197,7 +197,8 @@ $("#openingstock").focus(function(event) {
  // Events for Unit of Measurement field.
     $(document).off('keydown', '#adduom').on('keydown', '#adduom', function(event) {
 	// Events that happen when Enter key is pressed.
-	if (event.which == 13) {
+	if (event.which == 13 || event.which==9) {
+	    event.preventDefault();
 	    if ($("#adduom option:selected").val()==""){
 		$("#uomblank-alert").alert();
 		$("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -879,16 +880,18 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
     var duplicatestates = [];
     for (var i = 0; i < states.length - 1; i++) {
       if (states[i + 1] == states[i]) {
-        duplicatestates.push(states[i]);
+          duplicatestates.push(states[i]);
+	   console.log(duplicatestates);
       }
     }
-    if (duplicatestates.length > 0) {
+      if (duplicatestates.length > 0) {  
       $("#tax-same-alert").alert();
       $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#tax-same-alert").hide();
       });
       return false;
     }
+      $("#adduom").focus();
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
 });
@@ -966,7 +969,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
     else {
-      if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+      if ($('#product_tax_table tbody tr:eq('+curindex1+') option:selected').val()=="") {
         $("#tax-name-blank-alert").alert();
         $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#tax-name-blank-alert").hide();
@@ -995,7 +998,8 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
                 }
             }
         }
-      $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	
+	$('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();	
     }
   }
   else if(event.which==190 && event.shiftKey)
