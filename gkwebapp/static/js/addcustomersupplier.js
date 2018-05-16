@@ -216,7 +216,11 @@ $("#add_state").keydown(function(event) {
     $(document).off("keydown", "#checkbnk").on("keydown", "#checkbnk", function(event) {
 	if(event.which == 13){
 	    event.preventDefault();
-	    $("#accountno").focus().select();
+	    if($("#checkbnk").is(':checked')){
+		$("#accountno").focus().select();
+	    }else{
+		$("#cussup_save").focus();
+	    }
 	}
 	else if(event.which == 38){
 	    if ($("#vatorgstflag").val() == '22'){

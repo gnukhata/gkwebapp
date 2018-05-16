@@ -73,7 +73,6 @@ $(document).ready(function() {
 		$(".hidden-load").show();
 		$('#gstintable tbody tr:last td:eq(2)').empty();
 		var rowhtml = $('#gstintable tbody tr:first').html();
-		$('#gstintable tbody').empty(); 
 		$("#edit_cussup").val(result["csflag"]);
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
@@ -129,14 +128,19 @@ $(document).ready(function() {
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
 
-	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
-	for(var gstin in result["gstin"]){
-	    var gstinstr = result["gstin"][gstin];
-	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
-	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
+	if(resp["gstinlen"] != 0){
+	    $('#gstintable tbody').empty(); 
+	    for(var gstin in result["gstin"]){
+		var gstinstr = result["gstin"][gstin];
+		$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
+		$('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+		$('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+		$('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
+	    }
+	}else{
+	    $('#gstintable tbody').empty();
+	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
 	}
 	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	    if (i > 0) {
@@ -153,7 +157,6 @@ $(document).ready(function() {
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
       $("#edit_cussup_btn").show();
-
     })
     .fail(function() {
       console.log("error");
@@ -260,7 +263,7 @@ $(document).ready(function() {
   });
 
     //Function to add leading zeros in date and month fields.
-    function pad(str, max) { //to add leading zeros in date
+    /**function pad(str, max) { //to add leading zeros in date
 	if (str && str!="") {
 	    str = str.toString();
 	    if (str.length == 1) {
@@ -270,7 +273,7 @@ $(document).ready(function() {
 		return str;
 	    }
 	}
-    }
+    }**/
 
   //Change event for 'state'.
   /**$("#edit_state").change(function(event) {
@@ -351,7 +354,6 @@ $(document).ready(function() {
   /**$("#edit_cussup_pan").change(function(event) {
       var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
       var txtpan1 = $(this).val();
-      console.log("change event of pan number");
       if($.trim($("#edit_cussup_pan").val())!=""){
 	  $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val($("#edit_cussup_pan").val());
 	  $(".panno").prop("disabled",true);
@@ -624,7 +626,6 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-      console.log("Esc");
       event.preventDefault();
       if ($("#edit_cussup").val() == "Supplier") {
 	  if ($("#checkbnk").is(":visible")) {
