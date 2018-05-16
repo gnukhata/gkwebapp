@@ -24,6 +24,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Reshma Bhatawadekar" <reshma_b@riseup.net>
 */
 
 $(document).ready(function() {
@@ -33,7 +34,8 @@ $(document).ready(function() {
     $('.glyphicon').click(function () {
 	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
     });
-
+    
+    //click event for sorting date.
     $('.dateorder1').click(function (e) {
 	var orderflag = $("#dualledgerDate1").attr("orderflag");
 	if ( orderflag == 1 ){
