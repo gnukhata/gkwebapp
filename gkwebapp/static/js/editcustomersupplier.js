@@ -72,6 +72,8 @@ $(document).ready(function() {
 		var result = resp["gkresult"];
 		$(".hidden-load").show();
 		$('#gstintable tbody tr:last td:eq(2)').empty();
+		var rowhtml = $('#gstintable tbody tr:first').html();
+		$('#gstintable tbody').empty(); 
 		$("#edit_cussup").val(result["csflag"]);
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
@@ -127,10 +129,7 @@ $(document).ready(function() {
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
 
-	var rowhtml = $('#gstintable tbody tr:first').html();
-	$('#gstintable tbody').empty(); 
 	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
-	console.log(result["gstin"]);	
 	for(var gstin in result["gstin"]){
 	    var gstinstr = result["gstin"][gstin];
 	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
@@ -259,6 +258,26 @@ $(document).ready(function() {
       $("#edit_cussup_email").focus().select();
     }
   });
+
+    //Function to add leading zeros in date and month fields.
+    function pad(str, max) { //to add leading zeros in date
+	if (str && str!="") {
+	    str = str.toString();
+	    if (str.length == 1) {
+		return str.length < max ? pad("0" + str, max) : str;
+	    }
+	    else {
+		return str;
+	    }
+	}
+    }
+
+  //Change event for 'state'.
+  /**$("#edit_state").change(function(event) {
+      var availstate =  $("#edit_state").val();
+      $('#gstintable tbody tr:last td:eq(0) select').val(availstate);
+      $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(pad($("#edit_state option:selected").attr("stateid"), 2));
+  });**/
     
   $("#edit_state").keydown(function(event) {
     if (event.which==13||event.which==9) {
@@ -329,10 +348,10 @@ $(document).ready(function() {
     }
   });
 
-  $("#edit_cussup_pan").change(function(event) {
+  /**$("#edit_cussup_pan").change(function(event) {
       var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
       var txtpan1 = $(this).val();
-
+      console.log("change event of pan number");
       if($.trim($("#edit_cussup_pan").val())!=""){
 	  $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val($("#edit_cussup_pan").val());
 	  $(".panno").prop("disabled",true);
@@ -340,7 +359,7 @@ $(document).ready(function() {
 	  $(".panno").val("");
 	  $(".panno").prop("disabled",false);
       }
-  });
+  });**/
     
   $("#edit_cussup_pan").keydown(function(event) {
     if (event.which==13) {
@@ -523,7 +542,7 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:xeq('+curindex+') td:eq(1) input:eq(2)').val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -605,13 +624,18 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-    event.preventDefault();
-      if ($("#checkbnk").is(":visible")) {
+      console.log("Esc");
+      event.preventDefault();
+      if ($("#edit_cussup").val() == "Supplier") {
+	  if ($("#checkbnk").is(":visible")) {
 	      $("#checkbnk").focus();
 	  }
 	  else{
 	      $("#edit_accountno").focus();
 	  }
+      } else {
+	  $("#cussup_edit_save").focus();
+      }
   }
 });
 
