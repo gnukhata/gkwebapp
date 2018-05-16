@@ -20,6 +20,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Vasudha Kadge" <kadge.vasudha@gmail.com>
 */
 // This script is for log report.
 $(document).ready(function() {

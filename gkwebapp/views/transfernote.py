@@ -30,6 +30,7 @@
         'Prajkta Patkar' <prajakta.dff.org.in>
         "Mohd. Talha Pawaty" <mtalha456@gmail.com>
         "Abhijith Balan" <abhijithb21@openmailbox.org>
+        "Vasudha Kadge" <kadge.vasudha@gmail.com>
                
 """
 from pyramid.view import view_config

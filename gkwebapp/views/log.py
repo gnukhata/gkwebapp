@@ -23,6 +23,8 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
 Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+"Vasudha Kadge" <kadge.vasudha@gmail.com>
+
 """
 
 from pyramid.view import view_config

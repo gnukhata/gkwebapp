@@ -23,7 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
-"Reshma Bhatawadekar" <reshma_b@riseup.net>
+"Vasudha Kadge" <kadge.vasudha@gmail.com>
 */
 // This script is for list of accounts report.
 // refer listofstockitems.js file for documentation.
