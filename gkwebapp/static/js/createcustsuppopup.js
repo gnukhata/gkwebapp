@@ -836,11 +836,10 @@ else{
 	gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
-	    console.log("pan number valid");
 	    $("#improper-gstin-alert").alert();
 	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#improper-gstin-alert").hide();
-		$(".gstin").focus();
+		$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
 	    });
 	    allow = 0;
 	    return false;
@@ -857,9 +856,9 @@ else{
 	    $("#improper-gstin-alert").alert();
 	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#improper-gstin-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}
 

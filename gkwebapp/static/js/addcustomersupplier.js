@@ -510,7 +510,6 @@ $("#add_state").keydown(function(event) {
 	else {
 	    $('#branchname').focus();
 	}
-	
     });
 
     $("#branchname").change(function(event) {
@@ -540,7 +539,6 @@ $("#add_state").keydown(function(event) {
 	else {
 	    $("#ifsc").focus();
 	}
-	
     });
 
     $("#ifsc").change(function(event) {
@@ -858,7 +856,7 @@ if($("#vatorgstflag").val() == '22'){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
+		$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
 	    });
 	    allow = 0;
 	    return false;
