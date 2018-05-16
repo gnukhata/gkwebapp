@@ -452,7 +452,7 @@ $(".businessmenu").keydown(function(event){
   });
     
   $('#helpdropdown').on('shown.bs.dropdown', function () {
-    $("#manual").focus();
+    $("#support").focus();
   });
   $('#signoutdropdown').on('shown.bs.dropdown', function () {
     $("#logout").focus();
