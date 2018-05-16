@@ -236,13 +236,17 @@ def showlistoftransfernotes(request):
                     goid = int(request.params["goid"])
                     if "orderflag" in request.params:
                         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d&orderflag=%d"%(startDate, endDate, goid, int(request.params["orderflag"])),headers=header)
+                        godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+                        godownname = godown.json()["gkresult"]["goname"]
+                        godownaddress = godown.json()["gkresult"]["goaddr"]
                         return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress, "goid":goid, "orderflag":"1"}
                     else:
                         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
+                        godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
+                        godownname = godown.json()["gkresult"]["goname"]
+                        godownaddress = godown.json()["gkresult"]["goaddr"]
                         return {"transfernotes":transfernotes.json()["gkresult"], "startdate":startDate, "enddate":endDate, "godownname":godownname, "godownaddress":godownaddress, "goid":goid, "orderflag":"4"}
-                    godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
-                    godownname = godown.json()["gkresult"]["goname"]
-                    godownaddress = godown.json()["gkresult"]["goaddr"]                          
+                                            
                 else:
                     if "orderflag" in request.params:
                         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&orderflag=%d"%(startDate, endDate, int(request.params["orderflag"])),headers=header)
