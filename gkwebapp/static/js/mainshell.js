@@ -1890,7 +1890,6 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 	    //Table rows containing search text are shown and others hidden.
 	    if (searchtext != "") {
 		$("table tbody tr").each(function(index){
-		    if (index != 0) {
 			let rowtext = $(this).text().toLowerCase();
 			if (rowtext.indexOf(searchtext) != -1) {
 			    $(this).show();
@@ -1898,7 +1897,6 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 			else {
 			    $(this).hide();
 			}
-		    }
 		});
 	    }
 	    //Pressing 'Esc' button clears search.
