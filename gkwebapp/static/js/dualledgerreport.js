@@ -27,7 +27,79 @@ Contributors:
 */
 
 $(document).ready(function() {
-  $(".fixed-table-loading").remove();
+    $(".fixed-table-loading").remove();
+
+   //Toggling the up and down arrow for sorting
+    $('.glyphicon').click(function () {
+	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
+    });
+
+    $('.dateorder1').click(function (e) {
+	var orderflag = $("#dualledgerDate1").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#dualledgerDate1").attr("orderflag",4);
+	    var dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()};
+	}else{
+	    $(this).find("#dualledgerDate1").attr("orderflag",1);
+	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"orderflag":4};
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/showdualledgerreport",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
+
+    $('.dateorder2').click(function (e) {
+	var orderflag = $("#dualledgerDate2").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#dualledgerDate2").attr("orderflag",4);
+	    var dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()};
+	}else{
+	    $(this).find("#dualledgerDate2").attr("orderflag",1);
+	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"orderflag":4};
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/showdualledgerreport",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
+    
   $('#ledgertable1 tbody tr:first-child td:eq(1) a').focus();
   $('#ledgertable1 tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
     var rcindex = 0;

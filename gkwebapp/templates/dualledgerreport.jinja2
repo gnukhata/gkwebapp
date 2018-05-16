@@ -97,7 +97,14 @@
       <table id="ledgertable1" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="right" data-buttons-align="right" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th  class="calign mdwrap dateorder1">
+	      {% trans %}Date{% endtrans %}
+	      {% if orderflag=="4" %}
+		<span  id="dualledgerDate1" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% else %}
+		<span  id="dualledgerDate1" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% endif %}
+	    </th>
             <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader1["projectname"]=="" %}
             <th class="col-xs-3 calign" >{% trans %}Particulars{% endtrans %}</th>
@@ -179,7 +186,14 @@
       <table id="ledgertable2" class="table shadow table-bordered" data-toggle="table" data-show-toggle="true"  data-search-align="left" data-buttons-align="left" data-search="true">
         <thead class="bg-primary">
           <tr>
-            <th  class="calign mdwrap">{% trans %}Date{% endtrans %}</th>
+            <th  class="calign mdwrap dateorder2">
+	      {% trans %}Date{% endtrans %}
+	      {% if orderflag=="4" %}
+		<span  id="dualledgerDate2" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% else %}
+		<span  id="dualledgerDate2" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% endif %}
+	    </th>
             <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
             <th class="col-xs-3 calign">{% trans %}Particulars{% endtrans %}</th>
