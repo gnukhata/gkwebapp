@@ -66,8 +66,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){  
 	    $("#lcd").val('1');
-	    //$("#lcd").focus();
-	    
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{
@@ -80,7 +78,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('2');
-	    $("#lcd").focus();
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -93,7 +90,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('3');
-	    $("#lcd").focus();
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -106,14 +102,11 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('4');
-	    $("#lcd").focus();
-	    
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
       var display = document.getElementById("lcd");
       display.value += "4";  
- 
 	}
 	return false;
     });
@@ -145,7 +138,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('7');
-	    return false;
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -187,8 +179,7 @@ $(document).ready(function() {
 	{  
       var display = document.getElementById("lcd");
       display.value += "0";  
-  
-	}
+  	}
        return false;
     });
    $(document).off("click", "#num00").on("click", "#num00", function(event){
@@ -200,21 +191,48 @@ $(document).ready(function() {
 	{  
       var display = document.getElementById("lcd");
       display.value += "00";  
-  
-	}
+  	}
        return false;
    });
     $(document).off("click", "#operationplus").on("click", "#operationplus", function(event){
 	event.preventDefault();
 	operation = "+";
-        firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("0");
+        firstnumber = parseFloat($("#lcd").val());
+	$("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "+" ;
 	return false;
     });
+
+     $(document).off("click", "#operationminus").on("click", "#operationminus", function(event){
+       event.preventDefault();
+       operation = "-";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "-" ;
+	return false;
+   });
+   $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
+       event.preventDefault();
+       operation = "*";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+       displays.value = firstnumber + "*" ;
+	return false;
+   });
+    $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
+	event.preventDefault();
+	operation = "/";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "/" ;
+	return false;
+    });
+
     $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
-	console.log("hi");
 	 var displays = document.getElementById("lcdu");
         if(event.which==107){
             event.preventDefault();
@@ -246,47 +264,20 @@ $(document).ready(function() {
         }
 	 else if(event.which==13){
             event.preventDefault();
-	    if($("#lcd").val()!=""){
+	 //   if($("#lcd").val()!=""){
 		$("#equalto").trigger("click");
-	    }
+	   // }
          }
     });
     
-   $(document).off("click", "#operationminus").on("click", "#operationminus", function(event){
-       event.preventDefault();
-       operation = "-";
+   $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
+        event.preventDefault();
+        operation = "%";
         firstnumber = parseFloat($("#lcd").val());  
         $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
-	displays.value = firstnumber + "-" ;
-	return false;
-   });
-   $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
-       event.preventDefault();
-       operation = "*";
-        firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("0");
-	var displays = document.getElementById("lcdu");
-	displays.value = firstnumber + "*" ;
-	return false;
-   });
-    $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
-	event.preventDefault();
-	operation = "/";
-        firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("0");
-	var displays = document.getElementById("lcdu");
-	displays.value = firstnumber + "/" ;
-	return false;
-    });
- $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
-	event.preventDefault();
-        var percent = document.getElementById("lcd");
-	var answer = (percent.value/100);
-	alert("hi");
-	var displays = document.getElementById("lcdu");
-	displays.value = answer ;
-	return false;
+	displays.value = firstnumber + "%" ;
+        return false;
       });
     $(document).off("click", "#decimal").on("click", "#decimal", function(event){
 	event.preventDefault(); 
@@ -299,18 +290,18 @@ $(document).ready(function() {
         }
         else{
             if (curReadOut.indexOf(".") == -1)
-		console.log("cr",curReadOut);
             curReadOut = curReadOut + ".";
             display.value = curReadOut; 
         }
 	 return false;
     });
+
      $(document).off("click", "#equalto").on("click", "#equalto", function(event){
 	 event.preventDefault();
-	 var display = document.getElementById("lcd");
-         secondnumber = parseFloat(display.value);
+	  var display = document.getElementById("lcd");
+      secondnumber = parseFloat(display.value);
      if (operation == "+")  
-         {
+         { 
 	     result = firstnumber + secondnumber;
      }  
      else if (operation == "*"){  
@@ -322,29 +313,31 @@ $(document).ready(function() {
      else if (operation == "/"){  
       result = firstnumber / secondnumber;  
      }
-	 result=(parseFloat(result.toFixed(2)));
+     else if (operation == "%"){
+	     //var percent = document.getElementById("lcd");
+      result = firstnumber * (secondnumber/100);
+     }
+	 result= parseFloat(result.toFixed(2));
 	 var displays =document.getElementById("lcdu");
 	 display.value ="" ;
-	 display.value = result.toString(); 
-	 displays.value = firstnumber + operation + secondnumber + " = " + result.toString();  ;
+	 display.value = result.toString();
+	 if(secondnumber>"0"){
+	     displays.value = firstnumber + operation + secondnumber + " = " + result.toString();
+	 }
+	 display.value =null;
 	 return false;
      });
     $(document).off("click", "#clr").on("click", "#clr", function(event){
 	 event.preventDefault();
 	$("#lcd").val('0');  
-	$("#lcdu").val('');
-	firstnumber="";
-	secondnumber="";
+	$("#lcdu").val("");
+	firstnumber="0";
+	secondnumber="0";
 	result="";
+	operation=null;
 	$("#lcd").focus().select();  
      return false;  
     });
-      
-    
-
-
-
-    
     $(document).off("click", ".popover-content").on("click", ".popover-content", function(event){
 	$('[data-toggle="popover"]').click();
     });

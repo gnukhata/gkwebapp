@@ -114,11 +114,11 @@
 
      /*Calculator Css starts here*/
      .calbody{  
-	 background: #c4c9d1;  
+	 background: #6e7277;  
 	 border: 1px solid #3b3b2a33;  
-	 padding: 20px;  
-	 margin-left: 5px;
-	 min-width: 15em;  
+	 padding: 8px;  
+	 margin-left: 0px;
+	 min-width: 5em;  
 	 max-width: 15em;  
 	 
      }  
@@ -131,7 +131,7 @@
      
      #lcd{  
 	 text-align: right;  
-	 width: 9.4em;  
+	 width: 10.7em;  
 	 height: 30px;  
 	 font-size: 18px;  
 	 
@@ -140,7 +140,7 @@
      #lcdu{  
 	 color: grey;  
 	 text-align: right; 
-	 width: 11.2em;  
+	 width: 12.7em;  
 	 height: 30px;  
 	 font-size: 15px;  
 	 
@@ -148,8 +148,8 @@
      
      .key{  
 	 background-color: #fff;  
-	 width: 40px;  
-	 height: 30px;  
+	 width: 48px;  
+	 height: 32px;  
 	 font-size: 20px;  
 	 border: 1px solid #80858e;  
      }  
@@ -158,10 +158,13 @@
      }
      .equalkey{
 	 background-color: #fff;  
-	 width: 80px;
-	 height: 30px;
+	 width: 95.3px;
+	 height: 32px;
 	 font-size: 20px;  
 	 border: 1px solid #80858e;  
+     }
+     .popover-content{
+	 padding:1px 1px;
      }
     </style>
   </head>
@@ -461,14 +464,9 @@
                   <i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Acc<u>o</u>unt{% endtrans %}
 		</button>
               </div>
-              <div class="form-group pull-right">
+              <div class="form-group">
       		<button type="button" class="btn btn-primary" data-toggle="popover"  data-placement="top" data-content='<div class="calbody"><form name="lcdform"><input id="lcdu" name="lcdsu" type="text" value="" /><input id="lcd" name="lcds" type="text" value="0" /></form><div id="calbutton"><button id="num1"class="key" value="1" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="operationperc" class="key">%</button><button id="operationdivid" class="key">/</button><button id="decimal" class="key">.</button><button id="clr" class="key">C</button><button id="equalto" class="equalkey" >=</button>'>{% trans %}C<u>a</u>lculator{% endtrans %}</button> 
 	      </div>
-	      
-
-
-
-	      
               <label class="btn btn-primary" for="my-file-selector">
                 <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                 <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
