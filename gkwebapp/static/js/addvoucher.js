@@ -121,8 +121,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('5');
-	    $("#lcd").focus();
-	    
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -135,8 +133,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('6');
-	    $("#lcd").focus();
-	    
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -149,7 +145,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('7');
-	    $("#lcd").focus();
 	    return false;
 	}
 	else //if(document.lcdform.lcds.value != "0")
@@ -163,8 +158,6 @@ $(document).ready(function() {
        event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('8');
-	    $("#lcd").focus();
-	    
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -189,7 +182,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('0');
-	    $("#lcd").focus();
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -203,7 +195,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
 	    $("#lcd").val('00');
-	    $("#lcd").focus();
 	}
 	else //if(document.lcdform.lcds.value != "0")
 	{  
@@ -223,14 +214,42 @@ $(document).ready(function() {
 	return false;
     });
     $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+	console.log("hi");
+	 var displays = document.getElementById("lcdu");
         if(event.which==107){
             event.preventDefault();
-         operation = "+";  
+            operation = "+";
             firstnumber = parseFloat($("#lcd").val());  
             $("#lcd").val("0");
-	    var displays = document.getElementById("lcdu");
 	    displays.value = firstnumber + "+" ;
+	}
+	 else if(event.which==109){
+            event.preventDefault();
+         operation = "-";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    displays.value = firstnumber + "-" ;
+         }
+	else if(event.which==106){
+            event.preventDefault();
+         operation = "*";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    displays.value = firstnumber + "*" ;
         }
+	else if(event.which==111){
+            event.preventDefault();
+         operation = "/";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    displays.value = firstnumber + "/" ;
+        }
+	 else if(event.which==13){
+            event.preventDefault();
+	    if($("#lcd").val()!=""){
+		$("#equalto").trigger("click");
+	    }
+         }
     });
     
    $(document).off("click", "#operationminus").on("click", "#operationminus", function(event){
@@ -242,18 +261,6 @@ $(document).ready(function() {
 	displays.value = firstnumber + "-" ;
 	return false;
    });
-
-    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
-        if(event.which==109){
-            event.preventDefault();
-         operation = "-";  
-            firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
-	    var displays = document.getElementById("lcdu");
-	    displays.value = firstnumber + "-" ;
-        }
-    });
-    
    $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
        event.preventDefault();
        operation = "*";
@@ -263,18 +270,6 @@ $(document).ready(function() {
 	displays.value = firstnumber + "*" ;
 	return false;
    });
-
-    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
-        if(event.which==109){
-            event.preventDefault();
-         operation = "*";  
-            firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
-	    var displays = document.getElementById("lcdu");
-	    displays.value = firstnumber + "*" ;
-        }
-    });
-    
     $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
 	event.preventDefault();
 	operation = "/";
@@ -284,39 +279,29 @@ $(document).ready(function() {
 	displays.value = firstnumber + "/" ;
 	return false;
     });
-
-    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
-        if(event.which==111){
-            event.preventDefault();
-         operation = "/";  
-            firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
-	    var displays = document.getElementById("lcdu");
-	    displays.value = firstnumber + "/" ;
-        }
-    });
-    
-    $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
+ $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
 	event.preventDefault();
-    operation = "%";
-        var percent = document.getElementById("lcdu");
-	var answer = (percent/100);
-	//var displays = document.getElementById("lcdu");
-	document.getElementById("lcdu") = answer ;
+        var percent = document.getElementById("lcd");
+	var answer = (percent.value/100);
+	alert("hi");
+	var displays = document.getElementById("lcdu");
+	displays.value = answer ;
 	return false;
-  
-    });
+      });
     $(document).off("click", "#decimal").on("click", "#decimal", function(event){
 	event.preventDefault(); 
-        var curReadOut = document.getElementById("lcdu");
+        var curReadOut = $("#lcd").val();
+	var display =document.getElementById("lcd");
+	console.log(curReadOut);
         if (curReadOut.length==0) {
             curReadOut = "0.";
-            document.getElementById("lcdu") = curReadOut;
+            display.value = curReadOut;
         }
         else{
             if (curReadOut.indexOf(".") == -1)
-                curReadOut = curReadOut + ".";
-            document.getElementById("lcdu") = curReadOut;
+		console.log("cr",curReadOut);
+            curReadOut = curReadOut + ".";
+            display.value = curReadOut; 
         }
 	 return false;
     });
@@ -336,7 +321,7 @@ $(document).ready(function() {
      }    
      else if (operation == "/"){  
       result = firstnumber / secondnumber;  
-     }    
+     }
 	 result=(parseFloat(result.toFixed(2)));
 	 var displays =document.getElementById("lcdu");
 	 display.value ="" ;
@@ -344,13 +329,6 @@ $(document).ready(function() {
 	 displays.value = firstnumber + operation + secondnumber + " = " + result.toString();  ;
 	 return false;
      });
-    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
-        if(event.which==13){
-            event.preventDefault();
-         $("#equalto").trigger("click");
-        }
-    });
-    
     $(document).off("click", "#clr").on("click", "#clr", function(event){
 	 event.preventDefault();
 	$("#lcd").val('0');  
