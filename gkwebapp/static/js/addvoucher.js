@@ -47,7 +47,334 @@
 $(document).ready(function() {
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
-    if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
+
+    $('[data-toggle="popover"]').popover({
+        html: true,
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-content"></div><div class="popover-footer"<div class="popover"><div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><div class="calbody"><form name="lcdform"><input id="lcdu" name="lcdsu" type="text" value="" /><input id="lcd" name="lcds" type="text" value="0" /></form><div id="calbutton"><button id="num1" class="key" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="operationperc" class="key">%</button><button id="operationdivid" class="key">/</button><button id="decimal" class="key">.</button><button id="clr" class="key">C</button><button id="equalto" class="equalkey" >=</button></div></div>'
+
+    });
+    $('[data-toggle="popover"]').on('shown.bs.popover', function(){
+        $("#lcd").focus().select();
+    });
+
+    var firstnumber;  
+    var secondnumber;  
+    var result;  
+    var operation;
+    
+    $(document).off("click", "#num1").on("click", "#num1", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){  
+	    $("#lcd").val('1');
+	    //$("#lcd").focus();
+	    
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{
+	    var display = document.getElementById("lcd");
+      display.value += "1";  
+	}
+	return false;
+    });
+    $(document).off("click", "#num2").on("click", "#num2", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('2');
+	    $("#lcd").focus();
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "2";  
+	}
+	return false;
+    });
+    $(document).off("click", "#num3").on("click", "#num3", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('3');
+	    $("#lcd").focus();
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "3";  
+	}
+	 return false;
+    });
+    $(document).off("click", "#num4").on("click", "#num4", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('4');
+	    $("#lcd").focus();
+	    
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "4";  
+ 
+	}
+	return false;
+    });
+    $(document).off("click", "#num5").on("click", "#num5", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('5');
+	    $("#lcd").focus();
+	    
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "5";  
+	}
+	return false;
+    });
+   $(document).off("click", "#num6").on("click", "#num6", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('6');
+	    $("#lcd").focus();
+	    
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+     var display = document.getElementById("lcd");
+      display.value += "6";  
+	}
+       return false;
+    });
+    $(document).off("click", "#num7").on("click", "#num7", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('7');
+	    $("#lcd").focus();
+	    return false;
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "7";  
+	}
+	return false;
+   });
+   $(document).off("click", "#num8").on("click", "#num8", function(event){
+       event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('8');
+	    $("#lcd").focus();
+	    
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "8";  
+	}
+       return false;
+    });
+   $(document).off("click", "#num9").on("click", "#num9", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('9');
+	}
+	else //if(document.lcdform.lcds.value != "0")
+       {
+	   var display = document.getElementById("lcd");
+	   display.value += "9";  
+	}
+       return false;
+    });
+   $(document).off("click", "#num0").on("click", "#num0", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('0');
+	    $("#lcd").focus();
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "0";  
+  
+	}
+       return false;
+    });
+   $(document).off("click", "#num00").on("click", "#num00", function(event){
+	event.preventDefault();
+	if ($("#lcd").val() == "0" || $("#lcd").val() == result){ 
+	    $("#lcd").val('00');
+	    $("#lcd").focus();
+	}
+	else //if(document.lcdform.lcds.value != "0")
+	{  
+      var display = document.getElementById("lcd");
+      display.value += "00";  
+  
+	}
+       return false;
+   });
+    $(document).off("click", "#operationplus").on("click", "#operationplus", function(event){
+	event.preventDefault();
+	operation = "+";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "+" ;
+	return false;
+    });
+    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+        if(event.which==107){
+            event.preventDefault();
+         operation = "+";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    var displays = document.getElementById("lcdu");
+	    displays.value = firstnumber + "+" ;
+        }
+    });
+    
+   $(document).off("click", "#operationminus").on("click", "#operationminus", function(event){
+       event.preventDefault();
+       operation = "-";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "-" ;
+	return false;
+   });
+
+    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+        if(event.which==109){
+            event.preventDefault();
+         operation = "-";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    var displays = document.getElementById("lcdu");
+	    displays.value = firstnumber + "-" ;
+        }
+    });
+    
+   $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
+       event.preventDefault();
+       operation = "*";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "*" ;
+	return false;
+   });
+
+    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+        if(event.which==109){
+            event.preventDefault();
+         operation = "*";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    var displays = document.getElementById("lcdu");
+	    displays.value = firstnumber + "*" ;
+        }
+    });
+    
+    $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
+	event.preventDefault();
+	operation = "/";
+        firstnumber = parseFloat($("#lcd").val());  
+        $("#lcd").val("0");
+	var displays = document.getElementById("lcdu");
+	displays.value = firstnumber + "/" ;
+	return false;
+    });
+
+    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+        if(event.which==111){
+            event.preventDefault();
+         operation = "/";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("0");
+	    var displays = document.getElementById("lcdu");
+	    displays.value = firstnumber + "/" ;
+        }
+    });
+    
+    $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
+	event.preventDefault();
+    operation = "%";
+        var percent = document.getElementById("lcdu");
+	var answer = (percent/100);
+	//var displays = document.getElementById("lcdu");
+	document.getElementById("lcdu") = answer ;
+	return false;
+  
+    });
+    $(document).off("click", "#decimal").on("click", "#decimal", function(event){
+	event.preventDefault(); 
+        var curReadOut = document.getElementById("lcdu");
+        if (curReadOut.length==0) {
+            curReadOut = "0.";
+            document.getElementById("lcdu") = curReadOut;
+        }
+        else{
+            if (curReadOut.indexOf(".") == -1)
+                curReadOut = curReadOut + ".";
+            document.getElementById("lcdu") = curReadOut;
+        }
+	 return false;
+    });
+     $(document).off("click", "#equalto").on("click", "#equalto", function(event){
+	 event.preventDefault();
+	 var display = document.getElementById("lcd");
+         secondnumber = parseFloat(display.value);
+     if (operation == "+")  
+         {
+	     result = firstnumber + secondnumber;
+     }  
+     else if (operation == "*"){  
+      result = firstnumber * secondnumber;  
+     }  
+     else if (operation == "-"){  
+        result = firstnumber - secondnumber;  
+     }    
+     else if (operation == "/"){  
+      result = firstnumber / secondnumber;  
+     }    
+	 result=(parseFloat(result.toFixed(2)));
+	 var displays =document.getElementById("lcdu");
+	 display.value ="" ;
+	 display.value = result.toString(); 
+	 displays.value = firstnumber + operation + secondnumber + " = " + result.toString();  ;
+	 return false;
+     });
+    $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
+        if(event.which==13){
+            event.preventDefault();
+         $("#equalto").trigger("click");
+        }
+    });
+    
+    $(document).off("click", "#clr").on("click", "#clr", function(event){
+	 event.preventDefault();
+	$("#lcd").val('0');  
+	$("#lcdu").val('');
+	firstnumber="";
+	secondnumber="";
+	result="";
+	$("#lcd").focus().select();  
+     return false;  
+    });
+      
+    
+
+
+
+    
+    $(document).off("click", ".popover-content").on("click", ".popover-content", function(event){
+	$('[data-toggle="popover"]').click();
+    });
+ 
+
+
+
+     if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
 	$(".billhide").hide();
 	if (sessionStorage.invsflag==0){
 	    $(".invhide").hide(); //Hides list of invoices in Sale and Purchase voucher when invoice flag is set to zero.
