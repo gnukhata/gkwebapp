@@ -26,6 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 "Prajkta Patkar"<prajakta@dff.org.in>
 "Reshma Bhatawadekar<reshma@dff.org.in>"
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 // This script is for the addcustomer/supplier.jinja2
@@ -587,6 +588,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
       }
+      //After delete one row of gstin then attach '+' button to previous row.
       if(!($('.addbtn').is(':visible'))){
 	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
       }
@@ -865,21 +867,30 @@ if($("#vatorgstflag").val() == '22'){
 	    allow = 0;
 	    return false;
 	}
+	else if(panno1 =="" && $(".gstin").val() !=""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    allow = 0;
+	    $(".panno").focus();
+	    return false;
+	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}else if(panno1 !="" && lastleg.length != 3){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}
 	if(gstinstring.length == 15){

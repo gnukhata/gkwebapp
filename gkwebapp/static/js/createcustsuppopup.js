@@ -27,6 +27,7 @@ Contributors:
 "Rohini Baraskar" <robaraskar@gmail.com>
 "Prajkta Patkar"<prajakta@dff.org.in>
 "Abhijith Balan"<abhijith@dff.org.in>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 $(document).ready(function() {
@@ -844,13 +845,22 @@ else{
 	    allow = 0;
 	    return false;
 	}
+	else if(panno1 =="" && gstin1 !=""){
+	    $("#improper-gstin-alert").alert();
+	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#improper-gstin-alert").hide();
+	    });
+	    allow = 0;
+	    $(".panno").focus();
+	    return false;
+	}
 	else if(panno1 !="" && gstin1 ==""){
 	    $("#improper-gstin-alert").alert();
 	    $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#improper-gstin-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}else if(panno1 !="" && lastleg.length != 3){
 	    $("#improper-gstin-alert").alert();

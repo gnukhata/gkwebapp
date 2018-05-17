@@ -28,6 +28,7 @@ Contributors:
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 "Sanket Kolnoorkar" <sanketf123@gmail.com>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 $(document).ready(function() {
@@ -150,7 +151,6 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	//$('#gstintable tbody tr td:eq(2)').empty();	
 	$('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	$(".gstinstate, .statecode, .panno, .gstin, .state_del, .addbtn").prop("disabled", true);
       $(".panel-footer").show();
@@ -564,6 +564,8 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
   var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) option:selected:not(:hidden)').length-1;
+  var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+  var txtpan_change = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();  
   if (event.which==13 /*|| event.which==9*/) {
       event.preventDefault();
       if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
@@ -579,6 +581,12 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
       }
       else if ($(".gstin").val()!="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }else if((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && txtpan_change !="") {
+	  $("#gstin-improper-alert").alert();
+	  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#gstin-improper-alert").hide();
+	      $(".panno").focus();
+	  });
       }
       else {
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
@@ -640,6 +648,7 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   }
 });
 
+    //Click event for '+' button which trigger click event of 'gstin' field. 
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	$(".gstin").trigger({type:"keydown",which:"13"});
     });
@@ -881,6 +890,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
       }
+      //After delete one row of gstin then attach '+' button to previous row.
       if(!($('.addbtn').is(':visible'))){
 	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
       }
@@ -1039,22 +1049,30 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    });
 	    allow = 0;
 	    return false;
+	}else if($(".gstin").val() !="" && panno1 ==""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    allow = 0;
+	    $(".panno").focus();
+	    return false;
 	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}else if(panno1 !="" && lastleg.length != 3){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
 	}
 	if(gstinstring.length == 15){
