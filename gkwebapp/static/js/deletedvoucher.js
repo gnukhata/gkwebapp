@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
+"Reshma Bhatawadekar" <reshma_b@riseup.net>
 */
 
 $(document).ready(function() {
@@ -33,7 +34,45 @@ $(document).ready(function() {
   }
   $("#msspinmodal").modal("hide");
   
-$(".fixed-table-loading").remove();
+    $(".fixed-table-loading").remove();
+
+  //Toggling the up and down arrow for sorting
+    $('.glyphicon').click(function () {
+	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
+    });
+
+    //click event for sorting date.
+    $('.dateorder').click(function (e) {
+	var orderflag = $("#delVoucherDate").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#delVoucherDate").attr("orderflag",4);
+	}else{
+	    $(this).find("#delVoucherDate").attr("orderflag",1);
+	    var dataset = {"orderflag":4};
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/showdeletedvoucher",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
 
   $(' #deletedvouchertable tbody tr:first-child td:eq(1) a').focus();
   $('#deletedvouchertable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');

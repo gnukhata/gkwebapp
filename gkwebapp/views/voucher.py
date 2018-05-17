@@ -247,8 +247,13 @@ def accountpopup(request):
 @view_config(route_name="showdeletedvoucher", renderer="gkwebapp:templates/deletedvoucher.jinja2")
 def showdeletedvoucher(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
-    return {"gkresult":result.json()["gkresult"]}
+    if "orderflag" in request.params:
+        result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher&orderflag=%d"%(int(request.params["orderflag"])), headers=header)
+        orderflag = "1"
+    else:
+        result = requests.get("http://127.0.0.1:6543/report?type=deletedvoucher", headers=header)
+        orderflag = "4"
+    return {"gkresult":result.json()["gkresult"],"orderflag":orderflag}
 
 @view_config(route_name="getattachment", renderer="gkwebapp:templates/viewimages.jinja2")
 def getattachment(request):

@@ -65,7 +65,14 @@
     <table id="deletedvouchertable" class=" table shadow table-bordered">
       <thead class="bg-primary">
         <tr>
-          <th class="col-xs-1">{% trans %}Date{% endtrans %}</th>
+          <th class="col-xs-1 dateorder">
+	    {% trans %}Date{% endtrans %}
+	    {% if orderflag=="4" %}
+	      <span  id="delVoucherDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	      {% else %}
+	    <span  id="delVoucherDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	    {% endif %}
+	  </th>
           <th class="col-xs-1">{% trans %}V.No.{% endtrans %}</th>
           <th class="col-xs-1">{% trans %}Type{% endtrans %}</th>
           <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
