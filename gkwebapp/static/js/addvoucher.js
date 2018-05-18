@@ -29,6 +29,7 @@
    "Navin Karkera" <navin@openmailbox.org>
    "Sachin Patil" <sachin619patil@rediffmail.com>
    "Ishan Masdekar" <imasdekar@dff.org.in>
+   "Sakshi Agrawal" <agrawalsakshi1850@gmail.com>
  */
 
 /*
@@ -48,6 +49,7 @@ $(document).ready(function() {
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
 
+    /*Calculator Popover*/
     $('[data-toggle="popover"]').popover({
         html: true,
         template: '<div class="popover"><div class="arrow"></div><div class="popover-content"></div><div class="popover-footer"<div class="popover"><div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><div class="calbody"><form name="lcdform"><input id="lcdu" name="lcdsu" type="text" value="" /><input id="lcd" name="lcds" type="text" value="0" /></form><div id="calbutton"><button id="num1" class="key" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="decimal" class="key">.</button><button id="operationdivid" class="key">/</button><button id="clr" class="key">C</button><button id="equalto" class="equalkey" >=</button></div></div>'
@@ -56,12 +58,12 @@ $(document).ready(function() {
     $('[data-toggle="popover"]').on('shown.bs.popover', function(){
         $("#lcd").focus().select();
     });
-
     var firstnumber;  
     var secondnumber;  
     var result;  
     var operation;
     
+    /*Calculator popover events starts here*/
     $(document).off("click", "#num1").on("click", "#num1", function(event){
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){  
@@ -242,28 +244,28 @@ $(document).ready(function() {
             event.preventDefault();
             operation = "+";
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
+            $("#lcd").val("");
 	    displays.value = firstnumber + "+" ;
 	}
 	 else if(event.which==109){
             event.preventDefault();
          operation = "-";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
+            $("#lcd").val("");
 	    displays.value = firstnumber + "-" ;
          }
 	else if(event.which==106){
             event.preventDefault();
          operation = "*";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
+            $("#lcd").val("");
 	    displays.value = firstnumber + "*" ;
         }
 	else if(event.which==111){
             event.preventDefault();
          operation = "/";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("0");
+            $("#lcd").val("");
 	    displays.value = firstnumber + "/" ;
         }
 	 else if(event.which==13){
@@ -273,7 +275,6 @@ $(document).ready(function() {
 	   // }
          }
     });
-    
    /*$(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
         event.preventDefault();
         operation = "%";
@@ -299,7 +300,6 @@ $(document).ready(function() {
         }
 	 return false;
     });
-
      $(document).off("click", "#equalto").on("click", "#equalto", function(event){
 	 event.preventDefault();
 	 var display = document.getElementById("lcd");
@@ -321,7 +321,6 @@ $(document).ready(function() {
 	     //var percent = document.getElementById("lcd");
       result = firstnumber * (secondnumber/100);
      }*/
-	 
 	 result= parseFloat(result.toFixed(2));
 	 var displays =document.getElementById("lcdu");
 	 display.value ="" ;
@@ -330,11 +329,9 @@ $(document).ready(function() {
 	     displays.value = firstnumber + operation + secondnumber + " = " + result.toString();
 	 }
 	 //firstnumber(displays.value);
-	 
 	 //display.value ="";
 	return false;
      });
-    
     $(document).off("click", "#clr").on("click", "#clr", function(event){
 	 event.preventDefault();
 	$("#lcd").val('0');  
@@ -350,9 +347,6 @@ $(document).ready(function() {
 	$('[data-toggle="popover"]').click();
     });
  
-
-
-
      if ($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") {
 	$(".billhide").hide();
 	if (sessionStorage.invsflag==0){
