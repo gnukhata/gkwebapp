@@ -50,7 +50,7 @@ $(document).ready(function() {
 
     $('[data-toggle="popover"]').popover({
         html: true,
-        template: '<div class="popover"><div class="arrow"></div><div class="popover-content"></div><div class="popover-footer"<div class="popover"><div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><div class="calbody"><form name="lcdform"><input id="lcdu" name="lcdsu" type="text" value="" /><input id="lcd" name="lcds" type="text" value="0" /></form><div id="calbutton"><button id="num1" class="key" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="operationperc" class="key">%</button><button id="operationdivid" class="key">/</button><button id="decimal" class="key">.</button><button id="clr" class="key">C</button><button id="equalto" class="equalkey" >=</button></div></div>'
+        template: '<div class="popover"><div class="arrow"></div><div class="popover-content"></div><div class="popover-footer"<div class="popover"><div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"><div class="calbody"><form name="lcdform"><input id="lcdu" name="lcdsu" type="text" value="" /><input id="lcd" name="lcds" type="text" value="0" /></form><div id="calbutton"><button id="num1" class="key" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="decimal" class="key">.</button><button id="operationdivid" class="key">/</button><button id="clr" class="key">C</button><button id="equalto" class="equalkey" >=</button></div></div>'
 
     });
     $('[data-toggle="popover"]').on('shown.bs.popover', function(){
@@ -274,7 +274,7 @@ $(document).ready(function() {
          }
     });
     
-   $(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
+   /*$(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
         event.preventDefault();
         operation = "%";
         firstnumber = parseFloat($("#lcd").val());  
@@ -282,7 +282,7 @@ $(document).ready(function() {
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "%" ;
         return false;
-      });
+      });*/
     $(document).off("click", "#decimal").on("click", "#decimal", function(event){
 	event.preventDefault(); 
         var curReadOut = $("#lcd").val();
@@ -317,10 +317,10 @@ $(document).ready(function() {
      else if (operation == "/"){  
       result = firstnumber / secondnumber;  
      }
-     else if (operation == "%"){
+     /*else if (operation == "%"){
 	     //var percent = document.getElementById("lcd");
       result = firstnumber * (secondnumber/100);
-     }
+     }*/
 	 
 	 result= parseFloat(result.toFixed(2));
 	 var displays =document.getElementById("lcdu");
@@ -332,10 +332,7 @@ $(document).ready(function() {
 	 //firstnumber(displays.value);
 	 
 	 //display.value ="";
-	 
 	return false;
-	 
-	 
      });
     
     $(document).off("click", "#clr").on("click", "#clr", function(event){
