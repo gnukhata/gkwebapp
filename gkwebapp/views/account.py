@@ -160,7 +160,7 @@ def showeditaccount(request):
     result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
     accdata=[]
     for record in result.json()["gkresult"]:
-        adata= {"accountname":str(record["accountname"]),"accountcode":str(record["accountcode"]), "sysaccount":record["sysaccount"]}
+        adata= {"accountname":record["accountname"],"accountcode":record["accountcode"], "sysaccount":record["sysaccount"]}
         accdata.append(adata)
     result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
     grpdata=[]
