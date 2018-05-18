@@ -1161,9 +1161,36 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			  {
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
+			      var acc = resp["accounts"];
+			      var first = [];
+			      var second = [];
+			      for(let i=0; i < acc.length-1; i++){
+				  let firstacc = acc[i];
+				  let secondacc = acc[i+1];
+				  let x = firstacc.indexOf("_");
+				  let y = firstacc.indexOf("@");
+				  let m = secondacc.indexOf("_");
+				  let n = secondacc.indexOf("@");
+				  let result1 = firstacc.slice(x+1,y);
+				  let result2 = secondacc.slice(m+1,n);
+				  if (result1 == result2){
+				      first.push(acc[i]);
+				  }else{
+				      second.push(acc[i]);
+				  }
+			      }
 			      $.each(resp.accounts, function(index, account) {
-				  if (index % 4 == 0) {
+				  let a = account;
+				  console.log("current value",resp.accounts[index]);
+				  console.log("next value",resp.accounts[index+1]);
+				  if (index % 6 == 0) {
+				      //if(a==resp.accounts[index+1]){
 				      $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
+				      //}
+				      //else{
+					//$("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
+				        
+				      //}
 				  }
 				  else {
 				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
