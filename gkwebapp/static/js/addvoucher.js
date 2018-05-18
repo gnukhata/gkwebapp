@@ -197,6 +197,11 @@ $(document).ready(function() {
     $(document).off("click", "#operationplus").on("click", "#operationplus", function(event){
 	event.preventDefault();
 	operation = "+";
+	var display= document.getElementById("lcd");
+	//function firstnumber(result){
+          //  firstnumber=result;
+	    //display.value =null;
+	//}
         firstnumber = parseFloat($("#lcd").val());
 	$("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
@@ -228,7 +233,7 @@ $(document).ready(function() {
         firstnumber = parseFloat($("#lcd").val());  
         $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
-	displays.value = firstnumber + "/" ;
+	displays.value = firstnumber + "/";
 	return false;
     });
 
@@ -317,6 +322,7 @@ $(document).ready(function() {
 	     //var percent = document.getElementById("lcd");
       result = firstnumber * (secondnumber/100);
      }
+	 
 	 result= parseFloat(result.toFixed(2));
 	 var displays =document.getElementById("lcdu");
 	 display.value ="" ;
@@ -324,9 +330,15 @@ $(document).ready(function() {
 	 if(secondnumber>"0"){
 	     displays.value = firstnumber + operation + secondnumber + " = " + result.toString();
 	 }
-	 display.value =null;
-	 return false;
+	 //firstnumber(displays.value);
+	 
+	 //display.value ="";
+	 
+	return false;
+	 
+	 
      });
+    
     $(document).off("click", "#clr").on("click", "#clr", function(event){
 	 event.preventDefault();
 	$("#lcd").val('0');  
