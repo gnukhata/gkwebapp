@@ -197,7 +197,6 @@ $(document).ready(function() {
     $(document).off("click", "#operationplus").on("click", "#operationplus", function(event){
 	event.preventDefault();
 	operation = "+";
-	var display= document.getElementById("lcd");
 	//function firstnumber(result){
           //  firstnumber=result;
 	    //display.value =null;
@@ -303,8 +302,8 @@ $(document).ready(function() {
 
      $(document).off("click", "#equalto").on("click", "#equalto", function(event){
 	 event.preventDefault();
-	  var display = document.getElementById("lcd");
-      secondnumber = parseFloat(display.value);
+	 var display = document.getElementById("lcd");
+	 secondnumber = parseFloat(display.value);
      if (operation == "+")  
          { 
 	     result = firstnumber + secondnumber;
