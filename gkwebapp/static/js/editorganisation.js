@@ -1161,8 +1161,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			  {
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
-			      var acc = resp["accounts"];
-			      console.log(resp["accounts"]);
 			      let count = 0;
 			      $.each(resp.accounts, function(index, account) {
 				  let firstacc = account;
@@ -1180,7 +1178,6 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 				  let result1 = firstacc.slice(fin_1+1,fin_2);
 				  let result2 = secondacc.slice(sin_1+1,sin_2);
 				  if(result1 == result2){
-				      console.log(count);
 				      if(count % 6 == 0){
 					  if(count == 0){
 					      //This ajax will gives state name from "state abbreviation".
@@ -1198,8 +1195,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 						  }
 					      }).done(function(resp){
 						  if (resp.gkstatus == 0) {
-						      console.log(resp["statename"]);
-						      $("#gstaccountstable tbody").append("<tr><td colspan='2'>" + "Accounts For "+ resp["statename"] + "</td></tr>");
+						      $("#gstaccountstable tbody").append("<tr><td colspan='3'><div style='font-weight:bold; text-decoration:underline;'>" + "Accounts For "+ resp["statename"] + "</div></td></tr>");
 						  }
 					      });
 					  }
