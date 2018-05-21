@@ -1162,37 +1162,39 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 			      $("#msspinmodal").modal("hide");
 			      $("#gstaccountsmodal").modal("show");
 			      var acc = resp["accounts"];
-			      var first = [];
-			      var second = [];
-			      for(let i=0; i < acc.length-1; i++){
-				  let firstacc = acc[i];
-				  let secondacc = acc[i+1];
-				  let x = firstacc.indexOf("_");
-				  let y = firstacc.indexOf("@");
-				  let m = secondacc.indexOf("_");
-				  let n = secondacc.indexOf("@");
-				  let result1 = firstacc.slice(x+1,y);
-				  let result2 = secondacc.slice(m+1,n);
-				  if (result1 == result2){
-				      first.push(acc[i]);
-				  }else{
-				      second.push(acc[i]);
-				  }
-			      }
+			      console.log(resp["accounts"]);
+			      let count = 0;
 			      $.each(resp.accounts, function(index, account) {
-				  let a = account;
-				  console.log("current value",resp.accounts[index]);
-				  console.log("next value",resp.accounts[index+1]);
-				  if (index % 6 == 0) {
-				      //if(a==resp.accounts[index+1]){
-				      $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
-				      //}
-				      //else{
-					//$("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
-				        
-				      //}
+				  let firstacc = account;
+				  let secondacc;
+				  if (resp.accounts[index+1] == null){
+				      secondacc="";
+				  }else{
+				      secondacc = resp.accounts[index+1];
 				  }
-				  else {
+				  //Here we separate out 'abbrevation of state' in account name.(i.e abbrevation of 'IGSTIN_MH@5.0%' is 'MH')
+				  let fin_1 = firstacc.indexOf("_");
+				  let fin_2 = firstacc.indexOf("@");
+				  let sin_1 = secondacc.indexOf("_");
+				  let sin_2 = secondacc.indexOf("@");
+				  let result1 = firstacc.slice(fin_1+1,fin_2);
+				  let result2 = secondacc.slice(sin_1+1,sin_2);
+				  if(result1 == result2){
+				      console.log(count);
+				      if(count % 6 == 0){
+					  $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
+					  count = count+1; 
+				      }
+				      else{
+					  $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
+					  count = count+1;
+				      }
+				  }
+				  else if(result1 != result2) {
+				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
+				      $("#gstaccountstable tbody").append("<tr></tr>");
+				      count =0;
+				  }else if(result1 !="" && result2 ==""){
 				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
 				  }
 			      });
