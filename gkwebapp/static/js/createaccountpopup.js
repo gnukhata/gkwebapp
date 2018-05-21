@@ -63,24 +63,19 @@ $(document).ready(function()
   });
 
 
-  $('input:text,select, input:checkbox').keyup( function(event) {
+  /**$('input:text,select, input:checkbox').keyup( function(event) {
     var n = $("input:text:visible,select, input:checkbox").length;
     var f = $('input:text:visible,select, input:checkbox');
 
     if (event.which == 13)
     {
-
-
-      var nextIndex = f.index(this) + 1;
-      if(nextIndex < n){
-        event.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-
-      }
-
-
+    var nextIndex = f.index(this) + 1;
+    if(nextIndex < n){
+    event.preventDefault();
+    f[nextIndex].focus();
+    f[nextIndex].select();
+    }
+    }
       var s2 = $("#m_subgroupname option:selected").index();
       if ((event.which == 38 && sel2 == 1 && s2 == 0) || (event.which == 38 && (sel1 == 0 && sel2==0)))
       {
@@ -91,7 +86,7 @@ $(document).ready(function()
           f[prevIndex].select();
         }
         }
-      });
+      });**/
 
 
   $("#m_groupname").focus();
@@ -156,10 +151,84 @@ else
 
 });
 
+// Keydown event for Group Name.
+// Validations for Group Name.
+      $("#m_groupname").keydown(function(event) {
+	  if(event.which==13 || event.which == 9) {
+	      event.preventDefault();
+	      if ($.trim($("#m_groupname option:selected").val())=="") {	  
+		  $("#m_grpblank-alert").alert();
+		  $("#m_grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#m_grpblank-alert").hide();
+		  });
+		  $("#m_groupname").focus();
+		  $("#m_groupname").select();
+		  return false;
+	      }
+	  }
+	  if(event.which==13){
+	      event.preventDefault();
+	      $("#m_subgroupname").focus().select();
+	  }
+      });
 
+//key down event for subgroup.
+    $("#m_subgroupname").keydown(function(event){
+	if(event.which==13 || event.which == 9) {
+	    event.preventDefault();
+	    if ($.trim($("#m_subgroupname option:selected").val())=="New"){
+		$("#m_newsubgroup").focus().select();
+	    }
+	    else {
+		$("#m_accountname").focus().select();
+	    }
+	}
+	if (event.which==38 && (document.getElementById('m_subgroupname').selectedIndex==0)) {
+	    event.preventDefault();
+	    $("#m_groupname").focus().select();
+	}
+    });
 
+//key down event for newsubgroup.
+    $("#m_newsubgroup").keydown(function(event) {
+	if (event.which==13 || event.which==9) {
+	    event.preventDefault();
+	    if ($.trim($("#m_newsubgroup").val())=="") {
+		$("#m_nsblank-alert").alert();
+		$("#m_nsblank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#m_nsblank-alert").hide();
+		});
+		$("#m_newsubgroup").focus().select();
+		return false;
+	    }
+      $("#m_accountname").focus().select();
+	}
+	if (event.which==38) {
+	 event.preventDefault();
+	 $("#m_subgroupname").focus().select();
+	}
+    });
 
-
+// Keydown event for Account Name.
+// Validations for Account Name.
+    $("#m_accountname").keydown(function(event) {
+	if(event.which==13 || event.which == 9) {
+	    event.preventDefault();
+	    if ($.trim($("#m_accountname").val())=="") {
+		$("#m_blank-alert").alert();
+		$("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#m_blank-alert").hide();
+		});
+		$("#m_accountname").focus().select();
+		return false;
+	    }
+	}
+	if(event.which==13){
+	    event.preventDefault();
+	    $("#m_openbal").focus().select();
+	}
+    });
+ 
   $("#m_accountform").submit(function(e)
   {
 
