@@ -131,14 +131,11 @@ $(document).ready(function()
         for (i in subgroups ) {
           $('#m_subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
         }
-        var grpnam=$("#m_groupname option:selected").text();
-        if (grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus")
-        {
-            $('#m_subgroupname').prepend('<option value="None">None</option>');
-        }
-        $('#m_subgroupname').append('<option value="New">New Sub-Group</option>');
+          var grpnam=$("#m_groupname option:selected").text();
+          $('#m_subgroupname').prepend('<option value="None">None</option>');
+	  $("#m_subgroupname option:first").attr("selected", "selected");
+          $('#m_subgroupname').append('<option value="New">New Sub-Group</option>');
       }
-
     });
   });
 
