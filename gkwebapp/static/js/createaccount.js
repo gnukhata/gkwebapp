@@ -80,18 +80,13 @@ $(document).ready(function()
           for (i in subgroups ) {
             $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
           }
-          var grpnam=$("#groupname option:selected").text();
-          if (grpnam=="Current Assets" ||grpnam=="Direct Expense" ||grpnam=="Direct Expense" || grpnam=="Indirect Expense" || grpnam=="Direct Income" || grpnam=="Fixed Assets" ||grpnam=="Indirect Income" || grpnam=="Loans(Asset)" || grpnam=="Reserves" || grpnam=="Capital" || grpnam=="Miscellaneous Expenses(Asset)" || grpnam=="Corpus" ||grpnam=="Investments"||grpnam=="Loans(Liability)" ||grpnam=="Current Liabilities")
-          {
+            var grpnam=$("#groupname option:selected").text();
             $('#subgroupname').prepend('<option value="None">None</option>');
 	    $("#subgroupname option:first").attr("selected", "selected");
-          }
-          $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+            $('#subgroupname').append('<option value="New">New Sub-Group</option>');
         }
-
       });
     }
-    
   });
 
   
