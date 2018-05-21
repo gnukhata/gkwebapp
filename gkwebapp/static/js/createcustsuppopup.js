@@ -712,6 +712,19 @@ else{
 	  $("#add_cussup_pan").focus();
 	  return false;
       }
+
+      if ($("#checkbnkpop").is(":checked")) {
+	  if($("#cust_accountno").val()=="" || $("#cust_bankname").val()=="" || $("#cust_branchname").val()=="" || $("#cust_ifsc").val()=="" ) {
+	      $("#allbank-blank-alert").alert();
+	      $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#allbank-blank-alert").hide();
+	      });
+	      $("#cust_accountno").focus();
+	      return false;
+	  }
+      }
+
+      
       // Validation for proper email.
       email = $("#add_cussup_email").val();
       if ((!email.match(emailExp)) && email!="") {
