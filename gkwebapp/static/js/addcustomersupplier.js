@@ -738,6 +738,17 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       groupcode = $("#credgroupcode").val();
     }
 	// Validation for bank details
+
+	  if ($("#checkbnk").is(":checked")) {
+	  if($("#accountno").val()=="" || $("#bankname").val()=="" || $("#branchname").val()=="" || $("#ifsc").val()=="" ) {
+	      $("#allbank-blank-alert").alert();
+	      $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#allbank-blank-alert").hide();
+	      });
+	      $("#accountno").focus();
+	      return false;
+	  }
+      }
 	if (!($("#accountno").val() == "" && $("#bankname").val() == "" && $("#branchname").val() == "" && $("#ifsc").val() == "")){
 	   if ($("#accountno").val() == "" || $("#bankname").val() == "" || $("#branchname").val() == "" || $("#ifsc").val() == ""){
 	    $("#allbank-blank-alert").alert();
