@@ -172,3 +172,11 @@ def orgbankDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://0.0.0.0:6543/organisation?orgbankdetails", headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkbankdata":result.json()["gkbankdata"]}
+
+@view_config(route_name="editorganisation",request_param="type=statename", renderer="json")
+def getstatename(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://0.0.0.0:6543/state?statename&stateabbr=%s"%(request.params["stateabbr"]), headers=header)
+    print result.json()["statename"]
+    return {"gkstatus":result.json()["gkstatus"], "statename":result.json()["statename"]}
+

@@ -1172,7 +1172,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 				  }else{
 				      secondacc = resp.accounts[index+1];
 				  }
-				  //Here we separate out 'abbrevation of state' in account name.(i.e abbrevation of 'IGSTIN_MH@5.0%' is 'MH')
+				  //Here we separate out 'abbreviation of state' in account name.(i.e abbrevation of 'IGSTIN_MH@5.0%' is 'MH')
 				  let fin_1 = firstacc.indexOf("_");
 				  let fin_2 = firstacc.indexOf("@");
 				  let sin_1 = secondacc.indexOf("_");
@@ -1182,6 +1182,27 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 				  if(result1 == result2){
 				      console.log(count);
 				      if(count % 6 == 0){
+					  if(count == 0){
+					      //This ajax will gives state name from "state abbreviation".
+					      let stateabbr = result1;
+					      $.ajax({
+						  url: '/editorganisation?type=statename',
+						  type: 'POST',
+						  global: false,
+						  async: false,
+						  datatype: 'json',
+						  data: {"stateabbr": stateabbr},
+						  beforeSend: function(xhr)
+						  {
+						      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+						  }
+					      }).done(function(resp){
+						  if (resp.gkstatus == 0) {
+						      console.log(resp["statename"]);
+						      $("#gstaccountstable tbody").append("<tr><td colspan='2'>" + "Accounts For "+ resp["statename"] + "</td></tr>");
+						  }
+					      });
+					  }
 					  $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
 					  count = count+1; 
 				      }
