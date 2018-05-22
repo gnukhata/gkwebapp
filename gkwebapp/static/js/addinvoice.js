@@ -49,6 +49,9 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
+
+    $
+    
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
           if($(this).prop('checked') == true) {
@@ -345,9 +348,9 @@ $(document).ready(function() {
 		    return false;
 		}
 	    }
-	    if (invoicedate >= gstdate) {
+	    /**if (invoicedate >= gstdate) {
 		$("#taxapplicabletext").text("GST");
-		$("#taxapplicable").val("7");
+		$(".taxapplicable").val("7");
 		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 		$("#vathelp").hide();
 		$(".tinfield").hide();
@@ -358,7 +361,7 @@ $(document).ready(function() {
 	    }
 	    else {
 		$("#taxapplicabletext").text("VAT");
-		$("#taxapplicable").val("22");
+		$(".taxapplicable").val("22");
 		$("#gstproducttable").hide();
 		$(".gstinfield").hide();
 		$("#invoice_product_table_vat").show();
@@ -366,7 +369,33 @@ $(document).ready(function() {
 		$("#vathelp").show();
 		$(".gstfield").hide();
 		$(".vatfield").show();
-	    }
+	    }**/
+	}
+    });
+
+    //Change event for 'GST' and 'VAT' radio button.
+    $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
+	console.log("Tax Change");
+	if($("#gst").is(":checked")){
+	    $("#taxapplicabletext").text("GST");
+	    $(".taxapplicable").val("7");
+	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+	    $("#vathelp").hide();
+	    $(".tinfield").hide();
+	    $("#gstproducttable").show();  //Shows GST Product table.
+	    $(".gstinfield").show();
+	    $(".vatfield").hide();
+	    $(".gstfield").show();
+	}else if($("#vat").is(":checked")){
+	    $("#taxapplicabletext").text("VAT");
+	    $(".taxapplicable").val("22");
+	    $("#gstproducttable").hide();
+	    $(".gstinfield").hide();
+	    $("#invoice_product_table_vat").show();
+	    $(".tinfield").show();
+	    $("#vathelp").show();
+	    $(".gstfield").hide();
+	    $(".vatfield").show();
 	}
     });
 
@@ -411,7 +440,8 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
-	if ($("#taxapplicable").val() == 7){
+	console.log($(".taxapplicable").val());
+	if ($(".taxapplicable").val() == 7){
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
@@ -496,7 +526,7 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
-			if ($("#taxapplicable").val() == 7) {
+			if ($(".taxapplicable").val() == 7) {
 			    if ($("#invoice_deliverynote option:selected").val() != '') {
 				$(".invoice_product_quantity_gst:first").focus().select();
 			    }
@@ -577,7 +607,7 @@ $(document).ready(function() {
 	   } 
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
-		    if ($("#taxapplicable").val() == 7) { 
+		    if ($(".taxapplicable").val() == 7) { 
 			if ($("#invoice_deliverynote option:selected").val() != '') {
 			    $(".invoice_product_quantity_gst:first").focus().select();
 			}
@@ -696,7 +726,7 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#taxapplicable").val() == 7) {
+	if ($(".taxapplicable").val() == 7) {
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
@@ -731,7 +761,7 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if($("#Consignee").prop('checked') == true) {
-		if ($("#taxapplicable").val() == 7) {
+		if ($(".taxapplicable").val() == 7) {
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    $(".invoice_product_quantity_gst:first").focus().select();
 		}
@@ -815,7 +845,7 @@ $(document).ready(function() {
 	    /*if ($("#gstinconsignee").is(":visible")) {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
 		}*/
-	    if ($("#taxapplicable").val() == 22) {
+	    if ($(".taxapplicable").val() == 22) {
 		if ($("#consigneename").is(":disabled")){
 		   $(".invoice_product_quantity_vat:first").focus().select(); 
 		} else {
@@ -842,7 +872,7 @@ $(document).ready(function() {
     $("#gstinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#taxapplicable").val() == 7) {
+	    if ($(".taxapplicable").val() == 7) {
 		if ($("#consigneename").is(":disabled")){
 		    $(".invoice_product_quantity_gst:first").focus().select();
 		} else {
@@ -869,7 +899,7 @@ $(document).ready(function() {
     $("#consigneeaddress").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($("#taxapplicable").val() == 7) {
+	    /**if ($(".taxapplicable").val() == 7) {
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    $(".invoice_product_quantity_gst:first").focus().select();
 		}
@@ -884,7 +914,8 @@ $(document).ready(function() {
 		else {
 		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
 		}
-	    }
+	    }**/
+	    $("#gst").focus().select();
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
 	else if (event.which == 38) {
@@ -955,7 +986,7 @@ $(document).ready(function() {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
       }
-	var taxflag=$("#taxapplicable").val();
+	var taxflag=$(".taxapplicable").val();
 	if (productcode != "") {
 	    $.ajax({
         url: '/invoice?action=getappliedtax',
@@ -1686,7 +1717,7 @@ $(document).ready(function() {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#invoice_customerstate").val();
       }
-    var taxflag=$("#taxapplicable").val();
+    var taxflag=$(".taxapplicable").val();
 
     if (productcode != "") {
 	$.ajax({
@@ -2337,7 +2368,7 @@ if (event.which == 13) {
 		}
 	    }
 	    else if (previndex == -1) {
-		if ($("#taxapplicable").val() == 7) {
+		if ($(".taxapplicable").val() == 7) {
 		    $(".invoice_product_discount_gst:last").focus().select();
 		}
 		else {
@@ -2593,7 +2624,7 @@ if (event.which == 13) {
       bankdetails["bankname"] = $.trim($("#bankname").val());
       bankdetails["ifsc"] = $.trim($("#ifsc").val());
       bankdetails["branch"] = $.trim($("#branch").val());
-    if ($("#taxapplicable").val() == 22) {
+    if ($(".taxapplicable").val() == 22) {
     for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
       if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -2678,7 +2709,7 @@ if (event.which == 13) {
 
     }
 
-      else if ($("#taxapplicable").val() == 7) {
+      else if ($(".taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
 		  $("#product-blank-alert").alert();
@@ -2819,7 +2850,7 @@ if (event.which == 13) {
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-    form_data.append("taxflag", $("#taxapplicable").val());
+    form_data.append("taxflag", $(".taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
@@ -2873,7 +2904,7 @@ if (event.which == 13) {
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-			$('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
+			$('input:not(#status, .taxapplicable), select:not(#invselect)').val("");
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#success-alert").alert();
                         $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
