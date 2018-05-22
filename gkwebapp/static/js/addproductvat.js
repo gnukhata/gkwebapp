@@ -872,27 +872,6 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
   }
   else if (event.which==13) {
     event.preventDefault();
-    /**var states = [];
-    $('#product_tax_table tbody tr').each(function(){
-      states.push($(".tax_state",this).val());
-    });
-    states.sort();
-    var duplicatestates = [];
-    for (var i = 0; i < states.length - 1; i++) {
-      if (states[i + 1] == states[i]) {
-          duplicatestates.push(states[i]);
-	  console.log(duplicatestates);
-      }
-	console.log(states[i]);
-    }
-      if (duplicatestates.length > 0) {  
-      $("#tax-same-alert").alert();
-      $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#tax-same-alert").hide();
-      });
-      return false;
-      } 
-      $("#adduom").focus();**/
       $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
 });
@@ -1480,7 +1459,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
       $("#product").click();
       $('.modal-backdrop').remove();
-      $("#addproduct-success-alert").alert();te
+      $("#addproduct-success-alert").alert();
       $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#addproduct-success-alert").hide();
       });
