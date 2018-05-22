@@ -64,7 +64,6 @@ $(document).ready(function() {
     var operation;
     
     /*Calculator popover events starts here*/
-    $("#lcd").numeric();
     $(document).off("click", "#num1").on("click", "#num1", function(event){
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){  
@@ -275,7 +274,6 @@ $(document).ready(function() {
 		$("#equalto").trigger("click");
 	    }
          }
-
     });
    /*$(document).off("click", "#operationperc").on("click", "#operationperc", function(event){
         event.preventDefault();
@@ -328,7 +326,6 @@ $(document).ready(function() {
 	 display.value ="" ;
 	 display.value = result.toString();
 	 if(secondnumber>"0" ){
-	
 	     displays.value = firstnumber + operation + secondnumber + " = " + result.toString();
 	 }
 	 //firstnumber(displays.value);
@@ -346,14 +343,11 @@ $(document).ready(function() {
 	$("#lcd").focus().select();  
      return false;  
     });
-    /*$(document).off("focus", "#operationminus").on("focus", "#operationminus", function(event){
-	$(this).numeric({"negative":false});
-    });
-    $(document).off("focus", "#lcdu").on("focus", "#lcdu", function(event){
-	$(this).numeric({"negative":false});
-    });*/
-    
-    
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+  event.preventDefault();
+  // Act on the event
+    $(".numtype").numeric({ negative: false });
+ });
     $(document).off("click", ".popover-content").on("click", ".popover-content", function(event){
 	$('[data-toggle="popover"]').click();
     });
