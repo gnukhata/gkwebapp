@@ -1170,7 +1170,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 				  }else{
 				      secondacc = resp.accounts[index+1];
 				  }
-				  //Here we separate out 'abbreviation of state' in account name.(i.e abbrevation of 'IGSTIN_MH@5.0%' is 'MH')
+				  //Separate out 'abbreviation' of state in account name.(i.e abbreviation of 'IGSTIN_MH@5.0%' is 'MH')
 				  let fin_1 = firstacc.indexOf("_");
 				  let fin_2 = firstacc.indexOf("@");
 				  let sin_1 = secondacc.indexOf("_");
@@ -1195,7 +1195,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 						  }
 					      }).done(function(resp){
 						  if (resp.gkstatus == 0) {
-						      $("#gstaccountstable tbody").append("<tr><td colspan='3'><div style='font-weight:bold; text-decoration:underline;'>" + "Accounts For "+ resp["statename"] + "</div></td></tr>");
+						      $("#gstaccountstable tbody").append("<tr><td colspan='3'><div style='font-weight:bold; text-decoration:underline; background-color:#fafafa;'>" + "Accounts For "+ resp["statename"] + "</div></td></tr>");
 						  }
 					      });
 					  }
