@@ -2877,19 +2877,15 @@ if (event.which == 13) {
 	  //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
 		form_data.append("paymentmode",3);   
       } else if($("#chkpaymentmode option:selected").val()=="2"){
-	  
-	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+	  //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-
       else{
-	  
-	    form_data.append("paymentmode",15);
+	  form_data.append("paymentmode",15);
       }
       form_data.append("taxflag", $("#taxapplicable").val());
-
-    form_data.append("transportationmode", $("#transportationmode").val());
+      form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
