@@ -686,19 +686,19 @@ $(document).ready(function() {
               });
               return false;
           }
-	/**if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+	if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
           $("#tax-name-blank-alert").alert();
           $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#tax-name-blank-alert").hide();
           });
-          $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+          $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
           return false;
-        }**/
+        }
         $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
       else if (event.which==13) {
 	  event.preventDefault();
-	  if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
+	 if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
               $("#tax-name-blank-alert").alert();
               $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#tax-name-blank-alert").hide();
@@ -777,26 +777,6 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
-      /**var edittaxstates = [];
-      $('#product_edit_tax_table tbody tr').each(function(){
-        edittaxstates.push($(".tax_state",this).val());
-      });
-      if (edittaxstates.length>1) {
-        edittaxstates.sort();
-        var duplicatestates = [];
-        for (var i = 0; i < edittaxstates.length - 1; i++) {
-          if (edittaxstates[i+1] == edittaxstates[i]) {
-            duplicatestates.push(edittaxstates[i]);
-          }
-        }
-        if (duplicatestates.length > 0) {
-          $("#tax-same-alert").alert();
-          $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#tax-same-alert").hide();
-          });
-          return false;
-        }
-      }**/
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
