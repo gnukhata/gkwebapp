@@ -781,23 +781,16 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if($("#Consignee").prop('checked') == true) {
-		if ($(".taxapplicable").val() == 7) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_gst:first").focus().select();
-		}
-		else {
-		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
-		}
-	    }
-	    else {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_vat:first").focus().select();
-		}
-		else {
-		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
-		}
-	    }
-		
+		if($(".taxapplicable").val() == 22){
+		    if ($("#invoice_deliverynote option:selected").val() != '') {
+			$(".invoice_product_quantity_vat:first").focus().select();
+		    }
+		    else {
+			$(".product_name_vat:first").focus().select();
+		    }
+		}else{
+		    $("#gst").focus().select();
+		} 
 	    }else{
 		$("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
 	    }
@@ -1887,7 +1880,6 @@ $(document).ready(function() {
     event.preventDefault();
       /* Act on the event */
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-      console.log(curindex);
     if ($(this).val() == "") {
       $(this).val(0);
     }
