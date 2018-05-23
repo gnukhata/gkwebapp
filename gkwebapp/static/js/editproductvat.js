@@ -664,48 +664,64 @@ $(document).ready(function() {
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       event.preventDefault();
     }
-    else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
-        event.preventDefault();
-        var types = [];
-        $('#product_edit_tax_table tbody tr').each(function(){
-          if ($(".tax_name",this).val()=='CVAT') {
-          types.push($(".tax_name",this).val());
-          }
-        });
-        types.sort();
-        var duplicatetypes = [];
-        for (var i = 0; i < types.length - 1; i++) {
-          if (types[i + 1] == types[i]) {
-            duplicatetypes.push(types[i]);
-          }
-        }
-        if (duplicatetypes.length > 0) {
-          $("#cvat-alert").alert();
-          $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#cvat-alert").hide();
+      else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
+          event.preventDefault();
+          var types = [];
+          $('#product_edit_tax_table tbody tr').each(function(){
+              if ($(".tax_name",this).val()=='CVAT') {
+		  types.push($(".tax_name",this).val());
+              }
           });
+          types.sort();
+          var duplicatetypes = [];
+          for (var i = 0; i < types.length - 1; i++) {
+              if (types[i + 1] == types[i]) {
+		  duplicatetypes.push(types[i]);
+              }
+          }
+          if (duplicatetypes.length > 0) {
+              $("#cvat-alert").alert();
+              $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#cvat-alert").hide();
+              });
+              return false;
+          }
+	/**if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+          $("#tax-name-blank-alert").alert();
+          $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax-name-blank-alert").hide();
+          });
+          $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
-        }
+        }**/
         $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
-    else if (event.which==13) {
-      event.preventDefault();
-      $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
-    }
-    else if (event.which==27) {
-      event.preventDefault();
-      if ($("#editgodownpresence").val() == 0) {
-        $("#editopeningstock").focus().select();
+      else if (event.which==13) {
+	  event.preventDefault();
+	  if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
+              $("#tax-name-blank-alert").alert();
+              $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#tax-name-blank-alert").hide();
+              });
+              $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
+              return false;
+          }
+	  $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       }
-      else {
-        if ($("#editgodownflag").val() == 1) {
-          $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-        }
-        else if ($("#editgodownflag").val() == 0) {
-          $("#editgodownflag").focus().select();
-        }
+      else if (event.which==27) {
+	  event.preventDefault();
+	  if ($("#editgodownpresence").val() == 0) {
+              $("#editopeningstock").focus().select();
+	  }
+	  else {
+              if ($("#editgodownflag").val() == 1) {
+		  $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+              }
+              else if ($("#editgodownflag").val() == 0) {
+		  $("#editgodownflag").focus().select();
+              }
+	  }
       }
-    }
   });
 
   $(document).off("change",".tax_name").on("change",".tax_name",function(event)
@@ -761,7 +777,7 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
       event.preventDefault();
-      var edittaxstates = [];
+      /**var edittaxstates = [];
       $('#product_edit_tax_table tbody tr').each(function(){
         edittaxstates.push($(".tax_state",this).val());
       });
@@ -780,7 +796,7 @@ $(document).ready(function() {
           });
           return false;
         }
-      }
+      }**/
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
