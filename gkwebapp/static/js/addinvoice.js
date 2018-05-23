@@ -548,6 +548,8 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
+			if($(".taxapplicable").val()){
+			}
 			$("#gst").focus().select();
 		    }
 		    else{
@@ -885,9 +887,13 @@ $(document).ready(function() {
     $("#consigneeaddress").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    console.log($(".taxapplicable").val());
 	    if($(".taxapplicable").val() == 22){
-		
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();
+		}
 	    }else{
 		$("#gst").focus().select();
 	    }
