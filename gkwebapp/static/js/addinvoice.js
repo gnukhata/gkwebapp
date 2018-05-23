@@ -50,7 +50,6 @@ $(document).ready(function() {
 	$(".vatfield").hide();
     }
 
-    $
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
@@ -386,6 +385,17 @@ $(document).ready(function() {
 	    $(".gstinfield").show();
 	    $(".vatfield").hide();
 	    $(".gstfield").show();
+
+	    /**On changing 'gst' or 'vat' radio button on the basis of 'source state' and 'destination state', 'igst' and 'sgst' fields are hide and show.**/
+	    
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
 	}else if($("#vat").is(":checked")){
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
@@ -462,7 +472,6 @@ $(document).ready(function() {
 	event.preventDefault();
 	$("#orggstin").text("");
 	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
-	console.log($(".taxapplicable").val());
 	if ($(".taxapplicable").val() == 7){
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
@@ -548,7 +557,8 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
-			if($(".taxapplicable").val()){
+			if($(".taxapplicable").val() == 22){
+			    $(".invoice_product_quantity_vat:first").focus().select();
 			}
 			$("#gst").focus().select();
 		    }
@@ -1224,7 +1234,11 @@ $(document).ready(function() {
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
-          $("#vat").focus().select();
+	  if($("#vat").is(':visible')){
+	      $("#vat").focus().select();
+	  }else{
+	      $("#consigneeaddress").focus();
+	  }
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
       } else {
           $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
