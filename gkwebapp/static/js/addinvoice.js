@@ -45,9 +45,14 @@ $(document).ready(function() {
       $(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
+	$(".onlyvat").show();
+	$(".gstvat").hide();
+	
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
+	$(".gstvat").show();
+	$(".onlyvat").hide();
     }
 
     
@@ -347,6 +352,24 @@ $(document).ready(function() {
 		    return false;
 		}
 	    }
+	    
+	    if(invoicedate < gstdate){
+		$(".onlyvat").show();
+		$(".gstvat").hide();
+		$("#taxapplicabletext").text("VAT");
+		$(".taxapplicable").val("22");
+		$("#gstproducttable").hide();
+		$(".gstinfield").hide();
+		$("#invoice_product_table_vat").show();
+		$(".tinfield").show();
+		$("#vathelp").show();
+		$(".gstfield").hide();
+		$(".vatfield").show();
+	    }else{
+		$(".onlyvat").hide();
+		$(".gstvat").show();
+		$(".taxapplicable").change();
+	    }
 	    /**if (invoicedate >= gstdate) {
 		$("#taxapplicabletext").text("GST");
 		$(".taxapplicable").val("7");
@@ -374,7 +397,6 @@ $(document).ready(function() {
 
     //Change event for 'GST' and 'VAT' radio button.
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
-	console.log("Tax Change");
 	if($("#gst").is(":checked")){
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
