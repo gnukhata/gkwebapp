@@ -2593,7 +2593,7 @@ if (event.which == 13) {
       }
 
       //validation for bankdetails on save button.
-      if ($("#chkbank").is(":checked")) {
+      if($("#chkpaymentmode option:selected").val()=="2"){
 	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
 	      $("#bankdetails-blank-alert").alert();
 	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2831,6 +2831,8 @@ if (event.which == 13) {
 	  address = $("#originaddress").val();
       }
       var form_data = new FormData();
+      console.log("contents",contents);
+      console.log("tax",tax);
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
       form_data.append("invoiceno", $("#invoice_challanno").val());
@@ -2867,8 +2869,9 @@ if (event.which == 13) {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-      //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+      //Code for sending data to the database based on which option is selected i.e."cash" or "bank" or "on credit".
       if ($("#chkpaymentmode option:selected").val()=="3"){
+<<<<<<< 8937b4283ff61ffc93a8f14bcd48c1f81f7266fc
 	  alert("3");
 	  //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
 		form_data.append("paymentmode",3);   
@@ -2881,9 +2884,14 @@ if (event.which == 13) {
             }
     form_data.append("taxflag", $(".taxapplicable").val());
 =======
+=======
+	  form_data.append("paymentmode",3);   //If cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+      } else if($("#chkpaymentmode option:selected").val()=="2"){  //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+	  form_data.append("bankdetails", JSON.stringify(bankdetails));
+	  form_data.append("paymentmode",2);
+>>>>>>> Changes in addinvoive and editinvoice  for payment mode
       }else{
-	  alert("15");
-	    form_data.append("paymentmode",15);
+	  form_data.append("paymentmode",15); //If on credit is selected then paymentmode is set to 15 (i.e. on credit transaction)
       }
       form_data.append("taxflag", $("#taxapplicable").val());
 >>>>>>> 1) Added one new payment mode option i.e "on credit" with value=15.
@@ -3075,25 +3083,21 @@ if (event.which == 13) {
     //Checking which radio button is selected.
     $("#chkpaymentmode").change(function(event) {
     if ($("#chkpaymentmode option:selected").val()=="2"){ //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
-	console.log("bank");
 	$("#bank").show();
 	$("#cash").hide();
 	$("#oncredit").hide();
     } else if ($("#chkpaymentmode option:selected").val()=="3"){
-	console.log("cash");
-	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
-                $("#bank").hide();
+	//If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+        $("#bank").hide();
 	$("#cash").show();
 	$("#oncredit").hide();
     }else {
-	console.log("oncredit");
-	     $("#bank").hide();
+	$("#bank").hide();
 	$("#cash").hide();
 	$("#oncredit").show();
     }});
     //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
     if ($("#status").val() == '15') {      //checking whether it is sale invoice or not (15 = sale invoice).
-	console.log("allo");
 	if ($("#chkpaymentmode option:selected").val()=="2"){
             $.ajax({
                 url: '/editorganisation?action=orgbankdetails',

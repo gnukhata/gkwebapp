@@ -2665,23 +2665,29 @@ if (event.which == 13) {
 				$("#tviw").hide();
 			    }
 			    
-			    paymentmod = resp.invoicedata.paymentmode; 
+			    paymentmod = resp.invoicedata.paymentmode;
 			    // If paymentmode is 2(i.e. bank) then load bankdetails.
 			    if (resp.invoicedata.paymentmode == "2") {
 				$("#accountno").val(resp.invoicedata.bankdetails.accountno);
 				$("#bankname").val(resp.invoicedata.bankdetails.bankname);
 				$("#branch").val(resp.invoicedata.bankdetails.branch);
 				$("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
-				$("#chkbank").prop('checked', true);  
-				$("#chkcash").prop('checked', false);
+				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
 				$("#bank").show();
 				$("#cash").hide();
-			    } else {
-				$("#chkcash").prop('checked', true);
-				$("#chkbank").prop('checked', false);
+				$("#oncredit").hide();
+			    }else if(resp.invoicedata.paymentmode == "15"){
+				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
+				$("#bank").hide();
+				$("#cash").hide();
+				$("#oncredit").show();
+			    }
+			    else {
+				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
 				$("#bank").hide();
 				$("#cash").show();
-			    }
+			     $("#oncredit").hide();
+			 }
 			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
 			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
 				$("#chkbank").click(function(event) {
