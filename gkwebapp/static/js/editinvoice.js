@@ -2690,7 +2690,7 @@ if (event.which == 13) {
 			 }
 			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
 			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
-				$("#chkbank").click(function(event) {
+				if($("#chkpaymentmode option:selected").val()=="2"){
 				    $.ajax({
 					url: '/editorganisation?action=orgbankdetails',
 					type: 'POST',
@@ -2713,7 +2713,7 @@ if (event.which == 13) {
 					.always(function() {
 					    console.log("complete");
 					});
-				});
+				}
 
 			    }
 			    $("#transportationmode").val(resp.invoicedata.transportationmode);

@@ -76,6 +76,7 @@ $(document).ready(function() {
       });
     
     //Initialising some variables.
+    var taxtype;
     var issuername = "";
     var designation = "";
     var address = "";
@@ -91,6 +92,7 @@ $(document).ready(function() {
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
+    var tottaxable;
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -134,6 +136,7 @@ $(document).ready(function() {
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    tottaxable=totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
@@ -159,7 +162,6 @@ $(document).ready(function() {
 		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	}
-
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
@@ -474,13 +476,15 @@ $(document).ready(function() {
 	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
 	if ($(".taxapplicable").val() == 7){
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-		    $(".igstfield").hide();
-		    $(".igstfield").css('border','');
-		    $(".sgstfield").show();
+		$(".igstfield").hide();
+		$(".igstfield").css('border','');
+		$(".sgstfield").show();
+		taxtype=3;
 		} else {
 		    $(".sgstfield").hide();
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
+		    taxtype=9;
 		}
 	 }	
 	$(".product_name_vat, .product_name_gst").change();
@@ -740,10 +744,12 @@ $(document).ready(function() {
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
+		taxtype=3;
 	    }
 	    else {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
+		taxtype=9;
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
@@ -1878,7 +1884,11 @@ $(document).ready(function() {
     event.preventDefault();
       /* Act on the event */
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
+<<<<<<< 91f686b811a0efbd6c4bec756815cd30c6436bc3
     if ($(this).val() == "") {
+=======
+	if ($(this).val() == "") {
+>>>>>>>  Product data with tax and taxable value send.
       $(this).val(0);
     }
 	if ($("#invoice_deliverynote option:selected").val() != '') {
@@ -2628,6 +2638,11 @@ if (event.which == 13) {
       var productcodes = [];
       var productqtys = [];
       var ppu;
+      var av= {};
+      var productdata={};
+      var prodtax={};
+      let pn;
+      let gsttype;
       var inoutflag = $("#status").val();
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -2804,7 +2819,20 @@ if (event.which == 13) {
 	      items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	      freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
 	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
+	      pn=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
+	      productdata[pn]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
+	      av["product"]=productdata;
 	  }
+	  if (taxtype==3){
+		  gsttype="CGST";
+	      }else{
+		  gsttype="IGST";	          
+	      }
+	  prodtax["GSTName"]=gsttype;
+	  prodtax["CESSName"]="CESS";
+	  av["tax"]=prodtax;
+	  av["totaltaxable"]=tottaxable;
+	  console.log("all data",av);
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
       stock["items"] = items;
@@ -2831,8 +2859,6 @@ if (event.which == 13) {
 	  address = $("#originaddress").val();
       }
       var form_data = new FormData();
-      console.log("contents",contents);
-      console.log("tax",tax);
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
       form_data.append("invoiceno", $("#invoice_challanno").val());
@@ -2846,6 +2872,7 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       form_data.append("invtotalword", numbertowords);
+      form_data.append("av",JSON.stringify(av));
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();
