@@ -923,6 +923,10 @@ if($("#vatorgstflag").val() == '22'){
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
 	}
+	var panno= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	if(panno!=""){
+	    form_data.append("gstin", JSON.stringify(gobj));
+	}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
 	    var csflag = $("#add_cussup input:radio:checked").val();
