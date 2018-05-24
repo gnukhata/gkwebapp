@@ -240,38 +240,49 @@ $(document).ready(function() {
 
     $(document).off("keydown", "#lcd").on("keydown", "#lcd", function(event){
 	 var displays = document.getElementById("lcdu");
-        if(event.which==107){
+        if(event.which==107 || (event.shiftKey && event.which==61)){
             event.preventDefault();
             operation = "+";
             firstnumber = parseFloat($("#lcd").val());  
             $("#lcd").val("");
 	    displays.value = firstnumber + "+" ;
 	}
-	 else if(event.which==109){
+	else if(event.which==106 || (event.shiftKey && event.which==56)){
+            event.preventDefault();
+         operation = "*";  
+            firstnumber = parseFloat($("#lcd").val());  
+            $("#lcd").val("");
+	    displays.value = firstnumber + "*" ;
+         }
+	else if(event.which==109 || event.which==173){
             event.preventDefault();
          operation = "-";  
             firstnumber = parseFloat($("#lcd").val());  
             $("#lcd").val("");
 	    displays.value = firstnumber + "-" ;
          }
-	else if(event.which==106){
-            event.preventDefault();
-         operation = "*";  
-            firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("");
-	    displays.value = firstnumber + "*" ;
-        }
-	else if(event.which==111){
+	
+	else if(event.which==111 || event.which==191){
             event.preventDefault();
          operation = "/";  
             firstnumber = parseFloat($("#lcd").val());  
             $("#lcd").val("");
 	    displays.value = firstnumber + "/" ;
         }
-	 else if(event.which==13){
+	else if(event.which==67){
+	    event.preventDefault();
+	    $("#lcd").val('0');  
+	    $("#lcdu").val("");
+	    firstnumber="0";
+	    secondnumber="0";
+	    result="";
+	operation=null;
+	    $("#lcd").focus().select();  
+	}
+	 else if(event.which==13 || event.which==61){
             event.preventDefault();
 	   if($("#lcd").val()!=""){
-		$("#equalto").trigger("click");
+	       $("#equalto").trigger("click");
 	    }
          }
     });
