@@ -70,7 +70,7 @@ $(document).ready(function() {
     var consigneeflag = false;
     var editflag = false;
     var delchalproducts = [];
-    var paymentmod = {};     //Store the paymentmode.
+    var paymentmod;     //Store the paymentmode.
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -1217,11 +1217,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	  $("#chkpaymentmode").focus();
       }
   });
 
@@ -1294,12 +1290,8 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
-      }
+	$("#chkpaymentmode").focus();
+    }
   });
 
   $(document).off('change', '.invoice_product_freequantity_vat').on('change', '.invoice_product_freequantity_vat', function(event) {
@@ -1390,11 +1382,8 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	$("#chkpaymentmode").focus();
+
       }
   });
 
@@ -1458,11 +1447,8 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+     	      $("#chkpaymentmode").focus();
+
     }
   });
 
@@ -1526,12 +1512,8 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
-    }
+     	$("#chkpaymentmode").focus();
+   }
   });
 
 
@@ -1587,11 +1569,7 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
-	 if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	$("#chkpaymentmode").focus();
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
@@ -1648,11 +1626,7 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	  }
       else {
-          if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+          $("#chkpaymentmode").focus();
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
@@ -1683,11 +1657,7 @@ $(document).ready(function() {
       $("#invoice_issuer_name").focus().select();
     }
     else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	$("#chkpaymentmode").focus();
       }
   });
 
@@ -1860,11 +1830,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	$("#chkpaymentmode").focus();
       }
   });
 
@@ -1937,11 +1903,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
       else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	  $("#chkpaymentmode").focus();
       }
   });
 
@@ -2042,11 +2004,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	$("#chkpaymentmode").focus();
       }
   });
 
@@ -2115,11 +2073,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+      	$("#chkpaymentmode").focus();
     }
   });
 
@@ -2238,11 +2192,7 @@ if (event.which == 13) {
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	}
 	else {
-	    if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+	    $("#chkpaymentmode").focus();
 	}
     }
 }
@@ -2273,11 +2223,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      if ($("#chkbank").is(":checked")) {
-	      $("#chkbank").focus().click();
-	  }else{
-	      $("#chkcash").focus().click();
-	  }
+     	$("#chkpaymentmode").focus();
     }
 });
 
@@ -2672,22 +2618,21 @@ if (event.which == 13) {
 				$("#bankname").val(resp.invoicedata.bankdetails.bankname);
 				$("#branch").val(resp.invoicedata.bankdetails.branch);
 				$("#ifsc").val(resp.invoicedata.bankdetails.ifsc);
-				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
+				$('#chkpaymentmode option[value=' + paymentmod + ']').prop("selected",true);
 				$("#bank").show();
 				$("#cash").hide();
 				$("#oncredit").hide();
 			    }else if(resp.invoicedata.paymentmode == "15"){
-				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
+				$('#chkpaymentmode option[value=' + paymentmod + ']').prop("selected",true);
 				$("#bank").hide();
 				$("#cash").hide();
 				$("#oncredit").show();
-			    }
-			    else {
-				$('#chkpaymentmode option[value=' + paymentmod + ']').attr("selected","selected");
+			    }else {
+				$('#chkpaymentmode option[value=' + paymentmod + ']').prop("selected",true);
 				$("#bank").hide();
 				$("#cash").show();
-			     $("#oncredit").hide();
-			 }
+				$("#oncredit").hide();
+			    }
 			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
 			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
 				if($("#chkpaymentmode option:selected").val()=="2"){
@@ -2976,7 +2921,7 @@ if (event.which == 13) {
       }
 
       //validation for bankdetails on save button.  
-       if ($("#chkbank").is(":checked")) {
+       if ($("#chkpaymentmode option:selected").val()=="2") {
 	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
 	      $("#bankdetails-blank-alert").alert();
 	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -3243,17 +3188,16 @@ if (event.which == 13) {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
-        if ($("#chkcash").is(":checked")) {
-	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
-	        form_data.append("paymentmode",3);   
-
-        } else {
-	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
-	        form_data.append("bankdetails", JSON.stringify(bankdetails));
-		form_data.append("paymentmode",2);
-            }  
-    form_data.append("taxflag", $("#taxapplicable").val());
+    //Code for sending data to the database based on which option is selected i.e."cash" or "bank" or "on credit".
+      if ($("#chkpaymentmode option:selected").val()=="3"){
+	  form_data.append("paymentmode",3);   //If cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+      } else if($("#chkpaymentmode option:selected").val()=="2"){  //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+	  form_data.append("bankdetails", JSON.stringify(bankdetails));
+	  form_data.append("paymentmode",2);
+      }else{
+	  form_data.append("paymentmode",15); //If on credit is selected then paymentmode is set to 15 (i.e. on credit transaction)
+      }
+      form_data.append("taxflag", $("#taxapplicable").val());
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
@@ -3451,35 +3395,40 @@ if (event.which == 13) {
             });
     });
 
-    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+   $(document).off('keydown', '#chkpaymentmode').on('keydown', '#chkpaymentmode', function(event) {
         if(event.which==13){
-        $("#accountno").focus();
-        }
+	    if($("#chkpaymentmode option:selected").val()=="2"){
+		$("#accountno").focus();
+            }else{
+		$("#transportationmode").focus();
+    	    }
+	}
     });
-    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
-        if(event.which==13){
-        $("#transportationmode").focus();
-        }
-    });
+      
      //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
-    $("input[name='chkpaymentmode']").click(function () {
-	//Checking which radio button is selected.
-        if ($("#chkbank").is(":checked")) {
-	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
-                $("#bank").show();
-	        $("#cash").hide();
-	    if ($("#status").val() == "15" && editflag == 'false') {
-		$('#chkbank').trigger('click');    //trigger click event on bank radio button.
+$("#chkpaymentmode").change(function(event) {
+    if ($("#chkpaymentmode option:selected").val()=="2"){ //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+	$("#bank").show();
+	$("#cash").hide();
+	$("#oncredit").hide();
+	if ($("#status").val() == "15" && editflag == 'false') {
+	    console.log("pay",paymentmod);
+	    $('#chkbank').trigger('click');    //trigger click event on bank radio button.
+	}
+	if (editflag == 'false'){
+	    $("#invoice_customer").trigger("change");    //Calling change event on onclick of bank to load bankdetails.
 	    }
-	    if (editflag == 'false'){
-	        $("#invoice_customer").trigger("change");    //Calling change event on onclick of bank to load bankdetails.
-	    }
-        } else {
-	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
-                $("#bank").hide();
-		$("#cash").show();
-            }
-    });
+        
+    } else if ($("#chkpaymentmode option:selected").val()=="3"){
+	//If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+        $("#bank").hide();
+	$("#cash").show();
+	$("#oncredit").hide();
+    }else {
+	$("#bank").hide();
+	$("#cash").hide();
+	$("#oncredit").show();
+    }});
 
       //Keydown event for BANK DETAILS
     $("#accountno").keydown(function(event) {
