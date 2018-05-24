@@ -226,13 +226,9 @@ $(document).ready(function() {
       $(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
-	$(".onlyvat").show();
-	$(".gstvat").hide();
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
-	$(".onlyvat").hide();
-	$(".gstvat").show();
     }
 
     //Delivery Note number select field is hidden when inventory is disabled.
@@ -351,26 +347,7 @@ $(document).ready(function() {
 		    return false;
 		}
 	    }
-
-	    if(invoicedate < gstdate){
-		$(".onlyvat").show();
-		$(".gstvat").hide();
-		$("#taxapplicabletext").text("VAT");
-		$(".taxapplicable").val("22");
-		$("#gstproducttable").hide();
-		$(".gstinfield").hide();
-		$("#invoice_product_table_vat").show();
-		$(".tinfield").show();
-		$("#vathelp").show();
-		$(".gstfield").hide();
-		$(".vatfield").show();
-	    }else{
-		$(".onlyvat").hide();
-		$(".gstvat").show();
-		$(".taxapplicable").change();
-	    }
-	    
-	    /**if (invoicedate >= gstdate) {
+	    if (invoicedate >= gstdate) {
 		$("#taxapplicabletext").text("GST");
 		$("#taxapplicable").val("7");
 		$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
@@ -391,66 +368,9 @@ $(document).ready(function() {
 		$("#vathelp").show();
 		$(".gstfield").hide();
 		$(".vatfield").show();
-	    }**/
+	    }
 	}
 	$("#invoicestate").change();
-    });
-
-    //Chnage event of Radio Buttons ("VAT" and "GST")
-    $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
-	if($("#gst").is(":checked")){
-	    $("#taxapplicabletext").text("GST");
-	    $(".taxapplicable").val("7");
-	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-	    $("#vathelp").hide();
-	    $(".tinfield").hide();
-	    $("#gstproducttable").show();  //Shows GST Product table.
-	    $(".gstinfield").show();
-	    $(".vatfield").hide();
-	    $(".gstfield").show();
-
-	    /**On changing 'gst' or 'vat' radio button on the basis of 'source state' and 'destination state', 'igst' and 'sgst' fields are hide and show.**/
-	    
-	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-		$(".igstfield").hide();
-		$(".sgstfield").show();
-	    }
-	    else {
-		$(".sgstfield").hide();
-		$(".igstfield").show();
-	    }
-	}else if($("#vat").is(":checked")){
-	    $("#taxapplicabletext").text("VAT");
-	    $(".taxapplicable").val("22");
-	    $("#gstproducttable").hide();
-	    $(".gstinfield").hide();
-	    $("#invoice_product_table_vat").show();
-	    $(".tinfield").show();
-	    $("#vathelp").show();
-	    $(".gstfield").hide();
-	    $(".vatfield").show();
-	}
-    });
-
-    $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
-	if (event.which == 13) {
-	    if ($(".taxapplicable").val() == 7) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_gst:first").focus().select();
-		}
-		else {
-		    $(".product_name_gst:first").focus().select();
-		}
-	    }
-	    else {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_vat:first").focus().select();
-		}
-		else {
-		    $(".product_name_vat:first").focus().select();
-		}
-	    }
-	}
     });
 
     //Key Event for Invoice Date Field.
@@ -584,13 +504,27 @@ $(document).ready(function() {
 	    else {
 		if ($("#invoice_customer").is(":disabled")) {
 		    if($("#consigneename").is(":disabled")) {
-			if(invoicedate < gstdate){
-			    $(".invoice_product_quantity_vat:first").focus().select();
+			if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+			if(sessionStorage.vatorgstflag == '22' ){
+			    $("#tinconsignee").focus();
 			}
-			if($(".taxapplicable").val() == 22){
-			    $("#vat").focus().select();
-			}else{
-			    $("#gst").focus().select();
+			else {
+			    $("#gstinconsignee").focus(); //Focus shifts to Consignee GSTIN as Consignee Name field is disabled when delivery note is selected. 
 			}
 		    }
 		    else{
@@ -650,7 +584,7 @@ $(document).ready(function() {
 	    }
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
-		    if (invoicedate < gstdate) {
+		    if ($("#taxapplicable").val() == 7) {
 			if ($("#invoice_deliverynote option:selected").val() != '') {
 			    $(".invoice_product_quantity_gst:first").focus().select();
 			}
@@ -658,18 +592,13 @@ $(document).ready(function() {
 			    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
 			}
 		    }
-		    /**else {
+		    else {
 			if ($("#invoice_deliverynote option:selected").val() != '') {
 			    $(".invoice_product_quantity_vat:first").focus().select();
 			}
 			else {
 			    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
 			}
-			}**/
-		    if ($("#taxapplicable").val() == 7) {
-			$("#gst").focus().select();
-		    }else{
-			$("#vat").focus().select();
 		    }
 		}
             }
@@ -815,20 +744,23 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if($("#Consignee").prop('checked') == true) {
-		if(invoicedate < gstdate){
-		    if ($("#invoice_deliverynote option:selected").val() != '') {
-			$(".invoice_product_quantity_vat:first").focus().select();
-		    }
-		    else {
-			$(".product_name_vat:first").focus().select();
-		    }
-		}else{
-		    if($(".taxapplicable").val() == 22){
-			$("#vat").focus().select();
-		    }else{
-			$("#gst").focus().select();
-		    }
-		} 
+		if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+		
 	    }else{
 		$("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
 	    }
@@ -945,18 +877,20 @@ $(document).ready(function() {
     $("#consigneeaddress").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if(invoicedate < gstdate){
+	    if ($("#taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+	    }
+	    else {
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    $(".invoice_product_quantity_vat:first").focus().select();
 		}
 		else {
-		    $(".product_name_vat:first").focus().select();
-		}
-	    }else{
-		if($(".taxapplicable").val() == 22){
-		    $("#vat").focus().select();
-		}else{
-		    $("#gst").focus().select();
+		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
 		}
 	    }
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
@@ -2578,7 +2512,7 @@ if (event.which == 13) {
 			    $("#invoice_date").val(invoicedate["0"]);
 			    $("#invoice_month").val(invoicedate["1"]);
 			    $("#invoice_year").val(invoicedate["2"]);
-			    //$("#invoice_year").blur();
+			    $("#invoice_year").blur();
 			    if ($("#status").val() == 15) {
 				$("#invoicestate").val(resp.invoicedata.sourcestate);
 				$("#statecodeforinvoice").text(pad(resp.invoicedata.sourcestatecode, 2));
@@ -2607,31 +2541,8 @@ if (event.which == 13) {
 			    });
 
 			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
-			    $(".beforedit").show();
-			    $(".editinv").hide();
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
 			    // Loading tax and product data based on taxflag(VAT or GST)
-			    if ($("#taxapplicable").val() == '7') {
-				$("#taxapplicabletext").text("GST");
-				$("#taxapplicable").val("7");
-				$("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-				$("#vathelp").hide();
-				$(".tinfield").hide();
-				$("#gstproducttable").show();  //Shows GST Product table.
-				$(".gstinfield").show();
-				$(".gstfield").show();
-				$(".vatfield").hide();
-			    }else if ($("#taxapplicable").val() == '22') {
-				$("#taxapplicabletext").text("VAT");
-				$("#taxapplicable").val("22");
-				$("#gstproducttable").hide();
-				$(".gstinfield").hide();
-				$("#invoice_product_table_vat").show();
-				$(".tinfield").show();
-				$("#vathelp").show();
-				$(".gstfield").hide();
-				$(".vatfield").show();
-			    }
 			    if ($("#taxapplicable").val() == '7') {
 				// Loading tax and product details when GST is applied.
 				$("#taxapplicabletext").text('GST');
@@ -2687,8 +2598,6 @@ if (event.which == 13) {
 				$(".gstfield").show();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
-				console.log("vat invoice");
-				
 				// Loading tax and product details when VAT is applied.
 				$("#taxapplicabletext").text('VAT');
 				$("#tin").text(resp.invoicedata.custSupDetails.custtin);
@@ -2720,6 +2629,8 @@ if (event.which == 13) {
 				$("#totaltax").val(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#total_product_vat").val(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
 				$("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+				$(".gstfield").hide();
+				$(".vatfield").show();
 			    }
 			    // Loading consignee ddetails if any.
 			    if (resp.invoicedata.consignee.consigneename) {
@@ -2826,11 +2737,8 @@ if (event.which == 13) {
 	    $("#invdetailsdiv").hide();
 	}
     });
-
     // Click event for invoice edit button.
     $("#invoice_edit").click(function(event){
-	invoicedatestring = $("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val();
-	invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
 	editflag = false;
 	$("#invoice_save").show();
 	$("#invoice_addcust").show();
@@ -2844,26 +2752,13 @@ if (event.which == 13) {
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .delchalfield, .supplydate").prop("disabled", true);
 	}
-	$(".beforedit").hide();
-	$(".editinv").show();	
 	$("#originaddress").prop("disabled",true);
-	if(invoicedate < gstdate){
-	    $(".onlyvat").show();
-	    $(".gstvat").hide();
-	}
-	else{
-	    $(".onlyvat").hide();
-	    $(".gstvat").show();
-	}
 	if ($("#taxapplicable").val() == 7) {
-	    $("#gst").prop("checked",true);
 	    $(".product_name_gst").each(function(index){
 		if ($(".product_name_gst:eq(" + index + ") option:selected").attr("gsflag") != 7) {  // If an item is not a product
 		    $(".invoice_product_quantity_gst:eq(" + index + "), .invoice_product_freequantity_gst:eq(" + index + ")").prop("disabled", true);
 		}
 	    });
-	}else{
-	    $("#vat").prop("checked",true);
 	}
 	
 	if(consigneeflag == true){

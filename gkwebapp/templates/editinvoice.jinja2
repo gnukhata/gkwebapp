@@ -266,22 +266,15 @@
 		    </div>
 		    <a id="taxapplicablescroll"></a>
 		    <div class="col-md-12">
-		      <div class="col-sm-3 beforedit">
-			<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
-			<label id="taxapplicabletext"></label>
-			<input type="text" id="taxapplicable" value="" hidden>
-		      </div>
-		      <div class="col-sm-3 editinv" hidden>
-			<div class="gstvat">
-			  <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
-			  <label><input type="radio" class="taxapplicable" name="cashmemo" id="gst" aria-label="gst" value="7" checked> GST</label>&nbsp
-			  <label><input type="radio" class="taxapplicable" name="cashmemo" id="vat" aria-label="vat" value="22"> VAT</label>
-			</div>
-			<div class="onlyvat" hidden>
-			  <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
+		      <div class="col-md-3">
+			<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
+			{% if resultgstvat == '29' or resultgstvat == '7' %}
+			  <label id="taxapplicabletext" class="">GST</label>
+			  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+			{% else %}
 			  <label id="taxapplicabletext" >VAT</label>
-			  <input type="text" class="taxapplicable" id="vat" value="22"  hidden>
-			</div>
+			  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+			{% endif %}
 		      </div>
 		      {% if status=="in" %}
 			<input type="hidden" id="status" value="9">
