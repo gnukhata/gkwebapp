@@ -210,9 +210,10 @@ $(document).ready(function() {
 	    //display.value =null;
 	//}
         firstnumber = parseFloat($("#lcd").val());
-	$("#lcd").val("0");
+	$("#lcd").val("");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "+" ;
+	$("#lcd").focus();
 	return false;
     });
 
@@ -220,27 +221,30 @@ $(document).ready(function() {
        event.preventDefault();
        operation = "-";
         firstnumber = parseFloat($("#lcd").val());  
-         $("#lcd").val("0");
+         $("#lcd").val("");
 	var displays = document.getElementById("lcdu");
-	displays.value = firstnumber + "-" ;
+	 displays.value = firstnumber + "-" ;
+	 $("#lcd").focus();
 	return false;
    });
    $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
        event.preventDefault();
        operation = "*";
         firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("0");
+        $("#lcd").val("");
 	var displays = document.getElementById("lcdu");
        displays.value = firstnumber + "*" ;
+       $("#lcd").focus();
 	return false;
    });
     $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
 	event.preventDefault();
 	operation = "/";
         firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("0");
+        $("#lcd").val("");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "/";
+	$("#lcd").focus();
 	return false;
     });
 
