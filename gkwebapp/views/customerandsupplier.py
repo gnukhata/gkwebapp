@@ -91,7 +91,7 @@ def savecustomersupplier(request):
         else:
             gkdata = {"activity":dataset["custname"] + " supplier created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-    if "gstin" in request.params:
+    if gstin in request.params:
         dataset["gstin"]=json.loads(request.params["gstin"])
     return {"gkstatus": result.json()["gkstatus"]}
 
@@ -99,9 +99,11 @@ def savecustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
-    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"gstin":json.loads(request.params["gstin"]),"custid":int(request.params["custid"])}
+    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"])}
     if request.params.has_key("bankdetails"):
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
+    if request.params.has_key("gstin"):
+        dataset["gstin"]=json.loads(request.params["gstin"])
     result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
         accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
