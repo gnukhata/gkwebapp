@@ -64,6 +64,12 @@ $(document).ready(function() {
     var operation;
     
     /*Calculator popover events starts here*/
+    $(document).off("click", "#lcd").on("click", "#lcd", function(event){
+	 event.preventDefault();
+	$("#lcd").focus().select();
+	return false;
+    });
+
     $(document).off("click", "#num1").on("click", "#num1", function(event){
 	event.preventDefault();
 	if ($("#lcd").val() == "0" || $("#lcd").val() == result){  
