@@ -15,7 +15,6 @@
    #ledgertable th {
        font-size: 85%;
 
-
    }
    .card-view .title {
        font-weight: bold;
@@ -86,7 +85,7 @@
 	  <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
 	{% endif %}
 	<span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
-	<span style="margin-left:50%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
+	<center><span style="margin-left:40%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span></center>
       </div>
       <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
 	<span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
