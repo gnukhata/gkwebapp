@@ -66,7 +66,7 @@ $(document).ready(function() {
     /*Calculator popover events starts here*/
     $(document).off("click", "#lcd").on("click", "#lcd", function(event){
 	 event.preventDefault();
-	$("#lcd").focus().select();
+	$("#lcd").focus();
 	return false;
     });
 
@@ -283,6 +283,7 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    $("#lcd").val('0');  
 	    $("#lcdu").val("");
+	    $("#resultlcd").val("");
 	    firstnumber="0";
 	    secondnumber="0";
 	    result="";
@@ -342,21 +343,30 @@ $(document).ready(function() {
 	     //var percent = document.getElementById("lcd");
       result = firstnumber * (secondnumber/100);
       }*/
+	 if(result!="" ){
+	     $("#resultlcd").show();
+	 }
 	 result= parseFloat(result.toFixed(2));
 	 var displays =document.getElementById("lcdu");
+	 var resultdisplay =document.getElementById("resultlcd");
 	 display.value ="" ;
 	 display.value = result.toString();
+	 resultdisplay.value = result.toString();
 	 if(secondnumber>"0" ){
-	     displays.value = firstnumber + operation + secondnumber + " = " + result.toString();
+	     displays.value = firstnumber + operation + secondnumber ;
+             resultdisplay.value =  "="   +   result.toString();
 	 }
 	 //firstnumber(displays.value);
 	 //display.value ="";
+	 $("#lcd").focus();
 	return false;
      });
     $(document).off("click", "#clr").on("click", "#clr", function(event){
 	 event.preventDefault();
 	$("#lcd").val('0');  
 	$("#lcdu").val("");
+	$("#resultlcd").val("");
+	$("#resultlcd").hide();
 	firstnumber="0";
 	secondnumber="0";
 	result="";
