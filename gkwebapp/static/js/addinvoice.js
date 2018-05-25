@@ -93,6 +93,7 @@ $(document).ready(function() {
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
     var tottaxable;
+    var tottax;
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -207,6 +208,7 @@ $(document).ready(function() {
 	    tottaxable=totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
+	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
@@ -2742,6 +2744,8 @@ if (event.which == 13) {
 	}
     }
 	av["totaltaxable"]=tottaxable;
+	av["taxpayment"]=tottax;
+	console.log("data of gst===",av);
 	invoicetotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 
     }
@@ -2835,8 +2839,9 @@ if (event.which == 13) {
 	      }
 	  prodtax["GSTName"]=gsttype;
 	  prodtax["CESSName"]="CESS";
-	  av["tax"]=prodtax;
+	  av["avtax"]=prodtax;
 	  av["totaltaxable"]=tottaxable;
+	  console.log("data of vat ===",av);
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
       stock["items"] = items;
