@@ -910,7 +910,6 @@ if($("#vatorgstflag").val() == '22'){
 	form_data.append("custfax", $("#add_cussup_fax").val());
 	form_data.append("custpan", $("#add_cussup_pan").val());
 	form_data.append("custtan", custtan);
-	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#add_state").val());
 	form_data.append("csflag", $("#add_cussup input:radio:checked").val());
 	if ($("#add_cussup input:radio:checked").val() == "19"){
