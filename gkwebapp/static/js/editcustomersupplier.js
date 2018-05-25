@@ -1103,7 +1103,11 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	form_data.append("custfax", $("#edit_cussup_fax").val());
 	form_data.append("custpan", $("#edit_cussup_pan").val());
 	form_data.append("custtan", custtan);
-	form_data.append("gstin", JSON.stringify(gobj));
+	var curindex2 = $(this).index();
+	var panno= $('#gstintable tbody tr:eq('+curindex2+') td:eq(1) input:eq(1)').val();
+	if (panno!=''){
+	    form_data.append("gstin", JSON.stringify(gobj));
+	}
 	form_data.append("state", $("#edit_state").val());
 	if ($("#custradio").is(":checked")){
 	    form_data.append("oldcustname", $("#Customer_edit_list option:selected").text());}
