@@ -84,6 +84,8 @@ def savecustomersupplier(request):
     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
     if request.params.has_key("bankdetails"): 
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
+    if "gstin" in request.params:
+        dataset["gstin"]=json.loads(request.params["gstin"])
     result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
         if dataset["csflag"] == 3:
@@ -91,8 +93,6 @@ def savecustomersupplier(request):
         else:
             gkdata = {"activity":dataset["custname"] + " supplier created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-    if gstin in request.params:
-        dataset["gstin"]=json.loads(request.params["gstin"])
     return {"gkstatus": result.json()["gkstatus"]}
 
 
