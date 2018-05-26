@@ -1,56 +1,56 @@
 <!DOCTYPE HTML >
 <html>
-<head>
-  <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
-  <style>
-  .content{ margin-top:4%
-  }
-  @media (max-width: 767px) {
-    .mainbox {
-      margin-top: 50px;
-    }
+  <head>
+    <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}" />
+    <style>
+     .content{ margin-top:4%
+     }
+     @media (max-width: 767px) {
+	 .mainbox {
+	     margin-top: 50px;
+	 }
 
-  }
-  </style>
+     }
+    </style>
 
 
 
-</head>
-<body>
+  </head>
+  <body>
 
-      <div id="createtorg" class="mainbox">
-        <div class="alert alert-danger" id="orgname-blank-alert" aria-live="rude" role="alert" hidden>
+    <div id="createtorg" class="mainbox">
+      <div class="alert alert-danger" id="orgname-blank-alert" aria-live="rude" role="alert" hidden>
 
-          {% trans %}Please enter organisation name!{% endtrans %}
+        {% trans %}Please enter organisation name!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="orgname-duplicate-alert" aria-live="rude" role="alert" hidden>
+
+        {% trans %}Duplicate organisation!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+        <label for="viewledger_todate">{% trans %}Financial end date should be greater or equal to start date!{% endtrans %}</label>
+      </div>
+      <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
+
+        {% trans %}Please enter Date!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="date-improper-alert" aria-live="rude" role="alert" hidden>
+
+        {% trans %}Improper Date!{% endtrans %}
+      </div>
+      <div class="col-sm-12 panel" >
+        <div class="panel-heading">
+          <div class="panel-title">{% trans %}Create Organisation{% endtrans %}</div>
         </div>
-        <div class="alert alert-danger" id="orgname-duplicate-alert" aria-live="rude" role="alert" hidden>
+        <div style="padding-top:20px" class="panel-body" >
 
-          {% trans %}Duplicate organisation!{% endtrans %}
-        </div>
-        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
-
-          <label for="viewledger_todate">{% trans %}Financial end date should be greater or equal to start date!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="date-blank-alert" aria-live="rude" role="alert" hidden>
-
-          {% trans %}Please enter Date!{% endtrans %}
-        </div>
-        <div class="alert alert-danger" id="date-improper-alert" aria-live="rude" role="alert" hidden>
-
-          {% trans %}Improper Date!{% endtrans %}
-        </div>
-        <div class="panel" >
-          <div class="panel-heading">
-            <div class="panel-title">{% trans %}Create Organisation{% endtrans %}</div>
-          </div>
-          <div style="padding-top:20px" class="panel-body" >
-
-            <form id="createorgform"  role="form">
-              <div class="form-group">
-                <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %} : </label>
-                <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
-                <br/>
-                {% if locale =='en' or locale ==None %}
+          <form id="createorgform"  role="form">
+	    <div class="col-sm-6 form-group">
+              <label for="orgname">{% trans %}<u>O</u>rganisation Name{% endtrans %} : </label>
+              <input name="orgname" class="form-control" placeholder="Enter Organisation Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
+              <br/>
+              {% if locale =='en' or locale ==None %}
 
                 <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %} : </label>
                 <select name="orgcase" class="form-control" id="orgcase" accesskey="c">
@@ -60,73 +60,82 @@
                   <option value="Title Case">{% trans %}Title Case{% endtrans %}</option>
                 </select>
                 <br/>
-                {% endif %}
+              {% endif %}
 
 
-                <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %} : </label>
-                <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
-                  <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
-                  <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
-                </select>
+              <label for="orgtype">{% trans %}Organisation <u>T</u>ype{% endtrans %} : </label>
+              <select name="orgtype" class="form-control" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
+                <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
+                <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
+              </select>
 
-                <br/>
+              <br/>
 
-                <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %} : </label>
+              <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %} : </label>
 
-                <div class="form-inline">
+              <div class="form-inline">
 
-                  <label class="sr-only" for="fromday">{% trans %}Enter From Day{% endtrans %}</label>
-                  <input type="text" id="fromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
+                <label class="sr-only" for="fromday">{% trans %}Enter From Day{% endtrans %}</label>
+                <input type="text" id="fromday" name="fromday" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
 
-                  <label class="sr-only" for="frommonth">{% trans %}Enter From Month{% endtrans %}</label>
-                  <input type="text" id="frommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
+                <label class="sr-only" for="frommonth">{% trans %}Enter From Month{% endtrans %}</label>
+                <input type="text" id="frommonth" name="frommonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
 
-                  <label class="sr-only" for="fromyear">{% trans %}Enter From Year{% endtrans %}</label>
-                  <input type="text" id="fromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                <label class="sr-only" for="fromyear">{% trans %}Enter From Year{% endtrans %}</label>
+                <input type="text" id="fromyear" name="fromyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
-                  <label>--{% trans %}To{% endtrans %}--</label>
+                <label>--{% trans %}To{% endtrans %}--</label>
 
-                  <label class="sr-only" for="today">{% trans %}Enter To Day{% endtrans %}</label>
-                  <input type="text" id="today" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
+                <label class="sr-only" for="today">{% trans %}Enter To Day{% endtrans %}</label>
+                <input type="text" id="today" name="day" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
 
-                  <label class="sr-only" for="tomonth">{% trans %}Enter To Month{% endtrans %}</label>
-                  <input type="text" id="tomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
+                <label class="sr-only" for="tomonth">{% trans %}Enter To Month{% endtrans %}</label>
+                <input type="text" id="tomonth" name="tomonth" class="form-control vdate" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
 
-                  <label class="sr-only" for="toyear">{% trans %}Enter To Year{% endtrans %}</label>
-                  <input type="text" id="toyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
+                <label class="sr-only" for="toyear">{% trans %}Enter To Year{% endtrans %}</label>
+                <input type="text" id="toyear" name="toyear" class="form-control vdate" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
 
-                </div>
-        
-                <div class="form-group">
-		  <div class="radio">
-        	    <label><input type="radio" class="iib" name="iib" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
-        	  </div>
-		  <div class="radio">
-        	    <label><input type="radio" class="iib" name="iib" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Accounting with Invoicing{% endtrans %}.</label>
-        	  </div>
-		  <div class="radio">
-        	    <label><input type="radio" class="iib" name="iib" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
-        	  </div>
-
-        	  <div class="radio">
-        	    <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" >&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
-        	  </div>
-		  <small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
-               	      </div>
-
-                <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
               </div>
-
-
-            </form>
-
-          </div>
+	      <br>
+	    </div>
+	    <div class="col-sm-6 form-group">
+	      <div class="form-inline">
+		<div class="radio">
+        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Single Sales/Purchase Ledger{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Per Product Sale/Purchase Ledger{% endtrans %}.</label>
+		</div>
+	      </div><br>
+	      <div class="form-group">
+		<input type="checkbox" id="sales" checked>
+		<label for="sales">{%trans%}Generate Sales & Purchase Vouchers for Invoices{%endtrans%}</label>
+	      </div>
+	      <div class="form-group">
+		<label >{%trans%}How would you like to use GNUKLhata?{%endtrans%}</label><br>
+		<div class="radio">
+        	  <label><input type="radio" class="iib" name="iib" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="iib" name="iib" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Accounting with Invoicing{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="iib" name="iib" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
+        	</div>
+        	<div class="radio">
+        	  <label><input type="radio" class="iib" name="iib" id="invinvsbillradio" aria-label="" >&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
+        	</div>
+		<small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
+	      </div>
+	    </div>
+	    <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
+          </form>
         </div>
-
       </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
+    </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
 
   </body>
-  </html>
+</html>
