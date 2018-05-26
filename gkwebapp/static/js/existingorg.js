@@ -26,7 +26,7 @@ Contributors:
 
 $(document).ready(function()
 {
-  var orgobj = {};
+    var orgobj = {};
   $("#finalyears").keydown( function(e) {
 
     if (e.which == 13)
@@ -86,9 +86,11 @@ $(document).ready(function()
     }
 
       
-$("#selectnav").click(function(event){
+    $("#selectnav").click(function(event){
+	
     event.preventDefault();
-    var numoforg = $("#org-name option").length;
+	$(".feature").show();
+	var numoforg = $("#org-name option").length;
     var numofyears =  $("#finalyears option").length;
     if (numoforg == 2){ //for setting focus to the "next" button if there is only one organisation present
 	if(numofyears==1)
