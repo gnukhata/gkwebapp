@@ -2642,7 +2642,8 @@ if (event.which == 13) {
       var productqtys = [];
       var ppu;
       var av= {};
-      var productdata={};
+    var productdata={};
+    var proddata = {};
       var prodtax={};
       let pn;
       let gsttype;
@@ -2741,8 +2742,9 @@ if (event.which == 13) {
 	    pn=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
 	  productdata[pn]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
 	  proddata[productcode]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
+	  
 	  av["product"]=productdata;
-	  av["proddata"]=proddata;
+	  av["prodData"]=proddata;
 	}
     }
 	av["totaltaxable"]=tottaxable;
@@ -2832,7 +2834,9 @@ if (event.which == 13) {
 	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
 	      pn=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
 	      productdata[pn]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
+	      proddata[productcode]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
 	      av["product"]=productdata;
+	      av["prodData"]= proddata;
 	  }
 	  if (taxtype==3){
 		  gsttype="CGST";
