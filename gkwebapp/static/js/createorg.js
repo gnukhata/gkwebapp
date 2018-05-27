@@ -28,6 +28,9 @@ Contributors:
 
 $(document).ready(function()
 {
+    $("#ledgerdiv").hide();
+    $("#addorg").hide();
+    $("#createtorg").show();
   var invflag;
   var invsflag;
   var billflag;
@@ -101,7 +104,7 @@ $(document).ready(function()
     $(this).val(yearpad($(this).val(),4));
   });
 
-  $('.vdate').autotab('number');
+    $('.vdate').autotab('number');
   $('input:text,select').keydown( function(e) {
     var n = $('input:text,select').length;
     var f = $('input:text,select');
@@ -275,8 +278,9 @@ $(document).ready(function()
                                 invsflag=0;
                               billflag=0;
                             }
-                            });
-
+              });
+   
+    
       $("#btnsubmit").click(function(event){
         event.preventDefault();
         var startday = $("#fromday").val();
@@ -402,7 +406,34 @@ $(document).ready(function()
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
 
-        if ($("#invinvsbillradio").is(":checked")) {
+	  console.log("csdhcvsdgh");
+	   var vatorgstflag;
+    var date1 = "2017-07-01";
+    
+    var gstdate = Date.parse(date1);
+    
+    var financialStart =Date.parse(fdate);
+    var financialEnd = Date.parse(tdate);
+    console.log(gstdate);
+    console.log(financialStart);
+    console.log(financialEnd);
+    if (gstdate>financialStart && gstdate>financialEnd){
+	console.log("22");
+	$(".vat").show();
+	$(".gst").hide();
+	vatorgstflag=22;}
+    else if(gstdate>financialStart && gstdate<=financialEnd) {
+	console.log("29");
+	$(".gst").show();
+	$(".vat").show();
+	vatorgstflag=29;}
+    else if(gstdate<=financialStart && gstdate<=financialEnd){
+	console.log("7");
+	$(".gst").show();
+	$(".vat").hide();
+	vatorgstflag=7;}
+     
+	  if ($("#invinvsbillradio").is(":checked")) {
             invflag=1;
             invsflag=1;
             billflag=1;
@@ -453,8 +484,10 @@ $(document).ready(function()
 
           }
           else
-          {
-          $("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag+"&invsflag="+invsflag+"&billflag="+billflag);
+            {
+		$("#createtorg").hide();
+		$("#addorg").show();
+          //$("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag+"&invsflag="+invsflag+"&billflag="+billflag);
           }
           console.log("success");
         })
@@ -468,6 +501,24 @@ $(document).ready(function()
 
 
       });
-
-
+    $("#onlyaccradio").click(function(event){
+	event.preventDefault();
+	$("#ledgerdiv").hide();
     });
+    $("#invinvsbillradio").click(function(event) {
+        event.preventDefault();
+	$("#ledgerdiv").show();
+    });
+    $("#invsbillradio").click(function(event) {
+        event.preventDefault();
+	$("#ledgerdiv").show();
+    });
+    $("#onlyinvsradio").click(function(event){
+        event.preventDefault();
+	$("#ledgerdiv").show();
+    });
+    var otype = $("#orgtype option:selected").val();
+    if (otype =="Profit Making"){
+	$(".noprofit").hide();
+    }
+});

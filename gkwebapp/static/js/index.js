@@ -68,7 +68,9 @@ $("#createorg").load("/createorg");
 
  
 $("#createnav").click(function(event){
-$(".feature").hide();				 
+    $(".feature").hide();
+    $("#addorg").hide();
+    $("#createtorg").show();
 setTimeout( function() { $("#orgname").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 });
   return;
