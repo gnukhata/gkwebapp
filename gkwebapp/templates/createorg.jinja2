@@ -233,7 +233,7 @@
 		  <div class="img-thumbnail img-circle ">
 
 		    <div style="position: relative; padding: 0; cursor: pointer;" type="file">
-		      <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
+		      <img class="img-circle"  style="width: 100px !important; height: 100px !important;" id="imgbox">
 		      <canvas id="imgcanvas" hidden></canvas>
 
 
@@ -452,30 +452,6 @@
 		    </tbody>
 		  </table>
 		</div>
-		
-		<div id="OrgModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:325px;;"  aria-hidden="true">
-		  <div class="modal-dialog bgcolor">
-		    <div class="modal-content ">
-		      <div class="modal-header">
-			{% trans %}<strong>Help!</strong>{% endtrans %}
-			<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-			  <span aria-hidden="true">&times;</span>
-			</button> </div>
-		      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-
-			<p>   <font color=" #566573"> {%trans%}
-
-			  This screen helps you edit or update organisation particulars.</br>
-			  You can use enter key to navigate forward and up arrow to navigate backward.</br>
-			  Note that the default tab and shift + tab shortcuts are also available for navigation.
-{% endtrans %} </font>
-
-			</p>
-		      </div>
-
-		    </div>
-		  </div>
-		</div>
 		<div class="container-fluid">
 		  <div class="col-xs-2 col-xs-offset-5">
 		    <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="v"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Sa<u>v</u>e{% endtrans %}</button>
@@ -486,224 +462,7 @@
 	    </div>
 	  </div>
 	</div>
-
-	{#For GSTIN#}
-	<div id="addgstinmodal" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-              <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<div class="modal-title">
-		  {% trans %}GSTIN{% endtrans %} :
-		</div>
-              </div>
-              <div class="modal-body">
-		<div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please select State!{% endtrans %}
-		</div>
-		<div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
-      		  {% trans %}Please enter proper GSTIN!{% endtrans %}
-		</div>
-		<div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Improper GSTIN!{% endtrans %}
-		</div>
-		<div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please Enter GSTIN.{% endtrans %}	
-		</div>
-		<div class="panel">
-		  <div class="panel-body gstinclass">
-		    <table id="gstintable" class="table table-condensed table-bordered fixed-table">
-		      <thead class="bg-primary input-sm">
-			<tr>
-			  <th class="col-xs-5 text-center">{% trans %}State{% endtrans %}</th>
-			  <th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
-			  <th class="col-xs-1"></th>
-			  <th class="col-xs-1"></th>
-			</tr>
-		      </thead>
-		      <tbody>
-
-			<tr>
-			    <td class="col-xs-5">
-			      <select class="form-control input-sm gstinstate">
-				<option value="" disabled hidden selected>Select State</option>
-				{% for state in states %}
-				  {% for key, value in state.items() %}
-				    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
-				  {% endfor %}
-				{% endfor %}
-			      </select>
-			    </td>
-			    <td class="col-xs-5">
-			      <div class="form-inline nopadding">
-				<div class="form-group nopadding">
-				  <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
-				  <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
-				  <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
-				</div>
-			      </div>
-			    </td>
-			    <td class="col-xs-1">
-			    </td>
-			    <td class="col-xs-1">
-			      
-			    </td >
-			  </tr>
-		
-		      </tbody>
-		    </table>
-		    <div>
-		      <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                    </div>
-		  </div>
-                  
-		</div>
-
-		<div class="panel-footer">
-		  <div class="container-fluid">
-		    <button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true" accesskey="d"></i>{% trans %} <u>D</u>one{% endtrans %}</button>
-		    {#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
-		  </div>
-		</div>
-	      </div>
-	    </div>
-	  </div>
-
-	  {#end GSTIN#}	
 	  <div style="padding-top:15px" class="mainbox col-md-2"></div>
-	</div>
-
-
-	
-	{# bank details #}
-
-	<div id="addbankdel" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog">
-	    <div class="modal-content">
-              <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<div class="modal-title">
-		  {% trans %}BANK DETAILS{% endtrans %} :
-		</div>
-              </div>
-              <div class="modal-body">
-		<div class="alert alert-danger" id="bankdetails-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
-		</div>
-
-		<div class="alert alert-danger" id="bankname-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter the Bank Name.{% endtrans %}
-		</div>
-
-		<div class="alert alert-danger" id="accno-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter an account  number.{% endtrans %}
-		</div>
-
-
-		<div class="alert alert-danger" id="both-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter an Account Number and the Bank Name{% endtrans %}
-		</div>
-
-
-		<div class="alert alert-danger" id="branchname-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter the Branch Name.{% endtrans %}
-		</div>
-
-
-		<div class="alert alert-danger" id="both1-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter Account Number, Bank Name and the Branch Name.{% endtrans %}
-		</div>
-
-
-		<div class="alert alert-danger" id="both2-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter the Bank Name and Branch Name{% endtrans %}
-		</div>
-
-		<div class="alert alert-danger" id="both3-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter an Account Number and Branch Name{% endtrans %}
-		</div>
-
-
-		<div class="alert alert-danger" id="ifsc-improper-modal"  aria-live="rude" role="alert" hidden>
-		  {% trans %}Please enter an IFSC Code{% endtrans %}
-		</div>
-
-
-		
-		
-		<table id="banktable" class="table fixed-table">
-		  <tbody>
-                    <tr>
-		      <td class="col-xs-6">
-		        <label for="bankaccount number" id="accno">{% trans %}Account Number{% endtrans %} :</label>
-		      </td>
-		      <td class="col-xs-6">
-			<input  type="text" id="accnum" class="form-control input-sm bankdel" name="bankaccountno" value="" style="width: 100%"></input>
-		      </td>
-		    </tr>
-
-
-                    <tr>
-		      <td>
-		        <label for="bank name" id="banknm">{% trans %}Bank Name{% endtrans %} :</label>
-		      </td>
-		      <td>
-			<input type="text" id="bank_name" class="form-control input-sm bankdel" name="bankname" value="" style="width: 100%"></input>
-		      </td>
-                    </tr>
-
-		    <tr>
-		      <td>
-		        <label for="bankbranch name" id="branchnm">{% trans %}Branch Name{% endtrans %} :</label>
-		      </td>
-		      <td>
-			<input type="text" id="branch_name" class="form-control input-sm bankdel" name="branchname" value="" style="width: 100%"></input>
-		      </td>
-		    </tr>
-                    
-		    <tr>
-		      <td>
-		        <label for="bankIFSC code" id="ifsc">{% trans %}IFSC Code{% endtrans %} :</label>
-		      </td>
-		      <td>
-			<input type="text" id="ifsc_code" class="form-control input-sm bankdel" name="bankifsc" value="" style="width: 100%"></input>
-		      </td>
-		    </tr>
-		  </tbody>
-		</table>
-
-		<div>
-		  <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
-                </div>
-		<div class="panel-footer">
-		  <div class="container-fluid">
-		    <button class="btn btn-success btn-sm" id="bankdel_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true" accesskey="n"></i>{% trans %} Do<u>n</u>e{% endtrans %}</button>
-		  </div>
-		</div>
-	      </div>
-	    </div>
-	  </div>
-	  <div style="padding-top:15px" class="mainbox col-md-2"></div>
-	</div>
-	
-	{# end bank details #}
-	<div id="gstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" style="display:block; width:85%">
-	    <div class="modal-content">
-              <div class="modal-header">
-		<button type="button" class="close" data-dismiss="modal">&times;</button>
-		<div class="modal-title">
-		  {% trans %}GST Accounts created under subgroup 'Duties & Taxes' of group 'Current Liabilities'{% endtrans %} :
-		</div>
-              </div>
-              <div class="modal-body">
-		<table id="gstaccountstable" class="table table-striped fixed-table">
-		  <tbody>
-		  </tbody>
-		</table>
-	      </div>
-	    </div>
-	  </div>
 	</div>
       </div>
     </div>
@@ -774,45 +533,164 @@
 	    </form>
 	  </div>
 	</div>
-	<div id="adminModal" tabindex="-1" class="modal fade" style="width:650px; margin-top: 150px; margin-left:300px;" role="dialog">
-	  <div class="modal-dialog bgcolor">
-	    <div class="modal-content ">
-	      <div class="modal-header">
-		{% trans %}<strong>Help!</strong>{% endtrans %}
-		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-		  <span aria-hidden="true">&times;</span>
-		</button> </div>
-	      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-
-		<p>   <font color=" #566573"> {%trans%}
-
-		  This screen let's you create an administrator user.
-		  You should enter username password and also a security question and answer.
-		  You can press enter to go ahead from one field to other and up arrow to go one field backwards.
-		  After this screen the main window will appear.{% endtrans %} </font>
-
-		</p>
-	      </div>
-
-	    </div>
-	  </div>
-	</div>
-      </div>
-
-
-
-      <div id="spinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
-	<div class="vertical-alignment-helper">
-	  <div class="modal-content vertical-align-center">
-	    <div class="modal-body">
-	      <i class="fa fa-spinner fa-spin" style="color:white; font-size:50px"></i>
-	    </div>
-	  </div>
-	</div>
       </div>
 
     </div>
-	  
+    <div id="OrgModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:325px;;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor">
+	<div class="modal-content ">
+	  <div class="modal-header">
+	    {% trans %}<strong>Help!</strong>{% endtrans %}
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span aria-hidden="true">&times;</span>
+	    </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+	    <p>   <font color=" #566573"> {%trans%}
+
+	      This screen helps you edit or update organisation particulars.</br>
+	      You can use enter key to navigate forward and up arrow to navigate backward.</br>
+	      Note that the default tab and shift + tab shortcuts are also available for navigation.
+{% endtrans %} </font>
+
+	    </p>
+	  </div>
+
+	</div>
+      </div>
+    </div>
+    <div id="spinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
+      <div class="vertical-alignment-helper">
+	<div class="modal-content vertical-align-center">
+	  <div class="modal-body">
+	    <i class="fa fa-spinner fa-spin" style="color:white; font-size:50px"></i>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div id="adminModal" tabindex="-1" class="modal fade" style="width:650px; margin-top: 150px; margin-left:300px;" role="dialog">
+      <div class="modal-dialog bgcolor">
+	<div class="modal-content ">
+	  <div class="modal-header">
+	    {% trans %}<strong>Help!</strong>{% endtrans %}
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	      <span aria-hidden="true">&times;</span>
+	    </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+	    <p>   <font color=" #566573"> {%trans%}
+
+	      This screen let's you create an administrator user.
+	      You should enter username password and also a security question and answer.
+	      You can press enter to go ahead from one field to other and up arrow to go one field backwards.
+	      After this screen the main window will appear.{% endtrans %} </font>
+
+	    </p>
+	  </div>
+
+	</div>
+      </div>
+    </div>
+    <div id="gstaccountsmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog" style="display:block; width:85%">
+	<div class="modal-content">
+          <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	    <div class="modal-title">
+	      {% trans %}GST Accounts created under subgroup 'Duties & Taxes' of group 'Current Liabilities'{% endtrans %} :
+	    </div>
+          </div>
+          <div class="modal-body">
+	    <table id="gstaccountstable" class="table table-striped fixed-table">
+	      <tbody>
+	      </tbody>
+	    </table>
+	  </div>
+	</div>
+      </div>
+    </div>
+    <div id="addgstinmodal" class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+	<div class="modal-content">
+          <div class="modal-header">
+	    <button type="button" class="close" data-dismiss="modal">&times;</button>
+	    <div class="modal-title">
+	      {% trans %}GSTIN{% endtrans %} :
+	    </div>
+          </div>
+          <div class="modal-body">
+	    <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please select State!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="panno-blank-alert"  aria-live="rude" role="alert" hidden>
+      	      {% trans %}Please enter proper GSTIN!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Improper GSTIN!{% endtrans %}
+	    </div>
+	    <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
+	      {% trans %}Please Enter GSTIN.{% endtrans %}	
+	    </div>
+	    <div class="panel">
+	      <div class="panel-body gstinclass">
+		<table id="gstintable" class="table table-condensed table-bordered fixed-table">
+		  <thead class="bg-primary input-sm">
+		    <tr>
+		      <th class="col-xs-5 text-center">{% trans %}State{% endtrans %}</th>
+		      <th class="col-xs-5 text-center">{% trans %}GSTIN{% endtrans %}</th>
+		      <th class="col-xs-1"></th>
+		      <th class="col-xs-1"></th>
+		    </tr>
+		  </thead>
+		  <tbody>
+
+		    <tr>
+		      <td class="col-xs-5">
+			<select class="form-control input-sm gstinstate">
+			  <option value="" disabled hidden selected>Select State</option>
+			  {% for state in states %}
+			    {% for key, value in state.items() %}
+			      <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			    {% endfor %}
+			  {% endfor %}
+			</select>
+		      </td>
+		      <td class="col-xs-5">
+			<div class="form-inline nopadding">
+			  <div class="form-group nopadding">
+			    <input type="text" class="form-control input-sm nopadding statecode" size="2" maxlength="2" disabled >
+			    <input type="text" class="form-control input-sm nopadding panno" size="10" maxlength="10">
+			    <input type="text" class="form-control input-sm nopadding gstin" size="3" maxlength="3">
+			  </div>
+			</div>
+		      </td>
+		      <td class="col-xs-1">
+		      </td>
+		      <td class="col-xs-1">
+			
+		      </td >
+		    </tr>
+		    
+		  </tbody>
+		</table>
+		<div>
+		  <small id="donehelp" class="form-text text-muted"> Press 'Esc' when you are done.</small>
+                </div>
+	      </div>
+              
+	    </div>
+
+	    <div class="panel-footer">
+	      <div class="container-fluid">
+		<button class="btn btn-success btn-sm" id="gstin_done" data-toggle="tooltip" data-placement="top" ><i class="fa fa-check" aria-hidden="true" accesskey="d"></i>{% trans %} <u>D</u>one{% endtrans %}</button>
+		{#<button id="gstinmod_reset" class="btn btn-warning btn-sm" accesskey="">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Reset{% endtrans %}</button>#}
+	      </div>
+	    </div>
+	  </div>
+	</div>
+      </div>
+    </div>
+    
 	  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
 	  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.validate.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createorg.js')}}"></script>

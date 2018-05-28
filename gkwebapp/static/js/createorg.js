@@ -1614,6 +1614,7 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     if ($("#multiplesales").is(":checked")) {
 	form_data.append("maflag", 1);
     }
+    $('.modal-backdrop').remove();
   $("#spinmodal").modal("show");
     $.ajax(
     {
@@ -1635,7 +1636,195 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
         sessionStorage.gktoken = gt;
         sessionStorage.gktheme = 'Default';
         sessionStorage.reload = 1;
-        window.location="/showmainshell";
+	  var accounts = [];
+      // If there are GSTINs for an organisation accounts for GST will be created under subgroup 'Duties & Taxes' in group 'Current Liabilities'.
+      if (Object.keys(gobj).length > 0) {
+	  var groupcode = "";
+	  var subgroupcode = "";
+	  var newsubgroup = "";
+	  //Fetching groupcode and subgroup codes for GST accconts to be created.
+	  $.ajax({
+	      url: '/showeditOrg?getgstgroupcode',
+	      type: 'POST',
+	      global: false,
+	      async: false,
+	      datatype: 'json',
+	      beforeSend: function(xhr)
+	      {
+		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	      }
+	  }).done(function(resp){
+	      if (resp.gkstatus == 0) {
+		  groupcode = resp.groupcode;
+		  subgroupcode = resp.subgroupcode;
+		  // If subgroup 'Duties & Taxes' is not present it will be created.
+		  if (subgroupcode == "New") {
+		      newsubgroup = "Duties & Taxes";
+		  }
+	      }
+	      else {
+		  $("#connectionfailed").alert();
+		  $("#connectionfailed").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#connectionfailed").hide();
+		  });
+	      }
+	      console.log("success");
+	  }).fail(function() {
+	      console.log("error");
+	  }).always(function() {
+	      console.log("complete");
+	  });
+	  // GST account will be of the format 'TAX/CESSTYPE_STATEABBREVIATION@RATE%' like 'SGST_KL@12%'
+	  var taxes = ["SGSTIN", "SGSTOUT", "CGSTIN", "CGSTOUT", "IGSTIN", "IGSTOUT"];
+	  var cesses = ["CESSIN", "CESSOUT"];
+	  var taxstate = "";
+	  var taxtype = "";
+	  var taxrate = "";
+	  var accountname = "";
+	  var newtaxrate = "";
+	  //Looping through GSTIN table rows to fetch state abbreviations.
+	  $("#gstintable tbody tr").each(function(index) {
+	      if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
+		  let statecode = $("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid");
+		  $.ajax({
+		      url: '/addaccount?type=abbreviation',
+		      type: 'POST',
+		      global: false,
+		      async: false,
+		      datatype: 'json',
+		      data: {"statecode": statecode},
+		      beforeSend: function(xhr)
+		      {
+			  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		      }
+		  }).done(function(resp){
+		      if (resp.gkstatus == 0) {
+			  taxstate = resp.abbreviation;
+			  //For each state choon GST and CESS rates are found
+			  $(".gstrate").each(function(index){
+			      if ($(this).is(":checked")) {
+				  taxrate = $(this).data("taxrate");
+				  newtaxrate = parseFloat(taxrate)/2;
+				  newtaxrate = newtaxrate.toString();
+			      }
+			      else{
+				  taxrate = "";
+			      }
+			      //For each tax rate accounts are created for all types of tax.
+			      $.each(taxes, function(index, taxtype) {
+				  if (taxrate != "" && taxstate != "") {
+				      if(taxtype == 'SGSTIN' || taxtype == 'CGSTIN' || taxtype == 'SGSTOUT' || taxtype == 'CGSTOUT'){
+					  accountname = taxtype + '_' + taxstate + '@' + newtaxrate + '%';
+				      }
+				      else{
+					  accountname = taxtype + '_' + taxstate + '@' + taxrate + '%';
+				      }
+				      accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
+				  }
+			      });
+			  });
+			  //Accounts are created for CESS like they were created for tax.
+			  $.each(cessrates, function(index, cessrate){
+			      $.each(cesses, function(index, cesstype) {
+				  if (cessrate != "" && taxstate != "") {
+				      accountname = cesstype + '_' + taxstate + '@' + cessrate + "%";
+				      accounts.push({"accountname":accountname, "subgroupname":subgroupcode, "groupname":groupcode, "newsubgroup":newsubgroup, "openbal":"0.00"});
+				  }
+			      });
+			  });
+		      }
+		  }).fail(function() {
+		      console.log("error");
+		  }).always(function() {
+		      console.log("complete");
+		  });
+	      }
+	  });
+	  if (accounts.length > 0) {
+	      $.ajax(
+		  {
+		      type: "POST",
+		      url: "/multiacc?type=GST",
+		      global: false,
+		      async: false,
+		      datatype: "json",
+		      data:{"accdetails":JSON.stringify(accounts)} ,
+		      beforeSend: function(xhr)
+		      {
+			  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		      },
+		      success: function(resp)
+		      {
+			  if(resp["accounts"].length>0)
+			  {
+			      $("#spinmodal").modal("hide");
+			      $('.modal-backdrop').remove();
+			      $("#gstaccountsmodal").modal("show");
+			      let count = 0;
+			      $.each(resp.accounts, function(index, account) {
+				  let firstacc = account;
+				  let secondacc;
+				  if (resp.accounts[index+1] == null){
+				      secondacc="";
+				  }else{
+				      secondacc = resp.accounts[index+1];
+				  }
+				  //Separate out 'abbreviation' of state in account name.(i.e abbreviation of 'IGSTIN_MH@5.0%' is 'MH')
+				  let fin_1 = firstacc.indexOf("_");
+				  let fin_2 = firstacc.indexOf("@");
+				  let sin_1 = secondacc.indexOf("_");
+				  let sin_2 = secondacc.indexOf("@");
+				  let result1 = firstacc.slice(fin_1+1,fin_2);
+				  let result2 = secondacc.slice(sin_1+1,sin_2);
+				  if(result1 == result2){
+				      if(count % 6 == 0){
+					  if(count == 0){
+					      //This ajax will gives state name from "state abbreviation".
+					      let stateabbr = result1;
+					      $.ajax({
+						  url: '/editorganisation?type=statename',
+						  type: 'POST',
+						  global: false,
+						  async: false,
+						  datatype: 'json',
+						  data: {"stateabbr": stateabbr},
+						  beforeSend: function(xhr)
+						  {
+						      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+						  }
+					      }).done(function(resp){
+						  if (resp.gkstatus == 0) {
+						      $("#gstaccountstable tbody").append("<tr><td colspan='3'><div style='font-weight:bold; text-decoration:underline; background-color:#fafafa;'>" + "Accounts For "+ resp["statename"] + "</div></td></tr>");
+						  }
+					      });
+					  }
+					  $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
+					  count = count+1; 
+				      }
+				      else{
+					  $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
+					  count = count+1;
+				      }
+				  }
+				  else if(result1 != result2) {
+				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
+				      $("#gstaccountstable tbody").append("<tr></tr>");
+				      count =0;
+				  }else if(result1 !="" && result2 ==""){
+				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
+				  }
+			      });
+			  }
+		      }
+		  });
+	  }
+	  else {
+	      window.location="/showmainshell";
+	  }
+      }
+	  else{
+	      window.location="/showmainshell";
+	  }
       }
       else if(resp['gkstatus']==3) {
 
@@ -1656,6 +1845,10 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     }
     );
 }
-);
+					   );
+    $("#gstaccountsmodal").on('hidden.bs.modal', function(event) {
+	  $(".modal-backdrop").remove();
+        window.location="/showmainshell";
+    });
     //end
 });
