@@ -84,7 +84,7 @@
       <div class="col-sm-12 panel" >
         <div class="panel-heading">
           <div class="panel-title">{% trans %}Company Setup Wizard{% endtrans %}</div>
-	  <div class="panel-title" style="font-size:90%; margin-left:2%;">{% trans %}This wizard will help you setup GNUKhata just the way you wish to manage your business.{% endtrans %}</div>
+	  <div class="panel-title" style="font-size:90%;">{% trans %}This wizard will help you setup GNUKhata just the way you wish to manage your business.{% endtrans %}</div>
         </div>
         <div style="padding-top:20px" class="panel-body" >
 
@@ -164,14 +164,14 @@
 	      </div>
 	      <div id="ledgerdiv" class="form-inline">
 		<div class="radio">
-        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Single Sales/Purchase Ledger{% endtrans %}.</label>
+        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="singlesales" aria-label="" checked>&nbsp {% trans %}Single Sales/Purchase Ledger{% endtrans %}.</label>
         	</div>
 		<div class="radio">
-        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Per Product Sale/Purchase Ledger{% endtrans %}.</label>
+        	  <label><input type="radio" class="ledger nopadding" name="ledger" id="multiplesales" aria-label="">&nbsp {% trans %}Per Product Sale/Purchase Ledger{% endtrans %}.</label>
 		</div>
 	      </div>
 	    </div>
-	    <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
+	    <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p" style="float:right"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
           </form>
         </div>
       </div>
@@ -765,7 +765,7 @@
 		<input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
 		<input type="hidden" class="form-control" value="{{todate}}" id="yearend" name="yearend"></input>
 		<br/>
-		<button type="submit" class="btn btn-success" accesskey="l">{% trans %}Create & <u>L</u>ogin{% endtrans %}</button>
+		<button type="button" id="createlogin" class="btn btn-success" accesskey="l">{% trans %}Create & <u>L</u>ogin{% endtrans %}</button>
 	      </div>
 	    </form>
 	  </div>

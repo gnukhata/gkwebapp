@@ -116,7 +116,6 @@ $(document).ready(function()
       if(nextIndex < n){
         e.preventDefault();
         f[nextIndex].focus();
-        f[nextIndex].select();
       }
 
       }
@@ -1487,9 +1486,8 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
       }
     });
 
-$("#loginform").submit(function(e)
-{
-  e.preventDefault();
+$(document).off("click", "#createlogin").on("click", "#createlogin", function(e){
+    e.preventDefault();
   if ($.trim($("#username").val())=="") {
     $("#usrname-blank-alert").alert();
     $("#usrname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1538,6 +1536,84 @@ $("#loginform").submit(function(e)
     $("#securityanswer").focus();
     return false;
   }
+    var allow =1;
+    var regdate="";
+    var fcraregdate="";
+    var regno="";
+    var fcrano="";
+    if ($("#regyear").val() != "" && $("#regmonth").val() != "" && $("#regday").val() !="") {
+	regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
+    }
+    regno = $("#orgregno").val();
+    if ($("#fcraregyear").val() != "" && $("#fcraregmonth").val() != "" && $("#fcraregday").val() != "") {
+	fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val(); 
+    }
+        fcrano = $("#orgfcrano").val();
+      	email = $("#orgemail").val();  // Validation for email.
+   var gobj = {}; // Creating a dictionary for storing statecode with gstin.
+   $("#gstintable tbody tr").each(function(){
+       var curindex1 = $(this).index();
+       var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+   });
+    
+    var form_data = new FormData();
+    form_data.append("orgcity", $("#orgcity").val());
+    form_data.append("orgaddr", $("#orgaddr").val());
+    form_data.append("orgpincode", $("#orgpincode").val());
+    form_data.append("orgstate",$("#orgstate").val());
+    form_data.append("orgcountry",$("#orgcountry").val());
+    form_data.append("orgtelno",$("#orgtelno").val());
+    form_data.append("orgfax",$("#orgfax").val());
+    form_data.append("orgwebsite",$("#orgwebsite").val());
+    form_data.append("orgemail",$("#orgemail").val());
+    form_data.append("orgpan",$("#orgpan").val());
+    form_data.append("orgmvat",$("#orgmvat").val());
+    form_data.append("orgstax",$("#orgstax").val());    
+      form_data.append("gstin",JSON.stringify(gobj)); //for gstin
+      if($("#accnum").val()!="" && $("#branch_name").val()!="" && $("#bank_name").val()!="" && $("#ifsc_code").val()!=""){
+	  var bankdetails={};
+         bankdetails["accountno"]=$.trim($("#accnum").val());
+         bankdetails["bankname"]=$.trim($("#bank_name").val());
+         bankdetails["branchname"]=$.trim($("#branch_name").val());
+          bankdetails["ifsc"]=$.trim($("#ifsc_code").val());
+	  
+	  form_data.append("bankdetails",JSON.stringify(bankdetails));
+      } //For bank details
+	  form_data.append("orgregno",regno);
+    form_data.append("orgregdate",regdate);
+    form_data.append( "orgfcrano",fcrano);
+    form_data.append("orgfcradate",fcraregdate);
+    if ($("#my-file-selector")[0].files[0])
+    {
+
+      var file = $("#my-file-selector")[0].files[0];
+      form_data.append("logo",file);
+    }
+    form_data.append("orgname", $("#orgname").val());
+    form_data.append("orgtype", $("#orgtype").val());
+    form_data.append("yearstart", sessionStorage.yyyymmddyear1);
+    form_data.append("yearend", sessionStorage.yyyymmddyear2);
+    form_data.append("username", $("#username").val());
+    form_data.append("password", $("#confirmpassword").val());
+    form_data.append("securityquestion", $("#securityquestion").val());
+    form_data.append("securityanswer", $("#securityanswer").val());
+    form_data.append("billflag",billflag);
+    form_data.append("invflag", invflag);
+    form_data.append("invsflag", invsflag);
+    if ($("#sales").is(":checked")) {
+	form_data.append("avflag", 1);
+    }
+    else {
+	form_data.append("avflag", 0);
+    }
+    if ($("#singlesales").is(":checked")) {
+	form_data.append("maflag", 0);
+    }
+    if ($("#multiplesales").is(":checked")) {
+	form_data.append("maflag", 1);
+    }
   $("#spinmodal").modal("show");
     $.ajax(
     {
@@ -1547,7 +1623,9 @@ $("#loginform").submit(function(e)
     global: false,
     async: false,
     datatype: "json",
-    data: $("#loginform").serialize(),
+	data: form_data,
+	processData: false,
+    contentType: false,
     success: function(resp)
     {
       if (resp['gkstatus']==0) {

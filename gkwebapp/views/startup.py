@@ -34,6 +34,9 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.i18n import default_locale_negotiator
 s = requests.session()
+from PIL import Image
+import base64
+import cStringIO
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
 def index(request):
@@ -97,7 +100,25 @@ def createadmin(request):
 
 @view_config(route_name="createorglogin",renderer="json")
 def orglogin(request):
-    gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+    gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"], "orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"], "avflag":request.params["avflag"], "maflag":request.params["maflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+    if request.params.has_key("bankdetails"):
+        gkdata["orgdetails"]["bankdetails"]=json.loads(request.params["bankdetails"])
+        
+    filelogo={}
+    try:
+        if request.POST['logo'].file:
+
+            img=request.POST['logo'].file
+            image=Image.open(img)
+            imgbuffer = cStringIO.StringIO()
+            image.save(imgbuffer, format="JPEG")
+            img_str = base64.b64encode(imgbuffer.getvalue())
+            image.close()
+            filelogo=img_str
+
+            gkdata["orgdetails"]["logo"]=filelogo
+    except:
+        print "no file found "
     result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
     if result.json()["gkstatus"]==0:
         return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"]}
