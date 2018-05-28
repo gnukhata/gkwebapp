@@ -76,7 +76,6 @@ $(document).ready(function() {
       });
     
     //Initialising some variables.
-    var taxtype;
     var issuername = "";
     var designation = "";
     var address = "";
@@ -92,8 +91,6 @@ $(document).ready(function() {
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
-    var tottaxable;
-    var tottax;
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -137,7 +134,6 @@ $(document).ready(function() {
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
-	    tottaxable=totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
@@ -163,6 +159,7 @@ $(document).ready(function() {
 		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	}
+
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
@@ -205,10 +202,8 @@ $(document).ready(function() {
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
-	    tottaxable=totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
-	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
@@ -479,15 +474,13 @@ $(document).ready(function() {
 	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
 	if ($(".taxapplicable").val() == 7){
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
-		$(".igstfield").hide();
-		$(".igstfield").css('border','');
-		$(".sgstfield").show();
-		taxtype=3;
+		    $(".igstfield").hide();
+		    $(".igstfield").css('border','');
+		    $(".sgstfield").show();
 		} else {
 		    $(".sgstfield").hide();
 		    $(".sgstfield").css('border','');
 		    $(".igstfield").show();
-		    taxtype=9;
 		}
 	 }	
 	$(".product_name_vat, .product_name_gst").change();
@@ -747,12 +740,10 @@ $(document).ready(function() {
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
-		taxtype=3;
 	    }
 	    else {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
-		taxtype=9;
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
@@ -1271,7 +1262,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1344,7 +1335,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	$("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1436,7 +1427,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	$("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1499,7 +1490,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkpaymentmode").focus();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1563,7 +1554,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkpaymentmode").focus();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -1620,7 +1611,7 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
-	$("#chkpaymentmode").focus();
+	$("#chkbank").focus().click();
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
@@ -1677,7 +1668,7 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	  }
       else {
-          $("#chkpaymentmode").focus();
+          $("#chkbank").focus().click();
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
@@ -1879,7 +1870,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -1887,11 +1878,7 @@ $(document).ready(function() {
     event.preventDefault();
       /* Act on the event */
       var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-<<<<<<< 91f686b811a0efbd6c4bec756815cd30c6436bc3
     if ($(this).val() == "") {
-=======
-	if ($(this).val() == "") {
->>>>>>>  Product data with tax and taxable value send.
       $(this).val(0);
     }
 	if ($("#invoice_deliverynote option:selected").val() != '') {
@@ -1956,7 +1943,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -2057,7 +2044,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkpaymentmode").focus();
+	  $("#chkbank").focus().click();
       }
   });
 
@@ -2136,7 +2123,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-	$("#chkpaymentmode").focus();
+      $("#chkbank").focus().click();
     }
   });
 
@@ -2286,7 +2273,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkpaymentmode").focus();
+      $("#chkbank").focus().click();
     }
 });
 
@@ -2606,7 +2593,7 @@ if (event.which == 13) {
       }
 
       //validation for bankdetails on save button.
-      if($("#chkpaymentmode option:selected").val()=="2"){
+      if ($("#chkbank").is(":checked")) {
 	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
 	      $("#bankdetails-blank-alert").alert();
 	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2641,12 +2628,6 @@ if (event.which == 13) {
       var productcodes = [];
       var productqtys = [];
       var ppu;
-      var av= {};
-    var productdata={};
-    var proddata = {};
-      var prodtax={};
-      let pn;
-      let gsttype;
       var inoutflag = $("#status").val();
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -2739,17 +2720,8 @@ if (event.which == 13) {
             items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
-	    pn=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
-	  productdata[pn]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
-	  proddata[productcode]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
-	  
-	  av["product"]=productdata;
-	  av["prodData"]=proddata;
 	}
     }
-	av["totaltaxable"]=tottaxable;
-	av["taxpayment"]=tottax;
-	console.log("data of gst===",av);
 	invoicetotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 
     }
@@ -2832,22 +2804,7 @@ if (event.which == 13) {
 	      items[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val();
 	      freeqty[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val();
 	      discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
-	      pn=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
-	      productdata[pn]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
-	      proddata[productcode]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
-	      av["product"]=productdata;
-	      av["prodData"]= proddata;
 	  }
-	  if (taxtype==3){
-		  gsttype="CGST";
-	      }else{
-		  gsttype="IGST";	          
-	      }
-	  prodtax["GSTName"]=gsttype;
-	  prodtax["CESSName"]="CESS";
-	  av["avtax"]=prodtax;
-	  av["totaltaxable"]=tottaxable;
-	  console.log("data of vat ===",av);
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
       stock["items"] = items;
@@ -2887,7 +2844,6 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       form_data.append("invtotalword", numbertowords);
-      form_data.append("av",JSON.stringify(av));
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();
@@ -2911,9 +2867,8 @@ if (event.which == 13) {
     form_data.append("freeqty", JSON.stringify(freeqty));
     form_data.append("discount", JSON.stringify(discount));
     form_data.append("consignee", JSON.stringify(consignee));
-      //Code for sending data to the database based on which option is selected i.e."cash" or "bank" or "on credit".
+      //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
       if ($("#chkpaymentmode option:selected").val()=="3"){
-<<<<<<< 8937b4283ff61ffc93a8f14bcd48c1f81f7266fc
 	  alert("3");
 	  //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
 		form_data.append("paymentmode",3);   
@@ -2922,21 +2877,15 @@ if (event.which == 13) {
 	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
-<<<<<<< a56d1169f0dca738cf27fc0a57bd7684ce4fce29
             }
     form_data.append("taxflag", $(".taxapplicable").val());
-=======
-=======
-	  form_data.append("paymentmode",3);   //If cash is selected then paymentmode is set to 3 (i.e. cash transaction)
-      } else if($("#chkpaymentmode option:selected").val()=="2"){  //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
-	  form_data.append("bankdetails", JSON.stringify(bankdetails));
-	  form_data.append("paymentmode",2);
->>>>>>> Changes in addinvoive and editinvoice  for payment mode
+
       }else{
-	  form_data.append("paymentmode",15); //If on credit is selected then paymentmode is set to 15 (i.e. on credit transaction)
+	  
+	    form_data.append("paymentmode",15);
       }
       form_data.append("taxflag", $("#taxapplicable").val());
->>>>>>> 1) Added one new payment mode option i.e "on credit" with value=15.
+
     form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
@@ -3110,34 +3059,40 @@ if (event.which == 13) {
             });
     });
 
-    $(document).off('keydown', '#chkpaymentmode').on('keydown', '#chkpaymentmode', function(event) {
+    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
         if(event.which==13){
-	    if($("#chkpaymentmode option:selected").val()=="2"){
-		$("#accountno").focus();
-            }else{
-		$("#transportationmode").focus();
-    	    }
-	}
+        $("#accountno").focus();
+        }
     });
-    //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
+    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
+        if(event.which==13){
+        $("#transportationmode").focus();
+        }
+    });
+
+     //Code for radio buttons to show and hide "bankdetails fields" and "cash received"
     //Checking which radio button is selected.
     $("#chkpaymentmode").change(function(event) {
     if ($("#chkpaymentmode option:selected").val()=="2"){ //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+	console.log("bank");
 	$("#bank").show();
 	$("#cash").hide();
 	$("#oncredit").hide();
     } else if ($("#chkpaymentmode option:selected").val()=="3"){
-	//If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
-        $("#bank").hide();
+	console.log("cash");
+	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+                $("#bank").hide();
 	$("#cash").show();
 	$("#oncredit").hide();
     }else {
-	$("#bank").hide();
+	console.log("oncredit");
+	     $("#bank").hide();
 	$("#cash").hide();
 	$("#oncredit").show();
     }});
     //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
     if ($("#status").val() == '15') {      //checking whether it is sale invoice or not (15 = sale invoice).
+	console.log("allo");
 	if ($("#chkpaymentmode option:selected").val()=="2"){
             $.ajax({
                 url: '/editorganisation?action=orgbankdetails',
