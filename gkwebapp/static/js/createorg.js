@@ -106,9 +106,9 @@ $(document).ready(function()
   });
 
     $('.vdate').autotab('number');
-  $('input:text,select').keydown( function(e) {
-    var n = $('input:text,select').length;
-    var f = $('input:text,select');
+  $('.orgfields').keydown( function(e) {
+    var n = $('.orgfields').length;
+    var f = $('.orgfields');
     if (e.which == 13)
     {
 
@@ -436,10 +436,9 @@ $(document).ready(function()
             billflag=1;
         }
         if ($("#invsbillradio").is(":checked")) {
-            invflag=0
+            invflag=0;
             invsflag=1;
           billflag=1;
-          console.log("rohini");
         }
 
           if ($("#onlyinvsradio").is(":checked")) {
@@ -484,6 +483,15 @@ $(document).ready(function()
             {
 		$("#createtorg").hide();
 		$("#addorg").show();
+		var otype = $("#orgtype option:selected").val();
+		if (otype =="Profit Making"){
+		    $(".noprofit").hide();
+		    $("#orgaddr").focus().select();
+		}
+		else {
+		    $(".noprofit").show();
+		    $("#orgregno").focus().select();
+		}
           //$("#createorg").load("/createadmin?orgname="+orgname+"&orgtype="+orgtype+"&fdate="+fdate+"&tdate="+tdate+"&invflag="+invflag+"&invsflag="+invsflag+"&billflag="+billflag);
           }
           console.log("success");
@@ -512,10 +520,6 @@ $(document).ready(function()
         //event.preventDefault();
 	$("#ledgerdiv").show();
     });
-    var otype = $("#orgtype option:selected").val();
-    if (otype =="Profit Making"){
-	$(".noprofit").hide();
-    }
 
     if ($("#invinvsbillradio").is(":checked")) {
             invflag=1;
@@ -1425,6 +1429,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     event.preventDefault();
       $("#createadmin").show();
       $("#addorg").hide();
+      $("#username").focus().select();
   });
 
     $(document).off("keyup").on("keyup", function(event) {
@@ -1451,30 +1456,43 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
-$('input:not(:hidden),select').bind("keydown", function(e) {
-  var n = $("input:not(:hidden),select").length;
-  var f = $('input:not(:hidden),select');
-  if (e.which == 13)
-  {
-    var nextIndex = f.index(this) + 1;
-    if(nextIndex < n){
-      e.preventDefault();
-      f[nextIndex].focus();}
+    $(document).off('keydown', '#username').on('keydown', '#username', function(e) {
+	if(e.which == 13){
+	    e.preventDefault();
+	    $("#password").focus();
+	}
 
-    }
-  });
-  $('input:not(:hidden),select').bind("keydown", function(e) {
-    var n = $("input:not(:hidden),select").length;
-    var f = $('input:not(:hidden),select');
-    if (e.which == 38)
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex > 0){
-        e.preventDefault();
-        f[prevIndex].focus();}
-
-      }
     });
+    $(document).off('keydown', '#password').on('keydown', '#password', function(e) {
+	if(e.which == 13){
+	    e.preventDefault();
+	    $("#confirmpassword").focus();
+	}
+	else if(e.which == 38){
+	    $("#username").focus();
+	}
+
+    });
+    $(document).off('keydown', '#confirmpassword').on('keydown', '#confirmpassword', function(e) {
+	if(e.which == 13){
+	    e.preventDefault();
+	    $("#securityquestion").focus();
+	}
+	else if(e.which == 38){
+	    $("#password").focus();
+	}
+
+    });
+    $(document).off('keydown', '#securityquestion').on('keydown', '#securityquestion', function(e) {
+	if(e.which == 13){
+	    e.preventDefault();
+	    $("#securityanswer").focus();
+	}
+	else if(e.which == 38){
+	    $("#confirmpassword").focus();
+	}
+
+  });
     $("#confirmpassword").blur(function(event) {
       if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
         $("#checkpass-blank-alert").alert();
@@ -1484,6 +1502,15 @@ $('input:not(:hidden),select').bind("keydown", function(e) {
         $("#password").focus();
         return false;
       }
+    });
+    $(document).off("keydown", "#securityanswer").on("keydown", "#securityanswer", function(e){
+	if (e.which ==13) {
+	    e.preventDefault();
+	$("#createlogin").click();
+	}
+	else if(e.which ==38){
+	    $("#securityquestion").focus();
+	}
     });
 
 $(document).off("click", "#createlogin").on("click", "#createlogin", function(e){
