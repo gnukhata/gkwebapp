@@ -377,7 +377,7 @@ $(document).ready(function() {
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
 	
 	if($("#gst").is(":checked")){
-	    console.log("gst");
+	    
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
@@ -400,7 +400,7 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	}else if($("#vat").is(":checked")){
-	    console.log("vat");
+	  
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
 	    $("#gstproducttable").hide();
