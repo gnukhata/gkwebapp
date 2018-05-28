@@ -118,8 +118,6 @@ def saveinvoice(request):
     if request.params["dcid"]!="":
         invoicedata["dcid"] = request.params["dcid"]
     invoicewholedata = {"invoice":invoicedata,"stock":stock}
-    print "invwhole data"
-    print invoicewholedata
     result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
     if result.json()["gkstatus"]==0:
         return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
