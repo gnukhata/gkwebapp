@@ -414,9 +414,6 @@ $(document).ready(function()
     
     var financialStart =Date.parse(fdate);
     var financialEnd = Date.parse(tdate);
-    console.log(gstdate);
-    console.log(financialStart);
-    console.log(financialEnd);
     if (gstdate>financialStart && gstdate>financialEnd){
 	console.log("22");
 	$(".vat").show();
@@ -502,19 +499,17 @@ $(document).ready(function()
 
       });
     $("#onlyaccradio").click(function(event){
-	event.preventDefault();
 	$("#ledgerdiv").hide();
     });
     $("#invinvsbillradio").click(function(event) {
-        event.preventDefault();
 	$("#ledgerdiv").show();
     });
     $("#invsbillradio").click(function(event) {
-        event.preventDefault();
+        //event.preventDefault();
 	$("#ledgerdiv").show();
     });
     $("#onlyinvsradio").click(function(event){
-        event.preventDefault();
+        //event.preventDefault();
 	$("#ledgerdiv").show();
     });
     var otype = $("#orgtype option:selected").val();
