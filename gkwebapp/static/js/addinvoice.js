@@ -375,7 +375,9 @@ $(document).ready(function() {
 
     //Change event for 'GST' and 'VAT' radio button.
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
+	
 	if($("#gst").is(":checked")){
+	    console.log("gst");
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
@@ -385,6 +387,7 @@ $(document).ready(function() {
 	    $(".gstinfield").show();
 	    $(".vatfield").hide();
 	    $(".gstfield").show();
+	    
 
 	    /**On changing 'gst' or 'vat' radio button on the basis of 'source state' and 'destination state', 'igst' and 'sgst' fields are hide and show.**/
 	    
@@ -397,6 +400,7 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	}else if($("#vat").is(":checked")){
+	    console.log("vat");
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
 	    $("#gstproducttable").hide();
@@ -2873,14 +2877,13 @@ if (event.which == 13) {
 	  //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
 		form_data.append("paymentmode",3);   
       } else if($("#chkpaymentmode option:selected").val()=="2"){
-	  alert("2");
+	  
 	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-    form_data.append("taxflag", $(".taxapplicable").val());
 
-      }else{
+      else{
 	  
 	    form_data.append("paymentmode",15);
       }
