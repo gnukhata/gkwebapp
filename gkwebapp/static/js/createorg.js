@@ -68,7 +68,7 @@ $(document).ready(function()
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
   function yearpad (str, max) {
@@ -80,7 +80,7 @@ $(document).ready(function()
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+	return str;
     }
   }
 

@@ -158,11 +158,12 @@
         	</div>
 		<small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
 	      </div>
-	      <div class="form-group">
+	      <div id="ledgerdiv">
+		<div class="form-group">
 		<input type="checkbox" id="sales" checked>
 		<label for="sales">{%trans%}Generate Sales & Purchase Vouchers for Invoices{%endtrans%}</label>
 	      </div>
-	      <div id="ledgerdiv" class="form-inline">
+	      <div class="form-inline">
 		<div class="radio">
         	  <label><input type="radio" class="ledger nopadding" name="ledger" id="singlesales" aria-label="" checked>&nbsp {% trans %}Single Sales/Purchase Ledger{% endtrans %}.</label>
         	</div>
@@ -170,10 +171,13 @@
         	  <label><input type="radio" class="ledger nopadding" name="ledger" id="multiplesales" aria-label="">&nbsp {% trans %}Per Product Sale/Purchase Ledger{% endtrans %}.</label>
 		</div>
 	      </div>
+	      </div>
 	    </div>
-	    <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p" style="float:right"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
           </form>
         </div>
+	<div class="row col-md-12 pull-right">
+	  <button class="btn btn-success" id="btnsubmit" type="submit" accesskey="p" style="margin-right:10px; margin-bottom:10px; float:right;"><span class="glyphicon glyphicon-arrow-right"></span>{% trans %}<u>P</u>roceed{% endtrans %}</button>
+	</div>
       </div>
     </div>
     <div id="addorg">
