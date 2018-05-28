@@ -44,6 +44,13 @@ def showvoucher(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
     lastdetails = result.json()["gkresult"]
+    if(lastdetails["narration"] != ""):
+        lastdetails["narration"] = lastdetails["narration"]
+    else:
+        lastdetails["narration"]=""
+        vdate = str(request.params["financialstart"])
+        lastdetails["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
+ 
     if(lastdetails["vno"] != ""):
         lastdetails["vno"] = lastdetails["vno"]
     else:

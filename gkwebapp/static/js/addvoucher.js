@@ -475,6 +475,16 @@ $(document).ready(function() {
       });
       return bal;
   };
+    //Last narrration
+     $(document).off("keydown","#narration").on('keydown', '#narration', function(event) {
+  //event.preventDefault();
+    /* Act on the event */
+	var lastnarration = $("#narration").attr("value");
+	 if(event.which==78 && event.ctrlKey ||(event.which=18 && event.shiftKey && event.which==78)){
+	    $("#narration").val(lastnarration);
+	}
+     });
+
     
 $(document).off("focusout",".accs, .cramt, .dramt").on("focusout", ".accs, .cramt, .dramt", function() {
     curfocusrow = $(this).closest('tr').index();
@@ -1914,7 +1924,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           vtotal += +$(this).val();
 	});
       var details = {}; // dictionay containing details other than the table values.
-    details.vno=$('#vno').val();
+      details.vno=$('#vno').val();
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
 
