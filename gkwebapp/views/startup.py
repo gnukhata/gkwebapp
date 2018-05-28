@@ -81,8 +81,8 @@ def login(request):
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
 def createorg(request):
-
-    return {"locale":default_locale_negotiator(request)}
+     states = requests.get("http://127.0.0.1:6543/state")
+     return {"locale":default_locale_negotiator(request),"states": states.json()["gkresult"]}
 
 @view_config(route_name="createadmin", renderer="gkwebapp:templates/createadmin.jinja2")
 def createadmin(request):

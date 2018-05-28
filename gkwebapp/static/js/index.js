@@ -71,6 +71,7 @@ $("#createnav").click(function(event){
     $(".feature").hide();
     $("#addorg").hide();
     $("#createtorg").show();
+    $("#createadmin").hide();
 setTimeout( function() { $("#orgname").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 });
   return;
