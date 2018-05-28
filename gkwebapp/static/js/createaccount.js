@@ -39,6 +39,8 @@ $(document).ready(function()
   $("#openbal").hide();
   $("#baltbl").hide();
   $("#baltbl").hide();
+    $("#bnkdiv").hide();
+    $("#chsdiv").hide();
   $("#groupname").focus().select();
     $("#accountform").validate();
     var taxstate = "";
@@ -112,6 +114,18 @@ $(document).ready(function()
 	  $("#gstaccount").prop("disabled", true);
       }
 
+      //Default
+      if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
+	  $("#bnkdiv").show();
+	  $("#chsdiv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
+	  $("#chsdiv").show();
+	  $("#bnkdiv").hide();
+      }else{
+	  $("#bnkdiv").hide();
+	  $("#chsdiv").hide();
+      }
+
   });
 
   $("#reset").click(function()
@@ -163,6 +177,12 @@ $("#openbal").keydown(function(event){
 	    if ($.trim($("#subgroupname option:selected").val())=="New"){
 	    $("#newsubgroup").focus().select();
 	    }
+	    else if($.trim($("#subgroupname option:selected").text())=="Bank"){
+		$("#bnkac").focus().select();
+	    }
+	    else if($.trim($("#subgroupname option:selected").text())=="Cash"){
+		$("#chsac").focus().select();
+	    }
 	    else {
 		    $("#maccounts").focus().select();
 	    }
@@ -173,6 +193,16 @@ $("#openbal").keydown(function(event){
 	    }
     });
 
+    $(".defbx").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#maccounts").focus();
+	}
+	if (event.which==38){
+	    $("#subgroupname").focus();
+	}
+    });
+    
 //key down event for newsubgroup.
     $("#newsubgroup").keydown(function(event) {
 	if (event.which==13) {
@@ -207,6 +237,12 @@ $("#openbal").keydown(function(event){
 	     event.preventDefault();
 	     if ($("#newsubgroup").is(':visible')) {
 		 $("#newsubgroup").focus().select();
+	     }
+	     else if($("#bnkac").is(':visible')){
+		 $("#bnkac").focus();
+	     }
+	     else if($("#chsac").is(':visible')){
+		 $("#chsac").focus();
 	     }
 	     else {
 		 $("#subgroupname").focus().select();
