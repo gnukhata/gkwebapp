@@ -506,6 +506,7 @@ $(document).ready(function(){
 		$("#createtorg").hide();
 		$("#addorg").show();
 		$("#ticker").show();
+		$("footer").hide();
 		var otype = $("#orgtype option:selected").val();
 		if (otype =="Profit Making"){
 		    $(".noprofit").hide();
@@ -1388,9 +1389,15 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
   });**/
 
-  $("#reset").click(function()
-  {
-    $("#showeditorg").click();
+    $("#back").click(function(event){
+	event.preventDefault();
+	$("#addorg").hide();
+	$("#createtorg").show();
+    });
+    $("#backtoprofile").click(function(event){
+	event.preventDefault();
+	$("#createadmin").hide();
+	$("#addorg").show();
   });
 
     //Validation for GSTIN on Done Button inside Add GSTIN.

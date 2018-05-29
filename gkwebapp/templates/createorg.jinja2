@@ -42,6 +42,9 @@
      .img-circle {
 	 border-radius: 50%;
      }
+     .img-thumbnail{
+	 padding:50px !important;
+     }
      .gstrate{
 	 margin:10px;
      }
@@ -53,6 +56,9 @@
      }
      .state_del{
 	 color:#000000;
+     }
+     .fa{
+	 margin-right:5px;
      }
     </style>
 
@@ -90,13 +96,13 @@
 
           <form id="createorgform"  role="form">
 	    <div class="col-sm-6 form-group">
-              <label for="orgname">{% trans %}C<u>o</u>mpany Name{% endtrans %} : </label>
-              <input name="orgname" class="form-control orgfields" placeholder="Enter Company Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name" accesskey="o"/>
+              <label for="orgname">{% trans %}Company Name{% endtrans %} : </label>
+              <input name="orgname" class="form-control orgfields" placeholder="Enter Company Name" id="orgname" type="text" data-validation-required-message="Please Enter Organisation Name"/>
               <br/>
               {% if locale =='en' or locale ==None %}
 
-                <label for="orgcase">{% trans %}<u>C</u>ase{% endtrans %} : </label>
-                <select name="orgcase" class="form-control orgfields" id="orgcase" accesskey="c">
+                <label for="orgcase">{% trans %}Case{% endtrans %} : </label>
+                <select name="orgcase" class="form-control orgfields" id="orgcase">
                   <option value="As-Is">{% trans %}As{% endtrans %}-{% trans %}is{% endtrans %}</option>
                   <option value="Upper Case">{% trans %}Upper Case{% endtrans %}</option>
                   <option value="Lower Case">{% trans %}Lower Case{% endtrans %}</option>
@@ -106,20 +112,20 @@
               {% endif %}
 
 
-              <label for="orgtype">{% trans %}Company <u>T</u>ype{% endtrans %} : </label>
-              <select name="orgtype" class="form-control orgfields" id="orgtype" data-validation-required-message="Please select Organisation Type" accesskey="t">
+              <label for="orgtype">{% trans %}Company Type{% endtrans %} : </label>
+              <select name="orgtype" class="form-control orgfields" id="orgtype" data-validation-required-message="Please select Organisation Type">
                 <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
                 <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
               </select>
 
               <br/>
 
-              <label for="financialdate">{% trans %}<u>F</u>inancial Year{% endtrans %} : </label>
+              <label for="financialdate">{% trans %}Financial Year{% endtrans %} : </label>
 
               <div class="form-inline">
 
                 <label class="sr-only" for="fromday">{% trans %}Enter From Day{% endtrans %}</label>
-                <input type="text" id="fromday" name="fromday" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="DD" accesskey="f" >
+                <input type="text" id="fromday" name="fromday" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="DD">
 
                 <label class="sr-only" for="frommonth">{% trans %}Enter From Month{% endtrans %}</label>
                 <input type="text" id="frommonth" name="frommonth" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
@@ -339,7 +345,7 @@
 		  </table>
 		</div>
 		<div class="col-xs-6 from-group">
-		  <table class="table">
+		  <table id="editprofiletable" class="table">
 		    <tbody>
 		      <!--  -->
 		      <tr class="noprofit">
@@ -451,11 +457,9 @@
 		    </tbody>
 		  </table>
 		</div>
-		<div class="container-fluid">
-		  <div class="col-xs-2 col-xs-offset-5">
-		    <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="v"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Sa<u>v</u>e{% endtrans %}</button>
-		    <button id="reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
-		  </div>
+		<div class="container-fluid" style="margin-bottom:10px;">
+		  <button type="button" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="e" style="float:right;"><i class="fa fa-arrow-right" aria-hidden="true"></i> {% trans %}Pro<u>e</u>ed{% endtrans %}</button>
+		  <button id="back" type="button" class="btn btn-danger btn-sm" accesskey="b" style="float:right; margin-right:5px;"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
 		</div>
 	      </form>
 	    </div>
@@ -505,19 +509,19 @@
 	      <div style="margin-bottom: 5px" class="col-xs-12 from-group">
 
 
-		<label for="username">{% trans %}<u>U</u>sername{% endtrans %} : </label>
-		<input type="text" id="username" class="form-control adminfields" name="username" accesskey="u"></input>
+		<label for="username">{% trans %}Username{% endtrans %} : </label>
+		<input type="text" id="username" class="form-control adminfields" name="username"></input>
 		<br/>
-		<label for="password">{% trans %}<u>P</u>assword{% endtrans %} : </label>
-		<input type="password" id="password" class="form-control adminfields" name="password" accesskey="p"></input>
+		<label for="password">{% trans %}Password{% endtrans %} : </label>
+		<input type="password" id="password" class="form-control adminfields" name="password"></input>
 		<br/>
-		<label for="confirmpassword">{% trans %}<u>C</u>onfirm Password{% endtrans %} : </label>
-		<input type="password" name="confirmpassword" id="confirmpassword" class="form-control adminfields" value="" accesskey="c"></input>
+		<label for="confirmpassword">{% trans %}Confirm Password{% endtrans %} : </label>
+		<input type="password" name="confirmpassword" id="confirmpassword" class="form-control adminfields" value=""></input>
 		<br/>
-		<label for="securityanswer">{% trans %}Security <u>Q</u>uestion{% endtrans %} : </label>
-		<input type="text" class="form-control adminfields" value="" id="securityquestion" name="securityquestion" accesskey="q"></input>
+		<label for="securityanswer">{% trans %}Security Question{% endtrans %} : </label>
+		<input type="text" class="form-control adminfields" value="" id="securityquestion" name="securityquestion"></input>
 		<br/>
-		<label for="securityanswer">{% trans %}<u>A</u>nswer to  Security Question{% endtrans %} : </label>
+		<label for="securityanswer">{% trans %}Answer to  Security Question{% endtrans %} : </label>
 		<input type="text" class="form-control  adminfields" value="" id="securityanswer" name="securityanswer" accesskey="a"></input>
 		<input type="hidden" class="form-control" value="{{orgname}}" id="orgname" name="orgname"></input>
 		<input type="hidden" class="form-control" value="{{orgtype}}" id="orgtype" name="orgtype"></input>
@@ -527,7 +531,8 @@
 		<input type="hidden" class="form-control" value="{{fromdate}}" id="yearstart" name="yearstart"></input>
 		<input type="hidden" class="form-control" value="{{todate}}" id="yearend" name="yearend"></input>
 		<br/>
-		<button type="button" id="createlogin" class="btn btn-success" accesskey="l">{% trans %}Create & <u>L</u>ogin{% endtrans %}</button>
+		<button type="button" id="backtoprofile" class="btn btn-danger" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+		<button type="button" id="createlogin" class="btn btn-success" accesskey="l"><i class="fa fa-floppy-o" aria-hidden="true"></i>{% trans %}Create & <u>L</u>ogin{% endtrans %}</button>
 	      </div>
 	    </form>
 	  </div>
