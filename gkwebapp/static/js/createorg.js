@@ -26,8 +26,7 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 
-$(document).ready(function()
-{
+$(document).ready(function(){
     $("#ledgerdiv").hide();
     $("#addorg").hide();
     $("#createadmin").hide();
@@ -238,9 +237,32 @@ $(document).ready(function()
      $(".iib").keydown(function(event) {
           if (event.which==13) {
 	      event.preventDefault();
-          $('#btnsubmit').focus();
+	      if ($("#ledgerdiv").is(":hidden")) {
+		  $('#btnsubmit').focus();
+	      }
+	      else{
+		  $("#sales").focus();
+	      }
         }
      });
+    $("#sales").keydown(function(event){
+	if (event.which==13) {
+	    event.preventDefault();
+	    $('#singlesales').focus();
+	}
+	if (event.which == 38) {
+	    $("#invinvsbillradio").focus();
+	}
+    });
+    $(".ledger").keydown(function(event){
+	if (event.which==13) {
+	    event.preventDefault();
+	    $('#btnsubmit').focus();
+	}
+	if (event.which == 38) {
+	    $("#sales").focus();
+	}
+    });
 
      $("#onlyaccradio").keydown(function(event) {
           if (event.which==38) {
@@ -483,6 +505,7 @@ $(document).ready(function()
             {
 		$("#createtorg").hide();
 		$("#addorg").show();
+		$("#ticker").show();
 		var otype = $("#orgtype option:selected").val();
 		if (otype =="Profit Making"){
 		    $(".noprofit").hide();

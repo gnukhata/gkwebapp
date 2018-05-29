@@ -24,8 +24,8 @@ Contributors:
 "Navin Karkera" <navin@dff.org.in>
 */
 
-$(document).ready(function()
-{
+$(document).ready(function(){
+    $("#ticker").hide();
     var orgobj = {};
   $("#finalyears").keydown( function(e) {
 
@@ -88,20 +88,20 @@ $(document).ready(function()
       
     $("#selectnav").click(function(event){
 	
-    event.preventDefault();
+	event.preventDefault();
 	$(".feature").show();
 	var numoforg = $("#org-name option").length;
     var numofyears =  $("#finalyears option").length;
     if (numoforg == 2){ //for setting focus to the "next" button if there is only one organisation present
 	if(numofyears==1)
 	{
-	    setTimeout( function() { $("#callLogin").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
+	    setTimeout( function() { $("#ticker").hide(); $("#callLogin").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 	}
 
     }
     else //set focus to organisation name if there are more than one organisations
     {
-	    setTimeout( function() { $("#org-name").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
+	    setTimeout( function() {$("#ticker").hide(); $("#org-name").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
 	}
     
 });

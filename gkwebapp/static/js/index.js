@@ -25,9 +25,10 @@ Contributors:
 "Dinesh Sutar" <dinesh.sutar@openmailbox.org>
 */
 // This script is for the first page of GNUKhata i.e index page.
-$(document).ready(function(){;
+$(document).ready(function(){
 $("#selectorg").load("/existingorg");
-$("#createorg").load("/createorg");
+    $("#createorg").load("/createorg");
+    $("#ticker").hide();
   $(document).keydown(function(event) {
     // setting shortcut keys for menu items.
       if(event.ctrlKey && event.keyCode == 69) {
@@ -46,7 +47,7 @@ $("#createorg").load("/createorg");
   $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
     url: '/orgexists',
     type: 'POST',
-    datatype: 'json',
+    datatype: 'json'
   })
   .done(function(jsonobj) {
       var orgs = jsonobj["gkresult"];
@@ -67,12 +68,15 @@ $("#createorg").load("/createorg");
 
 
  
-$("#createnav").click(function(event){
-    $(".feature").hide();
-    $("#addorg").hide();
-    $("#createtorg").show();
-    $("#createadmin").hide();
-setTimeout( function() { $("#orgname").focus(); }, 500 );// Set focus after a timeout of 500 milliseconds.
+    $("#createnav").click(function(event){
+	setTimeout( function() {
+	    $("#ticker").hide();
+	    $(".feature").hide();
+	    $("#addorg").hide();
+	    $("#createtorg").show();
+	    $("#createadmin").hide();
+	    $("#orgname").focus();
+	}, 500 );// Set focus after a timeout of 500 milliseconds.
 });
   return;
 });
