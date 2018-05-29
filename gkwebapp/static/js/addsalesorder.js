@@ -174,10 +174,10 @@ $(document).ready(function() {
 	 $('.salesorder_product_total_vat:eq(' + curindex + ')').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat(rowdiscount);
-	    totaltaxable = totaltaxable + parseFloat(rowtaxableamount);
-	    totaltax = totaltax + parseFloat(taxamount);
-	    totalamount = totalamount + parseFloat(rowtotal);
+	    totaldiscount = totaldiscount +parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    totaltax = totaltax +parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
+	    totalamount = totalamount +parseFloat($('#salesorder_product_table_vat tbody tr:eq(' + i + ') td:eq(9) input').val());
 	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
@@ -1987,7 +1987,9 @@ if (event.which == 13) {
   if ($("#salesorder_product_table_vat tbody tr").length > 1) {
     $(this).closest('tr').fadeOut(200, function() {
       $(this).closest('tr').remove(); //closest method gives the closest element productified
-      $("#salesorder_product_table_vat tbody tr:first td:eq(0) select").focus();
+	$("#salesorder_product_table_vat tbody tr:first td:eq(0) select").focus();
+	calculatevataxamt(curindex);
+
     });
   }
       if ($("#salesorder_product_table_vat tbody tr").length == 1) {
