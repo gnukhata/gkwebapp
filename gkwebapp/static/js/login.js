@@ -39,14 +39,11 @@ $(document).ready(function()
   {
   // displays organisation details in the status bar.
   $("#ticker").show();
-  $("#welcome").hide();
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
   if (pathname=="/showmainshell") {
   // if user just logged out then the div is set to col-md-6 size.
-    $("#forgotpassworddiv").addClass('col-md-6');
-    $("#welcome").show();
     $("#bootstrap").attr('href', '../static/css/Default.min.css');
   }
 // Navigation functions.
