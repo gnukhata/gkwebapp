@@ -50,7 +50,6 @@ def showvoucher(request):
         lastdetails["narration"]=""
         vdate = str(request.params["financialstart"])
         lastdetails["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
- 
     if(lastdetails["vno"] != ""):
         lastdetails["vno"] = lastdetails["vno"]
     else:

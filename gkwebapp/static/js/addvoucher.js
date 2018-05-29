@@ -480,7 +480,7 @@ $(document).ready(function() {
   //event.preventDefault();
     /* Act on the event */
 	var lastnarration = $("#narration").attr("value");
-	 if(event.which==78 && event.ctrlKey ||(event.which=18 && event.shiftKey && event.which==78)){
+	 if(event.which==88 && event.ctrlKey ||(event.which=18 && event.shiftKey && event.which==88)){
 	    $("#narration").val(lastnarration);
 	}
      });
