@@ -66,7 +66,7 @@ $(document).ready(function() {
     /*Calculator popover events starts here*/
     $(document).off("click", "#lcd").on("click", "#lcd", function(event){
 	 event.preventDefault();
-	$("#lcd").focus();
+	$("#lcd").focus().select();
 	return false;
     });
      $(document).off("keyup", "#lcd").on("keyup", "#lcd", function(event){
@@ -217,7 +217,7 @@ $(document).ready(function() {
 	    //display.value =null;
 	//}
         firstnumber = parseFloat($("#lcd").val());
-	$("#lcd").val("");
+	$("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "+" ;
 	$("#lcd").focus();
@@ -228,7 +228,7 @@ $(document).ready(function() {
        event.preventDefault();
        operation = "-";
         firstnumber = parseFloat($("#lcd").val());  
-         $("#lcd").val("");
+         $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	 displays.value = firstnumber + "-" ;
 	 $("#lcd").focus();
@@ -238,7 +238,7 @@ $(document).ready(function() {
        event.preventDefault();
        operation = "*";
         firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("");
+        $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
        displays.value = firstnumber + "*" ;
        $("#lcd").focus();
@@ -248,7 +248,7 @@ $(document).ready(function() {
 	event.preventDefault();
 	operation = "/";
         firstnumber = parseFloat($("#lcd").val());  
-        $("#lcd").val("");
+        $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "/";
 	$("#lcd").focus();
@@ -261,30 +261,34 @@ $(document).ready(function() {
             event.preventDefault();
             operation = "+";
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("");
+            $("#lcd").val("0");
 	    displays.value = firstnumber + "+" ;
+	    $("#lcd").focus().select();
 	}
 	else if(event.which==106 || (event.shiftKey && event.which==56)){
             event.preventDefault();
          operation = "*";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("");
+            $("#lcd").val("0");
 	    displays.value = firstnumber + "*" ;
+	    $("#lcd").focus().select();
          }
 	else if(event.which==109 || event.which==173){
             event.preventDefault();
          operation = "-";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("");
+            $("#lcd").val("0");
 	    displays.value = firstnumber + "-" ;
+	    $("#lcd").focus().select();
          }
 	
 	else if(event.which==111 || event.which==191){
             event.preventDefault();
          operation = "/";  
             firstnumber = parseFloat($("#lcd").val());  
-            $("#lcd").val("");
+            $("#lcd").val("0");
 	    displays.value = firstnumber + "/" ;
+	    $("#lcd").focus().select();
         }
 	else if(event.which==67){
 	    event.preventDefault();
@@ -366,7 +370,7 @@ $(document).ready(function() {
 	 }
 	 //firstnumber(displays.value);
 	 //display.value ="";
-	 $("#lcd").focus();
+	 $("#lcd").focus().select();
 	return false;
      });
     $(document).off("click", "#clr").on("click", "#clr", function(event){
