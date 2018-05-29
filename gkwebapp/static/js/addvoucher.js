@@ -69,6 +69,13 @@ $(document).ready(function() {
 	$("#lcd").focus();
 	return false;
     });
+     $(document).off("keyup", "#lcd").on("keyup", "#lcd", function(event){
+	 event.preventDefault();
+	 if($("#lcd").val()== ""){
+	     $("#lcd").val("0");
+	 }
+     });
+
 
     $(document).off("click", "#num1").on("click", "#num1", function(event){
 	event.preventDefault();
@@ -284,6 +291,7 @@ $(document).ready(function() {
 	    $("#lcd").val('0');  
 	    $("#lcdu").val("");
 	    $("#resultlcd").val("");
+	    $("#resultlcd").hide();
 	    firstnumber="0";
 	    secondnumber="0";
 	    result="";
