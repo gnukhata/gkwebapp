@@ -26,9 +26,37 @@ Contributors:
 */
 // This script is for the first page of GNUKhata i.e index page.
 $(document).ready(function(){
-$("#selectorg").load("/existingorg");
+    $("#selectorg").load("/existingorg");
     $("#createorg").load("/createorg");
-    $("#ticker").hide();
+    let width = $('#firstmessage').width();
+    $('#secondmessage').width(width);
+    $('#firstmessage').fadeIn(4000, function(){
+	$(this).fadeOut(3000, function(){
+	    $('#secondmessage').fadeIn(4000, function(){
+		$("#logodiv").fadeOut(1000, function(){
+			$.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
+			url: '/orgexists',
+			type: 'POST',
+			datatype: 'json'
+		    }).done(function(jsonobj) {
+			var orgs = jsonobj["gkresult"];
+			if (orgs==0) {
+			    $("#selectnav").hide();
+			    $("#createnav").click();
+			}
+			else {
+			    $("#selectnav").click();
+			}
+		    }).fail(function() {
+			console.log("error");
+		    }).always(function() {
+			console.log("complete");
+		    });
+		    $("#contentdiv").fadeIn();
+		});
+	    });
+	});
+    });
   $(document).keydown(function(event) {
     // setting shortcut keys for menu items.
       if(event.ctrlKey && event.keyCode == 69) {
@@ -44,30 +72,6 @@ $("#selectorg").load("/existingorg");
       }
     });
 
-  $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
-    url: '/orgexists',
-    type: 'POST',
-    datatype: 'json'
-  })
-  .done(function(jsonobj) {
-      var orgs = jsonobj["gkresult"];
-    if (orgs==0) {
-      $("#selectnav").hide();
-      $("#createnav").click();
-    }
-    else {
-      $("#selectnav").click();
-    }
-  })
-  .fail(function() {
-    console.log("error");
-   })
-  .always(function() {
-    console.log("complete");
-  });
-
-
- 
     $("#createnav").click(function(event){
 	setTimeout( function() {
 	    $("#ticker").hide();

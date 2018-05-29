@@ -147,101 +147,121 @@
 
 </head>
 <body style="background:url({{request.static_url('gkwebapp:static/images/old_mathematics.png')}})">
-<nav class="navbar gknav navbar-fixed-top">
-  <div class="container-fluid">
-    <!-- Brand and toggle get grouped for better mobile display -->
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gknavcollapse" aria-expanded="false">
-        <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;margin-top: -11px" /></a>
-      <a class="navbar-brand" style="margin-top: -9px">{% trans %}GNUKhata <em>v5.0</em>{% endtrans %}</a>
+  <div id="logodiv" style="position:relative; height:100vh;">
+    <div class="panel text-center shadow" style="margin:0; position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
+      <div id="welcomemessage" style="padding:2%; font-weight:bold; font-size:2.5em; color:grey; margin-top:2%;">
+	Welcome to GNUKhata!
       </div>
-
-    <!-- Collect the nav links, forms, and other content for toggling -->
-    <div class="collapse navbar-collapse" id="gknavcollapse">
-      <ul class="nav navbar-nav navbar-right">
-        <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
-        <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
-	<!--  
-             <li class="dropdown">
-             <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %} </a>
-             <ul class="dropdown-menu">
-             <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
-             <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
-             <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
-             </ul>
-             </li>-->
-
-        <li><a class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#Mcsh"></a></li>
-
-      </ul>
-
-    </div><!-- /.navbar-collapse -->
-  </div><!-- /.container-fluid -->
-
-</nav>
-  <br />
-  <div id="Mcsh" tabindex="-1" class="modal fade" role="dialog">
-  <div class="modal-dialog bgcolor">
-    <div class="modal-content ">
-    <div class="modal-header">
-      {% trans %}<strong>Help!</strong>{% endtrans %}
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-
-	<p>   <font color=" #566573"> {%trans%}
-
-	  This screen provides you with two options: Create Organization and Select Organizations. <br>
-	  If you are running GNUKhata for the first time then Create Organization Tab will be active by default.</br>
-	  In this module you have to enter the name of organization, choose it's type (Profit Making or Not for Profit ) and then enter the financial year.<br>
-	  You can select 4 modes of operations varying in the number of features they provide. <br>The least features comes in the Accounting only option. Choose this if you only wish to maintain books of account.<br>
-	  Choose this option Accounting and Invoicing if you wish to record and create invoices along with book keeping. <br>
-	  Invoicing with Billwise Accounting is same as the 2nd option along with bill tracking against payments and receipts. <br>
-	  Inventory with Invoicing and Billwise Accounting choose this option if you wish to use complete set of inventory and accounting section. <br>
-	  Note that you can use enter key to move to the next field and up arrow to move to earlier field.
-Tab and Shift tab options are also available by default for navigation.</br>
-Next screen will allow you to create admin user.
-Select Organization from the dropdown and press enter.
-Now choose financial year and press enter.
-Login screen will appear after this.{% endtrans %} </font>
-
-        </p>
+      <div class="row">
+	<div style="position:relative; padding:5%;">
+	  <img class="img-responsive" src="{{request.static_url('gkwebapp:static/images/gnukhata_icon.png')}}" alt="GNUKhata Icon" style="max-width:200px;max-height:200px; display: block; margin-left: auto; margin-right: auto ">
+	</div>
       </div>
-
+      <div id="firstmessage" style="padding:10px; font-weight:bold; color:grey; margin-left: auto; margin-right: auto ">
+	Manage your business with ease, make accounting a breeze.
+      </div>
+      <div id="secondmessage" style="padding:10px; font-weight:bold; color:grey; margin-left: auto; margin-right: auto " hidden>
+	Book keeping and invoicing can't get easier than this.
+      </div>
     </div>
   </div>
-</div>
-  <div class="container-fluid" id="ticker" hidden>
-    <ul class="shadow" style="list-style-type: none; margin-top: 30px; margin-bottom: -30px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
-      <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
-      <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
-    </ul>
+  <div id="contentdiv" hidden>
+    <nav class="navbar gknav navbar-fixed-top">
+      <div class="container-fluid">
+	<!-- Brand and toggle get grouped for better mobile display -->
+	<div class="navbar-header">
+	  <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#gknavcollapse" aria-expanded="false">
+            <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+	  </button>
+	  <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;margin-top: -11px" /></a>
+	  <a class="navbar-brand" style="margin-top: -9px">{% trans %}GNUKhata <em>v5.0</em>{% endtrans %}</a>
+	</div>
+
+	<!-- Collect the nav links, forms, and other content for toggling -->
+	<div class="collapse navbar-collapse" id="gknavcollapse">
+	  <ul class="nav navbar-nav navbar-right">
+            <li class="active"><a data-toggle="tab" id="selectnav" href="#selectorg"> <span class="sr-only">{% trans %}Select Existing Organisation{% endtrans %}</span>{% trans %}Select <u>E</u>xisting Organisation{% endtrans %}</a></li>
+            <li><a data-toggle="tab" id="createnav" href="#createorg">{% trans %}C<u>r</u>eate Organisation{% endtrans %}</a></li>
+	    <!--  
+		 <li class="dropdown">
+		 <a href="" id="lang" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>L</u>anguage{% endtrans %} </a>
+		 <ul class="dropdown-menu">
+		 <li><a  class="langmenu" id="mar" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+		 <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
+		 <li><a  class="langmenu" id="mar" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
+		 </ul>
+		 </li>-->
+
+            <li><a class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" id="csh" data-target="#Mcsh"></a></li>
+
+	  </ul>
+
+	</div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+
+    </nav>
+    <br />
+    <div id="Mcsh" tabindex="-1" class="modal fade" role="dialog">
+      <div class="modal-dialog bgcolor">
+	<div class="modal-content ">
+	  <div class="modal-header">
+	    {% trans %}<strong>Help!</strong>{% endtrans %}
+	    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </div>
+	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+	    <p>   <font color=" #566573"> {%trans%}
+
+	      This screen provides you with two options: Create Organization and Select Organizations. <br>
+	      If you are running GNUKhata for the first time then Create Organization Tab will be active by default.</br>
+	      In this module you have to enter the name of organization, choose it's type (Profit Making or Not for Profit ) and then enter the financial year.<br>
+	      You can select 4 modes of operations varying in the number of features they provide. <br>The least features comes in the Accounting only option. Choose this if you only wish to maintain books of account.<br>
+	      Choose this option Accounting and Invoicing if you wish to record and create invoices along with book keeping. <br>
+	      Invoicing with Billwise Accounting is same as the 2nd option along with bill tracking against payments and receipts. <br>
+	      Inventory with Invoicing and Billwise Accounting choose this option if you wish to use complete set of inventory and accounting section. <br>
+	      Note that you can use enter key to move to the next field and up arrow to move to earlier field.
+	      Tab and Shift tab options are also available by default for navigation.</br>
+	      Next screen will allow you to create admin user.
+	      Select Organization from the dropdown and press enter.
+	      Now choose financial year and press enter.
+	      Login screen will appear after this.{% endtrans %} </font>
+
+            </p>
+	  </div>
+
+	</div>
       </div>
+    </div>
+    <div class="container-fluid" id="ticker" hidden>
+      <ul class="shadow" style="list-style-type: none; margin-top: 30px; margin-bottom: -30px; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
+	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+	<li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
+      </ul>
+    </div>
 
 
 
-  <div id="containerdiv" class="container-fluid" style="margin-top:50px; overflow-y:scroll;">
-<div class="row">
-<div class="tab-content col-sm-12">
+    <div id="containerdiv" class="container-fluid" style="margin-top:50px; overflow-y:scroll;">
+      <div class="row">
+	<div class="tab-content col-sm-12">
 
-  <div id="selectorg" class="tab-pane fade in active">
+	  <div id="selectorg" class="tab-pane fade in active">
 
+	  </div>
+	  <div id="createorg" class="tab-pane fade">
+
+	  </div>
+	</div>
+      </div>
+    </div>
+    <footer class="footer" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
+      <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013 to 2018 & Accion Labs Pvt. Ltd. 2017 to 2018.{% endtrans %} {% trans %}This software is licensed under GNU AGPLv3.{% endtrans %}. {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
+    </footer>
   </div>
-  <div id="createorg" class="tab-pane fade">
-
-  </div>
-</div>
-</div>
-  </div>
-  <footer class="footer" style="background-color: rgb(87,93,99); color: white; margin-top: -10px; border-radius: 4px;">
-    <p style="text-align: center; font-size: 0.9em;">{% trans %}Copyright © Digital Freedom Foundation 2013 to 2018 & Accion Labs Pvt. Ltd. 2017 to 2018.{% endtrans %} {% trans %}This software is licensed under GNU AGPLv3.{% endtrans %}. {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" style="color: white;"><strong>{% trans %}gnukhata.in{% endtrans %}</strong></a> {% trans %}for more information.{% endtrans %}</p>
-  </footer>
   <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
   <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/index.js')}}"></script>
