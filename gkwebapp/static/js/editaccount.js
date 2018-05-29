@@ -59,15 +59,37 @@ $(document).ready(function()
       },
       success: function(jsonObj)
       {
-        accdetails=jsonObj["gkresult"];  
-        $("#editaccountform").show();  
+        let accdetails=jsonObj["gkresult"];  
+	$("#editaccountform").show();  
 	$("#groupname").val(accdetails["groupcode"]);
         $("#groupname").prop("disabled", true);  
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
-	$("groupname").change();  
-        $("#accountname").val(accdetails["accountname"]);
+	$("groupname").change();
+	if($('#subgroupname').text() == "Bank"){
+	    $("#bnkdiv").show();
+	    if(accdetails["defaultflag"] == 2){
+		$("#bnkac").prop("checked", true);
+		$("#bnkac").prop("disabled", true);
+	    }else{
+		$("#bnkac").prop("checked", false);
+		$("#bnkac").prop("disabled", true);
+	    }
+	}else if($('#subgroupname').text() == "Cash"){
+	    $("#chsdiv").show();
+            if(accdetails["defaultflag"] == 3){
+		$("#chsac").prop("checked", true);
+		$("#chsac").prop("disabled", true);
+	    }else{
+		$("#chsac").prop("checked", false);
+		$("#chsac").prop("disabled", true);
+	    }
+	}else{
+	    $("#bnkdiv").hide();
+	    $("#chsdiv").hide();
+	}
+	$("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
         $("#openingbal").val(accdetails["openingbal"]);
         $("#openingbal").prop("disabled", true);
@@ -134,7 +156,7 @@ $(document).ready(function()
       $("#openingbal").prop("disabled", false);
       $("#openingbal").focus().select();
       $("#groupname").prop("disabled", true);
-      $("#subgroupname").prop("disabled", true);	
+      $("#subgroupname").prop("disabled", true);
     }
     else{
       if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
@@ -144,6 +166,8 @@ $(document).ready(function()
         $("#openingbal").prop("disabled", false);
 
       }
+      $("#bnkac").prop("disabled",false);
+      $("#chsac").prop("disabled",false);
       $("#subgroupname").prop("disabled", false);
       $("#groupname").prop("disabled", false);
       $("#accountname").prop("disabled",false);
