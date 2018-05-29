@@ -105,13 +105,14 @@ $(document).ready(function() {
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#salesorder_product_table_gst tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat(rowdiscount);
-	    totaltaxable = totaltaxable + parseFloat(rowtaxableamount);
-	    totalcgst = totalcgst + parseFloat(sgstamount);
-	    totalsgst = totalsgst + parseFloat(sgstamount);
-	    totaligst = totaligst + parseFloat(igstamount);
-	    totalcess = totalcess + parseFloat(cessamount);
-	    totalamount = totalamount + parseFloat(rowtotal);
+	    
+	    totaldiscount = totaldiscount +parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    totaltaxable = totaltaxable + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(7) input').val());;
+	    totalcgst = totalcgst + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(9) input').val());
+	    totalsgst = totalsgst +parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(11) input').val());
+	    totaligst = totaligst +parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(13) input').val());
+	    totalcess = totalcess + parseFloat($('#salesorder_product_table_gst tbody tr:eq(' + i + ') td:eq(15) input').val());
+	    totalamount = totalamount + parseFloat($('#salesorder_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 	}
 
 	//Total of various columns are displayed on the footer.
@@ -1997,6 +1998,7 @@ if (event.which == 13) {
 	  $(this).closest('tr').remove();
 	  $("#salesorder_product_table_gst tbody tr:eq("+curindex+")").remove();
 	  $("#salesorder_product_table_gst tbody tr:first td:eq(0) select").focus();
+	  calculategstaxamt(curindex);
       }
       if ($("#salesorder_product_table_gst tbody tr").length == 1) {
 	  $("#salesorder_product_table_total tbody tr:eq(0) td:eq(1)").empty();
