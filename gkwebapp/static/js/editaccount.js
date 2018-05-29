@@ -36,6 +36,8 @@ $(document).ready(function()
   $("#editaccountform").validate();
   $("#editaccountform").hide();
   $("#alertmsg").hide();
+  $("#bnkac").prop("disabled",false);
+  $("#chsac").prop("disabled",false);  
   $('#openingbal').numeric();   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $("#submit").hide();
   $("#delete").hide();
@@ -243,6 +245,11 @@ $(document).ready(function()
 	    event.preventDefault();
 	    if($.trim($("#subgroupname option:selected").val())=="New"){
 		$("#newsubgroup").focus().select();
+	    }else if($.trim($("#subgroupname option:selected").text())=="Bank"){
+		$("#bnkac").focus().select();
+	    }
+	    else if($.trim($("#subgroupname option:selected").text())=="Cash"){
+		$("#chsac").focus().select();
 	    }else{
 		$("#accountname").focus();
 	    }
@@ -261,7 +268,30 @@ $(document).ready(function()
 	}else{
 	    $("#nsgp").hide();
 	}
+
+	if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
+	    $("#bnkdiv").show();
+	    $("#chsdiv").hide();
+	}else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
+	    $("#chsdiv").show();
+	    $("#bnkdiv").hide();
+	}else{
+	    $("#bnkdiv").hide();
+	    $("#chsdiv").hide();
+	}
     });
+
+    /** Keydown for 'bnkac' and 'chsac' checkbox **/
+    $(".defbx").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#accountname").focus();
+	}
+	if (event.which==38){
+	    $("#subgroupname").focus();
+	}
+    });
+
 
     //Keydown for 'Newsubgroup name' field.
     $("#newsubgroup").keydown(function(event){
@@ -331,6 +361,11 @@ $("#accountname").keydown(function(event) {
 	event.preventDefault();
 	if($("#newsubgroup").is(':visible')){
 	    $("#newsubgroup").focus();
+	}else if($.trim($("#subgroupname option:selected").text())=="Bank"){
+		$("#bnkac").focus().select();
+	}
+	else if($.trim($("#subgroupname option:selected").text())=="Cash"){
+	    $("#chsac").focus().select();
 	}else{
 	    $("#subgroupname").focus();
 	}
