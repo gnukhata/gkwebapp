@@ -1418,14 +1418,18 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     var obj = {}; //A dictionary created
     if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
       //For each tax its details are being stored in a dictionary
-      obj.taxname = $(".tax_name",this).val();
+	obj.taxname =$.trim($("td:eq(0) select option:selected", this).val());
+	obj.state = $.trim($("td:eq(1) select option:selected", this).val());
+	obj.taxrate =$.trim($("input", this).val());
+	taxes.push(obj);
+
+	/**obj.taxname = $(".tax_name",this).val();
       obj.state = $(".tax_state",this).val();
       obj.taxrate = $(".tax_rate",this).val();
-      taxes.push(obj);
+      taxes.push(obj);**/
     }
-
-
   });
+    
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
     if ($.trim($(".godown_name",this).val())!="") {
