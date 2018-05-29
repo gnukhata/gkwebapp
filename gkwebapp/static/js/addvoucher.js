@@ -216,7 +216,8 @@ $(document).ready(function() {
           //  firstnumber=result;
 	    //display.value =null;
 	//}
-        firstnumber = parseFloat($("#lcd").val());
+	firstnumber = parseFloat($("#lcd").val());
+	firstnumber=parseFloat(firstnumber.toFixed(2));
 	$("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "+" ;
@@ -227,7 +228,8 @@ $(document).ready(function() {
      $(document).off("click", "#operationminus").on("click", "#operationminus", function(event){
        event.preventDefault();
        operation = "-";
-        firstnumber = parseFloat($("#lcd").val());  
+         firstnumber = parseFloat($("#lcd").val());
+	 firstnumber=parseFloat(firstnumber.toFixed(2));
          $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	 displays.value = firstnumber + "-" ;
@@ -237,7 +239,8 @@ $(document).ready(function() {
    $(document).off("click", "#operationmult").on("click", "#operationmult", function(event){
        event.preventDefault();
        operation = "*";
-        firstnumber = parseFloat($("#lcd").val());  
+       firstnumber = parseFloat($("#lcd").val());
+       firstnumber=parseFloat(firstnumber.toFixed(2));
         $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
        displays.value = firstnumber + "*" ;
@@ -247,7 +250,8 @@ $(document).ready(function() {
     $(document).off("click", "#operationdivid").on("click", "#operationdivid", function(event){
 	event.preventDefault();
 	operation = "/";
-        firstnumber = parseFloat($("#lcd").val());  
+        firstnumber = parseFloat($("#lcd").val());
+	firstnumber=parseFloat(firstnumber.toFixed(2));
         $("#lcd").val("0");
 	var displays = document.getElementById("lcdu");
 	displays.value = firstnumber + "/";
@@ -260,7 +264,8 @@ $(document).ready(function() {
         if(event.which==107 || (event.shiftKey && event.which==61)){
             event.preventDefault();
             operation = "+";
-            firstnumber = parseFloat($("#lcd").val());  
+            firstnumber = parseFloat($("#lcd").val());
+	    firstnumber=parseFloat(firstnumber.toFixed(2));
             $("#lcd").val("0");
 	    displays.value = firstnumber + "+" ;
 	    $("#lcd").focus().select();
@@ -268,7 +273,8 @@ $(document).ready(function() {
 	else if(event.which==106 || (event.shiftKey && event.which==56)){
             event.preventDefault();
          operation = "*";  
-            firstnumber = parseFloat($("#lcd").val());  
+            firstnumber = parseFloat($("#lcd").val());
+	    firstnumber=parseFloat(firstnumber.toFixed(2));
             $("#lcd").val("0");
 	    displays.value = firstnumber + "*" ;
 	    $("#lcd").focus().select();
@@ -276,7 +282,8 @@ $(document).ready(function() {
 	else if(event.which==109 || event.which==173){
             event.preventDefault();
          operation = "-";  
-            firstnumber = parseFloat($("#lcd").val());  
+            firstnumber = parseFloat($("#lcd").val());
+	    firstnumber=parseFloat(firstnumber.toFixed(2));
             $("#lcd").val("0");
 	    displays.value = firstnumber + "-" ;
 	    $("#lcd").focus().select();
@@ -285,7 +292,8 @@ $(document).ready(function() {
 	else if(event.which==111 || event.which==191){
             event.preventDefault();
          operation = "/";  
-            firstnumber = parseFloat($("#lcd").val());  
+            firstnumber = parseFloat($("#lcd").val());
+	    firstnumber=parseFloat(firstnumber.toFixed(2));
             $("#lcd").val("0");
 	    displays.value = firstnumber + "/" ;
 	    $("#lcd").focus().select();
@@ -321,8 +329,7 @@ $(document).ready(function() {
     $(document).off("click", "#decimal").on("click", "#decimal", function(event){
 	event.preventDefault(); 
         var curReadOut = $("#lcd").val();
-	var display =document.getElementById("lcd");
-	console.log(curReadOut);
+       	var display =document.getElementById("lcd");
         if (curReadOut.length==0) {
             curReadOut = "0.";
             display.value = curReadOut;
@@ -338,7 +345,8 @@ $(document).ready(function() {
 	 event.preventDefault();
 	 var display = document.getElementById("lcd");
 	 secondnumber = parseFloat(display.value);
-     if (operation == "+")  
+	 secondnumber=parseFloat(secondnumber.toFixed(2));
+	 if (operation == "+")  
          { 
 	     result = firstnumber + secondnumber;
      }  
