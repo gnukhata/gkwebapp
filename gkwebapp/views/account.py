@@ -256,7 +256,7 @@ def getsubgroup(request):
 @view_config(route_name="addaccount", renderer="json")
 def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
-    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
+    gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"],"defaultflag":request.params["defaultflag"]}
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
         result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)

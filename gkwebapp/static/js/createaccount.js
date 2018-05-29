@@ -114,7 +114,7 @@ $(document).ready(function()
 	  $("#gstaccount").prop("disabled", true);
       }
 
-      //Default
+      /** Under Group 'Current asset' if subgroup 'Bank' or 'Cash' is selected then 'bnkdiv' or 'chsdiv' show or hide respectively **/
       if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
 	  $("#bnkdiv").show();
 	  $("#chsdiv").hide();
@@ -193,6 +193,7 @@ $("#openbal").keydown(function(event){
 	    }
     });
 
+    /** Keydown for 'bnkac' and 'chsac' checkbox **/
     $(".defbx").keydown(function(event){
 	if(event.which==13) {
 	    event.preventDefault();
@@ -486,6 +487,16 @@ $("#openbal").keydown(function(event){
     $('#openbal').val("0.00");
   }
 
+    /** Under Sub-Group 'Bank' is selected and 'bnkac' checkbox is 'checked' then set 'defaultflag' is 2, 
+        If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3.
+     **/
+    if($("#bnkac").is(':checked')){
+	var defaultflag = 2;
+    }else if($("#chsac").is(':checked')){
+	defaultflag = 3;
+    }else{
+	defaultflag = 0;
+    }
 
   $("#msspinmodal").modal("show");
   $.ajax(
@@ -496,7 +507,7 @@ $("#openbal").keydown(function(event){
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(), "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val()},
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
