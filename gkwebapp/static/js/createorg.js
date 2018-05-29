@@ -30,7 +30,7 @@ $(document).ready(function(){
     $("#ledgerdiv").hide();
     $("#addorg").hide();
     $("#createadmin").hide();
-    $("#createtorg").show();
+    $("#createtorg").fadeIn();
   var invflag;
   var invsflag;
   var billflag;
@@ -504,7 +504,7 @@ $(document).ready(function(){
           else
             {
 		$("#createtorg").hide();
-		$("#addorg").show();
+		$("#addorg").fadeIn();
 		$("#ticker").show();
 		$("footer").hide();
 		var otype = $("#orgtype option:selected").val();
@@ -1392,12 +1392,12 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#back").click(function(event){
 	event.preventDefault();
 	$("#addorg").hide();
-	$("#createtorg").show();
+	$("#createtorg").fadeIn();
     });
     $("#backtoprofile").click(function(event){
 	event.preventDefault();
 	$("#createadmin").hide();
-	$("#addorg").show();
+	$("#addorg").fadeIn();
   });
 
     //Validation for GSTIN on Done Button inside Add GSTIN.
@@ -1457,7 +1457,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     });
   $(document).off("click", "#submit").on("click", "#submit", function(event){
     event.preventDefault();
-      $("#createadmin").show();
+      $("#createadmin").fadeIn();
       $("#addorg").hide();
       $("#username").focus().select();
   });
