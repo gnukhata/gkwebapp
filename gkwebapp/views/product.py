@@ -754,6 +754,8 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['G'+str(row)] =stock["inward"]
+                     sheet['G'+str(row)]=float("%.2f"%float(stock["inward"]))
+                     sheet['G'+str(row)].number_format = '0.00'
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['H'+str(row)] =""
