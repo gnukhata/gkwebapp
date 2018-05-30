@@ -221,15 +221,11 @@ def getaccdetails(request):
     result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
     record = result.json()["gkresult"]
     result = requests.get("http://127.0.0.1:6543/groupsubgroup/%s"%(record["groupcode"]), headers=header)
-
     grprecord = result.json()["gkresult"]
-
-
+    
     if grprecord["groupcode"]==grprecord["subgroupcode"]:
         grprecord["subgroupname"] = "None"
-
-
-
+        
     accdetails={"accountcode":record["accountcode"],"accountname":record["accountname"],"openingbal":record["openingbal"],"groupname":grprecord["groupname"],"subgroupname":grprecord["subgroupname"],"groupcode":grprecord["groupcode"],"subgroupcode":grprecord["subgroupcode"],"defaultflag":record["defaultflag"]}
 
     return {"gkresult":accdetails}
@@ -355,6 +351,10 @@ def addGSTaccounts(request):
 def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
+
+    if request.params.has_key("defaultflag"):
+        gkdata["defaultflag"] = request.params["defaultflag"]
+
     '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
        return "groupcode" store with 'accountname' in 'accounts' table.
     ''' 

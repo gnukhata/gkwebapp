@@ -1,3 +1,4 @@
+
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
@@ -476,6 +477,18 @@ $("#editaccountform").submit(function(e)
   else{
     accountname=$("#accountname").val();
   }
+
+    /** Under Sub-Group 'Bank' is selected and 'bnkac' checkbox is 'checked' then set 'defaultflag' is 2, 
+        If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3.
+     **/
+    if($("#bnkac").is(':checked')){
+	var defaultflag = 2;
+    }else if($("#chsac").is(':checked')){
+	defaultflag = 3;
+    }else{
+	defaultflag = 0;
+    }
+    
     var accountcode = $("#accountcode").val();
     var groupname = $("#groupname option:selected").text();
     var groupcode = $("#groupname option:selected").val();
@@ -492,7 +505,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname},
+	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname,"defaultflag":defaultflag},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
