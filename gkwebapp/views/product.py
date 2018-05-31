@@ -753,7 +753,6 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['G'+str(row)] =stock["inward"]
                      sheet['G'+str(row)]=float("%.2f"%float(stock["inward"]))
                      sheet['G'+str(row)].number_format = '0.00'
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -782,13 +781,13 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)] = stock["rnno"]
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['G'+str(row)] = stock["inwardqty"]
+                     sheet['G'+str(row)]=float("%.2f"%float(stock["inwardqty"]))
+                     sheet['G'+str(row)].number_format = '0.00'
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['H'+str(row)] = stock["outwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['I'+str(row)] = stock["balance"]
                      sheet['I'+str(row)]=float("%.2f"%float(stock["balance"]))
                      sheet['I'+str(row)].number_format = '0.00'
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -811,12 +810,10 @@ def stockreportspreadsheet(request):
                      sheet['F'+str(row)] =""
                      sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['F'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['G'+str(row)] = stock["totalinwardqty"]
                      sheet['G'+str(row)]=float("%.2f"%float(stock["totalinwardqty"]))
                      sheet['G'+str(row)].number_format = '0.00'
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['H'+str(row)] = stock["totaloutwardqty"]
                      sheet['H'+str(row)]=float("%.2f"%float(stock["totaloutwardqty"]))
                      sheet['H'+str(row)].number_format = '0.00'
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
