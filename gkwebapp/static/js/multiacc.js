@@ -147,10 +147,12 @@ $(document).ready(function() {
       if (jsonobj["gkstatus"]==0)
       {
         var m_grpnm = $.trim($("#m_gname").val());
+	var m_sgname = $.trim($("#m_sgname").val());
+  
         if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
         {
           // will add row with only account name field as the groups mentioned above do not have opening balance.
-          $("#m_acctable").append('<tr>'+
+	  $("#m_acctable").append('<tr>'+
           '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
           '<td class="col-xs-2">'+
           '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
@@ -160,20 +162,30 @@ $(document).ready(function() {
       }
       else
       {
-      // will add row with both account name and opening balance.
-        $("#m_acctable").append('<tr>'+
-        '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
-        '<td class="col-xs-3">'+
-        '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
-        '</td>'+
-        '<td class="col-xs-2">'+
-        '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-        '</td>'+
-        '</tr>'
-      );
-
-    }
-
+	// will add row with both account name and opening balance.
+	if(m_sgname == 'Bank' || m_sgname == 'Cash'){
+	    $("#m_acctable").append('<tr>'+
+	    '<td class="col-xs-1 defbx"><input type="checkbox" id="default"></td>'+			    
+            '<td class="col-xs-6"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+            '<td class="col-xs-3">'+
+            '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+	    '</tr>');
+	}else{  
+            $("#m_acctable").append('<tr>'+
+	    '<td class="col-xs-7"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+            '<td class="col-xs-3">'+
+            '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+	    '</td>'+
+	    '</tr>');
+	}
+      }
 
     $('#m_acctable tbody tr:last td:eq(0) input').focus().select();// finally focus is set to the account name of the last row.
   }
