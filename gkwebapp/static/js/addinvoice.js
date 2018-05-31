@@ -93,6 +93,7 @@ $(document).ready(function() {
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
     var tottaxable;
+    var tottax;
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -206,6 +207,7 @@ $(document).ready(function() {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
+	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
@@ -2735,6 +2737,9 @@ if (event.which == 13) {
             items[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
             freeqty[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val());
 	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
+	    pn=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
+	    productdata[pn]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
+	    av["product"]=productdata;
 	}
     }
 	av["totaltaxable"]=tottaxable;
@@ -2829,9 +2834,9 @@ if (event.which == 13) {
 	      }else{
 		  gsttype="IGST";	          
 	      }
-	  prodtax["GSTName"]=gsttype;
+	 prodtax["GSTName"]=gsttype;
 	  prodtax["CESSName"]="CESS";
-	  av["tax"]=prodtax;
+	  av["avtax"]=prodtax;
 	  av["totaltaxable"]=tottaxable;
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
@@ -2908,7 +2913,7 @@ if (event.which == 13) {
       else{
 	  form_data.append("paymentmode",15);
       }
-      form_data.append("taxflag", $("#taxapplicable").val());
+      form_data.append("taxflag", $(".taxapplicable").val());
       form_data.append("transportationmode", $("#transportationmode").val());
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
