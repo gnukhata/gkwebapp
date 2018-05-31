@@ -634,7 +634,7 @@ $("#openbal").keydown(function(event){
     $("#m_multiacc").modal('show');
     $('#m_multiacc').on('shown.bs.modal', function (e)
     {
-      $(".m_accname:enabled:first").focus().select();
+      $("#default:first").focus().select();
 
     });
     $('#m_multiacc').on('hidden.bs.modal', function (e)

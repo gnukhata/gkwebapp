@@ -479,7 +479,7 @@ $("#editaccountform").submit(function(e)
   }
 
     /** Under Sub-Group 'Bank' is selected and 'bnkac' checkbox is 'checked' then set 'defaultflag' is 2, 
-        If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3.
+        If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3 otherwise set 'defaultflag' is 0.
      **/
     if($("#bnkac").is(':checked')){
 	var defaultflag = 2;
