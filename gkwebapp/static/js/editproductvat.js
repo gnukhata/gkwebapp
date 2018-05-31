@@ -679,13 +679,13 @@ $(document).ready(function() {
 		  duplicatetypes.push(types[i]);
               }
           }
-          if (duplicatetypes.length > 0) {
+          if (duplicatetypes.length >=0) {
               $("#cvat-alert").alert();
               $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#cvat-alert").hide();
               });
               return false;
-          }
+	  }
 	if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
           $("#tax-name-blank-alert").alert();
           $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -776,7 +776,26 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which==13) {
-      event.preventDefault();
+      event.preventDefault();var edittaxstates = [];
+      $('#product_edit_tax_table tbody tr').each(function(){
+        edittaxstates.push($(".tax_state",this).val());
+      });
+      if (edittaxstates.length>1) {
+        edittaxstates.sort();
+        var duplicatestates = [];
+        for (var i = 0; i < edittaxstates.length - 1; i++) {
+          if (edittaxstates[i+1] == edittaxstates[i]) {
+            duplicatestates.push(edittaxstates[i]);
+          }
+        }
+        if (duplicatestates.length > 0) {
+          $("#tax-same-alert").alert();
+          $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax-same-alert").hide();
+          });
+          return false;
+        }
+      }
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
@@ -1279,14 +1298,6 @@ $(document).ready(function() {
         taxes.push(obj);
       }
     });
-    for (tax of existingnonetax) {
-      let obj = {};
-      obj.taxrowid = tax["taxid"];
-      obj.taxname = tax["taxname"];
-      obj.state = tax["state"];
-      obj.taxrate = tax["taxrate"];
-      taxes.push(obj);
-    }
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
       if ($.trim($(".editgodown_name",this).val())!="") {
