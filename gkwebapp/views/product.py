@@ -641,7 +641,8 @@ def stockreportspreadsheet(request):
                      sheet['G'+str(row)] =""
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['H'+str(row)] =stock["inward"]
+                     sheet['H'+str(row)]=float("%.2f"%float(stock["inward"]))
+                     sheet['H'+str(row)].number_format = '0.00'
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['I'+str(row)] =""
@@ -674,10 +675,17 @@ def stockreportspreadsheet(request):
                      sheet['H'+str(row)] = stock["inwardqty"]
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+                     if stock["inwardqty"]!= "":
+                         sheet['H'+str(row)]=float("%.2f"%float(stock["inwardqty"]))
+                         sheet['H'+str(row)].number_format = '0.00'
                      sheet['I'+str(row)] = stock["outwardqty"]
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['J'+str(row)] = stock["balance"]
+                     if stock["outwardqty"]!= "":
+                         sheet['I'+str(row)]=float("%.2f"%float(stock["outwardqty"]))
+                         sheet['I'+str(row)].number_format = '0.00'
+                     sheet['J'+str(row)]=float("%.2f"%float(stock["balance"]))
+                     sheet['J'+str(row)].number_format = '0.00'
                      sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
@@ -701,10 +709,12 @@ def stockreportspreadsheet(request):
                      sheet['G'+str(row)] =""
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['H'+str(row)] = stock["totalinwardqty"]
+                     sheet['H'+str(row)]=float("%.2f"%float(stock["totalinwardqty"]))
+                     sheet['H'+str(row)].number_format = '0.00'
                      sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['H'+str(row)].alignment = Alignment(horizontal='right')
-                     sheet['I'+str(row)] = stock["totaloutwardqty"]
+                     sheet['I'+str(row)]=float("%.2f"%float(stock["totaloutwardqty"]))
+                     sheet['I'+str(row)].number_format = '0.00'
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                      sheet['J'+str(row)] =""
