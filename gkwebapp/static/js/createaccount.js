@@ -585,6 +585,13 @@ $("#openbal").keydown(function(event){
 	}
     });
   $('#maccounts').change(function() {
+  if($('#maccounts').attr('checked', true)){
+      if($.trim($("#subgroupname option:selected").text())=="Bank"){
+	  $("#bnkac").attr('checked',false);
+      }else if($.trim($("#subgroupname option:selected").text())=="Cash"){
+	  $("#chsac").attr('checked',false);
+      }
+  }
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();
     $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -634,7 +641,11 @@ $("#openbal").keydown(function(event){
     $("#m_multiacc").modal('show');
     $('#m_multiacc').on('shown.bs.modal', function (e)
     {
-      $("#default:first").focus().select();
+	if($("#default:first").is(':visible')){
+	    $("#default:first").focus().select();
+	}else{
+	    $(".m_accname:first").focus().select();
+	}
 
     });
     $('#m_multiacc').on('hidden.bs.modal', function (e)

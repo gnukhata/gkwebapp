@@ -159,33 +159,57 @@
             <table id="m_acctable" class="table table-condensed table-fixedheader">
               <thead class="bg-primary">
                 <tr>
-		  <th class="col-xs-1" > </th>
-                  {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
-                  <th class="col-xs-6">{% trans %}Account Name{% endtrans %}</th>
-                  <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
-                  {% else %}
-                  <th class="col-xs-9">{% trans %}Account Name{% endtrans %}</th>
-                  {% endif %}
+		  {% if gkresult['subgroupname'] == 'Bank' or gkresult['subgroupname'] == 'Cash' %}
+		    <th class="col-xs-1" > </th>
+                    {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
+                      <th class="col-xs-6">{% trans %}Account Name{% endtrans %}</th>
+                      <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
+                    {% else %}
+                      <th class="col-xs-9">{% trans %}Account Name{% endtrans %}</th>
+                    {% endif %}
+		  {% else %}
+                    {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
+                      <th class="col-xs-7">{% trans %}Account Name{% endtrans %}</th>
+                      <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
+                    {% else %}
+                      <th class="col-xs-10">{% trans %}Account Name{% endtrans %}</th>
+                    {% endif %}
+		  {% endif %}
                   <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
                 </tr>
               </thead>
               <tbody>
                 <tr>
-		  <td class="col-xs-1 defbx">
-		    <input type="checkbox" id="default">
-		  </td>
-                  {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
-                    <td class="col-xs-6">
-                      <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
-                    </td>
-                    <td class="col-xs-3">
-                      <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
-                  </td>
-                  {% else %}
-                  <td class="col-xs-9">
-                    <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
-                  </td>
-                  {% endif %}
+		  {% if gkresult['subgroupname'] == 'Bank' or gkresult['subgroupname'] == 'Cash' %}
+		    <td class="col-xs-1 defbx">
+		      <input type="checkbox" id="default">
+		    </td>
+                    {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
+                      <td class="col-xs-6">
+			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+                      <td class="col-xs-3">
+			<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                      </td>
+                    {% else %}
+                      <td class="col-xs-9">
+			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+                    {% endif %}
+		  {% else %}
+                    {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
+                      <td class="col-xs-7">
+			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+                      <td class="col-xs-3">
+			<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                      </td>
+                    {% else %}
+                      <td class="col-xs-10">
+			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+		    {% endif %}
+		  {% endif %}
                   <td class="col-xs-2">
                   </td>
                 </tr>
