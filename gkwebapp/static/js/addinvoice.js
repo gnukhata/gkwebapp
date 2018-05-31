@@ -2737,8 +2737,9 @@ if (event.which == 13) {
 	    discount[productcode] = $.trim($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val());
 	}
     }
+	av["totaltaxable"]=tottaxable;
+	av["taxpayment"]=tottax;
 	invoicetotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
-
     }
 
       else if ($(".taxapplicable").val() == 7) {
@@ -2832,7 +2833,6 @@ if (event.which == 13) {
 	  prodtax["CESSName"]="CESS";
 	  av["tax"]=prodtax;
 	  av["totaltaxable"]=tottaxable;
-	  console.log("all data",av);
 	  invoicetotal = $.trim($('#total_product_gst').html());
       }
       stock["items"] = items;
