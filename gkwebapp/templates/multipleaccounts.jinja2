@@ -178,7 +178,8 @@
                   {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
 		    {% if gkresult['subgroupname'] == 'Bank' or gkresult['subgroupname'] == 'Cash' %}
 		      <td class="col-xs-1 defbx">
-			<input type="checkbox" id="default">
+			<input type="checkbox" class="default" id="bnkac">
+			<input type="checkbox" class="default" id="chsac" hidden>
 		      </td>
                       <td class="col-xs-6">
 			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">

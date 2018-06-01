@@ -25,6 +25,15 @@ Contributors:
 */
 // This script is for multiple account popup.
 $(document).ready(function() {
+    if($("#m_sgname").val() == 'Bank'){
+	console.log("Bank");
+	$("#bnkac").show();
+	$("#chsac").hide();
+    }else if($("#m_sgname").val() == 'Cash'){
+	console.log("Cash"); 
+	$("#bnkac").hide();
+	$("#chsac").show();
+    }
   $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
 
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
@@ -117,7 +126,8 @@ $(document).ready(function() {
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.
-    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
+    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
+    console.log(accname);  
     if (accname == "") {
       $("#acc_add").click();
       return false;
@@ -163,9 +173,20 @@ $(document).ready(function() {
       else
       {
 	// will add row with both account name and opening balance.
-	if(m_sgname == 'Bank' || m_sgname == 'Cash'){
+	if(m_sgname == 'Bank'){
 	    $("#m_acctable").append('<tr>'+
-	    '<td class="col-xs-1 defbx"><input type="checkbox" id="default"></td>'+			    
+	    '<td class="col-xs-1 defbx"><input type="checkbox" class="bnkac" id="default"></td>'+			    
+            '<td class="col-xs-6"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+            '<td class="col-xs-3">'+
+            '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
+            '</td>'+
+            '<td class="col-xs-2">'+
+            '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+            '</td>'+
+	    '</tr>');
+	}else if(m_sgname == 'Cash'){
+	    $("#m_acctable").append('<tr>'+
+	    '<td class="col-xs-1 defbx"><input type="checkbox" class="chsac" id="default"></td>'+			    
             '<td class="col-xs-6"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
             '<td class="col-xs-3">'+
             '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
@@ -193,6 +214,20 @@ $(document).ready(function() {
 
 }
 
+    /**$(document).off("change", '#default').on("change", '#default', function(event){
+	let ckbxindex = $(this).closest('tr').index();
+	let preckbxindex = ckbxindex-1;
+	if($('#m_acctable tbody tr:eq('+ckbxindex+') td:eq(0)').attr('checked',true)){
+	    console.log("Ravan");
+	    if($('#m_acctable tbody tr:eq('+preckbxindex+') td:eq(0)').attr('checked',true)){
+		console.log("Ram");
+		$('#m_acctable tbody tr:eq('+preckbxindex+') td:eq(0)').attr('checked',false);
+	    }else{
+		console.log("Seeta");
+	    }
+	}
+    });**/
+    
 $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
 {
 // Keydown event for opening balance field.
@@ -277,6 +312,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 // Function to save all accounts in the table.
   var output = [];	// This is an array which will contain dictionaries representing rows of the table.
   var m_grpnm = $.trim($("#m_gname").val());
+  var sub_grpnm = $.trim($("#m_sgname").val());
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
 
     var accn = $(".m_accname", this).val();
@@ -299,12 +335,23 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       else {
         obj.openbal = $(".m_openbal", this).val();
       }
+      if($("#bnkac").is(':checked')){
+       	  var defaultflag = 2;
+      }else if($("#chsac").is(':checked')){
+	  defaultflag = 3;
+      }else{
+	  defaultflag = 0;
+      }  
       obj.groupname = $("#m_gcode").val();
       obj.subgroupname = $("#m_sgcode").val();
       obj.newsubgroup = $("#m_nsgcode").val();
+      obj.defaultflag = defaultflag;	
       output.push(obj);
     }
+      console.log("Times");
+      
   });
+    console.log(JSON.stringify(output));
 
 // ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
