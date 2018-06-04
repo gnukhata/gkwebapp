@@ -24,6 +24,8 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "sachin Patil"  <sachpatil@openmailbox.org>
+'ABhijith Balan'<abhijith@dff.org.in>
+'Prajkta Patkar'<prajakta@dff.org.in>
 """
 
 from pyramid.view import view_config
@@ -74,7 +76,7 @@ def getproducts(request):
 @view_config(route_name="cashmemos",request_param="action=save",renderer="json")
 def savecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"invoicetotalword":request.params["invoicetotalword"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"]}
+    cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"invoicetotalword":request.params["invoicetotalword"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"],"av":json.loads(request.params["av"])}
 
     if request.params.has_key("orgstategstin"):
         cashmemodata["orgstategstin"]=request.params["orgstategstin"]

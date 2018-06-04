@@ -752,7 +752,7 @@ $(document).ready(function() {
 		$(".sgstfield").show();
 		taxtype=3;
 	    }
-	    else {
+  	    else {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
 		taxtype=9;

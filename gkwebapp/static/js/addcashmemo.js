@@ -63,6 +63,8 @@ $(document).ready(function() {
     var numbertoword = "";
     var invoicedatestring = "";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
+    var tottaxable;
+    var tottax;
 
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -108,6 +110,7 @@ $(document).ready(function() {
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
+	    tottaxable = totaltaxable;
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
@@ -173,7 +176,9 @@ $(document).ready(function() {
 	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    tottaxable = totaltaxable;
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
+	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    var res = totalamount.toString();
 	    var str = res.split(".");
@@ -1331,7 +1336,7 @@ $(document).off("keyup").on("keyup", function(event) {
 	var proddata = {};
 	var prodtax={};
 	let pn;
-	let gsttype;
+	
 	//'inoutflag' will sent 9 for 'Record' and 15 for 'Create' cash memo.
 	var inoutflag = $("#status").val();
           bankdetails["accountno"] = $("#accountno").val();
@@ -1386,11 +1391,18 @@ $(document).off("keyup").on("keyup", function(event) {
             items[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val();
             freeqty[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val();
 	    discount[productcode] = $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val();
+	    pn=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
+	    productdata[pn]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
+	    proddata[productcode]=$("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val();
+	    av["product"]=productdata;
+	    av["prodData"]=proddata;
+	    
         }
 	    stock["items"] = items;
+            stock["inout"] = 15;
+	    av["totaltaxable"]=tottaxable;
+	    av["taxpayment"]=tottax;
 
-
-           stock["inout"] = 15;
 	    invoicetotal = $('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val();
       }
        if ($("#taxapplicable").val() == 7) {
@@ -1460,14 +1472,23 @@ $(document).off("keyup").on("keyup", function(event) {
                discount[productcode] = $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val();
 	       tax[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val());
 	       cess[productcode] = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
-     	}
-     	    invoicetotal = $('#total_product_gst').text();
+	      pn=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(0) select option:selected").text();
+	      productdata[pn]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
+	      av["product"]=productdata;
+	      proddata[productcode]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
+	      av["prodData"]= proddata;
+     	   }
+	   prodtax["GSTName"]= "CGST";
+	  prodtax["CESSName"]="CESS";
+	  av["avtax"]=prodtax;
+	  av["totaltaxable"]=tottaxable;
+     	  invoicetotal = $('#total_product_gst').text();
         stock["items"] = items;
 
 
            stock["inout"] = 15;
        }
-
+	console.log(av);
 	var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1483,6 +1504,7 @@ $(document).off("keyup").on("keyup", function(event) {
         form_data.append("discount", JSON.stringify(discount));
 	form_data.append("inoutflag",inoutflag);
 	form_data.append("invoicetotalword", numbertowords);
+	form_data.append("av",JSON.stringify(av));
 	let gstinstr= $("#gstin_panno").val() + $("#gstin").val();
 	if(gstinstr != ''){
   	    if(gstinstr.length == 13){
