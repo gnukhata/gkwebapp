@@ -370,7 +370,7 @@ $(document).ready(function()
     $("#viewdiv").hide();
     $("#viewinvsel").hide();
     $("#invtotaldiv").hide();
-    $("#editdiv").show();
+    $("#editdiv").hide();
     $("#editinv").show();
     $("#invsel").show();
     $("#invsel").prop('disabled', true);

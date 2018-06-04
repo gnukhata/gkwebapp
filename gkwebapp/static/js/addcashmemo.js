@@ -24,6 +24,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajakta@dff.org.in>
 "Rohini Baraskar" <robaraskar@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 "Aditya Shukla" <adityashukla9158.as@gmail.com>
