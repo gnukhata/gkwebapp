@@ -26,11 +26,9 @@ Contributors:
 // This script is for multiple account popup.
 $(document).ready(function() {
     if($("#m_sgname").val() == 'Bank'){
-	console.log("Bank");
 	$("#bnkac").show();
 	$("#chsac").hide();
     }else if($("#m_sgname").val() == 'Cash'){
-	console.log("Cash"); 
 	$("#bnkac").hide();
 	$("#chsac").show();
     }
@@ -127,7 +125,6 @@ $(document).ready(function() {
   {
 // This function will validate the current row and then add a new row.
     var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
-    console.log(accname);  
     if (accname == "") {
       $("#acc_add").click();
       return false;
@@ -212,8 +209,8 @@ $(document).ready(function() {
   }
 });
 
-}
-
+  }
+    
     /**$(document).off("change", '#default').on("change", '#default', function(event){
 	let ckbxindex = $(this).closest('tr').index();
 	let preckbxindex = ckbxindex-1;
@@ -314,7 +311,6 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
   var m_grpnm = $.trim($("#m_gname").val());
   var sub_grpnm = $.trim($("#m_sgname").val());
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
-
     var accn = $(".m_accname", this).val();
     if (accn=="")
     {
@@ -335,23 +331,29 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       else {
         obj.openbal = $(".m_openbal", this).val();
       }
-      if($("#bnkac").is(':checked')){
-       	  var defaultflag = 2;
-      }else if($("#chsac").is(':checked')){
-	  defaultflag = 3;
-      }else{
-	  defaultflag = 0;
-      }  
+
+	//Saving defaultflag for particular account.
+	if(sub_grpnm == "Bank"){
+	    if ($(".default",this).is(":checked")) {
+		var defaultflag = 2;
+	    }else{
+		defaultflag = 0;
+	    }
+	}else if(sub_grpnm == "Cash"){
+	    if ($(".default",this).is(":checked")) {
+		defaultflag = 3;
+	    }else{
+		defaultflag = 0;
+	    }
+	}
+	
       obj.groupname = $("#m_gcode").val();
       obj.subgroupname = $("#m_sgcode").val();
       obj.newsubgroup = $("#m_nsgcode").val();
       obj.defaultflag = defaultflag;	
       output.push(obj);
     }
-      console.log("Times");
-      
   });
-    console.log(JSON.stringify(output));
 
 // ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
