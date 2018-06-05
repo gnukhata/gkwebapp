@@ -427,8 +427,6 @@ $(document).ready(function(){
         var otype = $("#orgtype option:selected").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
-
-	  console.log("csdhcvsdgh");
 	   var vatorgstflag;
     var date1 = "2017-07-01";
     
@@ -504,6 +502,18 @@ $(document).ready(function(){
           else
             {
 		$("#createtorg").hide();
+		var orname = sessionStorage.getItem('orgn');
+		var ortype = sessionStorage.getItem('orgt');
+		var styear = sessionStorage.getItem('year1');
+		var enyear = sessionStorage.getItem('year2');
+		var orgdata = orname + " (" + ortype + ")";
+		var yeardata = "Financial Year : " + styear + " to " + enyear;
+		if(orgdata!=""||yeardata!="")
+		{
+		    $("#ticker").show();
+		    $("#orgdata").html(orgdata);
+		    $("#yeardata").html(yeardata);
+		}
 		$("#addorg").fadeIn();
 		$("#ticker").show();
 		$("footer").hide();

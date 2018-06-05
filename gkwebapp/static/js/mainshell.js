@@ -981,8 +981,8 @@ $(".businessmenu").keydown(function(event){
     // clears sessionstorage and logs the user out to show select organisation page.
     sessionStorage.clear();
     $("#msspinmodal").modal();
-    window.location.replace("/");
-
+      window.location.replace("/");
+      sessionStorage.changeorg = 1;
   });
 
   $("#logout").click(function(event) {

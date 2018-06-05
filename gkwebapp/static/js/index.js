@@ -28,13 +28,19 @@ Contributors:
 $(document).ready(function(){
     $("#selectorg").load("/existingorg");
     $("#createorg").load("/createorg");
-    let width = $('#firstmessage').width();
-    $('#secondmessage').width(width);
-    $('#firstmessage').fadeIn(4000, function(){
+    if (sessionStorage.changeorg == 1) {
+	$("#logodiv").hide();
+	$("#contentdiv").show();
+    }
+    else{
+	sessionStorage.changeorg = 1;
+	let width = $('#firstmessage').width();
+	$('#secondmessage').width(width);
+	$('#firstmessage').fadeIn(4000, function(){
 	$(this).fadeOut(3000, function(){
 	    $('#secondmessage').fadeIn(4000, function(){
 		$("#logodiv").fadeOut(1000, function(){
-			$.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
+		    $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
 			url: '/orgexists',
 			type: 'POST',
 			datatype: 'json'
@@ -57,6 +63,7 @@ $(document).ready(function(){
 	    });
 	});
     });
+    }
   $(document).keydown(function(event) {
     // setting shortcut keys for menu items.
       if(event.ctrlKey && event.keyCode == 69) {

@@ -27,6 +27,12 @@ Contributors:
 $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
+    $("#org-name").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#finalyears").focus();
+	}
+    });
   $("#finalyears").keydown( function(e) {
 
     if (e.which == 13)
@@ -34,6 +40,11 @@ $(document).ready(function(){
       e.preventDefault();
       $("#callLogin").click();
     }
+      else if(e.which == 38){
+	  if ($("#finalyears option:first").is(":selected")) {
+	      $("#org-name").focus();
+	  }
+      }
   });
 
   $("#org-name").change(function(){
