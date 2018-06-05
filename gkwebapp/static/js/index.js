@@ -64,6 +64,11 @@ $(document).ready(function(){
 	});
     });
     }
+    $("#closesplash").click(function(event){
+	event.preventDefault();
+	$("#logodiv").hide();
+	$("#contentdiv").show();
+    });
   $(document).keydown(function(event) {
     // setting shortcut keys for menu items.
       if(event.ctrlKey && event.keyCode == 69) {
