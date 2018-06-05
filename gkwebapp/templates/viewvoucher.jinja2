@@ -273,36 +273,35 @@
 			    {% endif %}
 			  {% endif %}
 			{% endfor %}
-		    {% else %}
                       </select>
+		    {% else %}
 		      <label id="editinv">{% trans %}Cash Memo {% endtrans %} :</label>
                       <select id="invsel" class="form-control input-sm invoice_no" hidden>
 			<option value="" total="">{% trans %}None{% endtrans %}</option>
 			{% for invoice in invoicedata %}
 			  {% if vtype == "purchase" and voucher["invid"]|int== invoice['invid']|int %}
-			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" 
-				selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
-			    {% else %}
-			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
+			    <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
+			  {% elif vtype == "sales" and voucher["invid"]|int== invoice['invid']|int %}
+			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}"  selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
+			    
 			    {% endif %}
-			  {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
-			    {% if voucher["invid"]|int== invoice['invid']|int %}
-			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-			    {% else %}
-			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
-			    {% endif %}
-			  {% endif %}
+			  
 			{% endfor %}
 
                       </select>
-
+		      {% endif %}
 		    
 
 		      
 		  </div>
                   <div class="form-group pull-right" id="selinvtotal">
-                    <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
-                    <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+		    {% if voucher["vvi"]["custSupDetails"] %}
+                      <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+		    {% else %}
+		      <label for="invtotal">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+		      {% endif %}
                   </div>
 		</div>
 		    {% endif %}
