@@ -641,8 +641,10 @@ $("#openbal").keydown(function(event){
     $("#m_multiacc").modal('show');
     $('#m_multiacc').on('shown.bs.modal', function (e)
     {
-	if($("#default:first").is(':visible')){
-	    $("#default:first").focus().select();
+	if($("#subgroupname option:selected").text() == 'Bank'){
+	    $(".default:first").focus().select();
+	}else if($("#subgroupname option:selected").text() == 'Cash'){
+	    $(".default:first").focus().select();
 	}else{
 	    $(".m_accname:first").focus().select();
 	}

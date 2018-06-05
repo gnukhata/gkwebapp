@@ -254,7 +254,7 @@ def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
     if request.params.has_key("defaultflag"):
-        gkdata["defaultflag"] = request.params["defaultflag"]
+        gkdata["defaultflag"] = int(request.params["defaultflag"])
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
         result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(gkdata1),headers=header)
@@ -282,7 +282,7 @@ def addaccount(request):
 def addmultiaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     accdetails = json.loads(request.params["accdetails"])
-    print accdetails
+    
     gkdata = {}
     if accdetails[0]["subgroupname"]=="New":
         gkdata1={"groupname":accdetails[0]["newsubgroup"],"subgroupof":accdetails[0]["groupname"]}
@@ -303,6 +303,7 @@ def addmultiaccount(request):
     for acc in accdetails:
         gkdata["accountname"]=acc["accountname"]
         gkdata["openingbal"]=acc["openbal"]
+        gkdata["defaultflag"] = int(acc["defaultflag"])
         result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
         if result.json()["gkstatus"] == 0:
             gkdata2 = {"activity":acc["accountname"] + " account created"}

@@ -211,20 +211,6 @@ $(document).ready(function() {
 
   }
     
-    /**$(document).off("change", '#default').on("change", '#default', function(event){
-	let ckbxindex = $(this).closest('tr').index();
-	let preckbxindex = ckbxindex-1;
-	if($('#m_acctable tbody tr:eq('+ckbxindex+') td:eq(0)').attr('checked',true)){
-	    console.log("Ravan");
-	    if($('#m_acctable tbody tr:eq('+preckbxindex+') td:eq(0)').attr('checked',true)){
-		console.log("Ram");
-		$('#m_acctable tbody tr:eq('+preckbxindex+') td:eq(0)').attr('checked',false);
-	    }else{
-		console.log("Seeta");
-	    }
-	}
-    });**/
-    
 $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
 {
 // Keydown event for opening balance field.
