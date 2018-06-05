@@ -69,9 +69,10 @@ $(document).ready(function()
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
-	$("groupname").change();
+	$("groupname").change();  
 	if($('#subgroupname').text() == "Bank"){
 	    $("#bnkdiv").show();
+	    $("#chsdiv").hide();
 	    if(accdetails["defaultflag"] == 2){
 		$("#bnkac").prop("checked", true);
 		$("#bnkac").prop("disabled", true);
@@ -81,6 +82,7 @@ $(document).ready(function()
 	    }
 	}else if($('#subgroupname').text() == "Cash"){
 	    $("#chsdiv").show();
+	    $("#bnkdiv").hide();
             if(accdetails["defaultflag"] == 3){
 		$("#chsac").prop("checked", true);
 		$("#chsac").prop("disabled", true);
@@ -149,7 +151,6 @@ $(document).ready(function()
 
     $("#submit").show();
     $("#alertmsg").hide();
-   
     $("#edit").hide();
     var acccode = $("#editaccountname option:selected").val();
       var accname= $("#editaccountname option:selected").text();
@@ -167,7 +168,6 @@ $(document).ready(function()
       }
       else {
         $("#openingbal").prop("disabled", false);
-
       }
       $("#bnkac").prop("disabled",false);
       $("#chsac").prop("disabled",false);
@@ -175,10 +175,7 @@ $(document).ready(function()
       $("#groupname").prop("disabled", false);
       $("#accountname").prop("disabled",false);
       $("#groupname").focus().select();
-
     }
-
-
   }
 );
     //Change event for 'group name' field.
@@ -272,9 +269,11 @@ $(document).ready(function()
 
 	if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
 	    $("#bnkdiv").show();
+	    $("#bnkdiv").prop(':checked',false);
 	    $("#chsdiv").hide();
 	}else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
 	    $("#chsdiv").show();
+	    $("#chsdiv").prop(':checked',false);
 	    $("#bnkdiv").hide();
 	}else{
 	    $("#bnkdiv").hide();

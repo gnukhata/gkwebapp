@@ -325,10 +325,10 @@ if ($("#m_newsubgroup").is(':visible')) {
               $("#selpopupaccount").val($("#m_accountname").val());
               $("#m_success-alert").alert();
               $("#m_success-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#m_success-alert").hide();
+		  $('#m_accmodal').modal('hide');
+		  $('.modal-backdrop').remove();
+		  $("#m_success-alert").hide();
               });
-              $('#m_accmodal').modal('hide');
-              $('.modal-backdrop').remove();
             }
             else if(resp["gkstatus"]==1)
             {

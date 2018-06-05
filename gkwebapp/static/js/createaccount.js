@@ -434,8 +434,12 @@ $("#openbal").keydown(function(event){
                 }
 	}
 	else if (event.which == 38){
-	event.preventDefault();
-	$("#maccounts").focus().select();
+	    event.preventDefault();
+	    if($("#gstaccount").is(':visible')){
+		$("#gstaccount").focus().select();
+	    }else{
+		$("#maccounts").focus().select();
+	    }
     }
     });
     $("#accountform").submit(function(e)
