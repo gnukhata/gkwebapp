@@ -206,6 +206,7 @@ $(document).ready(function() {
 	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    tottaxable = totaltaxable;
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
@@ -2640,7 +2641,7 @@ if (event.which == 13) {
       var productcodes = [];
       var productqtys = [];
       var ppu;
-      var av= {};
+      var av = {};
       var productdata={};
       var proddata = {};
       var prodtax={};
@@ -2833,7 +2834,6 @@ if (event.which == 13) {
 	      av["product"]=productdata;
 	      proddata[productcode]=$("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val();
 	      av["prodData"]= proddata;
-
 	  }
 	  if (taxtype==3){
 		  gsttype="CGST";
