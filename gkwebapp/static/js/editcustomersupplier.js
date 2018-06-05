@@ -203,10 +203,17 @@ $(document).ready(function() {
   $("#edit_cussup_name").keydown(function(event) {
     if (event.which==13||event.which==9) {
     	if ($.trim($("#edit_cussup_name").val())=="") {
-            $("#name-blank-alert").alert();
-            $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#name-blank-alert").hide();
+	    if ($("#edit_cussup").val() == "Supplier"){
+		$("#supname-blank-alert").alert();
+		$("#supname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#supname-blank-alert").hide();
             });
+	    } else {
+		$("#custname-blank-alert").alert();
+		$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#custname-blank-alert").hide();
+            });
+	    }
             $("#edit_cussup_name").focus();
             return false;
           }
@@ -909,13 +916,19 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	    $("#edit_cussup_email").focus().select();
 	    return false;
 	}
-	
 
-    if ($.trim($("#edit_cussup_name").val())=="") {
-      $("#name-blank-alert").alert();
-      $("#name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#name-blank-alert").hide();
-      });
+	if ($.trim($("#edit_cussup_name").val())=="") {
+	    if ($("#edit_cussup").val() == "Supplier"){
+		$("#supname-blank-alert").alert();
+		$("#supname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#supname-blank-alert").hide();
+            });
+	    } else {
+		$("#custname-blank-alert").alert();
+		$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#custname-blank-alert").hide();
+            });
+	    }
       $("#edit_cussup_name").focus();
       return false;
     }
@@ -1054,8 +1067,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
                 .done(function(resp) {
                     if(resp["gkstatus"] == 0){
 			allow = 0;
+			
                         $("#customersupplier_edit").click();
                         if (resp["custsup"] == 'Customer') {
+			    
                             $("#cus-edit-alert").alert();
                             $("#cus-edit-alert").fadeTo(2250, 500).slideUp(500, function(){
                                 $("#cus-edit-alert").hide();
@@ -1072,7 +1087,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 
                     }
                     if(resp["gkstatus"] == 1){
-                        if (custsupdata == '3') {
+                        if (resp["custsup"] == 'Customer') {
                             $("#edit_cussup_name").focus();
                             $("#cus-duplicate-alert").alert();
                             $("#cus-duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){

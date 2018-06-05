@@ -50,10 +50,13 @@
 
 	{% trans %}This supplier cannot be deleted, As there are invoices / delivery notes associated.{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="custname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-      <div class="alert alert-danger" id="name-blank-alert"  aria-live="rude" role="alert" hidden>
+	{% trans %}Please enter Customer name!{% endtrans %}
+      </div>
+      <div class="alert alert-danger" id="supname-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please Enter name!{% endtrans %}
+	{% trans %}Please enter Supplier name!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="email-editimproper-alert"  aria-live="rude" role="alert" hidden>
 
@@ -67,11 +70,11 @@
       </div>
       <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please Enter address!{% endtrans %}
+	{% trans %}Please enter address!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please Enter TIN!{% endtrans %}
+	{% trans %}Please enter TIN!{% endtrans %}
       </div>
 
       <div class="alert alert-danger" id="gstin-improper-alert"  aria-live="rude" role="alert" hidden>
@@ -99,26 +102,26 @@
       </div>
       <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please Enter GSTIN.{% endtrans %}
+	{% trans %}Please enter GSTIN!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="state-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please select a state.{% endtrans %}
+	{% trans %}Please select a state!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="accountno-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please enter Account No.{% endtrans %}
+	{% trans %}Please enter Account No!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="bankname-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please enter Bank Name.{% endtrans %}
+	{% trans %}Please enter Bank Name!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="branchname-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please enter Branch Name.{% endtrans %}
+	{% trans %}Please enter Branch Name!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="ifsc-blank-alert"  aria-live="rude" role="alert" hidden>
-	{% trans %}Please enter IFSC Code.{% endtrans %}
+	{% trans %}Please enter IFSC Code!{% endtrans %}
       </div>
       <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
 
-	{% trans %}Please fill all the fields of Bank Details.{% endtrans %}
+	{% trans %}Please fill all the fields of Bank Details!{% endtrans %}
       </div>
       <div class="panel shadow usomersupplier_panel">
 	<div class="panel-body ">
@@ -131,7 +134,7 @@
 	  <div class="col-sm-12">
 	    {% if noofcustomer|int == 0 and noofsupplier|int == 0 %}
 	      <div class="form-group form-inline col-sm-9" id="custosuppl">
-		<label class="text-danger">{% trans %}No Customer/Supplier Found!{% endtrans %}</label>
+		<label class="text-danger">{% trans %}No Customer/Supplier found!{% endtrans %}</label>
 	      </div>
             {%else%}
 	      <div class="form-group form-inline col-sm-3">
@@ -144,7 +147,7 @@
 	      </div>
 	      <div class="form-group form-inline col-sm-9" id="custo">
 		{%if noofcustomer|int == 0 %}
-		  <label class="text-danger">{% trans %}No Customer Found!{% endtrans %}</label>
+		  <label class="text-danger">{% trans %}No Customer found!{% endtrans %}</label>
 		{%else%}
 		  <label for="customersupplier_edit_list">{% trans %}List of <u>C</u>ustomer{% endtrans %} :</label>
 		  <select class="form-control input-sm" id="Customer_edit_list" accesskey="D">
@@ -162,7 +165,7 @@
 	      
 	      <div class="form-group form-inline col-sm-9" id="suppl">
 		{%if noofsupplier|int == 0 %}
-		  <label class="text-danger">{% trans %}No Supplier Found!{% endtrans %}</label>
+		  <label class="text-danger">{% trans %}No Supplier found!{% endtrans %}</label>
 		{%else%}
 		  <label for="customersupplier_edit_list">{% trans %}List of <u>S</u>upplier{% endtrans %} :</label>
 		  <select class="form-control input-sm" id="Supplier_edit_list"  accesskey="D">
