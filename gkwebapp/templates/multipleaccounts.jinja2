@@ -161,7 +161,7 @@
                 <tr>
                   {% if gkresult['groupname']!="Direct Expense" and gkresult['groupname']!="Direct Income" and gkresult['groupname']!="Indirect Expense" and gkresult['groupname']!="Indirect Income" %}
 		    {% if gkresult['subgroupname'] == 'Bank' or gkresult['subgroupname'] == 'Cash' %}
-		      <th class="col-xs-1" > </th>
+		      <th class="col-xs-1" >&nbsp</th>
                       <th class="col-xs-6">{% trans %}Account Name{% endtrans %}</th>
 		    {% else %}
 		      <th class="col-xs-7">{% trans %}Account Name{% endtrans %}</th>
@@ -182,11 +182,11 @@
 			<input type="checkbox" class="default" id="chsac" hidden>
 		      </td>
                       <td class="col-xs-6">
-			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+			<input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
                       </td>
 		    {% else %}
 		      <td class="col-xs-7">
-			<input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+			<input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
                       </td>
 		    {% endif %}
                     <td class="col-xs-3">
@@ -194,7 +194,7 @@
                     </td>
                   {% else %}
                     <td class="col-xs-10">
-                      <input type="text" id="m_alt_accname"class="form-control input-sm m_accname" placeholder="Account Name">
+                      <input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
                     </td>
                   {% endif %}
                   <td class="col-xs-2">

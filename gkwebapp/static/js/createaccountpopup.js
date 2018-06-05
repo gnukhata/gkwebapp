@@ -28,6 +28,8 @@ Contributors:
 
 $(document).ready(function()
 {
+  $("#bnkdiv").hide();
+  $("#chsdiv").hide();
   $("#m_openbal").numeric();
   var sel1 = 0;
   var sel2 = 0;
@@ -121,6 +123,17 @@ else
   $("#m_nsgp").hide();
 }
 
+    /** Under Group 'Current asset' if subgroup 'Bank' or 'Cash' is selected then 'bnkdiv' or 'chsdiv' show or hide respectively **/
+      if($.trim($("#m_subgroupname option:selected").text()) == 'Bank'){
+	  $("#bnkdiv").show();
+	  $("#chsdiv").hide();
+      }else if($.trim($("#m_subgroupname option:selected").text()) == 'Cash'){
+	  $("#chsdiv").show();
+	  $("#bnkdiv").hide();
+      }else{
+	  $("#bnkdiv").hide();
+	  $("#chsdiv").hide();
+      }
 
 });
 
@@ -147,10 +160,15 @@ else
 
 //key down event for subgroup.
     $("#m_subgroupname").keydown(function(event){
-	if(event.which==13 || event.which == 9) {
+	if(event.which==13 || event.which == 9) {   
 	    event.preventDefault();
 	    if ($.trim($("#m_subgroupname option:selected").val())=="New"){
 		$("#m_newsubgroup").focus().select();
+	    }else if($.trim($("#m_subgroupname option:selected").text())=="Bank"){
+		$("#bnkac").focus().select();
+	    }
+	    else if($.trim($("#m_subgroupname option:selected").text())=="Cash"){
+		$("#chsac").focus().select();
 	    }
 	    else {
 		$("#m_accountname").focus().select();
@@ -159,6 +177,17 @@ else
 	if (event.which==38 && (document.getElementById('m_subgroupname').selectedIndex==0)) {
 	    event.preventDefault();
 	    $("#m_groupname").focus().select();
+	}
+    });
+
+    /** Keydown for 'bnkac' and 'chsac' checkbox **/
+    $(".defbx").keydown(function(event){
+	if(event.which==13) {
+	    event.preventDefault();
+	    $("#m_accountname").focus();
+	}
+	if (event.which==38){
+	    $("#m_subgroupname").focus();
 	}
     });
 
@@ -199,6 +228,20 @@ else
 	if(event.which==13){
 	    event.preventDefault();
 	    $("#m_openbal").focus().select();
+	}else if (event.which == 38){
+	    event.preventDefault();
+	    if ($("#m_newsubgroup").is(':visible')) {
+		$("#m_newsubgroup").focus().select();
+	    }
+	    else if($("#bnkac").is(':visible')){
+		$("#bnkac").focus();
+	    }
+	    else if($("#chsac").is(':visible')){
+		$("#chsac").focus();
+	    }
+	    else {
+		$("#m_subgroupname").focus().select();
+	    }
 	}
     });
  
@@ -251,6 +294,17 @@ if ($("#m_newsubgroup").is(':visible')) {
       $('#m_openbal').val("0.00");
     }
 
+      /** Under Sub-Group 'Bank' is selected and 'bnkac' checkbox is 'checked' then set 'defaultflag' is 2, 
+          If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3.
+      **/
+      if($("#bnkac").is(':checked')){
+	  var defaultflag = 2;
+      }else if($("#chsac").is(':checked')){
+	  defaultflag = 3;
+      }else{
+	  defaultflag = 0;
+      }
+
       $.ajax(
         {
 
@@ -259,7 +313,7 @@ if ($("#m_newsubgroup").is(':visible')) {
           global: false,
           async: false,
           datatype: "json",
-          data: $("#m_accountform").serialize(),
+          data: {"accountname":$("#m_accountname").val(), "openbal":$("#m_openbal").val(), "groupname":$("#m_groupname option:selected").val(),"defaultflag":defaultflag, "subgroupname":$("#m_subgroupname option:selected").val(), "newsubgroup":$("#m_newsubgroup").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

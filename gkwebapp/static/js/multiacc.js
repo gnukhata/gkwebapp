@@ -67,7 +67,6 @@ $(document).ready(function() {
     }
     if (event.which==38)
     {
-
       if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
       {
         // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to previous account name.
@@ -79,8 +78,8 @@ $(document).ready(function() {
       {
         // else it will be shifted to the previous opening balance field.
 	  if(s_grpnm == 'Bank' || s_grpnm == 'Cash'){
-	      $('#m_acctable tbody tr:eq('+previndex+') td:eq(2) input').focus();
-              $('#m_acctable tbody tr:eq('+previndex+') td:eq(2) input').select();
+	      $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').focus();
+              $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').select();
 	  }else{  
               $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
               $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
@@ -144,6 +143,9 @@ $(document).ready(function() {
 	if(event.which == 13){
 	    $('#m_acctable tbody tr:eq('+curindex1+') td:eq(1) input:enabled').focus();
 	}
+	if(event.which == 38){
+	    $('#m_acctable tbody tr:eq('+previndex1+') td:eq(2) input:enabled').focus();
+	}
     });
 
   function addRow(curindex)
@@ -203,7 +205,7 @@ $(document).ready(function() {
 	// will add row with both account name and opening balance.
 	if(m_sgname == 'Bank'){
 	    $("#m_acctable").append('<tr>'+
-	    '<td class="col-xs-1 defbx"><input type="checkbox" class="bnkac" id="default"></td>'+			    
+	    '<td class="col-xs-1 defbx"><input type="checkbox" class="default" id="bnkac"></td>'+			    
             '<td class="col-xs-6"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
             '<td class="col-xs-3">'+
             '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
@@ -214,7 +216,7 @@ $(document).ready(function() {
 	    '</tr>');
 	}else if(m_sgname == 'Cash'){
 	    $("#m_acctable").append('<tr>'+
-	    '<td class="col-xs-1 defbx"><input type="checkbox" class="chsac" id="default"></td>'+			    
+	    '<td class="col-xs-1 defbx"><input type="checkbox" class="default" id="chsac"></td>'+			    
             '<td class="col-xs-6"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
             '<td class="col-xs-3">'+
             '<input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00">'+
@@ -249,8 +251,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
   var curindex = $(this).closest('tr').index();
   var nextindex = curindex+1;
   var previndex = curindex-1;
-  var numberofrows = $(".m_openbal").length;
-
+  var numberofrows = $(".m_openbal").length;  
   if (event.which==40)
   {
 
@@ -269,8 +270,12 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
   if(event.which == 13)
   {
     // Validates whether the account name of corresponfing row is blank or not.
-    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
-
+      var m_sgrpname = $.trim($("#m_sgname").val());
+      if(m_sgrpname == 'Bank' || m_sgrpname == 'Cash'){  
+	  var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
+      }else{
+	  accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
+      }
     if(accnt=="")
     {
       if (curindex == 0) {
@@ -283,7 +288,7 @@ $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(even
         return false;
       }
       if (curindex == numberofrows - 1) {
-        $("#acc_add").click();
+	$("#acc_add").click();
         return false;
       }
     }
@@ -362,6 +367,8 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 	    }else{
 		defaultflag = 0;
 	    }
+	}else{
+	    defaultflag = 0;
 	}
 	
       obj.groupname = $("#m_gcode").val();
