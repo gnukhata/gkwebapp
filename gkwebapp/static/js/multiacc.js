@@ -42,6 +42,7 @@ $(document).ready(function() {
     var nextindex = curindex+1;
     var previndex = curindex-1;
     var m_grpnm = $.trim($("#m_gname").val());// get value of groupname selected.
+    var s_grpnm = $.trim($("#m_sgname").val());  
 
     if (event.which==40)
     {
@@ -54,9 +55,14 @@ $(document).ready(function() {
       }
       else
       {
-        // else it will be shifted to the corresponding opening balance field.
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
+	  // else it will be shifted to the corresponding opening balance field.
+	  if(s_grpnm == 'Bank' || s_grpnm == 'Cash'){
+	      $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').focus();
+              $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').select();
+	  }else{
+              $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
+              $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
+	  }
       }
     }
     if (event.which==38)
@@ -72,8 +78,13 @@ $(document).ready(function() {
       else
       {
         // else it will be shifted to the previous opening balance field.
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
+	  if(s_grpnm == 'Bank' || s_grpnm == 'Cash'){
+	      $('#m_acctable tbody tr:eq('+previndex+') td:eq(2) input').focus();
+              $('#m_acctable tbody tr:eq('+previndex+') td:eq(2) input').select();
+	  }else{  
+              $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
+              $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
+	  }
       }
     }
     if (event.which==13)
@@ -114,17 +125,37 @@ $(document).ready(function() {
       }
       else
       {
-        // else focus will be shifted to corresponding opening balance field.
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus().select();
+          // else focus will be shifted to corresponding opening balance field.
+	  if(s_grpnm == 'Bank' || s_grpnm == 'Cash'){
+	      $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input:enabled').focus().select();
+	  }else{
+	      $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus().select();
+	  }
       }
 
     }
   });
 
+    $(document).off("keydown",".default").on("keydown",".default",function(event){
+	var curindex1 = $(this).closest('tr').index();
+	var nextindex1 = curindex1+1;
+	var previndex1 = curindex1-1;
+
+	if(event.which == 13){
+	    $('#m_acctable tbody tr:eq('+curindex1+') td:eq(1) input:enabled').focus();
+	}
+    });
+
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.
-    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
+    var m_grpnm = $.trim($("#m_gname").val());
+    var sub_grpnm = $.trim($("#m_sgname").val());  
+    if(sub_grpnm == 'Bank' || sub_grpnm == 'Cash'){
+	var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
+    }else{
+	accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
+    }
     if (accname == "") {
       $("#acc_add").click();
       return false;
@@ -158,7 +189,7 @@ $(document).ready(function() {
   
         if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
         {
-          // will add row with only account name field as the groups mentioned above do not have opening balance.
+	  // will add row with only account name field as the groups mentioned above do not have opening balance.
 	  $("#m_acctable").append('<tr>'+
           '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
           '<td class="col-xs-2">'+
