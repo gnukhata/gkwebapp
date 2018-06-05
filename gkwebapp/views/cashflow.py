@@ -96,29 +96,29 @@ def printcashflowreport(request):
         sheet.column_dimensions['A'].width = 4
         sheet.column_dimensions['B'].width = 32
         sheet.column_dimensions['C'].width = 12
-        sheet.column_dimensions['D'].width = 12
-        sheet.column_dimensions['E'].width = 4
-        sheet.column_dimensions['F'].width = 32
-        sheet.column_dimensions['G'].width = 12
-        sheet.column_dimensions['H'].width = 12
+        sheet.column_dimensions['D'].width = 4
+        sheet.column_dimensions['E'].width = 32
+        sheet.column_dimensions['F'].width = 12
+        #sheet.column_dimensions['G'].width = 12
+        #sheet.column_dimensions['H'].width = 12
         # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:H2')
+        sheet.merge_cells('A1:F2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
         # Organisation name and financial year are displayed.
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
-        sheet.merge_cells('A3:H3')
+        sheet.merge_cells('A3:F3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
         # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:H2')
+        sheet.merge_cells('A1:F2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
         # Organisation name and financial year are displayed.
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
-        sheet.merge_cells('A3:H3')
+        sheet.merge_cells('A3:F3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
         if orgtype=="Profit Making":
@@ -130,10 +130,8 @@ def printcashflowreport(request):
         sheet.merge_cells('A3:H3')
         sheet['B4'] = 'Particulars'
         sheet['C4'] = 'Amount'
-        sheet['D4'] = 'Amount'
-        sheet['F4'] = 'Particulars'
-        sheet['G4'] = 'Amount'
-        sheet['H4'] = 'Amount'
+        sheet['E4'] = 'Particulars'
+        sheet['F4'] = 'Amount'
         titlerow = sheet.row_dimensions[4]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
         row = 5
@@ -144,37 +142,37 @@ def printcashflowreport(request):
             if account["toby"]!="" and account["particulars"]!="Opening balance":
                 sheet['B'+str(row)] = "			"+account["particulars"]
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['C'+str(row)] = account["amount"]
+                sheet['C'+str(row)] = ""
+                sheet['C'+str(row)] =float("%.2f"%float(account["amount"]))
+                sheet['C'+str(row)].number_format = '0.00'
                 sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['D'+str(row)] = ""
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             else:
                 sheet['B'+str(row)] = account["particulars"]
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['C'+str(row)] = ""
-                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['D'+str(row)] = account["amount"]
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if account["amount"]!= "":
+                    sheet['C'+str(row)] =float("%.2f"%float(account["amount"]))
+                    sheet['C'+str(row)].number_format = '0.00'
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
         row = 5
         for account in payment:
-            sheet['E'+str(row)] = account["toby"]
-            sheet['E'+str(row)].alignment = Alignment(horizontal='left')
-            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = account["toby"]
+            sheet['D'+str(row)].alignment = Alignment(horizontal='left')
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             if account["toby"]!="" and account["particulars"]!="Closing balance":
-                sheet['F'+str(row)] = "			"+account["particulars"]
+                sheet['E'+str(row)] = "			"+account["particulars"]
+                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['F'+str(row)] = ""
+                sheet['F'+str(row)] =float("%.2f"%float(account["amount"]))
+                sheet['F'+str(row)].number_format = '0.00'
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['G'+str(row)] = account["amount"]
-                sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['H'+str(row)] = ""
-                sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             else:
-                sheet['F'+str(row)] = account["particulars"]
-                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['G'+str(row)] = ""
-                sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['H'+str(row)] = account["amount"]
-                sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                sheet['E'+str(row)] = account["particulars"]
+                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if account["amount"]!= "." and account["amount"]!="":
+                    sheet['F'+str(row)] =float("%.2f"%float(account["amount"]))
+                    sheet['F'+str(row)].number_format = '0.00'
+                    sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
         cashwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
