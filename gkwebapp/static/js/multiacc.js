@@ -45,6 +45,11 @@ $(document).ready(function() {
     }else{
 	$("#helpmsg").hide();
     }
+    if($("#m_sgname").val() == 'Purchase' || $("#m_sgname").val() == 'Sales'){
+	$("#helpsp").show();
+    }else{
+	$("#helpsp").hide();
+    }
   $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
 
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)

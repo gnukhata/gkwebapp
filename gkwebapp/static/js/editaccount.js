@@ -560,7 +560,8 @@ $("#editaccountform").submit(function(e)
 
     /** Under Sub-Group 'Bank' is selected and 'bnkac' checkbox is 'checked' then set 'defaultflag' is 2, 
         If 'Cash' is selected and 'chsac' checkbox is 'checked' then set 'defaultflag' is 3 otherwise set 'defaultflag' is 0.
-     **/
+    **/
+
     if($("#bnkac").is(':checked')){
 	var defaultflag = 2;
     }else if($("#chsac").is(':checked')){
@@ -568,6 +569,14 @@ $("#editaccountform").submit(function(e)
     }else if($("#purac").is(':checked')){
 	defaultflag = 16;
     }else if($("#saleac").is(':checked')){
+	defaultflag = 19;
+    }else if(deflag == 2){
+	defaultflag = 2;
+    }else if(deflag == 3){
+	defaultflag = 3;
+    }else if(deflag == 16){
+	defaultflag = 16;
+    }else if(deflag == 19){
 	defaultflag = 19;
     }else{
 	defaultflag = 0;
@@ -589,7 +598,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname,"defaultflag":defaultflag},
+	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname, "defaultflag":defaultflag},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
