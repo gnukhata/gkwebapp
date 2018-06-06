@@ -6,45 +6,52 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% trans %}GNUKhata{% endtrans %} | {{projectname}} {% trans %}Statement{% endtrans %}</title>
   <style type="text/css">
-  @page {
-    size: 29.7cm 21cm ;
-    margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
-  }
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  #satable td{
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
-  #satable th{
-    font-size: 85%;
-  }
+   @page {
+       size: 29.7cm 21cm ;
+       margin: 10mm 10mm 20mm 10mm; /* change the margins as you want them to be. */
+   }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   #satable td{
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+   }
+   #satable th{
+       font-size: 85%;
+   }
 
-  .card-view .title {
-    font-weight: bold;
-    display: inline-block;
-    min-width: 30%;
-    text-align: left !important;
-  }
-  .fixed-table tbody{
-    display:block;
-    height: calc(74vh);
-    overflow-y:scroll;
-  }
-  .fixed-table thead,.fixed-table tbody tr{
-    display:table;
-    width:100%;
-    table-layout:fixed;
-  }
-  .fixed-table thead{
-    width: calc( 99.1% )
-  }
-  .nopadding{
-    padidng:0 !important;
-    padding:0 !important;
-  }
+   .card-view .title {
+       font-weight: bold;
+       display: inline-block;
+       min-width: 30%;
+       text-align: left !important;
+   }
+   .fixed-table tbody{
+       display:block;
+       height: calc(74vh);
+       overflow-y:scroll;
+   }
+   .fixed-table thead,.fixed-table tbody tr{
+       display:table;
+       width:100%;
+       table-layout:fixed;
+   }
+   .fixed-table thead{
+       width: calc( 99.1% )
+   }
+   .nopadding{
+       padidng:0 !important;
+       padding:0 !important;
+   }
+   .subgrouptd{
+       font-weight:normal !important;
+   }
+   .accounttd {
+       font-weight:normal !important;
+       font-style:italic !important;
+   }
   </style>
 </head>
 <body>
@@ -77,54 +84,34 @@
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Sources:" or record["groupAccname"]=="Difference" %}
             <a class="libgname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
+            <a class="libgname subgrouptd" href="#"><span style="margin-left:3em;">{{record["groupAccname"].upper()}}</span></a>
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            <a class="libgname accounttd" href="#"><span style="margin-left:3em;">{{record["groupAccname"]}}</span></a>
             {%elif record["groupAccflag"]==2%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            <a class="libgname accounttd" href="#"><span style="margin-left:6em;">{{record["groupAccname"]}}</span></a>
             {%else%}
             <a href="#" class="libgname">{{record["groupAccname"].upper()}}</a>
             {%endif%}
           </td>
 
           {%if record["advflag"] == 1%}
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+            {%if record["groupAccflag"]==2 %}
+              <td class="col-xs-1 accounttd" style="text-align:right; color:red;"><span style="margin-right:5em;">{{record["amount"]}}</span></td>
+	    {%elif record["groupAccflag"]==1%}
+	      <td class="col-xs-1 accounttd" style="text-align:right; color:red;"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+              <td class="col-xs-1 subgrouptd" style="text-align:right; color:red;"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%else%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
             <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
             {%endif%}
           {%else%}
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-1" style="text-align:right">{{record["amount"]}}</td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+            {%if record["groupAccflag"]==2%}
+            <td class="col-xs-1 accounttd" style="text-align:right"><span style="margin-right:5em;">{{record["amount"]}}</span></td>
+	    {%elif record["groupAccflag"]==1%}
+	    <td class="col-xs-1 accounttd" style="text-align:right"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+            <td class="col-xs-1 subgrouptd" style="text-align:right"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%else%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
             <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
             {%endif%}
           {%endif%}
@@ -147,55 +134,35 @@
             {% if record["groupAccname"]=="Total" or record["groupAccname"]=="Difference" or record["groupAccname"]=="Applications:" %}
             <a class="libgname" href="#" style="text-decoration: none;"><b>{{record["groupAccname"].upper()}}</b></a>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="")%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"].upper()}}</a>
+            <a class="libgname subgrouptd" href="#"><span style="margin-left:3em;">{{record["groupAccname"].upper()}}</span></a>
             {%elif record["groupAccflag"]==1 %}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            <a class="libgname accounttd" href="#"><span style="margin-left:3em;">{{record["groupAccname"]}}</span></a>
             {%elif record["groupAccflag"]==2%}
-            &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp<a class="libgname" href="#">{{record["groupAccname"]}}</a>
+            <a class="libgname accounttd" href="#"><span style="margin-left:6em;">{{record["groupAccname"]}}</span></a>
             {%else%}
             <a href="#" class="libgname groupname">{{record["groupAccname"].upper()}}</a>
             {%endif%}
           </td>
 
           {%if record["advflag"] == 1%}
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+            {%if record["groupAccflag"]==2%}
+              <td class="col-xs-1 accounttd" style="text-align:right; color:red;"><span style="margin-right:5em;">{{record["amount"]}}</span></td>
+	    {%elif record["groupAccflag"]==1%}
+	      <td class="col-xs-1 accounttd" style="text-align:right; color:red;"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") %}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+              <td class="col-xs-1 subgrouptd" style="text-align:right; color:red;"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%else%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right; color:red;"><b>{{record["amount"]}}</b></td>
+              <td class="col-xs-1" style="text-align:right; color:red;"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%endif%}
           {%else%}
-            {%if record["groupAccflag"]==2 or record["groupAccflag"]==1%}
-            <td class="col-xs-1" style="text-align:right">{{record["amount"]}}</td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+            {%if record["groupAccflag"]==2%}
+              <td class="col-xs-1 accounttd" style="text-align:right"><span style="margin-right:5em;">{{record["amount"]}}</span></td>
+	    {%elif record["groupAccflag"]==1%}
+              <td class="col-xs-1 accounttd" style="text-align:right"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%elif (record["groupAccflag"]=="" and record["subgroupof"]!="") %}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
+              <td class="col-xs-1 subgrouptd" style="text-align:right"><span style="margin-right:3em;">{{record["amount"]}}</span></td>
             {%else%}
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right">
-            </td>
-            <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
+	    <td class="col-xs-1" style="text-align:right"><b>{{record["amount"]}}</b></td>
             {%endif%}
           {%endif%}
         </tr>
