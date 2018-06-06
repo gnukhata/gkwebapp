@@ -203,10 +203,12 @@
               </tbody>
             </table>
           </div>
-
+	  <div id="helpmsg" hidden>
+	    <small> To set default account for 'Bank' or 'Cash' transaction click on checkbox of only one account. </small>
+	  </div>
         </div>
         <div class="modal-footer">
-          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+	  <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
           <button type="button" id="acc_add"  class="btn btn-success btnfocus" accesskey="v">{% trans %}Sa<u>v</u>e{% endtrans %}</button>
         </div>
       </div><!-- /.modal-content -->

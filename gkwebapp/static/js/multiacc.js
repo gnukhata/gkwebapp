@@ -32,6 +32,13 @@ $(document).ready(function() {
 	$("#bnkac").hide();
 	$("#chsac").show();
     }
+
+    //Help message for sub-group 'Bank' or 'Cash'.
+    if($("#m_sgname").val() == 'Bank' || $("#m_sgname").val() == 'Cash'){
+	$("#helpmsg").show();
+    }else{
+	$("#helpmsg").hide();
+    }
   $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
 
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)

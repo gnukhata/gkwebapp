@@ -41,6 +41,8 @@ $(document).ready(function()
   $("#baltbl").hide();
     $("#bnkdiv").hide();
     $("#chsdiv").hide();
+    $("#purdiv").hide();
+    $("#salediv").hide();
   $("#groupname").focus().select();
     $("#accountform").validate();
     var taxstate = "";
@@ -118,12 +120,28 @@ $(document).ready(function()
       if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
 	  $("#bnkdiv").show();
 	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
 	  $("#chsdiv").show();
+	  $("#bnkdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
+	  $("#chsdiv").hide();
+	  $("#bnkdiv").hide();
+	  $("#purdiv").show();
+	  $("#salediv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
+	  $("#purdiv").hide();
+	  $("#salediv").show();
+	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
       }else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
       }
 
   });
