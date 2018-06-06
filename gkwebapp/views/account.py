@@ -355,7 +355,7 @@ def editaccount(request):
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
 
     if request.params.has_key("defaultflag"):
-        gkdata["defaultflag"] = request.params["defaultflag"]
+        gkdata["defaultflag"] = int(request.params["defaultflag"])
 
     '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
        return "groupcode" store with 'accountname' in 'accounts' table.

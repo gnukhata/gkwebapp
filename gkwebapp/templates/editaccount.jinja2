@@ -82,7 +82,19 @@ th {
 						<strong>{% trans %}This is a system generated account, it cannot be edited/deleted.{% endtrans %}</strong>
 					</div>
 					<div class="alert alert-warning nopadding" id="accnamenoedit"  aria-live="rude" role="alert" hidden>
-						<strong>{% trans %}Only opening balance of this system generated account can be edited.{% endtrans %}</strong>
+					  <strong>{% trans %}Only opening balance of this system generated account can be edited.{% endtrans %}</strong>
+					</div>
+					<div class="alert alert-warning nopadding defckbx" id="alertbnk"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for bank transaction.{% endtrans %}</strong>
+					</div>
+					<div class="alert alert-warning nopadding defckbx" id="alertchs"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for cash transaction.{% endtrans %}</strong>
+					</div>
+					<div class="alert alert-warning nopadding defckbx" id="alertpur"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for purchase transaction.{% endtrans %}</strong>
+					</div>
+					<div class="alert alert-warning nopadding defckbx" id="alertsale"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for sales transaction.{% endtrans %}</strong>
 					</div>
 					<br>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
@@ -105,6 +117,12 @@ th {
 							</div>
 							<div id="chsdiv" style="margin-top:18px;" hidden>
 							  <label> <input class="defbx" type="checkbox" id="chsac"> {% trans %}Set default for Cash Transaction{% endtrans %}</label>
+							</div>
+							<div id="purdiv" style="margin-top:18px;" hidden>
+							  <label> <input class="defbx" type="checkbox" id="purac"> {% trans %}Set default for Purchase Transaction{% endtrans %}</label>
+							</div>
+							<div id="salediv" style="margin-top:18px;" hidden>
+							  <label> <input class="defbx" type="checkbox" id="saleac"> {% trans %}Set default for Sales Transaction{% endtrans %}</label>
 							</div>
 							<br>
 							<div id="nsgp" style="margin-bottom:25px" class="input-group">

@@ -36,12 +36,13 @@ $(document).ready(function()
   $("#editaccountname").focus();
   $("#editaccountform").validate();
   $("#editaccountform").hide();
-  $("#alertmsg").hide();
+  $("#alertmsg").hide();  
   $("#bnkac").prop("disabled",false);
   $("#chsac").prop("disabled",false);  
   $('#openingbal').numeric();   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $("#submit").hide();
   $("#delete").hide();
+  var deflag;  
   $("#editaccountname").bind("change keyup", function()
   {	  
     $("#alertmsg").hide();
@@ -63,6 +64,7 @@ $(document).ready(function()
       success: function(jsonObj)
       {
         let accdetails=jsonObj["gkresult"];  
+	deflag = accdetails["defaultflag"];
 	$("#editaccountform").show();  
 	$("#groupname").val(accdetails["groupcode"]);
         $("#groupname").prop("disabled", true);  
@@ -71,28 +73,82 @@ $(document).ready(function()
         $("#subgroupname").prop("disabled", true);
 	$("groupname").change();  
 	if($('#subgroupname').text() == "Bank"){
-	    $("#bnkdiv").show();
 	    $("#chsdiv").hide();
+	    $("#salediv").hide();
+	    $("#purdiv").hide();
+	    $("#alertchs").hide();
+	    $('#alertpur').hide();
+	    $('#alertsale').hide();
 	    if(accdetails["defaultflag"] == 2){
-		$("#bnkac").prop("checked", true);
-		$("#bnkac").prop("disabled", true);
+		$("#alertbnk").alert();
+		$("#alertbnk").show();
+		$("#bnkdiv").hide();
 	    }else{
+		$("#bnkdiv").show();
+		$("#alertbnk").hide();
 		$("#bnkac").prop("checked", false);
 		$("#bnkac").prop("disabled", true);
 	    }
 	}else if($('#subgroupname').text() == "Cash"){
-	    $("#chsdiv").show();
 	    $("#bnkdiv").hide();
+	    $("#salediv").hide();
+	    $("#purdiv").hide();
+	    $("#alertbnk").hide();
+	    $('#alertpur').hide();
+	    $('#alertsale').hide();
             if(accdetails["defaultflag"] == 3){
-		$("#chsac").prop("checked", true);
-		$("#chsac").prop("disabled", true);
+		$("#alertchs").alert();
+		$("#alertchs").show();
+		$("#chsdiv").hide();
 	    }else{
+		$("#alertbnk").hide();
+		$("#chsdiv").show();
 		$("#chsac").prop("checked", false);
 		$("#chsac").prop("disabled", true);
+	    }
+	}else if($('#subgroupname').text() == "Purchase"){
+	    $("#salediv").hide();
+	    $("#bnkdiv").hide();
+	    $("#chsdiv").hide();
+	    $("#alertsale").hide();
+	    $("#alertbnk").hide();  
+	    $("#alertchs").hide();
+	    if(accdetails["defaultflag"] == 16){
+		$("#purdiv").hide();
+		$("#alertpur").alert();
+		$("#alertpur").show();
+	    }else{
+		$("#alertpur").hide();
+		$("#purdiv").show();
+		$("#purac").prop("checked", false);
+		$("#purac").prop("disabled", true);
+	    }
+	}else if($('#subgroupname').text() == "Sales"){
+	    $("#purdiv").hide();
+	    $("#bnkdiv").hide();
+	    $("#chsdiv").hide();
+	    $("#alertpur").hide();
+	    $("#alertbnk").hide();  
+	    $("#alertchs").hide();
+            if(accdetails["defaultflag"] == 19){
+		$("#salediv").hide();
+		$("#alertsale").alert();
+		$("#alertsale").show();
+	    }else{
+		$("#alertsale").hide();
+		$("#salediv").show();
+		$("#saleac").prop("checked", false);
+		$("#saleac").prop("disabled", true);
 	    }
 	}else{
 	    $("#bnkdiv").hide();
 	    $("#chsdiv").hide();
+	    $("#salediv").hide();
+	    $("#purdiv").hide();
+	    $("#alertbnk").hide();  
+	    $("#alertchs").hide();
+	    $("#alertpur").hide();
+	    $("#alertsale").hide();
 	}
 	$("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
@@ -147,7 +203,7 @@ $(document).ready(function()
   $("#edit").click(function(event)
   {
     event.preventDefault();
-    var grpname= $("#groupname").val();
+    var grpname= $("#groupname").val();  
 
     $("#submit").show();
     $("#alertmsg").hide();
@@ -171,10 +227,19 @@ $(document).ready(function()
       }
       $("#bnkac").prop("disabled",false);
       $("#chsac").prop("disabled",false);
-      $("#subgroupname").prop("disabled", false);
-      $("#groupname").prop("disabled", false);
+      $("#purac").prop("disabled",false);
+      $("#saleac").prop("disabled",false);
       $("#accountname").prop("disabled",false);
       $("#groupname").focus().select();
+	if(deflag == 2 || deflag == 3 || deflag == 16 || deflag == 19){
+	    $("#groupname").prop('disabled',true);
+	    $("#subgroupname").prop("disabled", true);
+	    $("#accountname").focus().select();
+	}else{
+	    $("#subgroupname").prop("disabled", false);
+	    $("#groupname").prop("disabled", false);
+	    $("#groupname").focus().select();
+	}
     }
   }
 );
@@ -243,11 +308,8 @@ $(document).ready(function()
 	    event.preventDefault();
 	    if($.trim($("#subgroupname option:selected").val())=="New"){
 		$("#newsubgroup").focus().select();
-	    }else if($.trim($("#subgroupname option:selected").text())=="Bank"){
-		$("#bnkac").focus().select();
-	    }
-	    else if($.trim($("#subgroupname option:selected").text())=="Cash"){
-		$("#chsac").focus().select();
+	    }else if($(".defbx").is(':visible')){
+		$(".defbx").focus().select();
 	    }else{
 		$("#accountname").focus();
 	    }
@@ -268,17 +330,32 @@ $(document).ready(function()
 	}
 
 	if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
-	    $("#bnkdiv").show();
-	    $("#bnkdiv").prop(':checked',false);
-	    $("#chsdiv").hide();
-	}else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
-	    $("#chsdiv").show();
-	    $("#chsdiv").prop(':checked',false);
-	    $("#bnkdiv").hide();
-	}else{
-	    $("#bnkdiv").hide();
-	    $("#chsdiv").hide();
-	}
+	  $("#bnkdiv").show();
+	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
+	  $("#chsdiv").show();
+	  $("#bnkdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
+	  $("#chsdiv").hide();
+	  $("#bnkdiv").hide();
+	  $("#purdiv").show();
+	  $("#salediv").hide();
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
+	  $("#purdiv").hide();
+	  $("#salediv").show();
+	  $("#chsdiv").hide();
+	  $("#bnkdiv").hide();
+      }else{
+	  $("#bnkdiv").hide();
+	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
+      }
+	
     });
 
     /** Keydown for 'bnkac' and 'chsac' checkbox **/
@@ -361,11 +438,8 @@ $("#accountname").keydown(function(event) {
 	event.preventDefault();
 	if($("#newsubgroup").is(':visible')){
 	    $("#newsubgroup").focus();
-	}else if($.trim($("#subgroupname option:selected").text())=="Bank"){
-		$("#bnkac").focus().select();
-	}
-	else if($.trim($("#subgroupname option:selected").text())=="Cash"){
-	    $("#chsac").focus().select();
+	}else if($(".defbx").is(':visible')){
+	    $(".defbx").focus().select();
 	}else{
 	    $("#subgroupname").focus();
 	}
@@ -484,6 +558,10 @@ $("#editaccountform").submit(function(e)
 	var defaultflag = 2;
     }else if($("#chsac").is(':checked')){
 	defaultflag = 3;
+    }else if($("#purac").is(':checked')){
+	defaultflag = 16;
+    }else if($("#saleac").is(':checked')){
+	defaultflag = 19;
     }else{
 	defaultflag = 0;
     }
