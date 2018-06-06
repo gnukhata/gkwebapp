@@ -1489,7 +1489,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
-  if(orgdata!=""||yeardata!=""){
+  if(orgdata!=""||yeardata!="")
+{
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }
@@ -1748,8 +1749,8 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	  var newtaxrate = "";
 	  //Looping through GSTIN table rows to fetch state abbreviations.
 	  $("#gstintable tbody tr").each(function(index) {
-	      if ($("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid") != "") {
-		  let statecode = $("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid");
+	      let statecode = $("#gstintable tbody tr:eq(" + index + ") td:eq(0) select option:selected").attr("stateid");
+	      if (statecode && statecode != "") {
 		  $.ajax({
 		      url: '/addaccount?type=abbreviation',
 		      type: 'POST',
