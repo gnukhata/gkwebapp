@@ -515,7 +515,6 @@ $(document).ready(function(){
 		    $("#yeardata").html(yeardata);
 		}
 		$("#addorg").fadeIn();
-		$("#ticker").show();
 		$("footer").hide();
 		var otype = $("#orgtype option:selected").val();
 		if (otype =="Profit Making"){
@@ -1490,9 +1489,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
-  if(orgdata!=""||yeardata!="")
-  {
-  $("#ticker").show();
+  if(orgdata!=""||yeardata!=""){
   $("#orgdata").html(orgdata);
   $("#yeardata").html(yeardata);
   }

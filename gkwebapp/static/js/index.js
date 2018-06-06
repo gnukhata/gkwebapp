@@ -36,10 +36,8 @@ $(document).ready(function(){
 	sessionStorage.changeorg = 1;
 	let width = $('#firstmessage').width();
 	$('#secondmessage').width(width);
-	$('#firstmessage').fadeIn(4000, function(){
-	$(this).fadeOut(3000, function(){
-	    $('#secondmessage').fadeIn(4000, function(){
-		$("#logodiv").fadeOut(1000, function(){
+	$('#firstmessage').fadeIn(1000, function(){
+	    $("#logodiv").delay(3000).fadeOut(1000, function(){
 		    $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
 			url: '/orgexists',
 			type: 'POST',
@@ -59,8 +57,6 @@ $(document).ready(function(){
 			console.log("complete");
 		    });
 		    $("#contentdiv").fadeIn();
-		});
-	    });
 	});
     });
     }
@@ -93,6 +89,25 @@ $(document).ready(function(){
 	    $("#createadmin").hide();
 	    $("#orgname").focus();
 	}, 500 );// Set focus after a timeout of 500 milliseconds.
-});
+    });
+    $("#selectnav").click(function(event){	
+	event.preventDefault();
+	setTimeout( function() {
+	    $(".feature").show();
+	    var numoforg = $("#org-name option").length;
+	    var numofyears =  $("#finalyears option").length;
+	    if (numoforg == 2){ //for setting focus to the "next" button if there is only one organisation present
+		if(numofyears==1){
+		    $("#ticker").hide();
+		    $("#callLogin").focus();
+		}
+		
+	    }
+	    else { //set focus to organisation name if there are more than one organisations
+		$("#ticker").hide();
+		$("#org-name").focus();
+	    }
+	}, 500 );// Set focus after a timeout of 500 milliseconds.
+    });
   return;
 });
