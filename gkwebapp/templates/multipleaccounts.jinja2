@@ -168,7 +168,12 @@
 		    {% endif %}
                     <th class="col-xs-3">{% trans %}Opening Balance{% endtrans %}</th>
                   {% else %}
-                    <th class="col-xs-10">{% trans %}Account Name{% endtrans %}</th>
+		    {% if gkresult['subgroupname'] == 'Purchase' or gkresult['subgroupname'] == 'Sales' %}
+		      <th class="col-xs-1" >&nbsp</th>
+		      <th class="col-xs-9">{% trans %}Account Name{% endtrans %}</th>
+		    {% else %}
+		      <th class="col-xs-10">{% trans %}Account Name{% endtrans %}</th>
+		    {% endif %}
                   {% endif %}
                   <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
                 </tr>
@@ -193,9 +198,19 @@
                       <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
                     </td>
                   {% else %}
-                    <td class="col-xs-10">
-                      <input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
-                    </td>
+		    {% if gkresult['subgroupname'] == 'Purchase' or gkresult['subgroupname'] == 'Sales' %}
+		      <td class="col-xs-1 defbx">
+			<input type="checkbox" class="default" id="purac">
+			<input type="checkbox" class="default" id="saleac" hidden>
+		      </td>
+		      <td class="col-xs-9">
+			<input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+		    {% else %}
+		      <td class="col-xs-10">
+			<input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name">
+                      </td>
+		    {% endif %}
                   {% endif %}
                   <td class="col-xs-2">
                   </td>

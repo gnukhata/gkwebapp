@@ -660,9 +660,7 @@ $("#openbal").keydown(function(event){
     $("#m_multiacc").modal('show');
     $('#m_multiacc').on('shown.bs.modal', function (e)
     {
-	if($("#subgroupname option:selected").text() == 'Bank'){
-	    $(".default:first").focus().select();
-	}else if($("#subgroupname option:selected").text() == 'Cash'){
+	if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
 	    $(".default:first").focus().select();
 	}else{
 	    $(".m_accname:first").focus().select();

@@ -31,6 +31,12 @@ $(document).ready(function() {
     }else if($("#m_sgname").val() == 'Cash'){
 	$("#bnkac").hide();
 	$("#chsac").show();
+    }else if($("#m_sgname").val() == 'Purchase'){
+	$("#saleac").hide();
+	$("#purac").show();
+    }else if($("#m_sgname").val() == 'Sales'){
+	$("#purac").hide();
+	$("#saleac").show();
     }
 
     //Help message for sub-group 'Bank' or 'Cash'.
@@ -107,8 +113,8 @@ $(document).ready(function() {
 	  {
         //If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field
         if ($(this).closest('tr').is(":first-child")) {
-          if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "") {
-            $("#nodatasaved-alert").alert();
+          if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val() == "") {
+	    $("#nodatasaved-alert").alert();
             $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#m_multiacc").modal("hide");
               $(".modal-backdrop").hide();
@@ -151,7 +157,11 @@ $(document).ready(function() {
 	    $('#m_acctable tbody tr:eq('+curindex1+') td:eq(1) input:enabled').focus();
 	}
 	if(event.which == 38){
-	    $('#m_acctable tbody tr:eq('+previndex1+') td:eq(2) input:enabled').focus();
+	    if($("#m_sgname").val() == 'Bank' || $("#m_sgname").val() == 'Cash'){
+		$('#m_acctable tbody tr:eq('+previndex1+') td:eq(2) input:enabled').focus();
+	    }else if($("#m_sgname").val() == 'Purchase' || $("#m_sgname").val() == 'Sales'){
+		$('#m_acctable tbody tr:eq('+previndex1+') td:eq(1) input:enabled').focus();
+	    }
 	}
     });
 
@@ -167,7 +177,7 @@ $(document).ready(function() {
 // This function will validate the current row and then add a new row.
     var m_grpnm = $.trim($("#m_gname").val());
     var sub_grpnm = $.trim($("#m_sgname").val());  
-    if(sub_grpnm == 'Bank' || sub_grpnm == 'Cash'){
+    if(sub_grpnm == 'Bank' || sub_grpnm == 'Cash' || sub_grpnm == 'Purchase' || sub_grpnm == 'Sales'){
 	var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val();
     }else{
 	accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
@@ -206,14 +216,34 @@ $(document).ready(function() {
         if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
         {
 	  // will add row with only account name field as the groups mentioned above do not have opening balance.
-	  $("#m_acctable").append('<tr>'+
-          '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
-          '<td class="col-xs-2">'+
-          '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-          '</td>'+
-          '</tr>'
-        );
-      }
+	  if(m_sgname == 'Purchase'){
+	      $("#m_acctable").append('<tr>'+
+	      '<td class="col-xs-1 defbx"><input type="checkbox" class="default" id="purac"></td>'+			    		     
+              '<td class="col-xs-9"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+              '<td class="col-xs-2">'+
+              '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>'
+              );
+	  }else if(m_sgname == 'Sales'){
+	      $("#m_acctable").append('<tr>'+
+	      '<td class="col-xs-1 defbx"><input type="checkbox" class="default" id="saleac"></td>'+			    		     
+              '<td class="col-xs-9"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+              '<td class="col-xs-2">'+
+              '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>'
+              );
+	  }else{ 
+	      $("#m_acctable").append('<tr>'+
+              '<td class="col-xs-10"><input type="text" id="m_alt_accname" class="form-control input-sm m_accname" placeholder="Account Name"></td>'+
+              '<td class="col-xs-2">'+
+              '<a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
+              '</td>'+
+              '</tr>'
+         );
+	  }
+	}
       else
       {
 	// will add row with both account name and opening balance.
@@ -378,6 +408,18 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 	}else if(sub_grpnm == "Cash"){
 	    if ($(".default",this).is(":checked")) {
 		defaultflag = 3;
+	    }else{
+		defaultflag = 0;
+	    }
+	}else if(sub_grpnm == "Purchase"){
+	    if ($(".default",this).is(":checked")) {
+		defaultflag = 16;
+	    }else{
+		defaultflag = 0;
+	    }
+	}else if(sub_grpnm == "Sales"){
+	    if ($(".default",this).is(":checked")) {
+		defaultflag = 19;
 	    }else{
 		defaultflag = 0;
 	    }
