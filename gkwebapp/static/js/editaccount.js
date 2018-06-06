@@ -45,6 +45,7 @@ $(document).ready(function()
   var deflag;  
   $("#editaccountname").bind("change keyup", function()
   {	  
+    $("#submit").hide();
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
       var accname= $("#editaccountname option:selected").text();
@@ -183,6 +184,12 @@ $(document).ready(function()
       $("#alertmsg").hide();
       $("#delete").show();
       $("#edit").show();
+    }
+
+    if(accdetails["defaultflag"] == 2 || accdetails["defaultflag"] == 3 || accdetails["defaultflag"] == 19 || accdetails["defaultflag"] == 16){
+	$("#delete").hide();
+    }else{
+	$("#delete").show();
     }
     var grpname = $("#groupname option:selected").text();
 	if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {

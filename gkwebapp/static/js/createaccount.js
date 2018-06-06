@@ -605,11 +605,7 @@ $("#openbal").keydown(function(event){
     });
   $('#maccounts').change(function() {
   if($('#maccounts').attr('checked', true)){
-      if($.trim($("#subgroupname option:selected").text())=="Bank"){
-	  $("#bnkac").attr('checked',false);
-      }else if($.trim($("#subgroupname option:selected").text())=="Cash"){
-	  $("#chsac").attr('checked',false);
-      }
+      $(".defbx").attr('checked',false);
   }
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();

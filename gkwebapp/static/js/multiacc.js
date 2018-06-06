@@ -167,8 +167,8 @@ $(document).ready(function() {
 
     //In account table at time single account can select to set default for 'Bank' or 'Cash' Transaction. 
     $(document).off("change",".default").on("change",".default",function(event){
-	if($('input[type="checkbox"]').is(':checked')){
-	    $('input[type="checkbox"]').not(this).prop('checked', false);
+	if($('.default').is(':checked')){
+	    $('.default').not(this).prop('checked', false);
 	}
     });
 
