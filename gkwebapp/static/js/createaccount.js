@@ -38,7 +38,6 @@ $(document).ready(function()
   $("#obal").hide();
   $("#openbal").hide();
   $("#baltbl").hide();
-  $("#baltbl").hide();
     $("#bnkdiv").hide();
     $("#chsdiv").hide();
     $("#purdiv").hide();
@@ -195,11 +194,8 @@ $("#openbal").keydown(function(event){
 	    if ($.trim($("#subgroupname option:selected").val())=="New"){
 	    $("#newsubgroup").focus().select();
 	    }
-	    else if($.trim($("#subgroupname option:selected").text())=="Bank"){
-		$("#bnkac").focus().select();
-	    }
-	    else if($.trim($("#subgroupname option:selected").text())=="Cash"){
-		$("#chsac").focus().select();
+	    else if($('.defbx').is(':visible')){
+		$(".defbx").focus().select();
 	    }
 	    else {
 		    $("#maccounts").focus().select();
@@ -257,11 +253,8 @@ $("#openbal").keydown(function(event){
 	     if ($("#newsubgroup").is(':visible')) {
 		 $("#newsubgroup").focus().select();
 	     }
-	     else if($("#bnkac").is(':visible')){
-		 $("#bnkac").focus();
-	     }
-	     else if($("#chsac").is(':visible')){
-		 $("#chsac").focus();
+	     else if($(".defbx").is(':visible')){
+		 $(".defbx").focus();
 	     }
 	     else {
 		 $("#subgroupname").focus().select();
@@ -516,6 +509,10 @@ $("#openbal").keydown(function(event){
 	var defaultflag = 2;
     }else if($("#chsac").is(':checked')){
 	defaultflag = 3;
+    }else if($("#purac").is(':checked')){
+	defaultflag = 16;
+    }else if($("#saleac").is(':checked')){
+	defaultflag = 19;
     }else{
 	defaultflag = 0;
     }
