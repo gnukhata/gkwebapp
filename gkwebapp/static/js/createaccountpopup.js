@@ -30,6 +30,8 @@ $(document).ready(function()
 {
   $("#bnkdiv").hide();
   $("#chsdiv").hide();
+  $("#purdiv").hide();
+  $("#salediv").hide();
   $("#m_openbal").numeric();
   var sel1 = 0;
   var sel2 = 0;
@@ -127,12 +129,28 @@ else
       if($.trim($("#m_subgroupname option:selected").text()) == 'Bank'){
 	  $("#bnkdiv").show();
 	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
       }else if($.trim($("#m_subgroupname option:selected").text()) == 'Cash'){
 	  $("#chsdiv").show();
 	  $("#bnkdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
+      }else if($.trim($("#m_subgroupname option:selected").text()) == 'Purchase'){
+	  $("#purdiv").show();
+	  $("#salediv").hide();
+	  $("#bnkdiv").hide();
+	  $("#chsdiv").hide();
+      }else if($.trim($("#m_subgroupname option:selected").text()) == 'Sales'){
+	  $("#purdiv").hide();
+	  $("#salediv").show();
+	  $("#bnkdiv").hide();
+	  $("#chsdiv").hide();
       }else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
+	  $("#purdiv").hide();
+	  $("#salediv").hide();
       }
 
 });
@@ -164,13 +182,9 @@ else
 	    event.preventDefault();
 	    if ($.trim($("#m_subgroupname option:selected").val())=="New"){
 		$("#m_newsubgroup").focus().select();
-	    }else if($.trim($("#m_subgroupname option:selected").text())=="Bank"){
-		$("#bnkac").focus().select();
-	    }
-	    else if($.trim($("#m_subgroupname option:selected").text())=="Cash"){
-		$("#chsac").focus().select();
-	    }
-	    else {
+	    }else if($.trim($("#m_subgroupname option:selected").text())=="Bank" || $.trim($("#m_subgroupname option:selected").text())=="Cash" || $.trim($("#m_subgroupname option:selected").text())=="Purchase" || $.trim($("#m_subgroupname option:selected").text())=="Sales"){
+		$(".defbx").focus().select();
+	    }else {
 		$("#m_accountname").focus().select();
 	    }
 	}
@@ -233,11 +247,8 @@ else
 	    if ($("#m_newsubgroup").is(':visible')) {
 		$("#m_newsubgroup").focus().select();
 	    }
-	    else if($("#bnkac").is(':visible')){
-		$("#bnkac").focus();
-	    }
-	    else if($("#chsac").is(':visible')){
-		$("#chsac").focus();
+	    else if($(".defbx").is(':visible')){
+		$(".defbx").focus();
 	    }
 	    else {
 		$("#m_subgroupname").focus().select();
@@ -301,6 +312,10 @@ if ($("#m_newsubgroup").is(':visible')) {
 	  var defaultflag = 2;
       }else if($("#chsac").is(':checked')){
 	  defaultflag = 3;
+      }else if($("#purac").is(':checked')){
+	  defaultflag = 16;
+      }else if($("#saleac").is(':checked')){
+	  defaultflag = 19;
       }else{
 	  defaultflag = 0;
       }
