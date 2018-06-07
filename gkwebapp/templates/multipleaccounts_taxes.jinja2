@@ -151,7 +151,7 @@
 
         </div>
         <div class="modal-body shadow">
-	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+	  <div class="alert alert-danger" id="m_taxtype-alert"  aria-live="rude" role="alert" hidden>
 	    {% trans %}Please enter Tax Type!{% endtrans %}
 	  </div>
 	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
@@ -209,10 +209,14 @@
 		  <td class="col-xs-2">
                     <select class="form-control input-sm taxrate gstaccountfields">
 		      <option value="" hidden disabled selected>Select Rate</option>
-		      <option value="5%">5%</option>
-		      <option value="12%">12%</option>
-		      <option value="18%">18%</option>
-		      <option value="28%">28%</option>
+		      <option class="igstopt" value="5%">5%</option>
+		      <option class="igstopt" value="12%">12%</option>
+		      <option class="igstopt" value="18%">18%</option>
+		      <option class="igstopt" value="28%">28%</option>
+		      <option class="sgstopt" value="2.5%">2.5%</option>
+		      <option class="sgstopt" value="6%">6%</option>
+		      <option class="sgstopt" value="9%">9%</option>
+		      <option class="sgstopt" value="14%">14%</option>
 		    </select>
 		    <div class="input-group cessratediv" hidden>
 		      <input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a" style="display:none">

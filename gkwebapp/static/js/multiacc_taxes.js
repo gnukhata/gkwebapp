@@ -28,6 +28,7 @@ $(document).ready(function() {
     $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
     $(".cessrate").numeric({"negative":false});
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
+    var taxtype;
   $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
   {
   // This is the keydown event for account name column fields.
@@ -113,6 +114,49 @@ $(document).ready(function() {
 	    }
 	}
     });
+
+    //Change event for 'Tax Type'
+    $(".taxname").change(function(){
+	taxtype = $.trim($(".taxname option:selected").val());
+	console.log(taxtype);
+	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+	    $(".taxrate").hide();
+	    $(".cessratediv, .cessrate, .cessrateaddon").show();
+	}else{
+	    $(".taxrate").show();
+	    $(".cessratediv, .cessrate, .cessrateaddon").hide();
+	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
+		$(".taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
+		$(".taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
+	    }
+	    else {
+		$(".taxrate option.igstopt").prop("disabled", true).prop("hidden", true);
+		$(".taxrate option.sgstopt").prop("disabled", false).prop("hidden", false);
+	    }
+	}
+    });
+
+    //Keydown for 'Tax Type'
+    $(".taxname").keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($.trim($(".taxname option:selected").val())=="") {
+                $("#m_taxtype-alert").alert();
+                $("#m_taxtype-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#m_taxtype-alert").hide();
+		});
+                $(".taxname").focus();
+                return false;
+            }
+	    $(".taxstate").focus();
+	}
+	else if (event.which == 38) {
+	    if ($(".taxname option:visible").first().is(":selected")) {
+		$("#m_gstaccount").focus();
+	    }
+	}
+    });
+    
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.
