@@ -93,7 +93,13 @@ $(document).ready(function() {
 
     }
   });
-
+    
+    $(document).off("change","#m_gstaccount").on("change","#m_gstaccount",function(event){
+	if($('#m_gstaccount').is(':checked')){
+	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+	}
+    });
+    
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.
