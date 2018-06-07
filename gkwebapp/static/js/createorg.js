@@ -253,6 +253,14 @@ $(document).ready(function(){
 	    $("#invinvsbillradio").focus();
 	}
     });
+    $("#sales").change(function(event){
+	if ($("#sales").is(":checked")) {
+	    $(".ledger").prop("disabled", false);
+	}
+	else{
+	    $(".ledger").prop("disabled", true);
+	}
+    });
     $(".ledger").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
