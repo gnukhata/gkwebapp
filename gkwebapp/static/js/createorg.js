@@ -247,7 +247,12 @@ $(document).ready(function(){
     $("#sales").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
-	    $('#singlesales').focus();
+	    if($("#singlesales").is(":disabled")){
+		$("#btnsubmit").focus();
+	    }
+	    else{
+		$('#singlesales').focus();
+	    }
 	}
 	if (event.which == 38) {
 	    $("#invinvsbillradio").focus();
