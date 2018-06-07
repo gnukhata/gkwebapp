@@ -1750,17 +1750,31 @@ else{
     if (resp["gkstatus"] ==0) {
 
 	//$("#addproduct").click();
-      if(sessionStorage.invflag==0){
-        $("#product").click();
-      }
-      else{
-        $("#productinmaster").click();
-      }
 	$('.modal-backdrop').remove();
-	$("#addproduct-success-alert").alert();
-	$("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#addproduct-success-alert").hide();
-	});
+	if ($("#additem option:selected").val() == 7) {
+	    $("#addproduct-success-alert").alert();
+	    $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		if(sessionStorage.invflag==0){
+		    $("#product").click();
+		}
+		else{
+		    $("#productinmaster").click();
+		}
+		$("#addproduct-success-alert").hide();
+	    });
+	}
+	else {
+	    $("#addservice-success-alert").alert();
+	    $("#addservice-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		if(sessionStorage.invflag==0){
+		    $("#product").click();
+		}
+		else{
+		    $("#productinmaster").click();
+		}
+		$("#addservice-success-alert").hide();
+	    });
+	}
     }
     else if (resp["gkstatus"] ==1)
     {

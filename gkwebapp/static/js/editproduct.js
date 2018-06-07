@@ -1461,11 +1461,20 @@ $(document).ready(function() {
     .done(function(resp) {
       if (resp["gkstatus"] ==0) {
         $('.modal-backdrop').remove();
-        $("#editproduct-success-alert").alert();
-        $("#editproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#editproduct-success-alert").hide();
-        });
-        $("#editproduct").click();
+          if($("#gsflag").val() == 7){
+	      $("#editproduct-success-alert").alert();
+              $("#editproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#editproduct").click();
+		  $("#editproduct-success-alert").hide();
+              });
+	  }
+	  else {
+	      $("#editservice-success-alert").alert();
+              $("#editservice-success-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#editproduct").click();
+		  $("#editservice-success-alert").hide();
+              });
+	  }
         return false;
       }
       else if (resp["gkstatus"] ==1)
