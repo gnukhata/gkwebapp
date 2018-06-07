@@ -136,7 +136,7 @@ $(document).ready(function() {
 	}
     });
 
-    //Keydown for 'Tax Type'
+    //Keydown for 'Tax Type'.
     $(".taxname").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -154,6 +154,23 @@ $(document).ready(function() {
 	    if ($(".taxname option:visible").first().is(":selected")) {
 		$("#m_gstaccount").focus();
 	    }
+	}
+    });
+
+    $(".taxstate").keydown(function(event){
+	if (event.which == 13) {
+	    console.log($(".taxstate option:selected").val());
+	    event.preventDefault();
+	    if ($.trim($(".taxstate option:selected").val())=="") {
+		console.log("Hello");
+		$("#mult_taxstate-alert").alert();
+                $("#mult_taxstate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#mult_taxstate-alert").hide();
+		});
+                $(".taxstate").focus();
+                return false;
+            }
+	    $(".taxrate").focus();
 	}
     });
     
