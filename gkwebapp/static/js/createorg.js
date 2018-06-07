@@ -27,7 +27,6 @@ Contributors:
 */
 
 $(document).ready(function(){
-    $("#ledgerdiv").hide();
     $("#addorg").hide();
     $("#createadmin").hide();
     $("#createtorg").fadeIn();
