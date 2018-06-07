@@ -93,13 +93,26 @@ $(document).ready(function() {
 
     }
   });
-    
+
+    //Change event for 'GST Account' checkbox.
     $(document).off("change","#m_gstaccount").on("change","#m_gstaccount",function(event){
 	if($('#m_gstaccount').is(':checked')){
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+	}else{
+	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
 	}
     });
-    
+
+    //Keydown event for 'GST Account' checkbox.
+    $(document).off("keydown","#m_gstaccount").on("keydown","#m_gstaccount",function(event){
+	if(event.which == 13){
+	    if($('#m_gstaccount').is(':checked')){
+		$(".taxname:enabled:first").focus().select();
+	    }else{
+		$(".m_accname:enabled:first").focus().select();
+	    }
+	}
+    });
   function addRow(curindex)
   {
 // This function will validate the current row and then add a new row.

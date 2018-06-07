@@ -184,7 +184,7 @@
               <tbody>
                 <tr>
 		  <td class="col-xs-2">
-                    <select class="form-control input-sm  gstaccountfields" id="taxtype">
+                    <select class="form-control input-sm taxname gstaccountfields" id="taxtype">
 		      <option value="" hidden disabled selected>Select Tax</option>
 		      <option value="SGSTIN">SGSTIN</option>
 		      <option value="SGSTOUT">SGSTOUT</option>
@@ -197,7 +197,7 @@
 		    </select>
                   </td>
 		  <td class="col-xs-3">
-                    <select class="form-control input-sm taxstate  gstaccountfields">
+                    <select class="form-control input-sm taxstate gstaccountfields">
 		      <option value="" hidden disabled selected>Select State</option>
 		      {% for state in states %}
 			{% for key, value in state.items() %}
