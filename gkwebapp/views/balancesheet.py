@@ -122,31 +122,44 @@ def printconvbalsheetreport(request):
                         sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 if record["groupAccflag"]==2 or record["groupAccflag"]==1:
                     if record["advflag"]==1:
-                        sheet['B'+str(row)] = record["amount"]
+                        #sheet['B'+str(row)] = record["amount"]
+                        sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['B'+str(row)].number_format = '0.00'
                         sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['B'+str(row)] = record["amount"]
+                        #sheet['B'+str(row)] = record["amount"]
+                        sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['B'+str(row)].number_format = '0.00'
                         sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
                     if record["advflag"]==1:
-                        sheet['C'+str(row)] = record["amount"]
+                        #sheet['C'+str(row)] = record["amount"]
+                        sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['C'+str(row)].number_format = '0.00'
                         sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['C'+str(row)] = record["amount"]
+                        #sheet['C'+str(row)] = record["amount"]
+                        sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['C'+str(row)].number_format = '0.00'
                         sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 else:
                     if record["advflag"]==1:
-                        sheet['D'+str(row)] = record["amount"]
+                        #sheet['D'+str(row)] = record["amount"]
+                        sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['D'+str(row)].number_format = '0.00'
                         sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['D'+str(row)] = record["amount"]
-                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
-                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                        #sheet['D'+str(row)] = record["amount"]
+                        if record["amount"]!= "":
+                            sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                            sheet['D'+str(row)].number_format = '0.00'
+                            sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                            sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
                 row += 1
         """ 
         Looping each dictionaries in list applications to store data in cells and apply styles.
@@ -174,31 +187,44 @@ def printconvbalsheetreport(request):
                         
                 if record["groupAccflag"]==2 or record["groupAccflag"]==1:
                     if record["advflag"]==1:
-                        sheet['F'+str(row)] = record["amount"]
+                        #sheet['F'+str(row)] = record["amount"]
+                        sheet['F'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['F'+str(row)].number_format = '0.00'
                         sheet['F'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['F'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['F'+str(row)] = record["amount"]
+                        #sheet['F'+str(row)] = record["amount"]
+                        sheet['F'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['F'+str(row)].number_format = '0.00'
                         sheet['F'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['F'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
                     if record["advflag"]==1:
-                        sheet['G'+str(row)] = record["amount"]
+                        #sheet['G'+str(row)] = record["amount"]
+                        sheet['G'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['G'+str(row)].number_format = '0.00'
                         sheet['G'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['G'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['G'+str(row)] = record["amount"]
+                        #sheet['G'+str(row)] = record["amount"]
+                        sheet['G'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['G'+str(row)].number_format = '0.00'
                         sheet['G'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['G'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
                 else:
                     if record["advflag"]==1:
-                        sheet['H'+str(row)] = record["amount"]
+                        #sheet['H'+str(row)] = record["amount"]
+                        sheet['H'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['H'+str(row)].number_format = '0.00'
                         sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     else:
-                        sheet['H'+str(row)] = record["amount"]
-                        sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
-                        sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                        #sheet['H'+str(row)] = record["amount"]
+                        if record["amount"]!= "":
+                            sheet['H'+str(row)] = float("%.2f"%float(record["amount"]))
+                            sheet['H'+str(row)].number_format = '0.00'
+                            sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
+                            sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
                 row += 1
         conventionalwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
@@ -438,32 +464,46 @@ def printsourcesandappfundreport(request):
                 sheet['A'+str(row)] = record["groupAccname"].upper()
             if record["groupAccflag"]==2 or record["groupAccflag"]==1:
                 if record["advflag"]==1:
-                    sheet['B'+str(row)] = record["amount"]
+                    #sheet['B'+str(row)] = record["amount"]
+                    sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['B'+str(row)].number_format = '0.00'
                     sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                     
                 else:
-                    sheet['B'+str(row)] = record["amount"]
+                    #sheet['B'+str(row)] = record["amount"]
+                    sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['B'+str(row)].number_format = '0.00'
                     sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
             elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
                 if record["advflag"]==1:
-                    sheet['C'+str(row)] = record["amount"]
+                    #sheet['C'+str(row)] = record["amount"]
+                    sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                 else:
-                    sheet['C'+str(row)] = record["amount"]
+                    #sheet['C'+str(row)] = record["amount"]
+                    sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
             else:
                 if record["advflag"]==1:
-                    sheet['D'+str(row)] = record["amount"]
-                    sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
-                    sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    #sheet['D'+str(row)] = record["amount"]
+                    if record["amount"]!= "":
+                        sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['D'+str(row)].number_format = '0.00'
+                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                 else:
-                    sheet['D'+str(row)] = record["amount"]
-                    sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
-                    sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+                    #sheet['D'+str(row)] = record["amount"]
+                    if record["amount"]!= "":
+                        sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['D'+str(row)].number_format = '0.00'
+                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
             row += 1
         # Looping each dictionaries in list applications to store data in cells and apply styles.
         for record in applications:
@@ -484,29 +524,43 @@ def printsourcesandappfundreport(request):
                 sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             if record["groupAccflag"]==2 or record["groupAccflag"]==1:
                 if record["advflag"]==1:
-                    sheet['B'+str(row)] = record["amount"]
+                    #sheet['B'+str(row)] = record["amount"]
+                    sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['B'+str(row)].number_format = '0.00'
                     sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                 else:
-                    sheet['B'+str(row)] = record["amount"]
+                    #sheet['B'+str(row)] = record["amount"]
+                    sheet['B'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['B'+str(row)].number_format = '0.00'
                     sheet['B'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
             elif (record["groupAccflag"]=="" and record["subgroupof"]!=""):
                 if record["advflag"]==1:
-                    sheet['C'+str(row)] = record["amount"]
+                    #sheet['C'+str(row)] = record["amount"]
+                    sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                 else:
-                    sheet['C'+str(row)] = record["amount"]
+                    #sheet['C'+str(row)] = record["amount"]
+                    sheet['C'+str(row)] = float("%.2f"%float(record["amount"]))
+                    sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=False)
             else:
                 if record["advflag"]==1:
-                    sheet['D'+str(row)] = record["amount"]
-                    sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
-                    sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
+                    #sheet['D'+str(row)] = record["amount"]
+                    if record["amount"]!= "":
+                        sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['D'+str(row)].number_format = '0.00'
+                        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
+                        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True,color=RED)
                 else:
-                    sheet['D'+str(row)] = record["amount"]
+                    if record["amount"]!= "":
+                        sheet['D'+str(row)] = float("%.2f"%float(record["amount"]))
+                        sheet['D'+str(row)].number_format = '0.00'
+                    #sheet['D'+str(row)] = record["amount"]
                     sheet['D'+str(row)].alignment = Alignment(horizontal = 'right')
                     sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
             row += 1
