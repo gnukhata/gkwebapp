@@ -1686,8 +1686,6 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     if ($("#multiplesales").is(":checked")) {
 	form_data.append("maflag", 1);
     }
-    $('.modal-backdrop').remove();
-  $("#spinmodal").modal("show");
     $.ajax(
     {
     //alert("starting ajax");
@@ -1827,66 +1825,9 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 		      },
 		      success: function(resp)
 		      {
-			  if(resp["accounts"].length>0)
-			  {
-			      $("#spinmodal").modal("hide");
-			      $('.modal-backdrop').remove();
-			      $("#gstaccountsmodal").modal("show");
-			      let count = 0;
-			      $.each(resp.accounts, function(index, account) {
-				  let firstacc = account;
-				  let secondacc;
-				  if (resp.accounts[index+1] == null){
-				      secondacc="";
-				  }else{
-				      secondacc = resp.accounts[index+1];
-				  }
-				  //Separate out 'abbreviation' of state in account name.(i.e abbreviation of 'IGSTIN_MH@5.0%' is 'MH')
-				  let fin_1 = firstacc.indexOf("_");
-				  let fin_2 = firstacc.indexOf("@");
-				  let sin_1 = secondacc.indexOf("_");
-				  let sin_2 = secondacc.indexOf("@");
-				  let result1 = firstacc.slice(fin_1+1,fin_2);
-				  let result2 = secondacc.slice(sin_1+1,sin_2);
-				  if(result1 == result2){
-				      if(count % 6 == 0){
-					  if(count == 0){
-					      //This ajax will gives state name from "state abbreviation".
-					      let stateabbr = result1;
-					      $.ajax({
-						  url: '/editorganisation?type=statename',
-						  type: 'POST',
-						  global: false,
-						  async: false,
-						  datatype: 'json',
-						  data: {"stateabbr": stateabbr},
-						  beforeSend: function(xhr)
-						  {
-						      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-						  }
-					      }).done(function(resp){
-						  if (resp.gkstatus == 0) {
-						      $("#gstaccountstable tbody").append("<tr><td colspan='3'><div style='font-weight:bold; text-decoration:underline; background-color:#fafafa;'>" + "Accounts For "+ resp["statename"] + "</div></td></tr>");
-						  }
-					      });
-					  }
-					  $("#gstaccountstable tbody").append("<tr><td>" + account + "</td></tr>");
-					  count = count+1; 
-				      }
-				      else{
-					  $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
-					  count = count+1;
-				      }
-				  }
-				  else if(result1 != result2) {
-				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
-				      $("#gstaccountstable tbody").append("<tr></tr>");
-				      count =0;
-				  }else if(result1 !="" && result2 ==""){
-				      $("#gstaccountstable tbody tr:last").append("<td>" + account + "</td>");
-				  }
-			      });
-			  }
+			  $('.modal-backdrop').remove();
+			  $("#spinmodal").modal("hide");
+			  window.location="/showmainshell";
 		      }
 		  });
 	  }

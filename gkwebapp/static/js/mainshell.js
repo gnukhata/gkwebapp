@@ -38,7 +38,8 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 // Also all the external js libraries we have used is loaded along with the mainshell.
 $(document).ready(function(){
 var username1;
-var userrole1;
+    var userrole1;
+    $("#spinmodal").modal("hide");
   $('.modal-backdrop').remove();
 
   //Checking flags set according organisation preferences.
