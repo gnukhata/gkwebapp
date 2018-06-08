@@ -58,7 +58,7 @@ $(document).ready(function() {
 	}
     }
 
-    function saveCashMemo(c){
+    function saveCashMemo(invid,inoutflag){
 	                   $.ajax({
 			   url: '/cashmemos?action=showcashmemo',
 			   type: 'POST',
@@ -1574,8 +1574,8 @@ $(document).off("keyup").on("keyup", function(event) {
             }
           })
 		.done(function(resp) {
-		    console.log( resp["gkvch"].length());
-		    if ((resp["gkstatus"] == 0) && (resp["gkvch"].length() == 0)) {
+		   
+		    if ((resp["gkstatus"] == 0) && ((resp["gkvch"]).length == 0)) {
 		   if(inoutflag == 15){
 		       $("#cashmemo_create").click();
 		   }else{ $("#cashmemo_record").click();}
@@ -1584,29 +1584,29 @@ $(document).off("keyup").on("keyup", function(event) {
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#success-alert").hide();
 		   let invid = resp["gkresult"];
-		   saveCashMemo(invid);
+		   saveCashMemo(invid,inoutflag);
 	       });}
-		  elseif (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+		  else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
 		   if(inoutflag == 15){
 		       $("#cashmemo_create").click();
 		   }else{ $("#cashmemo_record").click();}
-		      $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+str(resp["gkvch"]["vchno"]));
+		      $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
                $("#cm-vch-success-alert").alert();
                $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#cm-vch-success-alert").hide();
 		   let invid = resp["gkresult"];
-		   saveCashMemo(invid);
+		   saveCashMemo(invid,inoutflag);
 	       });}
-		   elseif (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {
+		   else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {
 		   if(inoutflag == 15){
 		       $("#cashmemo_create").click();
 		   }else{ $("#cashmemo_record").click();}
-		      $("#cm-vch-failed-alert").text("Cash Memo saved with corresponding entry no. "+str(resp["gkvch"]["vchno"]));
+		      $("#cm-vch-failed-alert").text("Cash Memo saved with corresponding entry no. "+resp["gkvch"]["vchno"]);
                $("#cm-vch-failed-alert").alert();
                $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#cm-inv-failed-alert").hide();
 		   let invid = resp["gkresult"];
-		   saveCashMemo(invid);
+		   saveCashMemo(invid,inoutflag);
 	       });
 		
 		     
