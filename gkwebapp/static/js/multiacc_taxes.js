@@ -29,34 +29,34 @@ $(document).ready(function() {
     $(".cessrate").numeric({"negative":false});
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
     var taxtype;
-  $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event)
-  {
-  // This is the keydown event for account name column fields.
-    $(".m_openbal").numeric();
-    /**if (event.which==40)
-    {
-        $(".m_openbal").focus().select();
-    }**/
-    if (event.which==38)
-    {
-        if($('#m_gstaccount').is(':checked')){
-	    $('.taxrate').focus().select();
-	}else{
-	    $('#m_gstaccount').focus().select();
+
+    $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event){
+	// This is the keydown event for account name column fields.
+	$(".m_openbal").numeric();
+	/**if (event.which==40)
+	   {
+           $(".m_openbal").focus().select();
+	   }**/
+	if (event.which==38)
+	{
+            if($('#m_gstaccount').is(':checked')){
+		$('.taxrate').focus().select();
+	    }else{
+		$('#m_gstaccount').focus().select();
+	    }
 	}
-    }
-    if (event.which==13){
-	event.preventDefault();
-	if ($(".m_accname").val()=="") {
-	    $("#mult_blank-alert").alert();
-            $("#mult_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#mult_blank-alert").hide();
-            });
-	    return false;
+	if (event.which==13){
+	    event.preventDefault();
+	    if ($.trim($('.m_accname').val()) == "" ) {
+		$("#mult_blank-alert").alert();
+		$("#mult_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#mult_blank-alert").hide();
+		});
+		return false;
+	    }
+	    $(".m_openbal").focus().select();
 	}
-	$(".m_openbal").focus().select();
-    }
-  });
+    });
 
     //Change event for 'GST Account' checkbox.
     $(document).off("change","#m_gstaccount").on("change","#m_gstaccount",function(event){
@@ -79,9 +79,9 @@ $(document).ready(function() {
     });
 
     //Change event for 'Tax Type'
-    $(".taxname").change(function(){
-	taxtype = $.trim($(".taxname option:selected").val());
-	console.log(taxtype);
+    $(document).off("change",".taxname").on("change",".taxname",function(event){
+	var txnindex = $(this).closest('tr').index();
+	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $(".taxrate").hide();
 	    $(".cessratediv, .cessrate, .cessrateaddon").show();
@@ -100,10 +100,11 @@ $(document).ready(function() {
     });
 
     //Keydown for 'Tax Type'.
-    $(".taxname").keydown(function(event){
+    $(document).off("keydown",".taxname").on("keydown",".taxname",function(event){
+	var tnindex = $(this).closest('tr').index();
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($.trim($(".taxname option:selected").val())=="") {
+	    if ($.trim($('.taxname').val()) == "" ) {
                 $("#m_taxtype-alert").alert();
                 $("#m_taxtype-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#m_taxtype-alert").hide();
@@ -121,10 +122,11 @@ $(document).ready(function() {
     });
 
     //Keydown for 'Tax state'.
-    $(".taxstate").keydown(function(event){
+    $(document).off("keydown",".taxstate").on("keydown",".taxstate",function(event){
+	var tsindex = $(this).closest('tr').index();
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($.trim($(".taxstate option:selected").val())=="") {
+	    if ($.trim($('.taxstate').val()) == "" ) {
 		$("#mult_taxstate-alert").alert();
                 $("#mult_taxstate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_taxstate-alert").hide();
@@ -142,10 +144,11 @@ $(document).ready(function() {
     });
 
     //Keydown for 'Tax Rate'.
-    $(".taxrate").keydown(function(event){
+    $(document).off("keydown",".taxrate").on("keydown",".taxrate",function(event){
+	var trindex = $(this).closest('tr').index();
 	if(event.which == 13){
 	    event.preventDefault();
-	    if ($.trim($(".taxrate option:selected").val())=="") {
+	    if ($.trim($('.taxrate').val()) == "" ) {
 		$("#mult_taxrate-alert").alert();
 		$("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_taxrate-alert").hide();
@@ -161,11 +164,6 @@ $(document).ready(function() {
 	    }
 	}
     });
-
-    $(".m_openbal").keydown(function(event){
-	
-    });
-
 
     $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event){
 	// Keydown event for opening balance field.
@@ -187,9 +185,9 @@ $(document).ready(function() {
 	if(event.which == 13)
 	{
 	    // Validates whether the account name of corresponfing row is blank or not.
-	    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+	    var accnt = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val());
 	    if($("#m_gstaccount").is(':checked')){
-		if(accnt=="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val() == "" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val() =="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val() =="")
+		if(accnt=="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val()) =="")
 		{
 		    if (curindex == 0) {
 			$("#nodatasaved-alert").alert();
@@ -241,9 +239,8 @@ $(document).ready(function() {
 		// Else focus is set to the account name of the next row.
 		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
 		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-	    }**/
-	    
-	    if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="")
+		}**/
+	    if ($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input').val()) == 0 || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input').val())=="")
 	    {
 		// Default value 0.00 is set if the field is left blank or its value is 0.
 		$('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val("0.00");
