@@ -33,65 +33,28 @@ $(document).ready(function() {
   {
   // This is the keydown event for account name column fields.
     $(".m_openbal").numeric();
-    var curindex = $(this).closest('tr').index();
-    var nextindex = curindex+1;
-    var previndex = curindex-1;
-    var m_grpnm = $.trim($("#m_gname").val());// get value of groupname selected.
-
-    if (event.which==40)
+    /**if (event.which==40)
     {
-        // else it will be shifted to the corresponding opening balance field.
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').focus();
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').select();
-    }
+        $(".m_openbal").focus().select();
+    }**/
     if (event.which==38)
     {
-        // else it will be shifted to the previous opening balance field.
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').focus();
-        $('#m_acctable tbody tr:eq('+previndex+') td:eq(1) input').select();
+        if($('#m_gstaccount').is(':checked')){
+	    $('.taxrate').focus().select();
+	}else{
+	    $('#m_gstaccount').focus().select();
+	}
     }
-    if (event.which==13)
-      {
+    if (event.which==13){
 	event.preventDefault();
 	if ($(".m_accname").val()=="") {
-	  $("#m_blank-alert").alert();
-          $("#m_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#m_blank-alert").hide();
-          });
-	  return false;
-	}
-	if(m_grpnm=="Select Group" || m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income")
-	  {
-        //If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field
-        if ($(this).closest('tr').is(":first-child")) {
-          if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "") {
-            $("#nodatasaved-alert").alert();
-            $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
-              $("#m_multiacc").modal("hide");
-              $(".modal-backdrop").hide();
-              $("#nodatasaved-alert").hide();
+	    $("#mult_blank-alert").alert();
+            $("#mult_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#mult_blank-alert").hide();
             });
-            return false;
-          }
-        }
-        if ($(this).closest('tr').is(":last-child"))
-        {
-          // If its the last row then a new row is added by calling the function addRow.
-          addRow(curindex);
-        }
-        else
-        {
-        // If groupname is Direct or Indirect income OR direct or Indirect Expense there will be no opening balance field so focus will be shifted to next account name.
-          $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-          $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-        }
-      }
-      else
-      {
-        // else focus will be shifted to corresponding opening balance field.
-        $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').focus().select();
-      }
-
+	    return false;
+	}
+	$(".m_openbal").focus().select();
     }
   });
 
@@ -157,12 +120,11 @@ $(document).ready(function() {
 	}
     });
 
+    //Keydown for 'Tax state'.
     $(".taxstate").keydown(function(event){
 	if (event.which == 13) {
-	    console.log($(".taxstate option:selected").val());
 	    event.preventDefault();
 	    if ($.trim($(".taxstate option:selected").val())=="") {
-		console.log("Hello");
 		$("#mult_taxstate-alert").alert();
                 $("#mult_taxstate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_taxstate-alert").hide();
@@ -172,87 +134,114 @@ $(document).ready(function() {
             }
 	    $(".taxrate").focus();
 	}
+	else if (event.which == 38) {
+	    if ($(".taxstate option:visible").first().is(":selected")) {
+		$(".taxname").focus();
+	    }
+	}
     });
-    
-  function addRow(curindex)
-  {
-// This function will validate the current row and then add a new row.
-    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-    if (accname == "") {
-      $("#acc_add").click();
-      return false;
-    }
+
+    //Keydown for 'Tax Rate'.
+    $(".taxrate").keydown(function(event){
+	if(event.which == 13){
+	    event.preventDefault();
+	    if ($.trim($(".taxrate option:selected").val())=="") {
+		$("#mult_taxrate-alert").alert();
+		$("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#mult_taxrate-alert").hide();
+		});
+		$(".taxrate").focus();
+		return false;
+            }
+	    $(".m_accname").focus();
+	}
+	else if (event.which == 38) {
+	    if ($(".taxrate option:visible").first().is(":selected")) {
+		$(".taxstate").focus();
+	    }
+	}
+    });
+
+    $(".m_openbal").keydown(function(event){
+	
+    });
+
+
+    $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event){
+	// Keydown event for opening balance field.
+	$(".m_openbal").numeric();
+	var curindex = $(this).closest('tr').index();
+	var nextindex = curindex+1;
+	var previndex = curindex-1;
+	var numberofrows = $(".m_openbal").length;
+
+	/**if (event.which==40)
+	   {
+	   $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
+	   $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+	   }**/
+	if (event.which==38)
+	{
+	    $('.m_accname').focus().select();
+	}
+	if(event.which == 13)
+	{
+	    // Validates whether the account name of corresponfing row is blank or not.
+	    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+	    console.log(accnt);
+	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val());
+	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val());
+	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
+	    if(accnt=="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val() =="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val() =="")
+	    {
+		console.log("All Set");
+		if (curindex == 0) {
+		    $("#nodatasaved-alert").alert();
+		    $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#m_multiacc").modal("hide");
+			$(".modal-backdrop").hide();
+			$("#nodatasaved-alert").hide();
+		    });
+		    return false;
+		}
+		if (curindex == numberofrows - 1) {
+		    console.log("Getting All");
+		    //$("#acc_add").click();
+		    return false;
+		}
+	    }
+
+	    if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
+	    {
+		// Default value 0.00 is set if the field is left blank or its value is 0.
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");
+	    }
+
+	    if ($(this).closest('tr').is(":last-child"))
+	    {
+		console.log("One");
+		// If the current row is the last row then addrow function is called.
+		addRow(curindex);
+	    }
+	    else
+	    {
+		// Else focus is set to the account name of the next row.
+		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
+		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+	    }
+	}
+    });
+
+    //Function to add new row to add 'GST Account'.
+    function addRow(curindex){
+      // This function will validate the current row and then add a new row.
+      var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+      if (accname == "") {
+	  $("#acc_add").click();
+	  return false;
+      }
       $("#m_acctable").append(accrowhtml);
-}
-
-$(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event)
-{
-// Keydown event for opening balance field.
-  $(".m_openbal").numeric();
-  var curindex = $(this).closest('tr').index();
-  var nextindex = curindex+1;
-  var previndex = curindex-1;
-  var numberofrows = $(".m_openbal").length;
-
-  if (event.which==40)
-  {
-
-    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-
-  }
-  if (event.which==38)
-  {
-
-
-    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input:enabled').focus();
-    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input:enabled').select();
-
-  }
-  if(event.which == 13)
-  {
-    // Validates whether the account name of corresponfing row is blank or not.
-    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val();
-
-    if(accnt=="")
-    {
-      if (curindex == 0) {
-        $("#nodatasaved-alert").alert();
-        $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#m_multiacc").modal("hide");
-          $(".modal-backdrop").hide();
-          $("#nodatasaved-alert").hide();
-        });
-        return false;
-      }
-      if (curindex == numberofrows - 1) {
-        $("#acc_add").click();
-        return false;
-      }
     }
-
-
-    if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
-    {
-      // Default value 0.00 is set if the field is left blank or its value is 0.
-      $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");
-    }
-
-    if ($(this).closest('tr').is(":last-child"))
-    {
-    // If the current row is the last row then addrow function is called.
-      addRow(curindex);
-    }
-    else
-    {
-    // Else focus is set to the account name of the next row.
-      $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-      $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-    }
-
-  }
-
-});
 
 $(document).off("click",".m_del").on("click", ".m_del", function() {
 // This function will delete the current row.
@@ -300,10 +289,10 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 
 // ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
-    url: '/multiacc',
+      //url: '/multiacc',
     type: 'POST',
     datatype: 'json',
-    data: {"accdetails": JSON.stringify(output)},
+    //data: {"accdetails": JSON.stringify(output)},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
