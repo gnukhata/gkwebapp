@@ -59,8 +59,37 @@ $(document).ready(function() {
     }
 
     function saveCashMemo(c){
-	
-    }
+	                   $.ajax({
+			   url: '/cashmemos?action=showcashmemo',
+			   type: 'POST',
+			   dglobal: false,
+			   async: false,
+			   data: {"invid": invid},
+			   datatype: "text/html",
+			   beforeSend: function(xhr) {
+                               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			   }
+                       })
+			   .done(function(resp) {
+			       $("#cashmemoload").html("");
+			       $("#cashmemoload").html(resp);
+			       $("#viewcashmemo_div").show();
+			       $("#cashmemodiv").hide();
+			       $("#editbutton").hide();
+			       if(inoutflag==9){
+				   $("#printbutton").hide();
+			       }
+			       $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
+			       $("#cashmemo_div").html("");
+			   })
+			   .fail(function() {
+			       console.log("error");
+			   })
+			   .always(function() {
+			       console.log("complete");
+			   });
+               return false;
+		 }
     
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -1554,38 +1583,7 @@ $(document).off("keyup").on("keyup", function(event) {
 		   $("#success-alert").hide();
 		   let invid = resp["gkresult"];
 		   saveCashMemo(c);
-		       $.ajax({
-			   url: '/cashmemos?action=showcashmemo',
-			   type: 'POST',
-			   dglobal: false,
-			   async: false,
-			   data: {"invid": invid},
-			   datatype: "text/html",
-			   beforeSend: function(xhr) {
-                               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-			   }
-                       })
-			   .done(function(resp) {
-			       $("#cashmemoload").html("");
-			       $("#cashmemoload").html(resp);
-			       $("#viewcashmemo_div").show();
-			       $("#cashmemodiv").hide();
-			       $("#editbutton").hide();
-			       if(inoutflag==9){
-				   $("#printbutton").hide();
-			       }
-			       $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
-			       $("#cashmemo_div").html("");
-			   })
-			   .fail(function() {
-			       console.log("error");
-			   })
-			   .always(function() {
-			       console.log("complete");
-			   });
-		   
-               });
-               return false;
+		     
              } else if (resp["gkstatus"] == 1) {
                $("#invoice_challanno").focus();
                $("#duplicate-alert").alert();
