@@ -334,8 +334,8 @@ def listofinvspreadsheet(request):
         sheet.column_dimensions['E'].width = 10
         sheet.column_dimensions['F'].width = 16
         sheet.column_dimensions['G'].width = 18
-        sheet.column_dimensions['H'].width = 10
-        sheet.column_dimensions['I'].width = 10
+        sheet.column_dimensions['H'].width = 16
+        sheet.column_dimensions['I'].width = 16
         sheet.column_dimensions['J'].width = 10
         sheet.column_dimensions['K'].width = 16
         sheet.merge_cells('A1:K2')
@@ -428,13 +428,16 @@ def listofinvspreadsheet(request):
             sheet['G'+str(row)] = invoice['custtin']
             sheet['G'+str(row)].alignment = Alignment(horizontal='center')
             sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['H'+str(row)] = invoice['grossamt']
+            sheet['H'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['H'+str(row)].number_format="0.00"
             sheet['H'+str(row)].alignment = Alignment(horizontal='right')
             sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['I'+str(row)] = invoice['netamt']
+            sheet['I'+str(row)] = float("%.2f"%float(invoice['netamt']))
+            sheet['I'+str(row)].number_format="0.00"
             sheet['I'+str(row)].alignment = Alignment(horizontal='right')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['J'+str(row)] = invoice['taxamt']
+            sheet['J'+str(row)] = float("%.2f"%float(invoice['taxamt']))
+            sheet['J'+str(row)].number_format="0.00"
             sheet['J'+str(row)].alignment = Alignment(horizontal='right')
             sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             sheet['K'+str(row)] = invoice['godown']
