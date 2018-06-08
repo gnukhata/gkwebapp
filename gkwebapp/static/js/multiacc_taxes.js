@@ -188,46 +188,65 @@ $(document).ready(function() {
 	{
 	    // Validates whether the account name of corresponfing row is blank or not.
 	    var accnt = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-	    console.log(accnt);
-	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val());
-	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val());
-	    console.log($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
-	    if(accnt=="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) input').val() == "" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input').val() =="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val() =="")
-	    {
-		console.log("All Set");
-		if (curindex == 0) {
-		    $("#nodatasaved-alert").alert();
-		    $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
-			$("#m_multiacc").modal("hide");
-			$(".modal-backdrop").hide();
-			$("#nodatasaved-alert").hide();
-		    });
-		    return false;
+	    if($("#m_gstaccount").is(':checked')){
+		if(accnt=="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val() == "" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val() =="" && $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val() =="")
+		{
+		    if (curindex == 0) {
+			$("#nodatasaved-alert").alert();
+			$("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#m_multiacc").modal("hide");
+			    $(".modal-backdrop").hide();
+			    $("#nodatasaved-alert").hide();
+			});
+			return false;
+		    }
+		    if (curindex == numberofrows - 1) {
+			$("#acc_add").click();
+			return false;
+		    }
 		}
-		if (curindex == numberofrows - 1) {
-		    console.log("Getting All");
-		    //$("#acc_add").click();
-		    return false;
+
+		if ($(this).closest('tr').is(":last-child"))
+		{
+		    addRow(curindex);
+		    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+		    $(".taxname:enabled").focus().select();
+		}
+	    }else{
+		if(accnt=="")
+		{
+		    if (curindex == 0) {
+			$("#nodatasaved-alert").alert();
+			$("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#m_multiacc").modal("hide");
+			    $(".modal-backdrop").hide();
+			    $("#nodatasaved-alert").hide();
+			});
+			return false;
+		    }
+		    if (curindex == numberofrows - 1) {
+			$("#acc_add").click();
+			return false;
+		    }
+		}
+
+		if ($(this).closest('tr').is(":last-child"))
+		{
+		    addRow(curindex);
+		    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
+		    $(".m_accname:enabled").focus().select();
 		}
 	    }
-
-	    if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val()=="")
-	    {
-		// Default value 0.00 is set if the field is left blank or its value is 0.
-		$('#m_acctable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");
-	    }
-
-	    if ($(this).closest('tr').is(":last-child"))
-	    {
-		console.log("One");
-		// If the current row is the last row then addrow function is called.
-		addRow(curindex);
-	    }
-	    else
-	    {
+	    /**else{
 		// Else focus is set to the account name of the next row.
 		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
 		$('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
+	    }**/
+	    
+	    if ($('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="")
+	    {
+		// Default value 0.00 is set if the field is left blank or its value is 0.
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val("0.00");
 	    }
 	}
     });
