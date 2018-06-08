@@ -1601,7 +1601,7 @@ $(document).off("keyup").on("keyup", function(event) {
 		   if(inoutflag == 15){
 		       $("#cashmemo_create").click();
 		   }else{ $("#cashmemo_record").click();}
-		      $("#cm-vch-failed-alert").text("Cash Memo saved with corresponding entry no. "+resp["gkvch"]["vchno"]);
+		      
                $("#cm-vch-failed-alert").alert();
                $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#cm-inv-failed-alert").hide();
