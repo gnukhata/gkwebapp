@@ -88,7 +88,7 @@ def savecashmemo(request):
     invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 
     result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+    return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"],"voucherData":result.json()["vchData"]}
 
 
 

@@ -57,6 +57,11 @@ $(document).ready(function() {
         }
 	}
     }
+
+    function saveCashMemo(c){
+	
+    }
+    
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var invoicedate = "";
@@ -1489,7 +1494,7 @@ $(document).off("keyup").on("keyup", function(event) {
 
            stock["inout"] = 15;
        }
-	console.log(av);
+	
 	var form_data = new FormData();
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
@@ -1548,6 +1553,7 @@ $(document).off("keyup").on("keyup", function(event) {
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 		   $("#success-alert").hide();
 		   let invid = resp["gkresult"];
+		   saveCashMemo(c);
 		       $.ajax({
 			   url: '/cashmemos?action=showcashmemo',
 			   type: 'POST',
