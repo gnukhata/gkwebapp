@@ -35,6 +35,8 @@ $(document).ready(function() {
     $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event){
 	// This is the keydown event for account name column fields.
 	$(".m_openbal").numeric();
+	var nindex = $(this).closest('tr').index();
+	var npindex = nindex-1;
 	/**if (event.which==40)
 	   {
            $(".m_openbal").focus().select();
@@ -44,7 +46,7 @@ $(document).ready(function() {
             if($('#m_gstaccount').is(':checked')){
 		$('.taxrate').focus().select();
 	    }else{
-		$('#m_gstaccount').focus().select();
+		$('#m_acctable tbody tr:eq('+npindex+') td:eq(4) input').focus().select();
 	    }
 	}
 	if (event.which==13){
@@ -108,6 +110,7 @@ $(document).ready(function() {
     //Keydown for 'Tax Type'.
     $(document).off("keydown",".taxname").on("keydown",".taxname",function(event){
 	var tnindex = $(this).closest('tr').index();
+	var ptnindex = tnindex - 1;
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($.trim($('.taxname').val()) == "" ) {
@@ -121,9 +124,7 @@ $(document).ready(function() {
 	    $(".taxstate").focus();
 	}
 	else if (event.which == 38) {
-	    if ($(".taxname option:visible").first().is(":selected")) {
-		$("#m_gstaccount").focus();
-	    }
+	    $('#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
 	}
     });
 
@@ -204,7 +205,7 @@ $(document).ready(function() {
 		$(".taxrate").focus();
 		return false;
             }
-	    if($(".m_accname").is(':visible')){
+	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
 	    }else{
 		$(".m_accname").focus();
@@ -345,9 +346,11 @@ $(document).ready(function() {
 	    $("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
 	    if($('#m_gstaccount').is(':checked')){
 		$("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+		$('.m_accname').prop("disabled", true);
 		$('.taxname').focus().select();
 	    }else{
 		$("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
+		$('.m_accname').prop("disabled", false);
 		$('.m_accname').focus().select();
 	    }
 	}
@@ -372,7 +375,7 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
   var m_grpnm = $.trim($("#m_gname").val());
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
 
-    var accn = $(".m_accname", this).val();
+    var accn = $(".m_accname", this).val();  
     if (accn=="")
     {
       // If account name in any row is blank then the allow variable is set to false, also the index of the same row is saved.
@@ -385,27 +388,21 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
 
       obj.accountname = $(".m_accname", this).val();
       obj.openbal = $(".m_openbal", this).val();
-      /**if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
-      {
-        // Opening balance is set to 0.00 is its zero or group name is one from the above mentioned groups.
-        obj.openbal = "0.00";
-      }
-      else {
-        obj.openbal = $(".m_openbal", this).val();
-      }**/
       obj.groupname = $("#m_gcode").val();
       obj.subgroupname = $("#m_sgcode").val();
       obj.newsubgroup = $("#m_nsgcode").val();
+      obj.defaultflag = 0;
       output.push(obj);
     }
   });
 
-// ajax function below takes list of dictionaries "output" as input and saves all accounts.
+    console.log(JSON.stringify(output));
+  //ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
-      //url: '/multiacc',
+    url: '/multiacc',
     type: 'POST',
     datatype: 'json',
-    //data: {"accdetails": JSON.stringify(output)},
+    data: {"accdetails": JSON.stringify(output)},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
