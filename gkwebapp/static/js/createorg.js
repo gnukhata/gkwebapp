@@ -24,6 +24,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 */
 
 $(document).ready(function(){
@@ -1752,11 +1753,21 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     {
       if (resp['gkstatus']==0) {
 
-        var gt = resp['gktoken'];
+          var gt = resp['gktoken'];
 	  if(avnoflag==1){
 	      sessionStorage.avnoflag = 1;
 	  }else{
 	      sessionStorage.avnoflag = 0;
+	  }
+	  if(sessionStorage.avflag==1) {
+	      $('#sales').focus().prop('checked', true);
+	  }else{
+	      $('#sales').focus().prop('checked', false);
+	  }
+	  if(sessionStorage.maflag==1) {
+	      $('#multiplesales').focus().prop('checked', true);
+	  }else{
+	      $('#multiplesales').focus().prop('checked', false);
 	  }
         sessionStorage.gktoken = gt;
         sessionStorage.gktheme = 'Default';

@@ -33,11 +33,14 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "prajkta Patkar" <prajkta@riseup.net>
    "Reshma Bhatawadekar" <reshma@dff.org.in>
    "Pravin Dake" <pravindake24@gmail.com>
+   "Aditya Shukla" <adityashukla9158.as@gmail.com>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
 $(document).ready(function(){
-var username1;
+    var username1;
+    console.log(sessionStorage.maflag);
+    console.log(sessionStorage.avflag);
     var userrole1;
     $("#spinmodal").modal("hide");
   $('.modal-backdrop').remove();
@@ -725,7 +728,13 @@ $(".businessmenu").keydown(function(event){
   });
 
     $("#orgpref").click(function (e){
-
+	if ($("#sales").is(":checked")) {
+	    $(".ledger").prop("disabled", false);
+	}
+	else{
+	    $(".ledger").prop("disabled", true);
+	}
+    
       $("#orgprefmodal").modal('show');
       // creates a modal(dialog box) asking user to choose between org preferences .
 
@@ -746,6 +755,16 @@ $(".businessmenu").keydown(function(event){
           if (sessionStorage.modeflag == 1) {
               $("#mode").prop("checked", true);
           }
+	  if(sessionStorage.avflag==1) {
+	      $('#sales').focus().prop('checked', true);
+	  }else{
+	      $('#sales').focus().prop('checked', false);
+	  }
+	  if(sessionStorage.maflag==1) {
+	      $('#multiplesales').focus().prop('checked', true);
+	  }else{
+	      $('#multiplesales').focus().prop('checked', false);
+	  }
 	  if(sessionStorage.avnoflag==1){
 	      $('#avno').focus().prop('checked', true);
 	  }else{
@@ -902,6 +921,17 @@ $(".businessmenu").keydown(function(event){
 			      sessionStorage.avnoflag=0;
 			  }else{
 			      sessionStorage.avnoflag=1;
+			  }
+			  if(maflag==0){
+			      sessionStorage.maflag=0;
+			  }else{
+			      sessionStorage.maflag=1;
+			  }
+			  if(avflag==0){
+			      sessionStorage.avflag=0;
+			  }
+			  else{
+			      sessionStorage.avflag=1;
 			  }
 
                           sessionStorage.modeflag = modeflag;

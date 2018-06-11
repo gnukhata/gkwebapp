@@ -29,7 +29,7 @@ Contributors:
 "Vanita Rajpurohit" <vanita.rajpurohit9819@gmail.com>
 'Prajkta Patkar' <prajakta@dff.orgaddr.in>
 "Nitesh Chaughule" <nitesh@disroot.org>
-
+"Aditya Shukla" <adityashukla9158.as@gmail.com>
 """
 
 from pyramid.view import view_config
@@ -163,6 +163,7 @@ def getattachment(request):
 @view_config(route_name="editorganisation",request_param="action=orgpref", renderer="json")
 def editOrganisationPreferences(request):
     header={"gktoken":request.headers["gktoken"]}
+
     gkdata= {"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"],"avnoflag":request.params["avnoflag"],"maflag":request.params["maflag"],"avflag":request.params["avflag"],"modeflag":request.params["modeflag"]}
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
     return {"gkstatus":result.json()["gkstatus"]}
