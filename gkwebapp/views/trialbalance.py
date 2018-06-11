@@ -301,9 +301,15 @@ def printtrialbalance(request):
                 sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['C'+str(row)] = record['openingbalance']
-                sheet['C'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if record['openingbalance']== "0.00" :
+                    sheet['C'+str(row)]= float("%.2f"%float(record['openingbalance']))
+                    sheet['C'+str(row)].number_format = '0.00'
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                else:
+                    sheet['C'+str(row)] = record['openingbalance']
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 if record['totaldr']!= "":
                     sheet['D'+str(row)]= float("%.2f"%float(record['totaldr']))
                     sheet['D'+str(row)].number_format = '0.00'
