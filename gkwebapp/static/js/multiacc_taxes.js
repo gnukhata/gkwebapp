@@ -30,7 +30,7 @@ $(document).ready(function() {
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
     var taxtype ="";
     var taxrate ="";
-    var taxstate = "";
+    var taxstate ="";
 
     $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event){
 	// This is the keydown event for account name column fields.
@@ -65,9 +65,11 @@ $(document).ready(function() {
 	if($('#m_gstaccount').is(':checked')){
 	    $('.m_accname').prop("disabled", true);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+	    $(".gstaccountfields").val($(".gstaccountfields option:first").val());
 	}else{
 	    $('.m_accname').prop("disabled", false);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
+	    $(".gstaccountfields").val($(".gstaccountfields option:first").val());
 	}
     });
 
@@ -149,7 +151,8 @@ $(document).ready(function() {
 
     //Change Event for 'Tax State' under that ajax call which can give abbreviation of state.  
     $(document).off("change",".taxstate").on("change",".taxstate",function(event){
-	let taxstatecode = $(".taxstate option:selected").attr("stateid");
+	var tscindex = $(this).closest('tr').index();
+	let taxstatecode = $('#m_acctable tbody tr:eq('+tscindex+') td:eq(1) option:selected').attr("stateid");
 	if (taxstatecode !== "") {
 	    $.ajax({
 		url: '/addaccount?type=abbreviation',
@@ -168,7 +171,7 @@ $(document).ready(function() {
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
 			  if (taxtype!="" && taxstate!="" && taxrate!="") {
-			      $('.m_accname').val(taxtype + "_" + taxstate + "@" + taxrate);
+			      $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3)').val(taxtype + "_" + taxstate + "@" + taxrate);
 			  }
 		      }
 		      else {
@@ -191,7 +194,6 @@ $(document).ready(function() {
 
     //Keydown for 'Tax Rate'.
     $(document).off("keydown",".taxrate").on("keydown",".taxrate",function(event){
-	var trindex = $(this).closest('tr').index();
 	if(event.which == 13){
 	    event.preventDefault();
 	    if ($.trim($('.taxrate').val()) == "" ) {
@@ -216,9 +218,10 @@ $(document).ready(function() {
     });
 
     $(document).off("change",".taxrate").on("change",".taxrate",function(event){
-	taxrate = $.trim($(".taxrate option:selected").val());
+	var trindex = $(this).closest('tr').index();
+	taxrate = $.trim($('#m_acctable tbody tr:eq('+trindex+') td:eq(2) option:selected').val());
 	if (taxtype!="" && taxstate!="" && taxrate!="") {
-	    $('.m_accname').val(taxtype + "_" + taxstate + "@" + taxrate);
+	    $('#m_acctable tbody tr:eq('+trindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
 	    $(".m_accname").val("");
@@ -267,8 +270,6 @@ $(document).ready(function() {
 		if ($(this).closest('tr').is(":last-child"))
 		{
 		    addRow(curindex);
-		    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
-		    $(".taxname:enabled").focus().select();
 		}
 	    }else{
 		if(accnt=="")
@@ -291,8 +292,6 @@ $(document).ready(function() {
 		if ($(this).closest('tr').is(":last-child"))
 		{
 		    addRow(curindex);
-		    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
-		    $(".m_accname:enabled").focus().select();
 		}
 	    }
 	    /**else{
@@ -310,14 +309,49 @@ $(document).ready(function() {
 
     //Function to add new row to add 'GST Account'.
     function addRow(curindex){
+	var nextrwindex = curindex+1;
       // This function will validate the current row and then add a new row.
       var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
       if (accname == "") {
 	  $("#acc_add").click();
 	  return false;
       }
-      $("#m_acctable").append(accrowhtml);
-	$("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+	
+    $.ajax({
+	url: '/accountexists',
+	type: 'POST',
+	datatype: 'json',
+	data: {"accountname": accname},
+	beforeSend: function(xhr)
+	{
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	}
+    })
+    .done(function(jsonobj){
+	if (jsonobj["gkstatus"]==1){
+            $("#mult_duplicate-alert").alert();
+            $("#mult_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#mult_duplicate-alert").hide();
+            });
+	    if($('#m_gstaccount').is(':checked')){
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:first').focus().select();
+	    }else{
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+	    }
+	}
+	if (jsonobj["gkstatus"] == 0){
+	    $("#m_acctable").append(accrowhtml);
+	    $('#m_acctable tbody tr:eq('+nextrwindex+') td:eq(0) option:first').focus().select();
+	    $("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+	    if($('#m_gstaccount').is(':checked')){
+		$("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
+		$('.taxname').focus().select();
+	    }else{
+		$("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
+		$('.m_accname').focus().select();
+	    }
+	}
+    });
     }
 
 $(document).off("click",".m_del").on("click", ".m_del", function() {
