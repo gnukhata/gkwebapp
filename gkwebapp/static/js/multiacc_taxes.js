@@ -31,6 +31,7 @@ $(document).ready(function() {
     var taxtype ="";
     var taxrate ="";
     var taxstate ="";
+    var cessrate = "";
 
     $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event){
 	// This is the keydown event for account name column fields.
@@ -131,6 +132,7 @@ $(document).ready(function() {
     //Keydown for 'Tax state'.
     $(document).off("keydown",".taxstate").on("keydown",".taxstate",function(event){
 	var tsindex = $(this).closest('tr').index();
+	taxtype = $.trim($('#m_acctable tbody tr:eq('+tsindex+') td:eq(0) option:selected').val());
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($.trim($('.taxstate').val()) == "" ) {
@@ -141,7 +143,12 @@ $(document).ready(function() {
                 $(".taxstate").focus();
                 return false;
             }
-	    $(".taxrate").focus();
+	    console.log(taxtype);
+	    if(taxtype == 'CESSIN' || taxtype == 'CESSOUT'){
+		$('.cessrate').focus();
+	    }else{
+		$(".taxrate").focus();
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($(".taxstate option:visible").first().is(":selected")) {
@@ -205,6 +212,7 @@ $(document).ready(function() {
 		$(".taxrate").focus();
 		return false;
             }
+	    //wrong pls checked
 	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
 	    }else{
@@ -229,6 +237,43 @@ $(document).ready(function() {
 	}
     });
 
+    //Change event for 'Cess rate' field.
+    $(document).off("change",".cessrate").on("change",".cessrate", function(event){
+	cessrate = $.trim($(".cessrate").val());
+	if (taxtype!="" && taxstate!="" && cessrate!="") {
+	    $('.m_accname').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	}
+	else {
+	    $(".m_accname").val("");
+	}
+    });
+
+    //Keydown for 'Cess rate' field.
+    $(document).off("keydown",".cessrate").on("keydown",".cessrate", function(event){
+	var cesindex = $(this).closest('tr').index();
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    if ($.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').val())=="") {
+		console.log('fdskjfj');
+                $("#mult_cessrate-alert").alert();
+                $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#mult_cessrate-alert").hide();
+		});
+                $(".cessrate").focus();
+                return false;
+            }
+	    //wrong pls checked
+	    if($("#m_gstaccount").is(':checked')){
+		$('.m_openbal').focus();
+	    }else{
+		$(".m_accname").focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    $(".taxstate").focus();
+	}
+    });
+    
     $(document).off("keydown",".m_openbal").on("keydown",".m_openbal", function(event){
 	// Keydown event for opening balance field.
 	$(".m_openbal").numeric();
@@ -266,6 +311,8 @@ $(document).ready(function() {
 			$("#acc_add").click();
 			return false;
 		    }
+		}else{
+		    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
 		}
 
 		if ($(this).closest('tr').is(":last-child"))
@@ -288,8 +335,9 @@ $(document).ready(function() {
 			$("#acc_add").click();
 			return false;
 		    }
+		}else{
+		    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(3) input').focus().select();
 		}
-
 		if ($(this).closest('tr').is(":last-child"))
 		{
 		    addRow(curindex);
@@ -396,7 +444,6 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
     }
   });
 
-    console.log(JSON.stringify(output));
   //ajax function below takes list of dictionaries "output" as input and saves all accounts.
   $.ajax({
     url: '/multiacc',
