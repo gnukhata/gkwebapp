@@ -34,6 +34,7 @@ $(document).ready(function(){
   var invsflag;
   var billflag;
   var modeflag;
+  var avnoflag;
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
@@ -245,7 +246,7 @@ $(document).ready(function(){
       if (event.which == 13) {
         event.preventDefault();
         if ($("#ledgerdiv").is(":hidden")) {
-          $("#btnsubmit").focus();
+          $("#avno").focus();
         }
         else {
           $("#sales").focus();
@@ -261,7 +262,7 @@ $(document).ready(function(){
 	if (event.which==13) {
 	    event.preventDefault();
 	    if($("#singlesales").is(":disabled")){
-		$("#btnsubmit").focus();
+		$(".voucherno").focus();
 	    }
 	    else{
 		$('#singlesales').focus();
@@ -271,6 +272,7 @@ $(document).ready(function(){
 	    $("#invinvsbillradio").focus();
 	}
     });
+    
     $("#sales").change(function(event){
 	if ($("#sales").is(":checked")) {
 	    $(".ledger").prop("disabled", false);
@@ -282,13 +284,21 @@ $(document).ready(function(){
     $(".ledger").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
-	    $('#btnsubmit').focus();
+	    $('#avyes').focus();
 	}
 	if (event.which == 38) {
 	    $("#sales").focus();
 	}
     });
-
+    $(".voucherno").keydown(function(event){
+	if (event.which==13) {
+	    event.preventDefault();
+	    $('#btnsubmit').focus();
+	}
+	if (event.which == 38) {
+	    $(".ledger").focus();
+	}
+    });
      $("#onlyaccradio").keydown(function(event) {
           if (event.which==38) {
 	      event.preventDefault();
@@ -1721,6 +1731,12 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     if ($("#multiplesales").is(":checked")) {
 	form_data.append("maflag", 1);
     }
+    if($("#avyes").is(":checked")){
+	avnoflag=1;
+    }else{
+	avnoflag=0;
+    }
+    form_data.append("avnoflag", avnoflag);
     $.ajax(
     {
     //alert("starting ajax");
@@ -1737,7 +1753,11 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
       if (resp['gkstatus']==0) {
 
         var gt = resp['gktoken'];
-
+	  if(avnoflag==1){
+	      sessionStorage.avnoflag = 1;
+	  }else{
+	      sessionStorage.avnoflag = 0;
+	  }
         sessionStorage.gktoken = gt;
         sessionStorage.gktheme = 'Default';
         sessionStorage.reload = 1;

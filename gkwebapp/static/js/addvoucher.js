@@ -46,6 +46,11 @@
    Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
  */
 $(document).ready(function() {
+    if(sessionStorage.avnoflag==1){
+	$("#voucherno").hide();
+    }else{
+	$("#voucherno").show();
+    }
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
 

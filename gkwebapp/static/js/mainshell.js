@@ -742,10 +742,15 @@ $(".businessmenu").keydown(function(event){
         }
 	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
                $('#onlyaccradio').focus().prop('checked', true);
-        }
-        if (sessionStorage.modeflag == 1) {
-          $("#mode").prop("checked", true);
-        }
+           }
+          if (sessionStorage.modeflag == 1) {
+              $("#mode").prop("checked", true);
+          }
+	  if(sessionStorage.avnoflag==1){
+	      $('#avno').focus().prop('checked', true);
+	  }else{
+	      $('#avno').focus().prop('checked', false);
+	  }
 
 
         $(".iib").keydown(function(event) {
@@ -759,24 +764,63 @@ $(".businessmenu").keydown(function(event){
         $("#mode").keydown(function(event) {
           if (event.which == 13) {
             event.preventDefault();
-            $("#orgprefsave").focus();
+            $("#sales").focus();
           }
           else if (event.which == 38) {
             event.preventDefault();
             $("#invinvsbillradio").focus();
           }
-        })
-
-
-
+        });
+          
+	  $("#sales").keydown(function(event){
+	      if (event.which==13) {
+		  event.preventDefault();
+		  if($("#singlesales").is(":disabled")){
+		      $(".voucherno").focus();
+		  }
+		  else{
+		      $('#singlesales').focus();
+		  }
+	      }
+	      if (event.which == 38) {
+		  $("#invinvsbillradio").focus();
+	      }
+	  });
+	  $("#sales").change(function(event){
+	      if ($("#sales").is(":checked")) {
+		  $(".ledger").prop("disabled", false);
+	      }
+	      else{
+		  $(".ledger").prop("disabled", true);
+	      }
+	  });
+	  $(".ledger").keydown(function(event){
+	      if (event.which==13) {
+		  event.preventDefault();
+		  $('#avyes').focus();
+	      }
+	      if (event.which == 38) {
+		  $("#sales").focus();
+	      }
+	  });
+	  $(".voucherno").keydown(function(event){
+	      if (event.which==13) {
+		  event.preventDefault();
+		  $('#orgprefsave').focus();
+	      }
+	      if (event.which == 38) {
+		  $(".ledger").focus();
+	      }
+	  });
+	  
        $("#orgprefsave").click(function(event){
-	   var invflag,billflag,invsflag,modeflag;
-	 if ($("#invinvsbillradio").is(":checked"))
-         {
-           invflag=1;
-           invsflag=1;
-           billflag=1;
-       }
+	   var invflag,billflag,invsflag,avnoflag,avflag,maflag,modeflag;
+	   if ($("#invinvsbillradio").is(":checked"))
+           {
+               invflag=1;
+               invsflag=1;
+               billflag=1;
+	   }
 
        if ($("#invsbillradio").is(":checked"))
        {
@@ -796,20 +840,38 @@ $(".businessmenu").keydown(function(event){
      invflag=0;
      invsflag=0;
      billflag=0;
- }
-   if ($("#mode").is(":checked")) {
-      modeflag = 1;
-    }
-    else {
-      modeflag = 0;
-    }
+   }
+	   if ($("#mode").is(":checked")) {
+	       modeflag = 1;
+	   }
+	   else {
+	       modeflag = 0;
+	   }
+	   if ($("#avyes").is(":checked"))
+	   {
+	       avnoflag=1;
+	   }else{
+	       avnoflag=0;
+	   }
+	   if ($("#sales").is(":checked")) {
+	       avflag=1;
+	   }
+	   else {
+	       avflag= 0;
+	   }
+	   if ($("#singlesales").is(":checked")) {
+	       maflag = 0;
+	   }
+	   if ($("#multiplesales").is(":checked")) {
+	       maflag=1;
+	   }
                 $.ajax({
                        url: '/editorganisation?action=orgpref',
                        type: "POST",
                        datatype: 'json',
                        global: false,
                        async: false,
-                       data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"modeflag":modeflag},
+                    data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"avnoflag":avnoflag,"maflag":maflag,"avflag":avflag,"modeflag":modeflag},
                        beforeSend: function(xhr)
                        {
                          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -836,6 +898,11 @@ $(".businessmenu").keydown(function(event){
                           if (billflag==0){
                           sessionStorage.billflag=0;
                           }
+			  if(avnoflag==0){
+			      sessionStorage.avnoflag=0;
+			  }else{
+			      sessionStorage.avnoflag=1;
+			  }
 
                           sessionStorage.modeflag = modeflag;
 

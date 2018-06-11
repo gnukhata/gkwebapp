@@ -299,17 +299,43 @@
               <div class="radio">
                 <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label=""> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
               </div>
-
-	      <small class="form-text text-muted common">Press 'Enter' key to shift focus to Mode checkbox. Press 'Esc' key to Cancel.</small><br>
-
-        <div class="form-group">
-          <input type="checkbox" id="mode">
-          <label for="mode">{% trans %}Use automatic mode for Receipt and Payment Vouchers {% endtrans %}</label>
-        </div>
-
+	      <div class="form-group">
+		<input type="checkbox" id="mode">
+		<label for="mode">{% trans %}Use automatic mode for Receipt and Payment Vouchers {% endtrans %}</label>
+              </div>
             </div>
+	    <div id="ledgerdiv">
+	      <div class="form-group">
+		<input type="checkbox" id="sales" checked>
+		<label for="sales">{%trans%}Generate Sales & Purchase Vouchers for Invoices{%endtrans%}</label>
+	      </div>
+	      <div class="form-inline">
+		<div class="radio">
+        	  <label><input type="radio" class="ledger nopadding orgfields" name="ledger" id="singlesales" aria-label="">&nbsp {% trans %}Single Sales/Purchase Ledger{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="ledger nopadding orgfields" name="ledger" id="multiplesales" aria-label="" checked>&nbsp {% trans %}Per Product Sale/Purchase Ledger{% endtrans %}.</label>
+		</div>
+	      </div>
+	    </div>
+	    <br>
+	    <div id="vouchernodiv">
+	      <div class="form-group">
+		<label for="vouchernodiv">{%trans%}Use System Generated Voucher No. ?{%endtrans%}</label>
+	      </div>
+	      <div class="form-inline">
+		<div class="radio">
+        	  <label><input type="radio" class="voucherno nopadding orgfields" name="voucherno" id="avyes" checked>&nbsp {% trans %}Yes{% endtrans %}.</label>
+        	</div>
+		<div class="radio">
+        	  <label><input type="radio" class="voucherno nopadding orgfields" name="voucherno" id="avno">&nbsp {% trans %}No{% endtrans %}.</label>
+		</div>
+	      </div>
+	      <br>
+	      <small class="form-text text-muted common">Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .</small><br><br>
+	    </div>
+	    
 
-            
 	    <button type="button" class="btn btn-success" id ="orgprefsave"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
 	    <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}Cancel{% endtrans %}</button>
 	  </div>
@@ -521,7 +547,7 @@
               Sakshi Agrawal <a href="mailto:agrawalsakshi1850@gmail.com">agrawalsakshi1850@gmail.com</a></br>
 	      Sanket Shrawan kolnoorkar <a href="mailto:sanketf123@gmail.com">sanketf123@gmail.com></a></br>
               Vasudha Kadge <a href="mailto:kadge.vasudha@gmail.com">vasudha@gmail.com</a></br>
-			      </p>
+	    </p>
             <p>
               For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
             </p>
@@ -595,5 +621,5 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-ui.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
-</body>
+  </body>
 </html>
