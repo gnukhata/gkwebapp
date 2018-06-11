@@ -28,7 +28,9 @@ $(document).ready(function() {
     $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
     $(".cessrate").numeric({"negative":false});
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
-    var taxtype;
+    var taxtype ="";
+    var taxrate ="";
+    var taxstate = "";
 
     $(document).off("keydown",".m_accname").on("keydown",".m_accname",function(event){
 	// This is the keydown event for account name column fields.
@@ -61,8 +63,10 @@ $(document).ready(function() {
     //Change event for 'GST Account' checkbox.
     $(document).off("change","#m_gstaccount").on("change","#m_gstaccount",function(event){
 	if($('#m_gstaccount').is(':checked')){
+	    $('.m_accname').prop("disabled", true);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
 	}else{
+	    $('.m_accname').prop("disabled", false);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
 	}
     });
@@ -143,6 +147,48 @@ $(document).ready(function() {
 	}
     });
 
+    //Change Event for 'Tax State' under that ajax call which can give abbreviation of state.  
+    $(document).off("change",".taxstate").on("change",".taxstate",function(event){
+	let taxstatecode = $(".taxstate option:selected").attr("stateid");
+	if (taxstatecode !== "") {
+	    $.ajax({
+		url: '/addaccount?type=abbreviation',
+		type: 'POST',
+		global: false,
+		async: false,
+		datatype: 'json',
+		data: {"statecode": taxstatecode},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    })
+	    .done(function(resp)   /*This function will return spec name of the product*/
+		  {
+		      if (resp.gkstatus == 0) {
+			  taxstate = resp.abbreviation;
+			  if (taxtype!="" && taxstate!="" && taxrate!="") {
+			      $('.m_accname').val(taxtype + "_" + taxstate + "@" + taxrate);
+			  }
+		      }
+		      else {
+			  taxstate = "";
+			  $(".m_accname").val("");
+		      }
+		  })
+		.fail(function() {
+		    console.log("error");
+		})
+		.always(function() {
+		    console.log("complete");
+		});
+	}
+	else {
+	    taxstate = "";
+	    $(".m_accname").val("");
+	}
+    });
+
     //Keydown for 'Tax Rate'.
     $(document).off("keydown",".taxrate").on("keydown",".taxrate",function(event){
 	var trindex = $(this).closest('tr').index();
@@ -156,12 +202,26 @@ $(document).ready(function() {
 		$(".taxrate").focus();
 		return false;
             }
-	    $(".m_accname").focus();
+	    if($(".m_accname").is(':visible')){
+		$('.m_openbal').focus();
+	    }else{
+		$(".m_accname").focus();
+	    }
 	}
 	else if (event.which == 38) {
 	    if ($(".taxrate option:visible").first().is(":selected")) {
 		$(".taxstate").focus();
 	    }
+	}
+    });
+
+    $(document).off("change",".taxrate").on("change",".taxrate",function(event){
+	taxrate = $.trim($(".taxrate option:selected").val());
+	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	    $('.m_accname').val(taxtype + "_" + taxstate + "@" + taxrate);
+	}
+	else {
+	    $(".m_accname").val("");
 	}
     });
 
@@ -257,16 +317,18 @@ $(document).ready(function() {
 	  return false;
       }
       $("#m_acctable").append(accrowhtml);
+	$("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
 
 $(document).off("click",".m_del").on("click", ".m_del", function() {
-// This function will delete the current row.
+  //This function will delete the current row.
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
     $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
   });
   $('#m_acctable tbody tr:last td:eq(0) input').select();
 });
+    
 var allow = true;
 var blankindex = 0;
 $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
@@ -288,14 +350,15 @@ $(document).off("click",".#acc_add").on("click", "#acc_add", function() {
       var obj = {};// Dictionary is created for every row.
 
       obj.accountname = $(".m_accname", this).val();
-      if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
+      obj.openbal = $(".m_openbal", this).val();
+      /**if(m_grpnm=="Direct Expense" || m_grpnm=="Direct Income" || m_grpnm=="Indirect Expense" || m_grpnm=="Indirect Income" || $(".m_openbal", this).val()=="")
       {
         // Opening balance is set to 0.00 is its zero or group name is one from the above mentioned groups.
         obj.openbal = "0.00";
       }
       else {
         obj.openbal = $(".m_openbal", this).val();
-      }
+      }**/
       obj.groupname = $("#m_gcode").val();
       obj.subgroupname = $("#m_sgcode").val();
       obj.newsubgroup = $("#m_nsgcode").val();
