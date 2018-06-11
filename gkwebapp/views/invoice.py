@@ -615,7 +615,6 @@ def registerspreadsheet(request):
         colvar = 9
         for taxc in taxcolumns:
             if taxc in totalrow["tax"]:
-                #heet.cell(column = colvar, row=rowCount).value = totalrow["tax"][taxc]
                 sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float(totalrow["tax"][taxc]))
                 sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                 sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=True)
