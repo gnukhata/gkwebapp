@@ -241,6 +241,38 @@ $(document).ready(function() {
 	$("#totalValueInWord").text(numbertowords);
     }
 
+    function saveInvoice(invid,inoutflag){
+	$.ajax({
+	    type: "POST",
+	    url: "/invoice?action=showinv",
+	    global: false,
+	    async: false,
+	    datatype: "text/html",
+	    data: {
+		"invid": invid
+	    },
+	    beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	}).done(function(resp) {
+	    $("#invload").html("");
+	    $("#invload").html(resp);
+	    $("#backbutton").attr("inoutflag", inoutflag);
+	    $("#editbutton").attr("invid",invid);
+	    if (inoutflag == '9') {
+		$("#printbutton").hide();
+	    }
+	    else {
+		$("#printbutton").show();
+		$("#printbutton").attr("invid",invid);
+	    }
+	    $("#listdiv").hide();
+	    $("#viewinvdiv").show();
+	    $('#invoice_div').html("");
+	});
+	return false;
+    }
+
     //Delivery Note number select field is hidden when inventory is disabled.
     if(sessionStorage.invflag==0){
 	$("#deliverynoterow").hide();
@@ -2971,46 +3003,32 @@ if (event.which == 13) {
                 }
             })
                 .done(function(resp) {
-                    if (resp["gkstatus"] == 0) {
-			allow = 0;
-			$('input:not(#status, .taxapplicable), select:not(#invselect)').val("");
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-                        $("#success-alert").alert();
-                        $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
-			    let invid = resp.gkresult;
-			    $.ajax({
-				type: "POST",
-				url: "/invoice?action=showinv",
-				global: false,
-				async: false,
-				datatype: "text/html",
-				data: {
-				    "invid": invid
-				},
-				beforeSend: function(xhr) {
-				    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-				}
-			    })
-				.done(function(resp) {
-				    $("#invload").html("");
-				    $("#invload").html(resp);
-				    $("#backbutton").attr("inoutflag", inoutflag);
-				    $("#editbutton").attr("invid",invid);
-				    if (inoutflag == '9') {
-					$("#printbutton").hide();
-				    }
-				    else {
-					$("#printbutton").show();
-					$("#printbutton").attr("invid",invid);
-				    }
-				    $("#listdiv").hide();
-				    $("#viewinvdiv").show();
-				    $('#invoice_div').html("");
-				});
-                        });
-                        return false;
-                    } else if (resp["gkstatus"] == 1) {
+		    console.log(resp);
+                    if ((resp["gkstatus"] == 0) && ((resp["gkvch"]).length == 0)) {
+			$("#success-alert").alert();
+			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#success-alert").hide();
+			    let invid = resp["gkresult"];
+			    saveInvoice(invid,inoutflag);
+			});
+		    }
+		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+			$("#inv-vch-success-alert").text("Invoice saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
+			$("#inv-vch-success-alert").alert();
+			$("#inv-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#inv-vch-success-alert").hide();
+			    let invid = resp["gkresult"];
+			    saveInvoice(invid,inoutflag);
+			});
+		    }
+		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
+			$("#inv-vch-failed-alert").alert();
+			$("#inv-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#inv-vch-failed-alert").hide();
+			    let invid = resp["gkresult"];
+			    saveInvoice(invid,inoutflag);
+			});
+		    } else if (resp["gkstatus"] == 1) {
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
                         $("#invoice_challanno").focus();
                         $("#duplicate-alert").alert();

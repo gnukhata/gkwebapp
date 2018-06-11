@@ -119,7 +119,7 @@ def saveinvoice(request):
     invoicewholedata = {"invoice":invoicedata,"stock":stock}
     result=requests.post("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
     if result.json()["gkstatus"]==0:
-        return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+        return {"gkstatus":result.json()["gkstatus"],"gkresult":result.json()["gkresult"],"gkvch":result.json()["vchData"]}
     else:
         return {"gkstatus":result.json()["gkstatus"]}
 
