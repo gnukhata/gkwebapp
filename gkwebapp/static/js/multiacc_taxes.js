@@ -93,12 +93,10 @@ $(document).ready(function() {
 	var ptxnindex = txnindex -1;
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
-	    $(".taxrate").hide();
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').remove('#rate');
+	    //$('#m_acctable tbody tr:last td:eq(2) input').show(".cessratediv");
 	    $(".cessratediv, .cessrate, .cessrateaddon").show();
-	    /**$(this).closest('tr').hide('.taxrate');
-	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').show(".cessratediv, .cessrate, .cessrateaddon");
-	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').hide('#rate');
-	    if(ptxnindex >= 0){
+	    /**if(ptxnindex >= 0){
 		$('#m_acctable tbody tr:eq('+ ptxnindex +') td:eq(2) div').hide("#cessdiv");
 	    }**/
 	}else{
@@ -112,6 +110,13 @@ $(document).ready(function() {
 		$(".taxrate option.igstopt").prop("disabled", true).prop("hidden", true);
 		$(".taxrate option.sgstopt").prop("disabled", false).prop("hidden", false);
 	    }
+	}
+
+	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
+	}
+	else {
+	    $('.m_accname').val("");
 	}
     });
 
@@ -185,7 +190,7 @@ $(document).ready(function() {
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
 			  if (taxtype!="" && taxstate!="" && taxrate!="") {
-			      $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3)').val(taxtype + "_" + taxstate + "@" + taxrate);
+			      $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
 			  }
 		      }
 		      else {
@@ -246,7 +251,7 @@ $(document).ready(function() {
     //Change event for 'Cess rate' field.
     $(document).off("change",".cessrate").on("change",".cessrate", function(event){
 	var cesindex = $(this).closest('tr').index();
-	cessrate = $.trim($(".cessrate").val());
+	cessrate = $.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').val());
 	if (taxtype!="" && taxstate!="" && cessrate!="") {
 	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
 	}
@@ -260,7 +265,7 @@ $(document).ready(function() {
 	var cesindex = $(this).closest('tr').index();
 	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if ($.trim($('.cessrate').val())=="") {
+	    if ($.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input'))=="") {
                 $("#mult_cessrate-alert").alert();
                 $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_cessrate-alert").hide();
