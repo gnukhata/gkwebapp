@@ -299,7 +299,8 @@ else
 	    $('#m_accountname').val("");
 	}
     });
-    
+
+    //Keydown event for Tax type.
     $("#taxtype").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -320,6 +321,7 @@ else
 	}
     });
 
+    //ajax call will gives abbreviation of selected state.
     $("#taxstate").change(function(){
 	let taxstatecode = $("#taxstate option:selected").attr("stateid");
 	if (taxstatecode !== "") {
@@ -361,7 +363,8 @@ else
 	    $("#m_accountname").val("");
 	}
     });
-    
+
+    //Keydown event for Tax State.
     $("#taxstate").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -418,9 +421,39 @@ else
 	    }
 	}
     });
+
+    //Change event for Cess Rate.
+    $("#cessrate").change(function(){
+	cessrate = $.trim($("#cessrate").val());
+	if (taxtype!="" && taxstate!="" && cessrate!="") {
+	    $('#m_accountname').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	}
+	else {
+	    $("#m_accountname").val("");
+	}
+    });
+
+    //Keydown event for Cess Rate.
+    $("#cessrate").keydown(function(event){
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    if ($.trim($("#cessrate").val())=="") {
+                $("#cessrate-alert").alert();
+                $("#cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+                    $("#cessrate-alert").hide();
+		});
+                $("#cessrate").focus();
+                return false;
+            }
+	    $("#m_openbal").focus();
+	}
+	else if (event.which == 38) {
+	    $("#taxstate").focus();
+	}
+    });
     
-// Keydown event for Account Name.
-// Validations for Account Name.
+    // Keydown event for Account Name.
+    // Validations for Account Name.
     $("#m_accountname").keydown(function(event) {
 	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
@@ -449,6 +482,19 @@ else
 	    }
 	    else {
 		$("#m_subgroupname").focus().select();
+	    }
+	}
+    });
+
+    //Keydown event for Opening Balance.
+    $("#m_openbal").keydown(function(event) {
+	if(event.which==13) {
+	    $('#m_submit').focus();
+	}else if(event.which==38){
+	    if($('#gstaccount').is(':checked')){
+		$('#taxrate').focus();
+	    }else{
+		$('#m_accountname').focus();
 	    }
 	}
     });
