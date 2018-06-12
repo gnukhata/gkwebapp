@@ -35,7 +35,7 @@ $(document).ready(function(){
   var invsflag;
   var billflag;
   var modeflag;
-  var avnoflag;
+  var avnoflag,maflag,avflag;
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
@@ -1721,15 +1721,19 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     form_data.append("invsflag", invsflag);
     form_data.append("modeflag", modeflag);
     if ($("#sales").is(":checked")) {
+	avflag=1;
 	form_data.append("avflag", 1);
     }
     else {
+	avflag=0;
 	form_data.append("avflag", 0);
     }
     if ($("#singlesales").is(":checked")) {
+	maflag=0;
 	form_data.append("maflag", 0);
     }
     if ($("#multiplesales").is(":checked")) {
+	maflag=1;
 	form_data.append("maflag", 1);
     }
     if($("#avyes").is(":checked")){
@@ -1759,12 +1763,12 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	  }else{
 	      sessionStorage.avnoflag = 0;
 	  }
-	  if(sessionStorage.avflag==1) {
+	  if(avflag==1) {
 	      sessionStorage.avflag=1;
 	  }else{
 	      sessionStorage.avflag=0;
 	  }
-	  if(sessionStorage.maflag==1) {
+	  if(maflag==1) {
 	      sessionStorage.maflag=1;
 	  }else{
 	      sessionStorage.maflag=0;

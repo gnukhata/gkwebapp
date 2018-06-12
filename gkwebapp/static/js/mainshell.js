@@ -756,19 +756,19 @@ $(".businessmenu").keydown(function(event){
               $("#mode").prop("checked", true);
           }
 	  if(sessionStorage.avflag==1) {
-	      $('#sales').focus().prop('checked', true);
+	      $('#sales').prop('checked', true);
 	  }else{
-	      $('#sales').focus().prop('checked', false);
+	      $('#sales').prop('checked', false);
 	  }
 	  if(sessionStorage.maflag==1) {
-	      $('#multiplesales').focus().prop('checked', true);
+	      $('#multiplesales').prop('checked', true);
 	  }else{
-	      $('#multiplesales').focus().prop('checked', false);
+	      $('#multiplesales').prop('checked', false);
 	  }
 	  if(sessionStorage.avnoflag==1){
-	      $('#avno').focus().prop('checked', true);
+	      $('#avno').prop('checked', true);
 	  }else{
-	      $('#avno').focus().prop('checked', false);
+	      $('#avno').prop('checked', false);
 	  }
 
 
@@ -828,7 +828,7 @@ $(".businessmenu").keydown(function(event){
 		  $('#orgprefsave').focus();
 	      }
 	      if (event.which == 38) {
-		  $(".ledger").focus();
+		  $("#sales").focus();
 	      }
 	  });
 	  
