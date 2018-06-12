@@ -33,6 +33,9 @@ $(document).ready(function()
   $("#purdiv").hide();
   $("#salediv").hide();
   $("#m_openbal").numeric();
+  $("#gstaccount").prop("disabled", true);
+  $("#gstfielddiv").show();
+  $('#gstaccountfields').hide();  
   var sel1 = 0;
   var sel2 = 0;
 
@@ -153,6 +156,17 @@ else
 	  $("#salediv").hide();
       }
 
+    // 'GST Account' field is display only if sub-group name is 'Duties & Taxes'. 
+    if ($.trim($("#m_subgroupname option:selected").text()) == 'Duties & Taxes') {
+	$('#gstaccountfields').show();
+	$('#gstfielddiv').show();
+	$("#gstaccount").prop("disabled", false);
+    }
+    else {
+	$('#gstaccountfields').hide();
+	$('#gstfielddiv').hide();
+	$("#gstaccount").prop("disabled", true);
+    }
 });
 
 // Keydown event for Group Name.
@@ -184,6 +198,8 @@ else
 		$("#m_newsubgroup").focus().select();
 	    }else if($.trim($("#m_subgroupname option:selected").text())=="Bank" || $.trim($("#m_subgroupname option:selected").text())=="Cash" || $.trim($("#m_subgroupname option:selected").text())=="Purchase" || $.trim($("#m_subgroupname option:selected").text())=="Sales"){
 		$(".defbx").focus().select();
+	    }else if($.trim($("#m_subgroupname option:selected").text())=="Duties & Taxes"){
+		$('#gstaccount').focus().select();
 	    }else {
 		$("#m_accountname").focus().select();
 	    }
@@ -225,6 +241,35 @@ else
 	}
     });
 
+    //Change event for 'GST Account' checkbox.
+    $('#gstaccount').change(function(){
+	if ($(this).is(":checked")) {
+	    $('#accountname').prop("disabled", true);
+	    $("#gstaccountdiv").show();
+	}
+	else {
+	    $('#accountname').prop("disabled", false);
+	    $("#gstaccountdiv").hide();
+	}
+    });
+
+    //Keydown event for 'GST Account' checkbox.
+    $('#gstaccount').keydown(function(event){
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($(this).is(":checked")) {
+		$("#taxtype").focus();
+	    }
+	    else{
+		$('#m_accountname').focus();
+	    }
+	}
+	else if (event.which == 38) {
+	    $('#m_subgroupname').focus().select();
+	}
+    });
+    
+    
 // Keydown event for Account Name.
 // Validations for Account Name.
     $("#m_accountname").keydown(function(event) {
@@ -249,6 +294,9 @@ else
 	    }
 	    else if($(".defbx").is(':visible')){
 		$(".defbx").focus();
+	    }
+	    else if($("#gstaccount").is(':visible')){
+		$("#gstaccount").focus();
 	    }
 	    else {
 		$("#m_subgroupname").focus().select();
