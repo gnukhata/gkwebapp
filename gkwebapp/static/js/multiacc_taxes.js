@@ -90,10 +90,17 @@ $(document).ready(function() {
     //Change event for 'Tax Type'
     $(document).off("change",".taxname").on("change",".taxname",function(event){
 	var txnindex = $(this).closest('tr').index();
+	var ptxnindex = txnindex -1;
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $(".taxrate").hide();
 	    $(".cessratediv, .cessrate, .cessrateaddon").show();
+	    /**$(this).closest('tr').hide('.taxrate');
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').show(".cessratediv, .cessrate, .cessrateaddon");
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').hide('#rate');
+	    if(ptxnindex >= 0){
+		$('#m_acctable tbody tr:eq('+ ptxnindex +') td:eq(2) div').hide("#cessdiv");
+	    }**/
 	}else{
 	    $(".taxrate").show();
 	    $(".cessratediv, .cessrate, .cessrateaddon").hide();
@@ -143,7 +150,6 @@ $(document).ready(function() {
                 $(".taxstate").focus();
                 return false;
             }
-	    console.log(taxtype);
 	    if(taxtype == 'CESSIN' || taxtype == 'CESSOUT'){
 		$('.cessrate').focus();
 	    }else{
@@ -239,9 +245,10 @@ $(document).ready(function() {
 
     //Change event for 'Cess rate' field.
     $(document).off("change",".cessrate").on("change",".cessrate", function(event){
+	var cesindex = $(this).closest('tr').index();
 	cessrate = $.trim($(".cessrate").val());
 	if (taxtype!="" && taxstate!="" && cessrate!="") {
-	    $('.m_accname').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
 	}
 	else {
 	    $(".m_accname").val("");
@@ -253,8 +260,7 @@ $(document).ready(function() {
 	var cesindex = $(this).closest('tr').index();
 	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if ($.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').val())=="") {
-		console.log('fdskjfj');
+	    if ($.trim($('.cessrate').val())=="") {
                 $("#mult_cessrate-alert").alert();
                 $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_cessrate-alert").hide();
@@ -409,9 +415,9 @@ $(document).off("click",".m_del").on("click", ".m_del", function() {
   //This function will delete the current row.
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#m_acctable tbody tr:last td:eq(0) input').focus().select();
+    $('#m_acctable tbody tr:last td:eq(0) select').focus().select();
   });
-  $('#m_acctable tbody tr:last td:eq(0) input').select();
+  $('#m_acctable tbody tr:last td:eq(0) select').select();
 });
     
 var allow = true;
