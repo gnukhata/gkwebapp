@@ -440,7 +440,20 @@ $(document).ready(function() {
   if (sessionStorage.orgt=="Profit Making") {
     $("label[for='project']").html("C<u>o</u>st Center:");  //Label for select combo of projects is set as Cost Center
   }
-  
+   if(sessionStorage.avnoflag==1){
+	$("#voucherno").hide();
+       if ($("#invsel").length > 0)
+       {
+	   $("#invsel").focus();
+       }
+       else
+       {
+	   $('#vdate').focus().select();
+       }
+   }else{
+       $("#voucherno").show();
+       $("#vno").focus().select();
+   }
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
   $('.dramt').numeric({ negative: false });   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $('.cramt').numeric({ negative: false });
