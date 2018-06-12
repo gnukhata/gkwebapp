@@ -1760,14 +1760,14 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	      sessionStorage.avnoflag = 0;
 	  }
 	  if(sessionStorage.avflag==1) {
-	      $('#sales').focus().prop('checked', true);
+	      sessionStorage.avflag=1;
 	  }else{
-	      $('#sales').focus().prop('checked', false);
+	      sessionStorage.avflag=0;
 	  }
 	  if(sessionStorage.maflag==1) {
-	      $('#multiplesales').focus().prop('checked', true);
+	      sessionStorage.maflag=1;
 	  }else{
-	      $('#multiplesales').focus().prop('checked', false);
+	      sessionStorage.maflag=0;
 	  }
         sessionStorage.gktoken = gt;
         sessionStorage.gktheme = 'Default';

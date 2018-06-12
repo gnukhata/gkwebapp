@@ -48,8 +48,17 @@
 $(document).ready(function() {
     if(sessionStorage.avnoflag==1){
 	$("#voucherno").hide();
+	if ($("#invsel").length > 0)
+	{
+	    $("#invsel").focus();
+	}
+	else
+	{
+	    $('#vdate').focus().select();
+	}
     }else{
 	$("#voucherno").show();
+	$("#vno").focus().select();
     }
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
@@ -431,7 +440,7 @@ $(document).ready(function() {
   if (sessionStorage.orgt=="Profit Making") {
     $("label[for='project']").html("C<u>o</u>st Center:");  //Label for select combo of projects is set as Cost Center
   }
-  $("#vno").focus().select();
+  
   $('.vdate').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
   $('.dramt').numeric({ negative: false });   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $('.cramt').numeric({ negative: false });
@@ -720,12 +729,16 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     }
       
     if (event.which==38) {
-      $("#vno").select().focus();
+      if(sessionStorage.avnoflag==0){
+	  $("#vno").focus().select();
+      }
     }
   });
   $('#vdate').keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vno').focus().select();
+        if(sessionStorage.avnoflag==0){
+	    $("#vno").focus().select();
+	}
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
@@ -784,7 +797,9 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
   $("#invsel").keydown(function(event) {
     if (event.which==188 && event.ctrlKey) {
-      $('#vno').focus().select();
+      if(sessionStorage.avnoflag==0){
+	  $("#vno").focus().select();
+      }
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
@@ -924,7 +939,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       event.preventDefault();
     }
     if (event.which==190 && event.ctrlKey) {
-      $('#vno').focus();
+      if(sessionStorage.avnoflag==1){
+	    if ($("#invsel").length > 0)
+	    {
+		$("#invsel").focus();
+	    }
+	    else
+	    {
+		$('#vdate').focus().select();
+	    }
+	}else{
+	    $("#vno").focus();
+	}
       event.preventDefault();
     }
   });
@@ -950,7 +976,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   });
   $('#popup').keyup(function(event) {
     if (event.which==39 ) {
-      $('#vno').focus().select();
+      if(sessionStorage.avnoflag==1){
+	    if ($("#invsel").length > 0)
+	    {
+		$("#invsel").focus();
+	    }
+	    else
+	    {
+		$('#vdate').focus().select();
+	    }
+	}else{
+	    $("#vno").focus().select();
+	}
       event.preventDefault();
     }
     if (event.which==37 || event.which==38) {
@@ -1929,7 +1966,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
           vtotal += +$(this).val();
 	});
       var details = {}; // dictionay containing details other than the table values.
-      details.vno=$('#vno').val();
+      if(sessionStorage.avnoflag==0){
+	  details.vno=$('#vno').val();
+      }else{
+	  details.vno="";
+      }
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
 
@@ -2050,8 +2091,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	  form_data.append("billdetails",JSON.stringify(billdetails));
 	  form_data.append("invoice", $("#invsel option:selected").text());
       }
-
-    $("#msspinmodal").modal("show");
+      
+      $("#msspinmodal").modal("show");
     $.ajax({
       type: "POST",
       url: "/addvoucher",
@@ -2073,7 +2114,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 		if(resp.paymentstatus == true){
 		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
 		}
-          $("#success-alert").alert();
+		$("#success-alert").alert();
+		$("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
 		    $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?
@@ -2116,7 +2158,18 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	    $("#msspinmodal").modal("hide");
           });
         }
-        $('#vno').focus().select();
+        if(sessionStorage.avnoflag==1){
+	    if ($("#invsel").length > 0)
+	    {
+		$("#invsel").focus();
+	    }
+	    else
+	    {
+		$('#vdate').focus().select();
+	    }
+	}else{
+	    $("#vno").focus().select();
+	}
       }
     });
   });
@@ -2280,7 +2333,18 @@ $("#show"+$("#vtype").val()).click();
   });
   $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
   {
-    $("#vno").focus().select();
+      if(sessionStorage.avnoflag==1){
+	    if ($("#invsel").length > 0)
+	    {
+		$("#invsel").focus();
+	    }
+	    else
+	    {
+		$('#vdate').focus().select();
+	    }
+	}else{
+	    $("#vno").focus().select();
+	}
     $("#bwtableload").html("");
   });
   $('#bwtable').on('shown.bs.modal', function (e) // shown.bs.modal is an event which fires when the modal is opened
@@ -2289,7 +2353,18 @@ $("#show"+$("#vtype").val()).click();
   });
   $('#bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
     {
-      $("#vno").focus().select();
+        if(sessionStorage.avnoflag==1){
+	    if ($("#invsel").length > 0)
+	    {
+		$("#invsel").focus();
+	    }
+	    else
+	    {
+		$('#vdate').focus().select();
+	    }
+	}else{
+	    $("#vno").focus().select();
+	}
     });
 
   $("#bankdetails").change(function() {
