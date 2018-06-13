@@ -726,13 +726,7 @@ $(".businessmenu").keydown(function(event){
   });
 
     $("#orgpref").click(function (e){
-	if ($("#sales").is(":checked")) {
-	    $(".ledger").prop("disabled", false);
-	}
-	else{
-	    $(".ledger").prop("disabled", true);
-	}
-    
+ 
       $("#orgprefmodal").modal('show');
       // creates a modal(dialog box) asking user to choose between org preferences .
 
@@ -789,6 +783,13 @@ $(".businessmenu").keydown(function(event){
           }
         });
           
+	  if ($("#sales").is(":checked")) {
+	      $(".ledger").prop("disabled", false);
+	  }
+	  else{
+	      $(".ledger").prop("disabled", true);
+	  }
+
 	  $("#sales").keydown(function(event){
 	      if (event.which==13) {
 		  event.preventDefault();
@@ -814,7 +815,7 @@ $(".businessmenu").keydown(function(event){
 	  $(".ledger").keydown(function(event){
 	      if (event.which==13) {
 		  event.preventDefault();
-		  $('#avyes').focus();
+		  $('#avno').focus();
 	      }
 	      if (event.which == 38) {
 		  $("#sales").focus();
