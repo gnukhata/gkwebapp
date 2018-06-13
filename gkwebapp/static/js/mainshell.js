@@ -755,7 +755,7 @@ $(".businessmenu").keydown(function(event){
 	  if(sessionStorage.maflag==1) {
 	      $('#multiplesales').prop('checked', true);
 	  }else{
-	      $('#multiplesales').prop('checked', false);
+	      $('#singlesales').prop('checked', true);
 	  }
 	  if(sessionStorage.avnoflag==1){
 	      $('#avno').prop('checked', true);
