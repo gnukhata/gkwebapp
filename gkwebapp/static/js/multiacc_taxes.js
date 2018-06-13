@@ -38,10 +38,6 @@ $(document).ready(function() {
 	$(".m_openbal").numeric();
 	var nindex = $(this).closest('tr').index();
 	var npindex = nindex-1;
-	/**if (event.which==40)
-	   {
-           $(".m_openbal").focus().select();
-	   }**/
 	if (event.which==38)
 	{
             if($('#m_gstaccount').is(':checked')){
@@ -89,19 +85,17 @@ $(document).ready(function() {
 
     //Change event for 'Tax Type'
     $(document).off("change",".taxname").on("change",".taxname",function(event){
+	$('#m_acctable tbody tr:last td:eq(2)').html("");
 	var txnindex = $(this).closest('tr').index();
 	var ptxnindex = txnindex -1;
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').remove('#rate');
-	    //$('#m_acctable tbody tr:last td:eq(2) input').show(".cessratediv");
-	    $(".cessratediv, .cessrate, .cessrateaddon").show();
-	    /**if(ptxnindex >= 0){
-		$('#m_acctable tbody tr:eq('+ ptxnindex +') td:eq(2) div').hide("#cessdiv");
-	    }**/
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append('<div class="input-group cessratediv" id="cessdiv"><input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a"><span class="input-group-addon cessrateaddon">%</span></div>');
 	}else{
-	    $(".taxrate").show();
-	    $(".cessratediv, .cessrate, .cessrateaddon").hide();
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append('<select class="form-control input-sm taxrate gstaccountfields" id="rate"><option value="" hidden disabled selected>Select Rate</option><option class="igstopt" value="5%">5%</option><option class="igstopt" value="12%">12%</option><option class="igstopt" value="18%">18%</option><option class="igstopt" value="28%">28%</option><option class="sgstopt" value="2.5%">2.5%</option><option class="sgstopt" value="6%">6%</option><option class="sgstopt" value="9%">9%</option><option class="sgstopt" value="14%">14%</option></select>');
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').hide('#cessdiv');
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) span').hide('#cessdiv');
 	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
 		$(".taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
 		$(".taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
@@ -136,9 +130,9 @@ $(document).ready(function() {
             }
 	    $(".taxstate").focus();
 	}
-	else if (event.which == 38) {
+	/**else if (event.which == 38) {
 	    $('#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
-	}
+	}**/
     });
 
     //Keydown for 'Tax state'.
@@ -265,7 +259,7 @@ $(document).ready(function() {
 	var cesindex = $(this).closest('tr').index();
 	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if ($.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input'))=="") {
+	    if ($.trim($('.cessrate').val())=="") {
                 $("#mult_cessrate-alert").alert();
                 $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
                     $("#mult_cessrate-alert").hide();
