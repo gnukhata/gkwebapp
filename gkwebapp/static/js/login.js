@@ -122,8 +122,11 @@ $(document).ready(function()
         sessionStorage.gktoken = gt;
         sessionStorage.invflag = resp["invflag"];
         sessionStorage.invsflag = resp["invsflag"];
-        sessionStorage.billflag = resp["billflag"];
         sessionStorage.modeflag = resp["modeflag"];
+          sessionStorage.billflag = resp["billflag"];
+	  sessionStorage.avnoflag =resp["avnoflag"];
+	  sessionStorage.maflag =resp["maflag"];
+	  sessionStorage.avflag =resp["avflag"];
         
         // Theme is fetched for the user and stored in sessionstorage.
         $.ajax({
