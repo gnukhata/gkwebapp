@@ -82,13 +82,22 @@
 	 <div class="container-fluid row">
 	   <form class="form-horizontal" >
 	     <div class="form-inline col-sm-12"> 
-	       <div class="col-sm-6">
-		 <label for="inv">{% trans %}Select Invoice Type{% endtrans %}:</label>
-		 <div class="radio">
-        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="sale" aria-label="" checked>&nbsp{% trans %}Sale Invoice{% endtrans %}.</label>
+	       <div class="col-sm-4">
+		 <label>{% trans %}Select Invoice Type{% endtrans %}:</label>
+		 <div class="radio" style="margin-left:5px;"> 
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="discountreturn" id="discount" aria-label="" checked>&nbsp{% trans %}Discount{% endtrans %}.</label>
         	 </div>
 		 <div class="radio">
-        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="purchase" aria-label="">&nbsp {% trans %}Purchase Invoice{% endtrans %}.</label>
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="discountreturn" id="return" aria-label="">&nbsp {% trans %}Return of Goods{% endtrans %}.</label>
+        	 </div>
+	       </div>
+	       <div class="col-sm-4">
+		 <label for="inv">{% trans %}Select Invoice Type{% endtrans %}:</label>
+		 <div class="radio" style="margin-left:5px;"> 
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="sale" aria-label="{% trans %}Sale Invoice{% endtrans %}" style="margin-right:5px;" checked>{% trans %}Sale Invoice{% endtrans %}.</label>
+        	 </div>
+		 <div class="radio">
+        	   <label><input type="radio" class="form-control input-sm nopadding" name="invoice" id="purchase" aria-label="{% trans %}Sale Invoice{% endtrans %}" style="margin-right:5px;">{% trans %}Purchase Invoice{% endtrans %}.</label>
         	 </div>
 	       </div>
 	     </div>

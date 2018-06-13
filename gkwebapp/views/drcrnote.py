@@ -25,13 +25,16 @@ def showadddrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"])}
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"]), "drcrmode":request.params["drcrmode"]}
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
     if request.params.has_key("usr"):
         drcrdata["userid"]=request.params["usr"]
-    
-    result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(drcrdata),headers=header)
+
+    wholedataset = {}
+    wholedataset["dataset"] = drcrdata
+    wholedataset["vdataset"] = json.loads(request.params["vdetails"])
+    result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(wholedataset),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
     
 ''' this is for single view i=of drcrnote after saving data '''
