@@ -462,9 +462,6 @@ $(document).ready(function() {
 	var totalamount = 0.00;
 	var totaltax = 0.00;
 	totaltaxable = 0.00;
-	let productname = $.trim($("#drcrnote_table_vat tbody tr:eq(" + curindex + ") td:eq(0) label").text());
-	let productcode = $("#drcrnote_table_vat tbody tr:eq(" + curindex + ") td:eq(0) label").attr("data-productcode");
-
 
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(5) input').val(parseFloat(reductprice).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (reductprice * rowtaxrate)/100;  //Amount of tax to be applied is found out.
@@ -472,12 +469,7 @@ $(document).ready(function() {
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(taxamount).toFixed(2));
 	rowtotal = parseFloat(reductprice) + parseFloat(taxamount);
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
-
-	if (parseFloat(rowqty) > 0) {
-	    productdata[productname] = parseFloat(rowtaxableamount).toFixed(2);
-	    prodData[productcode] = parseFloat(rowtaxableamount).toFixed(2);
-	    taxes[productcode] = taxamount;
-	}
+	
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
 	    totaltaxable = totaltaxable + parseFloat($('#drcrnote_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
@@ -517,9 +509,6 @@ $(document).ready(function() {
 	var totaligst = 0.00;
 	var totalcess = 0.00;
 	totaltaxable = 0.00;
-
-	let productname = $.trim($("#drcrnote_product_table_gst tbody tr:eq(" + curindex + ") td:eq(0) label").text());
-	let productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + curindex + ") td:eq(0) label").attr("data-productcode");
  
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(reductprice).toFixed(2)); //Taxable amount is displayed.
 
@@ -538,13 +527,6 @@ $(document).ready(function() {
 
 	rowtotal = parseFloat(reductprice) + (2*parseFloat(sgstamount)) + parseFloat(igstamount) + parseFloat(cessamount); //Sum of Taxable Amount and Tax Amount is found out.
         $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
-
-	if (parseFloat(rowqty) > 0) {
-	    productdata[productname] = parseFloat(rowtaxableamount).toFixed(2);
-	    prodData[productcode] = parseFloat(rowtaxableamount).toFixed(2);
-	    taxes[productcode] = parseFloat((2*parseFloat(sgstamount)) + parseFloat(igstamount)).toFixed(2);
-	    cess[productcode] = parseFloat(cessamount).toFixed(2);
-	}
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
@@ -1058,6 +1040,8 @@ if (!curdate.between(financialstart, financialend)) {
 		ppu = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(2) input").val()).toFixed(2);
 		obj[ppu] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()).toFixed(2);
 		idrate[productcode]=parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val()).toFixed(2);
+		taxes[productcode] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(6) input").val()).toFixed(2);
+		prodData[productcode] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val()).toFixed(2);
 	    }
 	}
 	totreduct= $.trim($('#drcrnote_table_vat tfoot tr:last td:eq(4) input').val());
@@ -1101,10 +1085,14 @@ if (!curdate.between(financialstart, financialend)) {
 		  
 	      productqtys.push(parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()));
 	      let obj = {};
-	      productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+	      let productcode = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+	      let productname = $("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(0) label").text();
 	      ppu = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val()).toFixed(2);
 	      obj[ppu] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()).toFixed(2);
 	      idrate[productcode]=parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val()).toFixed(2);
+	      taxes[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(7) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
+	      cess[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(13) input").val());
+	      prodData[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val());
 	      
 	  }
 	  var totreduct = $.trim($('#total_product_gst').html());
