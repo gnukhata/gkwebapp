@@ -128,15 +128,7 @@ $(document).ready(function() {
     var currindex = $(this).index();
     $('#vouchertable tr').removeClass('selected');
     $(this).toggleClass('selected');
-      $('#vouchertable tbody tr:eq('+currindex+') a').focus();
-      enter = 1;
-      var id = $(this).data('value');
-      var voucheramount = $(this).data('voucheramount');
-      voucherrow = $(this).index();
-      $(".amountpaid:first").focus().select();
-      $("#selectedvoucher").val(id);
-      $("#selectedvoucheramount").val(voucheramount);
-
+      $(this).trigger({type:'keydown',which:'13'});
   });
 
     //To confirm a voucher is selected enter key is to be pressed. A flag 'enter' is set to 1 to prevent selected class from being removed when blur event triggers.
