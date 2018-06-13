@@ -110,7 +110,7 @@ $(document).ready(function() {
 	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
-	    $('.m_accname').val("");
+	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val("");
 	}
     });
 
@@ -189,7 +189,7 @@ $(document).ready(function() {
 		      }
 		      else {
 			  taxstate = "";
-			  $(".m_accname").val("");
+			  $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val("");
 		      }
 		  })
 		.fail(function() {
@@ -238,7 +238,7 @@ $(document).ready(function() {
 	    $('#m_acctable tbody tr:eq('+trindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
-	    $(".m_accname").val("");
+	    $('#m_acctable tbody tr:eq('+trindex+') td:eq(3) input').val("");
 	}
     });
 
@@ -250,7 +250,7 @@ $(document).ready(function() {
 	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
 	}
 	else {
-	    $(".m_accname").val("");
+	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val("");
 	}
     });
 
@@ -322,6 +322,18 @@ $(document).ready(function() {
 
 		if ($(this).closest('tr').is(":last-child"))
 		{
+		    var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+		    for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
+			let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+			if(curacname == pvacname){
+			    $("#acname_duplicate-alert").alert();
+			    $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#acname_duplicate-alert").hide();
+			    });
+			    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+			    return false;
+			}
+		    }
 		    addRow(curindex);
 		}
 	    }else{
@@ -345,6 +357,18 @@ $(document).ready(function() {
 		}
 		if ($(this).closest('tr').is(":last-child"))
 		{
+		    curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+		    for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
+			let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+			if(curacname == pvacname){
+			    $("#acname_duplicate-alert").alert();
+			    $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#acname_duplicate-alert").hide();
+			    });
+			    $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) select').focus().select();
+			    return false;
+			}
+		    }
 		    addRow(curindex);
 		}
 	    }
