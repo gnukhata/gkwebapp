@@ -137,7 +137,12 @@
 
             <label for="m_alt_accname">{% trans %}Same account name cannot be created!{% endtrans %}</label>
           </div>
-	  
+
+	  <div class="alert alert-danger" id="field_blank-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="m_alt_accname">{% trans %}All fields are required!{% endtrans %}</label>
+          </div>
+
           <div class="alert alert-danger" id="nodatasaved-alert" aria-live="rude" role="alert" hidden>
 
             <label>{% trans %}No account has been created!{% endtrans %}</label>

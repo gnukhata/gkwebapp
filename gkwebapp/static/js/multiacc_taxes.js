@@ -131,7 +131,7 @@ $(document).ready(function() {
 	    $(".taxstate").focus();
 	}
 	/**else if (event.which == 38) {
-	    $('#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
+	    $( '#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
 	}**/
     });
 
@@ -209,14 +209,16 @@ $(document).ready(function() {
     $(document).off("keydown",".taxrate").on("keydown",".taxrate",function(event){
 	if(event.which == 13){
 	    event.preventDefault();
-	    if ($.trim($('.taxrate').val()) == "" ) {
-		$("#mult_taxrate-alert").alert();
-		$("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
-                    $("#mult_taxrate-alert").hide();
-		});
-		$(".taxrate").focus();
-		return false;
-            }
+	    if(!$('.taxrate').is(':hidden')){
+		if ($.trim($('.taxrate').val()) == "" ) {
+		    $("#mult_taxrate-alert").alert();
+		    $("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+			$("#mult_taxrate-alert").hide();
+		    });
+		    $(".taxrate").focus();
+		    return false;
+		}
+	    }
 	    //wrong pls checked
 	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
@@ -259,14 +261,16 @@ $(document).ready(function() {
 	var cesindex = $(this).closest('tr').index();
 	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if ($.trim($('.cessrate').val())=="") {
-                $("#mult_cessrate-alert").alert();
-                $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
-                    $("#mult_cessrate-alert").hide();
-		});
-                $(".cessrate").focus();
-                return false;
-            }
+	    if(!$('.cessrate').is(':hidden')){
+		if ($.trim($('.cessrate').val())=="") {
+                    $("#mult_cessrate-alert").alert();
+                    $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+			$("#mult_cessrate-alert").hide();
+		    });
+                    $(".cessrate").focus();
+                    return false;
+		}
+	    }
 	    //wrong pls checked
 	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
@@ -334,6 +338,14 @@ $(document).ready(function() {
 			    return false;
 			}
 		    }
+		    /**if((accnt !=="" || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "") && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val()) ==""){
+			$("#field_blank-alert").alert();
+			$("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#field_blank-alert").hide();
+			});
+			$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+			return false;
+		    }**/
 		    addRow(curindex);
 		}
 	    }else{
