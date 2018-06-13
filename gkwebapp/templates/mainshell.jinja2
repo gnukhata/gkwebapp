@@ -319,17 +319,10 @@
 	      </div>
 	    </div>
 	    <br>
-	    <div id="vouchernodiv">
+	    <div class="voucherno">
 	      <div class="form-group">
-		<label for="vouchernodiv">{%trans%}Use System Generated Voucher No. ?{%endtrans%}</label>
-	      </div>
-	      <div class="form-inline">
-		<div class="radio">
-        	  <label><input type="radio" class="voucherno nopadding orgfields" name="voucherno" id="avyes" checked>&nbsp {% trans %}Yes{% endtrans %}.</label>
-        	</div>
-		<div class="radio">
-        	  <label><input type="radio" class="voucherno nopadding orgfields" name="voucherno" id="avno">&nbsp {% trans %}No{% endtrans %}.</label>
-		</div>
+		<input type="checkbox" id="avno">
+		<label for="voucherno">{%trans%}Use System Generated Voucher No.{%endtrans%}</label>
 	      </div>
 	      <br>
 	      <small class="form-text text-muted common">Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .</small><br><br>

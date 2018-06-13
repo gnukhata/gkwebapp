@@ -285,7 +285,7 @@ $(document).ready(function(){
     $(".ledger").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
-	    $('#avyes').focus();
+	    $('#avno').focus();
 	}
 	if (event.which == 38) {
 	    $("#sales").focus();
@@ -1736,7 +1736,7 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	maflag=1;
 	form_data.append("maflag", 1);
     }
-    if($("#avyes").is(":checked")){
+    if($("#avno").is(":checked")){
 	avnoflag=1;
     }else{
 	avnoflag=0;
