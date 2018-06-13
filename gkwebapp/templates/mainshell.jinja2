@@ -300,7 +300,12 @@
                 <label><input type="radio" class="iib" name="orgpref" id="invinvsbillradio" aria-label=""> &nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
               </div>
 
-	      <small class="form-text text-muted common">Press 'Enter' key to shift focus to Save button. Press 'Esc' key to Cancel.</small><br>
+	      <small class="form-text text-muted common">Press 'Enter' key to shift focus to Mode checkbox. Press 'Esc' key to Cancel.</small><br>
+
+        <div class="form-group">
+          <input type="checkbox" id="mode">
+          <label for="mode">{% trans %}Use automatic mode for Receipt and Payment Vouchers {% endtrans %}</label>
+        </div>
 
             </div>
 

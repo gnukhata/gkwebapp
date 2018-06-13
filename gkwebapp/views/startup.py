@@ -96,11 +96,12 @@ def createadmin(request):
     todate = request.params["tdate"]
     invsflag=request.params["invsflag"]
     billflag=request.params["billflag"]
-    return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate, "todate":todate, "invflag":invflag,"invsflag":invsflag,"billflag":billflag}
+    modeflag = request.params["modeflag"]
+    return {"orgname":orgname, "orgtype":orgtype, "fromdate":fromdate,"todate":todate,"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"modeflag":modeflag}
 
 @view_config(route_name="createorglogin",renderer="json")
 def orglogin(request):
-    gkdata = {"orgdetails":{"orgname":request.params["orgname"], "orgtype":request.params["orgtype"], "yearstart":request.params["yearstart"], "yearend":request.params["yearend"],"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"], "orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"], "avflag":request.params["avflag"], "maflag":request.params["maflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
+    gkdata = {"orgdetails":{"orgname":request.params["orgname"],"orgtype":request.params["orgtype"],"yearstart":request.params["yearstart"],"yearend":request.params["yearend"],"modeflag":request.params["modeflag"],"invflag":request.params["invflag"],"invsflag":request.params["invsflag"],"billflag":request.params["billflag"], "orgcity":request.params["orgcity"],"orgaddr":request.params["orgaddr"],"orgpincode":request.params["orgpincode"],"orgstate":request.params["orgstate"], "orgcountry":request.params["orgcountry"],"orgtelno":request.params["orgtelno"], "orgfax":request.params["orgfax"],"orgwebsite":request.params["orgwebsite"],"orgemail":request.params["orgemail"],"orgpan":request.params["orgpan"],"orgmvat":request.params["orgmvat"],"gstin":json.loads(request.params["gstin"]),"orgstax":request.params["orgstax"],"orgregno":request.params["orgregno"],"orgregdate":request.params["orgregdate"], "orgfcrano":request.params["orgfcrano"],"orgfcradate":request.params["orgfcradate"], "avflag":request.params["avflag"], "maflag":request.params["maflag"]}, "userdetails":{"username":request.params["username"], "userpassword":request.params["password"],"userquestion":request.params["securityquestion"], "useranswer":request.params["securityanswer"]}}
     if request.params.has_key("bankdetails"):
         gkdata["orgdetails"]["bankdetails"]=json.loads(request.params["bankdetails"])
         
@@ -132,7 +133,7 @@ def selectorglogin(request):
     if result.json()["gkstatus"]==0:
         header = result.json()["token"]
         result1 = requests.get("http://127.0.0.1:6543/organisation",headers={"gktoken":header})
-        return  {"gktoken":result.json()["token"], "gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"],"invsflag":result1.json()["gkdata"]["invsflag"],"billflag":result1.json()["gkdata"]["billflag"]}
+        return  {"gktoken":result.json()["token"],"gkstatus":result.json()["gkstatus"],"invflag":result1.json()["gkdata"]["invflag"],"invsflag":result1.json()["gkdata"]["invsflag"],"billflag":result1.json()["gkdata"]["billflag"],"modeflag":result1.json()["gkdata"]["modeflag"]}
     else:
         return  {"gkstatus":result.json()["gkstatus"]}
 

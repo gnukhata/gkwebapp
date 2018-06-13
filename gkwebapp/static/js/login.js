@@ -123,6 +123,7 @@ $(document).ready(function()
         sessionStorage.invflag = resp["invflag"];
         sessionStorage.invsflag = resp["invsflag"];
         sessionStorage.billflag = resp["billflag"];
+        sessionStorage.modeflag = resp["modeflag"];
         
         // Theme is fetched for the user and stored in sessionstorage.
         $.ajax({

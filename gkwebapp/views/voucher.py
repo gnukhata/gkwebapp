@@ -39,9 +39,24 @@ import cStringIO
 
 @view_config(route_name="showvoucher")
 def showvoucher(request):
-    type= request.params["type"]
+    type = request.params["type"]
+    header = {"gktoken": request.headers["gktoken"]}
+
+    # if mode is set to automatic then user friendly API should be shown for
+    # payment and receipt
+    if request.params.get("modeflag") == "1" and type in ["receipt", "payment"]:
+        groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header).json()
+        if type == "receipt":
+            grpcode = groups["gkresult"]["Sundry Debtors"]
+            result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(grpcode)),headers=header).json()
+        else:
+            grpcode = groups["gkresult"]["Sundry Creditors for Purchase"]
+            result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(grpcode)),headers=header).json()
+
+        if result["gkstatus"] == 0:
+            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts": result["gkresult"]},request=request)
+
     invflag= int(request.params["invflag"])
-    header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
     lastdetails = result.json()["gkresult"]
     if(lastdetails["narration"] != ""):
@@ -176,6 +191,48 @@ def addvoucher(request):
         return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":False}
     else:
         return {"gkstatus":False}
+
+@view_config(route_name="addvoucherauto", renderer="json")
+def addvoucherauto(request):
+    header = {"gktoken": request.headers["gktoken"]}
+
+    data = dict()
+    data["vdetails"] = dict()
+    data["transactions"] = dict()
+
+    data["vdetails"]["vouchertype"] = request.params["vtype"]
+    data["vdetails"]["voucherdate"] = request.params["date"]
+    data["vdetails"]["narration"] = request.params["narration"]
+    data["transactions"]["party"] = request.params["party"]
+    data["transactions"]["amount"] = request.params["amount"]
+    data["transactions"]["payment_mode"] = request.params["payment_mode"]
+
+    try:
+        files = {}
+        count = 0
+        for i in request.POST.keys():
+            if "file" not in i:
+                continue
+            else:
+                img = request.POST[i].file
+                image = Image.open(img)
+                imgbuffer = cStringIO.StringIO()
+                image.save(imgbuffer, format="JPEG")
+                img_str = base64.b64encode(imgbuffer.getvalue())
+                image.close()
+                files[count] = img_str
+                count += 1
+        if len(files) > 0:
+            data["vdetails"]["attachment"] = files
+            data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
+    except:
+        print "no attachment found"
+
+    result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
+    if result.json()["gkstatus"] == 0:
+        return {"gkstatus": True}
+    else:
+        return {"gkstatus": False}
 
 @view_config(route_name="accountpopup", renderer="gkwebapp:templates/createaccountpopup.jinja2")
 def accountpopup(request):

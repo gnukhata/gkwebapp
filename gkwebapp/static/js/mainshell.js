@@ -743,20 +743,34 @@ $(".businessmenu").keydown(function(event){
 	   if (sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
                $('#onlyaccradio').focus().prop('checked', true);
         }
+        if (sessionStorage.modeflag == 1) {
+          $("#mode").prop("checked", true);
+        }
 
 
-                    $(".iib").keydown(function(event) {
-                        if (event.which==13) {
-                          event.preventDefault();
-                          $('#orgprefsave').focus();
+        $(".iib").keydown(function(event) {
+            if (event.which==13) {
+              event.preventDefault();
+              $('#mode').focus();
 
-                      }
-                    });
+          }
+        });
+
+        $("#mode").keydown(function(event) {
+          if (event.which == 13) {
+            event.preventDefault();
+            $("#orgprefsave").focus();
+          }
+          else if (event.which == 38) {
+            event.preventDefault();
+            $("#invinvsbillradio").focus();
+          }
+        })
 
 
 
        $("#orgprefsave").click(function(event){
-	   var invflag,billflag,invsflag;
+	   var invflag,billflag,invsflag,modeflag;
 	 if ($("#invinvsbillradio").is(":checked"))
          {
            invflag=1;
@@ -783,13 +797,19 @@ $(".businessmenu").keydown(function(event){
      invsflag=0;
      billflag=0;
  }
+   if ($("#mode").is(":checked")) {
+      modeflag = 1;
+    }
+    else {
+      modeflag = 0;
+    }
                 $.ajax({
                        url: '/editorganisation?action=orgpref',
                        type: "POST",
                        datatype: 'json',
                        global: false,
                        async: false,
-                       data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag},
+                       data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"modeflag":modeflag},
                        beforeSend: function(xhr)
                        {
                          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -816,6 +836,8 @@ $(".businessmenu").keydown(function(event){
                           if (billflag==0){
                           sessionStorage.billflag=0;
                           }
+
+                          sessionStorage.modeflag = modeflag;
 
 
                               if (resp['gkstatus']==0)

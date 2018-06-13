@@ -33,6 +33,7 @@ $(document).ready(function(){
   var invflag;
   var invsflag;
   var billflag;
+  var modeflag;
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
@@ -234,16 +235,28 @@ $(document).ready(function(){
       });
 
      $(".iib").keydown(function(event) {
-          if (event.which==13) {
-	      event.preventDefault();
-	      if ($("#ledgerdiv").is(":hidden")) {
-		  $('#btnsubmit').focus();
-	      }
-	      else{
-		  $("#sales").focus();
-	      }
-        }
+       if (event.which==13) {
+         event.preventDefault();
+         $("#mode").focus();
+       }
      });
+
+    $("#mode").keydown(function(event) {
+      if (event.which == 13) {
+        event.preventDefault();
+        if ($("#ledgerdiv").is(":hidden")) {
+          $("#btnsubmit").focus();
+        }
+        else {
+          $("#sales").focus();
+        }
+      }
+      else if (event.which == 38) {
+        event.preventDefault();
+        $("#invinvsbillradio").focus();
+      }
+    });
+
     $("#sales").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
@@ -283,6 +296,14 @@ $(document).ready(function(){
         }
      });
 
+    $("#mode").change(function() {
+      if ($("#mode").is(":checked")) {
+        modeflag = 1;
+      }
+      else {
+        modeflag = 0;
+      }
+    });
     
               $(document).off('change', '.iib').on('change', '.iib', function(event) {
                           if ($("#invinvsbillradio").is(":checked")) {
@@ -484,6 +505,13 @@ $(document).ready(function(){
             billflag=0;
           }
 
+        if ($("#mode").is(":checked")) {
+          modeflag = 1;
+        }
+        else {
+          modeflag = 0;
+        }
+
         sessionStorage.setItem('orgn', $("#orgname").val());
         sessionStorage.setItem('orgt', otype);
         sessionStorage.setItem('year1', fadate);
@@ -493,6 +521,7 @@ $(document).ready(function(){
         sessionStorage.setItem('invflag', invflag );
         sessionStorage.setItem('invsflag', invsflag );
         sessionStorage.setItem('billflag', billflag );
+        sessionStorage.setItem('modeflag', modeflag);
         $.ajax({
           url: '/oexists',
           type: 'POST',
@@ -1679,6 +1708,7 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     form_data.append("billflag",billflag);
     form_data.append("invflag", invflag);
     form_data.append("invsflag", invsflag);
+    form_data.append("modeflag", modeflag);
     if ($("#sales").is(":checked")) {
 	form_data.append("avflag", 1);
     }
