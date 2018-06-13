@@ -1981,8 +1981,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       var details = {}; // dictionay containing details other than the table values.
       if(sessionStorage.avnoflag==0){
 	  details.vno=$('#vno').val();
-      }else{
-	  details.vno="";
       }
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
@@ -2122,13 +2120,15 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       },
       success: function(resp)
 	{
-            if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
+	    if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
 		$("#reset").click();
 		if(resp.paymentstatus == true){
 		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
 		}
 		$("#success-alert").alert();
-		$("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
+		if(sessionStorage.avnoflag==1){
+		    $("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
+		}
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
 		    $("#success-alert").hide();
             //Modal asking the user if he wants to do bill wise accounting or not?

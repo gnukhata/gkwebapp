@@ -135,7 +135,7 @@ def addvoucher(request):
     rowdetails= json.loads(request.params["transactions"])
     crs={}
     drs={}
-    if vdetails["vno"]:
+    if vdetails.has_key("vno"):
         if vdetails["projectcode"] !="":
             gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
         else:
@@ -145,7 +145,6 @@ def addvoucher(request):
                 gkdata["invid"] = vdetails["invid"]
             else:
                 gkdata["invid"] = None
-
     else:
         if vdetails["projectcode"] !="":
             gkdata={"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
