@@ -730,7 +730,21 @@ $(".businessmenu").keydown(function(event){
       $("#orgprefmodal").modal('show');
       // creates a modal(dialog box) asking user to choose between org preferences .
 
-      $("#orgprefmodal").on('shown.bs.modal', function(event) {
+	$("#orgprefmodal").on('shown.bs.modal', function(event) {
+	        $("#onlyaccradio").click(function(event){
+	$("#ledgerdiv").hide();
+    });
+    $("#invinvsbillradio").click(function(event) {
+	$("#ledgerdiv").show();
+    });
+    $("#invsbillradio").click(function(event) {
+        //event.preventDefault();
+	$("#ledgerdiv").show();
+    });
+    $("#onlyinvsradio").click(function(event){
+        //event.preventDefault();
+	$("#ledgerdiv").show();
+    });
 
         if (sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
             $('#invinvsbillradio').focus().prop('checked', true);
@@ -762,7 +776,7 @@ $(".businessmenu").keydown(function(event){
 	  }else{
 	      $('#avno').prop('checked', false);
 	  }
-
+	  
 
         $(".iib").keydown(function(event) {
             if (event.which==13) {
@@ -771,12 +785,17 @@ $(".businessmenu").keydown(function(event){
 
           }
         });
-
+	 
         $("#mode").keydown(function(event) {
           if (event.which == 13) {
-            event.preventDefault();
-            $("#sales").focus();
-          }
+        event.preventDefault();
+              if ($("#ledgerdiv").is(":hidden")) {
+		  $("#avno").focus();
+              }
+              else {
+		  $("#sales").focus();
+              }
+	  }
           else if (event.which == 38) {
             event.preventDefault();
             $("#invinvsbillradio").focus();

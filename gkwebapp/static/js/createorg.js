@@ -263,7 +263,7 @@ $(document).ready(function(){
 	if (event.which==13) {
 	    event.preventDefault();
 	    if($("#singlesales").is(":disabled")){
-		$(".voucherno").focus();
+		$("#avno").focus();
 	    }
 	    else{
 		$('#singlesales').focus();
@@ -291,13 +291,13 @@ $(document).ready(function(){
 	    $("#sales").focus();
 	}
     });
-    $(".voucherno").keydown(function(event){
+    $("#avno").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
 	    $('#btnsubmit').focus();
 	}
 	if (event.which == 38) {
-	    $(".ledger").focus();
+	    $("#sales").focus();
 	}
     });
      $("#onlyaccradio").keydown(function(event) {
