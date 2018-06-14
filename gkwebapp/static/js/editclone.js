@@ -237,7 +237,7 @@ $(document).ready(function()
       },
       success: function(jsonObj)
       {
-        gkstatus=jsonObj["gkstatus"]
+          gkstatus=jsonObj["gkstatus"];
         if(gkstatus)
         {
           if ($("#lock").val()=="Unlock")
@@ -466,6 +466,10 @@ $(document).ready(function()
     else {
       $("#clonereplaceattach").show();
     }
+      if(sessionStorage.avnoflag==1){
+	  $(".vouchernoclone").hide();
+	  $("#vdate").focus();
+      }
     ecflag="clone";
     $("#vouchercancel").show();
     $(".lblec").prepend('<i>Cloning </i>');
@@ -598,7 +602,7 @@ $(document).ready(function()
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-      data: {"vouchercode": vcode,"vtype":$(".lblec").text(),"vno":$("#vno").val()},
+	data: {"vouchercode": vcode,"vtype":$(".lblec").text(),"vno":$("#vno").val()},
     })
     .done(function(resp) {
       var x=window.open();
@@ -1209,7 +1213,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         diff=drsum-crsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+            var nxtindex = curindex+1;
           if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
@@ -1298,7 +1302,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         diff=crsum-drsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+            var nxtindex = curindex+1;
           if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
             var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
@@ -1409,7 +1413,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
         diff=drsum-crsum;
         if(curindex<lastindex)
         {
-          var nxtindex = curindex+1
+            var nxtindex = curindex+1;
           if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
             $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
             var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
@@ -1688,7 +1692,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       $('#vdate').focus();
       return false;
     }
-    var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd")
+      var curdate = Date.parseExact($("#vyear").val()+$("#vmonth").val()+$("#vdate").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1702,7 +1706,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       $("#balance-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#balance-alert").hide();
       });
-      $('#vctable tbody tr:last input:enabled').focus()
+	$('#vctable tbody tr:last input:enabled').focus();
       return false;
     }
     if ($('#drtotal').val()==0) {
@@ -1759,8 +1763,10 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       });
       return false;
     }
-    var details = {}
-    details.vno=$('#vno').val();
+      var details = {};
+      if(sessionStorage.avnoflag==0){
+	  details.vno=$('#vno').val();
+      }
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
     details.projectcode=$('#project').val();
 
@@ -1809,7 +1815,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     if(ecflag=="clone")
     {
 
-            details.instrumentno=""
+        details.instrumentno="";
             //details.instrumentdate="";
 
             if($("#instrumentno").val())
@@ -1903,14 +1909,14 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     {
 
       if ($("#removeattach").is(":checked")) {
-        details.delattach = true
+          details.delattach = true;
       }
       else {
-        details.delattach = false
+          details.delattach = false;
       }
       details.vcode=$('#vcode').val();
 
-                  details.instrumentno=""
+        details.instrumentno="";
                   //details.instrumentdate="";
 
                   if($("#instrumentno").val())

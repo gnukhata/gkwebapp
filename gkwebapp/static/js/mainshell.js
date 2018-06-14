@@ -794,7 +794,7 @@ $(".businessmenu").keydown(function(event){
 	      if (event.which==13) {
 		  event.preventDefault();
 		  if($("#singlesales").is(":disabled")){
-		      $(".voucherno").focus();
+		      $("#avno").focus();
 		  }
 		  else{
 		      $('#singlesales').focus();
