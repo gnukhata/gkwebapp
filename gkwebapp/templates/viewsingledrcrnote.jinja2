@@ -166,7 +166,6 @@
 	      <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 	      <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	      <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-	      <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 	      {% if gkresult["dctypeflag"] == 3 %}
 		<th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
 	      {% else %}
@@ -189,9 +188,6 @@
 		</td>
 		<td class="qtyvwrap text-right">
 		  {{ gkresult["drcrcontents"][product]["priceperunit"] }}
-		</td>
-		<td class="smvwrap text-right">
-		  {{ gkresult["drcrcontents"][product]["discount"] }}
 		</td>
 		<td class="smvwrap text-right">
 		  {{ gkresult["reductval"][product]}}
@@ -260,7 +256,6 @@
 		    {% else %}
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
 		    {% endif %}
-		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
@@ -297,9 +292,6 @@
 		      </td>
 		      <td class="qtywrap text-right">
 			{{ gkresult["drcrcontents"][product]["priceperunit"] }}
-		      </td>
-		      <td class="smwrap text-right">
-			{{ gkresult["drcrcontents"][product]["discount"] }}
 		      </td>
 		      <td class="smwrap text-right">
 			{{ gkresult["reductval"][product]}}
