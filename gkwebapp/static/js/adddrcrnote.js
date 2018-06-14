@@ -46,6 +46,14 @@ $(document).ready(function() {
 		return false;
 	    } 
     });
+    $("#discount, #return").change(function(event) {
+	if($("#drcrnote_invoice").is(":not(:hidden)")){
+	    $("#drcrnote_invoice") .change();
+	}
+	else {
+	    $("#drcrnote_invoice_purchase").change();
+	}
+    });
     $("#sale").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -671,7 +679,16 @@ $(document).ready(function() {
 			}
 			$("#drcrnote_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 			$("#drcrnote_product_table_total tbody tr:last td:eq(1)").append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-			$("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
+			    $("#drcrnote_product_table_total tbody tr:last td:first input").val(parseFloat(value.totalAmount).toFixed(2));
+			    if($("#return").is(":checked")){
+			    $('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').prop("disabled", true);
+			    $('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').prop("disabled", false);
+			    
+			}
+			else {
+			    $('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').prop("disabled", false);
+			    $('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').prop("disabled", true);
+			}
 		
 		    });
 		    $("#taxablevaluetotal_product_gst").text(resp.invoicedata.totaltaxablevalue);
@@ -687,7 +704,7 @@ $(document).ready(function() {
 		    $("#gstproducttable").show();  //Shows GST Product table.
 		    $(".gstinfield").show();
 		    $(".vatfield").hide();
-		    $(".gstfield").show();
+			$(".gstfield").show();
 		}
 		    else {
 			//invoicedata contents filled in table
