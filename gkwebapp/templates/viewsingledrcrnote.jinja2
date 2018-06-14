@@ -166,10 +166,12 @@
 	      <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 	      <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	      <th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-	      {% if gkresult["dctypeflag"] == 3 %}
-		<th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
-	      {% else %}
-		<th class="smvwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+	      {% if gkresult["drcrmode"]|int == 4 %}
+		{% if gkresult["dctypeflag"] == 3 %}
+		  <th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
+		{% else %}
+		  <th class="smvwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+		{% endif %}
 	      {% endif %}
 	      <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	      <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
@@ -189,9 +191,11 @@
 		<td class="qtyvwrap text-right">
 		  {{ gkresult["drcrcontents"][product]["priceperunit"] }}
 		</td>
-		<td class="smvwrap text-right">
-		  {{ gkresult["reductval"][product]}}
-		</td>
+		{% if gkresult["drcrmode"]|int == 4 %}
+		  <td class="smvwrap text-right">
+		    {{ gkresult["drcrcontents"][product]["reductionval"]}}
+		  </td>
+		{% endif %}
 		<td class="smvwrap text-right">
 		  {{ gkresult["drcrcontents"][product]["newtaxableamnt"] }}
 		</td>
@@ -210,8 +214,17 @@
 	  </tbody>
 	  <tfoot>
 	    <tr>
-	      <td colspan="5" class="text-right">
-		{% trans %}Total{% endtrans %}
+	      {% if gkresult["drcrmode"]|int == 18 %}
+		<td colspan="3" class="text-right">
+		  <script type="text/javascript">
+		   $(document).ready(function() {
+		     $(".smvwrap").css("width", "15.75%");
+		   });
+		  </script>
+	      {% else %}
+		<td colspan="4" class="text-right">
+	      {% endif %}
+	      {% trans %}Total{% endtrans %}
 	      </td>
 	      <td class="smvwrap text-right">
 		{{ gkresult["totaltaxablevalue"] }}
@@ -251,10 +264,12 @@
 		    <th rowspan="2" class="smwrap text-center">{% trans %}HSN Code/ ACS Code{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
+		    {% if gkresult["drcrmode"]|int == 4 %}
 		    {% if gkresult["dctypeflag"] == 3 %}
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
 		    {% else %}
 		      <th rowspan="2" class="smwrap text-center">{% trans %}Debited Value{% endtrans %}</th>
+		    {% endif %}
 		    {% endif %}
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
@@ -293,11 +308,12 @@
 		      <td class="qtywrap text-right">
 			{{ gkresult["drcrcontents"][product]["priceperunit"] }}
 		      </td>
+		      {% if gkresult["drcrmode"]|int == 4 %}
+			<td class="smwrap text-right">
+			  {{ gkresult["drcrcontents"][product]["reductionval"]}}
+			</td>
+		      {% endif %}
 		      <td class="smwrap text-right">
-			{{ gkresult["reductval"][product]}}
-		      </td>
-		      <td class="smwrap text-right">
-			{#wrong#}
 			{{ gkresult["drcrcontents"][product]["newtaxableamnt"] }}
 		      </td>
 
@@ -320,7 +336,16 @@
 	      <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
 		<tfoot>
 		  <tr>
-		    <td colspan="6" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+		    {% if gkresult["drcrmode"]|int == 4 %}
+		      <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+		    {% else %}
+		      <td colspan="4" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
+		      <script type="text/javascript">
+		       $(document).ready(function() {
+			 $(".totalwrap").css("width", "42%");
+		       });
+		      </script>
+		    {% endif %}
 		    <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
