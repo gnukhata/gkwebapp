@@ -253,9 +253,10 @@
                       <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
                       <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
 		    </div>
-		  {% endif %}
+		  
 		  
                   <div class="form-group" div="editdiv">
+		    
 		    {% if voucher["vvi"]["custSupDetails"] %}
                       <label id="editinv">{% trans %}Invoice {% endtrans %} :</label>
                       <select id="invsel" class="form-control input-sm invoice_no" hidden>
@@ -302,10 +303,11 @@
 		    {% else %}
 		      <label for="invtotal">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
                       <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
-		      {% endif %}
-                  </div>
-		</div>
 		    {% endif %}
+                  </div>
+		  {% endif %}
+		</div>
+	      {% endif %}
 
 		    <div class="table-responsive" id="demovctable">
 		      <table class="table table-condensed">
