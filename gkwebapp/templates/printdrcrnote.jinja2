@@ -280,7 +280,6 @@
 		<th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
 		<th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		<th class="qtyvwrap text-center">{% trans %}Price Per Unit{% endtrans %}</th>
-		<th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
 		{% if gkresult["dctypeflag"] == 3 %}
 		  <th class="smvwrap text-center">{% trans %}Credited Value{% endtrans %}</th>
 		{% else %}
@@ -303,9 +302,6 @@
 		  </td>
 		  <td class="text-right">
 		    <small>{{ gkresult["drcrcontents"][product]["priceperunit"] }}</small>
-		  </td>
-		  <td class="text-right">
-		    <small>{{ gkresult["drcrcontents"][product]["discount"] }}</small>
 		  </td>
 		  <td class="text-right">
 		    <small>{{ gkresult["reductval"][product]}}</small>
@@ -366,7 +362,6 @@
 		<th rowspan="2" class="text-center"><small>{% trans %}HSN/ACS {% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Billed Qty{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Price Per Unit{% endtrans %}</small></th>
-		<th rowspan="2" class="text-center"><small>{% trans %}Discount Amount{% endtrans %}</small></th>
 		{% if gkresult["dctypeflag"] == 3 %}
 		  <th rowspan="2" class="text-center"><small>{% trans %}Credited Value{% endtrans %}</small></th>
 		{%else%}
@@ -405,9 +400,6 @@
 		  </td>
 		  <td class="text-right">
 		    <small>{{ gkresult["drcrcontents"][product]["priceperunit"] }}</small>
-		  </td>
-		  <td class="smwrap text-right">
-		    {{ gkresult["drcrcontents"][product]["discount"] }}
 		  </td>
 		  <td class="text-right">
 		    <small>{{ gkresult["reductval"][product]}}</small>
