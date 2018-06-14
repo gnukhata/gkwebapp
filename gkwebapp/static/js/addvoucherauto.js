@@ -36,9 +36,32 @@ $(document).ready(function() {
 
   $("#vdate").focus();
 
+  function pad (str, max) { //to add leading zeros in date
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("0" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
+
+  function yearpad (str, max) {
+    str = str.toString();
+    if (str.length==1) {
+      return str.length < max ? pad("200" + str, max) : str;
+    }
+    else if (str.length==2) {
+      return str.length < max ? pad("20" + str, max) : str;
+    }
+    else{
+	return str;
+    }
+  }
+
   $("#reset").click(function(event) {
     event.preventDefault();
-    $('#vdetails').find('input:text, textarea').val('');
+    $("#vdetails").find('input:text, textarea').val('');
     $("#date").trigger("reset");
   })
 
@@ -101,6 +124,16 @@ $(document).ready(function() {
     }
   });
 
+  $("#vdate").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+  $("#month").blur(function(event) {
+    $(this).val(pad($(this).val(),2));
+  });
+
+  $("#year").blur(function(event) {
+    $(this).val(yearpad($(this).val(),4));
+  })
 
   $("#vdate").keydown(function(event) {
     if (event.which == 13) {
@@ -169,13 +202,6 @@ $(document).ready(function() {
       return false;
     }
 
-    //if (Date.today().compareTo(curdate) == -1) {
-    //  $("#postdate-alert").alert();
-    //  $("#postdate-alert").show();
-    //}
-    //else {
-    //  $("#postdate-alert").hide();
-    //}
   });
 
 
@@ -259,7 +285,8 @@ $(document).ready(function() {
       },
       success: function(resp) {
         if(resp.gkstatus == true) { // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $("#reset").click();
+          $("#vdetails").find('input:text, textarea').val('');
+          $("#date").trigger("reset");
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
             $("#success-alert").hide();
