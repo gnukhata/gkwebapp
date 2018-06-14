@@ -837,6 +837,36 @@ $(document).ready(function() {
 	    }
 	}
     });
+    $(document).off('keydown', '.drcrnote_product_quantity_vat').on('keydown', '.drcrnote_product_quantity_vat', function(event) {
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
+	    var nextindex = curindex + 1;
+	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
+	    calculatevataxamt(curindex);
+	    if (curindex == lastindex) {
+		$("#drcrnote_save").focus();
+	    }
+	    else{
+		$('.drcrnote_product_quantity_vat:eq(' + nextindex + ')').focus().select();
+	    }
+	}
+    });
+    $(document).off('keydown', '.drcrnote_product_quantity_gst').on('keydown', '.drcrnote_product_quantity_gst', function(event) {
+	if (event.which == 13 ) {
+	    event.preventDefault();
+	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
+	    var nextindex = curindex + 1;
+	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
+	    calculategstaxamt(curindex);
+	    if (curindex == lastindex) {
+		$("#drcrnote_save").focus();
+	    }
+	    else{
+		$('.drcrnote_product_quantity_gst:eq(' + nextindex + ')').focus().select();
+	    }
+	}
+    });
     // Change event for product price(i.e.Rate) in VAT
     $(document).off('change', '.drcrnote_product_rate_vat').on('change', '.drcrnote_product_rate_vat', function(event) {
 	// Act on the event
@@ -850,6 +880,27 @@ $(document).ready(function() {
 
     // Change event for product price(i.e.Rate) in GST
     $(document).off('change', '.drcrnote_product_rate_gst').on('change', '.drcrnote_product_rate_gst', function(event) {
+	/* Act on the event */
+	if ($(this).val() == "") {
+	    $(this).val(0);
+	}
+	var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
+	calculategstaxamt(curindex);
+    });
+
+    // Change event for product price(i.e.Rate) in VAT
+    $(document).off('change', '.drcrnote_product_quantity_vat').on('change', '.drcrnote_product_quantity_vat', function(event) {
+	// Act on the event
+	if ($(this).val() == "") {
+	    $(this).val(0);
+	}
+	$(this).val(parseFloat($(this).val()).toFixed(2));
+	var curindex = $(this).closest('#drcrnote_table_vat tbody tr').index();
+	calculatevataxamt(curindex);
+    });
+
+    // Change event for product price(i.e.Rate) in GST
+    $(document).off('change', '.drcrnote_product_quantity_gst').on('change', '.drcrnote_product_quantity_gst', function(event) {
 	/* Act on the event */
 	if ($(this).val() == "") {
 	    $(this).val(0);
