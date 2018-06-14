@@ -859,17 +859,13 @@ $(".businessmenu").keydown(function(event){
      invsflag=0;
      billflag=0;
    }
-<<<<<<< 5f9af303dafa9ea36d6f81202ee5ef16545b4191
 	   if ($("#mode").is(":checked")) {
 	       modeflag = 1;
 	   }
 	   else {
 	       modeflag = 0;
 	   }
-	   if ($("#avyes").is(":checked"))
-=======
 	   if ($("#avno").is(":checked"))
->>>>>>> Changed Radio btn to checkbox in Create Organisation and Organisation Preference
 	   {
 	       avnoflag=1;
 	   }else{
