@@ -94,7 +94,14 @@
         <tr>
           <th class="smwrap calign" >{% trans %}Sr.No.{% endtrans %}</th>
           <th class="smwrap calign" >{% trans %}Inv No.{% endtrans %}</th>
-          <th class="dtwrap calign" >{% trans %}Inv Date{% endtrans %}</th>
+          <th class="dtwrap calign invDate" >
+	    {% trans %}Inv Date{% endtrans %}
+	    {% if orderflag=="4" %}
+	      <span  id="invoiceDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	    {% else %}
+	      <span  id="invoiceDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	    {% endif %}
+	  </th>
           {% if registerheader["flag"] == "0" %}
           <th class="dtwrap calign">{% trans %}Cust Name{% endtrans %}</th>
           <th class="dtwrap calign">{% trans %}Cust TIN{% endtrans %}</th>

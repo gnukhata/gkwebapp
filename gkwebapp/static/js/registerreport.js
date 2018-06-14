@@ -49,7 +49,47 @@ $(".search").children(".form-control").keyup(function(event){
 		else if ($(this).val() == "") {
 			$("#rclearfields").hide();
 		}
-  });
+});
+
+
+  //Toggling the up and down arrow for sorting
+    $('.glyphicon').click(function () {
+	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
+    });
+
+    //click event for sorting date.
+    $('.invDate').click(function (e) {
+	var orderflag = $("#invoiceDate").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#invoiceDate").attr("orderflag",4);
+	    var dataset = {"flag":$("#flag").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val()};
+	}else{
+	    $(this).find("#invoiceDate").attr("orderflag",1);
+	    dataset = {"flag":$("#flag").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"orderflag":4};
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/invoice?action=showregisterreport",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
 
   $('#exporttospreadsheetregister').click(function (event) {
     console.log("in");
