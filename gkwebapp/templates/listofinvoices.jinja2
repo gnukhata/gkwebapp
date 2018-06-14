@@ -117,8 +117,13 @@
                <th class="srnowrap text-center" >
                   {% trans %}INV No.{% endtrans %}
                </th>
-               <th class="smlwrap text-center" >
-                  {% trans %}INV Date{% endtrans %}
+               <th class="smlwrap text-center invDate" >
+                 {% trans %}INV Date{% endtrans %}
+		 {% if orderflag=="4" %}
+		   <span  id="invoiceDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+		 {% else %}
+		   <span  id="invoiceDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+		 {% endif %}
                </th>
                <th class="srnowrap text-center" >
                   {% trans %}DC No.{% endtrans %}

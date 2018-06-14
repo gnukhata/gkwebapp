@@ -64,6 +64,45 @@ $(document).ready(function() {
         }
     });
 
+
+    //Toggling the up and down arrow for sorting
+    $('.glyphicon').click(function () {
+	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
+    });
+
+    //click event for sorting date.
+    $('.invDate').click(function (e) {
+	var orderflag = $("#invoiceDate").attr("orderflag");
+	if ( orderflag == 1 ){
+	    $(this).find("#invoiceDate").attr("orderflag",4);
+	    var dataset = {"flag": $("#invoicetypeselect").val(),"fromdate": $("#fromdate").data("fromdate"),"todate": $("#todate").data("todate")};
+	}else{
+	    $(this).find("#invoiceDate").attr("orderflag",1);
+	    dataset = {"flag": $("#invoicetypeselect").val(),"fromdate": $("#fromdate").data("fromdate"),"todate": $("#todate").data("todate"),"orderflag":4};
+	}
+	$.ajax({
+	    type: "POST",
+	    url: "/invoice?action=showlist",
+	    global: false,
+	    async: false,
+	    data: dataset,
+	    datatype: "text/html",
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	})
+	.done(function(resp) {
+	    $("#info").html(resp);
+	})
+	.fail(function() {
+	    console.log("error");
+	})
+	.always(function() {
+	    console.log("complete");
+	});
+
+    });
     var curindex;
     var nextindex;
     var previndex;
