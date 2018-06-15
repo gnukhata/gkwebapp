@@ -130,9 +130,12 @@ $(document).ready(function() {
             }
 	    $(".taxstate").focus();
 	}
-	/**else if (event.which == 38) {
-	    $( '#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
-	}**/
+	else if (event.which == 38) {
+	    if(tnindex > 0){
+		$( '#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
+	    }
+	    
+	}
     });
 
     //Keydown for 'Tax state'.
@@ -156,8 +159,8 @@ $(document).ready(function() {
 	    }
 	}
 	else if (event.which == 38) {
-	    if ($(".taxstate option:visible").first().is(":selected")) {
-		$(".taxname").focus();
+	    if ($('#m_acctable tbody tr:eq('+tsindex+') td:eq(1) option:visible').first().is(":selected")) {
+		$('#m_acctable tbody tr:eq('+tsindex+') td:eq(0) select').focus().select();
 	    }
 	}
     });
@@ -222,7 +225,6 @@ $(document).ready(function() {
 		    }
 		}
 	    }
-	    //wrong pls checked
 	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
 	    }else{
@@ -230,8 +232,8 @@ $(document).ready(function() {
 	    }
 	}
 	else if (event.which == 38) {
-	    if ($(".taxrate option:visible").first().is(":selected")) {
-		$(".taxstate").focus();
+	    if ($('#m_acctable tbody tr:eq('+rateindex+') td:eq(2) option:visible').first().is(":selected")) {
+		$('#m_acctable tbody tr:eq('+rateindex+') td:eq(1) select').focus().select();
 	    }
 	}
     });
@@ -276,7 +278,6 @@ $(document).ready(function() {
 		    }
 		}
 	    }
-	    //wrong pls checked
 	    if($("#m_gstaccount").is(':checked')){
 		$('.m_openbal').focus();
 	    }else{
@@ -284,7 +285,7 @@ $(document).ready(function() {
 	    }
 	}
 	else if (event.which == 38) {
-	    $(".taxstate").focus();
+	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(1) select').focus().select();
 	}
     });
     
@@ -296,14 +297,14 @@ $(document).ready(function() {
 	var previndex = curindex-1;
 	var numberofrows = $(".m_openbal").length;
 
-	/**if (event.which==40)
-	   {
-	   $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').focus();
-	   $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) input:enabled').select();
-	   }**/
 	if (event.which==38)
 	{
 	    $('.m_accname').focus().select();
+	    if($('#m_gstaccount').is(':checked')){
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(2) select').focus().select();
+	    }else{
+		$('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+	    }
 	}
 	if(event.which == 13)
 	{
@@ -352,7 +353,6 @@ $(document).ready(function() {
 			}
 		    }
 		    else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" || rateoftax =="" || accnt =="" ){
-			console.log('Up blank');
 			$("#field_blank-alert").alert();
 			$("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 			    $("#field_blank-alert").hide();
