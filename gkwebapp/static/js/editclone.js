@@ -1764,7 +1764,11 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       return false;
     }
       var details = {};
-      if(sessionStorage.avnoflag==0){
+      if(ecflag=="clone"){
+	  if(sessionStorage.avnoflag==0){
+	      details.vno=$('#vno').val();
+	  }
+      }else if(ecflag=="edit"){
 	  details.vno=$('#vno').val();
       }
     details.vdate=$('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
@@ -1774,7 +1778,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
           details.projectcode=$('#project').val();
       } // returns 1
       else {
-        details.projectcode=""
+          details.projectcode="";
       }
     details.narration=$('#narr').val();
     details.vtype=$('#m_vtype').val();
