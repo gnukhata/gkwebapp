@@ -574,12 +574,12 @@ def stockreportspreadsheet(request):
         sheet.column_dimensions['B'].width = 18
         sheet.column_dimensions['C'].width = 22
         sheet.column_dimensions['D'].width = 18
-        sheet.column_dimensions['E'].width = 12
-        sheet.column_dimensions['F'].width = 12
-        sheet.column_dimensions['G'].width = 12
-        sheet.column_dimensions['H'].width = 12
-        sheet.column_dimensions['I'].width = 12
-        sheet.column_dimensions['J'].width = 12
+        sheet.column_dimensions['E'].width = 14
+        sheet.column_dimensions['F'].width = 14
+        sheet.column_dimensions['G'].width = 14
+        sheet.column_dimensions['H'].width = 14
+        sheet.column_dimensions['I'].width = 14
+        sheet.column_dimensions['J'].width = 14
         # Cells of first two rows are merged to display organisation details properly.
         sheet.merge_cells('A1:I2')
         # Name and Financial Year of organisation is fetched to be displayed on the first row.
@@ -603,7 +603,7 @@ def stockreportspreadsheet(request):
             sheet['B6'] = "Particulars"
             sheet['C6'] = "Document Type"
             sheet['D6'] = "Deli Note No."
-            sheet['E6'] = "INV No."
+            sheet['E6'] = "INV/DR/CR No."
             sheet['F6'] = "RN No."
             sheet['G6'] = "TN No."
             sheet['H6'] = "Inward"
@@ -663,7 +663,12 @@ def stockreportspreadsheet(request):
                      sheet['D'+str(row)] = stock["dcno"]
                      sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['D'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['E'+str(row)] = stock["invno"]
+                     if stock["invno"] != "":
+                         sheet['E'+str(row)] = stock["invno"]
+                     elif "drcrno" in stock and stock["drcrno"] != "":
+                         sheet['E'+str(row)] = stock["drcrno"]
+                     else:
+                         sheet['E'+str(row)] = ""
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['F'+str(row)] = stock["rnno"]
@@ -727,7 +732,7 @@ def stockreportspreadsheet(request):
             sheet['B5'] = "Particulars"
             sheet['C5'] = "Document Type"
             sheet['D5'] = "Deli Note No."
-            sheet['E5'] = "INV No."
+            sheet['E5'] = "INV/DR/CR No."
             sheet['F5'] = "RN No."
             sheet['G5'] = "Inward"
             sheet['H5'] = "Outward"
@@ -771,7 +776,7 @@ def stockreportspreadsheet(request):
                      sheet['I'+str(row)] =""
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
-                if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["rnid"] != "") and stock["date"]!="":
+                if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["rnid"] != "" or stock["drcrno"] != "") and stock["date"]!="":
                      sheet['A'+str(row)] = stock["date"]
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['A'+str(row)].alignment = Alignment(horizontal='center')
@@ -783,7 +788,12 @@ def stockreportspreadsheet(request):
                      sheet['D'+str(row)] = stock["dcno"]
                      sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['D'+str(row)].alignment = Alignment(horizontal='center')
-                     sheet['E'+str(row)] = stock["invno"]
+                     if stock["invno"] != "":
+                         sheet['E'+str(row)] = stock["invno"]
+                     elif stock["drcrno"] != "":
+                         sheet['E'+str(row)] = stock["drcrno"]
+                     else:
+                         sheet['E'+str(row)] = ""
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['F'+str(row)] = stock["rnno"]
