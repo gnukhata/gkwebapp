@@ -1174,6 +1174,7 @@ if (!curdate.between(financialstart, financialend)) {
 	    calculatevataxamt(i);
 	    productcodes.push($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode"));
 	    var productcode = $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").attr("data-productcode");
+	    let productname = $("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(0) label").text();
 	    let quantity =parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val());
 	    if (parseFloat(quantity) > 0) {
 		let obj = {};
@@ -1182,6 +1183,7 @@ if (!curdate.between(financialstart, financialend)) {
 		idrate[productcode]=parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(3) input").val()).toFixed(2);
 		taxes[productcode] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(5) input").val()).toFixed(2);
 		prodData[productcode] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val()).toFixed(2);
+		productdata[productname] = parseFloat($("#drcrnote_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val()).toFixed(2);
 		if ($("#return").is(":checked")) {
 		    quantities[productcode] = parseFloat(quantity).toFixed(2);
 		}
@@ -1233,9 +1235,10 @@ if (!curdate.between(financialstart, financialend)) {
 	      ppu = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(3) input").val()).toFixed(2);
 	      obj[ppu] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val()).toFixed(2);
 	      idrate[productcode]=parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(4) input").val()).toFixed(2);
-	      taxes[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(9) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(11) input").val());
+	      taxes[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(6) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(8) input").val()) + parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(10) input").val());
 	      cess[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(12) input").val());
 	      prodData[productcode] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val());
+	      productdata[productname] = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val());
 	      if ($("#return").is(":checked")) {
 		    quantities[productcode] = parseFloat(quantity).toFixed(2);
 		}
