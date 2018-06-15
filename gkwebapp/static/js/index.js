@@ -72,7 +72,7 @@ $(document).ready(function(){
 	  $("#selectnav").click();
 	 
       }
-    if(event.ctrlKey && event.keyCode == 82) {
+    if(event.ctrlKey && event.keyCode == 67) {
       $("#createnav").click();
       setTimeout( function() { $("#orgname").focus(); }, 500 );
 
