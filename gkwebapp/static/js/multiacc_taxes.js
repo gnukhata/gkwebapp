@@ -100,7 +100,7 @@ $(document).ready(function() {
 		$(".taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
 		$(".taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
 	    }
-	    else {
+ 	    else {
 		$(".taxrate option.igstopt").prop("disabled", true).prop("hidden", true);
 		$(".taxrate option.sgstopt").prop("disabled", false).prop("hidden", false);
 	    }
@@ -207,16 +207,19 @@ $(document).ready(function() {
 
     //Keydown for 'Tax Rate'.
     $(document).off("keydown",".taxrate").on("keydown",".taxrate",function(event){
+	var rateindex = $(this).closest('tr').index();
 	if(event.which == 13){
 	    event.preventDefault();
-	    if(!$('.taxrate').is(':hidden')){
-		if ($.trim($('.taxrate').val()) == "" ) {
-		    $("#mult_taxrate-alert").alert();
-		    $("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
-			$("#mult_taxrate-alert").hide();
-		    });
-		    $(".taxrate").focus();
-		    return false;
+	    if(rateindex == 0){
+		if(!$('.taxrate').is(':hidden')){
+		    if ($.trim($('.taxrate').val()) == "" ) {
+			$("#mult_taxrate-alert").alert();
+			$("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+			    $("#mult_taxrate-alert").hide();
+			});
+			$(".taxrate").focus();
+			return false;
+		    }
 		}
 	    }
 	    //wrong pls checked
@@ -261,14 +264,16 @@ $(document).ready(function() {
 	var cesindex = $(this).closest('tr').index();
 	if (event.which == 13 ) {
 	    event.preventDefault();
-	    if(!$('.cessrate').is(':hidden')){
-		if ($.trim($('.cessrate').val())=="") {
-                    $("#mult_cessrate-alert").alert();
-                    $("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
-			$("#mult_cessrate-alert").hide();
-		    });
-                    $(".cessrate").focus();
-                    return false;
+	    if(cesindex == 0){
+		if(!$('.cessrate').is(':hidden')){
+		    if ($.trim($('.cessrate').val())=="") {
+			$("#mult_cessrate-alert").alert();
+			$("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
+			    $("#mult_cessrate-alert").hide();
+			});
+			$(".cessrate").focus();
+			return false;
+		    }
 		}
 	    }
 	    //wrong pls checked
@@ -326,26 +331,35 @@ $(document).ready(function() {
 
 		if ($(this).closest('tr').is(":last-child"))
 		{
-		    var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-		    for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
-			let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
-			if(curacname == pvacname){
-			    $("#acname_duplicate-alert").alert();
-			    $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-				$("#acname_duplicate-alert").hide();
-			    });
-			    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
-			    return false;
+		    if($('.cessrate').is(':visible')){
+			var rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val());
+		    }else if($('taxrate').is(':visible')){
+			rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
+		    }
+		    
+		    if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
+			var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+			for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
+			    let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+			    if(curacname == pvacname){
+				$("#acname_duplicate-alert").alert();
+				$("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+				    $("#acname_duplicate-alert").hide();
+				});
+				$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+				return false;
+			    }
 			}
 		    }
-		    /**if((accnt !=="" || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "") && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val()) ==""){
+		    else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" || rateoftax =="" || accnt =="" ){
+			console.log('Up blank');
 			$("#field_blank-alert").alert();
 			$("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 			    $("#field_blank-alert").hide();
 			});
 			$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
 			return false;
-		    }**/
+		    }
 		    addRow(curindex);
 		}
 	    }else{
@@ -446,6 +460,12 @@ $(document).ready(function() {
     });
     }
 
+    $(document).off("click",".headerdel").on("click", ".headerdel", function() {
+	$("#m_multiacc").modal('hide');
+	$("#reset").click();
+	$('.modal-backdrop').remove();
+    });
+    
 $(document).off("click",".m_del").on("click", ".m_del", function() {
   //This function will delete the current row.
   $(this).closest('tr').fadeOut(200, function(){
@@ -457,8 +477,18 @@ $(document).off("click",".m_del").on("click", ".m_del", function() {
     
 var allow = true;
 var blankindex = 0;
-$(document).off("click",".#acc_add").on("click", "#acc_add", function() {
+$(document).off("click","#acc_add").on("click", "#acc_add", function() {
 
+    for (let i = 0; i < $("#m_acctable tbody tr").length; i++) { 
+	var accnt = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(3) input').val());
+	var taxtype = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(0) option:selected').val());
+	if(taxtype =='CESSIN' || taxtype =='CESSOUT'){
+	    var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(2) input').val());
+	}else{
+	    rateoftax = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(2) option:selected').val());
+	}
+    }
+    
 // Function to save all accounts in the table.
   var output = [];	// This is an array which will contain dictionaries representing rows of the table.
   var m_grpnm = $.trim($("#m_gname").val());

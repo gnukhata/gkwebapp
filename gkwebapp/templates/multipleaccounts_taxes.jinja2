@@ -97,11 +97,15 @@
        float: left;
 
    }
-   span {
+   span:not(headerdel){
        margin:5.5 auto;
    }
    .m_del{
        color:#000000;
+   }
+   .headerdel{
+       float:right;
+       color:white;
    }
   </style>
 
@@ -120,7 +124,8 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header form-inline">
-          <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
+	  <a href="#" class="headerdel"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+	  <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
         </div>
         <div class="form-inline container-fluid">
 	  <div class="alert alert-danger" id="mult_blank-alert" aria-live="rude" role="alert" hidden>
