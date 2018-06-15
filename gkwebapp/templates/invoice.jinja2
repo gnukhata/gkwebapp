@@ -67,6 +67,7 @@
 </head>
 <body>
   <div id="listdiv" class="container-fluid row" >
+    <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;margin-right:10px;margin-top:13px;" data-toggle="modal" data-target="#invModal"></i>
     <ul class="nav nav-pills nav-tabs" role="tablist">
       <li role="presentation" class="active"><a href="" id="invoice_record" role="tab" data-toggle="tab" accesskey="1">{% trans %} Record Purchase Invoice{% endtrans %}</a></li>
       <li role="presentation" ><a href="" id="invoice_create" role="tab" data-toggle="tab" accesskey="2">{% trans %} Create Sale Invoice{% endtrans %}</a></li>
@@ -95,6 +96,42 @@
       <button type="button" class="btn btn-sm btn-danger pull-right" id="backbutton" accesskey="k" style="margin-left:10px;"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
       <button id="editbutton" class="btn btn-info btn-sm pull-right" accesskey="e" style="margin-left:10px;"><i class="fa fa-pencil-square-o" aria-hidden="true" style="margin-right:5px;"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>
       <button type="button" class="btn btn-sm btn-primary pull-right" id="printbutton" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    </div>
+  </div>
+  
+  <div id="invModal" tabindex="-1" class="modal fade" role="dialog" style="width:650px; margin-top:100px; margin-left:300px;"  aria-hidden="true">
+    <div class="modal-dialog bgcolor">
+      <div class="modal-content ">
+	<div class="modal-header">
+	  {% trans %}<strong>Help!</strong>{% endtrans %}
+	  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	    <span aria-hidden="true">&times;</span>
+	  </button>
+	</div>
+	<div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+	  
+	  <p><font color=" #566573"> {%trans%}
+	    This is the module for GST and VAT compatible invoices.<br>
+	    You can enter all the invoicing details including the product, service
+	    or combination there-off.<br>
+	    There is a dropdown to choose delivery challan for invoice creation against delivery challan.
+	    There is dropdown to select delivery challan to create invoice against the delivery challan.
+	    The details of the selected delivery challan, such as product, customer/supplier are filled automatically.<br>
+	    Needless to say that for product you also enter it's quantity.<br>
+	    Tax is automatically selected on the product.<br>
+	    Select the name of customer in case of sales invoice or supplier in the
+	    case of purchase invoice.<br>
+	    The checkbox to select the type of invoice you want to create ('VAT invoice' or 'GST invoice').<br>
+	    If you have chosen to generate sales and purchase transactions
+	    automatically, they will be generated when you save the invoice.<br>
+	    If payment is on Cash or Bank type then the available default cash or
+	    bank account will be affected.<br>
+	    If the invoice is on credit then the respective customer or supplier
+	    account will be affected for sales or purchase invoice respectively.<br>	    
+{%endtrans %} </font>
+	  </p>
+	</div>
+      </div>
     </div>
   </div>
 

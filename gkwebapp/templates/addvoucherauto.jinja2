@@ -91,9 +91,11 @@
         <div class="panel shadow" >
 
           <div class="panel-heading">
-            {% if vtype == "receipt" %}
-            <div class="panel-title">Receipt</div>
+	    {% if vtype == "receipt" %}
+	      <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#recVModal"></i>
+              <div class="panel-title">Receipt</div>
             {% else %}
+	      <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#payVModal"></i>
             <div class="panel-title">Payment</div>
             {% endif %}
           </div>
@@ -162,8 +164,63 @@
               </label>
               <span class='label label-info' id="upload-file-info"></span>
               <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
-            </div>
-          </form>
+          </div>
+            </form>
+	    <div id="payVModal" tabindex="-1" class="modal fade" role="dialog" style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	      <div class="modal-dialog bgcolor">
+		<div class="modal-content ">
+		  <div class="modal-header">
+		    {% trans %}<strong>Help!</strong>{% endtrans %}
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		      <span aria-hidden="true">&times;</span>
+		    </button>
+		  </div>
+		  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+		    <p>   <font color=" #566573"> {%trans%}
+		      This module helps you to record payment transactions.<br>
+		      Select the party to whom payment is to be maid from the dropdown.<br>
+		      If the payment is in cash select the cash option, if payment is in the
+		      form of cheque, NEFT etc then choose bank.<br>
+		      You can also choose to make a combination of two if the payment is
+		      partially by cash and partially as Neft or Cheque.<br>
+		      Enter the date for this transaction and click save.<br>
+{%endtrans %} </font>
+
+		    </p>
+		  </div>
+
+		</div>
+	      </div>
+	    </div>
+	    <div id="recVModal" tabindex="-1" class="modal fade" role="dialog" style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	      <div class="modal-dialog bgcolor">
+		<div class="modal-content ">
+		  <div class="modal-header">
+		    {% trans %}<strong>Help!</strong>{% endtrans %}
+		    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		      <span aria-hidden="true">&times;</span>
+		    </button>
+		  </div>
+		  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+		    <p>   <font color=" #566573"> {%trans%}
+		      This module helps you to record receipt transactions.<br>
+		      Select the party to whom receipt is to be maid from the dropdown.<br>
+		      If the payment is in cash select the cash option, if payment is in the
+		      form of cheque, NEFT etc then choose bank.<br>
+		      You can also choose to make a combination of two if the payment is
+		      partially by cash and partially as Neft or Cheque.<br>
+		      Enter the date for this transaction and click save.<br>
+		      
+{%endtrans %} </font>
+
+		    </p>
+		  </div>
+
+		</div>
+	      </div>
+	    </div>
         </div>
       </div>
     </div>
