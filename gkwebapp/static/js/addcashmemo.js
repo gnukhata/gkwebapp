@@ -1574,7 +1574,7 @@ $(document).off("keyup").on("keyup", function(event) {
             }
           })
 		.done(function(resp) {
-		    console.log(sessionStorage);
+		   
 		    if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
 		   if(inoutflag == 15){
 		       $("#cashmemo_create").click();
@@ -1610,7 +1610,7 @@ $(document).off("keyup").on("keyup", function(event) {
                  $("#duplicate-alert").hide();
                });
                return false;
-             } else if (resp["gkstatus"] == 1){
+             } else if (resp["gkstatus"] == 3){
                $("#invoice_challanno").focus();
                $("#failure-alert").alert();
                $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
