@@ -466,10 +466,6 @@ $(document).ready(function()
     else {
       $("#clonereplaceattach").show();
     }
-      if(sessionStorage.avnoflag==1){
-	  $(".vouchernoclone").hide();
-	  $("#vdate").focus();
-      }
     ecflag="clone";
     $("#vouchercancel").show();
     $(".lblec").prepend('<i>Cloning </i>');
@@ -494,8 +490,6 @@ $(document).ready(function()
     $('#invsel').val($('#selinv').val());
     $("#selinvtotal").show();
     $("#selinvtotal").prop('disabled', false);
-    $("#invtotal").val($('#invtotalvvi').val());
-    $("#vno").focus().select();
     $("#vctable").show();
     $("#demovctable").hide();
     $(".vdate").prop('disabled', false);
@@ -554,7 +548,13 @@ $(document).ready(function()
 
             });
 
-
+      $("#invtotal").val($('#invtotalvvi').val());
+      if(sessionStorage.avnoflag==1){
+	  $("#vdate").focus().select();
+	  $(".vouchernoclone").hide();
+      }else{
+	  $("#vno").focus().select();
+      }
   });
   $("#vouchercancel").click(function(event)
   {
