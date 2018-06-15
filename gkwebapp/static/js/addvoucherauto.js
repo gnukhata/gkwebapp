@@ -31,10 +31,39 @@ $(document).ready(function() {
   $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
 
   $("#amount").numeric({ negative: false });
+  $("#b-amount").numeric({ negative: false });
+  $("#c-amount").numeric({ negative: false });
+
+  $("#amount").val("0.00");
+  $("#b-amount").val("0.00");
+  $("#c-amount").val("0.00");
 
   $('.date').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
 
   $("#vdate").focus();
+
+  function raiseAlertById(id) {
+    $(id).alert();
+    $(id).fadeTo(2250, 500).slideUp(500, function() {
+      $(id).hide();
+    })
+
+  }
+
+  function adjustAmountByID(id) {
+    $(document).off("focusout",id).on("focusout",id,function(event) {
+      if ($(this).val()=="" || $.trim($(this).val())==".") {
+        $(this).val("0.00");
+      }
+      else{
+        $(this).val((parseFloat($(this).val()).toFixed(2)));
+      }
+    });
+  }
+
+  adjustAmountByID("#amount");
+  adjustAmountByID("#b-amount");
+  adjustAmountByID("#c-amount");
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -42,7 +71,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-	return str;
+      return str;
     }
   }
 
@@ -55,15 +84,14 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-	return str;
+      return str;
     }
   }
 
   $("#reset").click(function(event) {
     event.preventDefault();
-    $("#vdetails").find('input:text, textarea').val('');
-    $("#date").trigger("reset");
-  })
+    $("#show"+$("#vtype").val()).click();
+  });
 
   $("#narration").keydown(function(event) {
     if (event.which == 13) {
@@ -72,29 +100,40 @@ $(document).ready(function() {
     }
     else if (event.which == 38) {
       event.preventDefault();
-      $("#payment-mode").focus();
+      if ($("#amount-container").is(":visible")) {
+        $("#amount").focus().select();
+      }
+      else {
+        $("#c-amount").focus().select();
+      }
     }
   })
 
   $("#payment-mode").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#narration").focus();
+      if ($("#amount-container").is(":visible")) {
+        $("#amount").focus().select();
+      }
+      else {
+        $("#b-amount").focus().select();
+      }
     } 
     else if (event.which == 38) {
-      event.preventDefault();
-      $("#amount").focus();
+      if ($("#payment-mode").val() == "bank") {
+        $("#pname").focus();
+      }
     }
   })
  
   $("#amount").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
-      $("#payment-mode").focus();
+      $("#narration").focus();
     }
     else if (event.which == 38) {
       event.preventDefault();
-      $("#pname").focus();
+      $("#payment-mode").focus();
     }
   })
  
@@ -103,26 +142,38 @@ $(document).ready(function() {
       event.preventDefault();
 
       if ($("#pname option:selected").val() == "") {
-        $("#pname-blank").alert();
-        $("#pname-blank").fadeTo(2250, 500).slideUp(500, function(){
-          $("#pname-blank").hide();
-        });
-      };
-      $("#amount").focus();
+        raiseAlertById("#pname-blank");
+      }
+      $("#payment-mode").focus();
     }
     else if (event.which == 38) {
-      $("#vdate").focus();
+      var curName = $("#pname option:selected").val();
+      var firstOption = $("#pname option:first").val();
+      if (curName == firstOption) {
+        $("#vdate").focus();
+      }
     }
   })
 
-  $(document).off("focusout","#amount").on("focusout","#amount",function(event) {
-    if ($(this).val()=="" || $.trim($(this).val())==".") {
-      $(this).val("0.00");
+  $("#b-amount").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#c-amount").focus().select();
     }
-    else{
-      $(this).val((parseFloat($(this).val()).toFixed(2)));
+    else if (event.which == 38) {
+      $("#payment-mode").focus();
     }
-  });
+  })
+
+  $("#c-amount").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#narration").focus();
+    }
+    else if (event.which == 38) {
+      $("#b-amount").focus().select();
+    }
+  })
 
   $("#vdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
@@ -140,10 +191,7 @@ $(document).ready(function() {
       event.preventDefault();
 
       if ($("#vdate").val() == "") {
-        $("#vdate-blank").alert();
-        $("#vdate-blank").fadeTo(2250, 500).slideUp(500, function() {
-          $("#vdate-blank").hide();
-        });
+        raiseAlertById("#vdate-blank");
       }
       $("#month").focus();
     }
@@ -154,10 +202,7 @@ $(document).ready(function() {
       event.preventDefault();
 
       if($("#month").val() == "") {
-        $("#month-blank").alert();
-        $("#month-blank").fadeTo(2250, 500).slideUp(500, function() {
-          $("#month-blank").hide();
-        })
+        raiseAlertById("#month-blank");
       }
       $("#year").focus();
       }
@@ -168,10 +213,7 @@ $(document).ready(function() {
       event.preventDefault();
 
       if ($("#year").val() == "") {
-        $("#year-blank").alert();
-        $("#year-blank").fadeTo(2250, 500).slideUp(500, function() {
-          $("#year-blank").hide();
-        })
+        raiseAlertById("#year-blank");
       }
       $("#pname").focus();
     }
@@ -180,10 +222,7 @@ $(document).ready(function() {
 
   $("#year").blur(function(event) {
     if (!Date.parseExact($("#vdate").val()+$("#month").val()+$("#year").val(), "ddMMyyyy")) {
-      $("#date-alert").alert();
-      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#date-alert").hide();
-      });
+      raiseAlertById("#vdate-alert");
       $("#postdate-alert").hide();
       $('#vdate').focus().select();
       return false;
@@ -204,55 +243,80 @@ $(document).ready(function() {
 
   });
 
+  $("#payment-mode").change(function() {
+    if ($(this).val() == "both") {
+      $("#amount-container").hide();
+      $("#split-amount-container").show();
+    }
+    else {
+      $("#amount-container").show();
+      $("#split-amount-container").hide();
+    }
+  })
 
-  $("#vdetails").submit(function(event) {
+
+  $("#submit").click(function(event) {
     event.preventDefault();
 
     var date = $("#year").val()+"-"+$("#month").val()+"-"+$("#vdate").val();
     var party = $("#pname option:selected").val();
-    var amount = $("#amount").val();
     var payment_mode = $("#payment-mode option:selected").val();
     var vtype = $("#vtype").val();
     var narration = $("#narration").val();
 
+    if(payment_mode == "both") {
+      var bamount = $("#b-amount").val();
+      var camount = $("#c-amount").val();
+    }
+    else {
+      var amount = $("#amount").val();
+    }
+
+
     if ($("#vdate").val() == "") {
-      $("#vdate-blank").alert();
-      $("#vdate-blank").fadeTo(2250, 500).slideUp(500, function() {
-        $("#vdate-blank").hide();
-      })
+      raiseAlertById("#vdate-blank");
+      $("#vdate").focus();
       return false;
     }
 
     if ($("#month").val() == "") {
-      $("#month-blank").alert();
-      $("#month-blank").fadeTo(2250, 500).slideUp(500, function() {
-        $("#month-blank").hide();
-      })
+      raiseAlertById("#month-blank");
+      $("#month").focus();
       return false;
     }
 
     if ($("#year").val() == "") {
-      $("#year-blank").alert();
-      $("#year-blank").fadeTo(2250, 500).slideUp(500, function() {
-        $("#year-blank").hide();
-      })
+      raiseAlertById("#year-blank");
+      $("#year").focus();
       return false;
     }
 
-    if (amount == "") {
-      $("#amount-blank").alert();
-      $("#amount-blank").fadeTo(2250, 500).slideUp(500, function() {
-        $("#amount-blank").hide();
-      })
-      return false;
+    if (payment_mode == "both") {
+      if (bamount == "") {
+        raiseAlertById("#b-amount-blank");
+        $("#b-amount").focus();
+        return false;
+      }
+      if (camount == "") {
+        raiseAlertById("#c-amount-blank");
+        $("#c-amount").focus();
+        return false;
+      }
+      if (bamount == "0.00" || camount == "0.00") {
+        raiseAlertById("#amount-zero-alert");
+        return false;
+      }
     }
-
-    if (amount == "0.00") {
-      $("#amount-zero-alert").alert();
-      $("#amount-zero-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#amount-zero-alert").hide();
-      })
-      return false;
+    else {
+      if (amount == "") {
+        raiseAlertById("#amount-blank")
+        $("#amount").focus();
+        return false;
+      }
+      if (amount == "0.00") {
+        raiseAlertById("#amount-zero-alert");
+        return false;
+      }
     }
 
     var form_data = new FormData();
@@ -264,11 +328,21 @@ $(document).ready(function() {
     }
 
     form_data.append("party", party);
-    form_data.append("amount", amount);
     form_data.append("payment_mode", payment_mode);
     form_data.append("vtype", vtype);
     form_data.append("date", date);
     form_data.append("narration", narration);
+
+    if (payment_mode == "both") {
+      form_data.append("bamount", bamount);
+      form_data.append("camount", camount);
+    }
+    else if (payment_mode == "cash") {
+      form_data.append("camount", amount);
+    }
+    else {
+      form_data.append("bamount", amount);
+    }
 
     $.ajax({
       type: "POST",
@@ -285,18 +359,11 @@ $(document).ready(function() {
       },
       success: function(resp) {
         if(resp.gkstatus == true) { // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $("#vdetails").find('input:text, textarea').val('');
-          $("#date").trigger("reset");
-          $("#success-alert").alert();
-          $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#success-alert").hide();
-          })
+          $("#reset").click();
+          raiseAlertById("#success-alert");
         }
         else {
-          $("#failure-alert").alert();
-          $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#failure-alert").hide();
-          })
+          raiseAlertById("#failure-alert");
           return false;
         }
       }

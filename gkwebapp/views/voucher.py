@@ -204,8 +204,12 @@ def addvoucherauto(request):
     data["vdetails"]["voucherdate"] = request.params["date"]
     data["vdetails"]["narration"] = request.params["narration"]
     data["transactions"]["party"] = request.params["party"]
-    data["transactions"]["amount"] = request.params["amount"]
     data["transactions"]["payment_mode"] = request.params["payment_mode"]
+
+    if data["transactions"]["payment_mode"] in ["both", "bank"]:
+        data["transactions"]["bamount"] = request.params["bamount"]
+    if data["transactions"]["payment_mode"] in ["both", "cash"]:
+        data["transactions"]["camount"] = request.params["camount"]
 
     try:
         files = {}

@@ -4,6 +4,9 @@
       #narration {
         margin-bottom: 15px;
       }
+      #split-amount-container {
+        display: none;
+      }
     </style>
   </head>
   <body>
@@ -62,6 +65,14 @@
         {% trans %}Please enter amount!{% endtrans %}
       </div>
 
+      <div class="alert alert-danger" id="b-amount-blank"  aria-live="rude" role="alert" hidden>
+        {% trans %}Please enter Bank tranfer amount!{% endtrans %}
+      </div>
+
+      <div class="alert alert-danger" id="c-amount-blank"  aria-live="rude" role="alert" hidden>
+        {% trans %}Please enter Cash tranfer amount!{% endtrans %}
+      </div>
+
       <div class="alert alert-danger" id="amount-zero-alert"  aria-live="rude" role="alert" hidden>
         {% trans %}Cannot create voucher with amount 0.00!{% endtrans %}
       </div>
@@ -106,16 +117,32 @@
                 {% endfor %}
               </select>
               <br/>
-              <label for="amount" id="amount-label">{% trans %}<u>A</u>mount{% endtrans %}: </label><label for="amount" style="color:red;font-size: 120%;">*</label>
-              <br/>
-              <input id="amount" name="amount" class="form-control input-sm" accesskey="a">
-              <br/>
               <label for="payment-mode" id="payment-mode-label">{% trans %}Pa<u>y</u>ment Mode{% endtrans %}:</label><label for="payment-mode" style="color:red;font-size: 120%;">*</label>
               <select class="form-control pselect input-sm" id="payment-mode" name="payment-mode" accesskey="y">
                 <option value="bank">Bank</option>
                 <option value="cash">Cash</option>
+                <option value="both">Bank & Cash</option>
               </select>
               <br/>
+
+              <div id="amount-container">
+                  <label for="amount" id="amount-label">{% trans %}<u>A</u>mount{% endtrans %}: </label><label for="amount" style="color:red;font-size: 120%;">*</label>
+                  <br/>
+                  <input id="amount" name="amount" class="split-amount form-control input-sm" accesskey="a">
+                  <br/>
+              </div>
+
+              <div id="split-amount-container">
+                  <label for="b-amount">{% trans %}<u>B</u>ank transfer amount{% endtrans %}:</label><label for="b-amount" style="color:red;font-size: 120%;">*</label>
+                  <br/>
+                  <input id="b-amount" name="b-amount" class="form-control input-sm" accesskey="b">
+                  <br/>
+
+                  <label for="c-amount">{% trans %}C<u>a</u>sh transfer amount{% endtrans %}:</label><label for="b-amount" style="color:red;font-size: 120%;">*</label>
+                  <br/>
+                  <input id="c-amount" name="c-amount" class="form-control input-sm" accesskey="a">
+                  <br/>
+              </div>
 
               <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
               <textarea class="form-control" name="narration" id="narration" rows="2" cols="70" accesskey="t"></textarea>
