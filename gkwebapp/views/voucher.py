@@ -140,9 +140,10 @@ def addvoucher(request):
             gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
         else:
             gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
-        if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
+        if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales" or vdetails["vtype"] == "payment" or vdetails["vtype"] == "receipt":
             if vdetails["invid"] != "":
                 gkdata["invid"] = vdetails["invid"]
+
             else:
                 gkdata["invid"] = None
     else:
@@ -150,7 +151,7 @@ def addvoucher(request):
             gkdata={"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
         else:
             gkdata={"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"]}
-        if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales":
+        if vdetails["vtype"] == "purchase" or vdetails["vtype"] == "sales" or vdetails["vtype"] == "payment" or vdetails["vtype"] == "receipt":
             if vdetails["invid"] != "":
                 gkdata["invid"] = vdetails["invid"]
             else:
@@ -188,7 +189,6 @@ def addvoucher(request):
         if row["side"]=="Dr":
             drs[row["accountcode"]]=row["dramount"]
     header={"gktoken":request.headers["gktoken"]}
-
     result = requests.post("http://127.0.0.1:6543/transaction",data=json.dumps(gkdata) , headers=header)
     if result.json()["gkstatus"]==0:
         '''

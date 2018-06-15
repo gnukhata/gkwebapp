@@ -2007,12 +2007,12 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 		return false;
 	    }
 	form_data.append("file"+i,files[i]);
-    }
-    if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase"))
+      }
+      if (($('#vtype').val()=="sales") || ($('#vtype').val()=="purchase") || ($('#vtype').val()=="payment") || ($('#vtype').val()=="receipt"))
       {
 	if ($("#invsel").length > 0) {
 	  details.invid = $("#invsel option:selected").val();
-	  var invoicetotal= $("#invsel option:selected").attr("total");
+	    var invoicetotal= $("#invsel option:selected").attr("total");
       }
       else {
 	details.invid = "";

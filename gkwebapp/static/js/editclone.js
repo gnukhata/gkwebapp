@@ -82,8 +82,8 @@ $(document).ready(function()
         return bal;
       }
 
-  if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
-  {
+    if ((($('#m_vtype').val()=="sales") || ($('#m_vtype').val()=="purchase") || ($('#m_vtype').val()=="payment") || ($('#m_vtype').val()=="receipt")) && sessionStorage.invflag==1)
+    {
     if ($("#viewinvsel").length > 0){
       $(".invhide").show();
     }
