@@ -45,21 +45,24 @@ def showvoucher(request):
     # if mode is set to automatic then user friendly API should be shown for
     # payment and receipt
     if request.params.get("modeflag") == "1" and type in ["receipt", "payment"]:
+        accounts = []
         groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header).json()
-        if type == "receipt":
-            grpcode = groups["gkresult"]["Sundry Debtors"]
-            result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(grpcode)),headers=header).json()
-        else:
-            grpcode = groups["gkresult"]["Sundry Creditors for Purchase"]
-            result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(grpcode)),headers=header).json()
+        cust_grpcode = groups["gkresult"]["Sundry Debtors"]
+        cust_result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(cust_grpcode)),headers=header).json()
+        if cust_result["gkstatus"] == 0:
+            accounts = cust_result["gkresult"]
+        sup_grpcode = groups["gkresult"]["Sundry Creditors for Purchase"]
+        sup_result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(sup_grpcode)),headers=header).json()
+        if sup_result["gkstatus"] == 0:
+            accounts.extend(sup_result["gkresult"])
 
         flags = dict()
         flags["invflag"] = request.params.get("invflag")
         flags["invsflag"] = request.params.get("invsflag")
         flags["billflag"] = request.params.get("billflag")
 
-        if result["gkstatus"] == 0:
-            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":result["gkresult"],"flags":flags},request=request)
+        if cust_result["gkstatus"] == 0 and sup_result["gkstatus"] == 0:
+            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)

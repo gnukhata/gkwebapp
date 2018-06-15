@@ -14,19 +14,11 @@
 
       {% if accounts|length < 1 %}
       <div class="alert alert-warning" id="no-party-accounts" aria-live="rude" role="alert">
-        {% if vtype == "receipt" %}
-          {% if flags.invflag == "0" and flags.invsflag == "0" and flags.billflag == "0" %}
-            {% trans %} Please create an account under subgroup Sundry Debtors first to create voucher {% endtrans %}
-          {% else %}
-            {% trans %} Please create a Customer account first to create voucher {% endtrans %}
-          {% endif %}
-        {% else %}
-          {% if flags.invflag == "0" and flags.invsflag == "0" and flags.billflag == "0" %}
-            {% trans %} Please create an account under subgroup Sundry Creditors for Purchase first to create voucher {% endtrans %}
-          {% else %}
-            {% trans %} Please create a Supplier account first to create voucher {% endtrans %}
-          {% endif %}
-        {% endif %}
+      {% if flags.invflag == "0" and flags.invsflag == "0" and flags.billflag == "0" %}
+        {% trans %} Please create an account under subgroup Sundry Debtors/Sundry Creditors for Purchase first to create voucher {% endtrans %}
+      {% else %}
+        {% trans %} Please create a Customer/Supplier account first to create voucher {% endtrans %}
+      {% endif %}
       </div>
       {% endif %}
       <div class="alert alert-danger" id="error-alert"  aria-live="rude" role="alert" hidden>
