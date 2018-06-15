@@ -84,7 +84,7 @@ $(document).ready(function()
 
     if ((($('#m_vtype').val()=="sales") || ($('#m_vtype').val()=="purchase") || ($('#m_vtype').val()=="payment") || ($('#m_vtype').val()=="receipt")) && sessionStorage.invflag==1)
     {
-    if ($("#viewinvsel").length > 0){
+	if ($("#viewinvsel").length > 0){
       $(".invhide").show();
     }
     else {
@@ -466,12 +466,17 @@ $(document).ready(function()
     else {
       $("#clonereplaceattach").show();
     }
-    ecflag="clone";
+      ecflag="clone";
+      if ($("#viewinvsel").length > 0){
+	  $(".invhide").show();
+      }
+      else {
+	  $(".invhide").hide();
+      }
     $("#vouchercancel").show();
     $(".lblec").prepend('<i>Cloning </i>');
     $("#lock").hide();
     $("#clone").hide();
-    $(".invhide").show();
     $("#edit").hide();
     $("#delete").hide();
     $(".ttl").prop('disabled', true);
@@ -850,7 +855,7 @@ $(document).ready(function()
 
   $('#vyear').keyup(function(event) {
     if(event.which==13 && $('#vyear').val()!=""){
-      if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
+      if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase" || $('#m_vtype').val()=="payment" || $('#m_vtype').val()=="receipt") && sessionStorage.invflag==1)
       {
         $("#invsel").focus();
       }
