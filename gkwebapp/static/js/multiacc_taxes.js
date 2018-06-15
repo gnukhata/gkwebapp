@@ -479,21 +479,93 @@ var allow = true;
 var blankindex = 0;
 $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 
-    for (let i = 0; i < $("#m_acctable tbody tr").length; i++) { 
-	var accnt = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(3) input').val());
-	var taxtype = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(0) option:selected').val());
-	if(taxtype =='CESSIN' || taxtype =='CESSOUT'){
-	    var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(2) input').val());
-	}else{
-	    rateoftax = $.trim($('#m_acctable tbody tr:eq('+ i +') td:eq(2) option:selected').val());
-	}
-    }
-    
 // Function to save all accounts in the table.
   var output = [];	// This is an array which will contain dictionaries representing rows of the table.
-  var m_grpnm = $.trim($("#m_gname").val());
+    var m_grpnm = $.trim($("#m_gname").val());
+    var allowsave = 1;
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
+      var curindex = $(this).index();
+      var accnt = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(3) input').val());
+      var taxtype = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) option:selected').val());
+      if(taxtype =='CESSIN' || taxtype =='CESSOUT'){
+	  var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) input').val());
+      }else{
+	  rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) option:selected').val());
+      }
 
+      if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
+	  var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+	  for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
+	      let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+	      if(curacname == pvacname){
+		  $("#acname_duplicate-alert").alert();
+		  $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#acname_duplicate-alert").hide();
+		  });
+		  allowsave = 0;
+		  $('#m_acctable tbody tr:last td:eq(0) select').focus().select();
+		  return false;
+	      }
+	  }
+      }
+      if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && accnt !="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax =="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && accnt =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax =="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && accnt =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax !="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && accnt !="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax !="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && accnt !="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax =="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && accnt =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax =="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && accnt =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" ){
+	  $("#field_blank-alert").alert();
+	  $("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#field_blank-alert").hide();
+	  });
+	  allowsave = 0;
+	  $('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) select').focus().select();
+	  return false;
+      }
+      
     var accn = $(".m_accname", this).val();  
     if (accn=="")
     {
@@ -515,51 +587,51 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
     }
   });
 
-  //ajax function below takes list of dictionaries "output" as input and saves all accounts.
-  $.ajax({
-    url: '/multiacc',
-    type: 'POST',
-    datatype: 'json',
-    data: {"accdetails": JSON.stringify(output)},
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    //ajax function below takes list of dictionaries "output" as input and saves all accounts.
+    if(allowsave == 1){
+	$.ajax({
+	url: '/multiacc',
+	type: 'POST',
+	datatype: 'json',
+	data: {"accdetails": JSON.stringify(output)},
+	beforeSend: function(xhr)
+	{
+	    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	}
+	})
+        .done(function(resp) {
+	    if(resp["gkstatus"]==0)
+	    {
+		$("#m_multiacc").modal('hide');
+		$("#reset").click();
+		$('.modal-backdrop').remove();
+		$("#multisuccess-alert").alert();
+		$("#multisuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#multisuccess-alert").hide();
+		});
+		
+	    }
+	    else if(resp["gkstatus"]==1)
+	    {
+		$("#m_multiacc").modal('hide');
+		$("#duplicate-alert").alert();
+		$("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#duplicate-alert").hide();
+		});
+		$("#accname").focus().select();
+	    }
+	    else
+	    {
+		$("#m_multiacc").modal('hide');
+		$("#failure-alert").alert();
+		$("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#failure-alert").hide();
+		});
+		$("#accname").focus().select();
+	    }
+	});
     }
-  })
-  .done(function(resp) {
-
-    if(resp["gkstatus"]==0)
-    {
-      $("#m_multiacc").modal('hide');
-      $("#reset").click();
-      $('.modal-backdrop').remove();
-      $("#multisuccess-alert").alert();
-      $("#multisuccess-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#multisuccess-alert").hide();
-      });
-
-    }
-    else if(resp["gkstatus"]==1)
-    {
-      $("#m_multiacc").modal('hide');
-      $("#duplicate-alert").alert();
-      $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#duplicate-alert").hide();
-      });
-      $("#accname").focus().select();
-    }
-    else
-    {
-      $("#m_multiacc").modal('hide');
-      $("#failure-alert").alert();
-      $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#failure-alert").hide();
-      });
-      $("#accname").focus().select();
-    }
-  });
-
-});
+    });
 
 
 });
