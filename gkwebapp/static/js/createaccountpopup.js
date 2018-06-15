@@ -341,7 +341,6 @@ else
 		  {
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
-			  console.log(taxstate);
 			  if (taxtype!="" && taxstate!="" && taxrate!="") {
 			      $('#m_accountname').val(taxtype + "_" + taxstate + "@" + taxrate);
 			  }

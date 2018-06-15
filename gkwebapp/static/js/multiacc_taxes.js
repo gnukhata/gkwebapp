@@ -20,8 +20,8 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
 "Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
+"Abhijith Balan" <abhijith@dff.org.in>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 // This script is for multiple account popup.
 $(document).ready(function() {
@@ -132,7 +132,9 @@ $(document).ready(function() {
 	}
 	else if (event.which == 38) {
 	    if(tnindex > 0){
-		$( '#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
+		if ($('#m_acctable tbody tr:eq('+tnindex+') td:eq(0) option:visible').first().is(":selected")) {
+		    $( '#m_acctable tbody tr:eq('+ptnindex+') td:eq(4) input').focus().select();
+		}
 	    }
 	    
 	}
@@ -310,6 +312,7 @@ $(document).ready(function() {
 	{
 	    // Validates whether the account name of corresponfing row is blank or not.
 	    var accnt = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val());
+	    var type = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val());
 	    if($("#m_gstaccount").is(':checked')){
 		if(accnt=="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val()) =="")
 		{
@@ -332,12 +335,11 @@ $(document).ready(function() {
 
 		if ($(this).closest('tr').is(":last-child"))
 		{
-		    if($('.cessrate').is(':visible')){
+		    if(type == 'CESSIN' || type == 'CESSOUT'){
 			var rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val());
-		    }else if($('taxrate').is(':visible')){
+		    }else{
 			rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
 		    }
-		    
 		    if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
 			var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
 			for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
@@ -470,9 +472,9 @@ $(document).off("click",".m_del").on("click", ".m_del", function() {
   //This function will delete the current row.
   $(this).closest('tr').fadeOut(200, function(){
     $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#m_acctable tbody tr:last td:eq(0) select').focus().select();
+    $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
   });
-  $('#m_acctable tbody tr:last td:eq(0) select').select();
+    $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
 });
     
 var allow = true;
@@ -480,7 +482,7 @@ var blankindex = 0;
 $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 
 // Function to save all accounts in the table.
-  var output = [];	// This is an array which will contain dictionaries representing rows of the table.
+    var output = [];	// This is an array which will contain dictionaries representing rows of the table.
     var m_grpnm = $.trim($("#m_gname").val());
     var allowsave = 1;
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
@@ -491,22 +493,6 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 	  var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) input').val());
       }else{
 	  rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) option:selected').val());
-      }
-
-      if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
-	  var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-	  for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
-	      let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
-	      if(curacname == pvacname){
-		  $("#acname_duplicate-alert").alert();
-		  $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-		      $("#acname_duplicate-alert").hide();
-		  });
-		  allowsave = 0;
-		  $('#m_acctable tbody tr:last td:eq(0) select').focus().select();
-		  return false;
-	      }
-	  }
       }
       if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && accnt !="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax =="" ){
 	  $("#field_blank-alert").alert();
@@ -633,5 +619,11 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
     }
     });
 
+    $(document).off("keyup").on("keyup", function(event) {
+	if (event.which == 45) {
+	    event.preventDefault();
+	    $("#acc_add").click();
+	}
+    });
 
 });

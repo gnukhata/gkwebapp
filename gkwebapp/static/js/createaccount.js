@@ -606,6 +606,7 @@ $("#openbal").keydown(function(event){
   $('#maccounts').change(function() {
   if($('#maccounts').attr('checked', true)){
       $(".defbx").attr('checked',false);
+      $("#gstaccount").attr('checked',false);
   }
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();

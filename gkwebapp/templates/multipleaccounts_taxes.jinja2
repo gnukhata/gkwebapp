@@ -124,7 +124,7 @@
     <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header form-inline">
-	  <a href="#" class="headerdel"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+	  <span class="glyphicon glyphicon-remove headerdel" aria-hidden="true"></span>
 	  <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
         </div>
         <div class="form-inline container-fluid">
@@ -145,7 +145,7 @@
 
 	  <div class="alert alert-danger" id="field_blank-alert" aria-live="rude" role="alert" hidden>
 
-            <label for="m_alt_accname">{% trans %}All fields are required!{% endtrans %}</label>
+            <label for="m_alt_accname">{% trans %}All fields are mandatory!{% endtrans %}</label>
           </div>
 
           <div class="alert alert-danger" id="nodatasaved-alert" aria-live="rude" role="alert" hidden>
@@ -258,7 +258,7 @@
         </div>
         <div class="modal-footer">
 
-          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal">{% trans %}Cancel{% endtrans %}</button>
+          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal" accesskey="n">{% trans %}Ca<u>n</u>cel{% endtrans %}</button>
           <button type="button" id="acc_add"  class="btn btn-success btnfocus" accesskey="v">{% trans %}Sa<u>v</u>e{% endtrans %}</button>
         </div>
       </div><!-- /.modal-content -->
