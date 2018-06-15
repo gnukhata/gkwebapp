@@ -104,6 +104,58 @@ $(document).ready(function(){
       sessionStorage.reload = 0;
       location.reload();
     }
+
+  $("#create-cust").click(function() {
+    $("#customersupplier").click();
+  })
+
+  $("#create-prod").click(function() {
+    $("#productinmaster").click();
+  })
+
+  $("#create-invoice").click(function() {
+    $("#invoice").click();
+  })
+
+  $("#make-payments").click(function() {
+    $("#showreceipt").click();
+  })
+
+  $("#view-charts").click(function() {
+    $("#listofaccounts").click();
+  })
+
+  if (sessionStorage.invsflag==0) {
+    $("#help-message").hide();
+  }
+
+  else {
+    $.ajax({
+      url: '/genstats',
+      type: 'GET',
+      global: false,
+      async: false,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+     .done(function(resp){
+       if(resp["gkstatus"] == 0) {
+         if (resp["gkresult"]["party_count"] > 0) {
+           $("#create-cust").hide();
+           $("#create-prod").css("font-weight", "bold");
+         }
+         if (resp["gkresult"]["prod_count"] > 0) {
+           $("#create-prod").hide();
+           $("#create-invoice").css("font-weight", "bold");
+         }
+         if (resp["gkresult"]["inv_count"] > 0) {
+           $("#create-invoice").hide();
+         }
+       }
+     })
+  }
   var oninvoice = 0;// This variable is set to 1 only when its in the print page of invoice, cashmemo or deliverychallan or transfernote. Reason: The organisation details that appear in all print pages of GNUKhata is not required in the pages where its set to 1.
   $("#msspinmodal").modal("hide"); //Hides the loading spinner.
   $("#bootstrap").attr('href', '../static/css/'+sessionStorage.gktheme+'.min.css');// set the theme depending on users previous choice.

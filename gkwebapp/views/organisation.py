@@ -55,6 +55,12 @@ def set_locale_cookie(request):
                      headers=response.headers)
 
 
+@view_config(route_name="genstats", renderer="json")
+def getGeneralStats(request):
+    header = {"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/organisations?type=genstats", headers=header)
+    return {"gkresult": result.json()["gkresult"], "gkstatus": result.json()["gkstatus"]}
+
 @view_config(route_name="showeditOrg", renderer="gkwebapp:templates/editorganisation.jinja2")
 def showeditOrg(request):
     header={"gktoken":request.headers["gktoken"]}
