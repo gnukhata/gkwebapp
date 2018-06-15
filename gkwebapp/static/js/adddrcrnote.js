@@ -1320,7 +1320,7 @@ if (!curdate.between(financialstart, financialend)) {
 			if($("#status").val()==3){
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			    if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 1) {
-				$("#cr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]["vchCode"]);
+				$("#cr-success-alert").append(" Accounting entry made with voucher no cr" + resp["vchCode"]["vchCode"]);
 			    }
 			    else if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 0){
 				$("#cr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
@@ -1336,7 +1336,7 @@ if (!curdate.between(financialstart, financialend)) {
 			{
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			    if (resp["vchCode"] != 0) {
-				$("#dr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]);
+				$("#dr-success-alert").append(" Accounting entry made with voucher no dr" + resp["vchCode"]["vchCode"]);
 			    }
 			    else{
 				$("#dr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
