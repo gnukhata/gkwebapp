@@ -1574,8 +1574,11 @@ $(document).off("keyup").on("keyup", function(event) {
             }
           })
 		.done(function(resp) {
-		   
-		    if ((resp["gkstatus"] == 0) && ((resp["gkvch"]).length == 0)) {
+		    console.log(sessionStorage);
+		    if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
+		   if(inoutflag == 15){
+		       $("#cashmemo_create").click();
+		   }else{ $("#cashmemo_record").click();}
 		
                $("#success-alert").alert();
                $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1599,15 +1602,15 @@ $(document).off("keyup").on("keyup", function(event) {
 		   saveCashMemo(invid,inoutflag);
 	       });
 		
-		     
-             } if (resp["gkstatus"] == 1) {
+	
+		   }else if (resp["gkstatus"] == 1) {
                $("#invoice_challanno").focus();
                $("#duplicate-alert").alert();
                $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
                  $("#duplicate-alert").hide();
                });
                return false;
-             } else {
+             } else if (resp["gkstatus"] == 1){
                $("#invoice_challanno").focus();
                $("#failure-alert").alert();
                $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
