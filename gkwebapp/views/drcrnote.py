@@ -35,7 +35,7 @@ def savedrcrnote(request):
     wholedataset["dataset"] = drcrdata
     wholedataset["vdataset"] = json.loads(request.params["vdetails"])
     result=requests.post("http://127.0.0.1:6543/drcrnote",data=json.dumps(wholedataset),headers=header)
-    if int(result.json()["gkstatus"]) == 0:
+    if "vchCode" in result.json():
         return {"gkstatus":result.json()["gkstatus"], "vchCode":result.json()["vchCode"]}
     return {"gkstatus":result.json()["gkstatus"]}
     

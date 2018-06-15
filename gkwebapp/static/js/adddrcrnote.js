@@ -1205,7 +1205,7 @@ if (!curdate.between(financialstart, financialend)) {
 			    });
 			    return false;   
 			}
-		let quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val());
+		let quantity = parseFloat($("#drcrnote_product_table_gst tbody tr:eq(" + i + ") td:eq(2) input").val());
 	/*//at time of rejection of product/service	 
 	 if (parseFloat(quantity) === 0.00) {
 	      $("#quantity-blank-alert").alert();
@@ -1319,10 +1319,10 @@ if (!curdate.between(financialstart, financialend)) {
                     if (resp["gkstatus"] == 0) {
 			if($("#status").val()==3){
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    if (resp["vchCode"] != 0) {
-				$("#cr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]);
+			    if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 1) {
+				$("#cr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]["vchCode"]);
 			    }
-			    else{
+			    else if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 0){
 				$("#cr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
 				$("#cr-success-alert").removeClass("alert-success");
 				$("#cr-success-alert").addClass("alert-warning");
