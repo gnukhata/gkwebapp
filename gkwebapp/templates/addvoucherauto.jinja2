@@ -15,9 +15,17 @@
       {% if accounts|length < 1 %}
       <div class="alert alert-warning" id="no-party-accounts" aria-live="rude" role="alert">
         {% if vtype == "receipt" %}
-          {% trans %} Please create an account under subgroup Sundry Debtors first to create voucher {% endtrans %}
+          {% if flags.invflag == "0" and flags.invsflag == "0" and flags.billflag == "0" %}
+            {% trans %} Please create an account under subgroup Sundry Debtors first to create voucher {% endtrans %}
+          {% else %}
+            {% trans %} Please create a Customer account first to create voucher {% endtrans %}
+          {% endif %}
         {% else %}
-          {% trans %} Please create an account under subgroup Sundry Creditors for Purchase first to create voucher {% endtrans %}
+          {% if flags.invflag == "0" and flags.invsflag == "0" and flags.billflag == "0" %}
+            {% trans %} Please create an account under subgroup Sundry Creditors for Purchase first to create voucher {% endtrans %}
+          {% else %}
+            {% trans %} Please create a Supplier account first to create voucher {% endtrans %}
+          {% endif %}
         {% endif %}
       </div>
       {% endif %}
@@ -162,8 +170,6 @@
               </label>
               <span class='label label-info' id="upload-file-info"></span>
               <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
-
-
             </div>
           </form>
         </div>

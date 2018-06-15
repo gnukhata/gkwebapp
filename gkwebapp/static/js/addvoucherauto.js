@@ -93,10 +93,16 @@ $(document).ready(function() {
     $("#show"+$("#vtype").val()).click();
   });
 
+  var delta = 600;
+  var lastKeypressTime = 0;
   $("#narration").keydown(function(event) {
-    if (event.which == 13) {
-      event.preventDefault();
-      $("#submit").click();
+    if (event.which==13){
+      var thisKeypressTime = new Date();
+      if ( thisKeypressTime - lastKeypressTime <= delta ) {
+        $("#submit").click();
+        thisKeypressTime = 0;
+      }
+	  lastKeypressTime = thisKeypressTime;
     }
     else if (event.which == 38) {
       event.preventDefault();
@@ -107,7 +113,7 @@ $(document).ready(function() {
         $("#c-amount").focus().select();
       }
     }
-  })
+  });
 
   $("#payment-mode").keydown(function(event) {
     if (event.which == 13) {
@@ -129,6 +135,16 @@ $(document).ready(function() {
   $("#amount").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
+      if ($("#amount").val() == "0.00" || $("#amount").val() == "0") {
+        raiseAlertById("#amount-zero-alert");
+        $("#amount").focus().select();
+        return false;
+      }
+      if ($("#amount").val() == "") {
+        raiseAlertById("#amount-blank");
+        $("#amount").focus().select();
+        return false;
+      }
       $("#narration").focus();
     }
     else if (event.which == 38) {
@@ -158,6 +174,16 @@ $(document).ready(function() {
   $("#b-amount").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
+      if ($("#b-amount").val() == "0.00" || $("#b-amount").val() == "0") {
+        raiseAlertById("#amount-zero-alert");
+        $("#b-amount").focus().select();
+        return false;
+      }
+      if ($("#b-amount").val() == ""){
+        raiseAlertById("#b-amount-blank");
+        $("#b-amount").focus().select();
+        return false;
+      }
       $("#c-amount").focus().select();
     }
     else if (event.which == 38) {
@@ -168,6 +194,16 @@ $(document).ready(function() {
   $("#c-amount").keydown(function(event) {
     if (event.which == 13) {
       event.preventDefault();
+      if ($("#c-amount").val() == "0.00" || $("#c-amount").val() == "0") {
+        raiseAlertById("#amount-zero-alert");
+        $("#c-amount").focus().select();
+        return false;
+      }
+      if ($("#c-amount").val() == ""){
+        raiseAlertById("#c-amount-blank");
+        $("#c-amount").focus().select();
+        return false;
+      }
       $("#narration").focus();
     }
     else if (event.which == 38) {

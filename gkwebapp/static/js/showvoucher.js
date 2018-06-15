@@ -44,7 +44,9 @@ $(document).ready(function(){
               "type":vtype,
               "invflag":sessionStorage.invsflag,
               "financialstart": sessionStorage.yyyymmddyear1,
-              "modeflag": sessionStorage.modeflag
+              "modeflag": sessionStorage.modeflag,
+              "invsflag": sessionStorage.invsflag,
+              "billflag": sessionStorage.billflag
             },
           beforeSend: function(xhr)
             {

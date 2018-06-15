@@ -53,8 +53,13 @@ def showvoucher(request):
             grpcode = groups["gkresult"]["Sundry Creditors for Purchase"]
             result = requests.get("http://127.0.0.1:6543/accounts?accbygrp&groupcode=%d"%(int(grpcode)),headers=header).json()
 
+        flags = dict()
+        flags["invflag"] = request.params.get("invflag")
+        flags["invsflag"] = request.params.get("invsflag")
+        flags["billflag"] = request.params.get("billflag")
+
         if result["gkstatus"] == 0:
-            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts": result["gkresult"]},request=request)
+            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":result["gkresult"],"flags":flags},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
