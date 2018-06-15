@@ -1319,6 +1319,14 @@ if (!curdate.between(financialstart, financialend)) {
                     if (resp["gkstatus"] == 0) {
 			if($("#status").val()==3){
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			    if (resp["vchCode"] != 0) {
+				$("#cr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]);
+			    }
+			    else{
+				$("#cr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
+				$("#cr-success-alert").removeClass("alert-success");
+				$("#cr-success-alert").addClass("alert-warning");
+			    }
                             $("#cr-success-alert").alert();
                             $("#cr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#creditnote_create").click();
@@ -1327,6 +1335,14 @@ if (!curdate.between(financialstart, financialend)) {
 			}else
 			{
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			    if (resp["vchCode"] != 0) {
+				$("#dr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]);
+			    }
+			    else{
+				$("#dr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
+				$("#dr-success-alert").removeClass("alert-success");
+				$("#dr-success-alert").addClass("alert-warning");
+			    }
                             $("#dr-success-alert").alert();
                             $("#dr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#debitnote_create").click();
