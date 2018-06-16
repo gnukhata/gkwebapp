@@ -1,3 +1,23 @@
+[15 June 2018 Release 5.10]
+* Debit Credit note for adjustment in quantity
+* New company setup	
+* Automated sales purchase entries with invoices
+* Automated Debit Credit entry for Debit credit note
+* Alternative sales purchase vouchers entries
+* Rectify invoice with or without auto voucher
+* Voucher entry without voucher no. and automatic voucher no. entry
+* Narration repeatation	
+* Calculator in voucher
+* Sorting functionality in major modules
+* Set/Reset default accounts for cash & bank & sales & purchase accounts.
+* Chart of accounts
+* Automated GST summary report
+* System generated accounts for GST & Cess	
+* Added more context sensitive help.	
+* UI & UX enhancement done.	
+* Fixed minor bugs.
+
+
 [12 April 2018 Release 5.0]
 * New menu "Documents".	
 * Godown keeper can access list of all products and can add opening stock.
