@@ -2072,7 +2072,7 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 	    });
 	}
     });
-    $(document).off('keyup' ,'#reportsearch').on('keyup' ,'#reportsearch',function(e) {
+    $(document).off('keydown' ,'#reportsearch').on('keydown' ,'#reportsearch',function(e) {
 	//String to search for is stored in searchtext variable.
 	let searchtext = $("#reportsearch").val().toLowerCase();
 	    //When search field is blank the clear search button is hidden.
@@ -2101,10 +2101,10 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 		$("tr").show();
 	    }
 	    if (e.which == 8) {
-		if($("#reportsearch").val()==""){
+		if($("#reportsearch").length == 1){
 		    $("#reportclearsearchspan").trigger("click");
+		    $("#reportsearch").focus();
 		}
-		$("#reportsearch").focus().select();
 	    }
 	    //Pressing Enter key shifts focus to first row.
 	    if (e.which == 13) {
