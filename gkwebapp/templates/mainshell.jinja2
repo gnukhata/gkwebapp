@@ -129,10 +129,10 @@
 		<li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
 		<li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
 		
-		<li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Organisation Preferences{% endtrans %}</a></li>
+		<li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Company Preferences{% endtrans %}</a></li>
 		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
 		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
-		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Organisation{% endtrans %}</a></li>
+		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Company{% endtrans %}</a></li>
 		
               </ul>
             </li>
@@ -302,11 +302,11 @@
 	<div class="modal-content">
 	  <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title" id="">Organisation Preferences</h4>
+            <h4 class="modal-title" id="">Company Preferences</h4>
 	  </div>
 	  <div class="modal-body">
             <div class="alert alert-success" id="orgpref-alert"  aria-live="rude" role="alert" hidden>
-              {% trans %}Organisation Preferences updated.{% endtrans %}
+              {% trans %}Company Preferences updated.{% endtrans %}
             </div>
 
             <div class="form-group">
@@ -376,10 +376,10 @@
               <b>{% trans %}Index Page{% endtrans %}</b>
             </p>
             <p>
-              {% trans %}Select Existing Organisation{% endtrans %} - CTRL + SHIFT + E
+              {% trans %}Select Existing Company{% endtrans %} - CTRL + SHIFT + E
             </p>
             <p>
-              {% trans %}Create Organisation{% endtrans %} - CTRL + SHIFT + R
+              {% trans %}Create Company{% endtrans %} - CTRL + SHIFT + R
             </p>
             <p>
               <b>{% trans %}Menu{% endtrans %}</b>
@@ -415,7 +415,7 @@
               {% trans %}Logout{% endtrans %} - CTRL - L
             </p>
             <p>
-              {% trans %}Change Organisation{% endtrans %} - CTRL + O
+              {% trans %}Change Company{% endtrans %} - CTRL + O
             </p>
             <p>
               {% trans %}Project{% endtrans %} - ALT + P
@@ -578,7 +578,7 @@
 	  <div class="modal-content">
             <div class="modal-header">
 
-              <h4 class="modal-title">{% trans %}Delete Organisation?{% endtrans %}</h4>
+              <h4 class="modal-title">{% trans %}Delete Company?{% endtrans %}</h4>
             </div>
             <div class="modal-body">
               <p>{% trans %}Are you sure?{% endtrans %}</p>
@@ -597,7 +597,7 @@
 	  <div class="modal-content">
             <div class="modal-header">
               <button type="button" class="close" data-dismiss="modal" style="color: white; opacity:2;">&times;</button>
-              <h4 class="modal-title">{% trans %}Export Organisation Data{% endtrans %}</h4>
+              <h4 class="modal-title">{% trans %}Export Company Data{% endtrans %}</h4>
             </div>
             <div class="modal-body">
               <div class="alert alert-success" id="export-success-alert"  aria-live="rude" role="alert" hidden>
