@@ -21,7 +21,13 @@
 	    <div class="container-fluid row">
 	      <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
-		{% trans %}Invoice updated.{% endtrans %}
+		{% trans %}Invoice Rectified.{% endtrans %}
+	      </div>
+	      <div class="alert alert-success" id="inv-vch-failed-alert"  aria-live="rude" role="alert" hidden>
+		{% trans %}Invoice rectified without an accounting entry due to missmatch of accounts. Please make the accounting entry manually. {% endtrans %}
+	      </div>
+	      <div class="alert alert-success" id="inv-vch-success-alert"  aria-live="rude" role="alert" hidden>
+
 	      </div>
 	      <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 
