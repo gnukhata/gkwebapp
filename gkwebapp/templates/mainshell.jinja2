@@ -234,30 +234,30 @@
     </div>
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
-      <div id="help-message" class="panel shadow">
-          <div class="panel-heading">
-              <div class="panel-title">{% trans %}Welcome to GNUKhata{% endtrans %}</div>
+      <div id="help-message" class="panel shadow col-md-4" style="padding:0 !important; margin:10px !important;">
+        <div class="panel-heading">
+          <div class="panel-title">{% trans %}Welcome to GNUKhata{% endtrans %}</div>
+        </div>
+        <div style="padding-top:20px" class="panel-body">
+          <div id="recentuser">{% trans %}It seems you have created a new company in GNUKhata. You can start by doing the following.{% endtrans %}</div>
+          <div>
+            <a id="create-cust" style="font-weight:bold">{% trans %}Create customer and supplier{% endtrans %}</a>
           </div>
-          <div style="padding-top:20px" class="panel-body">
-            <p id="first">{% trans %}It seems you have recently started using GNUKhata recently, you may like to do the following {% endtrans %}</p>
-            <div>
-                <a id="create-cust" style="font-weight:bold">{% trans %}Create customer and supplier{% endtrans %}</a>
-            </div>
-            <div>
-                <a id="create-prod">{% trans %}Create product records{% endtrans %}</a>
-            </div>
-            <div>
-                <a id="create-invoice">{% trans %}Start invoicing{% endtrans %}</a>
-            </div>
-            <div>
-                <a id="make-payments">{% trans %}Make payments and receive payments{% endtrans %}</a>
-            </div>
-            <div>
-                <a id="view-charts">{% trans %}View Charts of accounts{% endtrans %}</a>
-            </div>
+          <div>
+            <a id="create-prod">{% trans %}Create product records{% endtrans %}</a>
           </div>
+          <div>
+            <a id="create-invoice">{% trans %}Start invoicing{% endtrans %}</a>
+          </div>
+          <div>
+            <a id="make-payments">{% trans %}Make payments and receive payments{% endtrans %}</a>
+          </div>
+          <div>
+            <a id="view-charts">{% trans %}View Charts of accounts{% endtrans %}</a>
+          </div>
+        </div>
       </div>
-      <div class="panel shadow" >
+      <div class="panel shadow col-md-7" style="padding:0 !important; margin:10px !important;">
 	<div class="panel-heading">
 	  <div class="panel-title">{% trans %}About Keyboard Shortcuts{% endtrans %}</div>
 

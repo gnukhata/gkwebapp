@@ -151,7 +151,7 @@ $(document).ready(function(){
            $("#create-invoice").css("font-weight", "bold");
          }
          if (resp["gkresult"]["inv_count"] > 0) {
-           $("#create-invoice").hide();
+	     $("#recentuser").hide();
          }
        }
      })
