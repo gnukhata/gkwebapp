@@ -923,7 +923,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		$("#supname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#supname-blank-alert").hide();
             });
-	    } else {
+	    } else if($("#edit_cussup").val() == "Customer") {
 		$("#custname-blank-alert").alert();
 		$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#custname-blank-alert").hide();
