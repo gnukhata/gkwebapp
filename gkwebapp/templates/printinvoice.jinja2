@@ -457,7 +457,7 @@
 	    </div>
 	  {% else %}
 	    <div class="col-sm-12 nopadding">
-	      <label style="font-size:160% !important;">CASH RECEIVED</label>
+	      <label style="font-size:160% !important;">{% if gkresult["inoutflag"] | int == 15 %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}</label>
 	    </div><br>
 	  {% endif %}
 	  <div class="row col-sm-12">

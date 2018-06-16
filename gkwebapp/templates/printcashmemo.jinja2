@@ -408,7 +408,7 @@
       </table>
     </div>
   {% else %}
-    <strong>CASH RECEIVED</strong>
+    <strong>{% if gkresult["inoutflag"] | int == 15 %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}</strong>
   {% endif %}
   {% if gkresult["invoicetotalword"]!= None %}
     <div class ="col-sm-12 ">

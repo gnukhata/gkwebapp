@@ -642,7 +642,7 @@
 		    </div>
 		  </div><br>
 		  <div class="col-sm-4 rborderdiv" id="cash">
-		    <label style="font-size:120% !important;">CASH RECEIVED</label>
+		    <label style="font-size:120% !important;">{% if status=="out" %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}</label>
 		    <br><br><br><br><br><br><br><br><br><br>	
 		  </div>
 		  <div class="col-sm-4 rborderdiv" style='display:none;' id="oncredit">
