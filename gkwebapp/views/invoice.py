@@ -167,7 +167,7 @@ def updateinvoice(request):
     invoicewholedata = {"invoice":invoicedata,"stock":stock,"av":json.loads(request.params["av"])}
     result=requests.put("http://127.0.0.1:6543/invoice",data=json.dumps(invoicewholedata),headers=header)
     if result.json()["gkstatus"]==0:
-        return {"gkstatus":result.json()["gkstatus"]}
+        return {"gkstatus":result.json()["gkstatus"],"gkvch":result.json()["vchdata"]}
     else:
         return {"gkstatus":result.json()["gkstatus"]}
 @view_config(route_name="invoice",request_param="action=getdeliverynote",renderer="json")

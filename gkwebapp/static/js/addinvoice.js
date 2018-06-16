@@ -3003,8 +3003,8 @@ if (event.which == 13) {
                 }
             })
                 .done(function(resp) {
-		    console.log(resp);
-                    if ((resp["gkstatus"] == 0) && ((resp["gkvch"]).length == 0)) {
+		    console.log(sessionStorage);
+                    if ((resp["gkstatus"] == 0) && ((sessionStorage.avflag == 0)) {
 			$("#success-alert").alert();
 			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 			    $("#success-alert").hide();

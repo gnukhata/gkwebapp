@@ -3586,5 +3586,5 @@ $("#chkpaymentmode").change(function(event) {
 	 $("#branch").focus().select();
        };
     });
-  
+
 });
