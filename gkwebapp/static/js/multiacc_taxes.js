@@ -27,7 +27,9 @@ Contributors:
 $(document).ready(function() {
     $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
     $(".cessrate").numeric({"negative":false});
+    $('#cessdiv').hide();
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
+    var cessdiv = '<div class="input-group cessratediv" id="cessdiv"><input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a"><span class="input-group-addon cessrateaddon">%</span></div>';
     var taxtype ="";
     var taxrate ="";
     var taxstate ="";
@@ -91,9 +93,11 @@ $(document).ready(function() {
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').remove('#rate');
-	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append('<div class="input-group cessratediv" id="cessdiv"><input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a"><span class="input-group-addon cessrateaddon">%</span></div>');
+	    $('#cessdiv').show();
+	    $('#m_acctable tbody tr:last td:eq(2)').append(cessdiv);
 	}else{
-	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append('<select class="form-control input-sm taxrate gstaccountfields" id="rate"><option value="" hidden disabled selected>Select Rate</option><option class="igstopt" value="5%">5%</option><option class="igstopt" value="12%">12%</option><option class="igstopt" value="18%">18%</option><option class="igstopt" value="28%">28%</option><option class="sgstopt" value="2.5%">2.5%</option><option class="sgstopt" value="6%">6%</option><option class="sgstopt" value="9%">9%</option><option class="sgstopt" value="14%">14%</option></select>');
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').show('#rate');
+	    $('#m_acctable tbody tr:last td:eq(2)').append('<select class="form-control input-sm taxrate gstaccountfields" id="rate"><option value="" hidden disabled selected>Select Rate</option><option class="igstopt" value="5%">5%</option><option class="igstopt" value="12%">12%</option><option class="igstopt" value="18%">18%</option><option class="igstopt" value="28%">28%</option><option class="sgstopt" value="2.5%">2.5%</option><option class="sgstopt" value="6%">6%</option><option class="sgstopt" value="9%">9%</option><option class="sgstopt" value="14%">14%</option></select>');
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').hide('#cessdiv');
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) span').hide('#cessdiv');
 	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
@@ -128,7 +132,7 @@ $(document).ready(function() {
                 $(".taxname").focus();
                 return false;
             }
-	    $(".taxstate").focus();
+	    $('#m_acctable tbody tr:eq('+tnindex+') td:eq(1) select').focus().select();
 	}
 	else if (event.which == 38) {
 	    if(tnindex > 0){
@@ -155,9 +159,9 @@ $(document).ready(function() {
                 return false;
             }
 	    if(taxtype == 'CESSIN' || taxtype == 'CESSOUT'){
-		$('.cessrate').focus();
+		$('#m_acctable tbody tr:eq('+tsindex+') td:eq(2) input').focus().select();
 	    }else{
-		$(".taxrate").focus();
+		$('#m_acctable tbody tr:eq('+tsindex+') td:eq(2) select').focus().select();
 	    }
 	}
 	else if (event.which == 38) {
@@ -228,9 +232,9 @@ $(document).ready(function() {
 		}
 	    }
 	    if($("#m_gstaccount").is(':checked')){
-		$('.m_openbal').focus();
+		$('#m_acctable tbody tr:eq('+rateindex+') td:eq(4) input').focus().select();
 	    }else{
-		$(".m_accname").focus();
+		$('#m_acctable tbody tr:eq('+rateindex+') td:eq(3) input').focus().select();
 	    }
 	}
 	else if (event.which == 38) {
@@ -281,9 +285,9 @@ $(document).ready(function() {
 		}
 	    }
 	    if($("#m_gstaccount").is(':checked')){
-		$('.m_openbal').focus();
+		$('#m_acctable tbody tr:eq('+cesindex+') td:eq(4) input').focus().select();
 	    }else{
-		$(".m_accname").focus();
+		$('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').focus().select();
 	    }
 	}
 	else if (event.which == 38) {
@@ -301,7 +305,7 @@ $(document).ready(function() {
 
 	if (event.which==38)
 	{
-	    $('.m_accname').focus().select();
+	    //$('.m_accname').focus().select();
 	    if($('#m_gstaccount').is(':checked')){
 		$('#m_acctable tbody tr:eq('+curindex+') td:eq(2) select').focus().select();
 	    }else{
