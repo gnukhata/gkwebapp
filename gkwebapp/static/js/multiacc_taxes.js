@@ -87,17 +87,26 @@ $(document).ready(function() {
 
     //Change event for 'Tax Type'
     $(document).off("change",".taxname").on("change",".taxname",function(event){
-	$('#m_acctable tbody tr:last td:eq(2)').html("");
 	var txnindex = $(this).closest('tr').index();
 	var ptxnindex = txnindex -1;
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
-	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').remove('#rate');
-	    $('#cessdiv').show();
-	    $('#m_acctable tbody tr:last td:eq(2)').append(cessdiv);
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').hide('#rate');
+	    if ($(this).closest('tr').is(":last-child")){
+		$('#m_acctable tbody tr:last td:eq(2) input').remove();
+		$('#m_acctable tbody tr:last td:eq(2) span').remove();
+		$('#m_acctable tbody tr:last td:eq(2)').append(cessdiv);
+	    }else{
+		if($('.cessratediv').is(':visible')){
+		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').remove();
+		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) span').remove();
+		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append(cessdiv);
+		}else{
+		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append(cessdiv);
+		}
+	    }
 	}else{
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').show('#rate');
-	    $('#m_acctable tbody tr:last td:eq(2)').append('<select class="form-control input-sm taxrate gstaccountfields" id="rate"><option value="" hidden disabled selected>Select Rate</option><option class="igstopt" value="5%">5%</option><option class="igstopt" value="12%">12%</option><option class="igstopt" value="18%">18%</option><option class="igstopt" value="28%">28%</option><option class="sgstopt" value="2.5%">2.5%</option><option class="sgstopt" value="6%">6%</option><option class="sgstopt" value="9%">9%</option><option class="sgstopt" value="14%">14%</option></select>');
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').hide('#cessdiv');
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) span').hide('#cessdiv');
 	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
@@ -305,7 +314,6 @@ $(document).ready(function() {
 
 	if (event.which==38)
 	{
-	    //$('.m_accname').focus().select();
 	    if($('#m_gstaccount').is(':checked')){
 		$('#m_acctable tbody tr:eq('+curindex+') td:eq(2) select').focus().select();
 	    }else{
