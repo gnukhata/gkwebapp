@@ -147,7 +147,10 @@
               </div>
 
               <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
-              <textarea class="form-control" name="narration" id="narration" rows="2" cols="70" accesskey="t"></textarea>
+              <textarea class="form-control" name="narration" id="narration" rows="2" cols="70" accesskey="t" style="margin:0"></textarea>
+              <small class="form-text text-muted" class="margin:0">Press Enter key twice to save voucher</small>
+              <br>
+              <br>
         
               <input type="hidden" value="{{ vtype }}" id="vtype" name="vtype"/>
               <button type="submit" class="btn btn-success" id="submit" name="submit" accesskey="s">

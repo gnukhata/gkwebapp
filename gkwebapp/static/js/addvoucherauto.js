@@ -258,7 +258,7 @@ $(document).ready(function() {
 
   $("#year").blur(function(event) {
     if (!Date.parseExact($("#vdate").val()+$("#month").val()+$("#year").val(), "ddMMyyyy")) {
-      raiseAlertById("#vdate-alert");
+      raiseAlertById("#date-alert");
       $("#postdate-alert").hide();
       $('#vdate').focus().select();
       return false;
