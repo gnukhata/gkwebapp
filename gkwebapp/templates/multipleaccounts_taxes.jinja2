@@ -10,7 +10,7 @@
        display: table; //This is important
        overflow-y: auto;
        overflow-x: auto;
-       width: auto;
+       width:850px;
        min-width: 50%;
    }
    .shadow {
@@ -106,6 +106,7 @@
    .headerdel{
        float:right;
        color:white;
+       font-size:12px;
    }
   </style>
 
@@ -152,6 +153,23 @@
 
             <label>{% trans %}No account has been created!{% endtrans %}</label>
           </div>
+
+	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="m_taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_taxstate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select State!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_taxrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Rate!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_cessrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Cess Rate!{% endtrans %}
+	  </div>
+
           <input type="hidden" name="m_gcode" id="m_gcode" value="{{gkresult['groupcode']}}">
           <input type="hidden" name="m_sgcode" id="m_sgcode" value="{{gkresult['subgroupcode']}}" >
           <input type="hidden" name="m_nsgcode" id="m_nsgcode" value="{{gkresult['newsubgroup']}}">
@@ -173,21 +191,6 @@
 
         </div>
         <div class="modal-body shadow">
-	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
-	    {% trans %}Please enter Tax Type!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="m_taxtype-alert"  aria-live="rude" role="alert" hidden>
-	    {% trans %}Please select Tax Type!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="mult_taxstate-alert"  aria-live="rude" role="alert" hidden>
-	    {% trans %}Please select State!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="mult_taxrate-alert"  aria-live="rude" role="alert" hidden>
-	    {% trans %}Please select Tax Rate!{% endtrans %}
-	  </div>
-	  <div class="alert alert-danger" id="mult_cessrate-alert"  aria-live="rude" role="alert" hidden>
-	    {% trans %}Please enter Cess Rate!{% endtrans %}
-	  </div>
 	  <div id="gstfielddiv">
 	    <label> <input type="checkbox" id="m_gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
 	  </div>

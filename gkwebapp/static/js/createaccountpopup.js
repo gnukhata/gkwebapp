@@ -203,7 +203,11 @@ else
 	    }else if($.trim($("#m_subgroupname option:selected").text())=="Bank" || $.trim($("#m_subgroupname option:selected").text())=="Cash" || $.trim($("#m_subgroupname option:selected").text())=="Purchase" || $.trim($("#m_subgroupname option:selected").text())=="Sales"){
 		$(".defbx").focus().select();
 	    }else if($.trim($("#m_subgroupname option:selected").text())=="Duties & Taxes"){
-		$('#gstaccount').focus().select();
+		if($('#gstaccount').is(':visible')){
+		    $('#gstaccount').focus().select();
+		}else{
+		    $("#m_accountname").focus().select();
+		}
 	    }else {
 		$("#m_accountname").focus().select();
 	    }

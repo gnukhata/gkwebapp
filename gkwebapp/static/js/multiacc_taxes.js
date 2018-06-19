@@ -91,18 +91,22 @@ $(document).ready(function() {
 	var ptxnindex = txnindex -1;
 	taxtype = $.trim($('#m_acctable tbody tr:eq('+txnindex+') td:eq(0) option:selected').val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
+	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(2) input').numeric({"negative":false});
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').hide('#rate');
 	    if ($(this).closest('tr').is(":last-child")){
 		$('#m_acctable tbody tr:last td:eq(2) input').remove();
 		$('#m_acctable tbody tr:last td:eq(2) span').remove();
 		$('#m_acctable tbody tr:last td:eq(2)').append(cessdiv);
+		$('#m_acctable tbody tr:eq('+txnindex+') td:eq(2) input').numeric({"negative":false});
 	    }else{
 		if($('.cessratediv').is(':visible')){
 		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) input').remove();
 		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) span').remove();
 		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append(cessdiv);
+		    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(2) input').numeric({"negative":false});
 		}else{
 		    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2)').append(cessdiv);
+		    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(2) input').numeric({"negative":false});
 		}
 	    }
 	}else{
@@ -268,6 +272,7 @@ $(document).ready(function() {
     $(document).off("change",".cessrate").on("change",".cessrate", function(event){
 	var cesindex = $(this).closest('tr').index();
 	cessrate = $.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').val());
+	console.log(cessrate);
 	if (taxtype!="" && taxstate!="" && cessrate!="") {
 	    $('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
 	}
@@ -288,11 +293,20 @@ $(document).ready(function() {
 			$("#mult_cessrate-alert").fadeTo(2250, 200).slideUp(500, function(){
 			    $("#mult_cessrate-alert").hide();
 			});
-			$(".cessrate").focus();
+			$('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').focus();
 			return false;
 		    }
 		}
 	    }
+
+	    cessrate = $.trim($('#m_acctable tbody tr:eq('+cesindex+') td:eq(2) input').val());
+	    if (taxtype!="" && taxstate!="" && cessrate!="") {
+		$('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + cessrate + "%");
+	    }
+	    else {
+		$('#m_acctable tbody tr:eq('+cesindex+') td:eq(3) input').val("");
+	    }
+	    
 	    if($("#m_gstaccount").is(':checked')){
 		$('#m_acctable tbody tr:eq('+cesindex+') td:eq(4) input').focus().select();
 	    }else{
@@ -375,6 +389,40 @@ $(document).ready(function() {
 			return false;
 		    }
 		    addRow(curindex);
+		}else{
+		    
+		    if(type == 'CESSIN' || type == 'CESSOUT'){
+			rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val());
+		    }else{
+			rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
+		    }
+		    if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
+			curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+			console.log(curindex);
+			for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
+			    if(curindex == j){
+				j++;
+			    }else{
+				let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+				if(curacname == pvacname){
+				    $("#acname_duplicate-alert").alert();
+				    $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#acname_duplicate-alert").hide();
+				    });
+				    $('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+				    return false;
+				}
+			    }
+			}
+		    }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" || rateoftax =="" || accnt =="" ){
+			$("#field_blank-alert").alert();
+			$("#field_blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#field_blank-alert").hide();
+			});
+			$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+			return false;
+		    }
+		    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
 		}
 	    }else{
 		if(accnt=="")
@@ -501,8 +549,15 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
       var curindex = $(this).index();
       var accnt = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(3) input').val());
       var taxtype = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(0) option:selected').val());
+
+      if ($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input').val()) == 0 || $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input').val())=="")
+      {
+	  $('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val("0.00");
+      }
+      
       if(taxtype =='CESSIN' || taxtype =='CESSOUT'){
 	  var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) input').val());
+	  console.log(rateoftax);
       }else{
 	  rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) option:selected').val());
       }
