@@ -39,7 +39,8 @@ $(document).ready(function() {
 $(".serviceclass").hide();
     $(".productclass").hide();
     var stkhtml;  
-  $(".common").hide();
+    $(".common").hide();
+    $(".tax_rate_gst").hide();
   var godownflag = 0;
     $('.modal-backdrop').remove();
     var taxfieldhtml = $("#product_tax_table tbody").html();
@@ -787,6 +788,17 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
 });
     $(document).off("change",".tax_name").on("change",".tax_name",function(event){
         var curindex = $(this).closest('tr').index();
+	console.log("CHECK");
+	console.log($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val());
+	if (!($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST')){
+	    console.log("Not GST");
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').show('.tax_rate_all');
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').hide('.tax_rate_gst');
+	} else if($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST') {
+	    console.log("Present GST");
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').show('.tax_rate_gst');
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').hide('.tax_rate_all');
+	}
         if ($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
             $("#product_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
             $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", false);
@@ -891,7 +903,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	$(".tax_name:last").change();
     });
     
-$(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
+$(document).off("keydown",".tax_rate_all").on("keydown",".tax_rate_all",function(event)
 {
   var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
@@ -928,7 +940,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       }
 	  $('#product_tax_table tbody').append(taxfieldhtml);
 	  $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(3) span').hide('.glyphicon-plus');
-	$(".tax_rate").numeric();
+	$(".tax_rate_all").numeric();
         for (let j = 0; j < curindex1 + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
             if (selectedtax != "VAT") {
