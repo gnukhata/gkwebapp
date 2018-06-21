@@ -792,14 +792,10 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
 });
     $(document).off("change",".tax_name").on("change",".tax_name",function(event){
         var curindex = $(this).closest('tr').index();
-	console.log("CHECK");
-	console.log($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val());
 	if (!($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST')){
-	    console.log("Not GST");
 	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').show('.tax_rate_all');
 	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').hide('.tax_rate_gst');
 	} else if($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST') {
-	    console.log("Present GST");
 	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').show('.tax_rate_gst');
 	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').hide('.tax_rate_all');
 	}

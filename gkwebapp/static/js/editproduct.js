@@ -41,6 +41,7 @@ $(document).ready(function() {
     var taxhtml;
     var stateshtml;
     $("#prodselect").focus();
+    var gst_tax = '<select hidden class="form-control input-sm tax_rate_gst text-right"><option value="5" class="text-right">5</option><option value="12" class="text-right">12</option><option value="18" class="text-right">18</option><option value="28" class="text-right">28</option></select>';
     $("#prodselect").keydown(function(e){
     if (e.which == 13) {
 	e.preventDefault();
@@ -409,8 +410,20 @@ $(document).ready(function() {
             $(".product_tax_disable").prop('disabled',true);
 	    $(".tax_del").prop('disabled',true);
             $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
-          $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-          $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+            $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+	    console.log("HIEEEE");
+	    console.log(tax["taxname"]);
+	    var curindex = $(this).closest('tr').index();
+	    var nextindex = curindex+1;
+	    var previndex = curindex-1;
+	    if(tax["taxname"] == "IGST"){
+		$('#product_edit_tax_table tbody tr:last td:eq(2) input').remove();
+		$('#product_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax);
+		$('.tax_rate_gst option').val(tax["taxrate"]).prop("selected","selected");
+	    }else{ 
+		$('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    } 
+          
         }
 	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
@@ -826,6 +839,17 @@ $(document).ready(function() {
   $(document).off("change",".tax_name").on("change",".tax_name",function(event)
   {
       var curindex = $(this).closest('tr').index();
+      var taxname = $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(0) select').val();
+      console.log(taxname);
+      if (taxname == 'IGST'){
+	  console.log('Hello');
+	  $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').hide('.tax_rate');
+	  $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').show('.tax_rate_gst');
+      }else{
+	  console.log('Bye');
+	  $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').show('.tax_rate');
+	  $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').hide('.tax_rate_gst');
+      }
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
           $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
           $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", false);
@@ -929,7 +953,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	}
     });
-    
+ 
   $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   {
     var curindex1 = $(this).closest('tr').index();
@@ -1426,8 +1450,12 @@ $(document).ready(function() {
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
-        obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
-        obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
+          obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
+	  if($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() == "IGST"){
+	    obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) select").val());  
+	  } else {
+	      obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
+	  }
         taxes.push(obj);
       }
     });
