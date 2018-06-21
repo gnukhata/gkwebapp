@@ -1696,7 +1696,11 @@ else{
     if ($.trim($("select option:selected", this).val()) != "") {
         obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
         obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-        obj.taxrate = $.trim($("input", this).val());
+	if($("td:eq(0) select option:selected", this).val() == 'IGST'){
+	    obj.taxrate = $.trim($("td:eq(2) select option:selected", this).val());
+	} else {
+	    obj.taxrate = $.trim($("input", this).val());
+	}
         taxes.push(obj);
     }
 
