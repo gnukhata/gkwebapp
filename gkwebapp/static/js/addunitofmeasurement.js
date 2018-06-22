@@ -139,7 +139,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val(),"description":$("#unit_desc").val()},
+	data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val(),"description":$("#unit_desc").val(), "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

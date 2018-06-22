@@ -2,7 +2,7 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#unit_edit_conversion_rate").numeric();
   $("#unit_edit_name").focus();
-
+    var sysuom = "";
   $("#unit_edit_list").change(function(event) {
 
     $.ajax({
@@ -18,6 +18,7 @@ $(document).ready(function() {
     })
     .done(function(resp) {
 	var result = resp["gkresult"];
+	sysuom = resp["gkresult"]["sysunit"];
       $("#unit_edit_name").val(result["unitname"]);
       $("#unit_edit_name").prop("disabled", true);
       $("#unit_edit_desc").val(result["description"]);
@@ -37,6 +38,10 @@ $(document).ready(function() {
 	}
 	else if(resp["gkresult"]["flag"] == "False"){
  	    $("#unit_delete").show();
+	}
+
+	if(resp["gkresult"]["sysunit"] == 1){
+	    $("#unit_btn").hide();
 	}
 
       if($("#sub_unit_edit option:selected").val()==''){
