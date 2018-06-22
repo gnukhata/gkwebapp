@@ -120,6 +120,11 @@ $(document).ready(function()
     }
 
   }
+    if ($("#lock").val()=="Unlock")
+    {
+	$("#delete").attr("disabled", true);
+	$("#edit").attr("disabled", true);
+    }
   var percentwid = 100*(($("#vctable").width()-1)/$("#vctable").width());
   $('#vctable thead').width(percentwid+"%");
 
@@ -211,19 +216,26 @@ $(document).ready(function()
   {
 
     var id = $("#vcode").val();
-
+      var  vstatus;
     if($("#lock").val()=="Unlock")
     {
 
-      var  vstatus = "False";
+      vstatus = "False";
 
     }
     else
     {
 
-      var  vstatus = "True";
+      vstatus = "True";
     }
-
+      if ($("#lock").val()=="Lock")
+      {
+	  $("#delete").attr("disabled", true);
+	  $("#edit").attr("disabled", true);
+      }else{
+	  $("#delete").attr("disabled", false);
+	  $("#edit").attr("disabled", false);
+      }
     $.ajax({
       type: "POST",
       url: "/lockvoucher",
@@ -267,8 +279,12 @@ $(document).ready(function()
       $("#viewattach").focus();
     }
     if (event.which==39)
-    {
-      $("#edit").focus();
+      {
+	  if($("#edit").is(":disabled")){
+	      $("#clone").focus();
+	  }else{
+	      $("#edit").focus();
+	  }
     }
     /* Act on the event */
   });
@@ -300,12 +316,19 @@ $(document).ready(function()
 
     }
     if (event.which==37)
-    {
-      $("#edit").focus();
+      {
+	  if($("#edit").is(":disabled"))
+	  {
+	      $("#lock").focus();
+	  }else{
+	      $("#edit").focus();
+	  }
     }
     if (event.which==39)
-    {
-      $("#delete").focus();
+      {
+	  if(!$("#delete").is(":disabled")){
+	      $("#delete").focus();
+	  }
     }
   });
 
@@ -1618,7 +1641,8 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 		          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
 		        },
 		      })
-		      .done(function(jsonobj) {
+		  .done(function(jsonobj) {
+		      console.log(jsonobj["gkstatus"]);
 		        if(jsonobj["gkstatus"]==0){
 		          $('#confirm_del').modal('hide');
 		          $('#confirm_del').on('hidden.bs.modal', function (e)
@@ -1635,7 +1659,8 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
 		        }
 
-		        else {
+		      else {
+			  console.log("no");
 		          $("#notran-del-alert").alert();
 		          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
 		            $("#notran-del-alert").hide();
