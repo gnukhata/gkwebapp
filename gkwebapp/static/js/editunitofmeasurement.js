@@ -20,6 +20,8 @@ $(document).ready(function() {
 	var result = resp["gkresult"];
       $("#unit_edit_name").val(result["unitname"]);
       $("#unit_edit_name").prop("disabled", true);
+      $("#unit_edit_desc").val(result["description"]);
+      $("#unit_edit_desc").prop("disabled", true);	
       $("#sub_unit_edit").val(result["subunitof"]);
       $("#sub_unit_edit").prop("disabled", true);
       $("#unit_edit_conversion_rate").val(result["conversionrate"]);
@@ -56,27 +58,31 @@ $(document).ready(function() {
     $("#unit_edit_name").keydown(function(event) {
       if (event.which==13) {
         event.preventDefault();
-        $("#sub_unit_edit").focus().select();
+        $("#unit_edit_desc").focus().select();
       }
       if (event.which==38){
         event.preventDefault();
         $("#unit_edit_list").focus().select();
       }
     });
+
     $("#unit_edit_list").keydown(function(event) {
+	if (event.which==13) {
+            event.preventDefault();
+	    $("#edit_btn").click();
+	}
+    });
 
-      if (event.which==13) {
-        event.preventDefault();
-        $("#edit_btn").hide();
-        $("#unit_edit_save").show();
-        $("#unit_edit_name").prop("disabled", false);
-        $("#unit_edit_name").focus().select();
-        $("#sub_unit_edit").prop("disabled", false);
-        $("#unit_edit_conversion_rate").prop("disabled", false);
-	      }
-
-   });
-
+    $("#unit_edit_desc").keydown(function(event) {
+	if (event.which==13) {
+            event.preventDefault();
+            $("#sub_unit_edit").focus().select();
+	}
+	if (event.which==38){
+            event.preventDefault();
+            $("#unit_edit_name").focus().select();
+	}
+    });
 
     $("#sub_unit_edit").keydown(function(event) {
       if (event.which==13 && $("#sub_unit_edit option:selected").val()=='') {
@@ -90,7 +96,7 @@ $(document).ready(function() {
       }
       if (event.which==38 && $("#sub_unit_edit option:selected").val()=='') {
         event.preventDefault();
-        $("#unit_edit_name").focus().select();
+        $("#unit_edit_desc").focus().select();
         $("#edit_conversion_div").hide();
       }
       if(event.which==40 || $("#sub_unit_edit option:selected").val()!='') {
@@ -121,7 +127,8 @@ $(document).ready(function() {
     $("#unit_edit_save").show();
     $("#unit_edit_name").prop("disabled", false);
     $("#unit_edit_name").focus().select();
-    $("#sub_unit_edit").prop("disabled", false);
+    $("#unit_edit_desc").prop("disabled", false);
+    $("#sub_unit_edit").prop("disabled", false);  
     $("#unit_edit_conversion_rate").prop("disabled", false);
 
   });
@@ -176,7 +183,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val()},
+	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description": $("#unit_edit_desc").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
