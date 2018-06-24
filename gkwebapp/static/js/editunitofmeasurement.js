@@ -3,6 +3,7 @@ $(document).ready(function() {
   $("#unit_edit_conversion_rate").numeric();
   $("#unit_edit_name").focus();
     var sysuom = "";
+    $("#alertmsg").hide();
   $("#unit_edit_list").change(function(event) {
 
     $.ajax({
@@ -30,8 +31,9 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#unit_edit_innerdiv").show();
       $("#unit_edit_save").hide();
-	$("#edit_btn").show();
-
+      $("#edit_btn").show();
+      $(".subunit").show();
+      $("#alertmsg").hide();
 	//condition of delete button for uom which are associated with products. 
 	if(resp["gkresult"]["flag"] == "True"){
 	   $("#unit_delete").hide();
@@ -41,7 +43,10 @@ $(document).ready(function() {
 	}
 
 	if(resp["gkresult"]["sysunit"] == 1){
-	    $("#unit_btn").hide();
+	    $("#alertmsg").show();
+	    $("#unit_delete").hide();
+	    $("#edit_btn").hide();
+	    $(".subunit").hide();
 	}
 
       if($("#sub_unit_edit option:selected").val()==''){
@@ -74,7 +79,9 @@ $(document).ready(function() {
     $("#unit_edit_list").keydown(function(event) {
 	if (event.which==13) {
             event.preventDefault();
-	    $("#edit_btn").click();
+	    if(sysuom !=1){
+		$("#edit_btn").click();
+	    }
 	}
     });
 
