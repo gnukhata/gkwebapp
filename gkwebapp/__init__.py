@@ -177,5 +177,7 @@ def main(global_config, **settings):
     config.add_route('gstsummary','/gstsummary')
     config.add_route('drcrnote','/drcrnote')
     config.add_route('genstats', '/genstats')
+    config.add_route('viewgstreturns', '/viewgstreturns')
+    config.add_route('gstreturns', '/gstreturns')
     config.scan('gkwebapp')
     return config.make_wsgi_app()

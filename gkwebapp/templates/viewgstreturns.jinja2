@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}GST Returns{% endtrans %}</title>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-4">
+      <div class="panel shadow">
+        <div class="panel-heading">
+            <h3 class="panel-title">{% trans %}GST Returns{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#HelpModal"></i></h3>
+        </div>
+        <div class="panel-body">
+          <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+            <label for="cashfl_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+            <label for="cashfl_fromdate">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+            <label for="cashfl_todate">{% trans %}From date should be smaller or equal to to date !{% endtrans %}</label>
+          </div>
+          <div  class="row ">
+            <div class="form-inline col-sm-12">
+              <label for="Type">{% trans %}Type{% endtrans %}: {{ type.upper() }}</label>
+              <input id="type" type="hidden" value="{{ type }}">
+            </div>
+          </div>
+          <br>
+          <div class="form-group form-inline">
+            <label for="fromdate">{% trans %}From{% endtrans %} :</label>
+            <br>
+            <input type="text" class="form-control input-sm autotab" id="from_date" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+            <input type="text" class="form-control input-sm autotab" id="from_month" value="" size="2" maxlength="2" placeholder="MM">
+            <input type="text" class="form-control input-sm autotab" id="from_year" value="" size="4" maxlength="4" placeholder="YYYY">
+          </div>
+          <div class="form-group form-inline">
+            <label for="todate">{% trans %}To{% endtrans %} :</label>
+            <br>
+            <input type="text" class="form-control input-sm autotab" id="to_date" value=""  size="2" maxlength="2" placeholder="DD">
+            <input type="text" class="form-control input-sm autotab" id="to_month" value="" size="2" maxlength="2" placeholder="MM">
+            <input type="text" class="form-control input-sm autotab" id="to_year" value="" size="4" maxlength="4" placeholder="YYYY">
+          </div>
+        </div>
+        <div class="panel-footer">
+          <button type="button" class="btn btn-sm btn-primary" name="button" id="view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+          <button type="button" name="button" class="btn btn-sm btn-danger" id="reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+        </div>
+      </div>
+
+      <div id="HelpModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+        <div class="modal-dialog bgcolor " >
+          <div class="modal-content ">
+            <div class="modal-header">
+              {% trans %}<strong>Help!</strong>{% endtrans %}
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+          <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+          <p>
+            <font color=" #566573">
+              {% trans %}
+                This module allows you to view and export your sales invoice, credit/debit notes data in format required to file GST R1<br>
+                After entering date click 'View' button to view the report
+              {% endtrans %}
+           </font>
+          </p>
+	      </div>
+      </div>
+	  </div>
+
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewgstreturns.js')}}"></script>
+  </body>
+</html>
