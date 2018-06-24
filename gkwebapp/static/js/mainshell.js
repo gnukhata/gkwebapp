@@ -60,6 +60,7 @@ $(document).ready(function(){
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
       $(".businessmenu").hide();	 
+      $(".gstreturnsmenu").hide();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -188,6 +189,11 @@ $(document).ready(function(){
     }
     if(event.ctrlKey && event.keyCode == 67) {
       $("#business").click();
+      event.preventDefault();
+    }
+
+    if(event.ctrlKey && event.keyCode == 71) {
+      $("#gstreturns").click();
       event.preventDefault();
     }
       
@@ -385,15 +391,29 @@ $(document).ready(function(){
     }
   });
 
-$(".businessmenu").keydown(function(event){
+  $(".businessmenu").keydown(function(event){
     if(event.which == 39){
-      $("#report").click();
+      $("#gstreturns").click();
     }
     if(event.which == 37){
       $("#transaction").click();
     }
   });
-  
+
+  $(".gstreturnsmenu").keydown(function(event) {
+    if(event.which == 39) {
+      $("#report").click();
+    }
+    if(event.which == 37) {
+      if (sessionStorage.invsflag == 1) {
+        $("#business").click();
+      }
+      else {
+        $("#transaction").click();
+      }
+    }
+  });
+ 
     
   $(".reportmenu").keydown(function(event){
     if(event.which == 39){
@@ -401,7 +421,7 @@ $(".businessmenu").keydown(function(event){
     }
       if(event.which == 37){
 	  if (sessionStorage.invsflag ==1){
-	      $("#business").click();
+	      $("#gstreturns").click();
 	  }else{
 	      $("#transaction").click();
 	  }
@@ -504,6 +524,11 @@ $(".businessmenu").keydown(function(event){
   $('#transactiondropdown').on('shown.bs.dropdown', function () {
     $("#showreceipt").focus();
   });
+
+  $("#gstreturnsdropdown").on("shown.bs.dropdown", function() {
+    $("#r1").focus();
+  });
+
   $('#reportdropdown').on('shown.bs.dropdown', function () {
     $("#showviewledger").focus();
   });
@@ -601,6 +626,8 @@ $(".businessmenu").keydown(function(event){
        $("#showviewlog").remove();
        $("#orgpref").remove();
        $("#gstsummary").remove();
+       //Not sure
+       $("#gstr1").remove();
        $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
@@ -1271,6 +1298,26 @@ $('#listofaccounts').click(function (e) {
       {
         type: "POST",
         url: "/gstsummary",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      });
+  });
+
+  $("#r1").click(function (e) {
+    console.log("r1");
+    $.ajax(
+      {
+        type: "GET",
+        url: "/viewgstreturns?type=r1",
         global: false,
         async: false,
         datatype: "text/html",

@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}GST Returns{% endtrans %}</title>
+    <style type="text/css">
+
+     .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+
+     td {
+       font-size: 75%;
+       padding: 4 !important;
+       margin: 4 !important;
+       width: 15%;
+     }
+
+     th {
+       font-size: 85%;
+       width: 15%;
+       vertical-align: top !important;
+     }
+
+     tbody {
+       display: block;
+       height: calc(60vh);
+       overflow-y: scroll;
+     }
+
+     thead, tbody tr {
+       display:table;
+       width:100%;
+       table-layout:fixed;
+     }
+
+     thead {
+       width: calc(99.1%);
+     }
+
+     .ralign{
+       text-align:right;
+     }
+
+     .lalign{
+       text-align:left;
+     }
+
+     .cred{
+       color:red;
+     }
+
+     .calign{
+       text-align:center;
+     }
+
+     .dtwrap{
+       width :80%;
+     }
+
+     .smwrap{
+       width:15%
+     }
+
+     .lngwrap{
+       width:100%;
+     }
+
+     .mdwrap{
+       width:30%
+     }
+
+
+    </style>
+  </head>
+  <body>
+    <input type="hidden" id="start" value={{ startdate }} >
+    <input type="hidden" id="end" value={{ enddate }}>
+    <span style="margin:auto; display:table; font-size:120%;"><strong>{% trans %}GST R1 {% endtrans %}</strong></span>
+
+    <div id="top-options">
+      <div class="col-xs-10 nopadding">
+        <div class="form-inline form-group col-sm-4" id="typediv" style="margin-top:10px;">
+          <label for="r1-type">{% trans %}Type{% endtrans %} :</label>
+          <select class = "form-control" id="r1-type">
+            <option value="b2b" selected>{% trans %}B2B{% endtrans %}</option>
+            <option value="b2cl">{% trans %}B2CL{% endtrans %}</option>
+            <option value="b2cs">{% trans %}B2CS{% endtrans %}</option>
+            <option value="cdnr">{% trans %}CDNR{% endtrans %}</option>
+            <option value="cdnur">{% trans %}CDNUR{% endtrans %}</option>
+          </select>
+        </div>
+        <span class="pull-right" style="padding-right:15px">
+          <i>{% trans %}Period{% endtrans %}</i> :
+          <strong>{{startdate}}</strong>
+          {% trans %}to{% endtrans %}
+          <strong>{{enddate}}</strong>
+        </span>
+
+      </div>
+      <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+        <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+        </span>
+        <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+        <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+        </span>
+        <span class="input-group-addon" ><i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#HelpModal"></i></span>
+      </div>
+    </div>
+
+    <div id="b2b-container">
+      <table class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign">
+              {% trans %}GSTIN/UIN of Recipient{% endtrans %}
+            </th>
+            <th class="calign">
+              {% trans %}Receiver Name{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice number{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice date{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Place of supply{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Reverse Charge{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Applicable % of Tax Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice Type{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}E-commerce GSTIN{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Taxable value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Cess Amount{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in b2b %}
+            <tr>
+              <td class="calign">
+                {{ invoice["gstin"] }}
+              </td>
+
+              <td class="calign" >
+                {{ invoice["receiver"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["invoice_number"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["invoice_date"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["invoice_value"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["place_of_supply"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["reverse_charge"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["applicable_tax"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["invoice_type"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["ecommerce_gstin"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["rate"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["taxable_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["cess"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="b2cl-container" hidden>
+      <table id="b2b-table" class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign" >
+              {% trans %}Invoice number{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice date{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Place of supply{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Applicable % of Tax Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Taxable value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Cess Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}E-commerce GSTIN{% endtrans %}
+            </th>
+            <th class="calign">
+              {% trans %} Sale from Bonded WH {% endtrans %}
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in b2cl %}
+            <tr>
+              <td class="calign">
+                {{ invoice["invoice_number"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["invoice_date"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["invoice_value"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["place_of_supply"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["applicable_tax"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["rate"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["taxable_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["cess"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["ecommerce_gstin"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["sale_from_bonded_wh"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+
+    <div id="b2cs-container" hidden>
+      <table class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign">
+              {% trans %}Type{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Place of supply{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Applicable % of Tax Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Taxable value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Cess Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}E-commerce GSTIN{% endtrans %}
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in b2cs %}
+            <tr>
+              <td class="ralign">
+                {{ invoice["type"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["place_of_supply"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["applicable_tax"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["rate"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["taxable_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["cess"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["ecommerce_gstin"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="cdnr-container" hidden>
+      <table class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign">
+              {% trans %}GSTIN/UIN of Recipient{% endtrans %}
+            </th>
+            <th class="calign">
+              {% trans %}Receiver Name{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice/Advance Receipt number{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Invoice/Advance Receipt date{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Note/Refund Voucher Number{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}Note/Refund Voucher Date{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}Document Type{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Place of supply{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}Note/Refund Voucher value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Applicable % of Tax Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Taxable value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Cess Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Pre GST{% endtrans %}
+            </th>
+
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in cdnr %}
+            <tr>
+              <td class="calign">
+                {{ invoice["gstin"] }}
+              </td>
+
+              <td class="calign" >
+                {{ invoice["receiver"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["invoice_number"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["invoice_date"] }}
+              </td>
+
+              <td class="calign" >
+                {{ invoice["voucher_number"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["voucher_date"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["document_type"] }}
+              </td>
+
+              <td class="calign">
+                {{ invoice["place_of_supply"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["refund_voucher_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["applicable_tax"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["rate"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["taxable_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["cess"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["pre_gst"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <div id="cdnur-container" hidden>
+      <table class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign">
+            {% trans %}UR Type {% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Voucher Number{% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Voucher date{% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Document Type{% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Invoice Number{% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Invoice Date{% endtrans %}
+            </th>
+            <th class="calign">
+            {% trans %}Place of supply{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Voucher value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Applicable % of Tax Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Rate{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Taxable value{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Cess Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Pre GST{% endtrans %}
+            </th>
+            <th class="calign">
+              {% trans %}Supply Type{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for invoice in cdnur %}
+            <tr>
+              <td class="calign">
+                {{ invoice["ur_type"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["voucher_number"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["voucher_date"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["document_type"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["invoice_number"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["invoice_date"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["place_of_supply"] }}
+              </td>
+              <td class="calign" >
+                {{ invoice["refund_voucher_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["applicable_tax"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["rate"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["taxable_value"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["cess"] }}
+              </td>
+              <td class="ralign">
+                {{ invoice["pre_gst"] }}
+              </td>
+              <td class="calign">
+                {{ invoice["supply_type"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
+    <span class="hidden-print" style="margin:auto; display:table;">
+      <button class="btn btn-sm btn-info" type="button"  id="spreadsheet" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+    </span>
+
+    <div id="HelpModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " >
+        <div class="modal-content ">
+          <div class="modal-header">
+            {% trans %}<strong>Help!</strong>{% endtrans %}
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+        <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+        <p>
+          <font color=" #566573">
+            {% trans %}
+            This report shows section wise data required to file GSTR1<br>
+            Use the 'Type' select box to navigate between different sections<br><br>
+            <b>Sections:</b><br>
+            <b>B2B:</b> Details of invoices of taxable supplies made to other registered taxpayers
+            <br>
+            <b>B2CL:</b> Invoices for taxable outward supplies to consumers where
+                  a)The place of supply is outside the state where the supplier is registered
+                  b)The total invoice value is more that Rs 2,50,000
+            <br>
+            <b>B2CS:</b> Invoices for taxable outward supplies to consumers where
+                  a)The place of supply is outside the state where the supplier is registered
+                  b)The total invoice value is more that Rs 2,50,000
+            <br>
+            <b>CDNR:</b> Credit/Debit notes issued to the registered taxpayer
+            <br>
+            <b>CDNUR:</b> Credit/ Debit notes issued to the unregistered persons against interstate invoice and value is  more than Rs 2.5 lakh
+            <br>
+            <br>
+            <b>Note: Manually editing the exported file is not recommended</b>
+            {% endtrans %}
+         </font>
+        </p>
+      </div>
+    </div>
+  </div>
+
+    
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/gstreturnreport.js')}}"></script>
+ 
+  </body>
+</html>
