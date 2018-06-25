@@ -117,13 +117,13 @@ $(document).off('blur', '#addproddesc').on('blur', '#addproddesc',function(event
 
     $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
 
 $("#openingstock").focus(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
     
@@ -184,13 +184,13 @@ $("#addproddesc").keydown(function(event) {
 /*opening stock events in addstock popup*/
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
 
 $("#openingstock").focus(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
 

@@ -99,7 +99,7 @@ $(document).ready(function() {
     $("#sub_unit_edit").keydown(function(event) {
       if (event.which==13 && $("#sub_unit_edit option:selected").val()=='') {
         event.preventDefault();
-          $("#unit_edit_save").focus().select();
+          $("#unit_edit_save").focus().click();
       }
       if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
         event.preventDefault();
@@ -195,7 +195,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description": $("#unit_edit_desc").val()},
+	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description": $("#unit_edit_desc").val(), "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
