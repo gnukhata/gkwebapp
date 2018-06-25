@@ -42,9 +42,9 @@
 	<select class = "form-control input-sm "  name = "uom" id="edituom" >
 	  {% for uom in uom %}
 	    {% if uom["uomid"]== proddesc["uomid"] %}
-	      <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}" selected>{{uom["unitname"]}} {% if uom["description"] != None %} ({{ uom["description"] }}){% endif %} </option>
+	      <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}" selected>{{uom["unitname"]}} {% if uom["description"] != "" %} ({{ uom["description"] }}){% endif %} </option>
 	    {% else %}
-	      <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}">{{uom["unitname"]}} {% if uom["description"] != None %} ({{ uom["description"] }}){% endif %}</option>
+	      <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}">{{uom["unitname"]}} {% if uom["description"] != "" %} ({{ uom["description"] }}){% endif %}</option>
 	    {% endif %}
 	  {% endfor %}
 	</select>

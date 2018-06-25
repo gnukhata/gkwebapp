@@ -42,6 +42,7 @@ $(document).ready(function() {
  	    $("#unit_delete").show();
 	}
 
+	//selected unit is system generated then it cannot be deleted or edited. 
 	if(resp["gkresult"]["sysunit"] == 1){
 	    $("#alertmsg").show();
 	    $("#unit_delete").hide();
@@ -85,6 +86,7 @@ $(document).ready(function() {
 	}
     });
 
+    //Keydown for description of unit.
     $("#unit_edit_desc").keydown(function(event) {
 	if (event.which==13) {
             event.preventDefault();

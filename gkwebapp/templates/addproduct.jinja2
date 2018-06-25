@@ -76,7 +76,7 @@
                 <select class = "form-control input-sm sel productclass"  name = "uom" id="adduom" aria-describedby="txtareahelp">
                   <option value="" disabled selected hidden>{% trans %}Select Unit of Measurement{% endtrans %}</option>
                   {% for uom in gkresult["uom"] %}
-                    <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}">{{uom["unitname"]}} {% if uom["description"] != None %} ({{ uom["description"] }}){% endif %}</option>
+                    <option value="{{uom['uomid']}}" uname="{{uom["unitname"]}}">{{uom["unitname"]}} {% if uom["description"] != "" %} ({{ uom["description"] }}){% endif %}</option>
                   {% endfor %}
                 </select>
 

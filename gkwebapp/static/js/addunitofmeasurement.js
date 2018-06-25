@@ -44,6 +44,7 @@ $(document).ready(function() {
     }
   });
 
+    //Keydown event for description.
     $("#unit_desc").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
@@ -134,6 +135,7 @@ $(document).ready(function() {
       return false;
     }
 
+      //Store description of unit.
       if($("#unit_desc").val()!=""){
 	  var description = $("#unit_desc").val();
       }else{
