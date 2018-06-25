@@ -61,11 +61,9 @@ def getunit(request):
 def saveunit(request):
     header={"gktoken":request.headers["gktoken"]}
     if request.params["subunitof"]!='':
-        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),'sysunit':int(request.params["sysunit"])}
+        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),'sysunit':int(request.params["sysunit"]),"description":request.params["description"]}
     else:
-        dataset={"unitname":request.params["unitname"],'sysunit':int(request.params["sysunit"])}
-    if request.params["description"] !='':
-        dataset['description'] = request.params["description"]
+        dataset={"unitname":request.params["unitname"],'sysunit':int(request.params["sysunit"]),"description":request.params["description"]}
     result = requests.post("http://127.0.0.1:6543/unitofmeasurement", data=json.dumps(dataset),headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
@@ -73,11 +71,9 @@ def saveunit(request):
 def editunit(request):
     header={"gktoken":request.headers["gktoken"]}
     if request.params["subunitof"]!='':
-        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),"uomid":int(request.params["uomid"])}
+        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),"uomid":int(request.params["uomid"]),"description":request.params["description"]}
     else:
-        dataset={"unitname":request.params["unitname"],"uomid":int(request.params["uomid"])}
-    if request.params["description"] !='':
-        dataset['description'] = request.params["description"]
+        dataset={"unitname":request.params["unitname"],"uomid":int(request.params["uomid"]),"description":request.params["description"]}
     result = requests.put("http://127.0.0.1:6543/unitofmeasurement", data=json.dumps(dataset),headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 

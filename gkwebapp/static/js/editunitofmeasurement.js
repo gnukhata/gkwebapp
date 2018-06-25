@@ -188,14 +188,19 @@ $(document).ready(function() {
       $('#conversion_rate').focus().select();
       return false;
     }
-
-
+	//Store uom description
+	if($("#unit_edit_desc").val()!=''){
+	    var description = $("#unit_edit_desc").val();
+	}else{
+	    description = "";
+	}
+	
     $.ajax({
       url: '/unitofmeasurements?action=edit',
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description": $("#unit_edit_desc").val(), "sysunit":0},
+	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description":description , "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

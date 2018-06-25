@@ -134,12 +134,18 @@ $(document).ready(function() {
       return false;
     }
 
+      if($("#unit_desc").val()!=""){
+	  var description = $("#unit_desc").val();
+      }else{
+	  description = "";
+      }
+
     $.ajax({
       url: '/unitofmeasurements?action=save',
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val(),"description":$("#unit_desc").val(), "sysunit":0},
+	data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val(),"description":description, "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
