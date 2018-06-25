@@ -64,10 +64,14 @@ $(document).ready(function() {
     //Change event for 'GST Account' checkbox.
     $(document).off("change","#m_gstaccount").on("change","#m_gstaccount",function(event){
 	if($('#m_gstaccount').is(':checked')){
+	    $('.actable').hide();
+	    $('.multgstac').show();
 	    $('.m_accname').prop("disabled", true);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
 	    $(".gstaccountfields").val($(".gstaccountfields option:first").val());
 	}else{
+	    $('.actable').show();
+	    $('.multgstac').hide();
 	    $('.m_accname').prop("disabled", false);
 	    $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
 	    $(".gstaccountfields").val($(".gstaccountfields option:first").val());
@@ -431,8 +435,10 @@ $(document).ready(function() {
 		    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
 		}
 	    }else{
-		if(accnt=="")
+		var acname = $.trim($('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').val());
+		if(acname == "")
 		{
+		    console.log('Good');
 		    if (curindex == 0) {
 			$("#nodatasaved-alert").alert();
 			$("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -451,15 +457,16 @@ $(document).ready(function() {
 		}
 		if ($(this).closest('tr').is(":last-child"))
 		{
-		    curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-		    for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
-			let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
+		    console.log('Last Child');
+		    curacname = $('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').val();
+		    for (let j = 0; j < $('#multiactable tbody tr').length - 1; j++) {
+			let pvacname = $('#multiactable tbody tr:eq('+ j +') td:eq(0) input').val();
 			if(curacname == pvacname){
 			    $("#acname_duplicate-alert").alert();
 			    $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#acname_duplicate-alert").hide();
 			    });
-			    $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) select').focus().select();
+			    $('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
 			    return false;
 			}
 		    }

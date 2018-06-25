@@ -193,7 +193,31 @@
 	  <div id="gstfielddiv">
 	    <label> <input type="checkbox" id="m_gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
 	  </div>
-          <div class='table-responsive'>
+
+	  <div class='table-responsive actable'>
+            <table id="multiactable" class="table table-condensed table-fixedheader">
+	      <thead class="bg-primary">
+                <tr>
+		  <th class="col-xs-5">{% trans %}Account Name{% endtrans %}</th>
+                  <th class="col-xs-5">{% trans %}Opening Balance{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Remove{% endtrans %}</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		<tr>
+		  <td class="col-xs-5">
+                    <input type="text" class="form-control input-sm m_accname" placeholder="Account Name">
+                  </td>
+                  <td class="col-xs-5">
+                    <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                  </td>
+                  <td class="col-xs-2"></td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
+	  
+          <div class='table-responsive multgstac' hidden>
             <table id="m_acctable" class="table table-condensed table-fixedheader">
               <thead class="bg-primary">
                 <tr>
@@ -255,7 +279,6 @@
               </tbody>
             </table>
           </div>
-
         </div>
         <div class="modal-footer">
 
