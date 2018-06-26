@@ -29,6 +29,7 @@ $(document).ready(function() {
     $(".cessrate").numeric({"negative":false});
     $('#cessdiv').hide();
     var accrowhtml = '<tr>' + $('#m_acctable tbody tr:eq(0)').html() + '</tr>';
+    var newrowhtml = '<tr>' + $('#multiactable tbody tr:eq(0)').html() + '</tr>';
     var cessdiv = '<div class="input-group cessratediv" id="cessdiv"><input type="text" class="form-control input-sm cessrate gstaccountfields" name="accountname" accesskey="a"><span class="input-group-addon cessrateaddon">%</span></div>';
     var taxtype ="";
     var taxrate ="";
@@ -57,7 +58,11 @@ $(document).ready(function() {
 		});
 		return false;
 	    }
-	    $(".m_openbal").focus().select();
+	    if($('#m_gstaccount').is(':checked')){
+		$('#m_acctable tbody tr:eq('+nindex+') td:eq(4) input').focus().select();
+	    }else{
+		$('#multiactable tbody tr:eq('+nindex+') td:eq(1) input').focus().select();
+	    }
 	}
     });
 
@@ -131,12 +136,12 @@ $(document).ready(function() {
 	    }
 	}
 
-	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	/**if (taxtype!="" && taxstate!="" && taxrate!="") {
 	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
 	}
 	else {
 	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val("");
-	}
+	}**/
     });
 
     //Keydown for 'Tax Type'.
@@ -213,14 +218,14 @@ $(document).ready(function() {
 		  {
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
-			  if (taxtype!="" && taxstate!="" && taxrate!="") {
+			  /**if (taxtype!="" && taxstate!="" && taxrate!="") {
 			      $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
-			  }
+			  }**/
 		      }
-		      else {
+		      /**else {
 			  taxstate = "";
 			  $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val("");
-		      }
+		      }**/
 		  })
 		.fail(function() {
 		    console.log("error");
@@ -262,6 +267,14 @@ $(document).ready(function() {
 	    if ($('#m_acctable tbody tr:eq('+rateindex+') td:eq(2) option:visible').first().is(":selected")) {
 		$('#m_acctable tbody tr:eq('+rateindex+') td:eq(1) select').focus().select();
 	    }
+	}
+
+	taxrate = $.trim($('#m_acctable tbody tr:eq('+rateindex+') td:eq(2) option:selected').val());
+	if (taxtype!="" && taxstate!="" && taxrate!="") {
+	    $('#m_acctable tbody tr:eq('+rateindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
+	}
+	else {
+	    $('#m_acctable tbody tr:eq('+rateindex+') td:eq(3) input').val("");
 	}
     });
 
@@ -438,7 +451,6 @@ $(document).ready(function() {
 		var acname = $.trim($('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').val());
 		if(acname == "")
 		{
-		    console.log('Good');
 		    if (curindex == 0) {
 			$("#nodatasaved-alert").alert();
 			$("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -453,11 +465,10 @@ $(document).ready(function() {
 			return false;
 		    }
 		}else{
-		    $('#m_acctable tbody tr:eq('+nextindex+') td:eq(3) input').focus().select();
+		    $('#multiactable tbody tr:eq('+nextindex+') td:eq(0) input').focus().select();
 		}
 		if ($(this).closest('tr').is(":last-child"))
 		{
-		    console.log('Last Child');
 		    curacname = $('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').val();
 		    for (let j = 0; j < $('#multiactable tbody tr').length - 1; j++) {
 			let pvacname = $('#multiactable tbody tr:eq('+ j +') td:eq(0) input').val();
@@ -478,6 +489,11 @@ $(document).ready(function() {
 		// Default value 0.00 is set if the field is left blank or its value is 0.
 		$('#m_acctable tbody tr:eq('+curindex+') td:eq(4) input:enabled').val("0.00");
 	    }
+	    if ($.trim($('#multiactable tbody tr:eq('+curindex+') td:eq(1) input').val()) == 0 || $.trim($('#multiactable tbody tr:eq('+curindex+') td:eq(1) input').val())=="")
+	    {
+		// Default value 0.00 is set if the field is left blank or its value is 0.
+		$('#multiactable tbody tr:eq('+curindex+') td:eq(1) input:enabled').val("0.00");
+	    }
 	}
     });
 
@@ -485,11 +501,15 @@ $(document).ready(function() {
     function addRow(curindex){
 	var nextrwindex = curindex+1;
       // This function will validate the current row and then add a new row.
-      var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
-      if (accname == "") {
-	  $("#acc_add").click();
-	  return false;
-      }
+	if($("#m_gstaccount").is(':checked')){
+	    var accname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
+	}else{
+	    accname = $('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').val();
+	}
+	if (accname == "") {
+	    $("#acc_add").click();
+	    return false;
+	}
 	
     $.ajax({
 	url: '/accountexists',
@@ -510,13 +530,19 @@ $(document).ready(function() {
 	    if($('#m_gstaccount').is(':checked')){
 		$('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:first').focus().select();
 	    }else{
-		$('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+		$('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
 	    }
 	}
 	if (jsonobj["gkstatus"] == 0){
-	    $("#m_acctable").append(accrowhtml);
-	    $('#m_acctable tbody tr:eq('+nextrwindex+') td:eq(0) option:first').focus().select();
-	    $("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+	    if($("#m_gstaccount").is(':checked')){
+		$("#m_acctable").append(accrowhtml);
+		$('#m_acctable tbody tr:eq('+nextrwindex+') td:eq(0) option:first').focus().select();
+		$("#m_acctable tbody tr:last td:eq(5)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+	    }else{
+		$("#multiactable").append(newrowhtml);
+		$('#multiactable tbody tr:eq('+nextrwindex+') td:eq(0) input').focus().select();
+		$("#multiactable tbody tr:last td:eq(2)").append('<div style="text-align: center;"><a href="#" class="m_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
+	    }
 	    if($('#m_gstaccount').is(':checked')){
 		$("input.gstaccountfields, select.gstaccountfields").prop("disabled", false);
 		$('.m_accname').prop("disabled", true);
@@ -553,6 +579,7 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
     var output = [];	// This is an array which will contain dictionaries representing rows of the table.
     var m_grpnm = $.trim($("#m_gname").val());
     var allowsave = 1;
+    if($("#m_gstaccount").is(':checked')){ 
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
       var curindex = $(this).index();
       var accnt = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(3) input').val());
@@ -664,7 +691,35 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
       output.push(obj);
     }
   });
+    }else{
+	$("#multiactable tbody tr").each(function() {
+	    var mulindex = $(this).index();
+	    var mulaccnt = $.trim($('#multiactable tbody tr:eq('+ mulindex +') td:eq(0) input').val());
 
+	    if ($.trim($('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input').val()) == 0 || $.trim($('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input').val())=="")
+	    {
+		$('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input:enabled').val("0.00");
+	    }
+
+	    if (mulaccnt=="")
+	    {
+		// If account name in any row is blank then the allow variable is set to false, also the index of the same row is saved.
+		allow = false;
+		blankindex = $(this).closest('tr').index();
+	    }else {
+		var obj = {};// Dictionary is created for every row.
+
+		obj.accountname = $(".m_accname", this).val();
+		obj.openbal = $(".m_openbal", this).val();
+		obj.groupname = $("#m_gcode").val();
+		obj.subgroupname = $("#m_sgcode").val();
+		obj.newsubgroup = $("#m_nsgcode").val();
+		obj.defaultflag = 0;
+		output.push(obj);
+	    }
+	});
+    }
+    
     //ajax function below takes list of dictionaries "output" as input and saves all accounts.
     if(allowsave == 1){
 	$.ajax({
