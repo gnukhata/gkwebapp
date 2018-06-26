@@ -40,8 +40,9 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml;
     var stateshtml;
+    var taxes1 = [];
     $("#prodselect").focus();
-    var gst_tax = '<select id="gstRate" class="form-control input-sm tax_rate_gst text-right"><option value="5" class="text-right">5</option><option value="12" class="text-right">12</option><option value="18" class="text-right">18</option><option value="28" class="text-right">28</option></select>';
+    var gst_tax = '<select id="gstRate" class="form-control input-sm tax_rate_gst product_tax_disable text-right"><option value="5" class="text-right">5</option><option value="12" class="text-right">12</option><option value="18" class="text-right">18</option><option value="28" class="text-right">28</option></select>';
     $("#prodselect").keydown(function(e){
     if (e.which == 13) {
 	e.preventDefault();
@@ -192,15 +193,15 @@ $(document).ready(function() {
     $("#editproddesc").val($("#editproddesc").val().trim());
 
   });
-  $(document).keyup(function(event)
-  {
+  //$(document).keyup(function(event)
+  //{
     /* Act on the event */
-    if (event.which == 45)
-    {
-      event.preventDefault();
-      $("#epsubmit").click();
-    }
-  });
+    //if (event.which == 45)
+    //{
+      //event.preventDefault();
+      //$("#epsubmit").click();
+    //}
+  //});
 /*
   $("#prodselect").keydown(function(event) {
 
@@ -405,7 +406,8 @@ $(document).ready(function() {
             taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
             $('#product_edit_tax_table tbody tr:first').remove();
-        for (tax of resp["gkresult"]) {
+            for (tax of resp["gkresult"]) {
+		var obj1 = {};
 	    $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
             $(".product_tax_disable").prop('disabled',true);
 	    $(".tax_del").prop('disabled',true);
@@ -416,13 +418,16 @@ $(document).ready(function() {
 	    var previndex = curindex-1;
 	    if(tax["taxname"] == "IGST"){
 		$('#product_edit_tax_table tbody tr:last td:eq(2) input').remove();
-		$('#product_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax);
+		$('#product_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax).prop("disabled", true);
 		var new_gst = Math.floor(tax["taxrate"]);
 		$('#product_edit_tax_table tbody tr:last td:eq(2) select').val(new_gst);
 	    }else{ 
 		$('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
-	    } 
-          
+	    }
+		
+		obj1.taxrowid1 = tax["taxid"];
+		taxes1.push(obj1);
+	  console.log(JSON.stringify(obj1));
         }
 	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
@@ -1352,7 +1357,8 @@ $(document).ready(function() {
                 event.preventDefault();
                 $("#epsubmit").click();
               }
-            });
+           });
+	 
             $.ajax({
               url: 'godown?type=getallgodowns',
               type: 'POST',
@@ -1395,10 +1401,19 @@ $(document).ready(function() {
      }
   }
    );
-   });
+  });
+
+    $(document).click(function(event){
+    /* Act on the event */
+    if (event.which == 45){
+	event.preventDefault();
+	$("#epsubmit").click();
+    }
+    });
 
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
-    event.preventDefault();
+      event.preventDefault();
+      console.log("in Save");
       /* Act on the event */
       if($("#gsflag").val() == '7'){
 	  if ($("#editproddesc").val()=="")
@@ -1426,7 +1441,7 @@ $(document).ready(function() {
 	  }
       }
 
-      var types = [];
+      /**var types = [];
       $('#product_edit_tax_table tbody tr').each(function(){
           if($(".tax_name",this).val()=='IGST') {
               types.push($(".tax_name",this).val());
@@ -1453,7 +1468,7 @@ $(document).ready(function() {
 	  $('#product_edit_tax_table tbody tr:eq('+this+') td:eq(0) select').focus();
           return false;
       }
-      
+      **/
 
       
     var igstflag=0;
@@ -1537,17 +1552,21 @@ $(document).ready(function() {
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
-      let curindex = $(this).index();
+	let curindex = $(this).index();
+	console.log(curindex);
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
           obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
 	  if($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() == "IGST"){
+	      console.log("IN SAVE IF");
 	    obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) select option:selected").val());  
 	  } else {
+	      console.log('IN SAVE ELSE');
 	      obj.taxrate = parseFloat($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(2) input").val()).toFixed(2);
 	  }
           taxes.push(obj);
+	  console.log(JSON.stringify(obj));
       }
     });
     
@@ -1560,7 +1579,8 @@ $(document).ready(function() {
       }
     });
     var editformdata = $("#editprodform").serializeArray();
-    editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+      editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+      editformdata.push({name: 'taxes1', value: JSON.stringify(taxes1)});
     editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
