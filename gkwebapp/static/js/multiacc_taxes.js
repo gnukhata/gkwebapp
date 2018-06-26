@@ -102,6 +102,10 @@ $(document).ready(function() {
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(2) input').numeric({"negative":false});
 	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) select').hide('#rate');
+
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(1) option:first').prop("selected",true);
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) option:first').prop("selected",true);
+	    $('#m_acctable tbody tr:eq('+ txnindex +') td:eq(3) input').val("");
 	    if ($(this).closest('tr').is(":last-child")){
 		$('#m_acctable tbody tr:last td:eq(2) input').remove();
 		$('#m_acctable tbody tr:last td:eq(2) span').remove();
@@ -127,12 +131,14 @@ $(document).ready(function() {
 		$(".taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
 		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(1) option:first').prop("selected",true);
 		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) option:first').prop("selected",true);
+		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(3) input').val("");
 	    }
  	    else {
 		$(".taxrate option.igstopt").prop("disabled", true).prop("hidden", true);
 		$(".taxrate option.sgstopt").prop("disabled", false).prop("hidden", false);
 		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(1) option:first').prop("selected",true);
 		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(2) option:first').prop("selected",true);
+		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(3) input').val("");
 	    }
 	}
 
@@ -184,6 +190,38 @@ $(document).ready(function() {
                 $(".taxstate").focus();
                 return false;
             }
+
+	    let taxstatecode = $('#m_acctable tbody tr:eq('+tsindex+') td:eq(1) option:selected').attr("stateid");
+	    if (taxstatecode !== "") {
+	    $.ajax({
+		url: '/addaccount?type=abbreviation',
+		type: 'POST',
+		global: false,
+		async: false,
+		datatype: 'json',
+		data: {"statecode": taxstatecode},
+		beforeSend: function(xhr)
+		{
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    })
+	    .done(function(resp){
+		if (resp.gkstatus == 0) {
+		    taxstate = resp.abbreviation;
+		}
+	    })
+            .fail(function() {
+		console.log("error");
+	    })
+	    .always(function() {
+		console.log("complete");
+	    });
+	    }
+	    else {
+		taxstate = "";
+		$(".m_accname").val("");
+	    }
+	    
 	    if(taxtype == 'CESSIN' || taxtype == 'CESSOUT'){
 		$('#m_acctable tbody tr:eq('+tsindex+') td:eq(2) input').focus().select();
 	    }else{
@@ -201,6 +239,8 @@ $(document).ready(function() {
     $(document).off("change",".taxstate").on("change",".taxstate",function(event){
 	var tscindex = $(this).closest('tr').index();
 	let taxstatecode = $('#m_acctable tbody tr:eq('+tscindex+') td:eq(1) option:selected').attr("stateid");
+	$('#m_acctable tbody tr:eq('+ tscindex +') td:eq(2) option:first').prop("selected",true);
+	$('#m_acctable tbody tr:eq('+ tscindex +') td:eq(3) input').val("");
 	if (taxstatecode !== "") {
 	    $.ajax({
 		url: '/addaccount?type=abbreviation',
@@ -218,14 +258,7 @@ $(document).ready(function() {
 		  {
 		      if (resp.gkstatus == 0) {
 			  taxstate = resp.abbreviation;
-			  /**if (taxtype!="" && taxstate!="" && taxrate!="") {
-			      $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
-			  }**/
 		      }
-		      /**else {
-			  taxstate = "";
-			  $('#m_acctable tbody tr:eq('+tscindex+') td:eq(3) input').val("");
-		      }**/
 		  })
 		.fail(function() {
 		    console.log("error");
@@ -247,7 +280,7 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if(rateindex == 0){
 		if(!$('.taxrate').is(':hidden')){
-		    if ($.trim($('.taxrate').val()) == "" ) {
+		    if ($.trim($('#m_acctable tbody tr:eq('+rateindex+') td:eq(2) option:selected').val()) == "" ) {
 			$("#mult_taxrate-alert").alert();
 			$("#mult_taxrate-alert").fadeTo(2250, 200).slideUp(500, function(){
 			    $("#mult_taxrate-alert").hide();
