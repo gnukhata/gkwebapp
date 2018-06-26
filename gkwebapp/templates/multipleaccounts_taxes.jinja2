@@ -246,7 +246,7 @@
                   </td>
 		  <td class="col-xs-3">
                     <select class="form-control input-sm taxstate gstaccountfields">
-		      <option value="" hidden disabled selected>Select State</option>
+		      <option value="" stateid="" hidden disabled selected>Select State</option>
 		      {% for state in states %}
 			{% for key, value in state.items() %}
 			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>

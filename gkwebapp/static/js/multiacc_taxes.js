@@ -25,6 +25,7 @@ Contributors:
 */
 // This script is for multiple account popup.
 $(document).ready(function() {
+    
     $(".m_openbal").numeric();// opening balance column will only accept numbers, decimal and minus sign.
     $(".cessrate").numeric({"negative":false});
     $('#cessdiv').hide();
@@ -46,7 +47,7 @@ $(document).ready(function() {
             if($('#m_gstaccount').is(':checked')){
 		$('.taxrate').focus().select();
 	    }else{
-		$('#m_acctable tbody tr:eq('+npindex+') td:eq(4) input').focus().select();
+		$('#multiactable tbody tr:eq('+npindex+') td:eq(1) input').focus().select();
 	    }
 	}
 	if (event.which==13){
@@ -141,13 +142,6 @@ $(document).ready(function() {
 		$('#m_acctable tbody tr:eq('+ txnindex +') td:eq(3) input').val("");
 	    }
 	}
-
-	/**if (taxtype!="" && taxstate!="" && taxrate!="") {
-	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val(taxtype + "_" + taxstate + "@" + taxrate);
-	}
-	else {
-	    $('#m_acctable tbody tr:eq('+txnindex+') td:eq(3) input').val("");
-	}**/
     });
 
     //Keydown for 'Tax Type'.
@@ -217,10 +211,6 @@ $(document).ready(function() {
 		console.log("complete");
 	    });
 	    }
-	    else {
-		taxstate = "";
-		$(".m_accname").val("");
-	    }
 	    
 	    if(taxtype == 'CESSIN' || taxtype == 'CESSOUT'){
 		$('#m_acctable tbody tr:eq('+tsindex+') td:eq(2) input').focus().select();
@@ -241,6 +231,7 @@ $(document).ready(function() {
 	let taxstatecode = $('#m_acctable tbody tr:eq('+tscindex+') td:eq(1) option:selected').attr("stateid");
 	$('#m_acctable tbody tr:eq('+ tscindex +') td:eq(2) option:first').prop("selected",true);
 	$('#m_acctable tbody tr:eq('+ tscindex +') td:eq(3) input').val("");
+	$('#m_acctable tbody tr:eq('+ tscindex +') td:eq(2) input').val("");
 	if (taxstatecode !== "") {
 	    $.ajax({
 		url: '/addaccount?type=abbreviation',
@@ -378,7 +369,6 @@ $(document).ready(function() {
 	var nextindex = curindex+1;
 	var previndex = curindex-1;
 	var numberofrows = $(".m_openbal").length;
-
 	if (event.which==38)
 	{
 	    if($('#m_gstaccount').is(':checked')){
@@ -388,7 +378,7 @@ $(document).ready(function() {
 		    $('#m_acctable tbody tr:eq('+curindex+') td:eq(2) select').focus().select();
 		}
 	    }else{
-		$('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').focus().select();
+		$('#multiactable tbody tr:eq('+curindex+') td:eq(0) input').focus().select();
 	    }
 	}
 	if(event.which == 13)
@@ -397,7 +387,12 @@ $(document).ready(function() {
 	    var accnt = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val());
 	    var type = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val());
 	    if($("#m_gstaccount").is(':checked')){
-		if(accnt=="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val()) =="")
+		if(type == 'CESSIN' || type == 'CESSOUT'){
+		    var rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val());
+		}else{
+		    rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
+		}
+		if(accnt=="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax =="")
 		{
 		    if (curindex == 0) {
 			$("#nodatasaved-alert").alert();
@@ -418,12 +413,10 @@ $(document).ready(function() {
 
 		if ($(this).closest('tr').is(":last-child"))
 		{
-		    if(type == 'CESSIN' || type == 'CESSOUT'){
-			var rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) input').val());
-		    }else{
-			rateoftax = $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(2) option:selected').val());
-		    }
-		    if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
+		    if(accnt=="" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) == "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) =="" && rateoftax ==""){
+			$("#acc_add").click();
+			return false;
+		    }else if($.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(0) option:selected').val()) != "" && $.trim($('#m_acctable tbody tr:eq('+curindex+') td:eq(1) option:selected').val()) !="" && rateoftax !="" && accnt !="" ){
 			var curacname = $('#m_acctable tbody tr:eq('+curindex+') td:eq(3) input').val();
 			for (let j = 0; j < $('#m_acctable tbody tr').length - 1; j++) {
 			    let pvacname = $('#m_acctable tbody tr:eq('+ j +') td:eq(3) input').val();
@@ -595,14 +588,22 @@ $(document).ready(function() {
 	$('.modal-backdrop').remove();
     });
     
-$(document).off("click",".m_del").on("click", ".m_del", function() {
-  //This function will delete the current row.
-  $(this).closest('tr').fadeOut(200, function(){
-    $(this).closest('tr').remove();	 //closest method gives the closest element specified
-    $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
-  });
-    $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
-});
+    $(document).off("click",".m_del").on("click", ".m_del", function() {
+	//This function will delete the current row.
+	$(this).closest('tr').fadeOut(200, function(){
+	    $(this).closest('tr').remove();	 //closest method gives the closest element specified
+	    if($('#m_gstaccount').is(':checked')){
+		$('#m_acctable tbody tr:last td:eq(4) input').focus().select();
+	    }else{
+		$('#multiactable tbody tr:last td:eq(1) input').focus().select();
+	    }
+	});
+	if($('#m_gstaccount').is(':checked')){
+	    $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
+	}else{
+	    $('#multiactable tbody tr:last td:eq(1) input').focus().select();
+	}
+    });
     
 var allow = true;
 var blankindex = 0;
@@ -612,6 +613,7 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
     var output = [];	// This is an array which will contain dictionaries representing rows of the table.
     var m_grpnm = $.trim($("#m_gname").val());
     var allowsave = 1;
+    var seenac = {};
     if($("#m_gstaccount").is(':checked')){ 
   $("#m_acctable tbody tr").each(function() { //loop for the rows of the table body
       var curindex = $(this).index();
@@ -627,6 +629,19 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 	  var rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) input').val());
       }else{
 	  rateoftax = $.trim($('#m_acctable tbody tr:eq('+ curindex +') td:eq(2) option:selected').val());
+      }
+
+      //This is do not allow to create same account name. 
+      if(seenac[accnt]){
+	  $("#acname_duplicate-alert").alert();
+	  $("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#acname_duplicate-alert").hide();
+	  });
+	  $('#m_acctable tbody tr:last td:eq(4) input').focus().select();
+	  allowsave = 0;
+	  return false;
+      }else{
+	  seenac[accnt] = true;
       }
       
       //Alert for blank fields
@@ -707,6 +722,16 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
     var accn = $(".m_accname", this).val();  
     if (accn=="")
     {
+      if(curindex == 0){
+	  $("#nodatasaved-alert").alert();
+	  $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#m_multiacc").modal("hide");
+	      $(".modal-backdrop").hide();
+	      $("#nodatasaved-alert").hide();
+	  });
+	  allowsave = 0;
+	  return false;
+      }
       // If account name in any row is blank then the allow variable is set to false, also the index of the same row is saved.
       allow = false;
       blankindex = $(this).closest('tr').index();
@@ -729,6 +754,19 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 	    var mulindex = $(this).index();
 	    var mulaccnt = $.trim($('#multiactable tbody tr:eq('+ mulindex +') td:eq(0) input').val());
 
+	    //This is do not allow to create same account name.
+	    if(seenac[mulaccnt]){
+		$("#acname_duplicate-alert").alert();
+		$("#acname_duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#acname_duplicate-alert").hide();
+		});
+		$('#multiactable tbody tr:last td:eq(1) input').focus().select();
+		allowsave = 0;
+		return false;
+	    }else{
+		seenac[mulaccnt] = true;
+	    }
+	    
 	    if ($.trim($('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input').val()) == 0 || $.trim($('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input').val())=="")
 	    {
 		$('#multiactable tbody tr:eq('+mulindex+') td:eq(1) input:enabled').val("0.00");
@@ -736,6 +774,17 @@ $(document).off("click","#acc_add").on("click", "#acc_add", function() {
 
 	    if (mulaccnt=="")
 	    {
+		if(mulindex == 0){
+		    $("#nodatasaved-alert").alert();
+		    $("#nodatasaved-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#m_multiacc").modal("hide");
+			$(".modal-backdrop").hide();
+			$("#nodatasaved-alert").hide();
+		    });
+		    allowsave = 0;
+		    return false;
+		}
+
 		// If account name in any row is blank then the allow variable is set to false, also the index of the same row is saved.
 		allow = false;
 		blankindex = $(this).closest('tr').index();
