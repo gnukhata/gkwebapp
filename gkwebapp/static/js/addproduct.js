@@ -573,13 +573,18 @@ $("#addcatselect").change(function(event) {
       console.log("success");
       if (resp["gkresult"].length>0) {
         $('#product_tax_table tbody tr').remove();
-        for (tax of resp["gkresult"]) {
+          for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append(taxfieldhtml);
 	    $('#product_tax_table tbody tr:last td:eq(3) span').hide('.glyphicon-plus');
 	    $('#product_tax_table tbody tr:last').attr({value: tax["taxid"]});
             $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
             $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-	    $('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	      if(tax["taxname"] == "IGST"){
+		  var new_gst = Math.floor(tax["taxrate"]);//Round up the number
+		  $("#product_tax_table tbody tr:last td:eq(2) select").val(new_gst);
+	    }else{ 
+		$('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    }
         }
 	  $('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	  $(".tax_name").change();
