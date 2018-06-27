@@ -41,6 +41,7 @@ $(document).ready(function() {
     $("#category_edit_name").focus().select();
     var deletedspecs = [];
     var deletedtaxs = [];
+    var gst_tax = '<select id="gstRate" class="form-control input-sm tax_rate_gst category_edit_disable text-right"><option value="5" class="text-right">5</option><option value="12" class="text-right">12</option><option value="18" class="text-right">18</option><option value="28" class="text-right">28</option></select>';
     $(document).keyup(function(event) {
     if(event.which == 45) {
       if ($("#category_edit_savespecs").is(":enabled")) {
@@ -140,7 +141,14 @@ $(document).ready(function() {
 	    if(tax["taxname"] != "VAT"){
 		$('#category_edit_tax_table tbody tr:last td:eq(1) select').prop("disabled", true);
 	    }
-	    $('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    if(tax["taxname"] == "IGST"){
+		$('#category_edit_tax_table tbody tr:last td:eq(2) input').remove();
+		$('#category_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax).prop("disabled", true);
+		var new_gst = Math.floor(tax["taxrate"]);//Round up the number
+		$('#category_edit_tax_table tbody tr:last td:eq(2) select').val(new_gst);
+	    }else{ 
+		$('#category_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    }
 	    $(".tax_del:first").hide();
 	}
 	}
@@ -326,6 +334,9 @@ $(document).ready(function() {
     else if (($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() !='VAT') && event.which==13 ) {
         event.preventDefault();
         var types = [];
+	if($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() == 'IGST'){
+	  $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) select').focus();  
+	} else { $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select(); }
         $('#category_edit_tax_table tbody tr').each(function(){
           if($(".tax_name",this).val()=='IGST') {
           types.push($(".tax_name",this).val());
@@ -352,7 +363,6 @@ $(document).ready(function() {
           return false;
         }
         $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", true);
-        $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
     else if (event.which==13) {
       event.preventDefault();
@@ -361,7 +371,16 @@ $(document).ready(function() {
   });
 
   $(document).off("change",".tax_name").on("change",".tax_name",function(event){
-    var curindex = $(this).closest('tr').index();
+      var curindex = $(this).closest('tr').index();
+      if ($('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(0) select').val() == 'IGST'){
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').remove('.tax_rate_gst');
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').hide('.tax_rate');
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2)').append(gst_tax);
+      }else{
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').remove('.tax_rate');
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2)').append('<input class="form-control input-sm tax_rate text-right numtype category_edit_disable">');
+	  $('#category_edit_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').hide('.tax_rate_gst');
+      }
     if ($("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
       $("#category_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", false);
@@ -411,6 +430,75 @@ $(document).ready(function() {
     else if (event.which==13) {
       event.preventDefault();
       $('#category_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+    }
+  });
+
+  //Keydown event for tax_rate select box for "GST" tax name.
+  $(document).off("keydown",".tax_rate_gst").on("keydown",".tax_rate_gst",function(event)
+  {
+    var curindex1 = $(this).closest('tr').index();
+    var nextindex1 = curindex1+1;
+    var previndex1 = curindex1-1;
+    if (event.which==13) {
+      event.preventDefault();
+      if (curindex1 != ($("#category_edit_tax_table tbody tr").length-1)) {
+        $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
+        if ($('#category_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+          $("#tax-name-blank-alert").alert();
+          $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax-name-blank-alert").hide();
+          });
+          $('#category_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+          return false;
+        }
+        if ($('#category_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) select').val()=="") {
+          $("#tax-rate-blank-alert").alert();
+          $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#tax-rate-blank-alert").hide();
+          });
+          $('#category_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) select').focus();
+          return false;
+        }
+        $('#category_edit_tax_table tbody').append(taxfieldhtml);
+          $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	  $('#category_edit_tax_table tbody tr:eq('+nextindex1+')').attr("value", "New");
+	  for (let j = 0; j < curindex1 + 1; j++) {
+	      var selectedtax = $("#category_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+	      if(selectedtax != "VAT"){
+		  for(let i=j+1; i <= nextindex1;i++){
+		      $('#category_edit_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
+		  }
+		  }
+	      }
+      }
+    }
+
+    else if(event.which==190 && event.shiftKey)
+    {
+	event.preventDefault();
+      $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(2) input').focus().select();
+    }
+    else if (event.which==188 && event.shiftKey)
+    {
+      if(previndex1>-1)
+      {
+        event.preventDefault();
+        $('#category_edit_tax_table tbody tr:eq('+previndex1+') td:eq(2) input').focus().select();
+      }
+    }
+    else if (event.ctrlKey && event.which==188) {
+      event.preventDefault();
+      $('#category_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
+    }
+    else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#category_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+    }
+    if (event.which == 27) {
+      event.preventDefault();
+      $("#category_edit_savespecs").focus();
     }
   });
 
@@ -505,7 +593,6 @@ $(document).ready(function() {
       $('#category_edit_spec_table tbody tr:eq('+nextindex+') td:eq(0) input').focus().select();
     }
     else if (event.which==38) {
-      console.log(curindex);
       if (curindex == 0) {
         event.preventDefault();
         $("#category_edit_name").focus().select();
@@ -598,6 +685,34 @@ $(document).ready(function() {
       $('#category_edit_name').focus().select();
       return false;
     }
+
+    var types = [];
+      $('#category_edit_tax_table tbody tr').each(function(){
+          if($(".tax_name",this).val()=='IGST') {
+              types.push($(".tax_name",this).val());
+          }
+          if($(".tax_name",this).val()=='CESS') {
+              types.push($(".tax_name",this).val());
+	  }
+          if ($(".tax_name",this).val()=='CVAT') {
+              types.push($(".tax_name",this).val());
+          }
+      });
+      types.sort();
+      var duplicatetypes = [];
+      for (var i = 0; i < types.length - 1; i++) {
+          if (types[i + 1] == types[i]) {
+              duplicatetypes.push(types[i]);
+          }
+      }
+      if (duplicatetypes.length > 0) {
+          $("#cvat-alert").alert();
+          $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#cvat-alert").hide();
+          });
+	  $('#category_edit_tax_table tbody tr:last td:eq(0) select').focus();
+          return false;
+      }
     var specs = [];
     for (var i = 0; i < $("#category_edit_spec_table tbody tr").length; i++) {
       if ($.trim($("#category_edit_spec_table tbody tr:eq("+i+") td:eq(0) input").val())=="") {
@@ -605,7 +720,6 @@ $(document).ready(function() {
         //return false;
         if(i==0)
         {
-          console.log("delete clicked");
           $("#category_edit_spec_table tbody tr:eq("+i+") td:eq(2) a").click();
 
         }
@@ -623,16 +737,21 @@ $(document).ready(function() {
 
       var taxes = [];
     for (let i = 0; i < $("#category_edit_tax_table tbody tr").length; i++) {
-      if ($.trim($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val())!="" && $.trim($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) input").val())!="") {
+	if ($.trim($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val())!="" && ($.trim($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) input").val())!="" || $.trim($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) select").val())!="")) {
       let obj = {};
       obj.taxid = $("#category_edit_tax_table tbody tr:eq("+i+")").attr('value');
       obj.taxname = $("#category_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val();
       obj.state = $("#category_edit_tax_table tbody tr:eq("+i+") td:eq(1) select option:selected").val();
-      obj.taxrate = $("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) input").val();
-      taxes.push(obj);
+      //If the 'taxname' will be GST, it takes the value from select box otherwise input field.
+      if($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == "IGST"){
+	  obj.taxrate = parseFloat($("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) select option:selected").val());  
+      } else {
+	  obj.taxrate = $("#category_edit_tax_table tbody tr:eq("+i+") td:eq(2) input").val();
+      }
+	    taxes.push(obj);
+	}
     }
-    }
-      console.log(taxes);
+
     $.ajax({
       url: '/category?action=edit',
       type: 'POST',
