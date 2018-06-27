@@ -1431,7 +1431,7 @@ $(document).ready(function() {
 	  }
       }
 
-      /**var types = [];
+      var types = [];
       $('#product_edit_tax_table tbody tr').each(function(){
           if($(".tax_name",this).val()=='IGST') {
               types.push($(".tax_name",this).val());
@@ -1455,12 +1455,9 @@ $(document).ready(function() {
           $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#cvat-alert").hide();
           });
-	  $('#product_edit_tax_table tbody tr:eq('+this+') td:eq(0) select').focus();
+	  $('#product_edit_tax_table tbody tr:last td:eq(0) select').focus();
           return false;
-      }
-      **/
-
-      
+      }     
     var igstflag=0;
     var taxflag=0;
   $("#product_edit_tax_table tbody tr").each(function(index){
