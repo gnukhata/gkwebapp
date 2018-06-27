@@ -104,7 +104,13 @@ $(document).ready(function() {
         else {
           $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val(parenttaxes[i].state);
         }
-        $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
+	  if (parenttaxes[i].taxname == "IGST"){
+	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").hide();
+	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) select").show();
+	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) select").val(Math.floor(parenttaxes[i].taxrate));
+	  } else {
+	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").val(parenttaxes[i].taxrate);
+	  }
       }
 	$("#category_tax_table tbody").append(taxfieldhtml);
 	if($("#category_tax_table tbody tr").length > 1){
