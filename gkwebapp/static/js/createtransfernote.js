@@ -154,7 +154,18 @@ $(document).ready(function() {
 		});
 		$('#tn_date').focus().select();
 		return false;
-	    } 
+	    }
+
+	    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd");
+	    if (!curdate.between(financialstart,financialend)) {
+		$("#between-date-alert").alert();
+		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#between-date-alert").hide();
+		});
+		$('#tn_date').focus().select();
+		return false;
+	    }
+	    
 	    if(fromgod==1 && togod==1){
 		$('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
 	    }
@@ -245,8 +256,16 @@ $(document).ready(function() {
 
   $("#tn_to_godown").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
+	event.preventDefault();
+	if ($.trim($('#tn_to_godown').val())=="") {
+	    $("#godown-blank-alert").alert();
+	    $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#godown-blank-alert").hide();
+	    });
+	    $('#tn_to_godown').focus();
+	    return false;
+	}
+	$('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
     }
     if (event.which==38 && (document.getElementById('tn_to_godown').selectedIndex==1||document.getElementById('tn_to_godown').selectedIndex==0)) {
       event.preventDefault();
@@ -428,7 +447,7 @@ $(document).ready(function() {
 							    '<td class="col-xs-1">' +
 							    '</td>' +
 							    '</tr>');
-              for (product of resp["products"]) {
+		for (product of resp["products"]) {
 		$('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
               }
               $('.transfernote_product_quantity').numeric({ negative: false});
@@ -502,6 +521,7 @@ $(document).ready(function() {
       var productcode = $(this).find('option:selected').val(); //Retreiving product code from selected option.
       var curindex = $(this).closest('tbody tr').index();  //Index value used for checking the current row
       //For each product selected its unit of measurement is displayed in the input field for quantity.
+      if(productcode!=""){	
       $.ajax({
 	url: '/invoice?action=getproduct',
 	type: 'POST',
@@ -526,7 +546,9 @@ $(document).ready(function() {
        .always(function() {
 	 console.log("complete");
        });
-    });
+      }
+      });
+					      
   //Key event for product quantity. Note that here a new row is added when 'Enter' key is pressed.
   $(document).off("keydown",".transfernote_product_quantity").on("keydown",".transfernote_product_quantity",function(event)
     {
@@ -539,6 +561,7 @@ $(document).ready(function() {
 	var month = today.getMonth();
 	month += 1;
 	var date = today.getDate();
+	var len_select = $('#transfernote_product_table tbody tr:last td:eq(0) option').length;
 	if (month < 10) {
 	    month = "0" + month;
 	}
@@ -607,52 +630,63 @@ $(document).ready(function() {
           }
 
 	  //Getting product details to fill the dropdown list in new row.
-	  
-          $.ajax({
-            url: '/transfernotes?action=getprod',
-            type: 'POST',
-            dataType: 'json',
-            async : false,
-            data: {"godownid":$("#tn_from_godown option:selected").val()},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-           .done(function(resp) {
-             if (resp["gkstatus"]==0) {
-               $('#transfernote_product_table tbody').append('<tr>'+
-							     '<td class="col-xs-7">'+
-							     '<select class="form-control input-sm product_name"></select>'+
-							     '</td>'+
-							     '<td class="col-xs-4">'+
-							     '<div class="input-group">'+
-							     '<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">'+
-							     '<span class="input-group-addon input-sm" id="unitaddon"></span>'+
-							     '</div>'+
-							     '</td>'+
-							     '<td class="col-xs-1">'+
-							     '<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>'+
-							     '</td>'+
-							     '</tr>');
-               for (product of resp["products"]) {
-		 $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-               }
-               $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
-               $('.transfernote_product_quantity').numeric({ negative: false});
-               $(".product_name").change();
-             }
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
+	  if(len_select>1){
+              $.ajax({
+	      url: '/transfernotes?action=getprod',
+	      type: 'POST',
+              dataType: 'json',
+              async : false,
+              data: {"godownid":$("#tn_from_godown option:selected").val()},
+              beforeSend: function(xhr)
+              {
+		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              }
+              })
+              .done(function(resp) {
+		  if (resp["gkstatus"]==0) {
+		      $('#transfernote_product_table tbody').append('<tr>'+
+				'<td class="col-xs-7">'+
+				'<select class="form-control input-sm product_name"></select>'+
+    				'</td>'+
+       			        '<td class="col-xs-4">'+
+				'<div class="input-group">'+
+				'<input type="text" class="transfernote_product_quantity form-control input-sm text-right" value="">'+
+				'<span class="input-group-addon input-sm" id="unitaddon"></span>'+
+				'</div>'+
+				'</td>'+
+				'<td class="col-xs-1">'+
+				'<div style="text-align: center;"><a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'+
+				'</td>'+
+				'</tr>');
+		      for (product of resp["products"]) {
+			  $('#transfernote_product_table tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+		      }
 
+		      //This loop removes selected product from list.
+		      for (let j = 0; j < curindex1 + 1; j++) {
+			  var selectedtax = $("#transfernote_product_table tbody tr:eq("+j+") td:eq(0) option:selected").val();
+			  for (let i=j+1; i<=curindex1+1;i++){
+			      $('#transfernote_product_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+			  }
+		      }
+		 
+		      $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
+		      $('.transfernote_product_quantity').numeric({ negative: false});
+		      $(".product_name").change();
+		  }
+              })
+	      .fail(function() {
+		  console.log("error");
+              })
+              .always(function() {
+		  console.log("complete");
+              }); 
+	  }else if(len_select == 1){   
+	      $('#no_of_packet').focus().select();
+	  }
+	    
 	}
       }
-
       else if(event.which==190 && event.shiftKey)
 	{
 	  event.preventDefault();
@@ -689,9 +723,9 @@ $(document).ready(function() {
   $(document).off("click",".product_del").on("click", ".product_del", function() {
     $(this).closest('tr').fadeOut(200, function(){
       $(this).closest('tr').remove();	 //closest method gives the closest element productified
-      $('#transfernote_product_table tbody tr:last td:eq(0) input').focus().select();
+      $('#transfernote_product_table tbody tr:last td:eq(0) select').focus().select();
     });
-    $('#transfernote_product_table tbody tr:last td:eq(0) input').select();
+    $('#transfernote_product_table tbody tr:last td:eq(0) select').select();
   });
 
     // Change event for quantity exceed alert box.
@@ -823,7 +857,7 @@ $(document).ready(function() {
       $('#tn_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd")
+    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1079,7 +1113,7 @@ $(document).ready(function() {
       $('#tn_date').focus().select();
       return false;
     }
-    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd")
+    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd");
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1208,7 +1242,7 @@ $(document).ready(function() {
       $('#confirm_yestnprint').modal('show').one('click', '#tn_save_yesprint', function (e)
 	{
 	  console.log($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val());
-	  var dataset ={}
+	  var dataset ={};
 	  dataset = {
 	    "transfernoteno":$("#transfernote_no").val(),
 	    "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
@@ -1254,7 +1288,7 @@ $(document).ready(function() {
 	       //AJAX that loads print preview of transfernote.  All data filled in by the user is sent so that it is displayed in the preview.
 	       
 
-	       var dataset ={}
+	       var dataset ={};
 	       dataset = {
 		 "transfernoteno":$("#transfernote_no").val(),
 		 "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
@@ -1267,7 +1301,7 @@ $(document).ready(function() {
 		 "receiveddate":"",
 		 "printset":JSON.stringify(printset)
 		 
-	       }
+	       };
 	       if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
 		 dataset["duedate"]=($("#tn_dueyear").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_duedate").val());}
 	       else{
