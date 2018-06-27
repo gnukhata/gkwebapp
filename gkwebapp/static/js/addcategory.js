@@ -28,6 +28,7 @@
    "Navin Karkera" <navin@openmailbox.org>
    "Pornima Kolte" <pornima@openmailbox.org>
    "Rohini Baraskar" <robaraskar@gmail.com>
+   "Reshma Bhatawadekar" <reshma_b@riseup.net>
    "Sachin Patil" <sachin619patil@rediffmail.com>
    "Vaibhav Kurhe" <vaibspidy@openmailbox.org>
 
@@ -39,6 +40,7 @@ $(document).ready(function() {
     var childspecs = [];
     var parenttaxes = [];
     var taxes = [];
+    $(".tax_rate_gst").hide();
     var taxfieldhtml = $("#category_tax_table tbody").html();
     var stateshtml = $("#category_tax_table tbody tr:first td:eq(1) select").html();
     if ($("#catcount").val() > 0) {
@@ -396,6 +398,14 @@ $(document).ready(function() {
     });
 
     $(document).off("change", ".tax_name").on("change", ".tax_name", function(event) {
+	//If taxname will be 'IGST' select box shown otherwise input field shown.
+	if (!($("#category_tax_table tbody tr:last td:eq(0) select").val()=='IGST')){
+	    $('#category_tax_table tbody tr:last td:eq(2) input').show('.tax_rate');
+	    $('#category_tax_table tbody tr:last td:eq(2) select').hide('.tax_rate_gst');
+	} else if($("#category_tax_table tbody tr:last td:eq(0) select").val()=='IGST') {
+	    $('#category_tax_table tbody tr:last td:eq(2) select').show('.tax_rate_gst');
+	    $('#category_tax_table tbody tr:last td:eq(2) input').hide('.tax_rate');
+	}
         if ($('#category_tax_table tbody tr:last td:eq(0) select').val() == "VAT") {
             $('#category_tax_table tbody tr:last td:eq(1) select').prop('disabled', false);
             $('#category_tax_table tbody tr:last td:eq(1) select option[value=""]').prop('disabled', true);
@@ -427,6 +437,53 @@ $(document).ready(function() {
           }
 
     });
+
+    //Keydown event for tax_rate select box for "GST" tax name.
+    $(document).off("keydown", ".tax_rate_gst").on("keydown", ".tax_rate_gst", function(event) {
+        $(".tax_rate").numeric();
+        $(".tax_rate").numeric({negative:false});
+        var curindex1 = $(this).closest('tr').index();
+        var nextindex1 = curindex1 + 1;
+        var previndex1 = curindex1 - 1;
+        if (event.which == 13) {
+            event.preventDefault();
+            if (curindex1 != ($("#category_tax_table tbody tr").length - 1)) {
+                $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
+            }
+                // appending a new row for adding another tax to category
+
+                $('#category_tax_table tbody').append(taxfieldhtml);
+
+
+                $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
+		for (let j = 0; j < curindex1 + 1; j++) {
+		    var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+		    if(selectedtax != "VAT"){
+			for(let i=j+1; i <= nextindex1;i++){
+			    $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
+			}
+		    }
+		}
+
+        } else if (event.which == 190 && event.shiftKey) {
+            event.preventDefault();
+            $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(2) input').focus().select();
+        } else if (event.which == 188 && event.shiftKey) {
+            if (previndex1 > -1) {
+                event.preventDefault();
+                $('#category_tax_table tbody tr:eq(' + previndex1 + ') td:eq(2) input').focus().select();
+            }
+        } else if (event.ctrlKey && event.which == 188) {
+            event.preventDefault();
+            $('#category_tax_table tbody tr:eq(' + curindex1 + ') td:eq(1) select').focus();
+        } else if (event.which == 190 && event.ctrlKey) {
+            event.preventDefault();
+            $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
+        }
+
+
+    });
+    
     $(document).off("keydown", ".tax_rate").on("keydown", ".tax_rate", function(event) {
         $(".tax_rate").numeric();
         $(".tax_rate").numeric({negative:false});
@@ -513,11 +570,16 @@ $(document).ready(function() {
         });
         taxes = [];
         $("#category_tax_table tbody tr").each(function() {
-            if ($.trim($("input", this).val()) != "") {
+	    var curindex = $(this).closest('tr').index();
+            if ($.trim($("input", this).val()) != "" || $.trim($("select", this).val()) != "") {
 		var obj = {}; // dict for storing tax details
 		obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
 		obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-		obj.taxrate = $.trim($("input", this).val());
+		if($("td:eq(0) select option:selected", this).val() == 'IGST'){
+		    obj.taxrate = $.trim($("td:eq(2) select option:selected", this).val());
+		} else {
+		    obj.taxrate = $.trim($("input", this).val());
+		}
 		taxes.push(obj);
 	    }
         });
@@ -606,7 +668,12 @@ $(document).ready(function() {
 		if($("td:eq(0) select option:selected", this).val() != ""){
 		    obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
                     obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-                    obj.taxrate = $.trim($("input", this).val());
+		    if($("td:eq(0) select option:selected", this).val() == "IGST"){
+			obj.taxrate = $.trim($("td:eq(2) select option:selected", this).val());
+		    } else {
+			obj.taxrate = $.trim($("input", this).val());
+		    }
+                    //obj.taxrate = $.trim($("input", this).val());
                     taxes.push(obj);
 		}
         });
