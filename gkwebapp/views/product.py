@@ -221,7 +221,6 @@ def editproduct(request):
     proddetails={}
     productdetails={}
     taxes =0
-    oldtaxes =0
     taxdata = {}
     godownflag=False
     godowns={}
@@ -248,8 +247,6 @@ def editproduct(request):
             proddetails["openingstock"] = request.params[prd]
         elif prd == "taxes":
             taxes = json.loads(request.params["taxes"])
-        elif prd == "oldtaxes":
-            oldtaxes = json.loads(request.params["oldtaxes"])
         elif prd == "godowns":
             godowns = json.loads(request.params["godowns"])
         else:
@@ -264,11 +261,11 @@ def editproduct(request):
     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
     result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
     if result.json()["gkstatus"] == 0:
-        for tax in oldtaxes:
-            if len(tax)!=0:
-                if tax["taxrowid1"]!="new":
-                    taxdata["taxid"] = tax["taxrowid1"]
-                    taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+        taxid = requests.get("http://127.0.0.1:6543/tax?pscflag=p&productcode=%d"%(int(request.params["productcode"])), headers=header)
+        taxids = taxid.json()["gkresult"]
+        for tax in taxids:
+            taxdata["taxid"] = tax["taxid"]
+            taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
         for tax in taxes:
             if len(tax)!=0:
                 taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
