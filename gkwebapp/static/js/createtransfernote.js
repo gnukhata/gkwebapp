@@ -701,6 +701,8 @@ $(document).ready(function() {
               .always(function() {
 		  console.log("complete");
               }); 
+	  }else{
+	      $("#no_of_packet").focus().select();
 	  }
 	    
 	}
