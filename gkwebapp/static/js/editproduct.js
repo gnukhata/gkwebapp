@@ -40,7 +40,6 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml;
     var stateshtml;
-    var oldtaxes = []; // the list for taxes before editing
     $("#prodselect").focus();
     var gst_tax = '<select id="gstRate" class="form-control input-sm tax_rate_gst product_tax_disable text-right"><option value="5" class="text-right">5</option><option value="12" class="text-right">12</option><option value="18" class="text-right">18</option><option value="28" class="text-right">28</option></select>';
     $("#prodselect").keydown(function(e){
@@ -348,7 +347,7 @@ $(document).ready(function() {
         }
       })
       .done(function(resp)
-      {
+      {		
         $("#proddetails").html("");
         $("#proddetails").html(resp);
         if(sessionStorage.invflag==0){
@@ -399,7 +398,6 @@ $(document).ready(function() {
 	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
             $('#product_edit_tax_table tbody tr:first').remove();
             for (tax of resp["gkresult"]) {
-		var obj1 = {};
 	    $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
             $(".product_tax_disable").prop('disabled',true);
 	    $(".tax_del").prop('disabled',true);
@@ -416,9 +414,6 @@ $(document).ready(function() {
 	    }else{ 
 		$('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
 	    }
-		
-		obj1.taxrowid1 = tax["taxid"];
-		oldtaxes.push(obj1);
         }
 	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
@@ -1564,7 +1559,6 @@ $(document).ready(function() {
     });
     var editformdata = $("#editprodform").serializeArray();
       editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
-      editformdata.push({name: 'oldtaxes', value: JSON.stringify(oldtaxes)});
     editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
