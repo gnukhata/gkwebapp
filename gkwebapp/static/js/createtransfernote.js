@@ -304,8 +304,18 @@ $(document).ready(function() {
 
   $("#tn_dueyear").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#tn_grace").focus().select();
+	event.preventDefault();
+	
+	//Receipt date cannot be before transfer note.
+	if((Date.parseExact($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val(), "ddMMyyyy")< Date.parseExact($("#tn_date").val()+$("#tn_month").val()+$("#tn_year").val(), "ddMMyyyy"))&&($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
+	    $("#beforetndate-alert").alert();
+	    $("#beforetndate-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#beforetndate-alert").hide();
+	    });
+	    $('#tn_duedate').focus().select();
+	    return false;
+	}
+	$("#tn_grace").focus().select();
     }
     if (event.which==38) {
       event.preventDefault();
@@ -570,10 +580,25 @@ $(document).ready(function() {
 	}
     var reversedate = year + "-" + month + "-" + date;
       if (event.which==13 || event.which==9) {
+
+	  //Here check whether dispatch from or dispatch to fields are not blank.
+	  if($("#tn_from_godown option:selected").val()=="" || $("#tn_to_godown option:selected").val()==""){
+	      $("#godown-blank-alert").alert();
+	      $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#godown-blank-alert").hide();
+	      });
+	      if($("#tn_from_godown option:selected").val()==""){
+		  $('#tn_from_godown').focus();
+	      }else if($("#tn_to_godown option:selected").val()==""){
+		  $('#tn_to_godown').focus();
+	      }
+	      return false;
+	  }
 	  event.preventDefault();
 	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
-	      $.ajax(
-        {
+	  if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
+	  $.ajax(
+          {
           type: "POST",
           url: "/transfernotes?type=stock",
           global: false,
@@ -686,6 +711,7 @@ $(document).ready(function() {
 	  }
 	    
 	}
+	  }
       }
       else if(event.which==190 && event.shiftKey)
 	{
@@ -749,8 +775,9 @@ $(document).ready(function() {
       if (event.which==13 || event.which==9) {
 	  event.preventDefault();
 	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
-	      $.ajax(
-        {
+	  if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
+	  $.ajax(
+          {
           type: "POST",
           url: "/transfernotes?type=stock",
           global: false,
@@ -778,6 +805,7 @@ $(document).ready(function() {
        );
 	  }
 	  }
+      }
     });
 
   //Click event for saving transfer note.
@@ -949,7 +977,7 @@ $(document).ready(function() {
       }
       //AJAX for checking available stock in godown from which stock is moved.
       //Godown id, current date and product code are sent to receive available quantity of each selected product in the godown.
-      
+	if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
       $.ajax(
         {
           type: "POST",
@@ -976,7 +1004,8 @@ $(document).ready(function() {
              return false;
            }
          }
-       );
+	    );
+	}
 
       
 
@@ -995,7 +1024,7 @@ $(document).ready(function() {
       //Modal that seeks confirmation from user before saving
       $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function (e)
 	{
-	  var dataset ={}
+	  var dataset ={};
 	  dataset = {
 	    "transfernoteno":$("#transfernote_no").val(),
 	    "transfernotedate":$("#tn_year").val()+'-'+$("#tn_month").val()+'-'+$("#tn_date").val(),
@@ -1007,7 +1036,7 @@ $(document).ready(function() {
 	    "designation":$("#designation").val(),
 	    "products":JSON.stringify(products)
 	    
-	  }
+	  };
 	  if(($("#tn_duedate").val()+$("#tn_duemonth").val()+$("#tn_dueyear").val())!=''){
 	    dataset["duedate"]=($("#tn_dueyear").val()+'-'+$("#tn_duemonth").val()+'-'+$("#tn_duedate").val());}
 
@@ -1203,7 +1232,7 @@ $(document).ready(function() {
 	$('#tn_duedate').focus().select();
 	return false;
       }
-      
+      if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
       $.ajax(
         {
           type: "POST",
@@ -1229,7 +1258,8 @@ $(document).ready(function() {
              return false;
            }
          }
-       );
+	    );
+      }
       var obj = {};
       obj.productcode = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val();
       obj.qty = $("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val();
