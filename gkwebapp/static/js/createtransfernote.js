@@ -580,8 +580,9 @@ $(document).ready(function() {
 	}
     var reversedate = year + "-" + month + "-" + date;
       if (event.which==13 || event.which==9) {
-
+	  var prodcurindex = $(this).closest('tr').index();
 	  //Here check whether dispatch from or dispatch to fields are not blank.
+	  
 	  if($("#tn_from_godown option:selected").val()=="" || $("#tn_to_godown option:selected").val()==""){
 	      $("#godown-blank-alert").alert();
 	      $("#godown-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -594,9 +595,7 @@ $(document).ready(function() {
 	      }
 	      return false;
 	  }
-	  event.preventDefault();
 	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
-	  if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
 	  $.ajax(
           {
           type: "POST",
@@ -604,7 +603,7 @@ $(document).ready(function() {
           global: false,
           async: false,
           datatype: "json",
-          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+ prodcurindex +") td:eq(0) select option:selected").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -613,27 +612,23 @@ $(document).ready(function() {
        .done(function(resp)
          {
 	   //Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
-           if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
+           if (parseInt($("#transfernote_product_table tbody tr:eq("+ prodcurindex +") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
              $("#quantity-excess-alert").alert();
              $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
                $("#quantity-excess-alert").hide();
              });
-             $("#transfernote_product_table tbody tr:eq("+i-1+") td:eq(1) input").focus();
+               $("#transfernote_product_table tbody tr:eq("+i-1+") td:eq(1) input").focus();
              stock = 1;
              return false;
            }
          }
        );
-	  }
 
 	//Alerts to be displayed as a part of validations
-	if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="") {
-
+	if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()=="" || $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').val()== 0) {
   	  $("#quantity-blank-alert").alert();
   	  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
   	    $("#quantity-blank-alert").hide();
-
-
   	  });
 	  $('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(1) input').focus();
 	  return false;
@@ -645,7 +640,7 @@ $(document).ready(function() {
           $('#transfernote_product_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
 	}
 	else {
-          if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
+	    if ($('#transfernote_product_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()=="") {
             $("#product-blank-alert").alert();
             $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#product-blank-alert").hide();
@@ -706,8 +701,6 @@ $(document).ready(function() {
               .always(function() {
 		  console.log("complete");
               }); 
-	  }else if(len_select == 1){   
-	      $('#no_of_packet').focus().select();
 	  }
 	    
 	}
@@ -755,7 +748,7 @@ $(document).ready(function() {
   });
 
     // Change event for quantity exceed alert box.
-    $(document).off("change",".transfernote_product_quantity").on("change",".transfernote_product_quantity",function(){
+    $(document).off("change",".transfernote_product_quantity").on("change",".transfernote_product_quantity",function(event){
 	var curindex1 = $(this).closest('tr').index();
 	var nextindex1 = curindex1+1;
 	var previndex1 = curindex1-1;
@@ -775,7 +768,7 @@ $(document).ready(function() {
       if (event.which==13 || event.which==9) {
 	  event.preventDefault();
 	  for (var i = 0; i < $("#transfernote_product_table tbody tr").length && stock==0; i++) {
-	  if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()!="" && reversedate!=""){
+	  if($("#tn_from_godown option:selected").val()!="" && $("#transfernote_product_table tbody tr:eq("+ curindex1 +") td:eq(0) select option:selected").val()!="" && reversedate!=""){
 	  $.ajax(
           {
           type: "POST",
@@ -783,7 +776,7 @@ $(document).ready(function() {
           global: false,
           async: false,
           datatype: "json",
-          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+i+") td:eq(0) select option:selected").val()},
+          data: {"endDate": reversedate, "goid": $("#tn_from_godown option:selected").val(), "productcode": $("#transfernote_product_table tbody tr:eq("+ curindex1 +") td:eq(0) select option:selected").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -792,7 +785,7 @@ $(document).ready(function() {
        .done(function(resp)
          {
 	   //Quantity is compared with available stock. Stock flag is set to 1 if it exceeds stock.
-           if (parseInt($("#transfernote_product_table tbody tr:eq("+i+") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
+           if (parseInt($("#transfernote_product_table tbody tr:eq("+ curindex1 +") td:eq(1) input").val()) > parseInt(resp["gkresult"])) {
              $("#quantity-excess-alert").alert();
              $("#quantity-excess-alert").fadeTo(2250, 500).slideUp(500, function(){
                $("#quantity-excess-alert").hide();
