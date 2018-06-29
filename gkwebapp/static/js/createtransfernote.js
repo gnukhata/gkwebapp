@@ -155,16 +155,6 @@ $(document).ready(function() {
 		$('#tn_date').focus().select();
 		return false;
 	    }
-
-	    var curdate = Date.parseExact($("#tn_year").val()+$("#tn_month").val()+$("#tn_date").val(), "yyyyMMdd");
-	    if (!curdate.between(financialstart,financialend)) {
-		$("#between-date-alert").alert();
-		$("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#between-date-alert").hide();
-		});
-		$('#tn_date').focus().select();
-		return false;
-	    }
 	    
 	    if(fromgod==1 && togod==1){
 		$('#transfernote_product_table tbody tr:first td:eq(0) select').focus();
