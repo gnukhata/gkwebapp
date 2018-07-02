@@ -626,8 +626,7 @@ $(document).ready(function(){
        $("#showviewlog").remove();
        $("#orgpref").remove();
        $("#gstsummary").remove();
-       //Not sure
-       $("#gstr1").remove();
+       $("#gstreturns").remove();
        $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
