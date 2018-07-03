@@ -330,7 +330,10 @@
           </div>
           <div class="panel">
             <div class="panel-body taxclass">
-                <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+              <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+	      <div class="alert alert-warning nopadding" id="gstrateEdit"  aria-live="rude" role="alert" hidden>
+		<strong>{% trans %}Please edit 'GST' rate!{% endtrans %}</strong>
+	      </div>
                 <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
                   <thead class="bg-primary input-sm">
                     <tr>

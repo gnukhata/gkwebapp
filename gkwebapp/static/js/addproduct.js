@@ -571,7 +571,8 @@ $("#addcatselect").change(function(event) {
     })
     .done(function(resp) {
       console.log("success");
-      if (resp["gkresult"].length>0) {
+	if (resp["gkresult"].length>0) {
+	    var gstRate = ["5.00","12.00","18.00","28.00"];
         $('#product_tax_table tbody tr').remove();
           for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append(taxfieldhtml);
@@ -580,6 +581,17 @@ $("#addcatselect").change(function(event) {
             $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
             $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
 	      if(tax["taxname"] == "IGST"){
+		  let count = 0;
+		    for(let a in gstRate){
+			if(tax["taxrate"] == gstRate[a]) {
+			    count = count+1;
+			}
+		    }
+		    if(count == 0){
+			$("#gstrateEdit").show();
+		    }else{
+			$("#gstrateEdit").hide();
+		    }
 		  var new_gst = Math.floor(tax["taxrate"]);//Round up the number
 		  $("#product_tax_table tbody tr:last td:eq(2) select").val(new_gst);
 	    }else{ 
