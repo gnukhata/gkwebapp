@@ -94,7 +94,8 @@ $(document).ready(function() {
         $('#parent_category_spec_name').focus();
     });
     $('#addtaxmodal').on('shown.bs.modal', function() {
-      $("#category_tax_table tbody").empty();
+	$("#category_tax_table tbody").empty();
+	var gstRate = ["5.00","12.00","18.00","28.00"];
       for (let i = 0; i < parenttaxes.length; i++) {
         $("#category_tax_table tbody").append(taxfieldhtml);
         $("#category_tax_table tbody tr:eq("+i+") td:eq(0) select").val(parenttaxes[i].taxname);
@@ -105,6 +106,17 @@ $(document).ready(function() {
           $("#category_tax_table tbody tr:eq("+i+") td:eq(1) select").val(parenttaxes[i].state);
         }
 	  if (parenttaxes[i].taxname == "IGST"){
+	      let count = 0;
+		    for(let a in gstRate){
+			if(parenttaxes[i].taxrate == gstRate[a]) {
+			    count = count+1;
+			}
+		    }
+		    if(count == 0){
+			$("#gstrateEdit").show();
+		    }else{
+			$("#gstrateEdit").hide();
+		    }
 	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) input").hide();
 	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) select").show();
 	      $("#category_tax_table tbody tr:eq("+i+") td:eq(2) select").val(Math.floor(parenttaxes[i].taxrate));

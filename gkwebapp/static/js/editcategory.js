@@ -132,6 +132,7 @@ $(document).ready(function() {
     .done(function(resp) {
       console.log("success");
 	if (resp["gkresult"].length>0) {
+	    var gstRate = ["5.00","12.00","18.00","28.00"];
 	    $('#category_edit_tax_table tbody').empty();
         for (tax of resp["gkresult"]) {
 	    $('#category_edit_tax_table tbody').append(taxfieldhtml);
@@ -142,6 +143,17 @@ $(document).ready(function() {
 		$('#category_edit_tax_table tbody tr:last td:eq(1) select').prop("disabled", true);
 	    }
 	    if(tax["taxname"] == "IGST"){
+		let count = 0;
+		    for(let a in gstRate){
+			if(tax["taxrate"] == gstRate[a]) {
+			    count = count+1;
+			}
+		    }
+		    if(count == 0){
+			$("#gstrateEdit").show();
+		    }else{
+			$("#gstrateEdit").hide();
+		    }
 		$('#category_edit_tax_table tbody tr:last td:eq(2) input').remove();
 		$('#category_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax).prop("disabled", true);
 		var new_gst = Math.floor(tax["taxrate"]);//Round up the number
