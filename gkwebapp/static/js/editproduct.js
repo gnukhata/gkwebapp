@@ -393,7 +393,8 @@ $(document).ready(function() {
       })
       .done(function(resp) {
           console.log("success");
-        if (resp["gkresult"].length > 0) {
+          if (resp["gkresult"].length > 0) {
+	      var gstRate = ["5.00","12.00","18.00","28.00"];
             taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
             $('#product_edit_tax_table tbody tr:first').remove();
@@ -405,8 +406,19 @@ $(document).ready(function() {
             $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
 	    var curindex = $(this).closest('tr').index();
 	    var nextindex = curindex+1;
-	    var previndex = curindex-1;
-	    if(tax["taxname"] == "IGST"){
+		var previndex = curindex-1;
+		if(tax["taxname"] == "IGST"){
+		    let count = 0;
+		    for(let a in gstRate){
+			if(tax["taxrate"] == gstRate[a]) {
+			    count = count+1;
+			}
+		    }
+		    if(count == 0){
+			$("#gstrateEdit").show();
+		    }else{
+			$("#gstrateEdit").hide();
+		    }
 		$('#product_edit_tax_table tbody tr:last td:eq(2) input').remove();
 		$('#product_edit_tax_table tbody tr:last td:eq(2)').append(gst_tax).prop("disabled", true);
 		var new_gst = Math.floor(tax["taxrate"]);//Round up the number
