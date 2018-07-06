@@ -60,7 +60,7 @@ $(document).ready(function(){
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
       $(".businessmenu").hide();	 
-      $(".gstreturnsmenu").hide();
+      $(".gstmenu").hide();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -193,7 +193,7 @@ $(document).ready(function(){
     }
 
     if(event.ctrlKey && event.keyCode == 71) {
-      $("#gstreturns").click();
+      $("#gst").click();
       event.preventDefault();
     }
       
@@ -393,14 +393,14 @@ $(document).ready(function(){
 
   $(".businessmenu").keydown(function(event){
     if(event.which == 39){
-      $("#gstreturns").click();
+      $("#gst").click();
     }
     if(event.which == 37){
       $("#transaction").click();
     }
   });
 
-  $(".gstreturnsmenu").keydown(function(event) {
+  $(".gstmenu").keydown(function(event) {
     if(event.which == 39) {
       $("#report").click();
     }
@@ -421,7 +421,7 @@ $(document).ready(function(){
     }
       if(event.which == 37){
 	  if (sessionStorage.invsflag ==1){
-	      $("#gstreturns").click();
+	      $("#gst").click();
 	  }else{
 	      $("#transaction").click();
 	  }
@@ -525,7 +525,7 @@ $(document).ready(function(){
     $("#showreceipt").focus();
   });
 
-  $("#gstreturnsdropdown").on("shown.bs.dropdown", function() {
+  $("#gstdropdown").on("shown.bs.dropdown", function() {
     $("#r1").focus();
   });
 
@@ -625,8 +625,7 @@ $(document).ready(function(){
        $("#tallyimport").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
-       $("#gstsummary").remove();
-       $("#gstreturns").remove();
+       $("#gst").remove();
        $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){

@@ -99,10 +99,11 @@
 	      </ul>
             </li>    
 
-	    <li id="gstreturnsdropdown" class="dropdown">
-          <a href="" id="gstreturns" class="dropdown-toggle gstreturnsmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>G</u>ST Returns{% endtrans %}</a>
+	    <li id="gstdropdown" class="dropdown">
+          <a href="" id="gst" class="dropdown-toggle gstmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>G</u>ST{% endtrans %}</a>
           <ul class="dropdown-menu">
-            <li><a class="gstreturnsmenu" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
+            <li><a class="gstmenu" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
+            <li><a class="gstmenu" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
 	      </ul>
         </li>    
 
@@ -113,7 +114,6 @@
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
-		<li><a class="" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
@@ -127,7 +127,6 @@
 		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
 		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
 		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
-
 		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
 		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
 		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
