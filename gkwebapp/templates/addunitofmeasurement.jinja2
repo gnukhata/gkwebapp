@@ -47,7 +47,7 @@
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
 		<option value="{{unitofmeasurement['uomid']}}">
-		  {{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != "" %}({{unitofmeasurement["description"]}}){% endif %}
+		  {{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != None %}({{unitofmeasurement["description"]}}){% endif %}
 		</option>
               {% endfor %}
             </select>

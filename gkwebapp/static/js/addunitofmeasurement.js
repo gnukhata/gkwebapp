@@ -138,8 +138,6 @@ $(document).ready(function() {
       //Store description of unit.
       if($("#unit_desc").val()!=""){
 	  var description = $("#unit_desc").val();
-      }else{
-	  description = "";
       }
 
     $.ajax({

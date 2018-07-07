@@ -61,9 +61,11 @@ def getunit(request):
 def saveunit(request):
     header={"gktoken":request.headers["gktoken"]}
     if request.params["subunitof"]!='':
-        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),'sysunit':int(request.params["sysunit"]),"description":request.params["description"]}
+        dataset={"unitname":request.params["unitname"],"conversionrate":float(request.params["conversionrate"]),"subunitof":int(request.params["subunitof"]),'sysunit':int(request.params["sysunit"])}
     else:
-        dataset={"unitname":request.params["unitname"],'sysunit':int(request.params["sysunit"]),"description":request.params["description"]}
+        dataset={"unitname":request.params["unitname"],'sysunit':int(request.params["sysunit"])}
+    if "description" in request.params:
+        dataset["description"] = request.params["description"]
     result = requests.post("http://127.0.0.1:6543/unitofmeasurement", data=json.dumps(dataset),headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
