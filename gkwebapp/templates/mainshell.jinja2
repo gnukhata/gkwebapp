@@ -46,6 +46,7 @@
                 <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
 
 		<li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+		<li><a class="mastermenu" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
               </ul>
             </li>
             <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
@@ -292,6 +293,26 @@
             </div>
             <button type="button" class="btn btn-danger" data-dismiss="modal" id ="inv_no"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
             <button type="button" class="btn btn-primary" id ="inv_yes"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+	  </div>
+
+	</div>
+      </div>
+    </div>
+    <div class="modal fade" id="newsmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">Tax News</h4>
+	  </div>
+	  <div class="modal-body">
+            <div class="alert alert-success" id="inventory_activate_success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Connection Failed.{% endtrans %}
+            </div>
+	    <div class ="col-md-12" id="rss-feed">
+	    </div>
+            <button type="button" class="btn btn-primary" id="viewnews"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
 	  </div>
 
 	</div>
@@ -636,6 +657,7 @@
     <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.rss.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-ui.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>

@@ -2055,6 +2055,10 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
     $("#info").load("/drcrnote");
     $("#drcrnote_div").show();
 });
+    $(document).off('click' ,'#viewnews').on('click' ,'#viewnews',function(event){
+	$("#rss-feed").html("");
+	$("#rss-feed").rss("https://www.gstindia.com/feed/");
+    });
 
     $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
 	let searchtext = $("#reportsearch").val().toLowerCase();
