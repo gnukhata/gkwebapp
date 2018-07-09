@@ -10,7 +10,7 @@
      .bgcolor{
 	 background-color:#1b2631;
      }
-     #rss-feed {
+     #rss-feeddiv {
 	 height: 60vh;
 	 overflow-y: scroll;
      }
@@ -314,7 +314,10 @@
 
               {% trans %}Connection Failed.{% endtrans %}
             </div>
-	    <div class ="col-md-12" id="rss-feed">
+	    <div id="rss-feeddiv">
+	      <div class ="col-md-12" id="rss-feed">
+		<h1 style="margin-top:30%; text-align:center;">Click View button to fetch news.</h1>
+	      </div>
 	    </div>
             <div>
 	      <button type="button" class="btn btn-primary" id="viewnews" style="margin-top:10px; margin-bottom:10px;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>

@@ -107,23 +107,23 @@ $(document).ready(function(){
 
   $("#create-cust").click(function() {
     $("#customersupplier").click();
-  })
+  });
 
   $("#create-prod").click(function() {
     $("#productinmaster").click();
-  })
+  });
 
   $("#create-invoice").click(function() {
     $("#invoice").click();
-  })
+  });
 
   $("#make-payments").click(function() {
     $("#showreceipt").click();
-  })
+  });
 
   $("#view-charts").click(function() {
     $("#listofaccounts").click();
-  })
+  });
 
   if (sessionStorage.invsflag==0) {
     $("#help-message").hide();
@@ -2060,10 +2060,10 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 	$("#rss-feed")
           .hide()
           .rss("https://www.gstindia.com/feed/", {
-            limit: 5,
+            limit: 15,
             effect: 'slideFastSynced',
             layoutTemplate: '{entries}',
-              entryTemplate: '<div><b>{title}</b></div></div><small>[{date}]</small></div><div><p>{bodyPlain}</p></div>',
+              entryTemplate: '<div><a href="{url}" target="_blank"><b>{title}</b></a></div></div><small>[{date}]</small></div><div><p>{bodyPlain}</p></div>',
 	      dateFormat: 'ddd, DD MMM YYYY'
           }, function() {
             $("#rss-feed").show();
