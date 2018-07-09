@@ -2057,7 +2057,17 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 });
     $(document).off('click' ,'#viewnews').on('click' ,'#viewnews',function(event){
 	$("#rss-feed").html("");
-	$("#rss-feed").rss("https://www.gstindia.com/feed/");
+	$("#rss-feed")
+          .hide()
+          .rss("https://www.gstindia.com/feed/", {
+            limit: 5,
+            effect: 'slideFastSynced',
+            layoutTemplate: '{entries}',
+              entryTemplate: '<div><b>{title}</b></div></div><small>[{date}]</small></div><div><p>{bodyPlain}</p></div>',
+	      dateFormat: 'ddd, DD MMM YYYY'
+          }, function() {
+            $("#rss-feed").show();
+          });
     });
 
     $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {

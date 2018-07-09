@@ -10,6 +10,10 @@
      .bgcolor{
 	 background-color:#1b2631;
      }
+     #rss-feed {
+	 height: 60vh;
+	 overflow-y: scroll;
+     }
     </style>
 
   </head>
@@ -312,7 +316,9 @@
             </div>
 	    <div class ="col-md-12" id="rss-feed">
 	    </div>
-            <button type="button" class="btn btn-primary" id="viewnews"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
+            <div>
+	      <button type="button" class="btn btn-primary" id="viewnews" style="margin-top:20px;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
+	    </div>
 	  </div>
 
 	</div>
@@ -657,9 +663,10 @@
     <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
-    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.rss.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/moment.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.rss.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
   </body>
