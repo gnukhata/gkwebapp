@@ -2506,7 +2506,27 @@ if (event.which == 13) {
 				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
-				    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
+				    //$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
+				    $.ajax({
+					url: '/invoice?action=getproducts',
+					type: 'POST',
+					dataType: 'json',
+					async: false,
+					data: {"taxflag":7},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					    }
+				    })
+				    .done(function(resp) {
+					console.log("success");
+					if (resp["gkstatus"] == 0) {
+					    $('#invoice_product_table_gst tbody').html('');
+					    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
+					    for (product of resp["products"]) {
+						$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
+					    }
+					}
+				    });
 				    $('.product_name_gst:eq(' + curindex + ')').val(key).prop("disabled", true);
 				    $('.invoice_product_hsncode:eq(' + curindex + ')').html(value.gscode);
 				    $('.invoice_product_quantity_gst:eq(' + curindex + ')').val(value.qty).attr("data", value.qty);
