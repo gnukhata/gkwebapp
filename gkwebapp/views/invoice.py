@@ -66,8 +66,7 @@ def showaddinvoice(request):
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     else:
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
-    productsnservices = requests.get("http://127.0.0.1:6543/products?filterflag", headers=header)
-    print productsnservices.json()
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
@@ -230,7 +229,7 @@ def showeditableinvoices(request):
             invlist = result.json()["invoices"]
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
-    productsnservices = requests.get("http://127.0.0.1:6543/products?filterflag", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
