@@ -60,7 +60,7 @@ $(document).ready(function(){
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
       $(".businessmenu").hide();	 
-      $(".gstmenu").hide();
+      $(".gstmenuitem").hide();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -193,7 +193,7 @@ $(document).ready(function(){
     }
 
     if(event.ctrlKey && event.keyCode == 71) {
-      $("#gst").click();
+      $("#gstmenu").click();
       event.preventDefault();
     }
       
@@ -393,14 +393,14 @@ $(document).ready(function(){
 
   $(".businessmenu").keydown(function(event){
     if(event.which == 39){
-      $("#gst").click();
+      $("#gstmenu").click();
     }
     if(event.which == 37){
       $("#transaction").click();
     }
   });
 
-  $(".gstmenu").keydown(function(event) {
+  $(".gstmenuitem").keydown(function(event) {
     if(event.which == 39) {
       $("#report").click();
     }
@@ -421,7 +421,7 @@ $(document).ready(function(){
     }
       if(event.which == 37){
 	  if (sessionStorage.invsflag ==1){
-	      $("#gst").click();
+	      $("#gstmenu").click();
 	  }else{
 	      $("#transaction").click();
 	  }
@@ -625,7 +625,7 @@ $(document).ready(function(){
        $("#tallyimport").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
-       $("#gst").remove();
+       $("#gstmenu").remove();
        $("#business").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
