@@ -175,7 +175,7 @@ def unpaidInvoicesSpreadsheet(request):
         orderflag = int(request.params["orderflag"])
         typeflag = int(request.params["typeflag"])
         inouts= {9:"Purchase", 15:"Sale"}
-        orders = {1:"Ascending", 2:"Descending"}
+        orders = {1:"Ascending", 4:"Descending"}
         types = {1:"Amount Wise", 3:"Party Wise", 4:"Due Wise"}
         inout = inouts[inoutflag]
         order = orders[orderflag]
