@@ -61,7 +61,7 @@ def showadddeliverychallan(request):
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
         lastdelchaldata = requests.get("http://127.0.0.1:6543/delchal?delchal=last&status=15", headers=header)
     productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
-    products = requests.get("http://127.0.0.1:6543/products?invdc=4&filterflag", headers=header)
+    products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)

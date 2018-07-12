@@ -40,7 +40,7 @@ def showinvoice(request):
 @view_config(route_name="cashmemos",request_param="action=showadd",renderer="gkwebapp:templates/addcashmemo.jinja2")
 def showaddcashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
-    productsnservices = requests.get("http://127.0.0.1:6543/products?filterflag", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)

@@ -1222,30 +1222,7 @@ $(document).ready(function() {
 				    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
 				    var productcode;
 				    $.each(resp.items, function(key, value) {
-					//$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-
-					$.ajax({
-					    url: '/invoice?action=getproducts',
-					    type: 'POST',
-					    dataType: 'json',
-					    async: false,
-					    data: {"taxflag":7},
-					    beforeSend: function(xhr) {
-						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-					    }
-					})
-					.done(function(resp) {
-					    console.log("success");
-					    if (resp["gkstatus"] == 0) {
-						console.log(resp["products"]);
-						$('#invoice_product_table_gst tbody').html('');
-						$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
-						for (product of resp["products"]) {
-						    $('#invoice_product_table_gst tbody tr:last td:eq(0) select').append('<option value="' + product.productcode + '">' +product.productdesc+ '</option>');
-						}
-					    }
-					});
-					
+					$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 					$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
 					$('#invoice_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
 					$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));

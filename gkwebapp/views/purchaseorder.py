@@ -60,7 +60,7 @@ def showaddpurchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
-    productsnservices = requests.get("http://127.0.0.1:6543/products?filterflag", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
@@ -73,7 +73,7 @@ def showaddsalesorder(request):
     header={"gktoken":request.headers["gktoken"]}
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
-    productsnservices = requests.get("http://127.0.0.1:6543/products?filterflag", headers=header)
+    productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
