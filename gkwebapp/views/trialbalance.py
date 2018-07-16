@@ -214,7 +214,6 @@ def printtrialbalance(request):
                 sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                #sheet['C'+str(row)] = record['totaldr']
                 if record['totaldr']!= "":
                         sheet['C'+str(row)]= float("%.2f"%float(record['totaldr']))
                         sheet['C'+str(row)].number_format = '0.00'
