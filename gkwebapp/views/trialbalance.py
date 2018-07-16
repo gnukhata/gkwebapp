@@ -215,13 +215,13 @@ def printtrialbalance(request):
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 if record['totaldr']!= "":
-                        sheet['C'+str(row)]= float("%.2f"%float(record['totaldr']))
-                        sheet['C'+str(row)].number_format = '0.00'
+                    sheet['C'+str(row)]= float("%.2f"%float(record['totaldr']))
+                    sheet['C'+str(row)].number_format = '0.00'
                 sheet['C'+str(row)].alignment = Alignment(horizontal='right')
                 sheet['C'+str(row)].font = Font(name='Liberation Serif', bold=False)
                 if record['totalcr']!= "":
-                        sheet['D'+str(row)]= float("%.2f"%float(record['totalcr']))
-                        sheet['D'+str(row)].number_format = '0.00'
+                    sheet['D'+str(row)]= float("%.2f"%float(record['totalcr']))
+                    sheet['D'+str(row)].number_format = '0.00'
                 sheet['D'+str(row)].alignment = Alignment(horizontal='right')
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', bold=False)
                 if record["advflag"]==1:
