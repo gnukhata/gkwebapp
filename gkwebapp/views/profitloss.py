@@ -69,9 +69,9 @@ def printprofitandloss(request):
     else:
         sheet.title = 'Income and Expenditure'
     sheet.column_dimensions['A'].width = 50
-    sheet.column_dimensions['B'].width = 12
+    sheet.column_dimensions['B'].width = 16
     sheet.column_dimensions['C'].width = 50
-    sheet.column_dimensions['D'].width = 12
+    sheet.column_dimensions['D'].width = 16
     # Cells of first two rows are merged to display organisation details properly.
     sheet.merge_cells('A1:D2')
     # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
