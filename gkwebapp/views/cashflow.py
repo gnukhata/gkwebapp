@@ -95,10 +95,10 @@ def printcashflowreport(request):
         #sheet.title = "List of Accounts"
         sheet.column_dimensions['A'].width = 4
         sheet.column_dimensions['B'].width = 32
-        sheet.column_dimensions['C'].width = 12
+        sheet.column_dimensions['C'].width = 13
         sheet.column_dimensions['D'].width = 4
         sheet.column_dimensions['E'].width = 32
-        sheet.column_dimensions['F'].width = 12
+        sheet.column_dimensions['F'].width = 13
         #sheet.column_dimensions['G'].width = 12
         #sheet.column_dimensions['H'].width = 12
         # Cells of first two rows are merged to display organisation details properly.
@@ -127,7 +127,7 @@ def printcashflowreport(request):
         if orgtype=="Not For Profit":
             sheet.title = "Receipt & Payment Account"
             sheet['A3']="Receipt & Payment Account ("+calculatefrom+" to "+calculateto+")"
-        sheet.merge_cells('A3:H3')
+        sheet.merge_cells('A3:F3')
         sheet['B4'] = 'Particulars'
         sheet['C4'] = 'Amount'
         sheet['E4'] = 'Particulars'
@@ -140,7 +140,7 @@ def printcashflowreport(request):
             sheet['A'+str(row)].alignment = Alignment(horizontal='left')
             sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             if account["toby"]!="" and account["particulars"]!="Opening balance":
-                sheet['B'+str(row)] = "			"+account["particulars"]
+                sheet['B'+str(row)] = account["particulars"]
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['C'+str(row)] = ""
                 sheet['C'+str(row)] =float("%.2f"%float(account["amount"]))
@@ -149,7 +149,7 @@ def printcashflowreport(request):
             else:
                 sheet['B'+str(row)] = account["particulars"]
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                if account["amount"]!= "":
+                if account["amount"]!= "." and account["amount"]!="":
                     sheet['C'+str(row)] =float("%.2f"%float(account["amount"]))
                     sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -160,7 +160,7 @@ def printcashflowreport(request):
             sheet['D'+str(row)].alignment = Alignment(horizontal='left')
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             if account["toby"]!="" and account["particulars"]!="Closing balance":
-                sheet['E'+str(row)] = "			"+account["particulars"]
+                sheet['E'+str(row)] = account["particulars"]
                 sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['F'+str(row)] = ""
                 sheet['F'+str(row)] =float("%.2f"%float(account["amount"]))
