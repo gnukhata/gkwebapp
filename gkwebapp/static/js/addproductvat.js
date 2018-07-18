@@ -1414,7 +1414,16 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
 
   var taxes = []; //Taxes list to store dictionaries created
-  $("#product_tax_table tbody tr").each(function(){
+    $("#product_tax_table tbody tr").each(function(){
+	var cur_index = $(this).closest('tr').index();
+    if($('#product_tax_table tbody tr:eq('+ cur_index +') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT"){
+	$("#tax_state-blank-alert").alert();
+	$("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#tax_state-blank-alert").hide();
+	});
+	$('#product_tax_table tbody tr:eq('+cur_index+') td:eq(1) select').focus();
+	allow = false;
+    }
     var obj = {}; //A dictionary created
     if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
       //For each tax its details are being stored in a dictionary
@@ -1446,6 +1455,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
+  if(allow == true){
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1488,7 +1498,8 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   .always(function() {
     console.log("complete");
   });
-  event.stopPropagation();
+      event.stopPropagation();
+  }
 });
 
 $(document).on('click', '#apreset', function(event) {

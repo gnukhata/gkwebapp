@@ -679,7 +679,7 @@ $(document).ready(function() {
 		  duplicatetypes.push(types[i]);
               }
           }
-          if (duplicatetypes.length >=0) {
+          if (duplicatetypes.length > 0) {
               $("#cvat-alert").alert();
               $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#cvat-alert").hide();
@@ -776,9 +776,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which==13) {
-      event.preventDefault();var edittaxstates = [];
+	event.preventDefault();
+	var edittaxstates = [];
       $('#product_edit_tax_table tbody tr').each(function(){
-        edittaxstates.push($(".tax_state",this).val());
+	  var c_index = $(this).closest('tr').index();
+	  edittaxstates.push($('#product_edit_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
       });
       if (edittaxstates.length>1) {
         edittaxstates.sort();
@@ -898,7 +900,7 @@ $(document).ready(function() {
 	  for (let j = 0; j < curindex1 + 1; j++) {
               var selectedtax = $("#product_edit_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
               if (selectedtax != "VAT") {
-                  for (let i=j+1; i<=curindex1+1;i++){
+                  for (let i=j+1; i<=curindex1+1; i++){
                       $('#product_edit_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
                   }
               }
@@ -1246,6 +1248,7 @@ $(document).ready(function() {
 
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
     event.preventDefault();
+    var allow = 0;
     /* Act on the event */
     if ($("#editproddesc").val()=="")
     {
@@ -1290,6 +1293,14 @@ $(document).ready(function() {
     $("#product_edit_tax_table tbody tr").each(function(){
       let obj = {};
       let curindex = $(this).index();
+      if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+	  $("#tax_state-blank-alert").alert();
+          $("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#tax_state-blank-alert").hide();
+          });
+	  $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
+	  allow = 1;
+      }
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
@@ -1312,6 +1323,7 @@ $(document).ready(function() {
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
     }
+    if(allow == 0){
     $.ajax({
       url: '/product?type=edit',
       type: 'POST',
@@ -1354,7 +1366,8 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropagation();
+      event.stopPropagation();
+    }
   });
 
 
