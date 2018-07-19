@@ -680,9 +680,9 @@ $(document).ready(function() {
               }
           }
           if (duplicatetypes.length > 0) {
-              $("#cvat-alert").alert();
-              $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
-		  $("#cvat-alert").hide();
+              $("#edit_cvat-alert").alert();
+              $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#edit_cvat-alert").hide();
               });
               return false;
 	  }

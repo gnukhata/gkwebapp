@@ -59,6 +59,44 @@ if (sessionStorage.invflag=='1' ){
   var selectedgodown;
   var selectedtaxname;
   var selectedtaxstate = 0;
+
+    //Function to check duplicate 'CVAT' tax.
+    function duplicatecvat(curindex){
+	var types = [];
+	$('#product_tax_table tbody tr').each(function(){
+	    if ($(".tax_name",this).val()=='CVAT') {
+		types.push($(".tax_name",this).val());
+	    }
+	});
+	types.sort();
+	var duplicatetypes = [];
+	for (var i = 0; i < types.length - 1; i++) {
+	    if (types[i + 1] == types[i]) {
+		duplicatetypes.push(types[i]);
+	    }
+	}
+	return duplicatetypes;
+    }
+    
+    //Function to check 'VAT' tax added for duplicate 'states'.
+    function duplicatestate(curindex){
+	var edittaxstates = [];
+	$('#product_tax_table tbody tr').each(function(){
+	    var c_index = $(this).closest('tr').index();
+	    edittaxstates.push($('#product_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
+	});
+	if (edittaxstates.length>0) {
+            edittaxstates.sort();
+            var duplicatestates = [];
+            for (var i = 0; i < edittaxstates.length - 1; i++) {
+		if (edittaxstates[i+1] == edittaxstates[i]) {
+		    duplicatestates.push(edittaxstates[i]);
+		}
+            }
+	}
+	return duplicatestates;
+    }
+    
   $("#moresmall").on('shown.bs.collapse', function(event) {
     event.preventDefault();
     $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -779,28 +817,17 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
     event.preventDefault();
   }
   else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
-    event.preventDefault();
-    var types = [];
-    $('#product_tax_table tbody tr').each(function(){
-      if ($(".tax_name",this).val()=='CVAT') {
-        types.push($(".tax_name",this).val());
-      }
-    });
-    types.sort();
-    var duplicatetypes = [];
-    for (var i = 0; i < types.length - 1; i++) {
-      if (types[i + 1] == types[i]) {
-        duplicatetypes.push(types[i]);
-      }
-    }
-    if (duplicatetypes.length > 0) {
-      $("#cvat-alert").alert();
-      $("#cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#cvat-alert").hide();
-      });
-      return false;
-    }
-    $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+      event.preventDefault();
+      var cvat = duplicatecvat(curindex);
+      if (cvat.length > 0) {
+	    $("#edit_cvat-alert").alert();
+	    $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#edit_cvat-alert").hide();
+	    });
+	    $('#product_tax_table tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+	    return false;
+	}
+      $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
   else if (event.which==13) {
     event.preventDefault();
@@ -871,7 +898,16 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
     event.preventDefault();
   }
   else if (event.which==13) {
-    event.preventDefault();
+      event.preventDefault();
+      var c_index = $(this).closest('tr').index();
+      var states = duplicatestate(c_index);
+      if (states.length > 0) {
+	  $("#tax-same-alert").alert();
+	  $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#tax-same-alert").hide();
+	  });
+	  return false;
+      }
       $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
 });
@@ -894,6 +930,24 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	    $('#product_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	}
 	else {
+	    var btncvat = duplicatecvat(curindex_addbtn);
+	    if (btncvat.length > 0) {
+		$("#edit_cvat-alert").alert();
+		$("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#edit_cvat-alert").hide();
+		});
+		$('#product_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').focus().select();
+		return false;
+	    }
+	    var states = duplicatestate(curindex_addbtn);
+	    if (states.length > 0) {
+		$("#tax-same-alert").alert();
+		$("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-same-alert").hide();
+		});
+		$('#product_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(1) select').focus().select();
+		return false;
+            }
 	    if ($('#product_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').val()==null) {
 		$("#tax-name-blank-alert").alert();
 		$("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -915,6 +969,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 		$('#product_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(3) span').hide('.glyphicon-plus');
 		$('#product_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	    }
+	    
 	    $(".tax_rate").numeric();
 	    for (let j = 0; j < curindex_addbtn + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
@@ -945,6 +1000,26 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
       return false;
     }
+
+    var btncvat = duplicatecvat(curindex1);
+      if (btncvat.length > 0) {
+	  $("#edit_cvat-alert").alert();
+	  $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#edit_cvat-alert").hide();
+	  });
+	  $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus().select();
+	  return false;
+      }
+      var states = duplicatestate(curindex1);
+      if (states.length > 0) {
+	  $("#tax-same-alert").alert();
+	  $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#tax-same-alert").hide();
+	  });
+	  $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus().select();
+	  return false;
+      }
+    
     if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
       $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
     }
@@ -1413,9 +1488,29 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   });
 
 
-  var taxes = []; //Taxes list to store dictionaries created
+    var taxes = []; //Taxes list to store dictionaries created
+    var edittaxstates = [];
     $("#product_tax_table tbody tr").each(function(){
 	var cur_index = $(this).closest('tr').index();
+	var savecvat = duplicatecvat(cur_index);
+	if (savecvat.length > 0) {
+	    $("#edit_cvat-alert").alert();
+	    $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#cvat-alert").hide();
+	    });
+	    allow = false;
+	}
+	if($('#product_tax_table tbody tr:eq('+cur_index+') td:eq(1) option:selected').val()!="" && $('#product_tax_table tbody tr:eq('+ cur_index +') td:eq(1) select option:selected').attr("stateid") > 1){
+	    var savestates = duplicatestate(cur_index);
+	    if (savestates.length > 0) {
+		$("#tax-same-alert").alert();
+		$("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-same-alert").hide();
+		});
+		allow = false;
+	    }
+	}
+	
     if($('#product_tax_table tbody tr:eq('+ cur_index +') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT"){
 	$("#tax_state-blank-alert").alert();
 	$("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
