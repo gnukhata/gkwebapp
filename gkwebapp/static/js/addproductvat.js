@@ -83,7 +83,9 @@ if (sessionStorage.invflag=='1' ){
 	var edittaxstates = [];
 	$('#product_tax_table tbody tr').each(function(){
 	    var c_index = $(this).closest('tr').index();
-	    edittaxstates.push($('#product_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
+	    if($('#product_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val() !=""){
+		edittaxstates.push($('#product_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
+	    }
 	});
 	if (edittaxstates.length>0) {
             edittaxstates.sort();

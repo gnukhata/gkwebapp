@@ -39,6 +39,46 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml = $('#product_edit_tax_table tbody tr:first').html();
     $("#prodselect").focus();
+
+    //Function to check duplicate 'CVAT' tax.
+    function duplicatecvat(curindex){
+	var types = [];
+	$('#product_edit_tax_table tbody tr').each(function(){
+	    if ($(".tax_name",this).val()=='CVAT') {
+		types.push($(".tax_name",this).val());
+	    }
+	});
+	types.sort();
+	var duplicatetypes = [];
+	for (var i = 0; i < types.length - 1; i++) {
+	    if (types[i + 1] == types[i]) {
+		duplicatetypes.push(types[i]);
+	    }
+	}
+	return duplicatetypes;
+    }
+    
+    //Function to check 'VAT' tax added for duplicate 'states'.
+    function duplicatestate(curindex){
+	var edittaxstates = [];
+	$('#product_edit_tax_table tbody tr').each(function(){
+	    var c_index = $(this).closest('tr').index();
+	    if($('#product_edit_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val() != ""){
+		edittaxstates.push($('#product_edit_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
+	    }
+	});
+	if (edittaxstates.length>0) {
+            edittaxstates.sort();
+            var duplicatestates = [];
+            for (var i = 0; i < edittaxstates.length - 1; i++) {
+		if (edittaxstates[i+1] == edittaxstates[i]) {
+		    duplicatestates.push(edittaxstates[i]);
+		}
+            }
+	}
+	return duplicatestates;
+    }
+    
     $("#prodselect").keydown(function(e){
     if (e.which == 13) {
 	e.preventDefault();
@@ -666,26 +706,15 @@ $(document).ready(function() {
     }
       else if (($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='CVAT') && event.which==13 ) {
           event.preventDefault();
-          var types = [];
-          $('#product_edit_tax_table tbody tr').each(function(){
-              if ($(".tax_name",this).val()=='CVAT') {
-		  types.push($(".tax_name",this).val());
-              }
-          });
-          types.sort();
-          var duplicatetypes = [];
-          for (var i = 0; i < types.length - 1; i++) {
-              if (types[i + 1] == types[i]) {
-		  duplicatetypes.push(types[i]);
-              }
-          }
-          if (duplicatetypes.length > 0) {
+	  var cvat = duplicatecvat(curindex);
+	  if (cvat.length > 0) {
               $("#edit_cvat-alert").alert();
               $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#edit_cvat-alert").hide();
               });
               return false;
 	  }
+	  
 	if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
           $("#tax-name-blank-alert").alert();
           $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -730,7 +759,7 @@ $(document).ready(function() {
     var previndex = curindex -1;
     if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="" selected hidden disabled>Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>').prop('disabled', false);
+      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="" stateid="0" selected hidden disabled>Select State</option><option value="Andaman and Nicobar Islands" stateid="1">Andaman and Nicobar Islands</option><option value="Andhra Pradesh" stateid="2">Andhra Pradesh</option><option value="Arunachal Pradesh" stateid="3">Arunachal Pradesh</option><option value="Assam" stateid="4">Assam</option><option value="Bihar" stateid="5">Bihar</option><option value="Chandigarh" stateid="6">Chandigarh</option><option value="Chhattisgarh" stateid="7">Chhattisgarh</option><option value="Dadra and Nagar Haveli" stateid="8">Dadra and Nagar Haveli</option><option value="Daman and Diu" stateid="9">Daman and Diu</option><option value="Delhi" stateid="10">Delhi</option><option value="Goa" stateid="11">Goa</option><option value="Gujarat" stateid="12">Gujarat</option><option value="Haryana" stateid="13">Haryana</option><option value="Himachal Pradesh" stateid="14">Himachal Pradesh</option><option value="Jammu and Kashmir" stateid="15">Jammu and Kashmir</option><option value="Jharkhand" stateid="16">Jharkhand</option><option value="Karnataka" stateid="17">Karnataka</option><option value="Kerala" stateid="19">Kerala</option><option value="Lakshadweep" stateid="20">Lakshadweep</option><option value="Madhya Pradesh" stateid="21">Madhya Pradesh</option><option value="Maharashtra" stateid="22">Maharashtra</option><option value="Manipur" stateid="23">Manipur</option><option value="Meghalaya" stateid="24">Meghalaya</option><option value="Mizoram" stateid="25">Mizoram</option><option value="Nagaland" stateid="26">Nagaland</option><option value="Odisha" stateid="29">Odisha</option><option value="Pondicherry" stateid="31">Pondicherry</option><option value="Punjab" stateid="32">Punjab</option><option value="Rajasthan" stateid="33">Rajasthan</option><option value="Sikkim" stateid="34">Sikkim</option><option value="Tamil Nadu" stateid="35">Tamil Nadu</option><option value="Telangana" stateid="36">Telangana</option><option value="Tripura" stateid="37">Tripura</option><option value="Uttar Pradesh" stateid="38">Uttar Pradesh</option><option value="Uttarakhand" stateid="39">Uttarakhand</option><option value="West Bengal" stateid="41">West Bengal</option>').prop('disabled', false);
       if (curindex > 0) {
         for (var i = 1; i < curindex+1; i++) {
           for (var j = 0; j < curindex; j++) {
@@ -777,28 +806,16 @@ $(document).ready(function() {
     }
     else if (event.which==13) {
 	event.preventDefault();
-	var edittaxstates = [];
-      $('#product_edit_tax_table tbody tr').each(function(){
-	  var c_index = $(this).closest('tr').index();
-	  edittaxstates.push($('#product_edit_tax_table tbody tr:eq('+c_index+') td:eq(1) option:selected').val());
-      });
-      if (edittaxstates.length>1) {
-        edittaxstates.sort();
-        var duplicatestates = [];
-        for (var i = 0; i < edittaxstates.length - 1; i++) {
-          if (edittaxstates[i+1] == edittaxstates[i]) {
-            duplicatestates.push(edittaxstates[i]);
-          }
-        }
-        if (duplicatestates.length > 0) {
-          $("#tax-same-alert").alert();
-          $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#tax-same-alert").hide();
-          });
-          return false;
-        }
-      }
-      $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
+        var c_index = $(this).closest('tr').index();
+	var states = duplicatestate(c_index);
+	if (states.length > 0) {
+	    $("#tax-same-alert").alert();
+	    $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#tax-same-alert").hide();
+	    });
+	    return false;
+	}
+	$('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
 
@@ -821,6 +838,26 @@ $(document).ready(function() {
             $('#product_edit_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	}
 	else {
+	    var cvat = duplicatecvat(curindex_addbtn);
+	    if (cvat.length > 0) {
+		$("#edit_cvat-alert").alert();
+		$("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#edit_cvat-alert").hide();
+		});
+		$('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').focus().select();
+		return false;
+	    }
+
+	    var states = duplicatestate(curindex_addbtn);
+	    if (states.length > 0) {
+		$("#tax-same-alert").alert();
+		$("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-same-alert").hide();
+		});
+		$('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(1) select').focus().select();
+		return false;
+            }
+	    
 	    if ($('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(0) select').val()=="") {
 		$("#tax-name-blank-alert").alert();
 		$("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -872,6 +909,26 @@ $(document).ready(function() {
 	  $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
           return false;
       }
+
+	var cvat = duplicatecvat(curindex1);
+	if (cvat.length > 0) {
+            $("#edit_cvat-alert").alert();
+            $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#edit_cvat-alert").hide();
+            });
+            return false;
+	}
+
+	var states = duplicatestate(curindex1);
+	if (states.length > 0) {
+	    $("#tax-same-alert").alert();
+	    $("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#tax-same-alert").hide();
+	    });
+	    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus().select();
+	    return false;
+	}
+	
       if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
         $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
       }
@@ -1301,6 +1358,29 @@ $(document).ready(function() {
 	  $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
 	  allow = 1;
       }
+
+	var cvat = duplicatecvat(curindex);
+	if (cvat.length > 0) {
+	    $("#edit_cvat-alert").alert();
+	    $("#edit_cvat-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#edit_cvat-alert").hide();
+	    });
+	    $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').focus().select();
+	    allow = 1;
+	}
+
+	if($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) option:selected').val()!="" && $('#product_edit_tax_table tbody tr:eq('+ curindex +') td:eq(1) select option:selected').attr("stateid") != 0){
+	    var savestates = duplicatestate(curindex);
+	    if (savestates.length > 0) {
+		$("#tax-same-alert").alert();
+		$("#tax-same-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax-same-alert").hide();
+		});
+		$('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus().select();
+		allow = 1;
+	    }
+	}
+	
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
         obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
