@@ -39,7 +39,7 @@ $(document).ready(function() {
     var selectedtaxstate;
     var taxhtml = $('#product_edit_tax_table tbody tr:first').html();
     $("#prodselect").focus();
-
+    var oldtaxes;
     //Function to check duplicate 'CVAT' tax.
     function duplicatecvat(curindex){
 	var types = [];
@@ -58,7 +58,7 @@ $(document).ready(function() {
 	return duplicatetypes;
     }
     
-    //Function to check 'VAT' tax added for duplicate 'states'.
+    //Function to check duplicate 'states' addded for 'VAT' tax.
     function duplicatestate(curindex){
 	var edittaxstates = [];
 	$('#product_edit_tax_table tbody tr').each(function(){
@@ -159,8 +159,12 @@ $(document).ready(function() {
   });
   $(document).off('keydown', '#editgodownflag').on('keydown', '#editgodownflag', function(e){
     if (e.which == 13) {
-      e.preventDefault();
-      $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus();
+	e.preventDefault();
+	if ($(this).is(":checked")) {
+	    $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus();
+	}else{
+	    $('#editopeningstock').focus();
+	}
     }
     if (e.which == 38) {
       $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus();
@@ -252,10 +256,13 @@ $(document).ready(function() {
     else if (event.which==173) {
       event.preventDefault();
     }
-      else if (event.which==27) {
-	  event.preventDefault();
-	  $("#epsubmit").focus().select();
-      }
+    else if (event.which==27) {
+	event.preventDefault();
+	$("#epsubmit").focus().select();
+    }else if(event.which == 38){
+	event.preventDefault();
+	$("#editgodownflag").focus();
+    }
     /* Act on the event */
   });
 
@@ -349,6 +356,7 @@ $(document).ready(function() {
       .done(function(resp) {
         console.log("success");
           if (resp["gkresult"].length > 0) {
+	      oldtaxes = resp["gkresult"]; 
 	      taxhtml = $('#product_edit_tax_table tbody tr:first').html();
 	      var stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
               $('#product_edit_tax_table tbody tr:first').remove();
@@ -425,9 +433,62 @@ $(document).ready(function() {
   $(document).on("change","#editcatselect",function(event) {
     /* Act on the event */
 
-    catcode= $("#editcatselect option:selected").val();
-    if (catcode!="")
-    {
+     catcode= $("#editcatselect option:selected").val();
+
+     if (catcode!=""){
+      $.ajax({
+      url: '/product?type=cattax',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      data: {"categorycode": catcode},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+      })
+      .done(function(resp) {
+	  console.log("success");
+	  if (resp["gkresult"].length>0) {
+              $('#product_edit_tax_table tbody tr').remove();
+              for (tax of resp["gkresult"]) {
+		  $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
+		  $('#product_edit_tax_table tbody tr:last td:eq(3) span').hide('.glyphicon-plus');  
+		  $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+		  $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+		  if(tax["taxname"] == 'CVAT'){
+		      $('.tax_name, .tax_rate').prop('disabled',false);
+		  }else{
+		      $('.tax_name, .tax_rate, .tax_state').prop('disabled',false);
+		  }
+		  $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);  
+              }
+	      $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	  }else{
+	      $('#product_edit_tax_table tbody tr').remove();
+              for (tax of oldtaxes) {
+		  $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
+		  $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+		  $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+		  $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+		  if(tax["taxname"] == 'CVAT'){
+		      $('.tax_name, .tax_rate').prop('disabled',false);
+		  }else{
+		      $('.product_tax_disable').prop('disabled',false);
+		  }
+              }
+	      $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	      $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+	  }
+      })
+      .fail(function() {
+	  console.log("error");
+      })
+      .always(function() {
+	  console.log("complete");
+      });
+
+      
       $.ajax({
         url: '/product?type=specs',
         type: 'POST',
@@ -461,8 +522,23 @@ $(document).ready(function() {
       $("#nocategory-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#nocategory-alert").hide();
       });
-    }
 
+	//Removing Taxes
+	$('#product_edit_tax_table tbody tr').remove();
+        for (tax of oldtaxes) {
+            $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
+            $('#product_edit_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
+            $('#product_edit_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
+	    $('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    if(tax["taxname"] == 'CVAT'){
+		$('.tax_name, .tax_rate').prop('disabled',false);
+	    }else{
+		$('.product_tax_disable').prop('disabled',false);
+	    }
+        }
+	$('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	$('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+    }
   });
 
   $("#prodselect").keyup(function(event) {
