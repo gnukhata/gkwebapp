@@ -523,7 +523,6 @@ $(document).ready(function() {
         $("#nocategory-alert").hide();
       });
 
-	//Removing Taxes
 	$('#product_edit_tax_table tbody tr').remove();
         for (tax of oldtaxes) {
             $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
