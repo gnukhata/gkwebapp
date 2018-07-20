@@ -78,7 +78,7 @@ if (sessionStorage.invflag=='1' ){
 	return duplicatetypes;
     }
     
-    //Function to check 'VAT' tax added for duplicate 'states'.
+    //Function to check duplicate 'states' addded for 'VAT' tax.
     function duplicatestate(curindex){
 	var edittaxstates = [];
 	$('#product_tax_table tbody tr').each(function(){
@@ -937,6 +937,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	    $('#product_tax_table tbody tr:eq('+nextindex_addbtn+') td:eq(0) select').focus().select();
 	}
 	else {
+	    //Check duplicate "CVAT" tax.
 	    var btncvat = duplicatecvat(curindex_addbtn);
 	    if (btncvat.length > 0) {
 		$("#edit_cvat-alert").alert();
