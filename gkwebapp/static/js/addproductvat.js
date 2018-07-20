@@ -648,6 +648,9 @@ $("#addcatselect").change(function(event) {
 	  $('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);  
         }
 	  $('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+      }else{
+	  $('#product_tax_table tbody tr').remove();
+	  $('#product_tax_table tbody').append(taxfieldhtml);
       }
     })
     .fail(function() {
