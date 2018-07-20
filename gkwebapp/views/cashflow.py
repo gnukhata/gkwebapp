@@ -99,8 +99,6 @@ def printcashflowreport(request):
         sheet.column_dimensions['D'].width = 4
         sheet.column_dimensions['E'].width = 32
         sheet.column_dimensions['F'].width = 13
-        #sheet.column_dimensions['G'].width = 12
-        #sheet.column_dimensions['H'].width = 12
         # Cells of first two rows are merged to display organisation details properly.
         sheet.merge_cells('A1:F2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
@@ -134,6 +132,10 @@ def printcashflowreport(request):
         sheet['F4'] = 'Amount'
         titlerow = sheet.row_dimensions[4]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['C4'].alignment = Alignment(horizontal='right')
+        sheet['F4'].alignment = Alignment(horizontal='right')
+        sheet['C4'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F4'].font = Font(name='Liberation Serif',size=12,bold=True)
         row = 5
         for account in receipt:
             sheet['A'+str(row)] = account["toby"]
