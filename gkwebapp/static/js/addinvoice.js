@@ -1207,7 +1207,6 @@ $(document).ready(function() {
 			})
 			    .done(function(resp) {
 				console.log("success");
-				console.log(resp.items);
 				if (resp["gkstatus"] == 0) {
 				    // if($("#invoice_product_table_vat").is(":not(:hidden)")){
 				    $.each(resp.items, function(key, value) {
