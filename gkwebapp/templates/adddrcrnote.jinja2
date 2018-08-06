@@ -305,6 +305,9 @@
 		   {% trans %}Debited Value must not be empty or zero!{% endtrans %}
 		 {% endif %}
 	       </div>
+	       <div class="alert alert-danger" id="crdr_qty_blank_alert"  aria-live="rude" role="alert" hidden>
+		 {% trans %}Billed Quantity cannot be zero or empty!{% endtrans %}
+	       </div>
 	       {% if resultgstvat == '29' or resultgstvat == '22' or resultgstvat == '7' %}
 		 {% if resultgstvat == '22' %}
 		   <div class="col-sm-12" style="margin-bottom:10px; padding:5;">

@@ -850,6 +850,16 @@ $(document).ready(function() {
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
 	    calculatevataxamt(curindex);
+
+	    if($('#drcrnote_table_vat tbody tr:eq('+ curindex +') td:eq(3) input').val()=="" || $('#drcrnote_table_vat tbody tr:eq('+ curindex +') td:eq(3) input').val() == 0){
+		$("#crdrvalblank-alert").alert();
+		$("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#crdrvalblank-alert").hide();
+		});
+		$('#drcrnote_table_vat tbody tr:eq('+ curindex +') td:eq(3) input').focus();
+		return false;
+	    }
+	    
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
 	    }
@@ -871,8 +881,8 @@ $(document).ready(function() {
 		$("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#crdrvalblank-alert").hide();
 		});
+		$('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(4) input').focus();
 		return false;
-		$('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(4) input').focus().select();
 	    }
 	    
 	    if (curindex == lastindex) {
@@ -892,6 +902,16 @@ $(document).ready(function() {
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_table_vat tbody tr:last').index();
 	    calculatevataxamt(curindex);
+
+	    if($('#drcrnote_table_vat tbody tr:eq('+ curindex +') td:eq(1) input').val()=="" || $('#drcrnote_table_vat tbody tr:eq('+ curindex +') td:eq(1) input').val() == 0){
+		$("#crdr_qty_blank_alert").alert();
+		$("#crdr_qty_blank_alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#crdr_qty_blank_alert").hide();
+		});
+		$('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(1) input').focus();
+		return false;
+	    }
+	    
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
 	    }
@@ -906,6 +926,16 @@ $(document).ready(function() {
 	    var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
+
+	    if($('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(2) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(2) input').val() == 0){
+		$("#crdr_qty_blank_alert").alert();
+		$("#crdr_qty_blank_alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#crdr_qty_blank_alert").hide();
+		});
+		$('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(2) input').focus();
+		return false;
+	    }
+	    
 	    calculategstaxamt(curindex);
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
@@ -926,13 +956,13 @@ $(document).ready(function() {
 	calculatevataxamt(curindex);
     });
 
-    // Change event for product price(i.e.Rate) in GST
+    //Change event for product price(i.e.Rate) in GST
     $(document).off('change', '.drcrnote_product_rate_gst').on('change', '.drcrnote_product_rate_gst', function(event) {
 	/* Act on the event */
+	var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 	if ($(this).val() == "") {
 	    $(this).val(0);
 	}
-	var curindex = $(this).closest('#drcrnote_product_table_gst tbody tr').index();
 	calculategstaxamt(curindex);
     });
 
@@ -975,10 +1005,14 @@ $(document).ready(function() {
       if ($("#drcrnote_table_vat tbody tr").length == 1) {
 	  $("#drcrnote_table_vat tbody tr:eq(0) td:eq(9)").empty();
       }
-  if ($("#drcrnote_product_table_gst tbody tr").length > 1) {
+      if ($("#drcrnote_product_table_gst tbody tr").length > 1) {
 	  $(this).closest('tr').remove();
 	  $("#drcrnote_product_table_gst tbody tr:eq("+curindex+")").remove();
-	  $("#drcrnote_product_table_gst tbody tr:first td:eq(0) select").focus();
+	  if($("#return").is(":checked")){
+	      $("#drcrnote_product_table_gst tbody tr:first td:eq(0) select").focus();
+	  }else if($("#discount").is(":checked")){
+	      $("#drcrnote_product_table_gst tbody tr:first td:eq(4) select").focus();
+	  }
       }
       if ($("#drcrnote_product_table_gst tbody tr").length == 1) {
 	  $("#drcrnote_product_table_total tbody tr:eq(0) td:eq(1)").empty();
@@ -1177,7 +1211,27 @@ if (!curdate.between(financialstart, financialend)) {
     if ($("#taxapplicabletext").text() == "VAT") {
 
 	for (let i = 0; i < $("#drcrnote_table_vat tbody tr").length; i++) {
-	    if ((parseFloat($('.drcrnote_product_rate_vat:eq(' + i + ')').val()) > parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val())) && $("#status").val()==3 && $("#discount").is(":checked")) {
+            if ($("#discount").is(":checked")) {
+		  if($('#drcrnote_table_vat tbody tr:eq('+ i +') td:eq(3) input').val()=="" || $('#drcrnote_table_vat tbody tr:eq('+ i +') td:eq(3) input').val() == 0){
+		      $("#crdrvalblank-alert").alert();
+		      $("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+			  $("#crdrvalblank-alert").hide();
+		      });
+		      $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(3) input').focus();
+		      return false;
+		  }
+	    }else if($("#return").is(":checked")){
+		if($('#drcrnote_table_vat tbody tr:eq('+ i +') td:eq(1) input').val()=="" || $('#drcrnote_table_gst tbody tr:eq('+ i +') td:eq(1) input').val() == 0){
+		    $("#crdr_qty_blank_alert").alert();
+		    $("#crdr_qty_blank_alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#crdr_qty_blank_alert").hide();
+		    });
+		    $('#drcrnote_table_vat tbody tr:eq('+ i +') td:eq(1) input').focus();
+		    return false;
+		}
+	    }
+
+            if ((parseFloat($('.drcrnote_product_rate_vat:eq(' + i + ')').val()) > parseFloat($('.drcrnote_product_per_price_vat:eq(' + i + ')').val())) && $("#status").val()==3 && $("#discount").is(":checked")) {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 		$("#exceed-blank-alert").alert();
 		$("#exceed-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1213,14 +1267,24 @@ if (!curdate.between(financialstart, financialend)) {
       else if ($("#taxapplicabletext").text() == "GST") {
 
 	  for (let i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
-
-	      if($('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val() == 0){
-		  $("#crdrvalblank-alert").alert();
-		  $("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		      $("#crdrvalblank-alert").hide();
-		  });
-		  $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').focus().select();
-		  return false;
+	      if ($("#discount").is(":checked")) {
+		  if($('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val() == 0){
+		      $("#crdrvalblank-alert").alert();
+		      $("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+			  $("#crdrvalblank-alert").hide();
+		      });
+		      $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').focus();
+		      return false;
+		  }
+	      }else if($("#return").is(":checked")){
+		  if($('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(2) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(2) input').val() == 0){
+		      $("#crdr_qty_blank_alert").alert();
+		      $("#crdr_qty_blank_alert").fadeTo(2250, 500).slideUp(500, function() {
+			  $("#crdr_qty_blank_alert").hide();
+		      });
+		      $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(2) input').focus();
+		      return false;
+		  }
 	      }
 	      
 	      if ((parseFloat($('.drcrnote_product_rate_gst:eq(' + i + ')').val()) > parseFloat($('.drcrnote_product_per_price_gst:eq(' + i + ')').val())) && $("#status").val()==3 && $("#discount").is(":checked")) {
