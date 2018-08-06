@@ -13,6 +13,12 @@ $(document).ready(function() {
   $("#drcrnote_year_ref").numeric({ negative: false });
   var usrid = "" ;
 
+    $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
+	event.preventDefault();
+	/* Act on the event */
+	$(".numtype").numeric({ negative: false });
+    });
+    
     //Show selectbox of invoice type on the basis of which radio button is checked.
     $("input[name='invoice']").click(function () {
 	//Checking which radio button is selected.
@@ -859,13 +865,25 @@ $(document).ready(function() {
 	    var nextindex = curindex + 1;
 	    var lastindex = $('#drcrnote_product_table_gst tbody tr:last').index();
 	    calculategstaxamt(curindex);
+
+	    if($('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(4) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(4) input').val() == 0){
+		$("#crdrvalblank-alert").alert();
+		$("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#crdrvalblank-alert").hide();
+		});
+		return false;
+		$('#drcrnote_product_table_gst tbody tr:eq('+ curindex +') td:eq(4) input').focus().select();
+	    }
+	    
 	    if (curindex == lastindex) {
 		$("#drcrnote_save").focus();
 	    }
 	    else{
 		$('.drcrnote_product_rate_gst:eq(' + nextindex + ')').focus().select();
 	    }
-	}
+	}else if (event.which == 190 && event.shiftKey) {
+	    $('#drcrnote_product_table_gst tbody tr:eq('+ nextindex +') td:eq(4) input').focus().select();
+	} 
     });
     $(document).off('keydown', '.drcrnote_product_quantity_vat').on('keydown', '.drcrnote_product_quantity_vat', function(event) {
 	if (event.which == 13 ) {
@@ -1195,6 +1213,16 @@ if (!curdate.between(financialstart, financialend)) {
       else if ($("#taxapplicabletext").text() == "GST") {
 
 	  for (let i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
+
+	      if($('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val()=="" || $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').val() == 0){
+		  $("#crdrvalblank-alert").alert();
+		  $("#crdrvalblank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#crdrvalblank-alert").hide();
+		  });
+		  $('#drcrnote_product_table_gst tbody tr:eq('+ i +') td:eq(4) input').focus().select();
+		  return false;
+	      }
+	      
 	      if ((parseFloat($('.drcrnote_product_rate_gst:eq(' + i + ')').val()) > parseFloat($('.drcrnote_product_per_price_gst:eq(' + i + ')').val())) && $("#status").val()==3 && $("#discount").is(":checked")) {
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			    $("#exceed-blank-alert").alert();

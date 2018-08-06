@@ -298,6 +298,13 @@
 	       {% endif %}
 	     </div>
 	     <div class="col-md-12">
+	       <div class="alert alert-danger" id="crdrvalblank-alert"  aria-live="rude" role="alert" hidden>
+		 {%  if drcrflag=="3"%}
+		   {% trans %}Credited Value must not be empty or zero!{% endtrans %}
+		 {%else%}
+		   {% trans %}Debited Value must not be empty or zero!{% endtrans %}
+		 {% endif %}
+	       </div>
 	       {% if resultgstvat == '29' or resultgstvat == '22' or resultgstvat == '7' %}
 		 {% if resultgstvat == '22' %}
 		   <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
