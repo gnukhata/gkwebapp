@@ -36,10 +36,12 @@ $(document).ready(function(){
   var billflag;
   var modeflag;
   var avnoflag,maflag,avflag;
+  var vatorgstflag;  
   $("#orgname").focus();
   var sel1 = 0;
   var sel2 = 0;
   var sel3 = 0;
+    
   $("#orgcase").focus(function(){
     sel1 = 1;
   });
@@ -486,7 +488,6 @@ $(document).ready(function(){
         var otype = $("#orgtype option:selected").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
-	   var vatorgstflag;
     var date1 = "2017-07-01";
     
     var gstdate = Date.parse(date1);
@@ -494,17 +495,14 @@ $(document).ready(function(){
     var financialStart =Date.parse(fdate);
     var financialEnd = Date.parse(tdate);
     if (gstdate>financialStart && gstdate>financialEnd){
-	console.log("22");
 	$(".vat").show();
 	$(".gst").hide();
 	vatorgstflag=22;}
     else if(gstdate>financialStart && gstdate<=financialEnd) {
-	console.log("29");
 	$(".gst").show();
 	$(".vat").show();
 	vatorgstflag=29;}
     else if(gstdate<=financialStart && gstdate<=financialEnd){
-	console.log("7");
 	$(".gst").show();
 	$(".vat").hide();
 	vatorgstflag=7;}
@@ -721,7 +719,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align:center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
 	}
-    console.log(sessionStorage.vatorgstflag);
+    
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
       $(".tinfield").show();
@@ -1180,10 +1178,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    return false;
 	}
 	else {
-	    if(sessionStorage.vatorgstflag == '22' || sessionStorage.vatorgstflag == '29' ){
+	    if($("#orgmvat").is(':visible')){
 		$("#orgmvat").focus();
-	    } else {
-		$("#orggstin").focus();
+	    }else {
+		$("#orgstax").focus();
 	    }
 	}
     }
@@ -1423,10 +1421,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgstax").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '29'){
+	if(vatorgstflag == '29' || vatorgstflag == '7'){
 	    $("#orggstin").focus();
 	} else {
-	    $("#submit").focus();
+	    $("#orgbankdel").focus();
 	}
       
     }
