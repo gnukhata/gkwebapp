@@ -84,7 +84,7 @@ $(document).ready(function(){
 	return str;
     }
   }
-
+    
   $("#fromday").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
@@ -110,6 +110,7 @@ $(document).ready(function(){
   $('.orgfields').keydown( function(e) {
     var n = $('.orgfields').length;
     var f = $('.orgfields');
+      
     if (e.which == 13)
     {
 
@@ -228,7 +229,21 @@ $(document).ready(function(){
         $("#tomonth").val(endmonth);
         $("#toyear").val(endyear);
       });
-      $("#toyear").keydown(function(event) {
+
+    $("#orgname").keydown(function(event){
+	if(event.which == 13){
+	    if ($.trim($("#orgname").val())=="") {
+		$("#orgname-blank-alert").alert();
+		$("#orgname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#orgname-blank-alert").hide();
+		});
+		$("#orgname").focus();
+		return false;
+            }
+	}
+    });
+
+    $("#toyear").keydown(function(event) {
           if (event.which==13) {
 	      event.preventDefault();
           $(this).val(yearpad($(this).val(),4));
@@ -706,7 +721,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
 	    $('#gstintable tbody tr:eq('+i+') td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    $("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align:center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
 	}
-    
+    console.log(sessionStorage.vatorgstflag);
   if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
       $(".tinfield").show();
@@ -1517,7 +1532,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	$('[data-toggle="popover"]').click();
     });
   $(document).off("click", "#submit").on("click", "#submit", function(event){
-    event.preventDefault();
+      event.preventDefault();
       $("#createadmin").fadeIn();
       $("#addorg").hide();
       $("#username").focus().select();
