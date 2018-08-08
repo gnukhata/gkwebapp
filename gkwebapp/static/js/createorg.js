@@ -1075,7 +1075,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgtelno").focus().select();
+          $("#orgwebsite").focus().select();
         }
     });
 
@@ -1126,7 +1126,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
      $("#fcraregyear").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgwebsite").focus().select();
+      $("#orgemail").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
@@ -1164,10 +1164,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     });
 
     // Validation for PAN
+    regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
     $("#orgpan").keydown(function(event) {
     if (event.which==13) {
-	event.preventDefault();
-	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+	event.preventDefault(); 
 	var txtpan = $(this).val();
 	if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#orgpan").val())!="") {
 	    $("#pan-incorrect-alert").alert();
@@ -1210,19 +1210,19 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
          event.preventDefault();
-	 $("#orgwebsite").focus();
-        }
+	 if ($("#orgtype").val()=="Not For Profit"){
+	     $("#fcraregyear").focus().select();
+	 }else{
+	     $("#orgwebsite").focus();
+	 }
+     }
    });
 
     $("#orgtelno").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if ($("#orgtype").val()=="Not For Profit"){
-		$("#regday").focus();
+	$("#orgwebsite").focus();
 		
-	} else {
-	    $("#orgwebsite").focus().select();
-	}
     }
      if (event.which==38)  {
           event.preventDefault();
@@ -1232,19 +1232,17 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
     $("#orgwebsite").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#orgemail").focus().select();
+	event.preventDefault();
+	if ($("#orgtype").val()=="Not For Profit"){
+	    $("#regday").focus().select();
+	}else{
+	    $("#orgemail").focus().select();
+	}
     }
      if (event.which==38)  {
-          event.preventDefault();
-	 if ($("#orgtype").val()=="Not For Profit"){
-		$("#fcraregyear").focus();
-		
-	    }
-	    else {
-		$("#orgtelno").focus().select();
-	    }
-        }
+         event.preventDefault();
+	 $("#orgtelno").focus().select();
+     }
     });
 
 
@@ -1428,10 +1426,14 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	}
       
     }
-     if (event.which==38)  {
-          event.preventDefault();
-          $("#orgmvat").focus().select();
-        }
+    if (event.which==38)  {
+        event.preventDefault();
+	if(vatorgstflag == '7'){
+	    $("#orgpan").focus().select();
+	}else{
+            $("#orgmvat").focus().select();
+	}
+    }
     });
 
     // 'Esc' keyevent for shifting focus from GSTIN button to Save button.
@@ -1467,6 +1469,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	event.preventDefault();
 	$("#addorg").hide();
 	$("#createtorg").fadeIn();
+	$("#orgname").focus();
     });
     $("#backtoprofile").click(function(event){
 	event.preventDefault();
@@ -1529,11 +1532,76 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $(document).off("click", ".popover-content").on("click", ".popover-content", function(event){
 	$('[data-toggle="popover"]').click();
     });
+
   $(document).off("click", "#submit").on("click", "#submit", function(event){
       event.preventDefault();
-      $("#createadmin").fadeIn();
-      $("#addorg").hide();
-      $("#username").focus().select();
+      var allow = 0;
+      //Validation for email.
+      email= $("#orgemail").val();
+      if((!email.match(emailExp)) && email!=""){
+	  $("#email-incorrect-alert").alert();
+	  $("#email-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#email-incorrect-alert").hide();
+	      $("#orgemail").focus().select();
+	  });
+	  allow = 1;
+	  return false;
+      }
+
+      //Validation for PAN.
+      var txtpan = $("#orgpan").val();
+      if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#orgpan").val())!="") {
+	  $("#pan-incorrect-alert").alert();
+	  $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#pan-incorrect-alert").hide();
+	  });
+	  $("#orgpan").focus();
+	  allow = 1;
+	  return false;
+      }
+
+      $("#gstintable tbody tr").each(function(){
+	  var curindex1 = $(this).index();
+	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	  if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+	      gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	      if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+		  $("#gstin-improper-alert").alert();
+		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#gstin-improper-alert").hide();
+		  });
+		  $("#orggstin").focus();
+		  allow = 1;
+		  return false;
+	      }
+	      else if(panno1 !="" && $(".gstin").val() ==""){
+		  $("#gstin-improper-alert").alert();
+		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		      $("#gstin-improper-alert").hide();
+		  });
+		  $("#orggstin").focus();
+		  allow = 1;
+		  return false;
+	      }
+	      else if(gstinstring != ""){
+		  if(gstinstring.length != 15){
+		      $("#gstin-improper-alert").alert();
+		      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#gstin-improper-alert").hide();
+		      });
+		      $("#orggstin").focus();
+		      allow = 1;
+		      return false;
+		  }
+	      }
+	  }
+   });
+
+      if(allow == 0){
+	  $("#createadmin").fadeIn();
+	  $("#addorg").hide();
+	  $("#username").focus().select();
+      }
   });
 
     $(document).off("keyup").on("keyup", function(event) {
