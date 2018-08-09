@@ -133,8 +133,13 @@ var gstinstring = ""; // for cocatination of GSTIN.
     } else {
       $(".gstinfield").show();
     }
-    if($("#state").val() != "" ){
-	$("#orgstate").val($("#state").val());}
+    if($("#state").val() != ""){
+	$("#orgstate").val($("#state").val());
+    }
+    if($("#state").val() == 'null'){
+	$("#orgstate").val("");
+    }
+    
   $(".regdate").numeric({negative: false});
   $(".fcradate").numeric({negative: false});
 

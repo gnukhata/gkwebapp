@@ -1475,6 +1475,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	event.preventDefault();
 	$("#createadmin").hide();
 	$("#addorg").fadeIn();
+	if($("#orgregno").is(":visible")){
+	    $("#orgregno").focus();
+	}else{
+	    $("#orgaddr").focus();
+	}
   });
 
     //Validation for GSTIN on Done Button inside Add GSTIN.
@@ -1560,6 +1565,21 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	  return false;
       }
 
+      //Validation for Bank Details.
+      if($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="" )
+      {
+	  allow = 0;			      			     
+      }else if($("#accnum").val()=="" || $("#branch_name").val()=="" || $("#bank_name").val()=="" || $("#ifsc_code").val()=="" ){
+	  $("#allbank-blank-alert").alert();
+	  $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#allbank-blank-alert").hide();
+	  });
+	  $("#orgbankdel").focus();
+	  allow = 1;
+	  return false;
+      }
+      
+      //Validation for GSTIN
       $("#gstintable tbody tr").each(function(){
 	  var curindex1 = $(this).index();
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
@@ -1595,8 +1615,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		  }
 	      }
 	  }
-   });
-
+      });
+      
       if(allow == 0){
 	  $("#createadmin").fadeIn();
 	  $("#addorg").hide();
