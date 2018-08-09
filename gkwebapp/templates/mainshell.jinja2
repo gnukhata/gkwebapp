@@ -314,16 +314,21 @@
 
               {% trans %}Connection Failed.{% endtrans %}
             </div>
-	    <div id="rss-feeddiv">
-	      <div class ="col-md-12" id="rss-feed">
+	    <div id="rss-feeddiv" class="row">
+	      <div class="col-sm-12" id="taxfeedmessage">
 		<h1 style="margin-top:30%; text-align:center;">Click View button to fetch news.</h1>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="gstindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}GST INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed"></div>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="incometaxindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}INCOME TAX INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed2"></div>
 	      </div>
 	    </div>
             <div>
 	      <button type="button" class="btn btn-primary" id="viewnews" style="margin-top:10px; margin-bottom:10px;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
-	    </div>
-	    <div>
-	      <small>Feeds are from <a href="https://www.gstindia.com" target="_blank"><b>GST INDIA</b></a>.</small>
 	    </div>
 	    <div>
 	      <small class="text-danger">
