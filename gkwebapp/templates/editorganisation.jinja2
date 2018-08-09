@@ -80,7 +80,6 @@
 
 				</div>
 
-
 				<div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
 
 				  {% trans %}Please fill all the fields of Bank Details.{% endtrans %}
@@ -92,7 +91,7 @@
 				  {% trans %}Improper GSTIN!{% endtrans %}
 
 				</div>
-
+				
 				<div class="alert alert-danger" id="connectionfailed"  aria-live="rude" role="alert" hidden>
 
  				  {% trans %}Connection Failed.{% endtrans %}
@@ -284,7 +283,7 @@
 					    <label for="organisationstaxnumber" id="orgstaxnumber">{% trans %}Service Tax Number{% endtrans %} :</label>
 					  </td>
 					  <td>
-					    <input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" value="{{gkresult["orgstax"]}}" style="width: 100%"></input>
+					    <input type="text" id="orgstax" class="form-control input-sm" name="organisationstaxnumber" style="width: 100%" value={% if gkresult["orgstax"] != "undefined" %}"{{gkresult["orgstax"]}}"{% endif %}></input>
 					  </td>
 					</tr>
 					

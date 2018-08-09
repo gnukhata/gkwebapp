@@ -60,7 +60,7 @@ $(document).ready(function(){
     $(".fcradate").autotab('number');
     $('[data-toggle="popover"]').popover({
         html: true,
-        template: '<div class="popover"><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"<div class="form-group input-group input-group-sm"><div id="cessratediv"><input class="input-sm form-control cessrate" size="23"></div><span class="glyphicon glyphicon-plus input-group-addon" id="addcessrate"></span></div></div></div>'
+        template: '<div class="popover"><div class="alert alert-danger" id="cess-blank-alert" aria-live="rude" role="alert" hidden>Please enter Cess Rate!</div><div class="arrow"></div><h3 class="popover-title"></h3><div class="popover-content"></div><div class="popover-footer"<div class="form-group input-group input-group-sm"><div id="cessratediv"><input class="input-sm form-control cessrate" size="23"></div><span class="glyphicon glyphicon-plus input-group-addon" id="addcessrate"></span></div></div></div>'
     });
     $('[data-toggle="popover"]').on('shown.bs.popover', function(){
         $(".cessrate").eq(0).focus().select();
@@ -235,6 +235,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
 	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
+	
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-modal").alert();
@@ -244,7 +245,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		});
   		return false;
             }
-  }
+	}
 
     });
 
@@ -337,11 +338,22 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     var nextindex1 = curindex1+1;
     var previndex1 = curindex1-1;
     var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+    var alfhanum = /^[0-9a-zA-Z]+$/;
     var panno = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();	
     var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
     gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();	
   if (event.which==13) {
       event.preventDefault();
+
+      if(!$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+	  $("#gstin-improper-modal").alert();
+	  $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#gstin-improper-modal").hide();
+	  });
+	  $('.gstin').focus().select();
+	  return false;
+      }
+      
       if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  $("#gstin_done").focus();
       }
@@ -593,7 +605,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	    if(sessionStorage.vatorgstflag == '22' || sessionStorage.vatorgstflag == '29' ){
 		$("#orgmvat").focus();
 	    } else {
-		$("#orggstin").focus();
+		$("#orgstax").focus();
 	    }
 	}
     }
@@ -833,10 +845,10 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgstax").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if($("#vatorgstflag").val() == '29'){
+	if($("#vatorgstflag").val() == '29' || $("#vatorgstflag").val() == '7'){
 	    $("#orggstin").focus();
 	} else {
-	    $("#submit").focus();
+	    $("#orgbankdel").focus();
 	}
       
     }
@@ -916,15 +928,40 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     });
     // Events for popover
     $(document).off("click", "#addcessrate").on("click", "#addcessrate", function(event){
-	$("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
-	$(".cessrate:last").focus();
+	var allowadd = 0;
+	var addcessindex = $('.cessrate').index();
+	event.preventDefault();
+	$(".cessrate").each(function(index){
+	    if($('.cessrate:eq('+ index +')').val() == ""){
+		$("#cess-blank-alert").alert();
+		$("#cess-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#cess-blank-alert").hide();
+		});
+		$('.cessrate:eq('+ index +')').focus();
+		allowadd = 1;
+		return false;
+	    }
+	});
+	if(allowadd == 0){
+	    $("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
+	    $(".cessrate:last").focus();
+	}
     });
     $(document).off("focus", ".cessrate").on("focus", ".cessrate", function(event){
 	$(this).numeric({"negative":false});
     });
     $(document).off("keydown", ".cessrate").on("keydown", ".cessrate", function(event){
+	var cessindex = $(this).index();
 	if (event.which == 13) {
 	    event.preventDefault();
+	    if($('.cessrate:eq('+ cessindex +')').val() == ""){
+		$("#cess-blank-alert").alert();
+		$("#cess-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#cess-blank-alert").hide();
+		    $('.cessrate:eq('+ cessindex +')').focus();
+		});
+		return false;
+	    }
 	    $("#cessratediv").append('<input class="input-sm form-control cessrate" size="23">');
 	    $(".cessrate:last").focus(); 
 	}
