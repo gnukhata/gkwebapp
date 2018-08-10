@@ -345,16 +345,14 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
   if (event.which==13) {
       event.preventDefault();
 
-      if(!$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() !="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
 	  $("#gstin-improper-modal").alert();
 	  $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 	      $("#gstin-improper-modal").hide();
 	  });
 	  $('.gstin').focus().select();
 	  return false;
-      }
-      
-      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
+      }else if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  $("#gstin_done").focus();
       }
       else if (curindex1 != ($("#gstintable tbody tr").length-1)) {
@@ -896,9 +894,18 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#gstin_done").click(function(event) {
 	var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
 	var curindex1 = $(this).index();
+	var alfhanum = /^[0-9a-zA-Z]+$/;
 	var panno1= $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val();
 	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
-	if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+
+	if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() !="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+	  $("#gstin-improper-modal").alert();
+	  $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#gstin-improper-modal").hide();
+	  });
+	  $('.gstin').focus().select();
+	  return false;
+	}else if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
 	    $("#gstin-improper-modal").alert();
 	    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-modal").hide();
@@ -1048,11 +1055,20 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
    var gobj = {}; // Creating a dictionary for storing statecode with gstin.
    $("#gstintable tbody tr").each(function(){
        var curindex1 = $(this).index();
+       var alfhanum = /^[0-9a-zA-Z]+$/;
        var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
        if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	   //Validation for GSTIN on Save Button.
-	   if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+	   if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()!="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+	       $("#gstin-improper-alert").alert();
+	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#gstin-improper-alert").hide();
+	       });
+	       $('#orggstin').focus();
+	       allow = 0;
+	       return false;
+	   }else if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
