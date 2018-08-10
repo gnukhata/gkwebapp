@@ -898,7 +898,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	var panno1= $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val();
 	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 
-	if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() !="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+	if($('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val() !="" && !$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val().match(alfhanum)){
 	  $("#gstin-improper-modal").alert();
 	  $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
 	      $("#gstin-improper-modal").hide();
