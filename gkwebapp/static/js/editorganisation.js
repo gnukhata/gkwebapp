@@ -497,7 +497,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
           event.preventDefault();
-          $("#orgtelno").focus().select();
+          $("#orgwebsite").focus().select();
         }
     });
 
@@ -601,7 +601,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	}
 	else {
 	    if(sessionStorage.vatorgstflag == '22' || sessionStorage.vatorgstflag == '29' ){
-		$("#orgmt").focus();
+		$("#orgmvat").focus();
 	    } else {
 		$("#orgstax").focus();
 	    }
@@ -643,12 +643,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgtelno").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if ($("#orgtype").val()=="Not For Profit"){
-		$("#regday").focus();
-		
-	} else {
-	    $("#orgwebsite").focus().select();
-	}
+	$("#orgwebsite").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
@@ -658,18 +653,16 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
     $("#orgwebsite").keydown(function(event) {
     if (event.which==13) {
-      event.preventDefault();
-      $("#orgemail").focus().select();
+	event.preventDefault();
+	if ($("#orgtype").val()=="Not For Profit"){
+	    $("#regday").focus();
+	}else{
+	    $("#orgemail").focus().select();
+	}
     }
      if (event.which==38)  {
           event.preventDefault();
-	 if ($("#orgtype").val()=="Not For Profit"){
-		$("#fcraregyear").focus();
-		
-	    }
-	    else {
-		$("#orgtelno").focus().select();
-	    }
+	 $("#orgtelno").focus().select();
         }
     });
 
@@ -855,8 +848,13 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       
     }
      if (event.which==38)  {
-          event.preventDefault();
-          $("#orgmvat").focus().select();
+         event.preventDefault();
+	 if($("#vatorgstflag").val() == '7'){
+             $("#orgpan").focus().select();
+	 }else{
+	     $("#orgmvat").focus().select();
+	 }
+          
         }
     });
 
