@@ -548,7 +548,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
      $("#fcraregyear").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#orgwebsite").focus().select();
+      $("#orgemail").focus().select();
     }
      if (event.which==38)  {
           event.preventDefault();
@@ -601,7 +601,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	}
 	else {
 	    if(sessionStorage.vatorgstflag == '22' || sessionStorage.vatorgstflag == '29' ){
-		$("#orgmvat").focus();
+		$("#orgmt").focus();
 	    } else {
 		$("#orgstax").focus();
 	    }
@@ -632,7 +632,11 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
          event.preventDefault();
-	 $("#orgwebsite").focus();
+	 if ($("#orgtype").val()=="Not For Profit"){
+		$("#fcraregyear").focus();    
+	 }else{
+	     $("#orgwebsite").focus();
+	 }
         }
    });
 
@@ -993,7 +997,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     //validation for bankdetails on save button.  
     if(!($("#accnum").val()=="" && $("#branch_name").val()=="" && $("#bank_name").val()=="" && $("#ifsc_code").val()=="")){
         if($("#accnum").val()=="" || $("#branch_name").val()=="" || $("#bank_name").val()=="" || $("#ifsc_code").val()=="" ) {
-		$("#allbank-blank-alert").alert();
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	        $("#allbank-blank-alert").alert();
 		$("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#allbank-blank-alert").hide();
 		});
@@ -1010,6 +1015,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
           regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
           regno = $("#orgregno").val();
           if(!Date.parseExact(regdate,"yyyy-MM-dd")){
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
             $("#date-alert").alert();
             $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
               $("#date-alert").hide();
@@ -1023,7 +1029,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       {
         fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
         fcrano = $("#orgfcrano").val();
-        if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
+          if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#date-alert").alert();
           $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
             $("#date-alert").hide();
@@ -1034,7 +1041,8 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       }
     }
       	email = $("#orgemail").val();  // Validation for email.
-	if ((!email.match(emailExp)) && email!="") {
+      if ((!email.match(emailExp)) && email!="") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	    $("#email-incorrect-alert").alert();
             $("#email-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#email-incorrect-alert").hide();
@@ -1045,6 +1053,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
       if (($("#orgpan").val().length != 10 || !$("#orgpan").val().match(regExp)) && $.trim($("#orgpan").val())!="") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	  $("#pan-incorrect-alert").alert();
 	    $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#pan-incorrect-alert").hide();
@@ -1061,6 +1070,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 	   //Validation for GSTIN on Save Button.
 	   if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()!="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
@@ -1069,6 +1079,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	       allow = 0;
 	       return false;
 	   }else if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
@@ -1078,6 +1089,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	       return false;
 	   }
 	   else if(panno1 !="" && $(".gstin").val() ==""){
+	       $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	       $("#gstin-improper-alert").alert();
 	       $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		   $("#gstin-improper-alert").hide();
@@ -1088,6 +1100,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	   }
 	   else if(gstinstring != ""){
 	       if(gstinstring.length != 15){
+		   $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		   $("#gstin-improper-alert").alert();
 		   $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		       $("#gstin-improper-alert").hide();

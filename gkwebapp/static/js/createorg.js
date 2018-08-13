@@ -1587,6 +1587,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       //Validation for email.
       email= $("#orgemail").val();
       if((!email.match(emailExp)) && email!=""){
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	  $("#email-incorrect-alert").alert();
 	  $("#email-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
 	      $("#email-incorrect-alert").hide();
@@ -1599,6 +1600,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       //Validation for PAN.
       var txtpan = $("#orgpan").val();
       if ((txtpan.length != 10 || !txtpan.match(regExp)) && $.trim($("#orgpan").val())!="") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	  $("#pan-incorrect-alert").alert();
 	  $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
 	      $("#pan-incorrect-alert").hide();
@@ -1613,6 +1615,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
       {
 	  allow = 0;			      			     
       }else if($("#accnum").val()=="" || $("#branch_name").val()=="" || $("#bank_name").val()=="" || $("#ifsc_code").val()=="" ){
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	  $("#allbank-blank-alert").alert();
 	  $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#allbank-blank-alert").hide();
@@ -1631,6 +1634,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	      gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
 	      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()!="" && !$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val().match(alfhanum)){
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		  $("#gstin-improper-alert").alert();
 		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		      $("#gstin-improper-alert").hide();
@@ -1640,6 +1644,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		  return false;
 	      }
 	      if((panno1.length != 10 || !panno1.match(regExp)) && panno1 !="" ) {
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		  $("#gstin-improper-alert").alert();
 		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		      $("#gstin-improper-alert").hide();
@@ -1649,6 +1654,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 		  return false;
 	      }
 	      else if(panno1 !="" && $(".gstin").val() ==""){
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		  $("#gstin-improper-alert").alert();
 		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		      $("#gstin-improper-alert").hide();
@@ -1659,6 +1665,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	      }
 	      else if(gstinstring != ""){
 		  if(gstinstring.length != 15){
+		      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');X
 		      $("#gstin-improper-alert").alert();
 		      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 			  $("#gstin-improper-alert").hide();
@@ -1678,6 +1685,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
               var regdate= $("#regyear").val() + "-" + $("#regmonth").val() + "-" + $("#regday").val();
               var regno = $("#orgregno").val();
               if(!Date.parseExact(regdate,"yyyy-MM-dd")){
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		  $("#date-alert").alert();
 		  $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
 		      $("#date-alert").hide();
@@ -1692,6 +1700,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
               var fcraregdate= $("#fcraregyear").val() + "-" + $("#fcraregmonth").val() + "-" + $("#fcraregday").val();
               var fcrano = $("#orgfcrano").val();
               if(!Date.parseExact(fcraregdate,"yyyy-MM-dd")){
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		  $("#date-alert").alert();
 		  $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
 		      $("#date-alert").hide();
