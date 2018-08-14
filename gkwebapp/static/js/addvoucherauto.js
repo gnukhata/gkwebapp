@@ -288,8 +288,79 @@ $(document).ready(function() {
       $("#amount-container").show();
       $("#split-amount-container").hide();
     }
-  })
+  });
 
+    $("#addcust").click(function(event) {
+	event.preventDefault();
+	var statusinout;
+    if ($("#vtype").val() == 'payment') {
+      statusinout = "in";
+    }
+    if ($("#vtype").val() == 'receipt') {
+      statusinout = "out";
+    }
+    $.ajax({
+
+      type: "POST",
+      url: "/customersuppliers?action=showaddpopup",
+      global: false,
+      async: false,
+      data: { "status": statusinout },
+      datatype: "text/html",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      },
+      success: function(resp) {
+
+        $("#viewcustsup").html("");
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        $("#viewcustsup").html(resp);
+          $('#custsupmodal').modal('show');
+        $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
+			      {
+            $('#add_cussup_name').focus();
+          });
+        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
+			      {
+            var text1 = $('#selectedcustsup').val();
+            if (text1 == '') {
+              $('#invoice_customer').focus();
+              return false;
+            }
+            var urlcustsup = "/customersuppliers?action=getallsups";
+            if ($("#vtype").val() == 'receipt') {
+		urlcustsup = "/customersuppliers?action=getallcusts";
+            }
+            $.ajax({
+              type: "POST",
+              url: urlcustsup,
+              global: false,
+              async: false,
+              datatype: "text/json",
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("gktoken", sessionStorage.gktoken);
+              }
+            })
+             .done(function(resp) {
+               var custs = resp["customers"];
+               $("#pname").empty();
+
+               for (var i in custs) {
+                 $("#pname").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
+               }
+		 $("#pname option").filter(function() {
+                     return this.text == text1;
+                 }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
+		 $("#pname").change();
+             });
+            $("#selectedcustsup").val("");
+              $("#pname").focus();
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+          });
+      }
+    });
+    });
 
   $("#submit").click(function(event) {
     event.preventDefault();

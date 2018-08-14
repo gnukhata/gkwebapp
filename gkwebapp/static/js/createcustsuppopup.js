@@ -767,7 +767,7 @@ else{
       }
       
     var custsupval;
-      if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9' || $("#status").val()=="16" ){
+      if ($("#deliverychallan_gkstatus").val()=='in' || $('#status').val()=='9' || $("#status").val()=="16" || $("#vtype").val()=="payment"){
       custsupval= 19;
     }
     else {
@@ -903,7 +903,6 @@ else{
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
 	}
-        form_data.append("csflag", custsupval);
       // ajax call for saving the customer/supplier
       if(allow == 1){
       $.ajax({
