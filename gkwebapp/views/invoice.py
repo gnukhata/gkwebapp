@@ -41,6 +41,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
 from openpyxl.utils import get_column_letter
+import base64
 
 @view_config(route_name="invoice",renderer="gkwebapp:templates/invoice.jinja2")
 def showinvoice(request):

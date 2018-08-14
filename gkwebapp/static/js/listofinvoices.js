@@ -181,14 +181,16 @@ $(document).ready(function() {
         }
     });
 
+    var invoice_id = "";
+
     $("#latable").off('dblclick', 'tr').on('dblclick', 'tr', function(e) {
         // This function opens a modal of the selected voucher.
         // It shows the complete details of the selected voucher along with option to edit, delete and clone.
         currentrow = $(this).index();
         e.preventDefault();
-        var id = "";
-        id = $(this).data("invid");
-        if (id == "") {
+	invoice_id = "";
+        invoice_id = $(this).data("invid");
+        if (invoice_id == "") {
             return false;
         }
 	var csflag = $("#latable tbody tr:eq(" + currentrow + ")").data("csflag");
@@ -200,7 +202,7 @@ $(document).ready(function() {
                 async: false,
                 datatype: "text/html",
                 data: {
-                    "invid": id
+                    "invid": invoice_id
                 },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -214,7 +216,43 @@ $(document).ready(function() {
 		    $("#printbutton").hide();
 		}
 		$("#viewinvdiv").show();
+		if ($("#attachmentcount").val() > 0) {
+		    $("#viewattachment").show();
+		}
+		else {
+		    $("#viewattachment").hide();
+		}
             });
+    });
+    $("#viewattachment").click(function(event) {
+        $.ajax({
+            url: '/invoice?action=getattachment',
+            type: 'POST',
+            datatype: 'json',
+	    data: { "invid": invoice_id },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        }).done(function(resp) {
+            var x = window.open();
+            if (x) {
+                //Browser has allowed it to be opened
+                x.focus();
+                x.document.open();
+                x.document.write(resp);
+                x.document.close();
+            } else {
+                //Browser has blocked it
+                alert('Please allow popups and retry');
+                x.close();
+            }
+	    
+            console.log("success");
+        }).fail(function() {
+            console.log("error");
+        }).always(function() {
+            console.log("complete");
+        });	
     });
     $("#backbutton").click(function(event){
 	$("#invload").html("");
