@@ -269,6 +269,14 @@ $(document).ready(function() {
 	    $("#listdiv").hide();
 	    $("#viewinvdiv").show();
 	    $('#invoice_div').html("");
+	    if ($("#attachmentcount").val() > 0) {
+		$("#viewattachment").show();
+		$("#viewattachment").attr("invid",invid);
+	    }
+	    else {
+		$("#viewattachment").hide();
+	    }
+
 	});
 	return false;
     }
@@ -3281,6 +3289,40 @@ if (event.which == 13) {
 	 event.preventDefault();
 	 $("#branch").focus().select();
        };
+    });
+
+    $("#viewattachment").click(function(event) {
+        $.ajax({
+                url: '/invoice?action=getattachment',
+                type: 'POST',
+            datatype: 'json',
+	    data: { "invid": $("#viewattachment").attr("invid") },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                var x = window.open();
+                if (x) {
+                    //Browser has allowed it to be opened
+                    x.focus();
+                    x.document.open();
+                    x.document.write(resp);
+                    x.document.close();
+                } else {
+                    //Browser has blocked it
+                    alert('Please allow popups and retry');
+                    x.close();
+                }
+
+                console.log("success");
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
     });
     
 });
