@@ -933,7 +933,7 @@ $(document).ready(function() {
        console.log("success");
        if (resp["gkstatus"] == 0) {
            $('.unitaddon_quantity_vat:eq(' + curindex + ')').text(resp["unitname"]);
-           $('.unitaddon_freequanity_vat:eq(' + curindex + ')').text(resp["unitname"]);
+           $('.unitaddon_freequantity_vat:eq(' + curindex + ')').text(resp["unitname"]);
        }
 
      })
@@ -2301,6 +2301,37 @@ if (event.which == 13) {
           return false;
       }
 
+      var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
+      if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
+	  $("#supplydate-alert").alert();
+	  $("#supplydate-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#supplydate-alert").hide();
+	  });
+	  $('#supply_date').focus().select();
+	  return false;
+      }
+      var supplydate = Date.parseExact(supplydatestring, "ddMMyyyy");
+      if (supplydate) {
+	  if (!supplydate.between(financialstart, financialend)) {
+	      $("#supbetween-date-alert").alert();
+	      $("#supbetween-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#supbetween-date-alert").hide();
+	      });
+	      $('#supply_date').focus().select();
+	      return false;
+	  }
+	  if (salesorderdate) {
+	      if (supplydate < salesorderdate) {
+		  $("#supply-date-alert").alert();
+		  $("#supply-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#supply-date-alert").hide();
+		  });
+		  $('#supply_date').focus().select();
+		  return false;
+	      }
+	  }
+      }
+
       //validation for bankdetails on save button.
       if ($("#chkbank").is(":checked")) {
 	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
@@ -2544,6 +2575,13 @@ if (event.which == 13) {
       }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
+
+    $('#confirm_yes').modal('show').one('click', '#tn_save_no', function(e) {
+	for (var key of form_data.keys()) {
+	    form_data.delete(key);
+	}
+    });
+      
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
 	if (allow == 1){
 	    $.ajax({
