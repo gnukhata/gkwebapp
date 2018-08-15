@@ -504,7 +504,7 @@ $(document).ready(function() {
     }
       if (sessionStorage.billflag == 1 && $("#invsel option:selected").val() != '') {
 	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
-	  if(billamount > vtotal) {
+	  if(parseFloat(billamount) > parseFloat(vtotal)) {
 	      billamount = vtotal;  // If balance of invoice is more than voucher amount then amount to be adjusted is set to voucher amount.
 	  }
 	  //A dictionary with invoice id and amount to be adjusted is created.
