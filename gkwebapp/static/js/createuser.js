@@ -23,6 +23,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajakta@dff.org.in>
 */
 
 $(document).ready(function(){
@@ -135,7 +136,8 @@ $(document).ready(function(){
       }
   });
 
-    $("#password").keydown(function(e){
+  
+  $("#password").keydown(function(e){
       if (e.which==13)
 	{
 	  if ($.trim($("#password").val())=="") {
@@ -147,7 +149,8 @@ $(document).ready(function(){
           return false;
         }   
         e.preventDefault();
-        $("#confirm_password").focus();
+          $("#confirm_password").focus();
+	  
       }
       if (e.which==38) {
         e.preventDefault();
@@ -155,9 +158,9 @@ $(document).ready(function(){
       }
     });
 
-    $("#confirm_password").keydown(function(e){
-      if (e.which==13)
-	{
+  $("#confirm_password").keydown(function(e){
+    if (e.which==13 || e.which==9)
+      {
             if ($.trim($("#confirm_password").val())=="") {
 		$("#cnfpass-blank-alert").alert();
 		$("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -166,8 +169,16 @@ $(document).ready(function(){
 		$("#confirm_password").focus();
 		return false;
             }
-	    
-            e.preventDefault();
+	else if ($.trim($("#password").val())!=($.trim($("#confirm_password").val()))) {
+	  $("#checkpassuser-blank-alert").alert();
+	  $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#checkpassuser-blank-alert").hide();
+	  });
+	  $("#confirm_password").focus();
+	   return false;
+	   }
+	  
+          e.preventDefault();
             $("#userrole").focus();
 	}
 	if (e.which==38) {
@@ -175,7 +186,8 @@ $(document).ready(function(){
       }
     });
 
-    $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
+
+  $(document).off("keydown","#userrole").on("keydown", '#userrole', function(e) {
 
         if (e.which == 13 || e.which == 9) {
 
@@ -204,17 +216,7 @@ $(document).ready(function(){
       }
     });
 
-      $("#confirm_password").blur(function(event) {
-        if ($.trim($("#password").val())!=$.trim($("#confirm_password").val())) {
-          $("#checkpassuser-blank-alert").alert();
-          $("#checkpassuser-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#checkpassuser-blank-alert").hide();
-          });
-          $("#password").focus();
-          return false;
-        }
-      });
-
+  
     $("#question").keydown(function(e){
           if (e.which==13)
           {
