@@ -1760,36 +1760,45 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 
     });
     $(document).off('keydown', '#confirmpassword').on('keydown', '#confirmpassword', function(e) {
-	if(e.which == 13){
-	    e.preventDefault();
-	    $("#securityquestion").focus();
+      if (e.which==13 || e.which==9)
+	{	if ($.trim($("#confirmpassword").val())=="") {
+	  $("#confpass-blank-alert").alert();
+	  $("#confpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	    $("#confpass-blank-alert").hide();
+	  });
+	  $("#confirmpassword").focus();
+	  return false;
 	}
-	else if(e.which == 38){
-	    $("#password").focus();
-	}
-
-    });
-    $(document).off('keydown', '#securityquestion').on('keydown', '#securityquestion', function(e) {
-	if(e.which == 13){
-	    e.preventDefault();
-	    $("#securityanswer").focus();
-	}
-	else if(e.which == 38){
+	  else if ($.trim($("#password").val())!=($.trim($("#confirmpassword").val()))) {
+	    $("#checkpass-blank-alert").alert();
+	    $("#checkpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#checkpass-blank-alert").hide();
+	    });
 	    $("#confirmpassword").focus();
+	    return false;
+	  }
+	  
+	  e.preventDefault();
+	  $("#securityquestion").focus();
 	}
-
-  });
-    $("#confirmpassword").blur(function(event) {
-      if ($.trim($("#password").val())!=$.trim($("#confirmpassword").val())) {
-        $("#checkpass-blank-alert").alert();
-        $("#checkpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-          $("#checkpass-blank-alert").hide();
-        });
-        $("#password").focus();
-        return false;
+      else if(e.which == 38){
+	$("#password").focus();
       }
     });
-    $(document).off("keydown", "#securityanswer").on("keydown", "#securityanswer", function(e){
+
+  $(document).off('keydown', '#securityquestion').on('keydown', '#securityquestion', function(e) {
+    if(e.which == 13){
+      e.preventDefault();
+      $("#securityanswer").focus();
+    }
+    else if(e.which == 38){
+      $("#confirmpassword").focus();
+    }
+
+  });
+
+  
+  $(document).off("keydown", "#securityanswer").on("keydown", "#securityanswer", function(e){
 	if (e.which ==13) {
 	    e.preventDefault();
 	$("#createlogin").click();

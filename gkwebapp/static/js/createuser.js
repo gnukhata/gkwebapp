@@ -23,6 +23,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Prajkta Patkar"<prajakta@dff.org.in>
 */
 
 $(document).ready(function(){
@@ -135,32 +136,10 @@ $(document).ready(function(){
       }
   });
 
- /* $("#password").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
-      if ($.trim($("#password").val())=="") {
-	$("#nsblank-alert").alert();
-	$("#nsblank-alert").fadeTo(2250, 500).slideUp(500, function(){
-	  $("#nsblank-alert").hide();
-	});
-	$("#newsubgroup").focus().select();
-	return false;
-      }
-      $("#maccounts").focus().select();
-    }
-    if (event.which==38) {
-      event.preventDefault();
-      $("#subgroupname").focus().select();
-    }
-  });*/
-  
   
   $("#password").keydown(function(e){
       if (e.which==13)
 	{
-	  console.log("Mi passowrd madhe ahe");
-	  console.log($("#password").val());
-	  
 	  if ($.trim($("#password").val())=="") {
           $("#password-blank-alert").alert();
           $("#password-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -182,8 +161,6 @@ $(document).ready(function(){
   $("#confirm_password").keydown(function(e){
     if (e.which==13 || e.which==9)
       {
-	console.log("Enter for confirm password fired2");
-	  console.log($("#confirm_password").val());
             if ($.trim($("#confirm_password").val())=="") {
 		$("#cnfpass-blank-alert").alert();
 		$("#cnfpass-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
