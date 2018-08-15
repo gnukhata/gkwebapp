@@ -67,7 +67,7 @@ def showvoucher(request):
                 if invdata.json()["gkstatus"]==0:
                     return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"])},request=request)
             else:
-                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags},request=request)
+                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags, "invoicedata":0,"invoicecount":0},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
