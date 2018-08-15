@@ -46,7 +46,7 @@ $(document).ready(function() {
     $(id).alert();
     $(id).fadeTo(2250, 500).slideUp(500, function() {
       $(id).hide();
-    })
+    });
 
   }
 
@@ -130,7 +130,7 @@ $(document).ready(function() {
         $("#pname").focus();
       }
     }
-  })
+  });
  
   $("#amount").keydown(function(event) {
     if (event.which == 13) {
@@ -151,7 +151,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#payment-mode").focus();
     }
-  })
+  });
  
   $("#pname").keydown(function(event) {
     if (event.which == 13) {
@@ -169,7 +169,7 @@ $(document).ready(function() {
         $("#vdate").focus();
       }
     }
-  })
+  });
 
   $("#b-amount").keydown(function(event) {
     if (event.which == 13) {
@@ -189,7 +189,7 @@ $(document).ready(function() {
     else if (event.which == 38) {
       $("#payment-mode").focus();
     }
-  })
+  });
 
   $("#c-amount").keydown(function(event) {
     if (event.which == 13) {
@@ -209,7 +209,7 @@ $(document).ready(function() {
     else if (event.which == 38) {
       $("#b-amount").focus().select();
     }
-  })
+  });
 
   $("#vdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
@@ -220,7 +220,7 @@ $(document).ready(function() {
 
   $("#year").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
-  })
+  });
 
   $("#vdate").keydown(function(event) {
     if (event.which == 13) {
@@ -231,7 +231,7 @@ $(document).ready(function() {
       }
       $("#month").focus();
     }
-  })
+  });
 
   $("#month").keydown(function(event) {
     if (event.which == 13) {
@@ -242,7 +242,7 @@ $(document).ready(function() {
       }
       $("#year").focus();
       }
-    })
+  });
 
   $("#year").keydown(function(event) {
     if (event.which == 13) {
@@ -253,7 +253,7 @@ $(document).ready(function() {
       }
       $("#pname").focus();
     }
-  })
+  });
 
 
   $("#year").blur(function(event) {
@@ -361,6 +361,37 @@ $(document).ready(function() {
       }
     });
     });
+
+    $(document).off("change","#invsel").on('change', '#invsel', function(event) {
+  event.preventDefault();
+    /* Act on the event */
+    var inv = $("#invsel option:selected").attr("total"); //Total amount of invoices.
+    var invbalance = $("#invsel option:selected").attr("balance");  //Balance of invoices.
+  if ($.trim(inv)!="")
+  {
+      $("#invtotal").val(parseFloat(inv).toFixed(2));  //Total amount of invoice is displayed.
+      $("#invbalance").val(parseFloat(invbalance).toFixed(2));  //Balance of invoice is displayed.
+  }
+  else
+    {
+	//Total and balance displayed are set to zero when no invoice is selected.
+      $("#invtotal").val(parseFloat(0).toFixed(2));
+      $("#invbalance").val(parseFloat(0).toFixed(2));
+      inv = 0;
+      invbalance = 0;
+    }
+    //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
+    var value = $('#invsel option:selected').attr("customername");
+	$("#amount").val(inv);
+	if(value){
+	    $('#pname option').each(function(index) {
+		if ($(this).text() == value) {
+		    $(this).prop("selected", true);
+		}
+	    });
+    }
+
+});
 
   $("#submit").click(function(event) {
     event.preventDefault();
