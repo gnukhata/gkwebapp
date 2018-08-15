@@ -414,8 +414,11 @@ $(document).ready(function() {
     var party = $("#pname option:selected").val();
     var payment_mode = $("#payment-mode option:selected").val();
     var vtype = $("#vtype").val();
-    var narration = $("#narration").val();
-
+      var narration = $("#narration").val();
+      var customername = "";
+      var customercode = 0;
+      var numberofcustomers = 0;
+      
     if(payment_mode == "both") {
       var bamount = $("#b-amount").val();
       var camount = $("#c-amount").val();
@@ -461,7 +464,7 @@ $(document).ready(function() {
     }
     else {
       if (amount == "") {
-        raiseAlertById("#amount-blank")
+          raiseAlertById("#amount-blank");
         $("#amount").focus();
         return false;
       }
@@ -470,6 +473,7 @@ $(document).ready(function() {
         return false;
       }
     }
+      var vtotal = 0.00;
 
     var form_data = new FormData();
 
@@ -487,14 +491,29 @@ $(document).ready(function() {
 
     if (payment_mode == "both") {
       form_data.append("bamount", bamount);
-      form_data.append("camount", camount);
+	form_data.append("camount", camount);
+	vtotal = bamount + camount;
     }
     else if (payment_mode == "cash") {
-      form_data.append("camount", amount);
+	form_data.append("camount", amount);
+	vtotal = amount;
     }
     else {
-      form_data.append("bamount", amount);
+	form_data.append("bamount", amount);
+	vtotal = amount;
     }
+      if (sessionStorage.billflag == 1 && $("#invsel option:selected").val() != '') {
+	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
+	  if(billamount > vtotal) {
+	      billamount = vtotal;  // If balance of invoice is more than voucher amount then amount to be adjusted is set to voucher amount.
+	  }
+	  //A dictionary with invoice id and amount to be adjusted is created.
+	  let billdetails = {};
+	  billdetails["invid"] = parseInt($("#invsel option:selected").val());
+	  billdetails["adjamount"] = billamount;
+	  form_data.append("billdetails",JSON.stringify(billdetails));
+	  form_data.append("invoice", $("#invsel option:selected").text());
+      }
 
     $.ajax({
       type: "POST",
@@ -511,15 +530,20 @@ $(document).ready(function() {
       },
       success: function(resp) {
         if(resp.gkstatus == true) { // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $("#reset").click();
+            $("#reset").click();
+	    if(resp.paymentstatus == true){
+		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
+	    }
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           raiseAlertById("#success-alert");
         }
-        else {
+          else {
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           raiseAlertById("#failure-alert");
           return false;
         }
       }
-    })
-  })
+    });
+  });
 
-})
+});

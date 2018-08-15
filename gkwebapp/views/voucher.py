@@ -258,6 +258,17 @@ def addvoucherauto(request):
 
     result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
     if result.json()["gkstatus"] == 0:
+        if request.params.has_key('billdetails'):
+            payment = json.loads(request.params["billdetails"])
+            payment["vouchercode"] = result.json()["vouchercode"]
+            payments = []
+            payments.append(payment)
+            billdata = {"adjbills":payments}
+            paymentupdate = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(billdata),headers = header)
+            if paymentupdate.json()["gkstatus"] == 0:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":True, "billdetails":{"amount":payment["adjamount"], "invoice":request.params["invoice"]}}
+            else:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"],"paymentstatus":False}
         return {"gkstatus": True}
     else:
         return {"gkstatus": False}
