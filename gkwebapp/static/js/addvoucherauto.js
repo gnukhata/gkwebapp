@@ -396,7 +396,7 @@ $(document).ready(function() {
     }
     //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
     var value = $('#invsel option:selected').attr("customername");
-	$("#amount").val(inv);
+	$("#amount").val(invbalance);
 	if(value){
 	    $('#pname option').each(function(index) {
 		if ($(this).text() == value) {
