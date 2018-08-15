@@ -250,7 +250,7 @@
 		      {% else %}
 			<label for="invtotalvvi">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
 		      {% endif %}
-                      <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
+                      <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}" style="text-align:right;"  disabled>
                       <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
 		    </div>
 		  
@@ -302,7 +302,7 @@
                       <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
 		    {% else %}
 		      <label for="invtotal">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
-                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" style="text-align:right;"  disabled>
 		    {% endif %}
                   </div>
 		  {% endif %}
