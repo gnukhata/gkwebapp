@@ -62,7 +62,12 @@ def showvoucher(request):
         flags["billflag"] = request.params.get("billflag")
 
         if cust_result["gkstatus"] == 0 and sup_result["gkstatus"] == 0:
-            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags},request=request)
+            if int(flags["invflag"]) == 1:
+                invdata = requests.get("http://127.0.0.1:6543/billwise?type=all", headers=header)
+                if invdata.json()["gkstatus"]==0:
+                    return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"])},request=request)
+            else:
+                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
