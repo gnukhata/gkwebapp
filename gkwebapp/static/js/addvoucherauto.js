@@ -502,6 +502,9 @@ $(document).ready(function() {
 	form_data.append("bamount", amount);
 	vtotal = amount;
     }
+      if ($("#invsel").length > 0 && $("#invsel option:selected").val() != "") {
+	  form_data.append("invid", $("#invsel option:selected").val());
+      }
       if (sessionStorage.billflag == 1 && $("#invsel option:selected").val() != '') {
 	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
 	  if(parseFloat(billamount) > parseFloat(vtotal)) {

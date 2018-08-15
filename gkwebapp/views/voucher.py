@@ -234,6 +234,8 @@ def addvoucherauto(request):
         data["transactions"]["bamount"] = request.params["bamount"]
     if data["transactions"]["payment_mode"] in ["both", "cash"]:
         data["transactions"]["camount"] = request.params["camount"]
+    if "invid" in request.params:
+        data["vdetails"]["invid"] = request.params["invid"]
 
     try:
         files = {}
