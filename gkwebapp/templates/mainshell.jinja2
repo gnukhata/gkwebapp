@@ -10,7 +10,7 @@
      .bgcolor{
 	 background-color:#1b2631;
      }
-     #rss-feed {
+     #rss-feeddiv {
 	 height: 60vh;
 	 overflow-y: scroll;
      }
@@ -29,7 +29,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;margin-top: -11px" /></a>
-          <a class="navbar-brand" style="pointer-events: none;margin-top: -9px;">{% trans %}GNUKhata <em>v5.10 </em> {% endtrans %}</a>
+          <a class="navbar-brand" style="pointer-events: none;margin-top: -9px;">{% trans %}GNUKhata <em>v5.25 </em> {% endtrans %}</a>
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
@@ -314,13 +314,21 @@
 
               {% trans %}Connection Failed.{% endtrans %}
             </div>
-	    <div class ="col-md-12" id="rss-feed">
+	    <div id="rss-feeddiv" class="row">
+	      <div class="col-sm-12" id="taxfeedmessage">
+		<h1 style="margin-top:30%; text-align:center;">Click View button to fetch news.</h1>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="gstindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}GST INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed"></div>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="incometaxindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}INCOME TAX INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed2"></div>
+	      </div>
 	    </div>
             <div>
 	      <button type="button" class="btn btn-primary" id="viewnews" style="margin-top:10px; margin-bottom:10px;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
-	    </div>
-	    <div>
-	      <small>Feeds are from <a href="https://www.gstindia.com" target="_blank"><b>GST INDIA</b></a>.</small>
 	    </div>
 	    <div>
 	      <small class="text-danger">
@@ -561,7 +569,7 @@
 	<div class="modal-content">
 	  <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 5.10 </small>{% endtrans %}</h4>
+            <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 5.25 </small>{% endtrans %}</h4>
 	  </div>
 	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
             <p>
