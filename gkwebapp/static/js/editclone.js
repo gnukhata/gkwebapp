@@ -480,8 +480,8 @@ $(document).ready(function()
   });
 
 
-  $("#clone").click(function(event)
-  {
+    $("#clone").click(function(event){
+	$(".invhide").remove();
       $("#printvoucher").hide();
       if ($("#replaceattach").length) {
       $("#replaceattach").show();

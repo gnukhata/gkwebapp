@@ -62,7 +62,12 @@ def showvoucher(request):
         flags["billflag"] = request.params.get("billflag")
 
         if cust_result["gkstatus"] == 0 and sup_result["gkstatus"] == 0:
-            return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags},request=request)
+            if int(flags["invflag"]) == 1:
+                invdata = requests.get("http://127.0.0.1:6543/billwise?type=all", headers=header)
+                if invdata.json()["gkstatus"]==0:
+                    return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"])},request=request)
+            else:
+                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags, "invoicedata":0,"invoicecount":0},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
@@ -229,6 +234,8 @@ def addvoucherauto(request):
         data["transactions"]["bamount"] = request.params["bamount"]
     if data["transactions"]["payment_mode"] in ["both", "cash"]:
         data["transactions"]["camount"] = request.params["camount"]
+    if "invid" in request.params:
+        data["vdetails"]["invid"] = request.params["invid"]
 
     try:
         files = {}
@@ -253,6 +260,17 @@ def addvoucherauto(request):
 
     result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
     if result.json()["gkstatus"] == 0:
+        if request.params.has_key('billdetails'):
+            payment = json.loads(request.params["billdetails"])
+            payment["vouchercode"] = result.json()["vouchercode"]
+            payments = []
+            payments.append(payment)
+            billdata = {"adjbills":payments}
+            paymentupdate = requests.post("http://127.0.0.1:6543/billwise",data=json.dumps(billdata),headers = header)
+            if paymentupdate.json()["gkstatus"] == 0:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"], "paymentstatus":True, "billdetails":{"amount":payment["adjamount"], "invoice":request.params["invoice"]}}
+            else:
+                return {"gkstatus":True,"vouchercode":result.json()["vouchercode"],"paymentstatus":False}
         return {"gkstatus": True}
     else:
         return {"gkstatus": False}
