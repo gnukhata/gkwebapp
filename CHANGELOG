@@ -1,3 +1,9 @@
+[15 August 2018 Release 5.10]
+* Invoice attachments are getting saved again. 
+* Narration of previous voucher can be used while creating a new voucher. 
+* Fixed bugs related to Debit/Credit Note, Company Setup and Edit Profile. 
+* Values in spreadsheet are now in float. 
+
 [15 June 2018 Release 5.10]
 * Debit Credit note for adjustment in quantity
 * New company setup	
