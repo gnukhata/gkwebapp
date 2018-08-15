@@ -338,13 +338,13 @@ $("#hsnno").keydown(function(event) {
 
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
 
 $("#openingstock").focus(function(event) {
   if ($("#adduom option:selected").val()!='') {
-    $("#unitaddon").html($("#adduom option:selected").text());
+    $("#unitaddon").html($("#adduom option:selected").attr('uname'));
   }
 });
 

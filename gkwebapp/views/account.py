@@ -152,6 +152,12 @@ def showmultiacc(request):
 
     return {"gkresult":request.params}
 
+@view_config(route_name="showmultiacc", request_param="taxes",renderer="gkwebapp:templates/multipleaccounts_taxes.jinja2")
+def showMultiAccTaxes(request):
+    header={"gktoken":request.headers["gktoken"]}
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    states = requests.get("http://127.0.0.1:6543/state", headers=header)
+    return {"gkresult":request.params, "vatorgstflag":resultgstvat.json()["gkresult"],"states": states.json()["gkresult"]}
 
 @view_config(route_name="showeditaccount", renderer="gkwebapp:templates/editaccount.jinja2")
 def showeditaccount(request):

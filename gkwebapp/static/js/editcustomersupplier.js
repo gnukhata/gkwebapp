@@ -28,6 +28,7 @@ Contributors:
 "Prajkta Patkar" <prajkta.patkar007@gmail.com>
 "Reshma Bhatawadekar" <bhatawadekar1reshma@gmail.com>
 "Sanket Kolnoorkar" <sanketf123@gmail.com>
+"Nitesh Chaughule" <nitesh@disroot.org>
 */
 
 $(document).ready(function() {
@@ -40,7 +41,7 @@ $(document).ready(function() {
     $("#scrollbar").hide();
     var gstinstring = ""; //for concatination of 'gstin'.
      for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
-	$("#gstintable tbody tr:eq(" + i +") td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+	$("#gstintable tbody tr:eq(" + i +") td:last").append('<div style="text-align: center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
     var custsupdata = $("#edit_cussup").val();
 	
@@ -71,6 +72,8 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		var result = resp["gkresult"];
 		$(".hidden-load").show();
+		$('#gstintable tbody tr:last td:eq(2)').empty();
+		var rowhtml = $('#gstintable tbody tr:first').html();
 		$("#edit_cussup").val(result["csflag"]);
 		if(result["csflag"] == 3){
 		    $("#edit_cussup").val("Customer");
@@ -116,7 +119,7 @@ $(document).ready(function() {
 	$("#edit_cussup_pan").prop("disabled", true);
 	$("#edit_cussup_tan").val(result["custtan"]);
 	$("#edit_cussup_tan").prop("disabled", true);
-	//fetching bank details	
+	//fetching bank details.	
 	$("#edit_accountno").val(result["bankdetails"]["accountno"]);
 	$("#edit_accountno").prop("disabled", true);
 	$("#edit_bankname").val(result["bankdetails"]["bankname"]);
@@ -125,17 +128,20 @@ $(document).ready(function() {
 	$("#edit_branchname").prop("disabled", true);
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
-	
-	var rowhtml = $('#gstintable tbody tr:first').html();
-	$('#gstintable tbody').empty();
-	$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
-	for(var gstin in result["gstin"]){
-	    var gstinstr = result["gstin"][gstin];
-	    $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
-	    $('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
-	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');
+
+	if(resp["gstinlen"] != 0){
+	    $('#gstintable tbody').empty(); 
+	    for(var gstin in result["gstin"]){
+		var gstinstr = result["gstin"][gstin];
+		$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
+		$('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+		$('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+		$('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
+	    }
+	}else{
+	    $('#gstintable tbody').empty();
+	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
 	}
 	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	    if (i > 0) {
@@ -145,12 +151,12 @@ $(document).ready(function() {
 		}
 	    }
 	}
-	$(".gstinstate, .statecode, .panno, .gstin, .state_del").prop("disabled", true);
+	$('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	$(".gstinstate, .statecode, .panno, .gstin, .state_del, .addbtn").prop("disabled", true);
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
       $("#edit_cussup_btn").show();
-
     })
     .fail(function() {
       console.log("error");
@@ -255,6 +261,26 @@ $(document).ready(function() {
       $("#edit_cussup_email").focus().select();
     }
   });
+
+    //Function to add leading zeros in date and month fields.
+    /**function pad(str, max) { //to add leading zeros in date
+	if (str && str!="") {
+	    str = str.toString();
+	    if (str.length == 1) {
+		return str.length < max ? pad("0" + str, max) : str;
+	    }
+	    else {
+		return str;
+	    }
+	}
+    }**/
+
+  //Change event for 'state'.
+  /**$("#edit_state").change(function(event) {
+      var availstate =  $("#edit_state").val();
+      $('#gstintable tbody tr:last td:eq(0) select').val(availstate);
+      $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(pad($("#edit_state option:selected").attr("stateid"), 2));
+  });**/
     
   $("#edit_state").keydown(function(event) {
     if (event.which==13||event.which==9) {
@@ -324,6 +350,18 @@ $(document).ready(function() {
       $("#edit_cussup_address").focus().select();
     }
   });
+
+  /**$("#edit_cussup_pan").change(function(event) {
+      var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+      var txtpan1 = $(this).val();
+      if($.trim($("#edit_cussup_pan").val())!=""){
+	  $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val($("#edit_cussup_pan").val());
+	  $(".panno").prop("disabled",true);
+      }else{
+	  $(".panno").val("");
+	  $(".panno").prop("disabled",false);
+      }
+  });**/
     
   $("#edit_cussup_pan").keydown(function(event) {
     if (event.which==13) {
@@ -506,7 +544,7 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
 	var curindex = $(this).closest('tr').index();
-	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:xeq('+curindex+') td:eq(1) input:eq(2)').val();
+	gstinstring = $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(2)').val();
 	if(gstinstring != ''){
   	    if(gstinstring.length !=15){
   		$("#gstin-improper-alert").alert();
@@ -525,18 +563,30 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   var selectedstate = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid");
-  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:not(:hidden)').length-1;
+  var numberofstates = $('#gstintable tbody tr:eq('+curindex1+') td:eq(0) option:selected:not(:hidden)').length-1;
+  var regExp_change = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/; 
+  var txtpan_change = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();  
   if (event.which==13 /*|| event.which==9*/) {
       event.preventDefault();
-      if($(".gstin").val()=="" && $(".panno").val()=="" /*|| $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val() == ""*/){
+      if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()==""){
 	  if ($("#edit_cussup").val() == "Supplier"){
-	      $("#checkbnk").focus();
+	      if ($("#checkbnk").is(":visible")) {
+		  $("#checkbnk").focus();
+	      }else{
+		  $("#edit_accountno").focus();
+	      }
 	  } else {
 	      $("#cussup_edit_save").focus();
 	  }
       }
       else if ($(".gstin").val()!="" && curindex1 != ($("#gstintable tbody tr").length-1)) {
 	  $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }else if((txtpan_change.length != 10 || !txtpan_change.match(regExp_change)) && txtpan_change !="") {
+	  $("#gstin-improper-alert").alert();
+	  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#gstin-improper-alert").hide();
+	      $(".panno").focus();
+	  });
       }
       else {
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
@@ -550,12 +600,9 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
   		return false;
             }
   }
-      if (numberofstates > 0) {
-        
-        $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
-        /*if (curindex1 == 0) {
-          $("#gstintable tbody tr:last td:last").append('<a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-        }*/
+      if (numberofstates >= 0) {
+          $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
+	  $('#gstintable tbody tr:eq('+curindex1+') td:eq(2) span').hide(".addbtn");
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[stateid='+selectedstate+']').prop('hidden', true).prop('disabled', true);
 	$('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select option[value=""]').prop('selected', true);
         $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
@@ -587,15 +634,24 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
   }
   else if (event.which==27) {
-    event.preventDefault();
-      if ($("#checkbnk").is(":visible")) {
+      event.preventDefault();
+      if ($("#edit_cussup").val() == "Supplier") {
+	  if ($("#checkbnk").is(":visible")) {
 	      $("#checkbnk").focus();
 	  }
 	  else{
 	      $("#edit_accountno").focus();
 	  }
+      } else {
+	  $("#cussup_edit_save").focus();
+      }
   }
 });
+
+    //Click event for '+' button which trigger click event of 'gstin' field. 
+    $(document).off("click",".addbtn").on("click",".addbtn",function(event){
+	$(".gstin").trigger({type:"keydown",which:"13"});
+    });
 
     // Keydown events for bank details
     $("#checkbnk").click(function(e){
@@ -834,6 +890,10 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       if($('#gstintable tbody tr').length == 0){  // After deleting 0th row gives field to adding new gstin.
 	  $('#gstintable tbody').append('<tr>'+$(this).closest('tr').html()+'</tr>');
       }
+      //After delete one row of gstin then attach '+' button to previous row.
+      if(!($('.addbtn').is(':visible'))){
+	  $('#gstintable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+      }
     $('#gstintable tbody tr:last td:eq(0) select').focus().select();
   });
   $('#gstintable tbody tr:last td:eq(0) select').select();
@@ -866,7 +926,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
       $("#edit_cussup_tan").prop("disabled", false);
-      $(".gstinstate, .panno, .gstin, .state_del").prop("disabled",false);
+      $(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled",false);
       $("#edit_state").prop("disabled", false);
       $("#edit_accountno").prop("disabled", false);
       $("#edit_bankname").prop("disabled", false);
@@ -978,36 +1038,42 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	  var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
 	  if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
 	      gstinstring =	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	      var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
 	  // Validation for GSTIN on Save Button.
 	      if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
 		  $("#gstin-improper-alert").alert();
 		  $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
+		$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
 	    });
 	    allow = 0;
+	    return false;
+	}else if($(".gstin").val() !="" && panno1 ==""){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    allow = 0;
+	    $(".panno").focus();
 	    return false;
 	}
 	else if(panno1 !="" && $(".gstin").val() ==""){
 	    $("#gstin-improper-alert").alert();
 	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#gstin-improper-alert").hide();
-		$(".gstin").focus();
 	    });
 	    allow = 0;
+	    $(".gstin").focus();
 	    return false;
-	}
-	else if(gstinstring != ""){
-	    if(gstinstring.length != 15){
-		$("#gstin-improper-alert").alert();
-		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#gstin-improper-alert").hide();
-		    $(".gstin").focus();
-		});
-		allow = 0;
-		return false;
-	    }
+	}else if(panno1 !="" && lastleg.length != 3){
+	    $("#gstin-improper-alert").alert();
+	    $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#gstin-improper-alert").hide();
+	    });
+	    allow = 0;
+	    $(".gstin").focus();
+	    return false;
 	}
 	if(gstinstring.length == 15){
 	    gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] =gstinstring;

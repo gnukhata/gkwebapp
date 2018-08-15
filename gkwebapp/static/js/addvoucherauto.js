@@ -40,13 +40,18 @@ $(document).ready(function() {
 
   $('.date').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
 
-  $("#vdate").focus();
+    if ($("#invsel").length > 0){
+	$("#invsel").focus();
+	}
+    else{
+	$('#vdate').focus().select();
+    }
 
   function raiseAlertById(id) {
     $(id).alert();
     $(id).fadeTo(2250, 500).slideUp(500, function() {
       $(id).hide();
-    })
+    });
 
   }
 
@@ -94,7 +99,8 @@ $(document).ready(function() {
   });
 
   var delta = 600;
-  var lastKeypressTime = 0;
+    var lastKeypressTime = 0;
+    
   $("#narration").keydown(function(event) {
     if (event.which==13){
       var thisKeypressTime = new Date();
@@ -130,7 +136,7 @@ $(document).ready(function() {
         $("#pname").focus();
       }
     }
-  })
+  });
  
   $("#amount").keydown(function(event) {
     if (event.which == 13) {
@@ -151,7 +157,7 @@ $(document).ready(function() {
       event.preventDefault();
       $("#payment-mode").focus();
     }
-  })
+  });
  
   $("#pname").keydown(function(event) {
     if (event.which == 13) {
@@ -169,7 +175,7 @@ $(document).ready(function() {
         $("#vdate").focus();
       }
     }
-  })
+  });
 
   $("#b-amount").keydown(function(event) {
     if (event.which == 13) {
@@ -189,7 +195,7 @@ $(document).ready(function() {
     else if (event.which == 38) {
       $("#payment-mode").focus();
     }
-  })
+  });
 
   $("#c-amount").keydown(function(event) {
     if (event.which == 13) {
@@ -209,7 +215,7 @@ $(document).ready(function() {
     else if (event.which == 38) {
       $("#b-amount").focus().select();
     }
-  })
+  });
 
   $("#vdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
@@ -220,7 +226,7 @@ $(document).ready(function() {
 
   $("#year").blur(function(event) {
     $(this).val(yearpad($(this).val(),4));
-  })
+  });
 
   $("#vdate").keydown(function(event) {
     if (event.which == 13) {
@@ -231,7 +237,7 @@ $(document).ready(function() {
       }
       $("#month").focus();
     }
-  })
+  });
 
   $("#month").keydown(function(event) {
     if (event.which == 13) {
@@ -242,7 +248,7 @@ $(document).ready(function() {
       }
       $("#year").focus();
       }
-    })
+  });
 
   $("#year").keydown(function(event) {
     if (event.which == 13) {
@@ -253,12 +259,12 @@ $(document).ready(function() {
       }
       $("#pname").focus();
     }
-  })
+  });
 
 
   $("#year").blur(function(event) {
     if (!Date.parseExact($("#vdate").val()+$("#month").val()+$("#year").val(), "ddMMyyyy")) {
-      raiseAlertById("#vdate-alert");
+      raiseAlertById("#date-alert");
       $("#postdate-alert").hide();
       $('#vdate').focus().select();
       return false;
@@ -288,8 +294,118 @@ $(document).ready(function() {
       $("#amount-container").show();
       $("#split-amount-container").hide();
     }
-  })
+  });
 
+    $("#addcust").click(function(event) {
+	event.preventDefault();
+	var statusinout;
+    if ($("#vtype").val() == 'payment') {
+      statusinout = "in";
+    }
+    if ($("#vtype").val() == 'receipt') {
+      statusinout = "out";
+    }
+    $.ajax({
+
+      type: "POST",
+      url: "/customersuppliers?action=showaddpopup",
+      global: false,
+      async: false,
+      data: { "status": statusinout },
+      datatype: "text/html",
+      beforeSend: function(xhr) {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      },
+      success: function(resp) {
+
+        $("#viewcustsup").html("");
+        $('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        $("#viewcustsup").html(resp);
+          $('#custsupmodal').modal('show');
+        $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
+			      {
+            $('#add_cussup_name').focus();
+          });
+        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
+			      {
+            var text1 = $('#selectedcustsup').val();
+            if (text1 == '') {
+              $('#invoice_customer').focus();
+              return false;
+            }
+            var urlcustsup = "/customersuppliers?action=getallsups";
+            if ($("#vtype").val() == 'receipt') {
+		urlcustsup = "/customersuppliers?action=getallcusts";
+            }
+            $.ajax({
+              type: "POST",
+              url: urlcustsup,
+              global: false,
+              async: false,
+              datatype: "text/json",
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("gktoken", sessionStorage.gktoken);
+              }
+            })
+             .done(function(resp) {
+               var custs = resp["customers"];
+               $("#pname").empty();
+
+               for (var i in custs) {
+                 $("#pname").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
+               }
+		 $("#pname option").filter(function() {
+                     return this.text == text1;
+                 }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
+		 $("#pname").change();
+             });
+            $("#selectedcustsup").val("");
+              $("#pname").focus();
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+          });
+      }
+    });
+    });
+
+
+    $("#invsel").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#vdate").focus();
+    }
+  });
+    
+    $(document).off("change","#invsel").on('change', '#invsel', function(event) {
+  event.preventDefault();
+    /* Act on the event */
+    var inv = $("#invsel option:selected").attr("total"); //Total amount of invoices.
+    var invbalance = $("#invsel option:selected").attr("balance");  //Balance of invoices.
+  if ($.trim(inv)!="")
+  {
+      $("#invtotal").val(parseFloat(inv).toFixed(2));  //Total amount of invoice is displayed.
+      $("#invbalance").val(parseFloat(invbalance).toFixed(2));  //Balance of invoice is displayed.
+  }
+  else
+    {
+	//Total and balance displayed are set to zero when no invoice is selected.
+      $("#invtotal").val(parseFloat(0).toFixed(2));
+      $("#invbalance").val(parseFloat(0).toFixed(2));
+      inv = 0;
+      invbalance = 0;
+    }
+    //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
+    var value = $('#invsel option:selected').attr("customername");
+	$("#amount").val(invbalance);
+	if(value){
+	    $('#pname option').each(function(index) {
+		if ($(this).text() == value) {
+		    $(this).prop("selected", true);
+		}
+	    });
+    }
+
+});
 
   $("#submit").click(function(event) {
     event.preventDefault();
@@ -298,8 +414,11 @@ $(document).ready(function() {
     var party = $("#pname option:selected").val();
     var payment_mode = $("#payment-mode option:selected").val();
     var vtype = $("#vtype").val();
-    var narration = $("#narration").val();
-
+      var narration = $("#narration").val();
+      var customername = "";
+      var customercode = 0;
+      var numberofcustomers = 0;
+      
     if(payment_mode == "both") {
       var bamount = $("#b-amount").val();
       var camount = $("#c-amount").val();
@@ -345,7 +464,7 @@ $(document).ready(function() {
     }
     else {
       if (amount == "") {
-        raiseAlertById("#amount-blank")
+          raiseAlertById("#amount-blank");
         $("#amount").focus();
         return false;
       }
@@ -354,6 +473,7 @@ $(document).ready(function() {
         return false;
       }
     }
+      var vtotal = 0.00;
 
     var form_data = new FormData();
 
@@ -371,14 +491,32 @@ $(document).ready(function() {
 
     if (payment_mode == "both") {
       form_data.append("bamount", bamount);
-      form_data.append("camount", camount);
+	form_data.append("camount", camount);
+	vtotal = bamount + camount;
     }
     else if (payment_mode == "cash") {
-      form_data.append("camount", amount);
+	form_data.append("camount", amount);
+	vtotal = amount;
     }
     else {
-      form_data.append("bamount", amount);
+	form_data.append("bamount", amount);
+	vtotal = amount;
     }
+      if ($("#invsel").length > 0 && $("#invsel option:selected").val() != "") {
+	  form_data.append("invid", $("#invsel option:selected").val());
+      }
+      if (sessionStorage.billflag == 1 && $("#invsel option:selected").val() != '') {
+	  let billamount = $("#invbalance").val();  // Amount to be adjusted is set to balance of invoice selected.
+	  if(parseFloat(billamount) > parseFloat(vtotal)) {
+	      billamount = vtotal;  // If balance of invoice is more than voucher amount then amount to be adjusted is set to voucher amount.
+	  }
+	  //A dictionary with invoice id and amount to be adjusted is created.
+	  let billdetails = {};
+	  billdetails["invid"] = parseInt($("#invsel option:selected").val());
+	  billdetails["adjamount"] = billamount;
+	  form_data.append("billdetails",JSON.stringify(billdetails));
+	  form_data.append("invoice", $("#invsel option:selected").text());
+      }
 
     $.ajax({
       type: "POST",
@@ -395,15 +533,20 @@ $(document).ready(function() {
       },
       success: function(resp) {
         if(resp.gkstatus == true) { // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-          $("#reset").click();
+            $("#reset").click();
+	    if(resp.paymentstatus == true){
+		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
+	    }
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           raiseAlertById("#success-alert");
         }
-        else {
+          else {
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           raiseAlertById("#failure-alert");
           return false;
         }
       }
-    })
-  })
+    });
+  });
 
-})
+});

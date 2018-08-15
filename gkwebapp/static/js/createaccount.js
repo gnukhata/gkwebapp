@@ -266,11 +266,11 @@ $("#openbal").keydown(function(event){
 	taxtype = $.trim($("#taxtype option:selected").val());
 	if (taxtype == "CESSIN" || taxtype == "CESSOUT") {
 	    $("#taxrate").hide();
-	    $("#cessrate").show();
+	    $("#cessratediv, #cessrate, #cessrateaddon").show();
 	}
 	else {
 	    $("#taxrate").show();
-	    $("#cessrate").hide();
+	    $("#cessratediv, #cessrate, #cessrateaddon").hide();
 	    if (taxtype == 'IGSTIN' || taxtype == 'IGSTOUT') {
 		$("#taxrate option.sgstopt").prop("disabled", true).prop("hidden", true);
 		$("#taxrate option.igstopt").prop("disabled", false).prop("hidden", false);
@@ -606,6 +606,7 @@ $("#openbal").keydown(function(event){
   $('#maccounts').change(function() {
   if($('#maccounts').attr('checked', true)){
       $(".defbx").attr('checked',false);
+      $("#gstaccount").attr('checked',false);
   }
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();
@@ -639,42 +640,49 @@ $("#openbal").keydown(function(event){
 
   }
 
-  $.ajax({
-    type: "POST",
-    url: "/showmultiacc",
-    data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
-    global: false,
-    async: false,
-    datatype: "text/html"
+      var url = "/showmultiacc";
+      if ($("#groupname option:selected").text() == "Current Liabilities" && $("#subgroupname option:selected").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
+	  url = "/showmultiacc?taxes";
+      }
+      $.ajax({
+	  type: "POST",
+	  url: url,
+	  data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+	  global: false,
+	  async: false,
+	  datatype: "text/html",
+	  beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      }
+      })
+	  .done(function(resp) {
+	      $("#multiaccount_modal").html("");
+	      $('.modal-backdrop').remove();
+	      $('.modal').modal('hide');
+	      $("#multiaccount_modal").html(resp);
+	      $("#m_multiacc").modal('show');
+	      $('#m_multiacc').on('shown.bs.modal', function (e){
+		  if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
+		      $(".default:first").focus().select();
+		  }else if ($("#m_gstaccount").is(":visible")) {
+		      $("#m_gstaccount").focus().select();
+		      $("input.gstaccountfields, select.gstaccountfields").prop("disabled", true);
+		  }
+		  else{
+		      $(".m_accname:enabled:first").focus().select();
+		  }	  
+	      });
+	      $('#m_multiacc').on('hidden.bs.modal', function (e){
+		  $('#maccounts').attr('checked', false);
+		  $("#multiaccount_modal").html("");
+		  $("#reset").click();
+	      });
 
-  })
-  .done(function(resp) {
-    $("#multiaccount_modal").html("");
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-    $("#multiaccount_modal").html(resp);
-    $("#m_multiacc").modal('show');
-    $('#m_multiacc').on('shown.bs.modal', function (e)
-    {
-	if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
-	    $(".default:first").focus().select();
-	}else{
-	    $(".m_accname:first").focus().select();
-	}
-
-    });
-    $('#m_multiacc').on('hidden.bs.modal', function (e)
-    {
-      $('#maccounts').attr('checked', false);
-      $("#multiaccount_modal").html("");
-      $("#reset").click();
-
-    });
-
-  })
-  .fail(function() {
-    alert("failed");
-  });
+	  })
+	  .fail(function() {
+	      console.log("failed");
+	  });
   });
      $(document).off("keyup").on("keyup", function(event) {
       if (event.which == 45) {

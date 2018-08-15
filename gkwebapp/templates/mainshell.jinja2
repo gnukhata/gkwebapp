@@ -10,6 +10,10 @@
      .bgcolor{
 	 background-color:#1b2631;
      }
+     #rss-feeddiv {
+	 height: 60vh;
+	 overflow-y: scroll;
+     }
     </style>
 
   </head>
@@ -25,7 +29,7 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;margin-top: -11px" /></a>
-          <a class="navbar-brand" style="pointer-events: none;margin-top: -9px;">{% trans %}GNUKhata <em>v5.10 </em> {% endtrans %}</a>
+          <a class="navbar-brand" style="pointer-events: none;margin-top: -9px;">{% trans %}GNUKhata <em>v5.25 </em> {% endtrans %}</a>
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
@@ -46,6 +50,7 @@
                 <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
 
 		<li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+		<li><a class="mastermenu" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
               </ul>
             </li>
             <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
@@ -297,6 +302,44 @@
 	</div>
       </div>
     </div>
+    <div class="modal fade" id="newsmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
+      <div class="modal-dialog">
+	<div class="modal-content">
+	  <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            <h4 class="modal-title" id="">Tax News</h4>
+	  </div>
+	  <div class="modal-body">
+            <div class="alert alert-success" id="inventory_activate_success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Connection Failed.{% endtrans %}
+            </div>
+	    <div id="rss-feeddiv" class="row">
+	      <div class="col-sm-12" id="taxfeedmessage">
+		<h1 style="margin-top:30%; text-align:center;">Click View button to fetch news.</h1>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="gstindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}GST INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed"></div>
+	      </div>
+	      <div class ="col-md-6 col-sm-12" id="incometaxindia" hidden>
+		<h3><a href="https://www.gstindia.com" target="_blank" style="color:#333">{%trans%}INCOME TAX INDIA{%endtrans%}</a></h3>
+		<div id="rss-feed2"></div>
+	      </div>
+	    </div>
+            <div>
+	      <button type="button" class="btn btn-primary" id="viewnews" style="margin-top:10px; margin-bottom:10px;"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}View{% endtrans %}</button>
+	    </div>
+	    <div>
+	      <small class="text-danger">
+		Please make sure you have a working internet connection.
+	      </small>
+	    </div>
+	  </div>
+
+	</div>
+      </div>
+    </div>
     <div class="modal fade" id="orgprefmodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true" style="margin-left: auto;margin-right: auto;">
       <div class="modal-dialog ">
 	<div class="modal-content">
@@ -513,8 +556,8 @@
               {% trans %}You may use a newer version of the same license.{% endtrans %} {% trans %}The libraries used in this software are licensed under their respective{% endtrans %} <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">{% trans %}free software licenses{% endtrans %}</a>.
             </p>
             <p style="margin-top: 30px;">
-              {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016.{% endtrans %}<br>
-	      {% trans %}Copyright © Digital Freedom Foundation & Accion Labs Pvt. Ltd. 2017, 2018.{% endtrans %}<br>
+              {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016, 2017, 2018.{% endtrans %}<br>
+	      {% trans %}Partial Copyright © Accion Labs Pvt. Ltd. 2017, 2018.{% endtrans %}<br>
 	      {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
             </p>
 	  </div>
@@ -526,12 +569,12 @@
 	<div class="modal-content">
 	  <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal">&times;</button>
-            <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 5.10 </small>{% endtrans %}</h4>
+            <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 5.25 </small>{% endtrans %}</h4>
 	  </div>
 	  <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
             <p>
               <a href="http://gnukhata.in" target="_blank">{% trans %}GNUKhata{% endtrans %}</a> {% trans %} a free and open source, industry standard software for accounting and inventory management being developed at{% endtrans %} <a href="http://dff.org.in" target="_blank">{% trans %}Digital Freedom Foundation{% endtrans %}</a>.{% trans %} Funded by{% endtrans %} <a href="https://icfoss.in/" target="_blank"> {% trans %}International Centre for Free and Open Source Software(ICFOSS){% endtrans %}</a>.
-	      {% trans %}Now also adopted by{% endtrans %} <a href="http://www.accionlabs.com/" target="_blank"> {% trans %}Accion Labs Pvt. Ltd{% endtrans %}</a>.
+	      {% trans %}Now commercially supported by{% endtrans %} <a href="http://www.accionlabs.com/" target="_blank"> {% trans %}Accion Labs Pvt. Ltd{% endtrans %}</a>.
             </p>
 	  </div>
 	</div>
@@ -552,20 +595,12 @@
             </p>
             <p>
               Abhijith Balan <a href="mailto:abhijith@dff.org.in">abhijith@dff.org.in</a><br />
-              Aditi Joshi  <a href="mailto: aditi97joshi@gmail.com">aditi97joshi@gmail.com</a> </br>
 	      Aditya Shukla <a href="mailto:adityashukla9158.as@gmail.com">adityashukla9158.as@gmail.com</a></br>
 	      Akhil KP Dasan <a href="mailto:akhilkpdasan@gmail.com">akhilkpdasan@gmail.com</a></br>
 	      Ark Arjun (Logo designer) <a href="maiito:arkarjun@gmail.com">arkarjun@gmail.com</a></br>
-              Gauri Shewalkar <a href="mailto: gauri.shewalkar96@gmail.com"> gauri.shewalkar96@gmail.com</a></br>
-              Nilesh Kamble <a href="mailto: nilesh.kamble93@gmail.com">nilesh.kamble93@gmail.com</a></br>
 	      Nitesh Chaughule <a href ="mailto:nitesh@disroot.org"> nitesh@disroot.org</a><br />
-              Prajkta Patkar <a href="mailto:prajakta@dff.org.in"></a>prajakta@dff.org.in</br>
-	      Pravin Dake <a href="mailto:pravindake24@gmail.com">pravindake24@gmail.com</a></br>
-	      Priyanka Prabhavale <a href="mailto:priyankaprabhavale95@gmail.com">priyankaprabhavale95@gmail.com</a></br>
+              Prajkta Patkar <a href ="mailto:prajakta@dff.org.in"> prajakta@dff.org.in</a><br />
 	      Reshma Bhatawadekar <a href="mailto:reshma_b@riseup.net">reshma_b@riseup.net</a></br>
-              Sakshi Agrawal <a href="mailto:agrawalsakshi1850@gmail.com">agrawalsakshi1850@gmail.com</a></br>
-	      Sanket Shrawan kolnoorkar <a href="mailto:sanketf123@gmail.com">sanketf123@gmail.com></a></br>
-              Vasudha Kadge <a href="mailto:kadge.vasudha@gmail.com">vasudha@gmail.com</a></br>
 	    </p>
             <p>
               For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
@@ -638,6 +673,8 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/date.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery-ui.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/moment.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.rss.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
   </body>

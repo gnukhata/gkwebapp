@@ -143,17 +143,25 @@ def printtrialbalance(request):
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 if record["advflag"]==1:
-                    sheet['C'+str(row)] = record['Dr']
-                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
-                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
-                    sheet['D'+str(row)] = record['Cr']
+                    if record['Dr']!= "":
+                        sheet['C'+str(row)]= float("%.2f"%float(record['Dr']))
+                        sheet['C'+str(row)].number_format = '0.00'
+                        sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                        sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                    if record['Cr']!= "":
+                        sheet['D'+str(row)]= float("%.2f"%float(record['Cr']))
+                        sheet['D'+str(row)].number_format = '0.00'
                     sheet['D'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
                 else:
-                    sheet['C'+str(row)] = record['Dr']
+                    if record['Dr']!= "":
+                        sheet['C'+str(row)]= float("%.2f"%float(record['Dr']))
+                        sheet['C'+str(row)].number_format = '0.00'
                     sheet['C'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
-                    sheet['D'+str(row)] = record['Cr']
+                    if record['Cr']!= "":
+                        sheet['D'+str(row)]= float("%.2f"%float(record['Cr']))
+                        sheet['D'+str(row)].number_format = '0.00'
                     sheet['D'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 sheet['E'+str(row)] = record['groupname']
@@ -206,24 +214,36 @@ def printtrialbalance(request):
                 sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['C'+str(row)] = record['totaldr']
+                if record['totaldr']!= "":
+                    sheet['C'+str(row)]= float("%.2f"%float(record['totaldr']))
+                    sheet['C'+str(row)].number_format = '0.00'
                 sheet['C'+str(row)].alignment = Alignment(horizontal='right')
                 sheet['C'+str(row)].font = Font(name='Liberation Serif', bold=False)
-                sheet['D'+str(row)] = record['totalcr']
+                if record['totalcr']!= "":
+                    sheet['D'+str(row)]= float("%.2f"%float(record['totalcr']))
+                    sheet['D'+str(row)].number_format = '0.00'
                 sheet['D'+str(row)].alignment = Alignment(horizontal='right')
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', bold=False)
                 if record["advflag"]==1:
-                    sheet['E'+str(row)] = record['curbaldr']
+                    if record['curbaldr']!= "":
+                        sheet['E'+str(row)]= float("%.2f"%float(record['curbaldr']))
+                        sheet['E'+str(row)].number_format = '0.00'
                     sheet['E'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
-                    sheet['F'+str(row)] = record['curbalcr']
+                    if record['curbalcr']!= "":
+                        sheet['F'+str(row)]= float("%.2f"%float(record['curbalcr']))
+                        sheet['F'+str(row)].number_format = '0.00'
                     sheet['F'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
                 else:
-                    sheet['E'+str(row)] = record['curbaldr']
+                    if record['curbaldr']!= "":
+                        sheet['E'+str(row)]= float("%.2f"%float(record['curbaldr']))
+                        sheet['E'+str(row)].number_format = '0.00'
                     sheet['E'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
-                    sheet['F'+str(row)] = record['curbalcr']
+                    if record['curbalcr']!= "":
+                        sheet['F'+str(row)]= float("%.2f"%float(record['curbalcr']))
+                        sheet['F'+str(row)].number_format = '0.00'
                     sheet['F'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 sheet['G'+str(row)] = record['groupname']
@@ -280,27 +300,45 @@ def printtrialbalance(request):
                 sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['B'+str(row)] = record['accountname']
                 sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['C'+str(row)] = record['openingbalance']
-                sheet['C'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['D'+str(row)] = record['totaldr']
-                sheet['D'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                sheet['E'+str(row)] = record['totalcr']
-                sheet['E'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                if record["advflag"]==1:
-                    sheet['F'+str(row)] = record['curbaldr']
-                    sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                    sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
-                    sheet['G'+str(row)] = record['curbalcr']
-                    sheet['G'+str(row)].alignment = Alignment(horizontal='right')
-                    sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                if record['openingbalance']== "0.00" :
+                    sheet['C'+str(row)]= float("%.2f"%float(record['openingbalance']))
+                    sheet['C'+str(row)].number_format = '0.00'
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 else:
-                    sheet['F'+str(row)] = record['curbaldr']
+                    sheet['C'+str(row)] = record['openingbalance']
+                    sheet['C'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if record['totaldr']!= "":
+                    sheet['D'+str(row)]= float("%.2f"%float(record['totaldr']))
+                    sheet['D'+str(row)].number_format = '0.00'
+                    sheet['D'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if record['totalcr']!= "":
+                    sheet['E'+str(row)]= float("%.2f"%float(record['totalcr']))
+                    sheet['E'+str(row)].number_format = '0.00'
+                    sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if record["advflag"]==1:
+                    if record['curbaldr']!= "":
+                        sheet['F'+str(row)]= float("%.2f"%float(record['curbaldr']))
+                        sheet['F'+str(row)].number_format = '0.00'
+                        sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+                        sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                    if record['curbalcr']!= "":
+                        sheet['G'+str(row)]= float("%.2f"%float(record['curbalcr']))
+                        sheet['G'+str(row)].number_format = '0.00'
+                        sheet['G'+str(row)].alignment = Alignment(horizontal='right')
+                        sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                else:
+                    if record['curbaldr']!= "":
+                        sheet['F'+str(row)]= float("%.2f"%float(record['curbaldr']))
+                        sheet['F'+str(row)].number_format = '0.00'
                     sheet['F'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
-                    sheet['G'+str(row)] = record['curbalcr']
+                    if record['curbalcr']!= "":
+                        sheet['G'+str(row)]= float("%.2f"%float(record['curbalcr']))
+                        sheet['G'+str(row)].number_format = '0.00'
                     sheet['G'+str(row)].alignment = Alignment(horizontal='right')
                     sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 sheet['H'+str(row)] = record['groupname']

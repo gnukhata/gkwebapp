@@ -107,23 +107,23 @@ $(document).ready(function(){
 
   $("#create-cust").click(function() {
     $("#customersupplier").click();
-  })
+  });
 
   $("#create-prod").click(function() {
     $("#productinmaster").click();
-  })
+  });
 
   $("#create-invoice").click(function() {
     $("#invoice").click();
-  })
+  });
 
   $("#make-payments").click(function() {
     $("#showreceipt").click();
-  })
+  });
 
   $("#view-charts").click(function() {
     $("#listofaccounts").click();
-  })
+  });
 
   if (sessionStorage.invsflag==0) {
     $("#help-message").hide();
@@ -2055,6 +2055,31 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
     $("#info").load("/drcrnote");
     $("#drcrnote_div").show();
 });
+    $(document).off('click' ,'#viewnews').on('click' ,'#viewnews',function(event){
+	$("#rss-feed").html("");
+	$("#rss-feed2").html("");
+	$("#rss-feed")
+          .rss("https://www.gstindia.com/feed/", {
+            limit: 5,
+            effect: 'slideFastSynced',
+            layoutTemplate: '{entries}',
+              entryTemplate: '<div><a href="{url}" target="_blank"><b>{title}</b></a></div></div><small>[{date}]</small></div><div><p>{bodyPlain}</p></div>',
+	      dateFormat: 'ddd, DD MMM YYYY'
+          }, function() {
+	      $("#taxfeedmessage").hide();
+            $("#gstindia").show();
+          });
+	$("#rss-feed2")
+          .rss("https://www.incometaxindia.gov.in/_layouts/15/Dit/Pages/Rss.aspx?List=Latest%20Tax%20Updates", {
+            limit: 5,
+            effect: 'slideFastSynced',
+            layoutTemplate: '{entries}',
+              entryTemplate: '<div><a href="{url}" target="_blank"><b>{title}</b></a></div></div><small>[{date}]</small></div><div><p>{bodyPlain}</p></div>',
+	      dateFormat: 'ddd, DD MMM YYYY'
+          }, function() {
+            $("#incometaxindia").show();
+          });
+    });
 
     $(document).off('click' ,'#reportsearchspan').on('click' ,'#reportsearchspan',function(e) {
 	let searchtext = $("#reportsearch").val().toLowerCase();

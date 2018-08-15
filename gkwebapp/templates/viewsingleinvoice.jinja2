@@ -392,8 +392,11 @@
 	</div>
       {% else %}
 	<div class="col-sm-4 rborderdiv" style="margin-top:0.2cm;">
-	  <br><label style="font-size:120% !important;">{% if gkresult["inoutflag"] | int == 15 %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}</label>
-	  <br><br><br><br><br><br><br><br><br><br>
+	  <br><label style="font-size:120% !important;">
+	    {% if gkresult["paymentmode"] | int ==3 %}{% if gkresult["inoutflag"] | int == 15 %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}{% endif %}
+	    {% if gkresult["paymentmode"] | int ==15 %}{% trans %}ON CREDIT{% endtrans %}{% endif %}
+	  </label>
+	    <br><br><br><br><br><br><br><br><br><br>
 	</div>{% endif %}
 	<div class="col-sm-4" style="margin-top:1.1cm;">
 	  <div class="row col-sm-12">

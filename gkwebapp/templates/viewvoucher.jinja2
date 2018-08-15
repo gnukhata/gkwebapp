@@ -250,7 +250,7 @@
 		      {% else %}
 			<label for="invtotalvvi">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
 		      {% endif %}
-                      <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}"  disabled>
+                      <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{voucher["vvi"]["invoicetotal"]}}" style="text-align:right;"  disabled>
                       <input id="selinv" value="{{voucher["vvi"]["invid"]}}" hidden>
 		    </div>
 		  
@@ -262,13 +262,13 @@
                       <select id="invsel" class="form-control input-sm invoice_no" hidden>
 			<option value="" total="">{% trans %}None{% endtrans %}</option>
 			{% for invoice in invoicedata %}
-			  {% if vtype == "purchase" and invoice["csflag"]|int == 19 %}
+			  {% if vtype == "purchase" or vtype == "payment" and invoice["csflag"]|int == 19 %}
 			    {% if voucher["invid"]|int== invoice['invid']|int %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% else %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% endif %}
-			  {% elif vtype == "sales" and invoice["csflag"]|int == 3 %}
+			  {% elif vtype == "sales" or vtype == "receipt" and invoice["csflag"]|int == 3 %}
 			    {% if voucher["invid"]|int== invoice['invid']|int %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% else %}
@@ -282,9 +282,9 @@
                       <select id="invsel" class="form-control input-sm invoice_no" hidden>
 			<option value="" total="">{% trans %}None{% endtrans %}</option>
 			{% for invoice in invoicedata %}
-			  {% if vtype == "purchase" and voucher["invid"]|int== invoice['invid']|int %}
+			  {% if vtype == "purchase" or vtype == "payment" and voucher["invid"]|int== invoice['invid']|int %}
 			    <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
-			  {% elif vtype == "sales" and voucher["invid"]|int== invoice['invid']|int %}
+			  {% elif vtype == "sales" or vtype == "receipt" and voucher["invid"]|int== invoice['invid']|int %}
 			    <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}"  selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
 			    
 			  {% endif %}
@@ -302,7 +302,7 @@
                       <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
 		    {% else %}
 		      <label for="invtotal">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
-                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" style="text-align:right;"  disabled>
 		    {% endif %}
                   </div>
 		  {% endif %}

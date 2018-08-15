@@ -41,6 +41,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 import os
 from openpyxl.utils import get_column_letter
+import base64
 
 @view_config(route_name="invoice",renderer="gkwebapp:templates/invoice.jinja2")
 def showinvoice(request):
@@ -334,8 +335,8 @@ def listofinvspreadsheet(request):
         sheet.column_dimensions['E'].width = 10
         sheet.column_dimensions['F'].width = 16
         sheet.column_dimensions['G'].width = 18
-        sheet.column_dimensions['H'].width = 10
-        sheet.column_dimensions['I'].width = 10
+        sheet.column_dimensions['H'].width = 16
+        sheet.column_dimensions['I'].width = 16
         sheet.column_dimensions['J'].width = 10
         sheet.column_dimensions['K'].width = 16
         sheet.merge_cells('A1:K2')
@@ -428,13 +429,16 @@ def listofinvspreadsheet(request):
             sheet['G'+str(row)] = invoice['custtin']
             sheet['G'+str(row)].alignment = Alignment(horizontal='center')
             sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['H'+str(row)] = invoice['grossamt']
+            sheet['H'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['H'+str(row)].number_format="0.00"
             sheet['H'+str(row)].alignment = Alignment(horizontal='right')
             sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['I'+str(row)] = invoice['netamt']
+            sheet['I'+str(row)] = float("%.2f"%float(invoice['netamt']))
+            sheet['I'+str(row)].number_format="0.00"
             sheet['I'+str(row)].alignment = Alignment(horizontal='right')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['J'+str(row)] = invoice['taxamt']
+            sheet['J'+str(row)] = float("%.2f"%float(invoice['taxamt']))
+            sheet['J'+str(row)].number_format="0.00"
             sheet['J'+str(row)].alignment = Alignment(horizontal='right')
             sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             sheet['K'+str(row)] = invoice['godown']
@@ -564,30 +568,36 @@ def registerspreadsheet(request):
                 sheet['F'+str(rowCount)].alignment = Alignment(horizontal='center')
             else:
                 sheet['F'+str(rowCount)] = " "
-            sheet['G'+str(rowCount)] = invoice["grossamount"]
+            sheet['G'+str(rowCount)] = float("%.2f"%float(invoice["grossamount"]))
+            sheet['G'+str(rowCount)].number_format = '0.00'
             sheet['G'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
             sheet['G'+str(rowCount)].alignment = Alignment(horizontal='right')
-            sheet['H'+str(rowCount)] = invoice["taxfree"]
+            sheet['H'+str(rowCount)] = float("%.2f"%float(invoice["taxfree"]))
+            sheet['H'+str(rowCount)].number_format = '0.00'
             sheet['H'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
             sheet['H'+str(rowCount)].alignment = Alignment(horizontal='right')
             #Looping each dictionaries in list taxcolumns to store data in cells and apply styles.
             colvar = 9
             for taxc in taxcolumns:
                 if taxc in invoice["tax"]:
-                    sheet.cell(column = colvar, row=rowCount).value = invoice["tax"][taxc]
+                    sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float(invoice["tax"][taxc]))
+                    sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                     sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
                     sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
                 else:
-                    sheet.cell(column = colvar, row=rowCount).value ="0.00"
+                    sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float("0.00"))
+                    sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                     sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
                     sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
                 colvar += 1
                 if taxc in invoice["taxamount"]:
-                    sheet.cell(column = colvar, row=rowCount).value = invoice["taxamount"][taxc]
+                    sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float(invoice["taxamount"][taxc]))
+                    sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                     sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
                     sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
                 else:
-                    sheet.cell(column = colvar, row=rowCount).value ="0.00"
+                    sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float("0.00"))
+                    sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                     sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=False)
                     sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
                 colvar += 1
@@ -597,30 +607,36 @@ def registerspreadsheet(request):
         sheet['A'+str(rowCount)] = "Total"
         sheet['A'+str(rowCount)].alignment = Alignment(horizontal='right')
         sheet['A'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
-        sheet['G'+str(rowCount)] = totalrow["grossamount"]
+        sheet['G'+str(rowCount)] = float("%.2f"%float(totalrow["grossamount"]))
+        sheet['G'+str(rowCount)].number_format = "0.00"                         
         sheet['G'+str(rowCount)].alignment = Alignment(horizontal='right')
         sheet['G'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
-        sheet['H'+str(rowCount)] = totalrow["taxfree"]
+        sheet['H'+str(rowCount)] = float("%.2f"%float(totalrow["taxfree"]))
+        sheet['H'+str(rowCount)].number_format = "0.00"
         sheet['H'+str(rowCount)].alignment = Alignment(horizontal='right')
         sheet['H'+str(rowCount)].font = Font(name='Liberation Serif', size='12', bold=True)
         #Looping each dictionaries in list taxcolumns to store data in cells and apply styles.
         colvar = 9
         for taxc in taxcolumns:
             if taxc in totalrow["tax"]:
-                sheet.cell(column = colvar, row=rowCount).value = totalrow["tax"][taxc]
+                sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float(totalrow["tax"][taxc]))
+                sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                 sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=True)
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             else:
-                sheet.cell(column = colvar, row=rowCount).value = "0.00"
+                sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float("0.00"))
+                sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                 sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=True)
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             colvar += 1
             if taxc in totalrow["taxamount"]:
-                sheet.cell(column = colvar, row=rowCount).value = totalrow["taxamount"][taxc]
+                sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float(totalrow["taxamount"][taxc]))
+                sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                 sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=True)
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             else:
-                sheet.cell(column = colvar, row=rowCount).value = "0.00"
+                sheet.cell(column = colvar, row=rowCount).value = float("%.2f"%float("0.00"))
+                sheet.cell(column = colvar, row=rowCount).number_format = "0.00"
                 sheet.cell(column = colvar, row=rowCount).font = Font(name='Liberation Serif',size='12',bold=True)
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             colvar += 1

@@ -104,16 +104,21 @@ def printmonthlyledgerreport(request):
             sheet['A'+str(row)].alignment = Alignment(horizontal='center')
             sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             if(eachmonth["advflag"]==1):
-                sheet['B'+str(row)] = eachmonth["Dr"]
-                sheet['B'+str(row)].alignment = Alignment(horizontal='right' )
-                #If the advflag = 1 the 'Dr' and 'Cr' amount will be displayed in 'RED' color
-                sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True, color=RED)
+                if (eachmonth["Dr"]!= ""):
+                    sheet['B'+str(row)] =float("%.2f"%float(eachmonth["Dr"]))
+                    sheet['B'+str(row)].number_format = "0.00"
+                    sheet['B'+str(row)].alignment = Alignment(horizontal='right' )
+                    #If the advflag = 1 the 'Dr' and 'Cr' amount will be displayed in 'RED' color
+                    sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True, color=RED)
                 sheet['C'+str(row)] = eachmonth["vcountDr"]
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['D'+str(row)] = eachmonth["Cr"]
-                sheet['D'+str(row)].alignment = Alignment(horizontal='right' )
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True, color=RED)
+                if (eachmonth["Cr"]!= ""):
+                    sheet['D'+str(row)] = float("%.2f"%float(eachmonth["Cr"]))
+                    sheet['D'+str(row)].number_format = "0.00"
+                    sheet['D'+str(row)].alignment = Alignment(horizontal='right' )
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=True, color=RED)
                 sheet['E'+str(row)] = eachmonth["vcountCr"]
                 sheet['E'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -121,15 +126,20 @@ def printmonthlyledgerreport(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             else:
-                sheet['B'+str(row)] = eachmonth["Dr"]
-                sheet['B'+str(row)].alignment = Alignment(horizontal='right' )
-                sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if (eachmonth["Dr"]!= ""):
+                    sheet['B'+str(row)] =float("%.2f"%float(eachmonth["Dr"]))
+                    sheet['B'+str(row)].number_format = "0.00"
+                    sheet['B'+str(row)].alignment = Alignment(horizontal='right' )
+                    sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['C'+str(row)] = eachmonth["vcountDr"]
                 sheet['C'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['D'+str(row)] = eachmonth["Cr"]
-                sheet['D'+str(row)].alignment = Alignment(horizontal='right' )
-                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+                if (eachmonth["Cr"]!= ""):
+                    sheet['D'+str(row)] = float("%.2f"%float(eachmonth["Cr"]))
+                    sheet['D'+str(row)].number_format = "0.00"
+                    sheet['D'+str(row)].alignment = Alignment(horizontal='right' )
+                    sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 sheet['E'+str(row)] = eachmonth["vcountCr"]
                 sheet['E'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -234,20 +244,28 @@ def printLedgerReport(request):
             sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             
             if transaction["advflag"]==1:
-                sheet['E'+str(row)] = transaction['Dr']
-                sheet['E'+str(row)].alignment = Alignment(horizontal='right')
-                #If the advflag = 1 the 'Dr' and 'Cr' amount will be displayed in 'RED' color
-                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
-                sheet['F'+str(row)] = transaction['Cr']
-                sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                if (transaction['Dr']!= ""):
+                    sheet['E'+str(row)] = float("%.2f"%float(transaction['Dr']))
+                    sheet['E'+str(row)].number_format = "0.00"
+                    sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+                    #If the advflag = 1 the 'Dr' and 'Cr' amount will be displayed in 'RED' color
+                    sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
+                if (transaction['Cr']!= ""):
+                    sheet['F'+str(row)] = float("%.2f"%float(transaction['Cr']))
+                    sheet['F'+str(row)].number_format = "0.00"
+                    sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=True, color=RED)
             else:
-                sheet['E'+str(row)] = transaction['Dr']
-                sheet['E'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
-                sheet['F'+str(row)] = transaction['Cr']
-                sheet['F'+str(row)].alignment = Alignment(horizontal='right')
-                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
+                if (transaction['Dr']!= ""):
+                    sheet['E'+str(row)] = float("%.2f"%float(transaction['Dr']))
+                    sheet['E'+str(row)].number_format = "0.00"
+                    sheet['E'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
+                if (transaction['Cr']!= ""):
+                    sheet['F'+str(row)] = float("%.2f"%float(transaction['Cr']))
+                    sheet['F'+str(row)].number_format = "0.00"
+                    sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+                    sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
             sheet['G'+str(row)] = transaction['balance']
             sheet['G'+str(row)].alignment = Alignment(horizontal='right')
             sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)

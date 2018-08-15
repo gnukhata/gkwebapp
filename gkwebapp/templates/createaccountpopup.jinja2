@@ -107,6 +107,82 @@
       			<label for="newsubgroup" id="m_newsgrp">{% trans %}Ne<u>w</u> Sub-Group Name{% endtrans %} : </label>
       			<input type="text" id="m_newsubgroup" class="form-control input-sm" name="newsubgroup" placeholder="New Sub-Group Name" accesskey="w" ></input>
       		      </div>
+
+		      <div id="gstaccountfields" hidden>
+			{%if vatorgstflag=='7' or vatorgstflag=='29' %}
+			  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+			    {% trans %}Please enter Tax Type!{% endtrans %}
+			  </div>
+			  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+			    {% trans %}Please select Tax Type!{% endtrans %}
+			  </div>
+			  <div class="alert alert-danger" id="taxstate-alert"  aria-live="rude" role="alert" hidden>
+			    {% trans %}Please select State!{% endtrans %}
+			  </div>
+			  <div class="alert alert-danger" id="taxrate-alert"  aria-live="rude" role="alert" hidden>
+			    {% trans %}Please select Tax Rate!{% endtrans %}
+			  </div>
+			  <div class="alert alert-danger" id="cessrate-alert"  aria-live="rude" role="alert" hidden>
+			    {% trans %}Please enter Cess Rate!{% endtrans %}
+			  </div>
+			  <div id="gstfielddiv">
+			    <label> <input type="checkbox" id="gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+			  </div>
+			  <div class="row" id="gstaccountdiv" hidden>
+			    <div class="form-group col-sm-3" style="margin:5px;">
+			      <label>
+				{% trans %}Tax Type{% endtrans %}
+			      </label>
+			      <select class="form-control input-sm" id="taxtype">
+				<option value="" hidden disabled selected>Select Tax</option>
+				<option value="SGSTIN">SGSTIN</option>
+				<option value="SGSTOUT">SGSTOUT</option>
+				<option value="CGSTIN">CGSTIN</option>
+				<option value="CGSTOUT">CGSTOUT</option>
+				<option value="IGSTIN">IGSTIN</option>
+				<option value="IGSTOUT">IGSTOUT</option>
+				<option value="CESSIN">CESSIN</option>
+				<option value="CESSOUT">CESSOUT</option>
+			      </select>
+			    </div>
+			    <div class="form-group col-sm-5" style="margin:5px;">
+			      <label>
+				{% trans %}State{% endtrans %}
+			      </label>
+			      <select class="form-control input-sm" id="taxstate">
+				<option value="" hidden disabled selected>Select State</option>
+				{% for state in states %}
+				  {% for key, value in state.items() %}
+				    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+				  {% endfor %}
+				{% endfor %}
+			      </select>
+			    </div>
+			    <div class="form-group col-sm-3" style="margin:5px;">
+			      <label>
+				{% trans %}Rate{% endtrans %}
+			      </label>
+			      <select class="form-control input-sm" id="taxrate">
+				<option value="" hidden disabled selected>Select Rate</option>
+				<option class="igstopt" value="5%">5%</option>
+				<option class="igstopt" value="12%">12%</option>
+				<option class="igstopt" value="18%">18%</option>
+				<option class="igstopt" value="28%">28%</option>
+				<option class="sgstopt" value="2.5%">2.5%</option>
+				<option class="sgstopt" value="6%">6%</option>
+				<option class="sgstopt" value="9%">9%</option>
+				<option class="sgstopt" value="14%">14%</option>
+			      </select>
+			      <div class="input-group" id="cessratediv" hidden>
+				<input type="text" id="cessrate" class="form-control input-sm" name="accountname" accesskey="a" style="display:none">
+				<span id="cessrateaddon" class="input-group-addon" style="display:none">%</span>
+			      </div>
+			    </div>
+			    <br/>
+			  </div>
+			  <br/>
+			{%endif%}
+		      </div>
       		      <label for="accountname" id="m_accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
       		      <input type="text" id="m_accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
       		      <br/>

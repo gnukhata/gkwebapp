@@ -69,9 +69,9 @@ def printprofitandloss(request):
     else:
         sheet.title = 'Income and Expenditure'
     sheet.column_dimensions['A'].width = 50
-    sheet.column_dimensions['B'].width = 12
+    sheet.column_dimensions['B'].width = 16
     sheet.column_dimensions['C'].width = 50
-    sheet.column_dimensions['D'].width = 12
+    sheet.column_dimensions['D'].width = 16
     # Cells of first two rows are merged to display organisation details properly.
     sheet.merge_cells('A1:D2')
     # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
@@ -108,6 +108,8 @@ def printprofitandloss(request):
     #Loiading data for Direct Expense group
     sheet['A5'] = "DIRECT EXPENSE"
     sheet['B5'] = DirectExpense["direxpbal"]
+    sheet["B5"]=float("%.2f"%float(DirectExpense["direxpbal"]))
+    sheet["B5"].number_format="0.00"
     sheet["B5"].alignment = Alignment(horizontal = "right")
     sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -117,6 +119,8 @@ def printprofitandloss(request):
         sheet["A" + str(row)] = "        PURCHASE"
         sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
         sheet["B" + str(row)] = DirectExpense["Purchase"]["balance"]
+        sheet["B" + str(row)]=float("%.2f"%float(DirectExpense["Purchase"]["balance"]))
+        sheet["B" + str(row)].number_format="0.00"
         sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
         # Purchase accounts
@@ -125,6 +129,8 @@ def printprofitandloss(request):
                 sheet["A" + str(row)] = "                " + purchaseaccount
                 sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                 sheet["B" + str(row)] = DirectExpense["Purchase"][purchaseaccount]
+                sheet["B" + str(row)]=float("%.2f"%float(DirectExpense["Purchase"][purchaseaccount]))
+                sheet["B" + str(row)].number_format="0.00"
                 sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
                 row = row + 1
     #Loading other subgroups
@@ -136,6 +142,8 @@ def printprofitandloss(request):
                 sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
             sheet["B" + str(row)] = DirectExpense[subgroup]["balance"]
+            sheet["B" + str(row)]=float("%.2f"%float(DirectExpense[subgroup]["balance"]))
+            sheet["B" + str(row)].number_format="0.00"
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
             #Loading accounts of each subgroup
@@ -144,6 +152,8 @@ def printprofitandloss(request):
                     sheet["A" + str(row)] = "                " + subgroupaccount
                     sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                     sheet["B" + str(row)] = DirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)]=float("%.2f"%float(DirectExpense[subgroup][subgroupaccount]))
+                    sheet["B" + str(row)].number_format="0.00"
                     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
         # Loading accounts that are not part of any subgroup
@@ -151,12 +161,16 @@ def printprofitandloss(request):
             sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["B" + str(row)] = DirectExpense[subgroup]
+            sheet["B" + str(row)]=float("%.2f"%float(DirectExpense[subgroup]))
+            sheet["B" + str(row)].number_format="0.00"
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
     #Loading data for Indirect Expense group.
     sheet["A" + str(row)] = "INDIRECT EXPENSE"
     sheet["B" + str(row)] = InDirectExpense["indirexpbal"]
+    sheet["B" + str(row)]=float("%.2f"%float(InDirectExpense["indirexpbal"]))
+    sheet["B" + str(row)].number_format="0.00"
     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
     sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -170,6 +184,8 @@ def printprofitandloss(request):
                 sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
             sheet["B" + str(row)] = InDirectExpense[subgroup]["balance"]
+            sheet["B" + str(row)]=float("%.2f"%float(InDirectExpense[subgroup]["balance"]))
+            sheet["B" + str(row)].number_format="0.00"
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
             for subgroupaccount in InDirectExpense[subgroup]:
@@ -177,12 +193,16 @@ def printprofitandloss(request):
                     sheet["A" + str(row)] = "                " + subgroupaccount
                     sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                     sheet["B" + str(row)] = InDirectExpense[subgroup][subgroupaccount]
+                    sheet["B" + str(row)]=float("%.2f"%float(InDirectExpense[subgroup][subgroupaccount]))
+                    sheet["B" + str(row)].number_format="0.00"
                     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
         if subgroup != "indirexpbal" and "balance" not in InDirectExpense[subgroup]:
             sheet["A" + str(row)] = "        " + subgroup
             sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["B" + str(row)] = InDirectExpense[subgroup]
+            sheet["B" + str(row)]=float("%.2f"%float(InDirectExpense[subgroup]))
+            sheet["B" + str(row)].number_format="0.00"
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
@@ -191,18 +211,24 @@ def printprofitandloss(request):
         sheet["A" + str(row)] = "Net Profit"
         sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet["B" + str(row)] = net["netprofit"]
+        sheet["B" + str(row)]=float("%.2f"%float(net["netprofit"]))
+        sheet["B" + str(row)].number_format="0.00"
         sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
         sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     row = row + 1
     sheet["A" + str(row)] = "Total"
     sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet["B" + str(row)] = Total
+    sheet["B" + str(row)]=float("%.2f"%float(Total))
+    sheet["B" + str(row)].number_format="0.00"
     sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
     sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
 
     #Loading data for Direct Income group
     sheet['C5'] = "DIRECT INCOME"
     sheet['D5'] = DirectIncome["dirincmbal"]
+    sheet["D5"]=float("%.2f"%float(DirectIncome["dirincmbal"]))
+    sheet["D5"].number_format="0.00"
     sheet['D5'].alignment = Alignment(horizontal = "right")
     sheet["C5"].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet["D5"].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -212,6 +238,8 @@ def printprofitandloss(request):
         sheet["C" + str(row)] = "        SALES"
         sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
         sheet["D" + str(row)] = DirectIncome["Sales"]["balance"]
+        sheet["D" + str(row)]=float("%.2f"%float(DirectIncome["Sales"]["balance"]))
+        sheet["D" + str(row)].number_format="0.00"
         sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
         row = row + 1
     
@@ -220,6 +248,8 @@ def printprofitandloss(request):
                 sheet["C" + str(row)] = "                " + salesaccount
                 sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                 sheet["D" + str(row)] = DirectIncome["Sales"][salesaccount]
+                sheet["D" + str(row)]=float("%.2f"%float(DirectIncome["Sales"][salesaccount]))
+                sheet["D" + str(row)].number_format="0.00"
                 sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
                 row = row + 1
 
@@ -231,6 +261,8 @@ def printprofitandloss(request):
                 sheet["C" + str(row)] = "        " + subgroup
             sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
             sheet["D" + str(row)] = DirectIncome[subgroup]["balance"]
+            sheet["D" + str(row)]=float("%.2f"%float(DirectIncome[subgroup]["balance"]))
+            sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
             for subgroupaccount in DirectIncome[subgroup]:
@@ -238,18 +270,24 @@ def printprofitandloss(request):
                     sheet["C" + str(row)] = "                " + subgroupaccount
                     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                     sheet["D" + str(row)] = DirectIncome[subgroup][subgroupaccount]
+                    sheet["D" + str(row)]=float("%.2f"%float(DirectIncome[subgroup][subgroupaccount]))
+                    sheet["D" + str(row)].number_format="0.00"
                     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
         if subgroup != "Sales" and subgroup != "dirincmbal" and "balance" not in DirectIncome[subgroup]:
             sheet["C" + str(row)] = "        " + subgroup
             sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["D" + str(row)] = DirectIncome[subgroup]
+            sheet["D" + str(row)]=float("%.2f"%float(DirectIncome[subgroup]))
+            sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
     #Loading data for Indirect Income group.
     sheet["C" + str(row)] = "INDIRECT INCOME"
     sheet["D" + str(row)] = InDirectIncome["indirincmbal"]
+    sheet["D" + str(row)]=float("%.2f"%float(InDirectIncome["indirincmbal"]))
+    sheet["D" + str(row)].number_format="0.00"
     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -263,6 +301,8 @@ def printprofitandloss(request):
                 sheet["C" + str(row)] = "        " + subgroup
             sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=False)
             sheet["D" + str(row)] = InDirectIncome[subgroup]["balance"]
+            sheet["D" + str(row)]=float("%.2f"%float(InDirectIncome[subgroup]["balance"]))
+            sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
             for subgroupaccount in InDirectIncome[subgroup]:
@@ -270,12 +310,16 @@ def printprofitandloss(request):
                     sheet["C" + str(row)] = "                " + subgroupaccount
                     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
                     sheet["D" + str(row)] = InDirectIncome[subgroup][subgroupaccount]
+                    sheet["D" + str(row)]=float("%.2f"%float(InDirectIncome[subgroup][subgroupaccount]))
+                    sheet["D" + str(row)].number_format="0.00"
                     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
                     row = row + 1
         if subgroup != "indirincmbal" and "balance" not in InDirectIncome[subgroup]:
             sheet["C" + str(row)] = "        " + subgroup
             sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
             sheet["D" + str(row)] = InDirectIncome[subgroup]
+            sheet["D" + str(row)]=float("%.2f"%float(InDirectIncome[subgroup]))
+            sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
@@ -284,12 +328,16 @@ def printprofitandloss(request):
         sheet["C" + str(row)] = "Net Loss"
         sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet["D" + str(row)] = net["netloss"]
+        sheet["D" + str(row)]=float("%.2f"%float(net["netloss"]))
+        sheet["D" + str(row)].number_format="0.00"
         sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
         sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     row = row + 1
     sheet["C" + str(row)] = "Total"
     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     sheet["D" + str(row)] = Total
+    sheet["D" + str(row)]=float("%.2f"%float(Total))
+    sheet["D" + str(row)].number_format="0.00"
     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
     sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
     pandlwb.save("response.xlsx")

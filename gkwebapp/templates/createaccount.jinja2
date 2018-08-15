@@ -265,7 +265,10 @@ outline: none;
 								  <option class="sgstopt" value="9%">9%</option>
 								  <option class="sgstopt" value="14%">14%</option>
 								</select>
-								<input type="text" id="cessrate" class="form-control input-sm" name="accountname" accesskey="a" style="display:none">
+								<div class="input-group" id="cessratediv" hidden>
+								  <input type="text" id="cessrate" class="form-control input-sm" name="accountname" accesskey="a" style="display:none">
+								  <span id="cessrateaddon" class="input-group-addon" style="display:none">%</span>
+								</div>
 							    </div>
 							    <br/>
 							  </div>
@@ -344,8 +347,9 @@ outline: none;
 				</tbody>
 			</table>
 		</div>
-		</div>
-		<div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+	</div>
+	<input type="hidden" value="{{vatorgstflag}}" id="vatorgstflag">
+	<div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
 	  <div class="modal-dialog bgcolor " >
 	    <div class="modal-content ">
 	    <div class="modal-header">

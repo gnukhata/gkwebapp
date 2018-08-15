@@ -40,10 +40,20 @@ $(document).ready(function() {
       $('#unit_name').focus().select();
       return false;
     }
-      $("#sub_unit_of").focus().select();
+      $("#unit_desc").focus().select();
     }
   });
 
+    //Keydown event for description.
+    $("#unit_desc").keydown(function(event) {
+	if (event.which==13) {
+	    event.preventDefault();
+	    $("#sub_unit_of").focus().select();
+	}else if(event.which==38){
+	    $("#unit_name").focus().select();
+	}
+    });
+    
   $("#sub_unit_of").keydown(function(event) {
     if (event.which==13 && $("#sub_unit_of option:selected").val()=='') {
       event.preventDefault();
@@ -56,7 +66,7 @@ $(document).ready(function() {
     }
     if (event.which==38 && $("#sub_unit_of option:selected").index()==0) {
       event.preventDefault();
-      $("#unit_name").focus().select();
+      $("#unit_desc").focus().select();
     }
   });
   $("#conversion_rate").keydown(function(event) {
@@ -125,12 +135,17 @@ $(document).ready(function() {
       return false;
     }
 
+      //Store description of unit.
+      if($("#unit_desc").val()!=""){
+	  var description = $("#unit_desc").val();
+      }
+
     $.ajax({
       url: '/unitofmeasurements?action=save',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val()},
+	data: {"unitname": $("#unit_name").val(),"conversionrate":$("#conversion_rate").val(),"subunitof":$("#sub_unit_of option:selected").val(),"description":description, "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

@@ -37,12 +37,18 @@
             <label for="unit_name">{% trans %} Unit Name :{% endtrans %}</label><label for="unit_name" style="color:red;font-size: 120%;">*</label>
             <input class="form-control input-sm" id="unit_name" placeholder="{% trans %}Enter Unit name{% endtrans %}">
           </div>
+	  <div class="form-group">
+               <label for="unit_desc">{% trans %} Description :{% endtrans %}</label>
+               <input class="form-control input-sm" id="unit_desc" placeholder="{% trans %}Enter Unit description{% endtrans %}">
+          </div>
           <div class="form-group">
             <label for="sub_unit_of">{% trans %}Sub Unit of :{% endtrans %}</label>
             <select class="form-control input-sm" id="sub_unit_of">
               <option value="" selected>None</option>
               {% for unitofmeasurement in gkresult %}
-              <option value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}}</option>
+		<option value="{{unitofmeasurement['uomid']}}">
+		  {{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != None %}({{unitofmeasurement["description"]}}){% endif %}
+		</option>
               {% endfor %}
             </select>
           </div>

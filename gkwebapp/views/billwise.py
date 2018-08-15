@@ -175,7 +175,7 @@ def unpaidInvoicesSpreadsheet(request):
         orderflag = int(request.params["orderflag"])
         typeflag = int(request.params["typeflag"])
         inouts= {9:"Purchase", 15:"Sale"}
-        orders = {1:"Ascending", 2:"Descending"}
+        orders = {1:"Ascending", 4:"Descending"}
         types = {1:"Amount Wise", 3:"Party Wise", 4:"Due Wise"}
         inout = inouts[inoutflag]
         order = orders[orderflag]
@@ -244,8 +244,10 @@ def unpaidInvoicesSpreadsheet(request):
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             sheet['D'+str(row)] = uninv['custname']
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = uninv['invoiceamount']
-            sheet['F'+str(row)] = uninv['balanceamount']
+            sheet['E'+str(row)] = float("%.2f"%float(uninv['invoiceamount'])) 
+            sheet['E'+str(row)].number_format = "0.00" 
+            sheet['F'+str(row)] = float("%.2f"%float(uninv['balanceamount']))
+            sheet['F'+str(row)].number_format = "0.00" 
             sheet['E'+str(row)].alignment = Alignment(horizontal='right')
             sheet['F'+str(row)].alignment = Alignment(horizontal='right')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)

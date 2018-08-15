@@ -103,10 +103,12 @@ def printprojectstatementreport(request):
             sheet['C'+str(row)] = transaction["groupname"]
             sheet['C'+str(row)].alignment = Alignment(horizontal='left')
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['D'+str(row)] = transaction["totalout"]
+            sheet['D'+str(row)] = float("%.2f"%float(transaction["totalout"]))
+            sheet['D'+str(row)].number_format = "0.00"
             sheet['D'+str(row)].alignment = Alignment(horizontal='right')
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = transaction["totalin"]
+            sheet['E'+str(row)] = float("%.2f"%float(transaction["totalin"]))
+            sheet['E'+str(row)].number_format = "0.00"
             sheet['E'+str(row)].alignment = Alignment(horizontal='right')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1

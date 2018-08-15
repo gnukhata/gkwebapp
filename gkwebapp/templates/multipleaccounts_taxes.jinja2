@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+
+  <title></title>
+  <style type="text/css">
+   .modal-dialog{
+       position: relative;
+       display: table; //This is important
+       overflow-y: auto;
+       overflow-x: auto;
+       width:850px;
+       min-width: 50%;
+   }
+   .shadow {
+       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   }
+   td {
+       font-size: 65%;
+   }
+
+   th {
+       font-size: 70%;
+   }
+   /*
+      Force table width to 100%
+    */
+   table.table-fixedheader {
+       width: 100%;
+   }
+   /*
+      Set table elements to block mode.  (Normally they are inline).
+      This allows a responsive table, such as one where columns can be stacked
+      if the display is narrow.
+    */
+   table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+       display: block;
+   }
+   table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+       content:' ';
+       display: block;
+       visibility: hidden;
+       clear: both;
+   }
+   /*
+      When scrolling the table, actually it is only the tbody portion of the
+      table that scrolls (not the entire table: we want the thead to remain
+      fixed).  We must specify an explicit height for the tbody.  We include
+      100px as a default, but it can be overridden elsewhere.
+
+      Also, we force the scrollbar to always be displayed so that the usable
+      width for the table contents doesn't change (such as becoming narrower
+      when a scrollbar is visible and wider when it is not).
+    */
+   table.table-fixedheader>tbody {
+       overflow-y: scroll;
+       height: 40vh;
+
+   }
+   /*
+      We really don't want to scroll the thead contents, but we want to force
+      a scrollbar to be displayed anyway so that the usable width of the thead
+      will exactly match the tbody.
+    */
+   table.table-fixedheader>thead, table.table-fixedheader>tfoot {
+       overflow-y: scroll;
+       height: 26px;
+       width: 99.3%;
+   }
+   /*
+      For browsers that support it (webkit), we set the background color of
+      the unneeded scrollbar in the thead to make it invisible.  (Setting
+      visiblity: hidden defeats the purpose, as this alters the usable width
+      of the thead.)
+    */
+   table.table-fixedheader>thead::-webkit-scrollbar {
+       background-color: inherit;
+   }
+
+
+   table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+       content:' ';
+       display: table-cell;
+       visibility: hidden;
+       clear: both;
+   }
+
+   /*
+      We want to set <th> and <td> elements to float left.
+      We also must explicitly set the width for each column (both for the <th>
+      and the <td>).  We set to 20% here a default placeholder, but it can be
+      overridden elsewhere.
+    */
+
+   table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+       float: left;
+
+   }
+   span:not(headerdel){
+       margin:5.5 auto;
+   }
+   .m_del{
+       color:#000000;
+   }
+   .headerdel{
+       float:right;
+       color:white;
+       font-size:12px;
+   }
+  </style>
+
+  <!-- Bootstrap -->
+
+  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+  <!--[if lt IE 9]>
+  <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.2/html5shiv.js"></script>
+  <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+  <![endif]-->
+</head>
+<body>
+
+  <div id="m_multiacc" class="modal fade" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header form-inline">
+	  <span class="glyphicon glyphicon-remove headerdel" aria-hidden="true"></span>
+	  <span style="margin:auto; display:table;"><strong>{% trans %}Multiple Accounts{% endtrans %}</strong></span>
+        </div>
+        <div class="form-inline container-fluid">
+	  <div class="alert alert-danger" id="mult_blank-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="m_alt_accname">{% trans %}Please enter account name!{% endtrans %}</label>
+          </div>
+
+          <div class="alert alert-danger" id="mult_duplicate-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="m_alt_accname">{% trans %}Account name already exists!{% endtrans %}</label>
+          </div>
+	  
+	  <div class="alert alert-danger" id="acname_duplicate-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="m_alt_accname">{% trans %}The same account name can not be created!{% endtrans %}</label>
+          </div>
+
+	  <div class="alert alert-danger" id="field_blank-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="m_alt_accname">{% trans %}All fields are mandatory!{% endtrans %}</label>
+          </div>
+
+          <div class="alert alert-danger" id="nodatasaved-alert" aria-live="rude" role="alert" hidden>
+
+            <label>{% trans %}No account has been created!{% endtrans %}</label>
+          </div>
+
+	  <div class="alert alert-danger" id="taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="m_taxtype-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Type!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_taxstate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select State!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_taxrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please select Tax Rate!{% endtrans %}
+	  </div>
+	  <div class="alert alert-danger" id="mult_cessrate-alert"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Please enter Cess Rate!{% endtrans %}
+	  </div>
+
+          <input type="hidden" name="m_gcode" id="m_gcode" value="{{gkresult['groupcode']}}">
+          <input type="hidden" name="m_sgcode" id="m_sgcode" value="{{gkresult['subgroupcode']}}" >
+          <input type="hidden" name="m_nsgcode" id="m_nsgcode" value="{{gkresult['newsubgroup']}}">
+          <div class="form-group">
+            <label for="m_gname">{% trans %}Group{% endtrans %} :</label>
+            <input type="text" name="m_gname" class="form-control input-sm " size="35" id="m_gname" value="{{gkresult['groupname']}}" disabled>
+
+          </div>
+	  <div class="form-group pull-right">
+
+	    <label for="m_sgname" >{% trans %}Sub-Group{% endtrans %} :</label>
+	    {% if gkresult['subgroupcode']=="New" %}
+	      <input type="text" class="vdate form-control input-sm " id="m_sgname" size="35" value="{{gkresult['newsubgroup']}}" disabled>
+	    {% else %}
+	      <input type="text" class="vdate form-control input-sm " id="m_sgname" size="35" value="{{gkresult['subgroupname']}}" disabled>
+	    {% endif %}
+	  </div>
+
+        </div>
+        <div class="modal-body shadow">
+	  <div id="gstfielddiv">
+	    <label> <input type="checkbox" id="m_gstaccount" accesskey="o"> {% trans %}GST Acc<u>o</u>unt{% endtrans %}</label>
+	  </div>
+
+	  <div class='table-responsive actable'>
+            <table id="multiactable" class="table table-condensed table-fixedheader">
+	      <thead class="bg-primary">
+                <tr>
+		  <th class="col-xs-6">{% trans %}Account Name{% endtrans %}</th>
+                  <th class="col-xs-5">{% trans %}Opening Balance{% endtrans %}</th>
+                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
+		</tr>
+	      </thead>
+	      <tbody>
+		<tr>
+		  <td class="col-xs-6">
+                    <input type="text" class="form-control input-sm m_accname" placeholder="Account Name">
+                  </td>
+                  <td class="col-xs-5">
+                    <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                  </td>
+                  <td class="col-xs-1"></td>
+		</tr>
+	      </tbody>
+	    </table>
+	  </div>
+	  
+          <div class='table-responsive multgstac' hidden>
+            <table id="m_acctable" class="table table-condensed table-fixedheader">
+              <thead class="bg-primary">
+                <tr>
+		  <th class="col-xs-2">{% trans %}Tax Type{% endtrans %}</th>
+		  <th class="col-xs-3">{% trans %}State{% endtrans %}</th>
+		  <th class="col-xs-2">{% trans %}Rate{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Account Name{% endtrans %}</th>
+                  <th class="col-xs-2">{% trans %}Opening Balance{% endtrans %}</th>
+                  <th class="col-xs-1">{% trans %}Remove{% endtrans %}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+		  <td class="col-xs-2">
+                    <select class="form-control input-sm taxname gstaccountfields" id="taxtype">
+		      <option value="" hidden disabled selected>Select Tax</option>
+		      <option value="SGSTIN">SGSTIN</option>
+		      <option value="SGSTOUT">SGSTOUT</option>
+		      <option value="CGSTIN">CGSTIN</option>
+		      <option value="CGSTOUT">CGSTOUT</option>
+		      <option value="IGSTIN">IGSTIN</option>
+		      <option value="IGSTOUT">IGSTOUT</option>
+		      <option value="CESSIN">CESSIN</option>
+		      <option value="CESSOUT">CESSOUT</option>
+		    </select>
+                  </td>
+		  <td class="col-xs-3">
+                    <select class="form-control input-sm taxstate gstaccountfields">
+		      <option value="" stateid="" hidden disabled selected>Select State</option>
+		      {% for state in states %}
+			{% for key, value in state.items() %}
+			  <option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			{% endfor %}
+		      {% endfor %}
+		    </select>
+                  </td>
+		  <td class="col-xs-2">
+                    <select class="form-control input-sm taxrate gstaccountfields" id="rate">
+		      <option value="" hidden disabled selected>Select Rate</option>
+		      <option class="igstopt" value="5%">5%</option>
+		      <option class="igstopt" value="12%">12%</option>
+		      <option class="igstopt" value="18%">18%</option>
+		      <option class="igstopt" value="28%">28%</option>
+		      <option class="sgstopt" value="2.5%">2.5%</option>
+		      <option class="sgstopt" value="6%">6%</option>
+		      <option class="sgstopt" value="9%">9%</option>
+		      <option class="sgstopt" value="14%">14%</option>
+		    </select>
+                  </td>
+                  <td class="col-xs-2">
+                    <input type="text" class="form-control input-sm m_accname" placeholder="Account Name">
+                  </td>
+                  <td class="col-xs-2">
+                    <input type="text" class=" form-control input-sm m_openbal rightJustified" placeholder="0.00" >
+                  </td>
+                  <td class="col-xs-1">
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="modal-footer">
+
+          <button type="button" id ="m_cancel" class="btn btn-warning btnfocus" data-dismiss="modal" accesskey="n">{% trans %}Ca<u>n</u>cel{% endtrans %}</button>
+          <button type="button" id="acc_add"  class="btn btn-success btnfocus" accesskey="v">{% trans %}Sa<u>v</u>e{% endtrans %}</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
+
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/multiacc_taxes.js')}}"></script>
+</body>
+</html>

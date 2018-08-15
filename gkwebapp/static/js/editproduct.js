@@ -365,7 +365,7 @@ $(document).ready(function() {
           $("#taxhelp5").show();  
 
         }
-        $("#unitaddon").html($("#edituom option:selected").text());
+        $("#unitaddon").html($("#edituom option:selected").attr('uname'));
         $(".pbutn").show();
         $("#epsubmit").hide();
         $("#addgodown").hide();
@@ -576,13 +576,13 @@ $(document).ready(function() {
   });
   $(document).on('change', '#edituom',function(event) {
     if ($("#edituom option:selected").val()!='') {
-      $("#unitaddon").html($("#edituom option:selected").text());
+      $("#unitaddon").html($("#edituom option:selected").attr('uname'));
     }
   });
 
   $(document).on('focus', '#editopeningstock',function(event) {
     if ($("#edituom option:selected").val()!='') {
-      $("#unitaddon").html($("#edituom option:selected").text());
+      $("#unitaddon").html($("#edituom option:selected").attr('uname'));
     }
   });
   $(document).on('click', '#epedit', function(event) {
