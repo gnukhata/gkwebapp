@@ -40,7 +40,12 @@ $(document).ready(function() {
 
   $('.date').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
 
-  $("#vdate").focus();
+    if ($("#invsel").length > 0){
+	$("#invsel").focus();
+	}
+    else{
+	$('#vdate').focus().select();
+    }
 
   function raiseAlertById(id) {
     $(id).alert();
@@ -94,7 +99,8 @@ $(document).ready(function() {
   });
 
   var delta = 600;
-  var lastKeypressTime = 0;
+    var lastKeypressTime = 0;
+    
   $("#narration").keydown(function(event) {
     if (event.which==13){
       var thisKeypressTime = new Date();
@@ -362,6 +368,14 @@ $(document).ready(function() {
     });
     });
 
+
+    $("#invsel").keydown(function(event) {
+    if (event.which == 13) {
+      event.preventDefault();
+      $("#vdate").focus();
+    }
+  });
+    
     $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   event.preventDefault();
     /* Act on the event */
