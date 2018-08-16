@@ -403,7 +403,6 @@ $(document).ready(function() {
 
     /*If Billing Details same as Shipping Details then autopopulate them in Shipping Details.*/
     $("#consigneedetails").change(function(){
-	console.log(vatorgstflag);
 	if($(this).prop('checked') == true){
 	    $("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
 	    $("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
