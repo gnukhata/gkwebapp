@@ -1012,7 +1012,11 @@ $(document).ready(function() {
       $('.salesorder_product_quantity_vat:eq(' + curindex + ')').focus().select();
     }
       else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  if($("#chkbank").is(":checked")){
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1061,7 +1065,11 @@ $(document).ready(function() {
       $('.salesorder_product_freequantity_vat:eq(' + curindex + ')').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
       }
   });
 
@@ -1135,7 +1143,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
       }
   });
 
@@ -1189,7 +1201,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
       }
   });
 
@@ -1251,8 +1267,12 @@ $(document).ready(function() {
       $('.salesorder_product_discount_vat:eq(' + curindex + ')').focus().select();
 
     } else if (event.which == 27) {
-      event.preventDefault();
-      $("#chkbank").focus().click();
+	event.preventDefault();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
     }
   });
 
@@ -1315,8 +1335,12 @@ $(document).ready(function() {
       $('.salesorder_product_tax_rate_vat:eq(' + curindex + ')').focus().select();
 
     } else if (event.which == 27) {
-      event.preventDefault();
-      $("#chkbank").focus().click();
+	event.preventDefault();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
     }
   });
 
@@ -1362,9 +1386,13 @@ $(document).ready(function() {
     var previndex1 = curindex1 - 1;
 
     if (event.which == 27) {
-      event.preventDefault();
+	event.preventDefault();
 	calculatevataxamt(curindex1);
-	$("#chkbank").focus().click();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
@@ -1598,8 +1626,12 @@ $(document).ready(function() {
 	event.preventDefault();
       $('.salesorder_product_quantity_gst:eq(' + curindex + ')').focus().select();
     }
-    else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+      else if (event.which == 27) {
+	  if($("#chkbank").is(":checked")){
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1647,8 +1679,12 @@ $(document).ready(function() {
 	event.preventDefault();
       $('.salesorder_product_freequantity_gst:eq(' + curindex + ')').focus().select();
     }
-    else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+      else if (event.which == 27) {
+	  if($("#chkbank").is(":checked")){
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1730,7 +1766,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  if($("#chkbank").is(":checked")){
+	      $("#chkbank").focus().click();
+	  }else{
+	      $("#chkcash").focus().click();
+	  }
       }
   });
 
@@ -1775,7 +1815,11 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
       }
     });
     
@@ -1843,8 +1887,12 @@ $(document).ready(function() {
       $('.salesorder_product_discount_gst:eq(' + curindex + ')').focus().select();
 
     } else if (event.which == 27) {
-      event.preventDefault();
-      $("#chkbank").focus().click();
+	event.preventDefault();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
     }
   });
 
@@ -1972,8 +2020,12 @@ if (event.which == 13) {
       $('.product_name_gst:eq(' + nextindex1 + ')').focus();
 
     } else if (event.which == 27) {
-      event.preventDefault();
-      $("#chkbank").focus().click();
+	event.preventDefault();
+	if($("#chkbank").is(":checked")){
+	    $("#chkbank").focus().click();
+	}else{
+	    $("#chkcash").focus().click();
+	}
     }
 });
 
