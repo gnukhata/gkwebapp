@@ -137,7 +137,7 @@ $(document).ready(function() {
 	    $("#stateorigin").hide();
 	    $(".infield").show();
 	    $(".outfield").hide();
-	    $(".panel-footer").hide();
+	    $(".panel-footer").show();
 	    $("#deliverychallan_editprint").hide();
 	}
 	else if(inoutflag == 15){
@@ -556,40 +556,47 @@ if(event.which==13)
     
   $("#viewattach").click(function(event)
   {
-    $.ajax({
-      url: '/deliverychallan?action=getattachment',
-      type: 'POST',
-      datatype: 'json',
-      beforeSend: function(xhr)
+      var dcid;
+      if ($("#delinradio").is(":checked"))
       {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-      data: {"dcid": $("#deliverychallan_edit_list option:selected").val()}
-    })
-    .done(function(resp) {
+	  dcid=$("#deliverychallanin_edit_list option:selected").val();
+      }
+      else {
+	  dcid=$("#deliverychallanout_edit_list option:selected").val();
+      }
+      $.ajax({
+	  url: '/deliverychallan?action=getattachment',
+	  type: 'POST',
+	  datatype: 'json',
+	  beforeSend: function(xhr)
+	  {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	  },
+	  data: {"dcid": dcid}
+      })
+      .done(function(resp) {
       var x=window.open();
       if (x) {
-        //Browser has allowed it to be opened
-        x.focus();
-        x.document.open();
-        x.document.write(resp);
-        x.document.close();
+          //Browser has allowed it to be opened
+          x.focus();
+          x.document.open();
+          x.document.write(resp);
+          x.document.close();
       } else {
-        //Browser has blocked it
-        alert('Please allow popups and retry');
-        x.close();
+          //Browser has blocked it
+          alert('Please allow popups and retry');
+          x.close();
       }
-
-      console.log("success");
-    })
-    .fail(function() {
-      console.log("error");
-    })
-    .always(function() {
-      console.log("complete");
-    });
-
+	  console.log("success");
+      })
+      .fail(function() {
+	  console.log("error");
+      })
+      .always(function() {
+	  console.log("complete");
+      });
   });
+
     $("#deliverychallan_editprint").click(function(event) {
 	var dcid = $("#deliverychallanout_edit_list option:selected").val();
 	$.ajax({
