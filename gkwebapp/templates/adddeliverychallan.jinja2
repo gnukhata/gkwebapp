@@ -60,6 +60,15 @@
             {% trans %}Please enter Consignee Name if you want to save Details of Consignee!{% endtrans %}
 
           </div>
+	  <div class="alert alert-danger" id="consigneeaddr-blank-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Please enter Consignee Address!{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="consigneename-blank-alert"  aria-live="rude" role="alert" hidden>
+            {% trans %}Please enter Consignee Name!{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="gstin-improper-modal"  aria-live="rude" role="alert" hidden>
+	    {% trans %}Improper GSTIN!{% endtrans %}
+	  </div>
 	  
           <form class="form-horizontal" >
 	    <!-- Upper Three Column  -->
@@ -110,7 +119,7 @@
 		      <label for="deliverychallan_date" class="col-sm-5 fsize">{% trans %}Note Date{% endtrans %} : <label for="deliverychallan_date" style="color:red;font-size:120%;">*</label></label>
 		      <input type="text" class="form-control input-sm delchaldate" size="1" maxlength="2" placeholder="DD" id="deliverychallan_date" accesskey="v" value = "{{lastdelchaldata['dcdate'][0:2]}}">
                       <input type="text" class="form-control input-sm delchaldate" size="1" maxlength="2" placeholder="MM" id="deliverychallan_month" accesskey="v" value = "{{lastdelchaldata['dcdate'][3:5]}}">
-                      <input type="text" class="form-control input-sm delchaldate" size="5" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}">
+                      <input type="text" class="form-control input-sm delchaldate" size="5" maxlength="4" placeholder="YYYY" id="deliverychallan_year" accesskey="v" value = "{{lastdelchaldata['dcdate'][6:]}}" style="width:54px">
                     </div>
 		    {%if numberofgodowns > 0 %}
 		      <div class="form-group form-inline col-sm-4">
@@ -121,7 +130,7 @@
 			    {% trans %}Dispatch From{% endtrans %} :
 			  {% endif %}
 			</label>
-			<select class="form-control input-sm col-sm-6" id="deliverychallan_godown">
+			<select class="form-control input-sm col-sm-6" id="deliverychallan_godown" style="width:205px; overflow:hidden">
 			  {% for godown in godowns %}
 			    <option value="{{godown['goid']}}">{{godown["goname"]}} ({{godown["goaddr"]}})</option>
 			  {% endfor %}
@@ -131,7 +140,7 @@
 		    <div class="form-group form-inline col-sm-5">
 		      {%if numberofgodowns > 0 %}
 			<div class="col-sm-12 form-group form-inline">
-			  <label class="col-sm-6 fsize" for="deliverychallan_consignment">Type of transaction:</label>
+			  <label class="col-sm-6 fsize" for="deliverychallan_consignment" style="width:130px">Type of transaction:</label>
 			  <select class="form-control input-sm col-sm-6" id="deliverychallan_consignment" accesskey="">
 			    <option value="1">{% trans %}Approval{% endtrans %}</option>
 			    <option value="3">{% trans %}Consignment{% endtrans %}</option>
