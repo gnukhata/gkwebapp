@@ -564,6 +564,13 @@ $(document).ready(function() {
 		    });
 		    $("#gstinconsignee").focus();
   		    return false;
+		}else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+		    $("#gstin-improper-modal").alert();
+		    $("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+			$("#gstin-improper-modal").hide();
+		    });
+		    $("#gstinconsignee").focus();
+		    return false;
 		}
 	    }
 	    $("#deliverychallan_consigneeaddr").focus();
