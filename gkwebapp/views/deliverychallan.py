@@ -84,9 +84,10 @@ def showeditdeliverychallan(request):
 @view_config(route_name="deliverychallan", request_param="action=showeditpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
 def showeditpopupdeliverychallan(request):
     header={"gktoken":request.headers["gktoken"]}
-    dcid = request.params["id"]
+    dcid = request.params["dcid"]
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(dcid)), headers=header)
-    return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"]["delchaldata"], "stockdata": delchal.json()["gkresult"]["stockdata"]}
+    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"])}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
