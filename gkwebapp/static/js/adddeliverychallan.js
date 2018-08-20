@@ -298,7 +298,7 @@ $(document).ready(function() {
 	if ($.trim($('#deliverychallan_customer option:selected').val())=="") {
             $("#custsup-blank-alert").alert();
             $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#custsup-blank-alert();").hide();
+		$("#custsup-blank-alert").hide();
             });
             $('#deliverychallan_customer').focus();
             return false;
@@ -580,6 +580,8 @@ $(document).ready(function() {
 	}
     });
 
+    
+
     $("#tinconsignee").keydown(function(event) {
 	if(event.which==13){
 	    $("#deliverychallan_consigneeaddr").focus();
@@ -608,6 +610,27 @@ $(document).ready(function() {
             });
 	    $("#deliverychallan_consigneeaddr").focus();
 	    return false;
+	}
+
+	var gstinstring = $("#gstinconsignee").val();
+	if(gstinstring != ""){
+	    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	    var alfhanum = /^[0-9a-zA-Z]+$/;
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$("#gstinconsignee").focus();
+  		return false;
+	    }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$("#gstinconsignee").focus();
+		return false;
+	    }
 	}
 	
 	if ($("#taxapplicable").val() == 7) {
@@ -2533,6 +2556,27 @@ else {
 	    $('#deliverychallan_product_table tbody tr:first td:eq(0) select').focus();
 	}
 
+	var gstinstring = $("#gstinconsignee").val();
+	if(gstinstring != ""){
+	    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	    var alfhanum = /^[0-9a-zA-Z]+$/;
+  	    if(gstinstring.length !=15){
+  		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$("#gstinconsignee").focus();
+  		return false;
+	    }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+		$("#gstin-improper-modal").alert();
+		$("#gstin-improper-modal").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-modal").hide();
+		});
+		$("#gstinconsignee").focus();
+		return false;
+	    }
+	}
+
     var tax = {};
     var cess = {};
     var contents = {};
@@ -2866,13 +2910,18 @@ else {
             else {
 		$("#deliverychallan_create").click();
             }
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
             $("#success-alert").alert();
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#success-alert").hide();
+		let dcid = resp["gkresult"];
+		let inoutflag = $("#status").val();
+		viewdelchal(dcid,inoutflag);
             });
             return false;
 	}
 	else if(resp["gkstatus"] == 1) {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
             $("#deliverychallan_challanno").focus();
             $("#duplicate-alert").alert();
             $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2881,6 +2930,7 @@ else {
             return false;
 	}
 	else {
+	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
             $("#deliverychallan_purchaseorder").focus();
             $("#failure-alert").alert();
             $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2908,6 +2958,29 @@ else {
     $("#deliverychallan_challanno").focus();
   });
 
+    function viewdelchal(dcid,inoutflag){
+	$.ajax({
+	    type: "POST",
+	    url: "/deliverychallan?action=showeditpopup",
+	    global: false,
+	    async: false,
+	    datatype: "text/html",
+	    data: {
+		"dcid": dcid
+	    },
+	    beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	    }
+	}).done(function(resp) {
+	    $("#delist").hide();
+	    $("#deliverychallan_div").hide();
+	    $("#viewdeldiv").show();
+	    $("#viewdc").html("");
+	    $("#viewdc").html(resp);
+	});
+	return false;
+    }
+    
     $("#deliverychallan_saveprint").click(function(event) {
       /* event is same as save event just that the data is collected and
        the delivery note is saved and the same data is passed on
@@ -3233,55 +3306,56 @@ else {
 	    delchaltotal = $.trim($('#total_product_gst').html());
 	}
 
-	var dataset = {};
-	dataset = {"custid":$("#deliverychallan_customer option:selected").val(),
-		   "dcno":$("#deliverychallan_challanno").val(),
-		   "dcdate":$("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val(),
-		   "inout":$("#status").val(),
-		   "noofpackages":$('#deliverychallan_noofpackages').val(),
-		   "tax":JSON.stringify(tax),
-		   "cess":JSON.stringify(cess),
-		   "delchaltotal":delchaltotal,
-		   "freeqty":JSON.stringify(freeqty),
-		   "discount":JSON.stringify(discount),
-		   "taxflag":($("#taxapplicable").val()),
-		   "inoutflag":$("#status").val(),
-		   "contents":JSON.stringify(contents),
-		   "orgstategstin":$("#orggstin").text()
-		  };
+	var new_form_data = new FormData();
+	new_form_data.append("custid", $("#deliverychallan_customer option:selected").val());
+	new_form_data.append("dcno", $("#deliverychallan_challanno").val());
+	new_form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
+	new_form_data.append("inout", $("#status").val());
+	new_form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
+	new_form_data.append("tax", JSON.stringify(tax));
+	new_form_data.append("cess", JSON.stringify(cess));
+	new_form_data.append("delchaltotal", delchaltotal);
+	new_form_data.append("freeqty", JSON.stringify(freeqty));
+	new_form_data.append("discount", JSON.stringify(discount));
+	new_form_data.append("taxflag", $("#taxapplicable").val());
+	new_form_data.append("inoutflag", $("#status").val());
+	new_form_data.append("contents", JSON.stringify(contents));
+	new_form_data.append("orgstategstin", $("#orggstin").text());
+	
 	if($("#consigneename").val() != ""){
-	    dataset["consignee"]=JSON.stringify(consignee);
+	    new_form_data.append("consignee", JSON.stringify(consignee));
 	}
-	dataset["modeoftransport"]= $('#transportationmode').val();
-	dataset["vehicleno"]= $("#vehicleno").val();
+	new_form_data.append("modeoftransport", $('#transportationmode').val());
+	new_form_data.append("vehicleno", $("#vehicleno").val());
 	if ($("#status").val() == 15) {
-	    dataset["issuername"] = $("#invoice_issuer_name").val();
-	    dataset["designation"] = $("#invoice_issuer_designation").val();
+	    new_form_data.append("issuername", $("#invoice_issuer_name").val());
+	    new_form_data.append("designation", $("#invoice_issuer_designation").val());
 	}
 	if ($("#deliverychallan_godown option").length!=0){
-    	    dataset["goid"] = $("#deliverychallan_godown option:selected").val();
+    	    new_form_data.append("goid", $("#deliverychallan_godown option:selected").val());
 	}
 
       //Delivery In
 	if ($("#status").val() == 9) {
-	    dataset["taxstate"] = $("#invoicestate option:selected").val();
-	    dataset["sourcestate"] = $("#deliverychallan_customerstate option:selected").val();
+	    new_form_data.append("taxstate", $("#invoicestate option:selected").val());
+	    new_form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
 	}//Delivery Out
 	else if ($("#status").val() ==  15) {
-	    dataset["taxstate"] = $("#deliverychallan_customerstate option:selected").val();
-	    dataset["sourcestate"] = $("#invoicestate option:selected").val();
+	    new_form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
+	    new_form_data.append("sourcestate", $("#invoicestate option:selected").val());
 	}
       
 	var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
 	if (dateofsupply == "") {
-  	    dataset["dateofsupply"] = dateofsupply;
+  	    new_form_data.append("dateofsupply", dateofsupply);
 	} 
 	else {
-	    dataset["dateofsupply"] = $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val());
+	    new_form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
 	}
 	//form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
-	dataset["dcflag"] = $("#deliverychallan_consignment option:selected").val();
-	/*var files = $("#my-file-selector")[0].files;
+	new_form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
+
+	var files = $("#my-file-selector")[0].files;
 	var filelist = [];
 	for (let i = 0; i < files.length; i++) {
 	    if (files[i].type != 'image/jpeg') {
@@ -3292,8 +3366,9 @@ else {
 		$('#my-file-selector').focus();
 		return false;
 	    }
-	    dataset["file"] = "file"+i,files[i];
-	}*/
+	    new_form_data.append("file"+i,files[i]);
+	}
+	
 	event.preventDefault();
 	$('.modal-backdrop').remove();
 	$('.modal').modal('hide');
@@ -3304,7 +3379,7 @@ else {
 		type: 'POST',
 		dataType: 'json',
 		async : false,
-		data: dataset,
+		data: new_form_data,
 		beforeSend: function(xhr)
 		{
 		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
