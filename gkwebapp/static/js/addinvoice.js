@@ -258,17 +258,18 @@ $(document).ready(function() {
 	    $("#invload").html("");
 	    $("#invload").html(resp);
 	    $("#backbutton").attr("inoutflag", inoutflag);
-	    $("#editbutton").attr("invid",invid);
+	    $("#editbutton").hide();
 	    if (inoutflag == '9') {
 		$("#printbutton").hide();
+		sessionStorage.salepurchase = 9;
 	    }
 	    else {
 		$("#printbutton").show();
 		$("#printbutton").attr("invid",invid);
+		sessionStorage.salepurchase = 15;
 	    }
-	    $("#listdiv").hide();
+	    $("#listdiv").html("");
 	    $("#viewinvdiv").show();
-	    $('#invoice_div').html("");
 	    if ($("#attachmentcount").val() > 0) {
 		$("#viewattachment").show();
 		$("#viewattachment").attr("invid",invid);
@@ -3083,17 +3084,7 @@ if (event.which == 13) {
     }
   });
     $("#backbutton").click(function(event){
-	$("#invload").html("");
-	$("#viewinvdiv").hide();
-	$('#listdiv').show();
-	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-	if ($("#backbutton").attr("inoutflag") == '9') {
-	    $("#invoice_record").click();
-
-	} else {
-	    $("#invoice_create").click();
-	}
-	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+	$("#invoice").click();
     });
     $("#printbutton").click(function(event) {
         $.ajax({
