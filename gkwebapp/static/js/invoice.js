@@ -124,49 +124,6 @@ Contributors:
     }
     );
     });
-    $("#editbutton").click(function(event) {
-	$("#buttondiv, #invload").hide();
-	var url = "/invoice?action=showeditinv&status=out";
-	if ($("#backbutton").attr("inoutflag") == '9') {
-	    url = "/invoice?action=showeditinv&status=in";
-	}
-	var today = new Date();
-	var year = today.getFullYear();
-	var month = today.getMonth();
-	month += 1;
-	var date = today.getDate();
-	if (month < 10) {
-	    month = "0" + month;
-	}
-	if(date < 10) {
-	    date = "0" + date;
-	}
-	var wholedate = year + "-" + month + "-" + date;
-        $.ajax({
-	    url: url,
-	    type: 'POST',
-            dataType: 'html',
-	    data: {"invid":$("#editbutton").attr("invid"), "inputdate": wholedate},
-            beforeSend: function(xhr) {
-		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                }
-            })
-            .done(function(resp) {
-                console.log("success");
-                $('#invload').html(resp);
-		$(".editblank").addClass("noborder nopadding");
-		$('#invload').show();
-		$("#invselectdiv").hide();
-		$("#invselect").val($("#editbutton").attr("invid")).change();
-		$("#invoice_edit").click();
-            })
-            .fail(function() {
-                console.log("error");
-            })
-            .always(function() {
-                console.log("complete");
-            });
-    });
     if (sessionStorage.salepurchase == "15") {
 	$("#invoice_create").click();// loads record purchase invoice page by default.
     }
