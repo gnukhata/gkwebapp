@@ -902,7 +902,7 @@ $(document).ready(function() {
 		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
 		}
 	    }
-	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'fast');
 	}
 	else if (event.which == 38) {
 	    if ($("#tinconsignee").is(":visible")) {
@@ -1210,16 +1210,16 @@ $(document).ready(function() {
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
           $("#consigneeaddress").focus().select();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       } else {
           $('#invoice_product_table_vat tbody tr:eq(' + previndex + ') td:eq(6) input').focus().select();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 190 && event.ctrlKey) {
 	event.preventDefault();
@@ -1288,7 +1288,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1380,7 +1380,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1444,7 +1444,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1509,7 +1509,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -1653,7 +1653,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 190 && event.ctrlKey) {
       $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
@@ -1823,14 +1823,14 @@ $(document).ready(function() {
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
         }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
       if (curindex == 0) {
         event.preventDefault();
           $("#consigneeaddress").focus().select();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
         } else {
         $('#invoice_product_table_gst tbody tr:eq(' + previndex + ') td:eq(5) input').focus().select();
       }
@@ -1901,7 +1901,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -2002,7 +2002,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -2065,7 +2065,7 @@ $(document).ready(function() {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
 	event.preventDefault();
@@ -2220,7 +2220,7 @@ if (event.which == 13) {
 	  } else {
 	      $("#consigneeaddress").focus().select();
 	  }
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       }
     } else if (event.which == 188 && event.ctrlKey) {
       event.preventDefault();
@@ -2815,7 +2815,7 @@ if (event.which == 13) {
              });
             $("#selectedcustsup").val("");
               $("#invoice_customer").focus();
-	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           });
       }
     });
@@ -2879,7 +2879,7 @@ if (event.which == 13) {
       return false;
     }
       if (!Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy")) {
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#date-alert").alert();
       $("#date-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#date-alert").hide();
@@ -3291,12 +3291,11 @@ if (event.which == 13) {
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
 			if ($("#listdiv").is(":hidden")) {
-			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                             if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
 				$("#success-alert").alert();
 				$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				    $("#success-alert").hide();
-				    $("#listdiv").show();
 				    $("#invoice").attr("status", $("#status").val());
 				    $("#invoice").click();
 				    $("#success-alert").hide();
@@ -3332,7 +3331,7 @@ if (event.which == 13) {
 				$("#invoice_view_sale").click();
                             }
 			    $("#invselect").val(originvid).change();
-                            $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                            $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                             if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
 				$("#success-alert").alert();
 				$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -3355,7 +3354,7 @@ if (event.which == 13) {
 			}
 			return false;
                     } else if (resp["gkstatus"] == 1) {
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                         $("#invoice_challanno").focus();
                         $("#duplicate-alert").alert();
                         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -3364,7 +3363,7 @@ if (event.which == 13) {
                         return false;
                     } else {
                         $("#invoice_deliverynote").focus();
-                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+                        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                         $("#failure-alert").alert();
                         $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#failure-alert").hide();
