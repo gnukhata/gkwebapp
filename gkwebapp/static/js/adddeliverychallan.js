@@ -2995,23 +2995,22 @@ else {
 	});
 	return false;
     }
+
+    // Back Button of Preview delivery challan.
     $("#backbutton").click(function(event){
 	$("#viewdc").html("");
 	$("#viewdeldiv").hide();
 	$('#delist').show();
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 	if ($("#backbutton").attr("inoutflag") == '9') {
-	    console.log("9");
-	    $("#deliverychallan").click();
-	    $("#deliverychallan_record").click();
+	    $("#deliverychallan_div").show();
 	} else if($("#backbutton").attr("inoutflag") == '15') {
-	    console.log("15");
-	    $("#deliverychallan").click();
-	    $("#deliverychallan_create").click();
+	    $("#deliverychallan_div").show();
 	}
 	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     });
-    
+
+    //Print button of Preview delivery challan.
     $("#printbutton").click(function(event) {
 	$.ajax({
             url: '/deliverychallan?action=print',
@@ -3024,7 +3023,7 @@ else {
         })
         .done(function(resp) {
             console.log("success");
-            $('#info').html(resp);
+            $('#printdc').html(resp);
 	    $("#viewdc").hide();
 	    $("#buttondiv").hide();
         })
@@ -3035,6 +3034,37 @@ else {
             console.log("complete");
         });
     });
+
+    $("#viewattachment").click(function(event) {
+        $.ajax({
+            url: '/deliverychallan?action=getattachment',
+            type: 'POST',
+            datatype: 'json',
+	    data: { "dcid": $("#viewattachment").attr("dcid") },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        })
+        .done(function(resp) {
+	    var x = window.open();
+            if (x) {
+                x.focus();
+                x.document.open();
+                x.document.write(resp);
+                x.document.close();
+            } else {
+                alert('Please allow popups and retry');
+                x.close();
+            }
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });	
     
     $("#deliverychallan_saveprint").click(function(event) {
       /* event is same as save event just that the data is collected and

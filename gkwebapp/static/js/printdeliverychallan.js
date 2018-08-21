@@ -44,8 +44,18 @@ $(document).ready(function() {
   });
 
   $("#delchalback").click(function(event) {
-    $("#deliverychallan").click();
+      if ($("#deliverychallan_div").length == 0) {
+	  $("#deliverychallan").click();
+      }
+      else {
+	  $('#printdc').html("");
+	  $("#viewdc").show();
+	  $("#buttondiv").show();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+      }
   });
+
+    
   (function() {
 var beforePrint = function() {
   console.log("beforeprint");
