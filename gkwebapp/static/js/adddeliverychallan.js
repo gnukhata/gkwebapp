@@ -2975,11 +2975,66 @@ else {
 	    $("#delist").hide();
 	    $("#deliverychallan_div").hide();
 	    $("#viewdeldiv").show();
+	    $("#backbutton").attr("inoutflag", inoutflag);
+	    if (inoutflag == '9') {
+		$("#printbutton").hide();
+	    }
+	    else {
+		$("#printbutton").show();
+		$("#printbutton").attr("dcid",dcid);
+	    }
 	    $("#viewdc").html("");
 	    $("#viewdc").html(resp);
+	    if ($("#attachmentcount").val() > 0) {
+		$("#viewattachment").show();
+		$("#viewattachment").attr("dcid",dcid);
+	    }
+	    else {
+		$("#viewattachment").hide();
+	    }
 	});
 	return false;
     }
+    $("#backbutton").click(function(event){
+	$("#viewdc").html("");
+	$("#viewdeldiv").hide();
+	$('#delist').show();
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	if ($("#backbutton").attr("inoutflag") == '9') {
+	    console.log("9");
+	    $("#deliverychallan").click();
+	    $("#deliverychallan_record").click();
+	} else if($("#backbutton").attr("inoutflag") == '15') {
+	    console.log("15");
+	    $("#deliverychallan").click();
+	    $("#deliverychallan_create").click();
+	}
+	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+    });
+    
+    $("#printbutton").click(function(event) {
+	$.ajax({
+            url: '/deliverychallan?action=print',
+            type: 'POST',
+            dataType: 'html',
+            data: {"dcid":$("#printbutton").attr("dcid")},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        })
+        .done(function(resp) {
+            console.log("success");
+            $('#info').html(resp);
+	    $("#viewdc").hide();
+	    $("#buttondiv").hide();
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
     
     $("#deliverychallan_saveprint").click(function(event) {
       /* event is same as save event just that the data is collected and
