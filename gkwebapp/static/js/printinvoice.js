@@ -41,16 +41,9 @@ $(document).ready(function() {
     window.print();
   });
 
-  $("#invback").click(function(event) {
-      if ($("#latable").length == 0 && $("#invoice_div").length == 0) {
+    $("#invback").click(function(event) {
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	$("#invoice").click();
-      }
-      else {
-	  $('#printload').html("");
-	  $("#invload").show();
-	  $("#buttondiv").show();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-      }
   });
   (function() {
 var beforePrint = function() {
