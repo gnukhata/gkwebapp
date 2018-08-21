@@ -120,13 +120,13 @@
 	{% if delchaldata["delchaldata"]["taxflag"] == 7 %}
 	  <div class="form-group form-inline gstinfield">
 	    <label for="gstin" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
-	    <label type="text" id="gstin" class="col-sm-8" name="gstin" >{% if delchaldata["custSupDetails"]["custgstin"] != "" %}{{ delchaldata["custSupDetails"]["custgstin"] }}{% else %}N/A{% endif %}</label>
+	    <label type="text" id="gstin" class="col-sm-8" name="gstin" >{% if delchaldata["custSupDetails"]["custgstin"] %}{{ delchaldata["custSupDetails"]["custgstin"] }}{% else %}N/A{% endif %}</label>
 	  </div>
 	{% endif %}
 	<div class="form-group form-inline">
 	  {% if delchaldata["delchaldata"]["inoutflag"] == 9 %}
 	    <label class="col-sm-4 fsize infield" for="deliverychallan_customeraddr">Supplier Address :</label>
-	    {% else %}
+	  {% else %}
 	    <label class="col-sm-4 fsize outfield" for="deliverychallan_customeraddr">Customer Address :</label>
 	  {% endif %}
 	  <label class="col-sm-8" id="deliverychallan_customeraddr">{{ delchaldata["custSupDetails"]["custaddr"] }}</label>
@@ -238,7 +238,7 @@
 		<label class="invoice_product_tax_rate_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxrate"] }}</label>
 	      </td>
 	      <td class="smvwrap">
-		<label class="invoice_product_tax_amount_vat form-control text-right numtype">{{ delchaldata["delchalContents"][product]["taxmount"] }}</label>
+		<label class="invoice_product_tax_amount_vat form-control text-right numtype">{{ delchaldata["delchalContents"][product]["taxamount"] }}</label>
 	      </td>
 	      <td class="smvwrap">
 		<label class="invoice_product_total form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["totalAmount"] }}</label>
@@ -264,7 +264,7 @@
 	      <label id="totaltax" class=" form-control input-sm text-right">{{ delchaldata["totaltaxamt"] }}</label>
 	    </td>
 	    <td class="smvwrap">
-	      <label id="total_product_vat" class=" form-control input-sm text-right">{{ delchaldata["invoicetotal"] }}</label>
+	      <label id="total_product_vat" class=" form-control input-sm text-right">{{ delchaldata["delchaldata"]["delchaltotal"] }}</label>
 	    </td>
 	  </tr>
 	</tfoot>
@@ -294,7 +294,7 @@
 		    {% if delchaldata["taxname"]=='IGST' %}
 		      <th colspan="2" class="taxwrap text-center igstfield">{% trans %}IGST{% endtrans %}</th>
 		    {% endif %}
-		      <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
+		    <th colspan="2" class="taxwrap text-center">{% trans %}CESS{% endtrans %}</th>
 		  </tr>
 		  
 		  <tr>
@@ -382,7 +382,7 @@
 		      <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
 		    {% endif %}
 		    {% if delchaldata["taxname"]=='IGST' %}
-		      <td colspan="2" class="text-right igstfield taxwrap" hidden><span id="totaligst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
+		      <td colspan="2" class="text-right igstfield taxwrap"><span id="totaligst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
 		    {% endif %}
 		    <td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totalcessamt"] }}</span></td>
 		</tfoot>
@@ -398,11 +398,15 @@
 		</tr>
 	      </thead>
 	      <tbody>
-		<tr>
-		  <td class="col-xs-8"><input type="text" class="invoice_product_total_gst form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
-		  <td class="col-xs-4 text-center">
-		  </td>
-		</tr>
+		{% for product in delchaldata["delchalContents"] %}
+		  <tr>
+		    <td class="col-xs-8 text-right">
+		      <label class="product_total_gst tamount form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["totalAmount"] }}</label>
+		    </td>
+		    <td class="col-xs-4 text-center">
+		    </td>
+		  </tr>
+		{% endfor %}
 	      </tbody>
 	      <tfoot>
 		<td class="col-xs-8 text-right">
@@ -423,37 +427,41 @@
 	<div class="row col-sm-12">
 	  <div class="form-group form-inline">
 	    <label for="deliverychallan_noofpackages" class="col-sm-5">{% trans %}Number of Packages{% endtrans %} :</label>
-	    <label id="deliverychallan_noofpackages" class="col-sm-5"></label>
+	    <label id="deliverychallan_noofpackages" class="col-sm-5">{{delchaldata["delchaldata"]["noofpackages"]}}</label>
 	  </div>
 	</div>
 	<div class="row col-sm-12">
 	  <div class="form-inline form-group">
 	    <label for="deliverychallan_edit_modeoftransport" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
-	    <label id="deliverychallan_edit_modeoftransport" class="col-sm-5"></label>
+	    <label id="deliverychallan_edit_modeoftransport" class="col-sm-5">{% if delchaldata["delchaldata"]["modeoftransport"] %}{{ delchaldata["delchaldata"]["modeoftransport"] }}{% else %}N/A{% endif %}</label>
 	  </div>
 	</div>
 	<div class="row col-sm-12">
-	  <div class="form-inline form-group vehiclenodiv" hidden>
-	    <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
-	    <label id="vehicleno" class="col-sm-5"></label>
-	  </div>
+	  {% if delchaldata["delchaldata"]["vehicleno"] %}
+	    <div class="form-inline form-group vehiclenodiv">
+	      <label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
+	      <label id="vehicleno" class="col-sm-5">{{delchaldata["delchaldata"]["vehicleno"]}}</label>
+	    </div>
+	  {% endif %}
 	</div>
-	<div class="row col-sm-12">
-	  <div class="form-group form-inline invoice_issuer" hidden>
-	    <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-	    <label id="delchal_issuer_name" class="col-sm-5"></label>
+	{% if delchaldata["delchaldata"]["inoutflag"] == 15 %}
+	  <div class="row col-sm-12">
+	    <div class="form-group form-inline invoice_issuer">
+	      <label class="col-sm-5" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
+	      <label id="delchal_issuer_name" class="col-sm-5">{{ delchaldata["delchaldata"]["issuername"]}}</label>
+	    </div>
 	  </div>
-	</div>
-	<div class="row col-sm-12">
-	  <div class="form-inline form-group invoice_issuer" hidden>
-	    <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
-	    <label id="delchal_issuer_designation" class="col-sm-5"></label>
+	  <div class="row col-sm-12">
+	    <div class="form-inline form-group invoice_issuer">
+	      <label class="col-sm-5">{% trans %}Designation{% endtrans %} :</label>
+	      <label id="delchal_issuer_designation" class="col-sm-5">{{ delchaldata["delchaldata"]["designation"]}}</label>
+	    </div>
 	  </div>
-	</div>
+	{% endif %}
 	<div class="row col-sm-12">
 	  <div class="form-group form-inline">
 	    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
-	    <label id="supply_date" class="col-sm-5"></label>
+	    <label id="supply_date" class="col-sm-5">{% if delchaldata["dateofsupply"] %}{{ delchaldata["dateofsupply"] }}{% else %}N/A{% endif %}</label>
 	  </div>
 	</div>
       </div>
@@ -466,53 +474,59 @@
 	      <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Value{% endtrans %} :</label>
 	    </div>
 	    <div class="col-sm-6 text-right">
-	      <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important"></label>
+	      <label id="taxableamount" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaltaxablevalue"] }}</label>
 	    </div>
 	  </div>
 	</div>
-	<div class="gstfield">
-	  <div class="row sgstfield hborderdiv">
-	    <div class="form-group sgstfield form-inline">
-	      <div class="col-sm-6">
-		<label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important"></label>
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<div class="gstfield">
-	  <div class="row sgstfield hborderdiv">
-	    <div class="form-group sgstfield form-inline">
-	      <div class="col-sm-6">
-		<label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	{% if delchaldata["delchaldata"]["taxflag"] == 7 %}
+	  {% if delchaldata["taxname"]=='SGST' %}
+	    <div class="gstfield">
+	      <div class="row sgstfield hborderdiv">
+		<div class="form-group sgstfield form-inline">
+		  <div class="col-sm-6">
+		    <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right">
+		    <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		  </div>
+		</div>
 	      </div>
 	    </div>
-	  </div>
-	</div>
-	<div class="gstfield ">
-	  <div class="row igstfield hborderdiv">
-	    <div class="form-group igstfield form-inline">
-	      <div class="col-sm-6">
-		<label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totaligtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	    <div class="gstfield">
+	      <div class="row sgstfield hborderdiv">
+		<div class="form-group sgstfield form-inline">
+		  <div class="col-sm-6">
+		    <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right">
+		    <label id="totalcgtax" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaltaxamt"] }}</label>
+		  </div>
+		</div>
 	      </div>
 	    </div>
-	  </div>
-	</div>
+	  {% endif %}
+	  {% if delchaldata["taxname"]=='IGST' %}
+	    <div class="gstfield ">
+	      <div class="row igstfield hborderdiv">
+		<div class="form-group igstfield form-inline">
+		  <div class="col-sm-6">
+		    <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
+		  </div>
+		  <div class="col-sm-6 text-right">
+		    <label id="totaligtax" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaltaxamt"] }}</label>
+		  </div>
+		</div>
+	      </div>
+	    </div>
+	  {% endif %}
+	{% endif %}
 	<div class="row hborderdiv gstfield">
 	  <div class="form-group form-inline">
 	    <div class="col-sm-6">
 	      <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
 	    </div>
 	    <div class="col-sm-6 text-right">
-	      <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important"></label>
+	      <label id="totalinvcess" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totalcessamt"] }}</label>
 	    </div>
 	  </div>
 	</div>
@@ -522,7 +536,7 @@
 	      <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
 	    </div>
 	    <div class="col-sm-6 text-right">
-	      <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important"></label>
+	      <label id="totalinvtax" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaltaxamt"] }}</label>
 	    </div>
 	  </div>
 	</div>
@@ -532,7 +546,7 @@
 	      <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
 	    </div>
 	    <div class="col-sm-6 text-right">
-	      <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important"></label>
+	      <label id="totalinvdiscount" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaldiscount"] }}</label>
 	    </div>
 	  </div>
 	</div>
@@ -542,7 +556,7 @@
 	      <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
 	    </div>
 	    <div class="col-sm-6 text-right">
-	      <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+	      <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important">{{delchaldata["delchaldata"]["delchaltotal"] }}</label>
 	    </div>
 	  </div>
 	</div>
