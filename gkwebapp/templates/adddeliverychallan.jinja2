@@ -237,7 +237,7 @@
 		<div class="form-group form-inline">
 		  <label class="col-sm-4 fsize" for="deliverychallan_customeraddr">
 		    {% if gkstatus == "in" %}
-		      {% trans %}Supplier{% endtrans %}<br> {% trans %}Address{% endtrans %} :
+		      {% trans %}Supplier Address{% endtrans %} :
 		    {% else %}
 		      {% trans %}Customer Address{% endtrans %} :
 		    {% endif %}
@@ -769,7 +769,6 @@
         <button class="btn btn-success btn-sm" id="deliverychallan_save" data-toggle="tooltip" data-placement="top" title="Press Insert anywhere on the current screen to save"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="s"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
         <button id="deliverychallan_reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="e"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         {% if gkstatus=="out" %}
-	  <!-- <button id="deliverychallan_saveprint" class="btn btn-primary btn-sm" ><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Save & Print{% endtrans %}</button> -->
 	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true" accesskey="d"></i> {% trans %}A<u>d</u>d Customer{% endtrans %}</button>
         {% else %}
 	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true" accesskey="d"></i> {% trans %}A<u>d</u>d Supplier{% endtrans %}</button>
