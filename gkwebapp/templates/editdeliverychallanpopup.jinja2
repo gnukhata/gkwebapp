@@ -26,7 +26,7 @@
 	      <label class="col-sm-10 fsize" for="statecodeforinvoice">{% trans %}State Code{% endtrans %} :</label>
 	      <label class="col-sm-2 nopadding fsize" id="statecodeforinvoice">{% if delchaldata["delchaldata"]["inoutflag"] == 15 %}{{ '%02d' | format(delchaldata["sourcestatecode"]| int)  }}{% endif %}{% if delchaldata["delchaldata"]["inoutflag"] == 9 %}{{ '%02d' | format(delchaldata["taxstatecode"]| int)}}{% endif %}</label>
 	    </div>
-	    {% if resultgstvat != '22' %}
+	    {% if delchaldata["delchaldata"]["taxflag"] == 7 %}
 	      <div class="form-group form-inline col-sm-3">
 		<label class="col-sm-5 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
 		<label class="col-sm-7  nopadding fsize gstinfield" id="orggstin">{{ delchaldata["delchaldata"]["orggstin"] }}</label>
@@ -191,12 +191,8 @@
     
     <!-- Product Table -->
     <div class="col-md-12">
-      {% if resultgstvat == '29' or resultgstvat == '22' %}
-	{% if resultgstvat == '22' %}
-	  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
-	{% else %}
-	    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
-	{% endif %}
+      {% if delchaldata["delchaldata"]["taxflag"] == 22 %}
+	<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 	<thead class="bg-primary">
 	  <tr>
 	    <th class="mdvwrap text-center">{% trans %}Product{% endtrans %}</th>
@@ -271,9 +267,8 @@
 	    </td>
 	  </tr>
 	</tfoot>
-	    </table>
-      {% endif %}
-      {% if resultgstvat == '29' or resultgstvat == '7' %}
+	</table>
+      {% else %}
 	<div class="row col-sm-12" id="gstproducttable">
 	  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 	    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
@@ -490,7 +485,7 @@
 		    <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
 		  </div>
 		  <div class="col-sm-6 text-right">
-		    <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totaltaxamt"] }}</label>
+		    <label id="totalsgtax" style="font-size:100% !important; font-weight:normal !important">{{ delchaldata["totaltaxamt"] }}</label>
 		  </div>
 		</div>
 	      </div>
