@@ -647,6 +647,7 @@ $(document).ready(function() {
 	}
 	if (event.which == 32) {
 	    event.preventDefault();
+	    $("#invoice_customer").prop("disabled", true);
 	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
     });
@@ -2779,6 +2780,7 @@ if (event.which == 13) {
         $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
 			      {
 				  modalpresent = 0;
+				  $("#invoice_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
               $('#invoice_customer').focus();
