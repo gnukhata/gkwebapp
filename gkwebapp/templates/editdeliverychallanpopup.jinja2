@@ -210,37 +210,31 @@
 	  {% for product in delchaldata["delchalContents"] %}
 	    <tr>
 	      <td class="mdvwrap">
-		<label class="form-control input-sm product_name_vat">{{ delchaldata["delchalContents"][product]["proddesc"] }}</label>
+		{{ delchaldata["delchalContents"][product]["proddesc"] }}
 	      </td>
-	      <td class="qtyvwrap">
-		<div class="input-group">
-		  <label class="invoice_product_quantity_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["qty"] }}</label>
-		  <span class="input-group-addon input-sm unitaddon_qty_vat">{{ delchaldata["delchalContents"][product]["uom"] }}</span>
-		</div>
+	      <td class="qtyvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["qty"] }} {{ delchaldata["delchalContents"][product]["uom"] }}
 	      </td>
-	      <td class="qtyvwrap">
-		<div class="input-group">
-		  <label class="invoice_product_freequantity_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["freeqty"] }}</label>
-		  <span class="input-group-addon input-sm unitaddon_freeqty_vat">{{ delchaldata["delchalContents"][product]["uom"] }}</span>
-		</div>
+	      <td class="qtyvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["freeqty"] }} {{ delchaldata["delchalContents"][product]["uom"] }}</span>
 	      </td>
-	      <td class="smvwrap">
-		<label class="invoice_product_per_price_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["priceperunit"] }}</label>
+	      <td class="smvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["priceperunit"] }}
 	      </td>
-	      <td class="smvwrap">
-		<label class="invoice_product_discount_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["discount"] }}</label>
+	      <td class="smvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["discount"] }}
 	      </td>
-	      <td class="smvwrap">
-		<label class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxableamount"] }}</label>
+	      <td class="smvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["taxableamount"] }}
 	      </td>
-	      <td class="ratewrap">
-		<label class="invoice_product_tax_rate_vat form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxrate"] }}</label>
+	      <td class="ratewrap text-right">
+		{{ delchaldata["delchalContents"][product]["taxrate"] }}
 	      </td>
-	      <td class="smvwrap">
-		<label class="invoice_product_tax_amount_vat form-control text-right numtype">{{ delchaldata["delchalContents"][product]["taxamount"] }}</label>
+	      <td class="smvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["taxamount"] }}
 	      </td>
-	      <td class="smvwrap">
-		<label class="invoice_product_total form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["totalAmount"] }}</label>
+	      <td class="smvwrap text-right">
+		{{ delchaldata["delchalContents"][product]["totalAmount"] }}
 	      </td>
 	    </tr>
 	  {% endfor %}
@@ -250,20 +244,19 @@
 	    <td colspan="4" class="text-right">
 	      {% trans %}Total{% endtrans %}
 	    </td>
-	    <!--  Total : ptotal       -->
-	    <td class="smvwrap">
-	      <label id="discounttotal_product_vat" class=" form-control input-sm text-right">{{ delchaldata["totaldiscount"] }}</label>
+	    <td class="smvwrap text-right">
+	      {{ delchaldata["totaldiscount"] }}
 	    </td>
-	    <td class="smvwrap">
-	      <label id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right">{{ delchaldata["totaltaxablevalue"] }}</label>
+	    <td class="smvwrap text-right">
+	      {{ delchaldata["totaltaxablevalue"] }}
 	    </td>
-	    <td class="ratewrap">
+	    <td class="ratewrap text-right">
 	    </td>
-	    <td class="smvwrap">
-	      <label id="totaltax" class=" form-control input-sm text-right">{{ delchaldata["totaltaxamt"] }}</label>
+	    <td class="smvwrap text-right">
+	      {{ delchaldata["totaltaxamt"] }}
 	    </td>
-	    <td class="smvwrap">
-	      <label id="total_product_vat" class=" form-control input-sm text-right">{{ delchaldata["delchaldata"]["delchaltotal"] }}</label>
+	    <td class="smvwrap text-right">
+	      {{ delchaldata["delchaldata"]["delchaltotal"] }}
 	    </td>
 	  </tr>
 	</tfoot>
@@ -318,50 +311,55 @@
 		  {% for product in delchaldata["delchalContents"] %}
 		    <tr>
 		      <td class="mdwrap">
-			<label class="form-control input-sm product_name_gst">{{ delchaldata["delchalContents"][product]["proddesc"] }}</label>			
+			{{ delchaldata["delchalContents"][product]["proddesc"] }}
 		      </td>
 		      <td class="smwrap text-center" style="vertical-align:middle;">
-			<label class="invoice_product_hsncode text-center">{{ delchaldata["delchalContents"][product]["gscode"] }}</label>
+			{{ delchaldata["delchalContents"][product]["gscode"] }}
 		      </td>
-		      <td class="qtywrap">
-			<div class="input-group">
-			  <label class="invoice_product_quantity_gst form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["qty"]}}</label>
-			  <span class="input-group-addon input-sm unitaddon_qty_gst">{{ delchaldata["delchalContents"][product]["uom"]}}</span>
+		      <td class="qtywrap text-right">
+			  {{ delchaldata["delchalContents"][product]["qty"]}} {{ delchaldata["delchalContents"][product]["uom"]}}
+		      </td>
+		      <td class="qtywrap text-right">
+			{{ delchaldata["delchalContents"][product]["freeqty"] }} {{ delchaldata["delchalContents"][product]["uom"] }}
 			</div>
 		      </td>
-		      <td class="qtywrap">
-			<div class="input-group">
-			  <label class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap">{{ delchaldata["delchalContents"][product]["freeqty"] }}</label>
-			  <span class="input-group-addon input-sm unitaddon_freeqty_gst">{{ delchaldata["delchalContents"][product]["uom"] }}</span>
-			</div>
+		      <td class="smwrap text-right">
+			{{ delchaldata["delchalContents"][product]["priceperunit"]}}
 		      </td>
-		      <td class="smwrap">
-			<label class="invoice_product_per_price_gst form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["priceperunit"]}}</label>
+		      <td class="smwrap text-right">
+			{{ delchaldata["delchalContents"][product]["discount"] }}
 		      </td>
-		      <td class="smwrap">
-			<label class="invoice_product_discount_gst form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["discount"] }}</label>
-		      </td>
-		      <td class="smwrap">
-			<label class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxableamount"] }}</label>
+		      <td class="smwrap text-right">
+			{{ delchaldata["delchalContents"][product]["taxableamount"] }}
 		      </td>
 		      {% if delchaldata["delchalContents"][product]["taxname"]=='SGST' %}
-			<td class="taxcell sgstfield"><label class="invoice_product_cgstrate trate form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxrate"] }}</label>
+			<td class="taxcell sgstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxrate"] }}
 			</td>
-			<td class="taxcell sgstfield"><label class="invoice_product_cgstamount tamount form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxamount"] }}</label>
+			<td class="taxcell sgstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxamount"] }}
 			</td>
-			<td class="taxcell sgstfield"><label class="invoice_product_sgstrate trate form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxrate"] }}</label>
+			<td class="taxcell sgstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxrate"] }}
 			</td>
-			<td class="taxcell sgstfield"><label class="invoice_product_sgstamount tamount input-sm form-control text-right numtype">{{ delchaldata["delchalContents"][product]["taxamount"] }}</label>
+			<td class="taxcell sgstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxamount"] }}
 			</td>
 		      {% endif %}
 		      {% if delchaldata["delchalContents"][product]["taxname"]=='IGST' %}
-			<td class="taxcell igstfield"><label class="invoice_product_igstrate trate input-sm text-right form-control numtype">{{ delchaldata["delchalContents"][product]["taxrate"] }}</label>
+			<td class="taxcell igstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxrate"] }}
 			</td>
-			<td class="taxcell igstfield"><label class="invoice_product_igstamount tamount form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["taxamount"] }}</label>
+			<td class="taxcell igstfield text-right">
+			  {{ delchaldata["delchalContents"][product]["taxamount"] }}
 			</td>
 		      {% endif %}
-		      <td class="taxcell"><label class="invoice_product_cessrate trate input-sm text-right form-control numtype">{{ delchaldata["delchalContents"][product]["cessrate"] }}</label></td>
-                      <td class="taxcell"><label class="invoice_product_cessamount tamount form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["cess"] }}</label></td>
+		      <td class="taxcell text-right">
+			{{ delchaldata["delchalContents"][product]["cessrate"] }}
+		      </td>
+                      <td class="taxcell text-right">
+			{{ delchaldata["delchalContents"][product]["cess"] }}
+		      </td>
 		    </tr>
 		  {% endfor %}
                 </tbody>
@@ -372,17 +370,28 @@
 		<tfoot>
 		  <tr>
 		    <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-		    <td class="text-right smwrap">  <span id="discounttotal_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaldiscount"] }}</span></td>
-		    <td class="text-right smwrap"><span id="taxablevaluetotal_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxablevalue"] }}</span></td>
+		    <td class="text-right smwrap">
+		      {{ delchaldata["totaldiscount"] }}
+		    </td>
+		    <td class="text-right smwrap">
+		      {{ delchaldata["totaltaxablevalue"] }}
+		    </td>
 		    {% if delchaldata["taxname"]=='SGST' %}
-		      <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalcgst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
-
-		      <td colspan="2" class="text-right sgstfield taxwrap"><span id="totalsgst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
+		      <td colspan="2" class="text-right sgstfield taxwrap">
+			{{ delchaldata["totaltaxamt"] }}
+		      </td>
+		      <td colspan="2" class="text-right sgstfield taxwrap">
+			{{ delchaldata["totaltaxamt"] }}
+		      </td>
 		    {% endif %}
 		    {% if delchaldata["taxname"]=='IGST' %}
-		      <td colspan="2" class="text-right igstfield taxwrap"><span id="totaligst_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totaltaxamt"] }}</span></td>
+		      <td colspan="2" class="text-right igstfield taxwrap">
+			{{ delchaldata["totaltaxamt"] }}
+		      </td>
 		    {% endif %}
-		    <td colspan="2" class="text-right taxwrap"><span id="totalcess_product_gst" class="input-sm text-right" size="8">{{ delchaldata["totalcessamt"] }}</span></td>
+		    <td colspan="2" class="text-right taxwrap">
+		      {{ delchaldata["totalcessamt"] }}
+		    </td>
 		</tfoot>
 	      </table>
 	    </div>
@@ -392,26 +401,20 @@
 	      <thead>
 		<tr>
 		  <th style="line-height:380% !important; text-align:center;" class="col-xs-8">Total</th>
-		  <th class="col-xs-4"></th>
 		</tr>
 	      </thead>
 	      <tbody>
 		{% for product in delchaldata["delchalContents"] %}
 		  <tr>
 		    <td class="col-xs-8 text-right">
-		      <label class="product_total_gst tamount form-control input-sm text-right numtype">{{ delchaldata["delchalContents"][product]["totalAmount"] }}</label>
-		    </td>
-		    <td class="col-xs-4 text-center">
+		      {{ delchaldata["delchalContents"][product]["totalAmount"] }}
 		    </td>
 		  </tr>
 		{% endfor %}
 	      </tbody>
 	      <tfoot>
 		<td class="col-xs-8 text-right">
-		  <span id="total_product_gst" class="input-sm text-right" size="9">{{delchaldata["delchaldata"]["delchaltotal"]}}</span>
-		</td>
-		<td class="col-xs-4">
-		  
+		  {{delchaldata["delchaldata"]["delchaltotal"]}}
 		</td>
 	      </tfoot>
 	    </table>
