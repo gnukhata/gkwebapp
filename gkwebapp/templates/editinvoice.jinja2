@@ -187,6 +187,9 @@
 			{% endfor %}
 		      </select>
 		    </div>
+		    <small class="form-text text-muted">Press 'Space' key to add a new {% if gkstatus=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}</small>
+		    <br>
+		    <br>
 		    <div class="form-group form-inline">
 		      <label for="invoice_customerstate" class="col-sm-4 fsize">
 			{% if status == "in" %}
