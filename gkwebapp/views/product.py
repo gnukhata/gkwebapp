@@ -88,7 +88,6 @@ def gethsnuom(request):
 def productstock(request):
     header = {"gktoken":request.headers["gktoken"]}
     gkdata = {"goid":request.params["goid"],"productdetails":json.loads(request.params["productdetails"])}
-    print request.params["productdetails"]
     result = requests.post("http://127.0.0.1:6543/products?type=addstock",data=json.dumps(gkdata), headers=header)
     return {"gkstatus": result.json()["gkstatus"]}
 
@@ -259,15 +258,14 @@ def editproduct(request):
     else:
          proddetails["gsflag"] = 7
 
-
     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
     result = requests.put("http://127.0.0.1:6543/products", data=json.dumps(productdetails),headers=header)
     if result.json()["gkstatus"] == 0:
-        for tax in taxes:
-            if len(tax)!=0:
-                if tax["taxrowid"]!="new":
-                    taxdata["taxid"] = tax["taxrowid"]
-                    taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+        taxid = requests.get("http://127.0.0.1:6543/tax?pscflag=p&productcode=%d"%(int(request.params["productcode"])), headers=header)
+        taxids = taxid.json()["gkresult"]
+        for tax in taxids:
+            taxdata["taxid"] = tax["taxid"]
+            taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
         for tax in taxes:
             if len(tax)!=0:
                 taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}

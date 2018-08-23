@@ -1193,6 +1193,7 @@ $(document).ready(function() {
 			$('#invoice_product_table_vat tbody').empty();
 			$('#invoice_product_table_gst tbody').empty();
 			$('#invoice_product_table_total tbody').empty();
+			
 			var totqty = 0;
 			$.ajax({
 			    url: '/invoice?action=getdelinvprods',

@@ -39,7 +39,8 @@ $(document).ready(function() {
 $(".serviceclass").hide();
     $(".productclass").hide();
     var stkhtml;  
-  $(".common").hide();
+    $(".common").hide();
+    $(".tax_rate_gst").hide();
   var godownflag = 0;
     $('.modal-backdrop').remove();
     var taxfieldhtml = $("#product_tax_table tbody").html();
@@ -570,15 +571,32 @@ $("#addcatselect").change(function(event) {
     })
     .done(function(resp) {
       console.log("success");
-      if (resp["gkresult"].length>0) {
+	if (resp["gkresult"].length>0) {
+	    var gstRate = ["5.00","12.00","18.00","28.00"];
         $('#product_tax_table tbody tr').remove();
-        for (tax of resp["gkresult"]) {
+          for (tax of resp["gkresult"]) {
             $('#product_tax_table tbody').append(taxfieldhtml);
 	    $('#product_tax_table tbody tr:last td:eq(3) span').hide('.glyphicon-plus');
 	    $('#product_tax_table tbody tr:last').attr({value: tax["taxid"]});
             $('#product_tax_table tbody tr:last td:eq(1) select').val(tax["state"]);
             $('#product_tax_table tbody tr:last td:eq(0) select').val(tax["taxname"]);
-	    $('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	      if(tax["taxname"] == "IGST"){
+		  let count = 0;
+		    for(let a in gstRate){
+			if(tax["taxrate"] == gstRate[a]) {
+			    count = count+1;
+			}
+		    }
+		    if(count == 0){
+			$("#gstrateEdit").show();
+		    }else{
+			$("#gstrateEdit").hide();
+		    }
+		  var new_gst = Math.floor(tax["taxrate"]);//Round up the number
+		  $("#product_tax_table tbody tr:last td:eq(2) select").val(new_gst);
+	    }else{ 
+		$('#product_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
+	    }
         }
 	  $('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
 	  $(".tax_name").change();
@@ -756,10 +774,14 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
     event.preventDefault();
   }
-  else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!='VAT') && event.which==13 ) {
-    event.preventDefault();
+  else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='CVAT' || $("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='CESS') && event.which==13 ) {
+      event.preventDefault();
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
   }
+  else if (($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() =='IGST') && event.which==13 ) {
+      event.preventDefault();
+    $('#product_tax_table tbody tr:eq('+curindex+') td:eq(2) select').focus();
+  } 
   else if (event.which==13) {
     event.preventDefault();
     $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
@@ -787,6 +809,13 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
 });
     $(document).off("change",".tax_name").on("change",".tax_name",function(event){
         var curindex = $(this).closest('tr').index();
+	if (!($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST')){
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').show('.tax_rate_all');
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').hide('.tax_rate_gst');
+	} else if($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='IGST') {
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) select').show('.tax_rate_gst');
+	    $('#product_tax_table tbody tr:eq('+ curindex +') td:eq(2) input').hide('.tax_rate_all');
+	}
         if ($("#product_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()=='VAT') {
             $("#product_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
             $('#product_tax_table tbody tr:eq('+curindex+') td:eq(1) select').prop("disabled", false);
@@ -890,8 +919,94 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
         }
 	$(".tax_name:last").change();
     });
+
+//Keydown event for tax_rate select box for "GST" tax name.
+    $(document).off("keydown",".tax_rate_gst").on("keydown",".tax_rate_gst",function(event){
+	var curindex1 = $(this).closest('tr').index();
+	var nextindex1 = curindex1+1;
+	var previndex1 = curindex1-1;
+	//$(".tax_rate_all").trigger({type:'keydown',which:'13'});
+	if (event.which==13) {
+	    event.preventDefault();
+	    if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
+		$("#tax_state-blank-alert").alert();
+		$("#tax_state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#tax_state-blank-alert").hide();
+		});
+		return false;
+	    }
+	    if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
+		$('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	    } else {
+		if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()==null) {
+		    $("#tax-name-blank-alert").alert();
+		    $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#tax-name-blank-alert").hide();
+		    });
+		    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
+		    return false;
+		}
+		if (!$.isNumeric($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val())) {
+		    $("#tax-rate-blank-alert").alert();
+		    $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#tax-rate-blank-alert").hide();
+		    });
+		    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').focus();
+		    return false;
+		}
+		$('#product_tax_table tbody').append(taxfieldhtml);
+		$('#product_tax_table tbody tr:eq('+curindex1+') td:eq(3) span').hide('.glyphicon-plus');
+		//$(".tax_rate_all").numeric();
+		for (let j = 0; j < curindex1 + 1; j++) {
+		    var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+		    if (selectedtax != "VAT") {
+			for (let i=j+1; i<=curindex1+1;i++){
+			    $('#product_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').remove();
+			}
+		    }
+		}
+		$(".tax_name:last").change();
+		$('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	    }
+	}
+	else if(event.which==190 && event.shiftKey){
+	    event.preventDefault();
+	    $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+	}
+	else if (event.which==188 && event.shiftKey) {
+	    if(previndex1>-1) {
+		event.preventDefault();
+		$('#product_tax_table tbody tr:eq('+previndex1+') td:eq(2) input').focus().select();
+	    }
+	} else if (event.ctrlKey && event.which==188) {
+	    event.preventDefault();
+	    $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) select').focus();
+	}
+	else if (event.which==190 && event.ctrlKey) {
+	    event.preventDefault();
+	    $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	}
+	else if (event.which==27) {
+	    event.preventDefault();
+	    if($("#additem option:selected").val()=='19'){
+		$("#apsubmit").focus();
+	    }
+	    else{
+		if ($("#godownpresence").val()==0) {
+		    $("#openingstock").focus().select();
+		}
+		if ($("#godownpresence").val()==1) {
+		    $("#godownflag").focus().select();
+		}
+		if(sessionStorage.invflag==0){
+		    $("#apsubmit").focus();
+		}
+	    }
+	}
+
+    });
     
-$(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
+$(document).off("keydown",".tax_rate_all").on("keydown",".tax_rate_all",function(event)
 {
   var curindex1 = $(this).closest('tr').index();
   var nextindex1 = curindex1+1;
@@ -928,7 +1043,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
       }
 	  $('#product_tax_table tbody').append(taxfieldhtml);
 	  $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(3) span').hide('.glyphicon-plus');
-	$(".tax_rate").numeric();
+	$(".tax_rate_all").numeric();
         for (let j = 0; j < curindex1 + 1; j++) {
             var selectedtax = $("#product_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
             if (selectedtax != "VAT") {
@@ -1684,7 +1799,11 @@ else{
     if ($.trim($("select option:selected", this).val()) != "") {
         obj.taxname = $.trim($("td:eq(0) select option:selected", this).val());
         obj.state = $.trim($("td:eq(1) select option:selected", this).val());
-        obj.taxrate = $.trim($("input", this).val());
+	if($("td:eq(0) select option:selected", this).val() == 'IGST'){
+	    obj.taxrate = $.trim($("td:eq(2) select option:selected", this).val());
+	} else {
+	    obj.taxrate = $.trim($("input", this).val());
+	}
         taxes.push(obj);
     }
 

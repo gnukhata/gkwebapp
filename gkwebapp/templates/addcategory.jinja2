@@ -330,7 +330,10 @@
           </div>
           <div class="panel">
             <div class="panel-body taxclass">
-                <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+              <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
+	      <div class="alert alert-warning nopadding" id="gstrateEdit"  aria-live="rude" role="alert" hidden>
+		<strong>{% trans %}Please edit 'GST' rate!{% endtrans %}</strong>
+	      </div>
                 <table id="category_tax_table" class="table table-condensed table-bordered fixed-table">
                   <thead class="bg-primary input-sm">
                     <tr>
@@ -369,6 +372,13 @@
                       </td>
                       <td class="col-xs-4">
                         <input class="form-control input-sm tax_rate text-right numtype">
+			<select hidden class="form-control input-sm tax_rate_gst text-right" >
+			  {#<option value="" hidden disabled selected>Select Rate</option>#}
+			  <option value="5" class="text-right">5</option>
+                          <option value="12" class="text-right">12</option>
+			  <option value="18" class="text-right">18</option>
+                          <option value="28" class="text-right">28</option>
+                        </select>
                       </td>
                     </tr>
                   </tbody>
