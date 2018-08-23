@@ -588,11 +588,11 @@ $(document).ready(function() {
 	}
 	if (event.which == 38) {
 	    if ($("#salesorder_customer option:visible").first().is(":selected") || $("#salesorder_customer option:first").is(":selected")) {
-		if ($("#status").val() == 15) {
-		    $("#salesorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+		if ($("#status").val() == 16) {
+		    $("#purchaseorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 		}
 		else {
-		    $("#salesorderstate").focus();  //Focus Shifts to Salesorder State.
+		    $("#togodown").focus();  //Focus Shifts to Salesorder State.
 		}
 	    }
 	}
@@ -684,7 +684,7 @@ $(document).ready(function() {
 	    $("#consigneename").focus().select();  //Focus Shifts to Consignee Name.
 	}
 	if (event.which == 38) {
-	    if ($("#salesorder_customerstate option:visible").first.is(":selected")) {
+	    if ($("#salesorder_customerstate option:visible").first().is(":selected")) {
 		$("#salesorder_customer").select();  //Focus shifts to Customer.
 	    }
 	}
@@ -2222,7 +2222,7 @@ if (event.which == 13) {
               return false;
             }
             var urlcustsup = "/customersuppliers?action=getallsups";
-            if ($("#status").val() == '15') {
+            if ($("#status").val() == '19') {
 		urlcustsup = "/customersuppliers?action=getallcusts";
             }
 	      else {
