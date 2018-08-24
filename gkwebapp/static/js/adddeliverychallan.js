@@ -2472,6 +2472,19 @@ else {
      $('#salesorderdiv').html("");
    });
 
+    var tax = {};
+    var cess = {};
+    var contents = {};
+    var freeqty = {};
+    var stock = {};
+    var items = {};
+    var discount = {};
+    var delchaltotal = 0.00;
+    var productcodes = [];
+    var productqtys = [];
+    var ppu;  
+    var consignee = {};
+
     $("#deliverychallan_save").click(function(event) {
 	// save event for saving the delivery note
 	event.stopPropagation();
@@ -2590,18 +2603,6 @@ else {
 	    }
 	}
 
-    var tax = {};
-    var cess = {};
-    var contents = {};
-    var freeqty = {};
-    var stock = {};
-    var items = {};
-    var discount = {};
-    var delchaltotal = 0.00;
-    var productcodes = [];
-    var productqtys = [];
-    var ppu;  
-    var consignee = {};
       
     if($("#consigneename").val() != ""){
 	consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -2613,7 +2614,8 @@ else {
     }
       
 	//------------VAT Product Values---------------//
-      if ($("#taxapplicable").val() == 22) {
+	if ($("#taxapplicable").val() == 22) {
+	  productcodes = [];
 	  for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	      productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
 	      if ($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(0) select option:selected").val() == "") {
@@ -2842,43 +2844,48 @@ else {
 	    }
 	}
 	
-        var form_data = new FormData();
-    form_data.append("custid", $("#deliverychallan_customer option:selected").val());
-    form_data.append("dcno", $("#deliverychallan_challanno").val());
-    form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
-    form_data.append("inout", $("#status").val());
-    form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
-    form_data.append("tax", JSON.stringify(tax));
-    form_data.append("cess", JSON.stringify(cess));
-    form_data.append("delchaltotal",delchaltotal);
-    form_data.append("freeqty", JSON.stringify(freeqty));
-    form_data.append("discount", JSON.stringify(discount));
-    form_data.append("taxflag", $("#taxapplicable").val());
-    form_data.append("inoutflag",$("#status").val());
-    form_data.append("contents", JSON.stringify(contents));	
-    form_data.append("orgstategstin",$("#orggstin").text());	
-    if($("#consigneename").val() != ""){
-	form_data.append("consignee", JSON.stringify(consignee));
-    }
+	$('.modal-backdrop').remove();
+	$('.modal').modal('hide');
+	$('#confirm_yes').modal('show');	
+    });
+    $('#dc_save_yes').click(function (e){
+	var form_data = new FormData();
+	form_data.append("custid", $("#deliverychallan_customer option:selected").val());
+	form_data.append("dcno", $("#deliverychallan_challanno").val());
+	form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());
+	form_data.append("inout", $("#status").val());
+	form_data.append("noofpackages", $('#deliverychallan_noofpackages').val());
+	form_data.append("tax", JSON.stringify(tax));
+	form_data.append("cess", JSON.stringify(cess));
+	form_data.append("delchaltotal",delchaltotal);
+	form_data.append("freeqty", JSON.stringify(freeqty));
+	form_data.append("discount", JSON.stringify(discount));
+	form_data.append("taxflag", $("#taxapplicable").val());
+	form_data.append("inoutflag",$("#status").val());
+	form_data.append("contents", JSON.stringify(contents));	
+	form_data.append("orgstategstin",$("#orggstin").text());	
+	if($("#consigneename").val() != ""){
+	    form_data.append("consignee", JSON.stringify(consignee));
+	}
 	form_data.append("modeoftransport", $('#transportationmode').val());
 	form_data.append("vehicleno", $("#vehicleno").val());
-      if ($("#status").val() == 15) {
-	  form_data.append("issuername", $("#invoice_issuer_name").val());
-	  form_data.append("designation", $("#invoice_issuer_designation").val());
-      }
-    if ($("#deliverychallan_godown option").length!=0){
-    	form_data.append("goid", $("#deliverychallan_godown option:selected").val());
-    }
+	if ($("#status").val() == 15) {
+	    form_data.append("issuername", $("#invoice_issuer_name").val());
+	    form_data.append("designation", $("#invoice_issuer_designation").val());
+	}
+	if ($("#deliverychallan_godown option").length!=0){
+    	    form_data.append("goid", $("#deliverychallan_godown option:selected").val());
+	}
 
-      //Delivery In
-      if ($("#status").val() == 9) {
-	  form_data.append("taxstate", $("#invoicestate option:selected").val());
-	  form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
-      }//Delivery Out
-      else if ($("#status").val() ==  15) {
-	  form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
-	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
-      }
+	//Delivery In
+	if ($("#status").val() == 9) {
+	    form_data.append("taxstate", $("#invoicestate option:selected").val());
+	    form_data.append("sourcestate", $("#deliverychallan_customerstate option:selected").val());
+	}//Delivery Out
+	else if ($("#status").val() ==  15) {
+	    form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
+	    form_data.append("sourcestate", $("#invoicestate option:selected").val());
+	}
 
 	var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
 	if (dateofsupply == "") {
@@ -2887,12 +2894,12 @@ else {
 	else {
 	    form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
 	}
-    //form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
-    form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
-      var files = $("#my-file-selector")[0].files;
-      var filelist = [];
-      for (let i = 0; i < files.length; i++) {
-	  if (files[i].type != 'image/jpeg') {
+	//form_data.append("products", JSON.stringify(products));// a list always needs to be stringified into json before sending it ahead
+	form_data.append("dcflag", $("#deliverychallan_consignment option:selected").val());
+	var files = $("#my-file-selector")[0].files;
+	var filelist = [];
+	for (let i = 0; i < files.length; i++) {
+	    if (files[i].type != 'image/jpeg') {
 		$("#image-alert").alert();
 		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
 		    $("#image-alert").hide();
@@ -2900,12 +2907,8 @@ else {
 		$('#my-file-selector').focus();
 		return false;
 	    }
-	form_data.append("file"+i,files[i]);
-      }
-	event.preventDefault();
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-	$('#confirm_yes').modal('show').one('click', '#dc_save_yes', function (e){
+	    form_data.append("file"+i,files[i]);
+	}
         // modal opened for save confirmation as delivery note once created cannot be edited later
     $.ajax({ //ajax call for saving the delivery note
       url: '/deliverychallan?action=save',
@@ -2970,7 +2973,6 @@ else {
       console.log("complete");
     });
     return false;
-  });
   });
   $("#confirm_yes").on('shown.bs.modal', function(event) {
       // on opening of modal the focus should be by efault on the no option so this event
