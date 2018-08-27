@@ -840,6 +840,7 @@ $(document).ready(function() {
 	    event.preventDefault();
 
 	    if($("#consigneename").val() == "" && $("#consigneeaddress").val() != ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 		$("#consignee-name-blank-alert").alert();
 		$("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#consignee-name-blank-alert").hide();
@@ -847,6 +848,7 @@ $(document).ready(function() {
 		$("#consigneename").focus().select();
 		return false;
 	    }else if($("#consigneename").val() != "" && $("#consigneeaddress").val() == ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 		$("#consignee-add-blank-alert").alert();
 		$("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#consignee-add-blank-alert").hide();
@@ -2396,25 +2398,243 @@ if (event.which == 13) {
       return false;
     }
 
+      //Validation for Address in sale salesorder.
+      if($("#originaddress").val() == ""){
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	  $("#address-blank-alert").alert();
+          $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#address-blank-alert").hide();
+	  });
+	  $("#originaddress").focus();
+	  return false;
+      }
+
+      if ($("#purchaseorder_issuer_name").val() == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	  $("#issuer-blank-alert").alert();
+	  $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#issuer-blank-alert").hide();
+	  });
+	  $("#purchaseorder_issuer_name").focus().select();
+	  return false;
+      }
+
+      if ($("#purchaseorder_issuer_designation").val() == "") {
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	  $("#issuer-blank-alert").alert();
+	  $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      $("#issuer-blank-alert").hide();
+	  });
+	  $("#purchaseorder_issuer_designation").focus().select();
+	  return false;
+      }
+      
       if ($.trim($('#salesorder_customer option:selected').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-      $("#custsup-blank-alert").alert();
-      $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-        $("#custsup-blank-alert").hide();
-      });
-      $('#salesorder_customer').focus();
-      return false;
-    }
+	  $("#custsup-blank-alert").alert();
+	  $("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#custsup-blank-alert").hide();
+	  });
+	  $('#salesorder_customer').focus();
+	  return false;
+      }
+      
       if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-          $("#consignee-blank-alert").alert();
-          $("#consignee-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#consignee-blank-alert").hide();
+          $("#consignee-name-blank-alert").alert();
+          $("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#consignee-name-blank-alert").hide();
           });
           $('#consigneename').focus();
           return false;
+      }else if($.trim($('#consigneename').val()) != "" && $.trim($("#consigneeaddress").val()) == ""){
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+          $("#consignee-add-blank-alert").alert();
+          $("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#consignee-add-blank-alert").hide();
+          });
+          $('#consigneeaddress').focus();
+          return false;
       }
 
+      var gstinstring = $("#gstinconsignee").val();
+      if(gstinstring != ""){
+	  var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	  var alfhanum = /^[0-9a-zA-Z]+$/;
+  	  if(gstinstring.length !=15){
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	      $("#gstin-improper-alert").alert();
+	      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#gstin-improper-alert").hide();
+	      });
+	      $("#gstinconsignee").focus();
+  	      return false;
+	  }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	      $("#gstin-improper-alert").alert();
+	      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#gstin-improper-alert").hide();
+	      });
+	      $("#gstinconsignee").focus();
+	      return false;
+	  }
+      }
+      
+      var psflag = $("#status").val();
+      if($("#consigneename").val() != ""){
+	  consignee["consigneename"] = $.trim($("#consigneename").val());
+          consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
+          consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
+          consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
+          consignee["consigneestate"] = $.trim($("#consigneestate").val());
+          consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+      }
+      bankdetails["accountno"] = $.trim($("#accountno").val());
+      bankdetails["bankname"] = $.trim($("#bankname").val());
+      bankdetails["ifsc"] = $.trim($("#ifsc").val());
+      bankdetails["branch"] = $.trim($("#branch").val());
+      if ($("#taxapplicable").val() == 22) {
+	  productcodes = [];
+    for (let i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
+	productqtys.push(parseFloat($(".salesorder_product_quantity_vat:eq(" + i + ")").val()));
+	if ($(".product_name_vat:eq(" + i + ") option:selected").val() == "") {
+	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+        $("#product-blank-alert").alert();
+        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#product-blank-alert").hide();
+        });
+        $(".product_name_vat:eq(" + i + ")").focus();
+        return false;
+      }
+      for (productcode of productcodes) {
+        if ($(".product_name_vat:eq(" + i + ")").val() == productcode) {
+          $("#product-duplicate-alert").alert();
+          $("#product-duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+            $("#product-duplicate-alert").hide();
+          });
+          $(".product_name_vat:eq(" + i + ")").focus();
+          return false;
+        }
+      }
+	calculatevataxamt(i);
+      productcodes.push($(".product_name_vat:eq(" + i + ")").val());
+
+      var productcode = $(".product_name_vat:eq(" + i + ")").val();
+	let quantity = parseFloat($(".salesorder_product_quantity_vat:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_freequantity_vat:eq(" + i + ")").val());
+	if (parseFloat(quantity) === 0.00) {
+	      $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	      $("#quantity-blank-alert").alert();
+	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		  $("#quantity-blank-alert").hide();
+	      });
+	      $(".salesorder_product_quantity_vat:eq(" + i + ")").focus().select();
+	      return false;
+	  }
+	if (parseFloat($('.salesorder_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.salesorder_product_quantity_vat:eq(' + i + ')').val()) > 0) {
+	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	    $("#price-blank-alert").alert();
+            $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$("#price-blank-alert").hide();
+		$('.salesorder_product_per_price_vat:eq(' + i + ')').focus().select();
+            });
+	    return false;   
+	}
+	if (parseFloat(parseFloat($('.salesorder_product_discount_vat:eq('+ i +')').val()).toFixed(2)) > (parseFloat(parseFloat($('.salesorder_product_per_price_vat:eq('+ i +')').val()).toFixed(2)) * parseFloat(parseFloat($('.salesorder_product_quantity_vat:eq('+ i +')').val()).toFixed(2)))) {
+	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".salesorder_product_discount_vat:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	}
+      if ($(".salesorder_product_freequantity_vat:eq(" + i + ")").val() == "") {
+        $(".salesorder_product_freequantity_vat:eq(" + i + ")").val(0.00);
+      }
+	if (parseFloat(quantity) > 0) {
+	    let obj = {};
+            obj["rateperunit"] = $.trim($(".salesorder_product_per_price_vat:eq(" + i + ")").val());
+	    obj["packages"] = $.trim($(".salesorder_product_noofpackages_vat:eq(" + i + ")").val());
+            obj["quantity"] = $.trim($(".salesorder_product_quantity_vat:eq(" + i + ")").val());
+            tax[productcode] = $.trim($(".salesorder_product_tax_rate_vat:eq(" + i + ")").val());
+	    schedule[productcode] = obj;
+            freeqty[productcode] = $.trim($(".salesorder_product_freequantity_vat:eq(" + i + ")").val());
+	    discount[productcode] = $.trim($(".salesorder_product_discount_vat:eq(" + i + ")").val());
+	}
+    }
+	salesordertotal = $.trim($("#total_product_vat").val());
+
+    }
+
+      else if ($("#taxapplicable").val() == 7) {
+	  for (let i = 0; i < $("#salesorder_product_table_gst tbody tr").length; i++) {
+	      if ($(".product_name_gst:eq(" + i + ") option:selected").val() == "") {
+		  $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		  $("#product-blank-alert").alert();
+		  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#product-blank-alert").hide();
+		  });
+		  $(".product_name_gst:eq(" + i + ")").focus();
+		  return false;
+	      }
+	      
+	      let quantity = parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_freequantity_gst:eq(" + i + ")").val());
+	      if (parseFloat(quantity) == 0.00 && $(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == '7') {
+		  $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+		  $("#quantity-blank-alert").alert();
+		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		      $("#quantity-blank-alert").hide();
+		  });
+		  $(".salesorder_product_quantity_gst:eq(" + i + ")").focus().select();
+		  return false;
+	      }
+	      if ($(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == 7) {
+	    if (parseFloat(parseFloat($(".salesorder_product_discount_gst:eq(" + i + ")").val()).toFixed(2)) > (parseFloat(parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()).toFixed(2)) * parseFloat(parseFloat($(".salesorder_product_per_price_gst:eq(" + i + ")").val()).toFixed(2)))) {
+            $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".salesorder_product_discount_gst:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	else{
+	    if (parseFloat(parseFloat($(".salesorder_product_discount_gst:eq(" + i + ")").val()).toFixed(2)) > parseFloat(parseFloat($(".salesorder_product_per_price_gst:eq(" + i + ")").val()).toFixed(2))) {
+            $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".salesorder_product_discount_vat:eq(" + i + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	}
+	      if (parseFloat($('.salesorder_product_per_price_gst:eq(' + i + ')').val()) == 0 && parseFloat($('.salesorder_product_quantity_gst:eq(' + i + ')').val()) > 0) {
+          $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
+          $("#price-blank-alert").alert();
+          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#price-blank-alert").hide();
+	      $('.salesorder_product_per_price_gst:eq(' + i + ')').focus().select();
+          });
+	  return false;   
+	}
+	      calculategstaxamt(i);
+	      productqtys.push(parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()));
+	      let obj = {};
+	      productcode = $(".product_name_gst:eq(" + i + ")").val();
+	      obj["rateperunit"] = $(".salesorder_product_per_price_gst:eq(" + i + ")").val();
+	      obj["packages"] = $(".salesorder_product_noofpackages_gst:eq(" + i + ")").val();
+	      obj["quantity"] = $(".salesorder_product_quantity_gst:eq(" + i + ")").val();
+	      schedule[productcode] = obj;
+	      tax[productcode] = parseFloat($(".salesorder_product_sgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_cgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_igstrate:eq(" + i + ")").val());
+	      cess[productcode] = parseFloat($(".salesorder_product_cessrate:eq(" + i + ")").val());
+	      freeqty[productcode] = $(".salesorder_product_freequantity_gst:eq(" + i + ")").val();
+	      discount[productcode] = $(".salesorder_product_discount_gst:eq(" + i + ")").val();
+	  }
+	  salesordertotal = $.trim($('#total_product_gst').html());
+      }
+      
       var supplydatestring = $("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val();
       if ((supplydatestring.length == 8) && (!Date.parseExact(supplydatestring, "ddMMyyyy"))) {
 	  $("#supplydate-alert").alert();
@@ -2456,161 +2676,6 @@ if (event.which == 13) {
 	      $("#accountno").focus();
 	      return false;
 	  }
-      }
-	      
-      //Validation for Address in sale salesorder.
-	  if($("#originaddress").val() == ""){
-	      $("#address-blank-alert").alert();
-              $("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#address-blank-alert").hide();
-	      });
-	      $("#originaddress").focus();
-	      return false;
-	  }
-      
-      var psflag = $("#status").val();
-      if($("#consigneename").val() != ""){
-	  consignee["consigneename"] = $.trim($("#consigneename").val());
-          consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
-          consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
-          consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
-          consignee["consigneestate"] = $.trim($("#consigneestate").val());
-          consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
-      }
-      bankdetails["accountno"] = $.trim($("#accountno").val());
-      bankdetails["bankname"] = $.trim($("#bankname").val());
-      bankdetails["ifsc"] = $.trim($("#ifsc").val());
-      bankdetails["branch"] = $.trim($("#branch").val());
-    if ($("#taxapplicable").val() == 22) {
-    for (let i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
-	productqtys.push(parseFloat($(".salesorder_product_quantity_vat:eq(" + i + ")").val()));
-	if ($(".product_name_vat:eq(" + i + ") option:selected").val() == "") {
-        $("#product-blank-alert").alert();
-        $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-          $("#product-blank-alert").hide();
-        });
-        $(".product_name_vat:eq(" + i + ")").focus();
-        return false;
-      }
-      for (productcode of productcodes) {
-        if ($(".product_name_vat:eq(" + i + ")").val() == productcode) {
-          $("#product-duplicate-alert").alert();
-          $("#product-duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-            $("#product-duplicate-alert").hide();
-          });
-          $(".product_name_vat:eq(" + i + ")").focus();
-          return false;
-        }
-      }
-	calculatevataxamt(i);
-      productcodes.push($(".product_name_vat:eq(" + i + ")").val());
-
-      var productcode = $(".product_name_vat:eq(" + i + ")").val();
-	let quantity = parseFloat($(".salesorder_product_quantity_vat:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_freequantity_vat:eq(" + i + ")").val());
-	  if (parseFloat(quantity) === 0.00) {
-	      $("#quantity-blank-alert").alert();
-	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#quantity-blank-alert").hide();
-	      });
-	      $(".salesorder_product_quantity_vat:eq(" + i + ")").focus().select();
-	      return false;
-	  }
-	if (parseFloat($('.salesorder_product_per_price_vat:eq(' + i + ')').val()) == 0.00 && parseFloat($('.salesorder_product_quantity_vat:eq(' + i + ')').val()) > 0) {
-	 $("#price-blank-alert").alert();
-          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#price-blank-alert").hide();
-	      $('.salesorder_product_per_price_vat:eq(' + i + ')').focus().select();
-          });
-	  return false;   
-	}
-	if (parseFloat(parseFloat($('.salesorder_product_discount_vat:eq(" + i + ")').val()).toFixed(2)) > (parseFloat(parseFloat($('.salesorder_product_per_price_vat:eq(" + i + ")').val()).toFixed(2)) * parseFloat(parseFloat($('.salesorder_product_quantity_vat:eq(" + i + ")').val()).toFixed(2)))) {
-	    $("#discount-more-alert").alert();
-	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$(".salesorder_product_discount_vat:eq(" + i + ")").focus().select();
-		  $("#discount-more-alert").hide();
-	      });
-	    return false;
-	}
-      if ($(".salesorder_product_freequantity_vat:eq(" + i + ")").val() == "") {
-        $(".salesorder_product_freequantity_vat:eq(" + i + ")").val(0.00);
-      }
-	if (parseFloat(quantity) > 0) {
-	    let obj = {};
-            obj["rateperunit"] = $.trim($(".salesorder_product_per_price_vat:eq(" + i + ")").val());
-	    obj["packages"] = $.trim($(".salesorder_product_noofpackages_vat:eq(" + i + ")").val());
-            obj["quantity"] = $.trim($(".salesorder_product_quantity_vat:eq(" + i + ")").val());
-            tax[productcode] = $.trim($(".salesorder_product_tax_rate_vat:eq(" + i + ")").val());
-	    schedule[productcode] = obj;
-            freeqty[productcode] = $.trim($(".salesorder_product_freequantity_vat:eq(" + i + ")").val());
-	    discount[productcode] = $.trim($(".salesorder_product_discount_vat:eq(" + i + ")").val());
-	}
-    }
-	salesordertotal = $.trim($("#total_product_vat").val());
-
-    }
-
-      else if ($("#taxapplicable").val() == 7) {
-	  for (let i = 0; i < $("#salesorder_product_table_gst tbody tr").length; i++) {
-	      if ($(".product_name_gst:eq(" + i + ") option:selected").val() == "") {
-		  $("#product-blank-alert").alert();
-		  $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		      $("#product-blank-alert").hide();
-		  });
-		  $(".product_name_gst:eq(" + i + ")").focus();
-		  return false;
-	      }
-	      
-	      let quantity = parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_freequantity_gst:eq(" + i + ")").val());
-	      if (parseFloat(quantity) == 0.00 && $(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == '7') {
-		  $("#quantity-blank-alert").alert();
-		  $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		      $("#quantity-blank-alert").hide();
-		  });
-		  $(".salesorder_product_quantity_gst:eq(" + i + ")").focus().select();
-		  return false;
-	      }
-	      if ($(".product_name_gst:eq(" + i + ") option:selected").attr("gsflag") == 7) {
-	    if (parseFloat(parseFloat($(".salesorder_product_discount_gst:eq(" + i + ")").val()).toFixed(2)) > (parseFloat(parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()).toFixed(2)) * parseFloat(parseFloat($(".salesorder_product_per_price_gst:eq(" + i + ")").val()).toFixed(2)))) {
-	    $("#discount-more-alert").alert();
-	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$(".salesorder_product_discount_gst:eq(" + i + ")").focus().select();
-		  $("#discount-more-alert").hide();
-	      });
-	    return false;
-	    }
-	}
-	else{
-	    if (parseFloat(parseFloat($(".salesorder_product_discount_gst:eq(" + i + ")").val()).toFixed(2)) > parseFloat(parseFloat($(".salesorder_product_per_price_gst:eq(" + i + ")").val()).toFixed(2))) {
-	    $("#discount-more-alert").alert();
-	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
-		$(".salesorder_product_discount_vat:eq(" + i + ")").focus().select();
-		  $("#discount-more-alert").hide();
-	      });
-	    return false;
-	    }
-	}
-	      if (parseFloat($('.salesorder_product_per_price_gst:eq(' + i + ')').val()) == 0 && parseFloat($('.salesorder_product_quantity_gst:eq(' + i + ')').val()) > 0) {
-	 $("#price-blank-alert").alert();
-          $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-              $("#price-blank-alert").hide();
-	      $('.salesorder_product_per_price_gst:eq(' + i + ')').focus().select();
-          });
-	  return false;   
-	}
-	      calculategstaxamt(i);
-	      productqtys.push(parseFloat($(".salesorder_product_quantity_gst:eq(" + i + ")").val()));
-	      let obj = {};
-	      productcode = $(".product_name_gst:eq(" + i + ")").val();
-	      obj["rateperunit"] = $(".salesorder_product_per_price_gst:eq(" + i + ")").val();
-	      obj["packages"] = $(".salesorder_product_noofpackages_gst:eq(" + i + ")").val();
-	      obj["quantity"] = $(".salesorder_product_quantity_gst:eq(" + i + ")").val();
-	      schedule[productcode] = obj;
-	      tax[productcode] = parseFloat($(".salesorder_product_sgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_cgstrate:eq(" + i + ")").val()) + parseFloat($(".salesorder_product_igstrate:eq(" + i + ")").val());
-	      cess[productcode] = parseFloat($(".salesorder_product_cessrate:eq(" + i + ")").val());
-	      freeqty[productcode] = $(".salesorder_product_freequantity_gst:eq(" + i + ")").val();
-	      discount[productcode] = $(".salesorder_product_discount_gst:eq(" + i + ")").val();
-	  }
-	  salesordertotal = $.trim($('#total_product_gst').html());
       }
       
     $('.modal-backdrop').remove();
@@ -2745,8 +2810,9 @@ if (event.which == 13) {
     $("#salesorder_deliverynote").focus();
   });
   $(document).off('click', '#salesorder_reset').on('click', '#salesorder_reset', function(event) {
-    event.preventDefault();
-    /* Act on the event */
+      event.preventDefault();
+      /* Act on the event */
+      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
     if ($("#status").val() == '9') {
       $("#purchaseorder_record").click();
 
