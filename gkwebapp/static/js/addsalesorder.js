@@ -787,7 +787,31 @@ $(document).ready(function() {
     $("#gstinconsignee").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+	    
 	    if ($("#taxapplicable").val() == 7) {
+		var gstinstring = $("#gstinconsignee").val();
+		if(gstinstring != ""){
+		    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+		    var alfhanum = /^[0-9a-zA-Z]+$/;
+  		    if(gstinstring.length !=15){
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#gstin-improper-alert").alert();
+			$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#gstin-improper-alert").hide();
+			});
+			$("#gstinconsignee").focus();
+  			return false;
+		    }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#gstin-improper-alert").alert();
+			$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+			    $("#gstin-improper-alert").hide();
+			});
+			$("#gstinconsignee").focus();
+			return false;
+		    }
+		}
+		
 		if ($("#consigneename").is(":disabled")){
 		    $(".salesorder_product_quantity_gst:first").focus().select();
 		} else {
@@ -814,6 +838,23 @@ $(document).ready(function() {
     $("#consigneeaddress").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+
+	    if($("#consigneename").val() == "" && $("#consigneeaddress").val() != ""){
+		$("#consignee-name-blank-alert").alert();
+		$("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#consignee-name-blank-alert").hide();
+		});
+		$("#consigneename").focus().select();
+		return false;
+	    }else if($("#consigneename").val() != "" && $("#consigneeaddress").val() == ""){
+		$("#consignee-add-blank-alert").alert();
+		$("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#consignee-add-blank-alert").hide();
+		});
+		$("#consigneeaddress").focus().select();
+		return false;
+	    }
+	    
 	    if ($("#taxapplicable").val() == 7) {
 		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
 	    }
@@ -858,17 +899,27 @@ $(document).ready(function() {
 	}
     });
     $(document).off("change","#gstinconsignee").on("change","#gstinconsignee",function(event) {
-        var gstin = $("#gstinconsignee").val();
-        var gstnint = parseInt(gstin[0] + gstin[1]);
-        if (gstin != ""){
-	    if(!($.isNumeric(gstnint)) || gstnint > 37 || gstnint < 0 || gstin.length !=15){
-            $("#gstin-improper-alert").alert();
-            $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#gstin-improper-alert").hide();
-                $('#gstinconsignee').focus().select();
-            });
-            return false;
-        }
+	var gstinstring = $("#gstinconsignee").val();
+	if(gstinstring != ""){
+	    var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	    var alfhanum = /^[0-9a-zA-Z]+$/;
+  	    if(gstinstring.length !=15){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-alert").hide();
+		});
+		$("#gstinconsignee").focus();
+  		return false;
+	    }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#gstin-improper-alert").alert();
+		$("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
+		    $("#gstin-improper-alert").hide();
+		});
+		$("#gstinconsignee").focus();
+		return false;
+	    }
 	}
     });
 
@@ -2273,11 +2324,22 @@ if (event.which == 13) {
 	}
     });
 
+    var tax = {};
+    var cess = {};
+    var schedule = {};
+    var freeqty = {};
+    var discount = {};
+    var consignee = {};
+    var bankdetails = {};
+    var salesordertotal = 0.00;
+    var productcodes = [];
+    var productqtys = [];
+    var ppu;
     var allow = 1;
   $("#salesorder_save").click(function(event) {
       event.preventDefault();
       event.stopPropagation();
-    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+      var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
       if ($.trim($('#salesorder_challanno').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#challanno-blank-alert").alert();
@@ -2405,17 +2467,7 @@ if (event.which == 13) {
 	      $("#originaddress").focus();
 	      return false;
 	  }
-      var tax = {};
-      var cess = {};
-      var schedule = {};
-      var freeqty = {};
-      var discount = {};
-      var consignee = {};
-      var bankdetails = {};
-      var salesordertotal = 0.00;
-      var productcodes = [];
-      var productqtys = [];
-      var ppu;
+      
       var psflag = $("#status").val();
       if($("#consigneename").val() != ""){
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -2560,83 +2612,74 @@ if (event.which == 13) {
 	  }
 	  salesordertotal = $.trim($('#total_product_gst').html());
       }
-      //For sales salesorder store address.
-      var form_data = new FormData();
-      form_data.append("csid", $("#salesorder_customer option:selected").val());
-      if ($("#togodown option:selected").val() > 0) {
-	  form_data.append("togodown", $("#togodown option:selected").val());
-      }
-      form_data.append("orderno", $("#salesorder_challanno").val());
-      form_data.append("payterms", $("#payterms").val());
-      form_data.append("creditperiod", $("#creditperiod").val());
-      form_data.append("orderdate", $.trim($("#salesorder_year").val() + '-' + $("#salesorder_month").val() + '-' + $("#salesorder_date").val()));
-      form_data.append("schedule", JSON.stringify(schedule));
-      form_data.append("tax", JSON.stringify(tax));
-      form_data.append("cess", JSON.stringify(cess));
-      form_data.append("orgstategstin",$("#orggstin").text() );
-      form_data.append("purchaseordertotal", salesordertotal);
-      if ($("#status").val() == 16) {
-	  form_data.append("address", $("#originaddress").val());
-	  form_data.append("issuername", $("#purchaseorder_issuer_name").val());
-	  form_data.append("designation", $("#purchaseorder_issuer_designation").val());
-      }
-      form_data.append("taxstate", $("#salesorder_customerstate option:selected").val());
-      form_data.append("sourcestate", $("#salesorderstate option:selected").val());
-      form_data.append("freeqty", JSON.stringify(freeqty));
-      form_data.append("discount", JSON.stringify(discount));
-      form_data.append("consignee", JSON.stringify(consignee));
-      //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
-        if ($("#chkcash").is(":checked")) {
-	    //Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
+      
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
+	if (allow == 1){
+	    var form_data = new FormData();
+	    form_data.append("csid", $("#salesorder_customer option:selected").val());
+	    if ($("#togodown option:selected").val() > 0) {
+		form_data.append("togodown", $("#togodown option:selected").val());
+	    }
+	    form_data.append("orderno", $("#salesorder_challanno").val());
+	    form_data.append("payterms", $("#payterms").val());
+	    form_data.append("creditperiod", $("#creditperiod").val());
+	    form_data.append("orderdate", $.trim($("#salesorder_year").val() + '-' + $("#salesorder_month").val() + '-' + $("#salesorder_date").val()));
+	    form_data.append("schedule", JSON.stringify(schedule));
+	    form_data.append("tax", JSON.stringify(tax));
+	    form_data.append("cess", JSON.stringify(cess));
+	    form_data.append("orgstategstin",$("#orggstin").text() );
+	    form_data.append("purchaseordertotal", salesordertotal);
+	    if ($("#status").val() == 16) {
+		form_data.append("address", $("#originaddress").val());
+		form_data.append("issuername", $("#purchaseorder_issuer_name").val());
+		form_data.append("designation", $("#purchaseorder_issuer_designation").val());
+	    }
+	    form_data.append("taxstate", $("#salesorder_customerstate option:selected").val());
+	    form_data.append("sourcestate", $("#salesorderstate option:selected").val());
+	    form_data.append("freeqty", JSON.stringify(freeqty));
+	    form_data.append("discount", JSON.stringify(discount));
+	    form_data.append("consignee", JSON.stringify(consignee));
+	    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
+            if ($("#chkcash").is(":checked")) {
+		//Checking which radio button is clicked. if cash is selected then paymentmode is set to 3 (i.e. cash transaction)
 		form_data.append("paymentmode",3);   
-
-        } else {
-	    //If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
+            } else {
+		//If bank is selected then append both bankdetails and paymentmode = 2 (i.e. bank transaction).
 		form_data.append("bankdetails", JSON.stringify(bankdetails));
 		form_data.append("paymentmode",2);
             }
-      form_data.append("taxflag", $("#taxapplicable").val());
-      form_data.append("modeoftransport", $("#modeoftransport").val());
-      form_data.append("vehicleno", $("#vehicleno").val());
-      form_data.append("psflag",psflag);
-      form_data.append("pototalwords", $("#totalValueInWord").text());
-      var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
-      if (dateofsupply != "") {
-	  form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
-      }
-      if ($("#rev1radio").is(":checked")) {
-	  
-          form_data.append("reversecharge", 1);
-      }
-      else if ($("#rev2radio").is(":checked")) {	  
-          form_data.append("reversecharge", 0);
-      }
-
-      var files = $("#my-file-selector")[0].files;
-      var filelist = [];
-      for (var i = 0; i < files.length; i++) {
-	  if (files[i].type != 'image/jpeg') {
-		$("#image-alert").alert();
-		$("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#image-alert").hide();
-		});
-	      $('#my-file-selector').focus();
-		return false;
+	    form_data.append("taxflag", $("#taxapplicable").val());
+	    form_data.append("modeoftransport", $("#modeoftransport").val());
+	    form_data.append("vehicleno", $("#vehicleno").val());
+	    form_data.append("psflag",psflag);
+	    form_data.append("pototalwords", $("#totalValueInWord").text());
+	    var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
+	    if (dateofsupply != "") {
+		form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
 	    }
-	form_data.append("file" + i, files[i]);
-      }
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
+	    if ($("#rev1radio").is(":checked")) {  
+		form_data.append("reversecharge", 1);
+	    }
+	    else if ($("#rev2radio").is(":checked")) {	  
+		form_data.append("reversecharge", 0);
+	    }
+	    var files = $("#my-file-selector")[0].files;
+	    var filelist = [];
+	    for (var i = 0; i < files.length; i++) {
+		if (files[i].type != 'image/jpeg') {
+		    $("#image-alert").alert();
+		    $("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#image-alert").hide();
+		    });
+		    $('#my-file-selector').focus();
+		    return false;
+		}
+		form_data.append("file" + i, files[i]);
+	    }
 
-    $('#confirm_yes').modal('show').one('click', '#tn_save_no', function(e) {
-	for (var key of form_data.keys()) {
-	    form_data.delete(key);
-	}
-    });
-      
-    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
-	if (allow == 1){
-	    $.ajax({
+	$.ajax({
                 url: '/purchaseorder?action=save',
                 type: 'POST',
                 global: false,
