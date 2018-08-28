@@ -447,13 +447,12 @@
             </table>
           </div>
 	</div>
-	<div class="form-group">
-          <div class="form-group col-md-6 pull-right">
-	    {% if  projects %}
-              <label for="project">{% trans %}Pr<u>o</u>ject{% endtrans %} :</label>
-              <div class="form-group">
-
-		<select class="form-control input-sm" id="project" accesskey="o">
+	<div class=" row form-group">
+          <div class="form-group col-md-7 pull-right">
+	    {% if projects %}
+              <div class="row form-group">
+		<label for="project">{% trans %}Pr<u>o</u>ject{% endtrans %} :</label>
+		<select class="form-control input-sm" id="project" accesskey="o" style="width:82%">
 		  <option value="">{% trans %}None{% endtrans %}</option>
 		  {% for project in projects %}
 		    <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
@@ -461,7 +460,7 @@
 		</select>
               </div>
 	    {% endif %}
-            <div class="form-inline" >
+            <div class="row form-inline">
 	      <input  class="bankclass" id="bankdetails" type="checkbox">
               <label class="bankclass" for="bank" id="banklabel">{% trans %}Bank Details{% endtrans %}</label>
               <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
@@ -490,7 +489,7 @@
 	      <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
             </div>
           </div>
-          <div class="form-group pull-left col-md-6">
+          <div class="form-group pull-left col-md-5">
             <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
             <textarea class="form-control" name="narration" id="narration" value="{{lastdetails['narration']}}"  rows="2" cols="70" accesskey="t"></textarea>
           </div>

@@ -508,7 +508,7 @@ $(".businessmenu").keydown(function(event){
     $("#showviewledger").focus();
   });
   $('#administrationdropdown').on('shown.bs.dropdown', function () {
-    $("#createuser").focus();
+    $("#user").focus();
   });
     
   $('#helpdropdown').on('shown.bs.dropdown', function () {
