@@ -1318,7 +1318,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#transportationmode").focus().click();
       }
   });
 
@@ -1391,7 +1391,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#transportationmode").focus().click();
       }
   });
 
@@ -1483,7 +1483,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#transportationmode").focus().click();
       }
   });
 
@@ -1546,7 +1546,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkbank").focus().click();
+      $("#transportationmode").focus().click();
     }
   });
 
@@ -1610,7 +1610,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkbank").focus().click();
+      $("#chkpaymentmode").focus().click();
     }
   });
 
@@ -1667,7 +1667,7 @@ $(document).ready(function() {
     if (event.which == 27) {
       event.preventDefault();
 	calculatevataxamt(curindex1);
-	$("#chkbank").focus().click();
+	$("#chkpaymentmode").focus().click();
     } else if (event.which == 13) {
 	event.preventDefault();
 	calculatevataxamt(curindex1);
@@ -1724,7 +1724,7 @@ $(document).ready(function() {
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
 	  }
       else {
-          $("#chkbank").focus().click();
+          $("#chkpaymentmode").focus().click();
       }
       }
     }else if (event.which == 190 && event.shiftKey) {
@@ -1926,7 +1926,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -1999,7 +1999,7 @@ $(document).ready(function() {
       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -2100,7 +2100,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#chkbank").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -2179,7 +2179,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkbank").focus().click();
+      $("#chkpaymentmode").focus().click();
     }
   });
 
@@ -2329,7 +2329,7 @@ if (event.which == 13) {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#chkbank").focus().click();
+      $("#chkpaymentmode").focus().click();
     }
 });
 
@@ -3112,14 +3112,14 @@ if (event.which == 13) {
             });
     });
 
-    $(document).off('keydown', '#chkbank').on('keydown', '#chkbank', function(event) {
+    $(document).off('keydown', '#chkpaymentmode').on('keydown', '#chkpaymentmode', function(event) {
         if(event.which==13){
-        $("#accountno").focus();
-        }
-    });
-    $(document).off('keydown', '#chkcash').on('keydown', '#chkcash', function(event) {
-        if(event.which==13){
-        $("#transportationmode").focus();
+	    if ($("#accountno").is(":hidden")) {
+		$("#transportationmode").focus();
+	    }
+	    else {
+		$("#accountno").focus();
+	    }
         }
     });
 
