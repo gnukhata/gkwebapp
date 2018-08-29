@@ -2948,6 +2948,8 @@ else {
             return false;
 	}
 	else if(resp["gkstatus"] == 1) {
+	    $('.modal-backdrop').remove();
+	    $('.modal').modal('hide');
 	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
             $("#deliverychallan_challanno").focus();
             $("#duplicate-alert").alert();
@@ -2957,6 +2959,8 @@ else {
             return false;
 	}
 	else {
+	    $('.modal-backdrop').remove();
+	    $('.modal').modal('hide');
 	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
             $("#deliverychallan_purchaseorder").focus();
             $("#failure-alert").alert();
