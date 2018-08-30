@@ -14,70 +14,96 @@
 		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
 		{% endif %}
 	{% endif %}
-<style type="text/css">
-.shadow {
-	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-#unbill_del_table td {
-	font-size: 75%;
-	padding: 4 !important;
-	margin: 4 !important;
-}
+	<style type="text/css">
+	 .shadow {
+	     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+	 }
+	 #unbill_del_table td {
+	     font-size: 75%;
+	     padding: 4 !important;
+	     margin: 4 !important;
+	 }
 
-#unbill_del_table th {
-	font-size: 85%;
-}
-.card-view .title {
-		font-weight: bold;
-		display: inline-block;
-		min-width: 30%;
-		text-align: left !important;
-}
+	 #unbill_del_table th {
+	     font-size: 85%;
+	 }
+	 .card-view .title {
+	     font-weight: bold;
+	     display: inline-block;
+	     min-width: 30%;
+	     text-align: left !important;
+	 }
 
-#unbill_del_table tbody {
-		display:block;
-		height: calc(69vh);
-		overflow-y:scroll;
-}
-#unbill_del_table thead,#unbill_del_table tbody tr {
-		display:table;
-		width:100%;
-		table-layout:fixed;
-}
-#unbill_del_table thead {
-		width: calc( 99.1% )
-}
-.ralign{
-	text-align:right;
+	 #unbill_del_table tbody {
+	     display:block;
+	     height: calc(69vh);
+	     overflow-y:scroll;
+	 }
+	 #unbill_del_table thead,#unbill_del_table tbody tr {
+	     display:table;
+	     width:100%;
+	     table-layout:fixed;
+	 }
+	 #unbill_del_table thead {
+	     width: calc( 99.1% )
+	 }
+	 .ralign{
+	     text-align:right;
 
-}
-.cred{
-	color:red;
-}
-.calign{
-	text-align:center;
-}
-.smwrap{
-width:3%
-}
+	 }
+	 .cred{
+	     color:red;
+	 }
+	 .calign{
+	     text-align:center;
+	 }
+	 .smwrap{
+	     width:3%
+	 }
 
-.smwrap1{
-width:1.8%
-}
+	 .smwrap1{
+	     width:1.8%
+	 }
 
-.mdwrap{
-width:6%
-}
-.lngwrap{
-width:22%
-}
-.ewrap{
-	width:8%
-}
-
-</style>
+	 .mdwrap{
+	     width:6%
+	 }
+	 .lngwrap{
+	     width:22%
+	 }
+	 .ewrap{
+	     width:8%
+	 }
+	 .fixed-table td {
+	     font-size: 75%;
+	     padding: 4 !important;
+	     margin: 4 !important;
+	 }
+	 .fixed-table tbody {
+	     display:block;
+	     height: calc(100vh - 26.5em);
+	     overflow-y:scroll;
+	 }
+	 .fixed-table thead ,.fixed-table tbody tr {
+	     display:table;
+	     width:100%;
+	     table-layout:fixed;
+	 }
+	 .fixed-table thead {
+	     width: calc( 100% - 0.6em )
+	 }
+	 .fixed-table tbody tr,.fixed-table tfoot tr {
+	     display:table;
+	     width:100%;
+	     table-layout:fixed;
+	 }
+	 .table{
+	     margin-bottom:0px;
+	 }
+	</style>
 </head>
 <body>
+  <div id="report_delchal">
   <div class="col-xs-10 nopadding">
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
@@ -156,12 +182,30 @@ width:22%
 	      <button type="button" class="btn btn-sm btn-primary" id="printbutton" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
 		<button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
 	</span>
+  </div>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
 	<input type="hidden" id="modalindex" value=""></input>
 	<input type="hidden" id="del_unbilled_type" value="{{del_unbilled_type}}">
-	<div id="viewdc">
+
+	<div id="viewdeldiv" hidden>
+	  <div class="panel editblank">
+	    <div class="panel-body editblank">
+	      <div id="viewdc">
+		
+	      </div>
+	      <div id="printdc">
+		
+	      </div>
+	    </div>
+	  </div>
+	  <div class="col-sm-3 col-sm-offset-4" align="center" id="buttondiv">
+	    <button type="button" class="btn btn-sm btn-danger" id="backbutton" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+	    <button type="button" class="btn btn-sm btn-primary" id="print_button" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
+	    <button type="button" class="btn btn-sm btn-info" id="view_del_attachment" accesskey="w" style="display:none">{% trans %}Vie<u>w</u> Attachment{% endtrans %}</button>
+	  </div>
 	</div>
+	
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unbilled_deliveries_report.js')}}"></script>
 </body>
