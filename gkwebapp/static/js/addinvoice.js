@@ -1318,7 +1318,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').focus().select();
     }
       else if (event.which == 27) {
-	  $("#transportationmode").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -1391,7 +1391,7 @@ $(document).ready(function() {
       $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) input').focus().select();
     }
     else if (event.which == 27) {
-	  $("#transportationmode").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -1483,7 +1483,7 @@ $(document).ready(function() {
       event.preventDefault();
     }
     else if (event.which == 27) {
-	  $("#transportationmode").focus().click();
+	  $("#chkpaymentmode").focus().click();
       }
   });
 
@@ -1546,7 +1546,7 @@ $(document).ready(function() {
 
     } else if (event.which == 27) {
       event.preventDefault();
-      $("#transportationmode").focus().click();
+      $("#chkpaymentmode").focus().click();
     }
   });
 
