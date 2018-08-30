@@ -82,7 +82,7 @@ $(document).ready(function() {
 					}
 				})
 				.done(function(resp) {
-					$("#info").html(resp)
+				    $("#info").html(resp);
 				});
 
 	});
@@ -136,9 +136,29 @@ $(document).ready(function() {
 	    $("#viewdeldiv").show();
 	    $("#viewdc").html("");
 	    $("#viewdc").html(resp);
+
+	    if($("#status").val() == 9){
+		$("#print_button").hide();
+	    }else{
+		$("#print_button").show();
+	    }
+
+	    if($("#attachmentcount").val() > 0){
+		$("#view_del_attachment").show();
+	    }else{
+		$("#view_del_attachment").hide();
+	    }
 	});
     });
 
+    $("#backbutton").click(function(event){
+	$("#viewdc").html("");
+	$("#viewdeldiv").hide();
+	$('#report_delchal').show();
+	$('#unbill_del_table tbody tr:eq(' + curindex + ') td:eq(1) a').focus();
+        $('#unbill_del_table tbody tr:eq(' + curindex + ') td:eq(1) a').closest('tr').addClass('selected');
+    });
+    
 // Not used. For future reference.
 	function open_in_newtab(filename, text) {
 		var element = document.createElement('a');
@@ -243,29 +263,50 @@ $(".search").children(".form-control").keyup(function(event){
   });
 
 
-
-		$("#printbutton").click(function(event) {
-			// this function creates a spreadsheet of the report.
-		event.preventDefault();
-		var orgname = sessionStorage.getItem('orgn');
-		var orgtype = sessionStorage.getItem('orgt');
-		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
-		var xhr = new XMLHttpRequest();
-		xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.getItem('year1') + '&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
-		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-		xhr.responseType = 'blob';
-
-		xhr.onload = function(e) {
-  	if (this.status == 200) {
+    $("#print_button").click(function(event){
+	$.ajax({
+            url: '/deliverychallan?action=print',
+            type: 'POST',
+            dataType: 'html',
+            data: {"dcid":$("#dcid").val()},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        })
+        .done(function(resp) {
+            console.log("success");
+            $('#printdc').html(resp);
+	    $("#viewdc").hide();
+	    $("#buttondiv").hide();
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });
+    
+    $("#printbutton").click(function(event) {
+	// this function creates a spreadsheet of the report.
+	event.preventDefault();
+	var orgname = sessionStorage.getItem('orgn');
+	var orgtype = sessionStorage.getItem('orgt');
+	var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_unbilled_type='+ $("#del_unbilled_type").val();
+	var xhr = new XMLHttpRequest();
+	xhr.open('GET', '/deliverychallan?action=unbillspreadsheet&fystart='+sessionStorage.getItem('year1') + '&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
+	xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	xhr.responseType = 'blob';
+	
+	xhr.onload = function(e) {
+  	    if (this.status == 200) {
 		// if successfull a file will be served to the client.
-    // get binary data as a response
-    	var blob = this.response;
-	 		var url = window.URL.createObjectURL(blob);
-	    window.location.assign(url);
-  	}
-		};
-
+		// get binary data as a response
+    		var blob = this.response;
+	 	var url = window.URL.createObjectURL(blob);
+		window.location.assign(url);
+  	    }
+	};
 	xhr.send();
-
-});
+    });
 });
