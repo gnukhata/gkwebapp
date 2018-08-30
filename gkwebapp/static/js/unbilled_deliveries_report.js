@@ -110,44 +110,34 @@ $(document).ready(function() {
 		}
 });
 
-$(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
+    $(".del_unbilled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 	e.preventDefault();
 	var id = $(this).attr('data-value');
-	if (id=="")
-	{
+	if (id==""){
 		return false;
 	}
 	$("#modalindex").val($(this).index());
 	console.log("double click");
-	$.ajax(
-		{
-			type: "POST",
-			url: "/deliverychallan?action=showeditpopup",
-			global: false,
-			async: false,
-			datatype: "text/html",
-			data : {"id":id},
-			beforeSend: function(xhr)
-			{
-				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-			}
-		}
-	)
-	.done(function(resp)
-	{
-		console.log("response");
-		$("#viewdc").html("");
-		$('.modal-backdrop').remove();
-		$('.modal').modal('hide');
-		$("#viewdc").html(resp);
-		$('#myModal').modal('show');
-		$('#myModal').on('hidden.bs.modal', function (e)
-		{
-			$("#viewdc").html("");
-			$('.del_unbilled_table tbody tr:eq('+$("#modalindex").val()+') a').focus();
-		});
+	$.ajax({
+	    type: "POST",
+	    url: "/deliverychallan?action=showeditpopup",
+	    global: false,
+	    async: false,
+	    datatype: "text/html",
+	    data : {"dcid":id},
+	    beforeSend: function(xhr)
+	    {
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    }
+	})
+	.done(function(resp){
+	    console.log("response");
+	    $("#report_delchal").hide();
+	    $("#viewdeldiv").show();
+	    $("#viewdc").html("");
+	    $("#viewdc").html(resp);
 	});
-});
+    });
 
 // Not used. For future reference.
 	function open_in_newtab(filename, text) {
