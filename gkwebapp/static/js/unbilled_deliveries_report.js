@@ -1,3 +1,4 @@
+
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
@@ -286,6 +287,37 @@ $(".search").children(".form-control").keyup(function(event){
             console.log("complete");
         });
     });
+
+    $(document).off("click", "#view_del_attachment").on("click", "#view_del_attachment", function(event){
+        $.ajax({
+            url: '/deliverychallan?action=getattachment',
+            type: 'POST',
+            datatype: 'json',
+	    data: { "dcid": $("#dcid").val()},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            }
+        })
+        .done(function(resp) {
+	    var x = window.open();
+            if (x) {
+                x.focus();
+                x.document.open();
+                x.document.write(resp);
+                x.document.close();
+            } else {
+                alert('Please allow popups and retry');
+                x.close();
+            }
+            console.log("success");
+        })
+        .fail(function() {
+            console.log("error");
+        })
+        .always(function() {
+            console.log("complete");
+        });
+    });	
     
     $("#printbutton").click(function(event) {
 	// this function creates a spreadsheet of the report.
