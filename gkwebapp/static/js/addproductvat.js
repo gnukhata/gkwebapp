@@ -1003,6 +1003,9 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
   var nextindex1 = curindex1+1;
   var previndex1 = curindex1-1;
   if (event.which==13) {
+      if($(this).val() == ""){
+	  $(this).val(0);
+      }
     $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val(parseFloat($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()).toFixed(2));
       event.preventDefault();
     if($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()!=""){
@@ -1036,11 +1039,18 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
 	  return false;
       }
       }
-    
-    if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
-      $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-    }
-    else {
+
+      if($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) option:selected').val()=="" && $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(1) option:selected').val()=="" && $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()==0.00){
+	  if($("#godownflag").is(":visible")){
+	      $("#godownflag").focus().select();
+	  }else{
+	      $("#openingstock").focus();
+	  }
+      }
+      else if (curindex1 != ($("#product_tax_table tbody tr").length-1)) {
+	  $('#product_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+      }
+      else {
       if ($('#product_tax_table tbody tr:eq('+curindex1+') option:selected').val()=="") {
         $("#tax-name-blank-alert").alert();
         $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1049,7 +1059,7 @@ $(document).off("keydown",".tax_rate").on("keydown",".tax_rate",function(event)
         $('#product_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
         return false;
       }
-      if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()=="") {
+	if ($('#product_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()=="" || $('#product_tax_table tbody tr:eq('+ curindex1 +') td:eq(2) input').val() == 0.00) {
         $("#tax-rate-blank-alert").alert();
         $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#tax-rate-blank-alert").hide();
@@ -1540,9 +1550,17 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 	$('#product_tax_table tbody tr:eq('+cur_index+') td:eq(1) select').focus();
 	allow = false;
     }
+	    else if ($('#product_tax_table tbody tr:eq('+cur_index+') td:eq(2) input').val()=="" || $('#product_tax_table tbody tr:eq('+ cur_index +') td:eq(2) input').val() == 0.00) {
+            $("#tax-rate-blank-alert").alert();
+            $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		$("#tax-rate-blank-alert").hide();
+            });
+            $('#product_tax_table tbody tr:eq('+cur_index+') td:eq(2) input').focus();
+            allow = false;
+      }
     }
     var obj = {}; //A dictionary created
-    if ($.trim($(".tax_name",this).val())!="" || $.trim($(".tax_rate",this).val())!="" ) {
+    if ($.trim($(".tax_name",this).val())!="" && $.trim($(".tax_rate",this).val())!="" ) {
       //For each tax its details are being stored in a dictionary
 	obj.taxname =$.trim($("td:eq(0) select option:selected", this).val());
 	obj.state = $.trim($("td:eq(1) select option:selected", this).val());

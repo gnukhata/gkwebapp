@@ -179,7 +179,11 @@ margin-bottom: 0px;
 
             {% trans %}Cannot delete Service!{% endtrans %}<br>
           </div>
-          <div class="tab-pane active" role="tabpanel" id="productdiv">
+	  <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
+          </div>
+	  <div class="tab-pane active" role="tabpanel" id="productdiv">
           </div>
         </div>
 

@@ -802,14 +802,6 @@ $(document).ready(function() {
     }
       else if (event.which==13) {
 	  event.preventDefault();
-	 if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').val()=="") {
-              $("#tax-name-blank-alert").alert();
-              $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		  $("#tax-name-blank-alert").hide();
-              });
-              $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(0) select').focus();
-              return false;
-          }
 	  $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
       }
       else if (event.which==27) {
@@ -849,7 +841,7 @@ $(document).ready(function() {
     }
     else {
       $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").empty();
-      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>').prop('disabled',true);
+      $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select").append('<option value="">None</option>');
     }
     selectedtaxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val();
   });
@@ -980,6 +972,9 @@ $(document).ready(function() {
     var previndex1 = curindex1-1;
     if (event.which==13) {
 	event.preventDefault();
+	if($(this).val()==""){
+	    $(this).val(0);
+	}
       if($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select option:selected').val()!=""){
       if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) select option:selected').attr("stateid") < 1 && selectedtaxname == "VAT") {
         $("#tax_state-blank-alert").alert();
@@ -1011,12 +1006,21 @@ $(document).ready(function() {
 	    return false;
 	}
 	}
-	
-      if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
-        $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
-      }
+	if($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) option:selected').val()=="" && $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(1) option:selected').val()=="" && $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()==0.00){
+	    if($("#editgodown_ob_table").is(":visible")){
+		$('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+	    }
+	    else if($("#editgodownflag").is(":visible")){
+		$("#editgodownflag").focus().select();
+	    }else{
+		$("#editopeningstock").focus();
+	    }
+	}	
+	else if (curindex1 != ($("#product_edit_tax_table tbody tr").length-1)) {
+            $('#product_edit_tax_table tbody tr:eq('+nextindex1+') td:eq(0) select').focus().select();
+	}
       else {
-        if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
+          if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').val()=="") {
           $("#tax-name-blank-alert").alert();
           $("#tax-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#tax-name-blank-alert").hide();
@@ -1024,7 +1028,7 @@ $(document).ready(function() {
           $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(0) select').focus();
           return false;
         }
-        if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()=="") {
+        if ($('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val()=="" || $('#product_edit_tax_table tbody tr:eq('+curindex1+') td:eq(2) input').val() == 0.00) {
           $("#tax-rate-blank-alert").alert();
           $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#tax-rate-blank-alert").hide();
@@ -1442,6 +1446,14 @@ $(document).ready(function() {
 	  $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(1) select').focus();
 	  allow = 1;
       }
+	  else if ($('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').val()=="" || $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').val() == 0.00) {
+              $("#tax-rate-blank-alert").alert();
+              $("#tax-rate-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#tax-rate-blank-alert").hide();
+              });
+              $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus();
+              allow = 1;
+          }
       }
 	var cvat = duplicatecvat(curindex);
 	if (cvat.length > 0) {
