@@ -309,7 +309,7 @@
         <tbody>
           {% for invoice in b2cs %}
             <tr>
-              <td class="ralign">
+              <td class="calign">
                 {{ invoice["type"] }}
               </td>
               <td class="calign">
@@ -344,7 +344,7 @@
               {% trans %}GSTIN/UIN of Recipient{% endtrans %}
             </th>
             <th class="calign">
-              {% trans %}Receiver Name{% endtrans %}
+              {% trans %}Name of Recipient{% endtrans %}
             </th>
             <th class="calign" >
               {% trans %}Invoice/Advance Receipt number{% endtrans %}
@@ -433,8 +433,8 @@
               <td class="ralign">
                 {{ invoice["cess"] }}
               </td>
-              <td class="ralign">
-                {{ invoice["pre_gst"] }}
+              <td class="calign">
+                {{ invoice["pregst"] }}
               </td>
             </tr>
           {% endfor %}
@@ -529,8 +529,8 @@
               <td class="ralign">
                 {{ invoice["cess"] }}
               </td>
-              <td class="ralign">
-                {{ invoice["pre_gst"] }}
+              <td class="calign">
+                {{ invoice["pregst"] }}
               </td>
               <td class="calign">
                 {{ invoice["supply_type"] }}
