@@ -218,10 +218,10 @@
 
             <form id="viewvoucher" name="voucher" class="" action="" method="get">
               <div class="form-inline">
-		<div align ="right">
-		  <strong><button type="button" data-dismiss ="modal" style="color:black; opacity:0.8; border:0; background:0;margin-top:-2%;font-size:20px">&times;</button></strong>
+		<div align="right">
+		  <strong><button type="button" data-dismiss ="modal" style="color:black; opacity:0.8; border:0; background:0; margin-top:-2%; font-size:25px">&times;</button></strong>
 		</div>
-		<div class="well well-sm" >
+		<div class="well well-sm" style="margin-top:0px;">
                   <div class="form-group nopadding" style="width:24%">
                     <label for="vno" class="vouchernoclone pull-left">{% trans %}Voucher No{% endtrans %} :</label><label for="vno" class="vouchernoclone pull-left" style="color:red;font-size: 120%;">*</label>
                     <input type="text" name="vno" class="vouchernoclone form-control input-sm pull-left" id="vno" size="10" value="{{voucher["vouchernumber"]}}">
@@ -665,8 +665,8 @@
             <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
 	  </div>     
 	</div>    
-        <div class="modal-footer">
-          <div id="butform" class="form-inline pull-left ">
+        <div class="modal-footer" style="padding:0px;">
+          <div id="butform" class="form-inline pull-left">
             <div class="form-group pull-left">
               {% if voucher['status'] %}
 		<button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
@@ -709,8 +709,7 @@
                   <b id="attachtext">{% trans %}Add Attac<u>h</u>ment{% endtrans %}</b>
 		</label>
 		<span class='label label-info' id="upload-file-info"></span>
-              </div>
-              
+              </div>      
           </div> 
         </div> 
       </div> 
