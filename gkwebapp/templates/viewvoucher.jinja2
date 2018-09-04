@@ -575,8 +575,8 @@
 			</div>
 			<div class ="form-group" style ="font-size:12px;">
 			  <label for="narration" >{% trans %}Narration{% endtrans %}:</label>
+			  <textarea class="form-control" name="narration" id="narr" rows="2" cols="20" accesskey="">{{voucher["narration"]}}</textarea>
 			</div>
-			<textarea class="form-control" name="narration" id="narr" rows="2" cols="20" accesskey="">{{voucher["narration"]}}</textarea>
 		      </div>
 		    <div class=" col-md-8">
 			<input type="hidden" id="m_vtype" name="m_vtype" value="{{vtype}}">
@@ -604,9 +604,9 @@
                                       <td>
                                         <div class="form-inline">
                                           <div class="form-group">
-                                            <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" value="{{voucher['instrumentdate'][:2]}}">
-					    <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month" value="{{voucher['instrumentdate'][3:5]}}">
-                                            <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year" value="{{voucher['instrumentdate'][6:]}}">
+                                            <input type="text" class="form-control input-sm instrdate" disabled size="3" maxlength="2" placeholder="DD" id="instrument_date" value="{{voucher['instrumentdate'][:2]}}">
+					    <input type="text" class="form-control input-sm instrdate" size="3" disabled maxlength="2" placeholder="MM" id="instrument_month" value="{{voucher['instrumentdate'][3:5]}}">
+                                            <input type="text" class="form-control input-sm instrdate" size="6" disabled maxlength="4" placeholder="YYYY" id="instrument_year" value="{{voucher['instrumentdate'][6:]}}">
                                           </div>
                                         </div>
 				      </td>
@@ -659,15 +659,14 @@
                           </div> 
                         </div> 
 		    </div> 
-		    <!--Last div-->
-	   
+		    <!--Last div-->	   
             </form>
             <input type="hidden" id="vcode" name="vcode" value="{{voucher['vouchercode']}}"></input>
 	  </div>     
 	</div>    
         <div class="modal-footer" style="padding:0px;">
           <div id="butform" class="form-inline pull-left">
-            <div class="form-group pull-left">
+            <div class="form-group pull-left" style="margin-top:10px;">
               {% if voucher['status'] %}
 		<button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
               {% else %}
