@@ -1,6 +1,6 @@
 <link href="{{request.static_url('gkwebapp:static/css/invoice.css')}}" rel="stylesheet" type="text/css">
-<div class="deliverychallan_edit_div borderdiv">
-  <form class="form-horizontal" >
+<div class="deliverychallan_edit_div">
+  <form class="form-horizontal">
     <div class="col-md-12">
 	{% if delchaldata["delchaldata"]["inoutflag"] == 9 %}
 	  <label class="nopadding fsize" id="detailsIN"><h4>Details of Delivery In: </h4></label>
@@ -417,8 +417,11 @@
 	    </table>
 	  </div>
       {% endif %}
-    </div>
-    <!-- Product Table Close -->
+  </form>
+</div>
+  
+  <!-- Product Table Close -->
+  <form class="form-horizontal">
     <div class ="row col-sm-12">
       <div class="col-sm-6" style="margin-top:0.5cm;">
 	<div class="row col-sm-12">
