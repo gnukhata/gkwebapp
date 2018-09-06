@@ -47,7 +47,7 @@ def showsingledrcrnote(request):
          drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=3", headers=header)
     if int(request.params["drcrflag"]) == 4:
         drcrdata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=all&drcrflag=4", headers=header)
-    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"status":request.params["drcrflag"]}
+    return {"gkstatus":drcrdata.json()["gkstatus"],"drcrdata":drcrdata.json()["gkresult"],"status":request.params["drcrflag"], "drcrdatalength":len(drcrdata.json()["gkresult"])}
 
 @view_config(route_name="drcrnote",request_param="action=getdrcrnotedetail", renderer="gkwebapp:templates/viewsingledrcrnote.jinja2")
 def getDrCrDetails(request):
