@@ -16,8 +16,8 @@ def showdrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=add",renderer="gkwebapp:templates/adddrcrnote.jinja2")
 def showadddrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    invoicesS = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=sale", headers=header)
-    invoicesP = requests.get("http://127.0.0.1:6543/invoice?inv=all&type=purchase", headers=header)
+    invoicesS = requests.get("http://127.0.0.1:6543/drcrnote?inv=all&type=sale", headers=header)
+    invoicesP = requests.get("http://127.0.0.1:6543/drcrnote?inv=all&type=purchase", headers=header)
     #it gives tax type VAT or GST on the basis of financialEnd Year of organisation    
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"drcrflag": request.params["drcrflag"],"invoicesS":invoicesS.json()["gkresult"],"invoicesP":invoicesP.json()["gkresult"],"resultgstvat":resultgstvat.json()["gkresult"]}
