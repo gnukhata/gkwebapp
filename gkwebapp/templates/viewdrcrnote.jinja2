@@ -12,7 +12,7 @@
 		{% if drcrdatalength|int == 0 %}
 		  <div class="col-sm-12 alert-danger" style="padding:10px; border-radius:4px;"  aria-live="rude" role="alert">{% if status|int == 3 %}{% trans %}No Credit Note found.{% endtrans %}{% else %}{% trans %}No Debit Note found{% endtrans %}{% endif %}</div>
 		{% else %}
-		  <label for="sel_creditnote">{% trans %}List of Credit Note{% endtrans %} :</label>
+		  <label for="sel_creditnote">{% if status|int == 3 %}{% trans %}List of Credit Notes{% endtrans %}{% else %}{% trans %}List of Debit Notes{% endtrans %}{% endif %} :</label>
 		    <select class="form-control input-sm" id="sel_creditnote" accesskey="">
 		      <option value="" disabled hidden selected>{% if status|int == 3 %}{% trans %}Select Credit Note{% endtrans %}{% else %}{% trans %}Select Debit Note{% endtrans %}{% endif %}</option>
 		      {% for drcr in drcrdata %}
