@@ -15,9 +15,9 @@
      </div>
      <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
        {%  if drcrflag=="3"%}
-	 {% trans %}You cannot make more than one credit note on a single invoice !{% endtrans %}
+	 {% trans %}Duplicate Credit Note number!{% endtrans %}
        {%else%}
-	 {% trans %}You cannot make more than one debit note on a single invoice !{% endtrans %}
+	 {% trans %}Duplicate Debit Note number!{% endtrans %}
        {% endif %}
      </div>
           <div class="alert alert-danger" id="invoice-blank-alert" aria-live="rude" role="alert" hidden>
