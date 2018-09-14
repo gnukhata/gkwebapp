@@ -36,8 +36,14 @@ $(document).ready(function(){
      {
        $("a[href ='#user_create']").click();
      });
-    
-  //$("#userrole option[value=3]").hide();
+  
+  //when company pref =erence is accounting only ;Dont show godown in charge user.
+
+  if (sessionStorage.invflag==0) {  
+    $("#userrole option[value=3]").hide();
+  }
+
+
   if (sessionStorage.invflag==1) {
     $.ajax(
        {
