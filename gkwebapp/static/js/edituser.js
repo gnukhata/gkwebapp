@@ -30,6 +30,12 @@
 $(document).ready(function() {    
   $('.modal-backdrop').remove();
   $("#all").focus();
+  if (sessionStorage.invflag==0) {  
+    $("#userrole option[value=3]").hide();
+    $("#Inchargeradio").parent().hide();
+    
+  }
+
   //This change event filter out list of user on basis of its role
   $(document).off('change', '.iib').on('change', '.iib', function(event){
     if ($("#managerradio").is(":checked")) {
