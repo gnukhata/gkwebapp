@@ -27,6 +27,7 @@ Contributors:
 $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
+    $("select").searchify();
     $("#org-name").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
