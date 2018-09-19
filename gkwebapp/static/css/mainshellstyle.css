@@ -46,6 +46,10 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
     outline: 2px #1f0e5e solid !important;
     
 }
+option {
+	 min-height: 15px !important;
+	 padding-top: 7px !important;
+}
 @media (min-width: 767px) {
     nav, .navbar-collapse, .navbar-fixed-top, .navbar-header, nav > li, .navbar-brand {
 	min-height:35px !important;

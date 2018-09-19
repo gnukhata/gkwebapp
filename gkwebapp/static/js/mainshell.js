@@ -41,13 +41,25 @@ $(document).ready(function(){
     var username1;
     var userrole1;
     $("#spinmodal").modal("hide");
-  $('.modal-backdrop').remove();
-
-  //Checking flags set according organisation preferences.
-  // For Accounting Only invflag=0, invsflag=0 and billflag=0. Inventory Menu, Invoice, Cash Memo and related Reports are hidden.
-  // For Invoicing Only invflag=0, invsflag=1 and billflag=0. Inventory Menu is hidden and  sub-menus which are 'Category', 'Product/Service' and 'Unit of Measurement' under 'Master' menu.
-  // For Invoicing with Billwise Accounting invflag=0, invsflag=1 and billflag=1. Inventory Menu is hidden. Sub-menus viz., 'Category', 'Product/Service' and 'Unit of Measurement' are added under Master Menu. Also Unadjusted sub-menu is added under Voucher for Billwise Accounting.
-  // For Inventory with Invoicing and Billwise Accounting invflag=1, invsflag=1 and billflag=1. It includes Inventory, Billwise Accounting, Invoicing and extra sub-menus(viz., 'Category', 'Product/Service' and 'Unit of Measurement') will be removed from Master menu.
+    $('.modal-backdrop').remove();
+    jQuery.fn.extend({
+	searchify : function(){
+	    var selectwidth = $(this).width(); //Width of original element
+	    var selectheight = $(this).height(); //Height of original element
+	    $(this).searchable();  // Function to convert original select element into a searcheable element
+	    //Setting triggerHandler()e dimensions of new element same as that of the original element.
+	    $(this).width(parseFloat(selectwidth));
+	    $(this).height(parseFloat(selectheight));
+	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
+	    $(this).next().next().css({"margin-top":"-7px"});
+	    $(this).next().width(parseFloat(selectwidth));
+	}
+    });
+    //Checking flags set according organisation preferences.
+    // For Accounting Only invflag=0, invsflag=0 and billflag=0. Inventory Menu, Invoice, Cash Memo and related Reports are hidden.
+    // For Invoicing Only invflag=0, invsflag=1 and billflag=0. Inventory Menu is hidden and  sub-menus which are 'Category', 'Product/Service' and 'Unit of Measurement' under 'Master' menu.
+    // For Invoicing with Billwise Accounting invflag=0, invsflag=1 and billflag=1. Inventory Menu is hidden. Sub-menus viz., 'Category', 'Product/Service' and 'Unit of Measurement' are added under Master Menu. Also Unadjusted sub-menu is added under Voucher for Billwise Accounting.
+    // For Inventory with Invoicing and Billwise Accounting invflag=1, invsflag=1 and billflag=1. It includes Inventory, Billwise Accounting, Invoicing and extra sub-menus(viz., 'Category', 'Product/Service' and 'Unit of Measurement') will be removed from Master menu.
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
       $(".productinmaster").hide();
       $(".categoryinmaster").hide();
