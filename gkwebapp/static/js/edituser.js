@@ -31,7 +31,7 @@ $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#all").focus();
   if (sessionStorage.invflag==0) {  
-    $("#userrole option[value=3]").hide();
+    $("#userrole option[value=3]").hide().prop("disabled",true);
     $("#Inchargeradio").parent().hide();
     
   }
@@ -747,39 +747,39 @@ $(document).ready(function() {
       datatype: "json",
       data:dataset,
       beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-            success: function(resp) {
-		if (resp["gkstatus"] == 0) {
-		    if($("#edituser option:selected").attr("role") == "Admin"){
-			$("#success-alert").alert();
-			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-			    location.reload();//After Admin successfully edited hole page refresh.
-			    $("#success-alert").hide();
-			});
-		    }else{
-			$("#reset").click();
-			$("#success-alert").alert();
-			$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-                            $("#success-alert").hide();
-			});
-		    }
-                } else if (resp["gkstatus"] == 1) {
-                    $("#duplicate-alert").alert();
-                    $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-                        $("#duplicate-alert").hide();
-                    });
-                    $("#editname").focus().select();
-                } else {
-                    $("#failure-alert").alert();
-                    $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-                        $("#failure-alert").hide();
-                    });
-                    $("#all").focus().select();
-		}
-            }
-        });
-       e.preventDefault();
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      },
+      success: function(resp) {
+	if (resp["gkstatus"] == 0) {
+	  if($("#edituser option:selected").attr("role") == "Admin"){
+	    $("#success-alert").alert();
+	    $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+	      location.reload();//After Admin successfully edited hole page refresh.
+	      $("#success-alert").hide();
+	    });
+	  }else{
+	    $("#reset").click();
+	    $("#success-alert").alert();
+	    $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
+              $("#success-alert").hide();
+	    });
+	  }
+        } else if (resp["gkstatus"] == 1) {
+          $("#duplicate-alert").alert();
+          $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+            $("#duplicate-alert").hide();
+          });
+          $("#editname").focus().select();
+        } else {
+          $("#failure-alert").alert();
+          $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
+            $("#failure-alert").hide();
+          });
+          $("#all").focus().select();
+	}
+      }
+    });
+    e.preventDefault();
     });
  });
     
