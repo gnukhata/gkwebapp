@@ -108,10 +108,9 @@ $(document).ready(function(){
       return false;
     }
 
-    var orgcode = $("#finalyears option:selected").val();
+    var orgcode = $("#finalyears option:eq(1)").val();
           $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
-
-    var financialyears = $("#finalyears option:selected").html();
+      var financialyears = $("#finalyears option:eq(1)").html();
     var oname = orgobj.orgname;
     var otype = orgobj.orgtype;
     var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[0]+financialyears[1];
