@@ -28,13 +28,16 @@ Contributors:
 $(document).ready(function(){
     jQuery.fn.extend({
 	searchify : function(){
-	var selectwidth = $(this).width(); //Width of original element
-	var selectheight = $(this).height(); //Height of original element
-	$(this).searchable();  // Function to convert original select element into a searcheable element
-	//Setting the dimensions of new element same as that of the original element.
-	$(this).width(parseFloat(selectwidth));
-	$(this).height(parseFloat(selectheight));
-    }
+	    var selectwidth = $(this).width(); //Width of original element
+	    var selectheight = $(this).height(); //Height of original element
+	    $(this).searchable();  // Function to convert original select element into a searcheable element
+	    //Setting triggerHandler()e dimensions of new element same as that of the original element.
+	    $(this).width(parseFloat(selectwidth));
+	    $(this).height(parseFloat(selectheight));
+	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
+	    $(this).next().next().css({"margin-top":"-7px"});
+	    $(this).next().width(parseFloat(selectwidth));
+	}
     });
     $("#selectorg").load("/existingorg");
     $("#createorg").load("/createorg");
