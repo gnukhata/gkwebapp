@@ -27,11 +27,15 @@ Contributors:
 $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
-    $("select").searchify();
+    $("#org-name, #finalyears").searchify();
     $("#org-name").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
 	    $("#finalyears").focus();
+	}
+	if (event.which == 40) {
+	    event.preventDefault();
+	    $("#org-name").text("");
 	}
     });
   $("#finalyears").keydown( function(e) {
@@ -50,8 +54,8 @@ $(document).ready(function(){
 
   $("#org-name").change(function(){
     //Creating an object to store organisation name and type
-    orgobj.orgname = $("#org-name option:selected").data("orgname");
-    orgobj.orgtype = $("#org-name option:selected").data("orgtype");
+    orgobj.orgname = $("#org-name option:eq(1)").data("orgname");
+    orgobj.orgtype = $("#org-name option:eq(1)").data("orgtype");
     if (orgobj.orgname!=""&&orgobj.orgtype!="") {
       $.ajax({
         type: "POST",
