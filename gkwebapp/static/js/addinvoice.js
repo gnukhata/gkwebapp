@@ -2186,7 +2186,8 @@ $(document).ready(function() {
 
     $(document).off("change", ".invoice_product_discount_gst").on("change", ".invoice_product_discount_gst", function(event) {
 	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
-	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select:eq(1)').attr("gsflag") == 7) {
+	let productCode = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select:eq(1)').val();
+	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select:eq(1) option[value=' + productCode + ']').attr("gsflag") == 7) {
 	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
