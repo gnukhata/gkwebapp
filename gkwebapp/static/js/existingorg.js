@@ -27,7 +27,6 @@ Contributors:
 $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
-    $("#org-name").searchify();
     $("#org-name").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -38,6 +37,9 @@ $(document).ready(function(){
 	    $("#org-name").text("");
 	}
     });
+    if ($("#org-name").is(":not(:hidden)")) {
+	$("#org-name").searchify();
+    }
   $("#finalyears").keydown( function(e) {
 
     if (e.which == 13)

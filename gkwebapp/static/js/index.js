@@ -31,7 +31,7 @@ $(document).ready(function(){
 	    var selectwidth = $(this).width(); //Width of original element
 	    var selectheight = $(this).height(); //Height of original element
 	    $(this).searchable();  // Function to convert original select element into a searcheable element
-	    //Setting triggerHandler()e dimensions of new element same as that of the original element.
+	    //Setting dimensions of new element same as that of the original element.
 	    $(this).width(parseFloat(selectwidth));
 	    $(this).height(parseFloat(selectheight));
 	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
@@ -51,27 +51,28 @@ $(document).ready(function(){
 	$('#secondmessage').width(width);
 	$('#firstmessage').fadeIn(1000, function(){
 	    $("#logodiv").delay(3000).fadeOut(1000, function(){
-		    $.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
-			url: '/orgexists',
-			type: 'POST',
-			datatype: 'json'
-		    }).done(function(jsonobj) {
-			var orgs = jsonobj["gkresult"];
-			if (orgs==0) {
-			    $("#selectnav").hide();
-			    $("#createnav").click();
-			}
-			else {
-			    $("#selectnav").click();
-			}
-		    }).fail(function() {
-			console.log("error");
-		    }).always(function() {
-			console.log("complete");
-		    });
-		    $("#contentdiv").fadeIn();
+		$.ajax({// this ajax function checks whether any organisations already exists. If the number of organisations is 0 then select organisation tab is hidden.
+		    url: '/orgexists',
+		    type: 'POST',
+		    datatype: 'json'
+		}).done(function(jsonobj) {
+		    var orgs = jsonobj["gkresult"];
+		    if (orgs==0) {
+			$("#selectnav").hide();
+			$("#createnav").click();
+		    }
+		    else {
+			$("#selectnav").click();
+			$("#org-name").searchify();
+		    }
+		}).fail(function() {
+		    console.log("error");
+		}).always(function() {
+		    console.log("complete");
+		});
+		$("#contentdiv").fadeIn();
+	    });
 	});
-    });
     }
     $("#closesplash").click(function(event){
 	event.preventDefault();
