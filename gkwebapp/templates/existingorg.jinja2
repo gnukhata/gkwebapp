@@ -46,7 +46,7 @@
               <select style="border-radius: 4px" class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="c">
                 <option value="" data-orgname="" data-orgtype="" disabled selected hidden>{% trans %}Select Company{% endtrans %}</option>
                 {% for orgs in gkresult %}
-                <option value="{{orgs}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</option>
+                  <option value="{{loop.index}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</option>
                 {% endfor %}
               </select>
             </div>

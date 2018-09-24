@@ -27,7 +27,7 @@ Contributors:
 $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
-    $("#org-name, #finalyears").searchify();
+    $("#org-name").searchify();
     $("#org-name").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -53,80 +53,79 @@ $(document).ready(function(){
   });
 
   $("#org-name").change(function(){
-    //Creating an object to store organisation name and type
-    orgobj.orgname = $("#org-name option:eq(1)").data("orgname");
-    orgobj.orgtype = $("#org-name option:eq(1)").data("orgtype");
-    if (orgobj.orgname!=""&&orgobj.orgtype!="") {
-      $.ajax({
-        type: "POST",
-        url: "/yearcode",
-        data: orgobj,
-        global: false,
-        async: false,
-        dataType: "json",
-        success: function(jsonObj) {
-            let ListofYears = jsonObj["gkresult"];
-          $('#finalyears').empty();
-          for (let i in ListofYears ) {
-            $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
-          }
-	    var numofyears =  $("#finalyears option:visible").length;
-	    if (numoforg == 1){ //for setting focus to the "next" button if there is only one organisation present
-		if(numofyears==1)
-		{
-		    $("#callLogin").focus();
-		}
-		else if(numofyears > 1) //set focus to organisation name if there are more than one organisations
-	        {
-		    $("#finalyears").focus().select();
-		}
-	
-	    }
-	    
-        }
-      });
-    }
+      //Creating an object to store organisation name and type
+      var selectedorg = $("#org-name").val();
+      orgobj.orgname = $("#org-name option[value=" + selectedorg + "]").data("orgname");
+      orgobj.orgtype = $("#org-name option[value=" + selectedorg + "]").data("orgtype");
+      if (orgobj.orgname!=""&&orgobj.orgtype!="") {
+	  $.ajax({
+              type: "POST",
+              url: "/yearcode",
+              data: orgobj,
+              global: false,
+              async: false,
+              dataType: "json",
+              success: function(jsonObj) {
+		  let ListofYears = jsonObj["gkresult"];
+		  $('#finalyears').empty();
+		  for (let i in ListofYears ) {
+		      $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
+		  }
+		  var numofyears =  $("#finalyears option:visible").length;
+		  if (numoforg == 1){ //for setting focus to the "next" button if there is only one organisation present
+		      if(numofyears==1)
+		      {
+			  $("#callLogin").focus();
+		      }
+		      else if(numofyears > 1) //set focus to organisation name if there are more than one organisations
+	              {
+			  $("#finalyears").focus().select();
+		      }
+		      
+		  }
+		  $("#finalyears").searchify();
+              }
+	  });
+      }
   });
     
-    //If only one organisation and only one financial year is present, it will get selected by default and focus will be shifted to the "next" button
-
+    //If only one organisation and only one financial year is present, it will get selected by default and focus will be shifted to the "next" button 
   var numoforg = $("#org-name option:visible").length;
-    if(numoforg==1)
-    {
+    if(numoforg==1){
         $("#org-name option").eq(1).prop("selected", true);
 	$("#org-name").change();//event calling
     }
-    else
-    {
+    else{
 	$("#org-name").focus();
     }
-    
+  //Click event that loads the login page.
   $("#callLogin").click(function(event){
-    event.preventDefault();
-    if ($.trim($("#org-name").val())=="") {
-      $("#selorg-blank-alert").alert();
-      $("#selorg-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#selorg-blank-alert").hide();
-      });
-      $("#org-name").focus();
-      return false;
-    }
-
-    var orgcode = $("#finalyears option:eq(1)").val();
-          $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
-      var financialyears = $("#finalyears option:eq(1)").html();
-    var oname = orgobj.orgname;
-    var otype = orgobj.orgtype;
-    var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[0]+financialyears[1];
-    var eyear = financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[14]+financialyears[15];
-    var yyddmmsyear = financialyears[0]+financialyears[1]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
-    var yyddmmeyear = financialyears[14]+financialyears[15]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23];
-    sessionStorage.setItem('orgn', oname);
-    sessionStorage.setItem('orgt', otype);
-    sessionStorage.setItem('year1', yyddmmsyear);
-    sessionStorage.setItem('year2', yyddmmeyear);
-    sessionStorage.setItem('yyyymmddyear1', syear );
-    sessionStorage.setItem('yyyymmddyear2', eyear );
-
+      event.preventDefault();
+      //Validation for not selecting an organisation
+      if ($.trim($("#org-name").val())=="") {
+	  $("#selorg-blank-alert").alert();
+	  $("#selorg-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+	      $("#selorg-blank-alert").hide();
+	  });
+	  $("#org-name").focus();
+	  return false;
+      }
+      //Orgcode is sent to fetch the login page.
+      var orgcode = $("#finalyears").val();
+      $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
+      var financialyears = $("#finalyears option[value=" + orgcode + "]").html();
+      //Details of selected organisation is stored in session storage.
+      var oname = orgobj.orgname;
+      var otype = orgobj.orgtype;
+      var syear = financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[0]+financialyears[1];
+      var eyear = financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[14]+financialyears[15];
+      var yyddmmsyear = financialyears[0]+financialyears[1]+"-"+financialyears[3]+financialyears[4]+"-"+financialyears[6]+financialyears[7]+financialyears[8]+financialyears[9];
+      var yyddmmeyear = financialyears[14]+financialyears[15]+"-"+financialyears[17]+financialyears[18]+"-"+financialyears[20]+financialyears[21]+financialyears[22]+financialyears[23];
+      sessionStorage.setItem('orgn', oname);
+      sessionStorage.setItem('orgt', otype);
+      sessionStorage.setItem('year1', yyddmmsyear);
+      sessionStorage.setItem('year2', yyddmmeyear);
+      sessionStorage.setItem('yyyymmddyear1', syear );
+      sessionStorage.setItem('yyyymmddyear2', eyear );
   });
 });
