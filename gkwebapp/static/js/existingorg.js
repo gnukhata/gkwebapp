@@ -30,7 +30,7 @@ $(document).ready(function(){
     $("#org-name").keydown(function(event){
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#finalyears").focus();
+	    setTimeout( function() { $("#finalyears").focus(); }, 300 );
 	}
 	if (event.which == 40) {
 	    event.preventDefault();
