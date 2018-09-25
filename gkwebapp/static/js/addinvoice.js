@@ -298,7 +298,7 @@ $(document).ready(function() {
 	$(".reversepurchase").show();
     }
 
-    $(".product_name_gst, product_name_vat").searchify();
+    $(".product_name_gst, .product_name_vat").searchify();
     $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
@@ -445,6 +445,11 @@ $(document).ready(function() {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
 	    }
+	    let gstproductwidth = $(".product_name_gst").parents("td").first().width();
+	    $(".product_name_gst").closest("select").width(gstproductwidth);
+	    $(".product_name_gst").closest("select").parent().width(gstproductwidth);
+	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth);
+	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth);
 	}else if($("#vat").is(":checked")){
 	  
 	    $("#taxapplicabletext").text("VAT");
@@ -456,9 +461,14 @@ $(document).ready(function() {
 	    $("#vathelp").show();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
+	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	    $(".product_name_vat").closest("select").width(vatproductwidth);
+	    $(".product_name_vat").closest("select").parent().width(vatproductwidth);
+	    $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
+	    $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	}
     });
-
+    $('.taxapplicable').change();
     //Keydown event for 'VAT' and 'GST' radio button.
     $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
 	if (event.which == 13) {
@@ -2303,7 +2313,7 @@ if (event.which == 13) {
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
 	    $("#invoicestate").change();
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
-	    $(".product_name_gst, product_name_vat").searchify();
+	    $(".product_name_gst, .product_name_vat").searchify();
 	    setTimeout( function() { $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
 	}
 	else {
