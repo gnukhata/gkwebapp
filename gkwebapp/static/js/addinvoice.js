@@ -1045,94 +1045,90 @@ $(document).ready(function() {
 	$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
 	var productcode = $(this).find('option:selected').val();
 	var curindex = $(this).closest('tbody tr').index();
-    var destinationstate = "";
-      var sourcestate = "";
-      if ($("#status").val() == 9) {
-	  destinationstate = $("#invoicestate option:selected").val();
-	  sourcestate = $("#invoice_customerstate").val();
-      }
-      else if ($("#status").val() ==  15) {
-	  sourcestate = $("#invoicestate option:selected").val();
-	  destinationstate = $("#invoice_customerstate").val();
-      }
+	var destinationstate = "";
+	var sourcestate = "";
+	if ($("#status").val() == 9) {
+	    destinationstate = $("")("#invoicestate option:selected").val();
+	    sourcestate = $("#invoice_customerstate").val();
+	}
+	else if ($("#status").val() ==  15) {
+	    sourcestate = $("#invoicestate option:selected").val();
+	    destinationstate = $("#invoice_customerstate").val();
+	}
 	var taxflag=$(".taxapplicable").val();
 	if (productcode != "") {
 	    $.ajax({
-        url: '/invoice?action=getappliedtax',
-        type: 'POST',
-        dataType: 'json',
-        async: false,
-        data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
-        beforeSend: function(xhr) {
-          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        }
-      })
-       .done(function(resp) {
-         if (resp["gkstatus"] == 0) {
-	     if ('VAT' in resp['tax']) {
-		 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
-	     }
-	     else if ('CVAT' in resp['tax']) {
-                 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
-             }
-         }
-	  else if (resp["gkstatus"] == 1) {
-	      $("#notax-alert").alert();
-	      $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#notax-alert").hide();
-	      });
-	  }
-       })
-       .fail(function() {
-           console.log("error");
-       })
-       .always(function() {
-         console.log("complete");
-       });
-    $.ajax({
-      url: '/invoice?action=getproduct',
-      type: 'POST',
-      dataType: 'json',
-      async: false,
-      data: { "productcode": productcode },
-      beforeSend: function(xhr) {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-    })
-     .done(function(resp) {
-       console.log("success");
-       if (resp["gkstatus"] == 0) {
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
-       }
-
-     })
-     .fail(function() {
-	 console.log("error");
-     })
-     .always(function() {
-       console.log("complete");
-     });
+		url: '/invoice?action=getappliedtax',
+		type: 'POST',
+		dataType: 'json',
+		async: false,
+		data: { "productcode": productcode, "source": sourcestate,"destination":destinationstate,"taxflag":taxflag },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    }).done(function(resp) {
+		if (resp["gkstatus"] == 0) {
+		    if ('VAT' in resp['tax']) {
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['VAT']).toFixed(2));
+		    }
+		    else if ('CVAT' in resp['tax']) {
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(resp['tax']['CVAT']).toFixed(2));
+		    }
+		}
+		else if (resp["gkstatus"] == 1) {
+		    $("#notax-alert").alert();
+		    $("#notax-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#notax-alert").hide();
+		    });
+		}
+	    }).fail(function() {
+		console.log("error");
+	    }).always(function() {
+		console.log("complete");
+	    });
+	    $.ajax({
+		url: '/invoice?action=getproduct',
+		type: 'POST',
+		dataType: 'json',
+		async: false,
+		data: { "productcode": productcode },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    }).done(function(resp) {
+		console.log("success");
+		if (resp["gkstatus"] == 0) {
+		    $('#invoice_product_// TODO: able_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+		}
+		
+	    })
+		.fail(function() {
+		    console.log("error");
+		})
+		.always(function() {
+		    console.log("complete");
+		});
 	}
 	else {
 	    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(0).toFixed(2));
 	    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text("");
-           $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
+            $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
 	}
     });
     var modalpresent = 0;
-  $(document).off("keyup").on("keyup", function(event) {
+    $(document).off("keyup").on("keyup", function(event) {
       if (event.which == 45) {
-	event.preventDefault();
-	if (modalpresent == 0) {
-	    $("#invoice_save").click();
-	}
+	  event.preventDefault();
+	  if (modalpresent == 0) {
+	      $("#invoice_save").click();
+	  }
 	  else {
 	      $("#cussup_save").click();
 	  }
       return false;
-    }
-  });
+      }
+    });
     $("#invoice_deliverynote").change(function(event) {
 	if ($("#invoice_deliverynote option:selected").val() != '') {
 	    var deliverydate = $("#invoice_deliverynote option:selected").attr("dcdate");
