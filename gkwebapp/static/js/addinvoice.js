@@ -298,7 +298,6 @@ $(document).ready(function() {
 	$(".reversepurchase").show();
     }
 
-    $(".product_name_gst, .product_name_vat").searchify();
     $(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
     //Preventing characters in numeric fields.
     $("#invoice_date").numeric({ negative: false });
@@ -398,7 +397,6 @@ $(document).ready(function() {
 		    return false;
 		}
 	    }
-	    
 	    if(invoicedate < gstdate){
 		$(".onlyvat").show();
 		$(".gstvat").hide();
@@ -421,9 +419,7 @@ $(document).ready(function() {
 
     //Change event for 'GST' and 'VAT' radio button.
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
-	
 	if($("#gst").is(":checked")){
-	    
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
@@ -433,10 +429,7 @@ $(document).ready(function() {
 	    $(".gstinfield").show();
 	    $(".vatfield").hide();
 	    $(".gstfield").show();
-	    
-
 	    /**On changing 'gst' or 'vat' radio button on the basis of 'source state' and 'destination state', 'igst' and 'sgst' fields are hide and show.**/
-	    
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
@@ -445,13 +438,13 @@ $(document).ready(function() {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
 	    }
-	    let gstproductwidth = $(".product_name_gst").parents("td").first().width();
-	    $(".product_name_gst").closest("select").width(gstproductwidth);
-	    $(".product_name_gst").closest("select").parent().width(gstproductwidth);
-	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth);
-	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth);
-	}else if($("#vat").is(":checked")){
-	  
+	    $(".product_name_gst").searchify(); //Converting to searcheable combo.
+	    let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
+	    $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
+	    $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
+	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
+	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
+	}else if($("#vat").is(":checked")){  
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
 	    $("#gstproducttable").hide();
@@ -461,6 +454,7 @@ $(document).ready(function() {
 	    $("#vathelp").show();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
+	    $(".product_name_vat").searchify();
 	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
 	    $(".product_name_vat").closest("select").width(vatproductwidth);
 	    $(".product_name_vat").closest("select").parent().width(vatproductwidth);
@@ -764,12 +758,12 @@ $(document).ready(function() {
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
 		    gstins = resp["gkresult"]["gstin"];
-        if ($("#invoice_customer option:selected").attr("custid") in gstins) {
-      	       $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
-      	}
-      	else {
-      	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
-      	}
+		    if ($("#invoice_customer option:selected").attr("custid") in gstins) {
+      			$("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+      		    }
+      		    else {
+      			$("#gstin").text('');  //If GSTIN is not available it is set as blank.
+      		    }
 		    //GSTIN of customer in default state is selected.
 		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 
@@ -1048,7 +1042,7 @@ $(document).ready(function() {
 	var destinationstate = "";
 	var sourcestate = "";
 	if ($("#status").val() == 9) {
-	    destinationstate = $("")("#invoicestate option:selected").val();
+	    destinationstate = $("#invoicestate option:selected").val();
 	    sourcestate = $("#invoice_customerstate").val();
 	}
 	else if ($("#status").val() ==  15) {
@@ -1098,7 +1092,7 @@ $(document).ready(function() {
 	    }).done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-		    $('#invoice_product_// TODO: able_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
 		}
 		
