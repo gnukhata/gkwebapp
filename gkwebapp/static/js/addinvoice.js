@@ -42,7 +42,7 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
-      $(".gstinfield").hide();
+	$(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
 	$(".onlyvat").show();
@@ -54,7 +54,6 @@ $(document).ready(function() {
 	$(".gstvat").show();
 	$(".onlyvat").hide();
     }
-
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
@@ -416,6 +415,9 @@ $(document).ready(function() {
 	    }
 	}
     });
+    $("#invoice_customer").searchify();
+    $("#invoice_customer").removeClass("col-sm-8");
+    $("#invoice_customer").parent().addClass("col-sm-8 nopadding");
 
     //Change event for 'GST' and 'VAT' radio button.
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
@@ -463,6 +465,7 @@ $(document).ready(function() {
 	}
     });
     $('.taxapplicable').change();
+
     //Keydown event for 'VAT' and 'GST' radio button.
     $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
 	if (event.which == 13) {
@@ -704,7 +707,9 @@ $(document).ready(function() {
     $("#invoice_customer").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($.trim($('#invoice_customer option:selected').val()) == "") {
+	    let selectedCustomer = $("#invoice_customer option:selected").val();
+	    setTimeout( function() {
+		if ($("#invoice_customer option:selected").val() == "") {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		$("#custsup-blank-alert").alert();
 		$("#custsup-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -713,6 +718,7 @@ $(document).ready(function() {
 		$('#invoice_customer').focus();
 		return false;
 	    }
+	    }, 25 );
 	    $("#invoice_customerstate").focus();  //Focus shifts to Customer State.
 	}
 	if (event.which == 38) {
