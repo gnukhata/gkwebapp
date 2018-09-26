@@ -166,7 +166,7 @@ $(document).ready(function() {
     if (event.which == 13) {
 	event.preventDefault();
 	setTimeout( function() {
-	    if ($("#pname option:selected").val() == "") {
+	    if ($("#pname").next().val() == "") {
 		raiseAlertById("#pname-blank");
 	    }
 	    $("#payment-mode").focus();
