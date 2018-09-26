@@ -43,6 +43,11 @@ $(document).ready(function() {
     //Converting Party Name List to Searchable Combo
     $("#pname").searchify();
 
+    if (!$("#invsel").is(":hidden")) {
+	//Converting Invoice List to Searchable Combo
+	$("#invsel").searchify();
+    }
+    
     if ($("#invsel").length > 0){
 	$("#invsel").focus();
 	}
@@ -375,8 +380,10 @@ $(document).ready(function() {
 
     $("#invsel").keydown(function(event) {
     if (event.which == 13) {
-      event.preventDefault();
-      $("#vdate").focus();
+	event.preventDefault();
+	setTimeout( function() {
+	    $("#vdate").focus();
+	}, 25 );
     }
   });
     
