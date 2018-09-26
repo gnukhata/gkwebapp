@@ -38,7 +38,10 @@ $(document).ready(function() {
   $("#b-amount").val("0.00");
   $("#c-amount").val("0.00");
 
-  $('.date').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
+    $('.date').autotab('number');    //autotab is a library for automatically switching the focus to next input when max allowed characters are filled.
+
+    //Converting Party Name List to Searchable Combo
+    $("#pname").searchify();
 
     if ($("#invsel").length > 0){
 	$("#invsel").focus();
@@ -161,12 +164,13 @@ $(document).ready(function() {
  
   $("#pname").keydown(function(event) {
     if (event.which == 13) {
-      event.preventDefault();
-
-      if ($("#pname option:selected").val() == "") {
-        raiseAlertById("#pname-blank");
-      }
-      $("#payment-mode").focus();
+	event.preventDefault();
+	setTimeout( function() {
+	    if ($("#pname option:selected").val() == "") {
+		raiseAlertById("#pname-blank");
+	    }
+	    $("#payment-mode").focus();
+	}, 25 );
     }
     else if (event.which == 38) {
       var curName = $("#pname option:selected").val();

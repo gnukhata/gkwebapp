@@ -415,7 +415,8 @@ $(document).ready(function() {
 	    }
 	}
     });
-    
+
+    //Converting List of Delivery Notes into a searchable combo
     if ($("#invoice_deliverynote").is(":visible")) {
 	$("#invoice_deliverynote").searchify();
 	$("#invoice_deliverynote").removeClass("col-sm-8");
@@ -423,6 +424,7 @@ $(document).ready(function() {
 	$("#invoice_deliverynote").focus();
     }
 
+    //Converting List of Customers/Suppliers into a searchable combo
     $("#invoice_customer").searchify();
     $("#invoice_customer").removeClass("col-sm-8");
     $("#invoice_customer").parent().addClass("col-sm-8 nopadding");
@@ -715,7 +717,6 @@ $(document).ready(function() {
     $("#invoice_customer").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    let selectedCustomer = $("#invoice_customer option:selected").val();
 	    setTimeout( function() {
 		if ($("#invoice_customer option:selected").val() == "") {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
