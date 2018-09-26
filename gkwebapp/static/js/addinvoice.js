@@ -61,7 +61,7 @@ $(document).ready(function() {
 	      $("#consigneename").val($("#invoice_customer option:selected").text());
 	      $("#consigneestate").val($("#invoice_customerstate option:selected").text());
 	      $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
-	      $("#gstinconsignee").val($("#gstin").text());
+ 	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
 	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
 	  } else {
@@ -307,7 +307,7 @@ $(document).ready(function() {
     $("#invoice_deliverynote").keydown(function(event) {
 	if (event.which == 13) {  //Events triggered when Enter key is pressed down.
 	    event.preventDefault();
-	    $("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+	    setTimeout( function() {$("#invoice_challanno").focus().select();}, 25 );  //Focus shifts to Invoice Number.
 	}
     });
 
@@ -415,10 +415,18 @@ $(document).ready(function() {
 	    }
 	}
     });
+    
+    if ($("#invoice_deliverynote").is(":visible")) {
+	$("#invoice_deliverynote").searchify();
+	$("#invoice_deliverynote").removeClass("col-sm-8");
+	$("#invoice_deliverynote").parent().addClass("col-sm-8 nopadding");
+	$("#invoice_deliverynote").focus();
+    }
+
     $("#invoice_customer").searchify();
     $("#invoice_customer").removeClass("col-sm-8");
     $("#invoice_customer").parent().addClass("col-sm-8 nopadding");
-
+    
     //Change event for 'GST' and 'VAT' radio button.
     $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
 	if($("#gst").is(":checked")){
@@ -1131,6 +1139,7 @@ $(document).ready(function() {
     });
     $("#invoice_deliverynote").change(function(event) {
 	if ($("#invoice_deliverynote option:selected").val() != '') {
+	    $("#msspinmodal").modal("show");
 	    var deliverydate = $("#invoice_deliverynote option:selected").attr("dcdate");
 	    $("#supply_date").val(deliverydate[0] + deliverydate[1]).prop("disabled", true);
 	    $("#supply_month").val(deliverydate[3] + deliverydate[4]).prop("disabled", true);
@@ -1242,6 +1251,7 @@ $(document).ready(function() {
 		    });
 		}
 	    });
+	    $("#msspinmodal").modal("hide");
 	}
 	else {
 	    $("#invoice_customer").val("").prop("disabled", false).change();
