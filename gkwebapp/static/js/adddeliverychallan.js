@@ -32,15 +32,16 @@ Contributors:
 
 
 $(document).ready(function() {
-  $('.modal-backdrop').remove();
-  $('.delchaldate').autotab('number');
-  $(".supplydate").autotab('number');  
-  $("#deliverychallan_challanno").focus().select();
-  $("#deliverychallan_date").numeric();
-  $("#deliverychallan_month").numeric();
-  $("#deliverychallan_year").numeric();
-  $('.deliverychallan_product_quantity').numeric({ negative: false});
-  $('#deliverychallan_noofpackages').numeric({ negative: false});
+    $('.modal-backdrop').remove();
+    $('.delchaldate').autotab('number');
+    $(".supplydate").autotab('number');  
+    $("#deliverychallan_challanno").focus().select();
+    $("#deliverychallan_date").numeric();
+    $("#deliverychallan_month").numeric();
+    $("#deliverychallan_year").numeric();
+    $('.deliverychallan_product_quantity').numeric({ negative: false});
+    $('#deliverychallan_noofpackages').numeric({ negative: false});
+    $(".product_name_gst, .product_name_vat").searchify(); //Converting to searcheable combo.
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var selectedproduct = "";
@@ -116,7 +117,7 @@ $(document).ready(function() {
       $(this).val(yearpad($(this).val(), 4));
       invoicedatestring = $("#deliverychallan_date").val() + $("#deliverychallan_month").val() + $("#deliverychallan_year").val();
       invoicedate = Date.parseExact(invoicedatestring, "ddMMyyyy");
-      if (invoicedatestring.length == 0) {
+      if (invoicedatestring.length == 0 && $("#deliverychallan_challanno").val() != "") {
 	  $("#date-blank-alert").alert();
 	  $("#date-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 	      $("#date-blank-alert").hide();
@@ -151,6 +152,12 @@ $(document).ready(function() {
 	      $(".gstinfield").show();
 	      $(".vatfield").hide();
 	      $(".gstfield").show();
+	      $(".product_name_gst").searchify(); //Converting to searcheable combo.
+	      let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
+	      $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
+	      $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
+	      $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
+	      $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
 	  }
 	  else {
 	      $("#taxapplicabletext").text("VAT");
@@ -162,10 +169,16 @@ $(document).ready(function() {
 	      $("#vathelp").show();
 	      $(".gstfield").hide();
 	      $(".vatfield").show();
+	      $(".product_name_vat").searchify();
+	      let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	      $(".product_name_vat").closest("select").width(vatproductwidth);
+	      $(".product_name_vat").closest("select").parent().width(vatproductwidth);
+	      $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
+	      $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	  }
       }
   });
-
+    $("#deliverychallan_year").blur();
 
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
