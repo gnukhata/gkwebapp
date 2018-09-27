@@ -8,11 +8,22 @@ $(document).ready(function() {
     $("#drcrnote_date").numeric({ negative: false });
     $("#drcrnote_month").numeric({ negative: false });
     $("#drcrnote_year").numeric({ negative: false });
-     $("#drcrnote_date_ref").numeric({ negative: false });
+    $("#drcrnote_date_ref").numeric({ negative: false });
     $("#drcrnote_month_ref").numeric({ negative: false });
-  $("#drcrnote_year_ref").numeric({ negative: false });
-  var usrid = "" ;
+    $("#drcrnote_year_ref").numeric({ negative: false });
+    var usrid = "" ;
 
+    if($("#sale").is(":checked"))  {
+	$("#drcrnote_invoice").searchify();
+	$("#drcrnote_invoice").removeClass("col-sm-8");
+	$("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
+    }
+    else{
+	$("#drcrnote_invoice_purchase").searchify();
+	$("#drcrnote_invoice_purchase").removeClass("col-sm-8");
+	$("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
+    }
+    
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
 	/* Act on the event */
@@ -30,7 +41,9 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice").change();
 	    $("#drcrnote_invoice_purchase").hide();
 	    $("#drcrnote_invoice_purchase").val("");
-	    
+	    $("#drcrnote_invoice").searchify();
+	    $("#drcrnote_invoice").removeClass("col-sm-8");
+	    $("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
        }
 	else{
 	    $("#drcrnote_invoice_purchase").show();
@@ -40,9 +53,11 @@ $(document).ready(function() {
 	    $(".salediv").hide();
 	    $(".purchasediv").show();
 	    $("#drcrnote_invoice").val("");
+	    $("#drcrnote_invoice_purchase").searchify();
+	    $("#drcrnote_invoice_purchase").removeClass("col-sm-8");
+	    $("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
 	}
     });
-    
     //keydown events for drcrnote
     //On the basis of radio buttons selection focus shift to selection of invoice type.
     $("#discount, #return").keydown(function(event) {
@@ -84,7 +99,8 @@ $(document).ready(function() {
     $("#drcrnote_invoice").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($.trim($('#drcrnote_invoice option:selected').val()) == "") {
+	    setTimeout( function() {
+		if ($('#drcrnote_invoice option:selected').val() == "") {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		$("#invoice-blank-alert").alert();
 		$("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -95,13 +111,15 @@ $(document).ready(function() {
 	    } else {
 		$("#drcrnote_no").focus();
 	    }
+	    }, 25 );
 	}
     });
     //Key Event for purchase invoice select.
     $("#drcrnote_invoice_purchase").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    if ($.trim($('#drcrnote_invoice_purchase option:selected').val()) == "") {
+	    setTimeout( function() {
+		if ($('#drcrnote_invoice_purchase option:selected').val() == "") {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		$("#invoice-blank-alert").alert();
 		$("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -112,6 +130,7 @@ $(document).ready(function() {
 	    } else {
 		$("#drcrnote_no").focus();
 	    }
+	    }, 25 );
 	}
     });
        //Key Event for credit/debit Number.
