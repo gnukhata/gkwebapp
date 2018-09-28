@@ -1585,89 +1585,66 @@ $(document).off("keyup").on("keyup", function(event) {
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
-          $.ajax({
-            url: '/cashmemos?action=save',
-            type: 'POST',
-            global: false,
-            contentType: false,
-            cache: false,
-            processData: false,
-            dataType: 'json',
-            async: false,
-            data: form_data,
-            beforeSend: function(xhr) {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            }
-          })
-		.done(function(resp) {
-		   
+            $.ajax({
+		url: '/cashmemos?action=save',
+		type: 'POST',
+		global: false,
+		contentType: false,
+		cache: false,
+		processData: false,
+		dataType: 'json',
+		async: false,
+		data: form_data,
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+            }).done(function(resp) {
 		if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {   
-               $("#success-alert").alert();
+		    $("#success-alert").alert();
 		    $("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
-			if(inoutflag == 15){
-		       $("#cashmemo_create").click();
-		   }else{ $("#cashmemo_record").click();}
-		
-		   $("#success-alert").hide();
-		   let invid = resp["gkresult"];
-		   saveCashMemo(invid,inoutflag);
-	       });}
-		  else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
-		      $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
-               $("#cm-vch-success-alert").alert();
-		      $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
-			  if(inoutflag == 15){
-		       $("#cashmemo_create").click();
-		   }else{ $("#cashmemo_record").click();}
-		
-		   $("#cm-vch-success-alert").hide();
-		   let invid = resp["gkresult"];
-		   saveCashMemo(invid,inoutflag);
-	       });}
-		   else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		      
-               $("#cm-vch-failed-alert").alert();
-		       $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
-			   if(inoutflag == 15){
-		       $("#cashmemo_create").click();
-		   }else{ $("#cashmemo_record").click();}
-		
-		   $("#cm-inv-failed-alert").hide();
-		   let invid = resp["gkresult"];
-		   saveCashMemo(invid,inoutflag);
-	       });
-		
-	
-		   }else if (resp["gkstatus"] == 1) {
-               $("#invoice_challanno").focus();
-               $("#duplicate-alert").alert();
-		       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
-			   if(inoutflag == 15){
-		       $("#cashmemo_create").click();
-		   }else{ $("#cashmemo_record").click();}
-		
-                 $("#duplicate-alert").hide();
-               });
-               return false;
-             } else if (resp["gkstatus"] == 3){
-               $("#invoice_challanno").focus();
-               $("#failure-alert").alert();
-		 $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {
-		     if(inoutflag == 15){
-		       $("#cashmemo_create").click();
-		   }else{ $("#cashmemo_record").click();}
-		
-                 $("#failure-alert").hide();
-               });
-               return false;
-             }
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
+			$("#success-alert").hide();
+			let invid = resp["gkresult"];
+			saveCashMemo(invid,inoutflag);
+		    });
+		}
+		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+		    $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
+		    $("#cm-vch-success-alert").alert();
+		    $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#cm-vch-success-alert").hide();
+			let invid = resp["gkresult"];
+			saveCashMemo(invid,inoutflag);
+		    });
+		}
+		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		      
+		    $("#cm-vch-failed-alert").alert();
+		    $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#cm-inv-failed-alert").hide();
+			let invid = resp["gkresult"];
+			saveCashMemo(invid,inoutflag);
+		    });
+		}else if (resp["gkstatus"] == 1) {
+		    $("#invoice_challanno").focus();
+		    $("#duplicate-alert").alert();
+		    $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#duplicate-alert").hide();
+			$("#addcashmemo").click();
+		    });
+		    return false;
+		} else if (resp["gkstatus"] == 3){
+		    $("#invoice_challanno").focus();
+		    $("#failure-alert").alert();
+		    $("#failure-alert").fadeTo(2250, 500).slideUp(500, function() {		
+			$("#failure-alert").hide();
+			$("#addcashmemo").click();
+		    });
+		    return false;
+		}
+           }).fail(function() {
+               console.log("error");
+           }).always(function() {
+               console.log("complete");
            });
-
           return false;
         });
     });
@@ -2053,5 +2030,5 @@ $(document).off("keyup").on("keyup", function(event) {
     $("#backbutton").click(function(event) {
     $("#addcashmemo").click();
   });
-    
+    return false;
 });
