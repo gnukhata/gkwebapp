@@ -17,11 +17,13 @@ $(document).ready(function() {
 	$("#drcrnote_invoice").searchify();
 	$("#drcrnote_invoice").removeClass("col-sm-8");
 	$("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
+	$("#drcrnote_invoice").next().addClass("invoiceselect");
     }
     else{
 	$("#drcrnote_invoice_purchase").searchify();
 	$("#drcrnote_invoice_purchase").removeClass("col-sm-8");
 	$("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
+	$("#drcrnote_invoice_purchase").next().addClass("invoiceselect");
     }
     
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
@@ -44,6 +46,7 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice").searchify();
 	    $("#drcrnote_invoice").removeClass("col-sm-8");
 	    $("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
+	    $("#drcrnote_invoice").next().addClass("invoiceselect");
        }
 	else{
 	    $("#drcrnote_invoice_purchase").show();
@@ -56,6 +59,7 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice_purchase").searchify();
 	    $("#drcrnote_invoice_purchase").removeClass("col-sm-8");
 	    $("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
+	    $("#drcrnote_invoice_purchase").next().addClass("invoiceselect");
 	}
     });
     //keydown events for drcrnote
@@ -99,18 +103,21 @@ $(document).ready(function() {
     $("#drcrnote_invoice").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+	    $("#msspinmodal").modal("show");
 	    setTimeout( function() {
-		if ($('#drcrnote_invoice option:selected').val() == "") {
-		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-		$("#invoice-blank-alert").alert();
-		$("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#invoice-blank-alert").hide();
-		});
-		$('#drcrnote_invoice').focus();
-		return false;
-	    } else {
-		$("#drcrnote_no").focus();
-	    }
+		if ($('#drcrnote_invoice').filter(function() {return $(this).css('display') == 'none';}).val() == "") {
+		    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+		    $("#invoice-blank-alert").alert();
+		    $("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+			$("#invoice-blank-alert").hide();
+			$("#msspinmodal").modal("hide");
+		    });
+		    $('#drcrnote_invoice').focus();
+		    return false;
+		} else {
+		    $("#drcrnote_no").focus();
+		    $("#msspinmodal").modal("hide");
+		}
 	    }, 25 );
 	}
     });
@@ -118,17 +125,21 @@ $(document).ready(function() {
     $("#drcrnote_invoice_purchase").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
+	    $("#msspinmodal").modal("show");
 	    setTimeout( function() {
-		if ($('#drcrnote_invoice_purchase option:selected').val() == "") {
+		if ($('#drcrnote_invoice_purchase').filter(function() {return $(this).css('display') == 'none';}).val() == "") {
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		$("#invoice-blank-alert").alert();
 		$("#invoice-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
 		    $("#invoice-blank-alert").hide();
+		    $("#msspinmodal").modal("hide");
 		});
+		    $("#msspinmodal").modal("hide");
 		$('#drcrnote_invoice_purchase').focus();
 		return false;
-	    } else {
-		$("#drcrnote_no").focus();
+		} else {
+		    $("#drcrnote_no").focus();
+		    $("#msspinmodal").modal("hide");
 	    }
 	    }, 25 );
 	}
@@ -628,7 +639,7 @@ $(document).ready(function() {
     //1 start
     $("#drcrnote_invoice, #drcrnote_invoice_purchase").change(function(event){
 	$("label.col-sm-8, #taxapplicabletext, .input-group-addon, .summarylabel").text("");
-	$('input:not(#status, #taxapplicable), select:not(#drcrnote_invoice, #drcrnote_invoice_purchase)').val("");
+	$('input:not(#status, #taxapplicable), select:not(#drcrnote_invoice, #drcrnote_invoice_purchase, .invoiceselect)').val("");
 	if($(this).val()!=""){
 	$.ajax({
 		url: '/invoice?action=getinvdetails',
