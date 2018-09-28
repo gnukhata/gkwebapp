@@ -58,7 +58,8 @@ $(document).ready(function() {
   function raiseAlertById(id) {
     $(id).alert();
     $(id).fadeTo(2250, 500).slideUp(500, function() {
-      $(id).hide();
+	$(id).hide();
+	$("#msspinmodal").modal("hide");
     });
 
   }
@@ -170,11 +171,13 @@ $(document).ready(function() {
   $("#pname").keydown(function(event) {
     if (event.which == 13) {
 	event.preventDefault();
+	$("#msspinmodal").modal("show");
 	setTimeout( function() {
 	    if ($("#pname").next().val() == "") {
 		raiseAlertById("#pname-blank");
 	    }
 	    $("#payment-mode").focus();
+	    $("#msspinmodal").modal("hide");
 	}, 25 );
     }
     else if (event.which == 38) {
@@ -381,8 +384,10 @@ $(document).ready(function() {
     $("#invsel").keydown(function(event) {
     if (event.which == 13) {
 	event.preventDefault();
+	$("#msspinmodal").modal("show");
 	setTimeout( function() {
 	    $("#vdate").focus();
+	    $("#msspinmodal").modal("hide");
 	}, 25 );
     }
   });
