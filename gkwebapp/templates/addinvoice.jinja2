@@ -76,7 +76,7 @@
 
           </div>
           <form class="form-horizontal" >
-	    <div class="col-md-12">
+	    <div class="col-md-12 row">
 	      <div class="col-md-4">
 		{% if gkstatus=="in" %}
 		  {% trans %}<h4>Details of Purchase Invoice: </h4>{% endtrans %}
@@ -263,7 +263,7 @@
 	      </div>
 	    </div>
 	    <a id="taxapplicablescroll"></a>
-	    <div class="col-md-12">
+	    <div class="col-md-12 row">
 	      <div class="col-md-3 gstvat" hidden>
 		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
 		<label><input type="radio" class="taxapplicable" name="cashmemo" id="gst" aria-label="gst" value="7" checked> GST</label>&nbsp
@@ -322,12 +322,14 @@
 		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Tab' key after a product is selected.</small>
 		  </div>
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
 		    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		      <small class="row col-sm-12 form-text text-muted">Press 'Tab' key after a product is selected.</small>
 		    </div>
 		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		{% endif %}
@@ -426,6 +428,7 @@
 		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+		    <small class="row col-sm-12 form-text text-muted">Press 'Tab' key after a product is selected.</small>
 		  </div>
 		  <div class="col-sm-10" style="overflow-x:scroll;">
 		    <div class="row">
