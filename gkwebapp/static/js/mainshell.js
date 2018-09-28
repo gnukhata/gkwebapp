@@ -51,6 +51,11 @@ $(document).ready(function(){
 	    $(this).width(parseFloat(selectwidth));
 	    $(this).height(parseFloat(selectheight));
 	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
+	    $(this).find("option").each(function() {
+		if ($(this).html()=="") {
+		    $(this).remove();
+		}
+	    });
 	    $(this).next().next().css({"margin-top":"-7px"});
 	    $(this).next().width(parseFloat(selectwidth));
 	}
