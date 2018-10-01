@@ -2404,6 +2404,7 @@ if (event.which == 13) {
       }
     });
 
+    //Click event for Plus Button that triggers creation of a new row.
     $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
 	event.preventDefault();
 	var curindex = $(this).closest('tr').index();
