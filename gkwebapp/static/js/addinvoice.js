@@ -2386,7 +2386,22 @@ if (event.which == 13) {
       if ($("#invoice_product_table_gst tbody tr").length == 1) {
 	  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
-  });
+    });
+
+    $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var nextindex = curindex + 1;
+	var previndex = curindex - 1;
+	var jqEvent = jQuery.Event("keydown");
+	jqEvent.which = 13; // # Some keycode value
+	if ($("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().is(":visible")) {
+	    $("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+	else{
+	    $("#invoice_product_table_vat tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+    });
 
     //Vehicle Number is to be entered only when Transportation Mode is Road.
     $("#transportationmode").change(function(event){
