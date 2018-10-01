@@ -1141,7 +1141,21 @@ if ($("#invoice_product_table_vat tbody tr").length > 1) {
 	if ($("#invoice_product_table_gst tbody tr").length == 1) {
 	    $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
 	}
-});
+    });
+
+    //Click event for Plus Button that triggers creation of a new row.
+    $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var jqEvent = jQuery.Event("keydown");
+	jqEvent.which = 13; // # Some keycode value
+	if ($("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().is(":visible")) {
+	    $("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+	else{
+	    $("#invoice_product_table_vat tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+    });
 
 $(document).off("keydown", ".lastfield").on("keydown", ".lastfield", function(event) {
 var n = $(".lastfield").length;
