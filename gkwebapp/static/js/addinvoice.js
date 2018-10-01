@@ -1237,7 +1237,7 @@ $(document).ready(function() {
 				$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 				$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
 			    });
-			    $("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+			    $("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 			    var productcode;
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
@@ -1252,7 +1252,7 @@ $(document).ready(function() {
 				$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 			    });
-			    $("#invoice_product_table_total tbody tr:first td:last").empty();
+			    $("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
 			    $(".product_name_gst, .product_name_vat, #invoicestate").change();
 			}
 		    });
