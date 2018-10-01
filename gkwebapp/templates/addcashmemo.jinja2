@@ -58,7 +58,7 @@
     
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
-        <div class="container-fluid row">
+        <div class="row">
           <div class="alert alert-danger" id="custsup-blank-alert"  aria-live="rude" role="alert" hidden>
             <label for="vno">
               {% if gkstatus=="in" %}
@@ -173,16 +173,17 @@
         </div>
 
 
-        <div class="container-fluid" id="invoice_product_div">
+        <div class="row col-md-12" id="invoice_product_div">
           {% if resultgstvat == '29' or resultgstvat == '22' %}
   	    {% if resultgstvat == '22' %}
-	      <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
+	      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:5;">
 		<div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Cash Memo. Press 'Esc' key to exit from the table.</small>
+	      </div>
   		<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
   	    {% else %}
-		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
+		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 		    <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Cash Memo. Press 'Esc' key to exit from the table.</small>
@@ -464,7 +465,7 @@
               </div>
 	      <div class="row">
 		<div class ="col-md-4 pull-right">
-		  <div class="row hborderdiv">
+		  <div class="row hborderdiv col-sm-12">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
@@ -474,7 +475,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv gstfield sgstfield">
+		  <div class="row hborderdiv col-sm-12 gstfield sgstfield">
 		    <div class="form-group sgstfield form-inline">
 		      <div class="col-sm-6">
 			<label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
@@ -484,7 +485,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv gstfield sgstfield">
+		  <div class="row hborderdiv col-sm-12 gstfield sgstfield">
 		    <div class="form-group sgstfield form-inline">
 		      <div class="col-sm-6">
 			<label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
@@ -494,7 +495,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv gstfield">
+		  <div class="row col-sm-12 hborderdiv gstfield">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
@@ -504,7 +505,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv vatfield">
+		  <div class="row col-sm-12 hborderdiv vatfield">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
@@ -514,7 +515,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv">
+		  <div class="row col-sm-12 hborderdiv">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
@@ -524,7 +525,7 @@
 		      </div>
 		    </div>
 		  </div>
-		  <div class="row hborderdiv" style="border-bottom-style:solid;">
+		  <div class="row col-sm-12 hborderdiv" style="border-bottom-style:solid;">
 		    <div class="form-group form-inline">
 		      <div class="col-sm-6">
 			<label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
