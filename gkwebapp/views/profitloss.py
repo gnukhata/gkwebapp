@@ -366,13 +366,14 @@ def showprofitlossreport(request):
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    
     net = {}
     try:
         net["netprofit"] = result.json()["gkresult"]["netprofit"]
     except:
         net["netloss"] = result.json()["gkresult"]["netloss"]
     Total = result.json()["gkresult"]["Total"]    
-    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total},request=request)
+    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total},request=request)
 
 @view_config(route_name="showprofitlossreport", request_param="type=print", renderer="gkwebapp:templates/printprofitlossreport.jinja2")
 def printprofitloss(request):
