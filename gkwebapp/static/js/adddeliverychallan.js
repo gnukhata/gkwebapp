@@ -2325,6 +2325,20 @@ else {
 	}
     });
 
+    //Click event for Plus Button that triggers creation of a new row.
+    $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var jqEvent = jQuery.Event("keydown");
+	jqEvent.which = 13; // # Some keycode value
+	if ($("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().is(":visible")) {
+	    $("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+	else{
+	    $("#invoice_product_table_vat tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+    });
+
   $("#deliverychallan_addcust").click(function() {
       var custsup = "";
         if ($("#deliverychallan_gkstatus").val()=='out') {
