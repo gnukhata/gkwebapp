@@ -1155,6 +1155,7 @@ $(document).ready(function() {
 	    $("#supply_date").val(deliverydate[0] + deliverydate[1]).prop("disabled", true);
 	    $("#supply_month").val(deliverydate[3] + deliverydate[4]).prop("disabled", true);
 	    $("#supply_year").val(deliverydate[6] + deliverydate[7] + deliverydate[8] + deliverydate[9]).prop("disabled", true);
+	    var delchalContents = {};
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
 		type: 'POST',
@@ -1170,6 +1171,9 @@ $(document).ready(function() {
 		    $("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 		    $("#invoice_customer").prop("disabled", true);
 		    $("#invoice_customerstate").prop("disabled", true);
+		    if ("delchalContents" in resp["delchal"]) {
+			delchalContents = resp["delchal"]["delchalContents"];
+		    }
 		    if(resp["delchal"]["delchaldata"]["consignee"]){
 			$("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
 			$("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
@@ -1236,10 +1240,14 @@ $(document).ready(function() {
 				$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 				$('#invoice_product_table_vat tbody tr:last td:first select').val(key).prop("disabled", true);
-				$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2));
 				$('#invoice_product_table_vat tbody tr:last td:eq(1) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 				$('#invoice_product_table_vat tbody tr:last td:eq(1) span').text(value.unitname);
 				$('#invoice_product_table_vat tbody tr:last td:eq(2) span').text(value.unitname);
+				if (Object.keys(delchalContents).length > 0) {
+				    $('#invoice_product_table_vat tbody tr:last td:eq(2) input').val(parseFloat(delchalContents[key].freeqty).toFixed(2)).attr("data", parseFloat(delchalContents[key].freeqty).toFixed(2));
+				    $('#invoice_product_table_vat tbody tr:last td:eq(3) input').val(parseFloat(delchalContents[key].priceperunit).toFixed(2));
+				    $('#invoice_product_table_vat tbody tr:last td:eq(3) input').val(parseFloat(delchalContents[key].discount).toFixed(2));
+				}
 			    });
 			    $("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 			    var productcode;
@@ -1247,12 +1255,16 @@ $(document).ready(function() {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				$('#invoice_product_table_gst tbody tr:last td:first select').val(key).prop("disabled", true);
 				$('#invoice_product_table_gst tbody tr:last td:eq(1) label').html(value.gscode);
-				$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2));
 				$('#invoice_product_table_gst tbody tr:last td:eq(2) input').val(parseFloat(value.qty).toFixed(2)).attr("data", parseFloat(value.qty).toFixed(2));
 				$('#invoice_product_table_gst tbody tr:last td:eq(2) span').text(value.unitname);
 				$('#invoice_product_table_gst tbody tr:last td:eq(3) span').text(value.unitname);
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
 				$('.invoice_product_per_price_gst').numeric({ negative: false });
+				if (Object.keys(delchalContents).length > 0) {
+				    $('#invoice_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(delchalContents[key].freeqty).toFixed(2)).attr("data", parseFloat(delchalContents[key].freeqty).toFixed(2));
+				    $('#invoice_product_table_gst tbody tr:last td:eq(4) input').val(parseFloat(delchalContents[key].priceperunit).toFixed(2));
+				    $('#invoice_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(delchalContents[key].discount).toFixed(2));
+				}
 				$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 			    });
