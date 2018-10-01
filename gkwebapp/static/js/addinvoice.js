@@ -47,7 +47,12 @@ $(document).ready(function() {
 	$(".gstfield").hide();
 	$(".onlyvat").show();
 	$(".gstvat").hide();
-	
+	$(".product_name_vat").searchify();
+	let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	$(".product_name_vat").closest("select").width(vatproductwidth);
+	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
+	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
+	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
@@ -480,7 +485,6 @@ $(document).ready(function() {
 	    $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	}
     });
-    $('.taxapplicable').change();
 
     //Keydown event for 'VAT' and 'GST' radio button.
     $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
