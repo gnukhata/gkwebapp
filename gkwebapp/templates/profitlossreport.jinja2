@@ -147,11 +147,11 @@
 		{% endfor %}
 	      {% endif %}
 	      {% if subgroup != "Purchase" and subgroup != "direxpbal" and "balance" not in DirectExpense[subgroup] %}
-		  <tr class="accountfield accountofdegroup">
-		    <td class="col-xs-8 accounttd"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
-		    <td class="col-xs-4 text-right accounttd"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
-		  </tr>
-		{% endif %}
+		<tr class="accountfield accountofdegroup">
+		  <td class="col-xs-8 accounttd"><a class="rcaccname"  href="#"><span style="margin-left:3em;">{{subgroup}}</span></a></td>
+		  <td class="col-xs-4 text-right accounttd"><span style="margin-right:3em;">{{DirectExpense[subgroup]}}</span></td>
+		</tr>
+	      {% endif %}
 	    {% endfor %}
 	    <tr class="group iegroup">
 	      <td class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </td>
@@ -247,10 +247,17 @@
 		</tr>
 	      {% endif %}
 	    {% endfor %}
+	    <tr class="">
+	      <td class="col-xs-8 accounttd"><a class=""  href="#"><span style="margin-left:3em;">Closing Stock</span></a></td>
+	      <td class="col-xs-4 text-right accounttd"><span style="margin-right:6em;">{{ClosingStock}}</span></td>
+	    </tr>
+	    
+	    
 	    <tr class="group iigroup">
 	      <td class="col-xs-8"> <a class="pyaccname"  href="#" style="text-decoration: none;" >INDIRECT INCOME</a> </td>
 	      <td  class="col-xs-4 text-right">{{InDirectIncome["indirincmbal"]}}</td>
 	    </tr>
+	    
             {% for subgroup in InDirectIncome %}
 	      {% if "balance" in InDirectIncome[subgroup] %}
 		<tr class="subgroupofiigroup" data-numberofaccounts="{{InDirectIncome[subgroup]|length}}">
@@ -292,9 +299,9 @@
       <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
       <button type="button" class="btn btn-sm btn-success expandbutton" id="expandall" accesskey="e"><i class="fa fa-toggle-down" aria-hidden="true"></i> {% trans %}<u>E</u>xpand All{% endtrans %}</button>
       <button type="button" class="btn btn-sm btn-warning expandbutton" id="compress" accesskey="e"><i class="fa fa-toggle-up" aria-hidden="true"></i> {% trans %}Compr<u>e</u>ss All{% endtrans %}</button>
-	   <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
-	   <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
-	   <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="printpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
     </span>
     <input type="hidden" id="ledtodate" value="{{to}}">
     <input type="hidden" id="ledfromdate" value="{{from}}">
