@@ -2262,7 +2262,21 @@ if (event.which == 13) {
       if ($("#invoice_product_table_gst tbody tr").length == 1) {
 	  $("#invoice_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
-  });
+    });
+
+    //Click event for Plus Button that triggers creation of a new row.
+    $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var jqEvent = jQuery.Event("keydown");
+	jqEvent.which = 13; // # Some keycode value
+	if ($("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().is(":visible")) {
+	    $("#invoice_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+	else{
+	    $("#invoice_product_table_vat tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+    });
 
     //Vehicle Number is to be entered only when Transportation Mode is Road.
     $("#transportationmode").change(function(event){
@@ -2538,7 +2552,7 @@ if (event.which == 13) {
 				});
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
 				$('.invoice_product_per_price_gst').numeric({ negative: false });
-				$("#invoice_product_table_total tbody tr:first td:last").empty();
+				$("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
 				$("#discounttotal_product_gst").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 				$("#taxablevaluetotal_product_gst").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totalcgst_product_gst").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
@@ -2577,7 +2591,7 @@ if (event.which == 13) {
 				    }
 				    curindex = curindex + 1;
 				});
-				$("#invoice_product_table_vat tbody tr:first td:eq(9)").empty();
+				$("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 				$('.invoice_product_quantity_vat').numeric({ negative: false });
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
 				$("#discounttotal_product_vat").val(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
