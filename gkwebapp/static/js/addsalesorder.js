@@ -1993,7 +1993,7 @@ if (event.which == 13) {
     });
   }
       if ($("#salesorder_product_table_vat tbody tr").length == 1) {
-	  $("#salesorder_product_table_vat tbody tr:eq(0) td:eq(10)").empty();
+	  $("#salesorder_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
       }
 
       if ($("#salesorder_product_table_gst tbody tr").length > 1) {
@@ -2003,7 +2003,7 @@ if (event.which == 13) {
 	  calculategstaxamt(curindex);
       }
       if ($("#salesorder_product_table_gst tbody tr").length == 1) {
-	  $("#salesorder_product_table_total tbody tr:eq(0) td:eq(1)").empty();
+	  $("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
       }
     });
 
