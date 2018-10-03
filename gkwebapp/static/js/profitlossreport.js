@@ -1,36 +1,37 @@
 /*
-Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
-  GNUKhata is Free Software; you can redistribute it and/or modify
-  it under the terms of the GNU Affero General Public License as
-  published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.
+   GNUKhata is Free Software; you can redistribute it and/or modify
+   it under the terms of the GNU Affero General Public License as
+   published by the Free Software Foundation; either version 3 of
+   the License, or (at your option) any later version.
 
-  GNUKhata is distributed in the hope that it will be useful, but
-  WITHOUT ANY WARRANTY; without even the implied warranty of
-  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-  GNU Affero General Public License for more details.
+   GNUKhata is distributed in the hope that it will be useful, but
+   WITHOUT ANY WARRANTY; without even the implied warranty of
+   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+   GNU Affero General Public License for more details.
 
-  You should have received a copy of the GNU Affero General Public
-  License along with GNUKhata (COPYING); if not, write to the
-  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
-  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+   You should have received a copy of the GNU Affero General Public
+   License along with GNUKhata (COPYING); if not, write to the
+   Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+   Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
 
 
-Contributors:
-"Krishnakant Mane" <kk@gmail.com>
-"Ishan Masdekar " <imasdekar@dff.org.in>
-"Navin Karkera" <navin@dff.org.in>
-"Bhavesh Bawadhane" <bbhavesh07@gmail.com>
-"Abhijith Balan" <abhijithb21@openmailbox.com>
-*/
+   Contributors:
+   "Krishnakant Mane" <kk@gmail.com>
+   "Ishan Masdekar " <imasdekar@dff.org.in>
+   "Navin Karkera" <navin@dff.org.in>
+   "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+   "Abhijith Balan" <abhijithb21@openmailbox.com>
+ */
 // This script is for the profit and loss report.
 $(document).ready(function() {
   var oninvoice = 0;
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
-    $("tbody tr:not('.group')").hide();
+    $("tbody tr:not('.group,.cl')").hide();
   $("#msspinmodal").modal("hide");
     $("#realprintpnl, #compress").hide();
   $('#expensetbl tbody tr:first-child td:first a').focus();
@@ -360,7 +361,7 @@ $(document).ready(function() {
 
     $(".expandbutton").click(function(event) {
 	$("tbody tr, .expandbutton").toggle();
-	$('.group').show();
+	$('.group,.cl').show();
     });
     $("#printpnl").click(function(event) {
 	// Displays a printable version of the report.
