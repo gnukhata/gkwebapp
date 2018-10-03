@@ -1911,8 +1911,8 @@ $(document).off("keyup").on("keyup", function(event) {
           return false;
         }
           var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex1 + ") td:eq(3) input").val());
-	  let productCode = $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').filter(function() {return $(this).css('display') == 'none';}).val();
-    	  if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option[value=' + productCode +']")').attr("gsflag") == '7') {
+	  let productCode = $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select').val();
+    	  if (parseFloat(quantity) === 0.00 && $('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option[value=' + productCode +']').attr("gsflag") == '7') {
     	      $("#quantity-blank-alert").alert();
     	      $("#quantity-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
     		  $("#quantity-blank-alert").hide();
