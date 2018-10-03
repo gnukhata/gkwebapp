@@ -2005,7 +2005,21 @@ if (event.which == 13) {
       if ($("#salesorder_product_table_gst tbody tr").length == 1) {
 	  $("#salesorder_product_table_total tbody tr:eq(0) td:eq(1)").empty();
       }
-  });
+    });
+
+    //Click event for Plus Button that triggers creation of a new row.
+    $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+	event.preventDefault();
+	var curindex = $(this).closest('tr').index();
+	var jqEvent = jQuery.Event("keydown");
+	jqEvent.which = 13; // # Some keycode value
+	if ($("#salesorder_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().is(":visible")) {
+	    $("#salesorder_product_table_gst tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+	else{
+	    $("#salesorder_product_table_vat tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+	}
+    });
 
     //Vehicle Number is to be entered only when Transportation Mode is Road.
     $("#modeoftransport").change(function(event){
