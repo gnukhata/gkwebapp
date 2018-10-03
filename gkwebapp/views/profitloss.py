@@ -53,6 +53,7 @@ def printprofitandloss(request):
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    
     net = {}
     try:
         net["netprofit"] = result.json()["gkresult"]["netprofit"]
@@ -282,7 +283,13 @@ def printprofitandloss(request):
             sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
-
+    sheet["C" + str(row)] = "Closing Stock"
+    sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
+    sheet["D" + str(row)]=float("%.2f"%float(result.json()["gkresult"]["Closing Stock"]))
+    sheet["D" + str(row)].number_format="0.00"
+    sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+    row = row + 1
+            
     #Loading data for Indirect Income group.
     sheet["C" + str(row)] = "INDIRECT INCOME"
     sheet["D" + str(row)] = InDirectIncome["indirincmbal"]
