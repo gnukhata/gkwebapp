@@ -3082,6 +3082,7 @@ if (event.which == 13) {
 			    let invid = resp["gkresult"];
 			    saveInvoice(invid,inoutflag);
 			});
+			return false;
 		    }
 		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
 			$("#inv-vch-success-alert").text("Invoice saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
@@ -3091,6 +3092,7 @@ if (event.which == 13) {
 			    let invid = resp["gkresult"];
 			    saveInvoice(invid,inoutflag);
 			});
+			return false;
 		    }
 		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
 			$("#inv-vch-failed-alert").alert();
@@ -3099,6 +3101,7 @@ if (event.which == 13) {
 			    let invid = resp["gkresult"];
 			    saveInvoice(invid,inoutflag);
 			});
+			return false;
 		    } else if (resp["gkstatus"] == 1) {
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                         $("#invoice_challanno").focus();
@@ -3127,6 +3130,7 @@ if (event.which == 13) {
 
       return false;
     });
+      return false;
   });
   $("#confirm_yes").on('shown.bs.modal', function(event) {
     $("#tn_save_no").focus();
