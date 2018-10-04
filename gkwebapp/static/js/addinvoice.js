@@ -1748,7 +1748,7 @@ $(document).ready(function() {
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	      $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	      for (let i = 0; i <= curindex1; i++) {
-		  var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select").filter(function() {return $(this).css('display') == 'none';}).val();
+		  var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select").val();
 		  $("#invoice_product_table_vat tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
               }
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
@@ -2330,7 +2330,7 @@ if (event.which == 13) {
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    for (let i = 0; i <= curindex1; i++) {
-		var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").filter(function() {return $(this).css('display') == 'none';}).val();
+		var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").val();
 		$("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
 	    }
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
