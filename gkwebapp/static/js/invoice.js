@@ -126,9 +126,11 @@ Contributors:
     });
     if (sessionStorage.salepurchase == "15") {
 	$("#invoice_create").click();// loads record purchase invoice page by default.
+	return false;
     }
     else{
 	$("#invoice_record").click();// loads create sale invoice page by default.
+	return false;
     }
 return false;
 });

@@ -95,9 +95,11 @@ $(document).ready(function() {
 
     if (sessionStorage.salepurchase == "15") {
 	$("#cashmemo_create").click();// loads record purchase cash memo page by default.
+	return false;
     }
     else{
 	$("#cashmemo_record").click();// loads create sale cash memo page by default.
+	return false;
     }
     return false;
 });
