@@ -1620,6 +1620,7 @@ $(document).off("keyup").on("keyup", function(event) {
 			let invid = resp["gkresult"];
 			saveCashMemo(invid,inoutflag);
 		    });
+		    return false;
 		}
 		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
 		    $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
@@ -1629,6 +1630,7 @@ $(document).off("keyup").on("keyup", function(event) {
 			let invid = resp["gkresult"];
 			saveCashMemo(invid,inoutflag);
 		    });
+		    return false;
 		}
 		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		      
 		    $("#cm-vch-failed-alert").alert();
@@ -1637,6 +1639,7 @@ $(document).off("keyup").on("keyup", function(event) {
 			let invid = resp["gkresult"];
 			saveCashMemo(invid,inoutflag);
 		    });
+		    return false;
 		}else if (resp["gkstatus"] == 1) {
 		    $("#invoice_challanno").focus();
 		    $("#duplicate-alert").alert();
@@ -1661,6 +1664,7 @@ $(document).off("keyup").on("keyup", function(event) {
            });
           return false;
         });
+	return false;
     });
     $("#confirm_yes").on('shown.bs.modal', function(event) {
         $("#tn_save_no").focus();
