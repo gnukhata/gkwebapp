@@ -151,7 +151,6 @@ def saveproduct(request):
     goid=0
     goopeningstock=0.00
     for prd in request.params:
-
         if prd=="type":
             continue
         elif prd=="godownflag":
@@ -164,6 +163,10 @@ def saveproduct(request):
                 proddetails["categorycode"] = request.params[prd]
         elif prd == "addproddesc":
             proddetails["productdesc"] = request.params[prd]
+        elif prd == "prodmrp":
+            proddetails["prodmrp"] = request.params[prd]
+        elif prd == "prodsp":
+            proddetails["prodsp"] = request.params[prd]
         elif prd == "uom":
             proddetails["uomid"] = request.params[prd]
         elif prd == "openingstock":
