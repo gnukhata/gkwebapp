@@ -245,21 +245,9 @@ $("#openingstock").focus(function(event) {
 		    $("#uomblank-alert").hide();
 		});
 		$("#adduom").focus();
+		return false;
 	    }
-	    // When specs are present focus shifts to specs table.
-	    else if (!$("#specdiv").is(":hidden")) {
-		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
-	    }
-	    else {
-		// If Tax is present focus shifts to Tax table.
-		if ($("#product_tax_table").length > 0) {
-		    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-		}
-		else{
-		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
-		    $(".godown_name:first").focus();
-		}
-	    }
+	    $("#maxprice").focus();
 	}
   else if (event.which==32)
   {
@@ -274,7 +262,41 @@ $("#openingstock").focus(function(event) {
   }
 
   /* Act on the event */
-});
+    });
+    $(document).off('keydown', '#maxprice').on('keydown', '#maxprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    $("#saleprice").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#adduom").focus();
+	}
+    });
+    $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    // When specs are present focus shifts to specs table.
+	    if (!$("#specdiv").is(":hidden")) {
+		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	    }
+	    else {
+		// If Tax is present focus shifts to Tax table.
+		if ($("#product_tax_table").length > 0) {
+		    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
+		}
+		else{
+		    // For godown keeper Tax table is not visible. Focus shifts to godown name.
+		    $(".godown_name:first").focus();
+		}
+	    }
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
 $("#godownflag").keydown(function(event){
   if (event.which == 13 && godownflag == 0) {
     event.preventDefault();
@@ -732,7 +754,7 @@ $(document).off("keydown",".spec").on("keydown",".spec",function(event) {
       }
       else {
         if (curindex == 0) {
-          $("#adduom").focus();
+          $("#saleprice").focus();
         }
         else {
           $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
