@@ -60,6 +60,16 @@
                 <small id="textareahelp" class="form-text text-muted">{% trans %}Press 'Enter' key to save and 'Esc' key to cancel.{% endtrans %}</small>
               </div>
             </div>
+	    <div class="row">
+	      <div class="form-group col-sm-5">
+                <label for="maxprice" class="common">{% trans %}MRP{% endtrans %}:</label>
+                <input type='text' class="form-control input-sm common numtype" name="prodmrp"  id="maxprice" placeholder="0.00">
+	      </div>
+	      <div class="form-group col-sm-offset-1 col-sm-5">
+                <label for="saleprice" class="common">{% trans %}Sale Price{% endtrans %}:</label>
+                <input type='text' class="form-control input-sm common numtype" name="prodsp"  id="saleprice" placeholder="0.00">
+	      </div>
+	    </div>
             <div class=" col-sm-12 row" id="specdiv" hidden>
             </div>
 	  </div>
