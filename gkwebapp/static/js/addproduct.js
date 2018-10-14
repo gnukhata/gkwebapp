@@ -307,12 +307,7 @@ $("#hsnno").keydown(function(event) {
     $("#adduom").focus();
     }
       else {
-	  if($("#product_tax_table").length > 0){
-	      $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-	  }
-	  else {
-	      $("#apsubmit").focus();
-	  }
+	  $("#maxprice").focus();
     }
 
   }
@@ -359,13 +354,48 @@ $("#openingstock").focus(function(event) {
 		$("#uomblank-alert").hide();
 	    });
 	    $("#adduom").focus();
+	    return false;
 	}
-	else if (specspresent == 1) {
-	    event.preventDefault();
-	    $("#spec_table tbody tr:first td:eq(1) input:first").focus();
-	}
+	$("#maxprice").focus();
+  }
+  else if (event.which==32)
+  {
+    event.preventDefault();
+    $(".olduom").hide();
+    $(".newuom").show();
 
-	else {
+    $("#newuom").focus();
+  }
+  else if (event.which==38 && (document.getElementById('adduom').selectedIndex==1||document.getElementById('adduom').selectedIndex==0)) {
+      event.preventDefault();
+      if($("#hsnno").is(":visible")){
+	  $("#hsnno").focus().select();
+  }
+      else {
+	  $("#addproddesc").focus().select();
+      }
+  }
+
+  /* Act on the event */
+    });
+    $(document).off('keydown', '#maxprice').on('keydown', '#maxprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    $("#saleprice").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#adduom").focus();
+	}
+    });
+    $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if (specspresent == 1) {
+		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	    }
+	    else {
 	    if ($("#product_tax_table tbody").length > 0) {
 		$("#product_tax_table tbody tr:first td:eq(0) select").focus();
 	    }
@@ -393,27 +423,12 @@ $("#openingstock").focus(function(event) {
 		}
 	    }
 	}
-  }
-  else if (event.which==32)
-  {
-    event.preventDefault();
-    $(".olduom").hide();
-    $(".newuom").show();
-
-    $("#newuom").focus();
-  }
-  else if (event.which==38 && (document.getElementById('adduom').selectedIndex==1||document.getElementById('adduom').selectedIndex==0)) {
-      event.preventDefault();
-      if($("#hsnno").is(":visible")){
-	  $("#hsnno").focus().select();
-  }
-      else {
-	  $("#addproddesc").focus().select();
-      }
-  }
-
-  /* Act on the event */
-});
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
 $("#godownflag").keydown(function(event){
   if (event.which == 13 && godownflag == 0) {
     event.preventDefault();
@@ -682,7 +697,7 @@ $("#addcatselect").change(function(event) {
       }
       else {
         if (curindex == 0) {
-          $("#adduom").focus();
+          $("#saleprice").focus();
         }
         else {
           $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
