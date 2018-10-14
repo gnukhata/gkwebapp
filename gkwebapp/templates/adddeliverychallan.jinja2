@@ -72,7 +72,7 @@
 	  
           <form class="form-horizontal" >
 	    <!-- Upper Three Column  -->
-	    <div class="col-md-12">
+	    <div class="col-md-12 row">
 	      <!-- Details Of Delivery in/out -->
 	      <div class="col-sm-12">
 		{% if gkstatus=="in" %}
@@ -292,16 +292,16 @@
 	    </div>
 	    <!-- For Page adjust -->
 	    <a id="taxapplicablescroll"></a>
-	    <div class="col-md-12">
-	      <div class="col-md-3">
-		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
-		{% if resultgstvat == '29' or resultgstvat == '7' %}
-		  <label id="taxapplicabletext" class="">GST</label>
-		  <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
-		{% else %}
-		  <label id="taxapplicabletext" >VAT</label>
-		  <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
-		{% endif %}
+	    <div class="col-md-12 row">
+	      <div class="col-md-3 gstvat" hidden>
+		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
+		<label><input type="radio" class="taxapplicable" name="cashmemo" id="gst" aria-label="gst" value="7" checked> GST</label>&nbsp
+		<label><input type="radio" class="taxapplicable" name="cashmemo" id="vat" aria-label="vat" value="22"> VAT</label>
+	      </div>
+	      <div class="col-md-3 onlyvat" hidden>
+		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
+		<label id="taxapplicabletext" >VAT</label>
+		<input type="text" class="taxapplicable" id="vat" value="22"  hidden>
 	      </div>
 	      {% if gkstatus=="in" %}
 		<input type="hidden" id="status" value="9">
@@ -348,9 +348,9 @@
 
 		<label >{% trans %}Rate must not be empty or zero!{% endtrans %}</label>
 	      </div>
-	      {% if resultgstvat == '29' or resultgstvat == '22' %}
+	      {% if resultgstvat == '29' or resultgstvat == '22'  or resultgstvat == '7'%}
 		{% if resultgstvat == '22' %}
-		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
+		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 		    <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Delivery Note. Press 'Esc' key to exit from the table.</small>
@@ -358,7 +358,7 @@
 		  </div>
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
-		    <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
+		    <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;" id="vathelp" hidden>
 		      <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Delivery Note. Press 'Esc' key to exit from the table.</small>
