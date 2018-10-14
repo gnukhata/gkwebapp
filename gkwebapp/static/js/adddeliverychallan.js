@@ -59,12 +59,22 @@ $(document).ready(function() {
 
     var vatorgstflag = sessionStorage.vatorgstflag;
     if(sessionStorage.vatorgstflag == '22' ){
-      $(".gstinfield").hide();
+	$(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
+	$(".onlyvat").show();
+	$(".gstvat").hide();
+	$(".product_name_vat").searchify();
+	let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	$(".product_name_vat").closest("select").width(vatproductwidth);
+	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
+	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
+	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
+	$(".gstvat").show();
+	$(".onlyvat").hide();
     }
 
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
@@ -143,7 +153,8 @@ $(document).ready(function() {
 	  }
 	  if (invoicedate >= gstdate) {
 	      $("#taxapplicabletext").text("GST");
-	      $("#taxapplicable").val("7");
+	      $(".taxapplicable").val("7");
+	      $(".taxapplicable").change();
 	      $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 	      $("#vathelp").hide();
 	      $(".tinfield").hide();
@@ -151,16 +162,10 @@ $(document).ready(function() {
 	      $(".gstinfield").show();
 	      $(".vatfield").hide();
 	      $(".gstfield").show();
-	      $(".product_name_gst").searchify(); //Converting to searcheable combo.
-	      let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
-	      $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
-	      $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
-	      $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
-	      $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
 	  }
 	  else {
 	      $("#taxapplicabletext").text("VAT");
-	      $("#taxapplicable").val("22");
+	      $(".taxapplicable").val("22");
 	      $("#gstproducttable").hide();
 	      $(".gstinfield").hide();
 	      $("#invoice_product_table_vat").show();
@@ -453,7 +458,7 @@ $(document).ready(function() {
     //invoice_customerstate
     $("#invoicestate").change(function(event) {
 	$("#statecodeforinvoice").text(pad($("#invoicestate option:selected").attr("stateid"), 2));
-	if ($("#taxapplicable").val() == 7){
+	if ($(".taxapplicable").val() == 7){
 	    if ($("#deliverychallan_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		    $(".igstfield").hide();
 		    $(".igstfield").css('border','');
@@ -645,7 +650,7 @@ $(document).ready(function() {
 	    }
 	}
 	
-	if ($("#taxapplicable").val() == 7) {
+	if ($(".taxapplicable").val() == 7) {
 	    $(".product_name_gst:first").focus().select();
 	}else{
 	    $(".product_name_vat:first").focus().select();
@@ -851,7 +856,7 @@ $(document).ready(function() {
 	else {
 	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
 	}
-	if ($("#taxapplicable").val() == 7) {
+	if ($(".taxapplicable").val() == 7) {
 	    if ($("#deliverychallan_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
 		$(".sgstfield").show();
@@ -888,7 +893,73 @@ $(document).ready(function() {
 	$(".product_name_vat, .product_name_gst").change();
     });
     $("#consigneestate").change();
-    
+
+    //Change event for 'GST' and 'VAT' radio button.
+    $(document).off("change", '.taxapplicable').on("change", '.taxapplicable', function(event) {
+	if($("#gst").is(":checked")){
+	    $("#taxapplicabletext").text("GST");
+	    $(".taxapplicable").val("7");
+	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+	    $("#vathelp").hide();
+	    $(".tinfield").hide();
+	    $("#gstproducttable").show();  //Shows GST Product table.
+	    $(".gstinfield").show();
+	    $(".vatfield").hide();
+	    $(".gstfield").show();
+	    /**On changing 'gst' or 'vat' radio button on the basis of 'source state' and 'destination state', 'igst' and 'sgst' fields are hide and show.**/
+	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
+		$(".igstfield").hide();
+		$(".sgstfield").show();
+	    }
+	    else {
+		$(".sgstfield").hide();
+		$(".igstfield").show();
+	    }
+	    $(".product_name_gst").searchify(); //Converting to searcheable combo.
+	    let gstproductwidth = parseFloat($(".product_name_gst").parents("td").first().width())*parseFloat(0.8); //Getting width of td with select field.
+	    $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
+	    $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
+	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
+	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
+	}else if($("#vat").is(":checked")){  
+	    $("#taxapplicabletext").text("VAT");
+	    $(".taxapplicable").val("22");
+	    $("#gstproducttable").hide();
+	    $(".gstinfield").hide();
+	    $("#invoice_product_table_vat").show();
+	    $(".tinfield").show();
+	    $("#vathelp").show();
+	    $(".gstfield").hide();
+	    $(".vatfield").show();
+	    $(".product_name_vat").searchify();
+	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	    $(".product_name_vat").closest("select").width(vatproductwidth);
+	    $(".product_name_vat").closest("select").parent().width(vatproductwidth);
+	    $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
+	    $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
+	}
+    });
+     //Keydown event for 'VAT' and 'GST' radio button.
+    $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
+	if (event.which == 13) {
+	    if ($(".taxapplicable").val() == 7) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_gst:first").focus().select();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();
+		}
+	    }
+	    else {
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+		    $(".invoice_product_quantity_vat:first").focus().select();
+		}
+		else {
+		    $(".product_name_vat:first").focus().select();
+		}
+	    }
+	}
+    });
 
   $(document).off("change",".product_name").on("change",".product_name",function(event)
   { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user
@@ -952,7 +1023,7 @@ $(document).ready(function() {
 	  sourcestate = $("#invoicestate option:selected").val();
 	  destinationstate = $("#deliverychallan_customerstate").val();
       }
-    var taxflag=$("#taxapplicable").val();
+    var taxflag=$(".taxapplicable").val();
 
     if (productcode != "") {
 	$.ajax({
@@ -1068,7 +1139,7 @@ $(document).ready(function() {
 	    sourcestate = $("#invoicestate option:selected").val();
 	    destinationstate = $("#deliverychallan_customerstate").val();
 	}
-	var taxflag=$("#taxapplicable").val();
+	var taxflag=$(".taxapplicable").val();
 	if (productcode != "") {
 	    $.ajax({
 		url: '/deliverychallan?action=getappliedtax',
@@ -2652,7 +2723,7 @@ else {
     }
       
 	//------------VAT Product Values---------------//
-	if ($("#taxapplicable").val() == 22) {
+	if ($(".taxapplicable").val() == 22) {
 	  productcodes = [];
 	  for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	      productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
@@ -2746,7 +2817,7 @@ else {
 	  }
 	  delchaltotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
     }
-      else if ($("#taxapplicable").val() == 7) {
+      else if ($(".taxapplicable").val() == 7) {
 	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
 	      if ($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(0) select option:selected').val() == "") {
 		  $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
@@ -2898,7 +2969,7 @@ else {
 	form_data.append("delchaltotal",delchaltotal);
 	form_data.append("freeqty", JSON.stringify(freeqty));
 	form_data.append("discount", JSON.stringify(discount));
-	form_data.append("taxflag", $("#taxapplicable").val());
+	form_data.append("taxflag", $(".taxapplicable").val());
 	form_data.append("inoutflag",$("#status").val());
 	form_data.append("contents", JSON.stringify(contents));	
 	form_data.append("orgstategstin",$("#orggstin").text());	
