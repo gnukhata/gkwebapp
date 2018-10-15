@@ -1117,8 +1117,9 @@ $(document).ready(function() {
 	    }).done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]);
-		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]); //Unit Name for Quantity
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]); //Unit Name for Free Quantity
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val(resp["prodsp"]);  //Selling Price
 		}
 		
 	    })
