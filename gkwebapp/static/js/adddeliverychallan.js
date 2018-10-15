@@ -649,11 +649,14 @@ $(document).ready(function() {
 		return false;
 	    }
 	}
-	
-	if ($(".taxapplicable").val() == 7) {
-	    $(".product_name_gst:first").focus().select();
+	if(invoicedate < gstdate){
+		$(".product_name_vat:first").focus().select();
 	}else{
-	    $(".product_name_vat:first").focus().select();
+	    if($(".taxapplicable").val() == 22){
+		$("#vat").focus().select();
+	    }else{
+		$("#gst").focus().select();
+	    }
 	}
 	$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
     }
