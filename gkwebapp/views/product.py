@@ -246,6 +246,10 @@ def editproduct(request):
             proddetails["productdesc"] = request.params[prd];
         elif prd == "uom":
             proddetails["uomid"] = request.params[prd]
+        elif prd == "prodmrp":
+            proddetails["prodmrp"] = request.params[prd]
+        elif prd == "prodsp":
+            proddetails["prodsp"] = request.params[prd]
         elif prd == "openingstock":
             proddetails["openingstock"] = request.params[prd]
         elif prd == "taxes":
