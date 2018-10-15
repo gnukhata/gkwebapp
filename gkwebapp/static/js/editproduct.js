@@ -103,34 +103,8 @@ $(document).ready(function() {
 
   $(document).off('keydown', '#edituom').on('keydown', '#edituom', function(e){
     if (e.which == 13) {
-      e.preventDefault();
-      if ($("#numberofspecs").val() > 0) {
-        $("#spec_table tbody tr:first td:eq(1) input:first").focus();
-      }
-	else {
-	    if ($('#product_edit_tax_table').length > 0){
-		$('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
-	    }
-	    else {
-		if($('#gsflag').val() == '7') {
-        if ($("#editgodownpresence").val() == 0) {
-          $("#editopeningstock").focus().select();
-        }
-        else {
-          if ($("#editgodownflag").val() == 1) {
-            $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-          }
-          else if ($("#editgodownflag").val() == 0) {
-            $("#editgodownflag").focus().select();
-          }
-      }
-
-      }
-      else {
-        $("#epsubmit").focus();
-      }
-	    }
-      }
+	e.preventDefault();
+	$("#maxprice").focus();
     }
     if (e.which == 38) {
       e.preventDefault();
@@ -139,6 +113,53 @@ $(document).ready(function() {
       }
     
   });
+    $(document).off('keydown', '#maxprice').on('keydown', '#maxprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    $("#saleprice").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#edituom").focus();
+	}
+    });
+    $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    if ($("#numberofspecs").val() > 0) {
+		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
+	    }
+	    else {
+		if ($('#product_edit_tax_table').length > 0){
+		    $('#product_edit_tax_table tbody tr:first td:eq(0) select').focus();
+		}
+		else {
+		    if($('#gsflag').val() == '7') {
+			if ($("#editgodownpresence").val() == 0) {
+			    $("#editopeningstock").focus().select();
+			}
+			else {
+			    if ($("#editgodownflag").val() == 1) {
+				$('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
+			    }
+			    else if ($("#editgodownflag").val() == 0) {
+				$("#editgodownflag").focus().select();
+			    }
+			}
+			
+		    }
+		    else {
+			$("#epsubmit").focus();
+		    }
+		}
+	    }
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
      $("#gscode").change(function(event){
 	if(parseInt($("#gscode").val()) <= 0)
 	    {
