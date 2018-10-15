@@ -51,7 +51,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-sm-11 pd ">
+      <div class="form-group col-sm-5 pd ">
 	{% if proddesc["gsflag"]==7 %}
 	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
 	{%else%}
@@ -59,10 +59,8 @@
 	{%endif%}
 	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="Non-zero">
       </div>
-    </div>
     {% if proddesc["gsflag"]==7 %}
-      <div class="row">
-	<div class="form-group col-sm-11 pds olduom">
+	<div class="form-group col-sm-offset-1 col-sm-5 pds olduom">
 	  <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
 	  <select class = "form-control input-sm "  name = "uom" id="edituom" >
 	    {% for uom in uom %}
@@ -74,9 +72,19 @@
 	    {% endfor %}
 	  </select>
 	</div>
-      </div>
     {%endif%}
-    <div id="extsp" class="row">
+    </div>
+    <div class="row">
+      <div class="form-group col-sm-5">
+        <label for="maxprice" class="common">{% trans %}MRP{% endtrans %}:</label>
+        <input type='text' class="form-control input-sm common numtype" name="prodmrp"  id="maxprice" value="{{proddesc["prodmrp"]}}">
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <label for="saleprice" class="common">{% trans %}Sale Price{% endtrans %}:</label>
+        <input type='text' class="form-control input-sm common numtype" name="prodsp"  id="saleprice" value="{{proddesc["prodsp"]}}">
+      </div>
+    </div>
+  <div id="extsp" class="row">
 
       <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
       {% if prodspecs|length > 0 %}
