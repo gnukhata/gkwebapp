@@ -576,40 +576,6 @@ $(document).ready(function() {
       }
     }
   });
-
-  $(document).on("keydown",'.spec', function(e) {
-    var n = $(".spec").length;
-    var f = $('.spec');
-    if (e.which == 13)
-    {
-      var nextIndex = f.index(this) + 1;
-
-      if(nextIndex < n)
-      {
-        e.preventDefault();
-        f[nextIndex].focus();
-        f[nextIndex].select();
-      }
-      else {
-        $('#editgodown_ob_table tbody tr:first td:eq(0) select').focus().select();
-      }
-
-    }
-    if (e.which == 38)
-    {
-      var prevIndex = f.index(this) - 1;
-      if(prevIndex > -1)
-      {
-          e.preventDefault();
-          f[prevIndex].focus();
-          f[prevIndex].select();
-
-        }
-        else {
-          $('#product_edit_tax_table tbody tr:last td:eq(2) input').focus().select();
-        }
-      }
-  });
   $(document).on('change', '#edituom',function(event) {
     if ($("#edituom option:selected").val()!='') {
       $("#unitaddon").html($("#edituom option:selected").attr('uname'));
@@ -706,7 +672,7 @@ $(document).ready(function() {
         }
         else {
           if (curindex == 0) {
-            $("#edituom").focus();
+            $("#saleprice").focus();
           }
           else {
             $('#spec_table tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
@@ -771,7 +737,7 @@ $(document).ready(function() {
           $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
         }
         else {
-          $("#edituom").focus();
+          $("#saleprice").focus();
         }
       }
       if(previndex>-1 && curindex != 0)
