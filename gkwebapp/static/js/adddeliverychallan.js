@@ -154,6 +154,7 @@ $(document).ready(function() {
 	  if (invoicedate >= gstdate) {
 	      $("#taxapplicabletext").text("GST");
 	      $(".taxapplicable").val("7");
+	      $("#gst").click();
 	      $(".taxapplicable").change();
 	      $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 	      $("#vathelp").hide();
@@ -166,6 +167,7 @@ $(document).ready(function() {
 	  else {
 	      $("#taxapplicabletext").text("VAT");
 	      $(".taxapplicable").val("22");
+	      $("#vat").click();
 	      $("#gstproducttable").hide();
 	      $(".gstinfield").hide();
 	      $("#invoice_product_table_vat").show();
