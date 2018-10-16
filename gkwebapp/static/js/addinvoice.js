@@ -2645,6 +2645,14 @@ if (event.which == 13) {
 	}
     });
 
+    $('#firstvatprice, #firstgstprice').tooltip({
+	title : "Press 'T' to toggle between MRP and Selling Price.",
+	placement : "bottom"
+    });
+    $('#firsvatprice, #firstgstprice').focusin(function(){
+	$(this).tooltip('show');
+    });
+    
     $(document).off("click", ".priceaddon").on("click", ".priceaddon", function(event){
 	event.preventDefault();
 	var togglekey = $.Event('keydown');
