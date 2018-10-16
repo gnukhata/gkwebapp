@@ -2645,6 +2645,13 @@ if (event.which == 13) {
 	}
     });
 
+    $(document).off("click", ".priceaddon").on("click", ".priceaddon", function(event){
+	event.preventDefault();
+	var togglekey = $.Event('keydown');
+	togglekey.which = 84;
+	$(this).parent().find("input").trigger(togglekey);
+    });
+
     var allow = 1;
   $("#invoice_save").click(function(event) {
       event.preventDefault();
