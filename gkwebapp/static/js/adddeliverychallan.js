@@ -649,7 +649,7 @@ $(document).ready(function() {
 		return false;
 	    }
 	}
-	if(invoicedate < gstdate){
+	if($("#gst").is(":not(':visible')")){
 		$(".product_name_vat:first").focus().select();
 	}else{
 	    if($(".taxapplicable").val() == 22){
