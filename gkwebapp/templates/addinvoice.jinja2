@@ -370,7 +370,10 @@
 			</div>
 		      </td>
 		      <td class="smvwrap">
-			<input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+			<div class="input-group">
+			  <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+			  <span class="input-group-addon input-sm unitaddon"  data-prodsp=""  data-prodmrp="">S</span>
+			</div>
 		      </td>
 		      <td class="smvwrap">
 			<input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
@@ -432,7 +435,7 @@
 		    </div>
 		    <div class="col-sm-10" style="overflow-x:scroll;">
 		      <div class="row">
-			<table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
+			<table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:160%; max-width:160%">
 			  <thead class="bg-primary">
 			    <tr>
 			      <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
@@ -462,7 +465,7 @@
 			</table>
 		      </div>
 		      <div class="row">
-			<table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+			<table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:160%; max-width:160%; overflow-x:hidden;overflow-y:scroll;">
 			  <tbody>
 			    <tr>
 			      <td class="mdwrap">
@@ -489,7 +492,10 @@
 				</div>		      </td>
 
 			      <td class="smwrap">
-				<input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+				<div class="input-group">
+				  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+				  <span class="input-group-addon input-sm unitaddon" data-prodsp=""  data-prodmrp="">S</span>
+				</div>
 			      </td>
 			      <td class="smwrap">
 				<input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
@@ -517,7 +523,7 @@
 			</table>
 		      </div>
 		      <div class="row">
-			<table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+			<table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:160%; max-width:160%;">
 			  <tfoot>
 			    <tr>
 			      <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>

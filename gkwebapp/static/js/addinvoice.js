@@ -1120,6 +1120,8 @@ $(document).ready(function() {
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]); //Unit Name for Quantity
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]); //Unit Name for Free Quantity
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val(resp["prodsp"]);  //Selling Price
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp", resp["prodsp"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodmrp", resp["prodmrp"]);
 		}
 		
 	    })
@@ -1582,6 +1584,17 @@ $(document).ready(function() {
       event.preventDefault();
       $("#chkpaymentmode").focus().click();
     }
+      else if (event.which == 84) {
+	  event.preventDefault();
+	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'M') {
+	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text('S');
+	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp"));
+	  }
+	  else if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'S') {
+	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text('M');
+	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodmrp"));
+	  }
+      }
   });
 
     $(document).off('change', '.invoice_product_discount_vat').on('change', '.invoice_product_discount_vat', function(event) {
@@ -1885,6 +1898,9 @@ $(document).ready(function() {
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", false);
              $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", false);
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
+	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp", resp["prodsp"]);
+	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp", resp["prodmrp"]);
+	     console.log($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp"), $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp"));
          }
 	   else {
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').prop("disabled", true).val("0.00");
@@ -1892,6 +1908,8 @@ $(document).ready(function() {
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
 	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp", resp["prodsp"]);
+	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp", resp["prodmrp"]);
 	   }
 
 
@@ -2216,6 +2234,17 @@ $(document).ready(function() {
       event.preventDefault();
       $("#chkpaymentmode").focus().click();
     }
+      else if (event.which == 84) {
+	  event.preventDefault();
+	  if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'M') {
+	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('S');
+	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp"));
+	  }
+	  else if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'S') {
+	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('M');
+	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp"));
+	  }
+      }
   });
     //Change event for discount field when tax is GST
     $(document).off("change", ".invoice_product_discount_gst").on("change", ".invoice_product_discount_gst", function(event) {
