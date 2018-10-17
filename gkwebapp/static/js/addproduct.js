@@ -86,14 +86,18 @@ $(".serviceclass").hide();
 	    $(".productclass").not("#addgodown").show();
 	}
       $("#proservlabel").text("Product Name :");
-      $("#gscodelabel").text("HSN Code :");
+	$("#gscodelabel").text("HSN Code :");
+	$("#maximumprice").text("MRP :");
+	$("#defaultprice").text("Sale Price :");
       $(".common").show();
     }
     if($("#additem option:selected").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
       $("#proservlabel").text("Service Name :");
-            $("#gscodelabel").text("Accounting Code for Service :");
+        $("#gscodelabel").text("Accounting Code for Service :");
+	$("#maximumprice").text("Maximum Rate :");
+	$("#defaultprice").text("Default Rate :");
       $(".common").show();
     }
   });
