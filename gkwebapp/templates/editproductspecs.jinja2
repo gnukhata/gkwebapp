@@ -76,11 +76,19 @@
     </div>
     <div class="row">
       <div class="form-group col-sm-5">
-        <label for="maxprice" class="common">{% trans %}MRP{% endtrans %}:</label>
+	{% if  proddesc["gsflag"]==7  %}
+          <label for="maxprice" class="common">{% trans %}MRP{% endtrans %}:</label>
+	{% else %}
+	  <label for="maxprice" class="common">{% trans %}Maximum Rate{% endtrans %}:</label>
+	{% endif %}
         <input type='text' class="form-control input-sm common numtype" name="prodmrp"  id="maxprice" value="{{proddesc["prodmrp"]}}">
       </div>
       <div class="form-group col-sm-offset-1 col-sm-5">
-        <label for="saleprice" class="common">{% trans %}Sale Price{% endtrans %}:</label>
+	{% if  proddesc["gsflag"]==7  %}
+          <label for="saleprice" class="common">{% trans %}Sale Price{% endtrans %}:</label>
+	{% else %}
+	  <label for="saleprice" class="common">{% trans %}Default Rate{% endtrans %}:</label>
+	{% endif %}
         <input type='text' class="form-control input-sm common numtype" name="prodsp"  id="saleprice" value="{{proddesc["prodsp"]}}">
       </div>
     </div>
