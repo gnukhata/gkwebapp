@@ -41,6 +41,10 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
+    $('#firstvatprice, #firstgstprice').tooltip({
+	title : "Press 'T' to toggle between MRP and Selling Price.",
+	placement : "bottom"
+    });
     if(sessionStorage.vatorgstflag == '22' ){
 	$(".gstinfield").hide();
 	$(".tinfield").show();
@@ -2644,11 +2648,7 @@ if (event.which == 13) {
 	    }
 	}
     });
-
-    $('#firstvatprice, #firstgstprice').tooltip({
-	title : "Press 'T' to toggle between MRP and Selling Price.",
-	placement : "bottom"
-    });
+    
     $('#firsvatprice, #firstgstprice').focusin(function(){
 	$(this).tooltip('show');
     });
