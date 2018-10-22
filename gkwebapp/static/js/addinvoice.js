@@ -1121,9 +1121,16 @@ $(document).ready(function() {
 	    }).done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
+		    //Last price of purchase is shown by default for Purchase Invoice.
+		    //Selling Price is shown for Sale Invoice.
+		    if ($("#status").val() == 9) {
+			$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val(resp["prodlp"]);
+		    }
+		    else {
+			$('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').val(resp["prodsp"]);
+		    }
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) span').text(resp["unitname"]); //Unit Name for Quantity
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]); //Unit Name for Free Quantity
-		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val(resp["prodsp"]);  //Selling Price
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp", resp["prodsp"]);
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodmrp", resp["prodmrp"]);
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodlp", resp["prodlp"]);
@@ -1592,7 +1599,12 @@ $(document).ready(function() {
       else if (event.which == 84) {
 	  event.preventDefault();
 	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'M') {
-	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text('S');
+	      if ($("#status").val() == 15) {
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text('S');
+	      }
+	      else {
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text('L');
+	      }
 	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp"));
 	  }
 	  else if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'S') {
@@ -1900,7 +1912,14 @@ $(document).ready(function() {
        console.log("success");
 	 if (resp["gkstatus"] == 0) {
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
-	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
+	     //Last price of purchase is shown by default for Purchase Invoice.
+	     //Selling Price is shown for Sale Invoice.
+	     if ($("#status").val() == 9) {
+		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodlp"]);
+	     }
+	     else {
+		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
+	     }
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp", resp["prodsp"]);
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp", resp["prodmrp"]);
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodlp", resp["prodlp"]);
@@ -2240,7 +2259,12 @@ $(document).ready(function() {
       else if (event.which == 84) {
 	  event.preventDefault();
 	  if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'M') {
-	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('S');
+	      if ($("#status").val() == 15) {
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('S');
+	      }
+	      else {
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('L');
+	      }
 	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp"));
 	  }
 	  else if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'S') {
