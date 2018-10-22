@@ -201,12 +201,16 @@ def getappliedtax(request):
 @view_config(route_name="invoice",request_param="action=getproduct",renderer="json")
 def getproduct(request):
     header={"gktoken":request.headers["gktoken"]}
+    pricedata = 0.00
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
+    lastprice = requests.get("http://127.0.0.1:6543/products?type=lastprice&productcode=%d&inoutflag=%d&custid=%d"%(int(request.params['productcode']),int(request.params['inoutflag']),int(request.params['custid'])),headers=header)
     data = result.json()["gkresult"]
+    if lastprice.json()["gkstatus"] == 0:
+        pricedata = lastprice.json()["gkresult"]
     if data.has_key("unitname"):
-        return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"]}
+        return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata)}
     else:
-        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"]}
+        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata)}
 
 
 
