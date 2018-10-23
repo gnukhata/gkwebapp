@@ -94,6 +94,8 @@ def saveinvoice(request):
         invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
     if request.params.has_key("address"):
         invoicedata["address"] = request.params["address"]
+    if request.params.has_key("pricedetails"):
+        invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
     try:
         files = {}
         count = 0
@@ -204,7 +206,7 @@ def getproduct(request):
     pricedata = 0.00
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
     data = result.json()["gkresult"]
-    if "custid" in request.params:
+    if "custid" in request.params and request.params['custid'] != "":
        lastprice = requests.get("http://127.0.0.1:6543/products?type=lastprice&productcode=%d&inoutflag=%d&custid=%d"%(int(request.params['productcode']),int(request.params['inoutflag']),int(request.params['custid'])),headers=header)
        if lastprice.json()["gkstatus"] == 0:
             pricedata = lastprice.json()["gkresult"] 
