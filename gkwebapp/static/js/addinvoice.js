@@ -763,7 +763,8 @@ $(document).ready(function() {
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
-	//AJAX to get details of customer.
+	if($("#invoice_customer option:selected").val() != ""){
+	    //AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
 	    type: 'POST',
@@ -811,6 +812,7 @@ $(document).ready(function() {
 	    .always(function() {
 		console.log("complete");
 	    });
+	}
     });
 
     //Change event for customer state.
