@@ -41,8 +41,12 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
+    var tootltiptitle ="Press 'T' to toggle between MRP, Last Selling Price and Selling Price.";
+    if($("#status").val() == 9){
+	tootltiptitle = "Press 'T' to toggle between MRP and Last Purchase Price.";
+    }
     $('#firstvatprice, #firstgstprice').tooltip({
-	title : "Press 'T' to toggle between MRP and Selling Price.",
+	title : tootltiptitle,
 	placement : "bottom"
     });
     if(sessionStorage.vatorgstflag == '22' ){
