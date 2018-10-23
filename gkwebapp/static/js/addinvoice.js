@@ -1601,11 +1601,12 @@ $(document).ready(function() {
 	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'M') {
 	      if ($("#status").val() == 15) {
 		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text('S');
+		  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp"));
 	      }
 	      else {
 		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text('L');
+		  $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodlp"));
 	      }
-	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp"));
 	  }
 	  else if ($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text() == 'S') {
 	      $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').text('L');
@@ -2261,11 +2262,12 @@ $(document).ready(function() {
 	  if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'M') {
 	      if ($("#status").val() == 15) {
 		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('S');
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp"));
 	      }
 	      else {
 		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('L');
+		  $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodlp"));
 	      }
-	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp"));
 	  }
 	  else if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text() == 'S') {
 	      $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').text('L');
