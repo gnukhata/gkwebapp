@@ -3075,7 +3075,9 @@ if (event.which == 13) {
       form_data.append("tax", JSON.stringify(tax));
       form_data.append("cess", JSON.stringify(cess));
       form_data.append("stock", JSON.stringify(stock));
-      form_data.append("pricedetails", JSON.stringify(pricedetails));
+      if (pricedetails.length > 0) {
+	  form_data.append("pricedetails", JSON.stringify(pricedetails));
+      }
       form_data.append("issuername", issuername);
       form_data.append("orgstategstin",$("#orggstin").text() );
       form_data.append("designation", designation);
@@ -3476,5 +3478,4 @@ if (event.which == 13) {
                 console.log("complete");
             });
     });
-    
 });
