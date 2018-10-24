@@ -379,7 +379,10 @@
 			  </div>
 			</td>
 			<td class="smvwrap">
-			  <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+			  <div class="input-group">
+			      <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
+			      <span class="input-group-addon input-sm unitaddon priceaddon pricespan_vat"  data-prodsp=""  data-prodmrp="" data-prodlp="">O</span>
+			  </div>
 			</td>
 			<td class="smvwrap">
 			  <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
@@ -498,7 +501,10 @@
 				  </div>		      </td>
 
 				<td class="smwrap">
-				  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+				  <div class="input-group">
+				      <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" id="firstgstprice">
+				      <span class="input-group-addon input-sm unitaddon priceaddon pricespan_gst" data-prodsp="" data-prodop=""  data-prodmrp=""  data-prodlp="">O</span>
+				  </div>
 				</td>
 				<td class="smwrap">
 				  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
