@@ -143,6 +143,8 @@ def updateinvoice(request):
         invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
     if request.params.has_key("address"):
         invoicedata["address"] = request.params["address"]
+    if request.params.has_key("pricedetails"):
+        invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
     try:
         files = {}
         count = 0
