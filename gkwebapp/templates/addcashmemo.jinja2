@@ -227,7 +227,13 @@
   		  </div>
   		</td>
   		<td class="smvwrap">
-  		  <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+  		  {% if gkstatus=="out" %}
+		    <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
+		    <span class="input-group-addon input-sm unitaddon priceaddon"  data-prodsp=""  data-prodmrp="" data-prodlp="">S</span>
+		  {% else %}
+		    <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		    <span class="input-group-addon input-sm unitaddon priceaddon"  data-prodsp=""  data-prodmrp="" data-prodlp="">M</span>
+		  {% endif %}
   		</td>
   		<td class="smvwrap">
   		  <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
@@ -283,7 +289,7 @@
 
           {% if resultgstvat == '29' or resultgstvat == '7' %}
 
-  	    <div class="row" id="gstproducttable">
+  	    <div class="col-sm-12 row" id="gstproducttable">
 	      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
 		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		<div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
@@ -346,7 +352,15 @@
 			  </div>		      </td>
 
 			<td class="smwrap">
-			  <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			  <div class="input-group">
+			    {% if gkstatus=="in" %}
+			      <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" id="firstgstprice">
+			      <span class="input-group-addon input-sm unitaddon priceaddon" data-prodsp=""  data-prodmrp=""  data-prodlp="">M</span>
+			    {% else %}
+			      <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00">
+			      <span class="input-group-addon input-sm unitaddon priceaddon" data-prodsp=""  data-prodmrp=""  data-prodlp="">S</span>
+			    {% endif %}
+			  </div>
 			</td>
 			<td class="smwrap">
 			  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
