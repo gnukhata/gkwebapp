@@ -8,6 +8,7 @@ $(document).ready(function() {
     global: false,
     async: false,
     datatype: "text/html",
+    data: {"gbflag":7}, 
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -29,6 +30,7 @@ $(document).ready(function() {
     global: false,
     async: false,
     datatype: "text/html",
+    data: {"gbflag":7}, 
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -38,6 +40,51 @@ $(document).ready(function() {
       $("#godown_edit").html(resp);
       $("#godown_create").html("");
       $("#godown_list").html("");
+    }
+    }
+  );
+  });
+
+  $("a[href ='#branch_create']").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/godown?type=addtab",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    data: {"gbflag":2}, 
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#godown_create").html(resp);
+      $("#godown_edit").html("");
+    }
+    }
+  );
+  });
+  $("a[href ='#branch_create']").click(function() {
+    $.ajax(
+    {
+
+    type: "POST",
+    url: "/godown?type=addtab",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    data: {"gbflag":2}, 
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+      $("#godown_create").html(resp);
+      $("#godown_edit").html("");
     }
     }
   );

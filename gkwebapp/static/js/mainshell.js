@@ -790,6 +790,27 @@ $(document).ready(function(){
       global: false,
       async: false,
       datatype: 'text/html',
+      data: {"gbflag":7},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+
+    })
+     .done(function(resp) {
+       $("#info").html(resp);
+     });
+  });
+
+  $('#branch').click(function (e) {
+    // Loads godown page in the main div.
+    $.ajax({
+      url: '/godown',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'text/html',
+      data: {"gbflag":2},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1380,6 +1401,7 @@ $('#listofaccounts').click(function (e) {
         global: false,
         async: false,
         datatype: "text/html",
+        data: {"gbflag": 7},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
