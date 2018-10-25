@@ -42,6 +42,7 @@
 		<li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
 		<li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
 
+    <li><a  class="inventorymenu" data-toggle="tab" id="branch" href="">{% trans %}Branch{% endtrans %}</a></li>
 		<li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
 		<li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
 
@@ -98,15 +99,6 @@
                 <li><a class="businessmenu" data-toggle="tab" id="drcrnote" href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
 	      </ul>
             </li>    
-
-	    <li id="gstdropdown" class="dropdown">
-          <a href="" id="gstmenu" class="dropdown-toggle gstdropdownmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>G</u>ST{% endtrans %}</a>
-          <ul class="dropdown-menu">
-            <li><a class="gstmenuitem" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
-            <li><a class="gstmenuitem" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
-	      </ul>
-        </li>    
-
             <li id="reportdropdown" class="dropdown">
               <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
               <ul class="dropdown-menu">
@@ -114,6 +106,7 @@
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
 		<li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
+		<li><a class="" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
 		<li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
@@ -127,6 +120,7 @@
 		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
 		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
 		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
+
 		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
 		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
 		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
@@ -276,7 +270,7 @@
 	</div>
 	<div style="padding-top:20px" class="panel-body" >
 
-	  <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}the underlined character{% endtrans %}."</p>
+	  <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character{% endtrans %}."</p>
           <p>{% trans %}To view Toolbar press  "F1".{% endtrans %}</p>
           <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
           <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character{% endtrans %}".</p>
@@ -684,7 +678,5 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.rss.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
-    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.browser.js')}}"></script>
-    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.searchabledropdown-1.0.8.min.js')}}"></script>
   </body>
 </html>

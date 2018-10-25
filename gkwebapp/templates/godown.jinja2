@@ -82,14 +82,26 @@
       width: calc( 100% - 0.65em );
   }
 
+
   </style>
 </head>
 <body>
+
   <div class="container-fluid row">
     <ul class="nav nav-pills nav-tabs hidden-print" role="tablist">
-      <li role="presentation" class="active"><a href="#godown_create" aria-controls="godown_create" role="tab" data-toggle="tab" accesskey="1">{% trans %}Create Godown{% endtrans %}</a></li>
-         <li role="presentation"><a href="#godown_edit" aria-controls="godown_edit" role="tab" data-toggle="tab" accesskey="2">{% trans %}Edit Godown{% endtrans %}</a></li>
-       </ul>
+    {% set value = value %}
+        {% if value == 7 %}
+        <li role="presentation" class="active"><a href="#godown_create" aria-controls="godown_create" role="tab" data-toggle="tab" accesskey="1">{% trans %}Create Godown{% endtrans %}</a></li>
+        {% else %} 
+        <li role="presentation" class="active"><a href="#branch_create" aria-controls="godown_create" role="tab" data-toggle="tab" accesskey="1">{% trans %}Create Branch{% endtrans %}</a></li>
+        {% endif %}
+        {% if value == "7" %}
+        <li role="presentation"><a href="#godown_edit" aria-controls="godown_edit" role="tab" data-toggle="tab" accesskey="2">{% trans %}Edit Godown{% endtrans %}</a></li>
+        {% else %} 
+        <li role="presentation"><a href="#branch_edit" aria-controls="godown_edit" role="tab" data-toggle="tab" accesskey="2">{% trans %}Edit Branch{% endtrans %}</a></li>
+         {% endif %}
+    </ul>
+       
     <div class="tab-content">
       <div role="tabpanel" class="tab-pane active" id="godown_create">
 
@@ -98,10 +110,10 @@
 
       </div>
     </div>
-
-
   </div>
 </div>
+
+<input type="hidden" id="gbflag" value="{{ gbflag }}">
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/godown.js')}}"></script>
 </body>
 </html>

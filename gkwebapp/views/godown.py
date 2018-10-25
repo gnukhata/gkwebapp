@@ -43,12 +43,12 @@ import os
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	return {"status":True}
+	return {"status":True, "gbflag":request.params["gbflag"]}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown", headers=header)
+	result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown&gbflag=%d"%(int(request.params["gbflag"])), headers=header)
 	goddata=[]
 	for record in result.json()["gkresult"]:
 		gdata= {"godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"])}
@@ -91,7 +91,7 @@ def addmultigodowns(request):
 @view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
 def showeditgodown(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
@@ -147,10 +147,13 @@ def editgodown(request):
 @view_config(route_name="godown",request_param="type=list", renderer="gkwebapp:templates/listofgodowns.jinja2")
 def listofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
-	result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+	result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
 	goddata=[]
 	for record in result.json()["gkresult"]:
-		gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		if(int(request.params["gbflag"]) == 7):
+			gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+		else:
+			gdata= {"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 		goddata.append(gdata)
 	return {"gkresult":goddata}
 
