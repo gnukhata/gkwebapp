@@ -27,7 +27,7 @@ Contributors:
 // Check printransfernote js for documentation.
 $(document).ready(function() {
   oninvoice = 1;
-  $("title").html("GNUKhata")
+    $("title").html("GNUKhata");
   /*
   $("#subject").focus();
 

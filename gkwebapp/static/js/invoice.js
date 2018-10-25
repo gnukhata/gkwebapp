@@ -26,7 +26,7 @@ Contributors:
 
 */
 // This script is for base page of invoice.
-(document).ready(function() {
+$(document).ready(function() {
   var today = new Date();
   var year = today.getFullYear();
   var month = today.getMonth();
