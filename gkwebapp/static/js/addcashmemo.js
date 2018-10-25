@@ -414,7 +414,12 @@ $(document).ready(function() {
         if (event.which == 13) {
             event.preventDefault();
 	    if ($("#taxapplicable").val() == 7) {
-		$("#gstin_panno").focus();
+		if (!$("#gstin_panno").is(":disabled")) {
+		    $("#gstin_panno").focus();
+		}
+		else {
+		    $(".product_name_gst:first").focus().select();
+		}
 	    }else {
 		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
             }	    
@@ -519,8 +524,8 @@ $(document).ready(function() {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
 		var gstincode=resp["gkresult"];
-		$("#gstin_panno").val(gstincode.substring(2, 12));
-		$("#gstin").val(gstincode.substring(12,15));
+		$("#gstin_panno").val(gstincode.substring(2, 12)).prop("disabled", true);
+		$("#gstin").val(gstincode.substring(12,15)).prop("disabled", true);
          	  }
                 })
                 .fail(function() {
