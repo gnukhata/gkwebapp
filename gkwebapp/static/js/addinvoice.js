@@ -3248,6 +3248,7 @@ if (event.which == 13) {
   });
     $("#backbutton").click(function(event){
 	$("#invoice").click();
+	return false;
     });
     $("#printbutton").click(function(event) {
         $.ajax({

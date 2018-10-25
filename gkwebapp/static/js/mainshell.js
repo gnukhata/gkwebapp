@@ -1918,7 +1918,8 @@ $('#listofaccounts').click(function (e) {
 
 
   $('#invoice').click(function (e) {// calls base invoice page.
-    $("#info").load("/invoice");
+      $("#info").load("/invoice");
+      return false;
   });
   $('#customersupplier').click(function (e) {// calls base customersupplier page.
     $("#info").load("/customersuppliers");
@@ -1930,7 +1931,8 @@ $('#listofaccounts').click(function (e) {
     $("#info").load("/unitofmeasurements");
   });
   $('#addcashmemo').click(function (e) {// calls base cash memo page.
-    $("#info").load("/cashmemos");
+      $("#info").load("/cashmemos");
+      return false;
   });
   $('#createtransfernote').click(function (e) {// calls base transfer note page.
     $("#info").load("/transfernotes");

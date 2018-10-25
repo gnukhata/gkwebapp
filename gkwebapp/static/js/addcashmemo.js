@@ -2097,7 +2097,8 @@ $(document).off("keyup").on("keyup", function(event) {
     });
 
     $("#backbutton").click(function(event) {
-    $("#addcashmemo").click();
+	$("#addcashmemo").click();
+	return false;
   });
     return false;
 });

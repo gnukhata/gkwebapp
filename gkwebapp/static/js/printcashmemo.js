@@ -34,7 +34,8 @@ $(document).ready(function() {
   });
 
   $("#invback").click(function(event) {
-    $("#addcashmemo").click();
+      $("#addcashmemo").click();
+      return false;
   });
   (function() {
 var beforePrint = function() {

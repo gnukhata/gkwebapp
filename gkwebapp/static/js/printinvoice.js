@@ -44,6 +44,7 @@ $(document).ready(function() {
     $("#invback").click(function(event) {
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	$("#invoice").click();
+	return false;
   });
   (function() {
 var beforePrint = function() {
