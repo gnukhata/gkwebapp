@@ -524,16 +524,21 @@ $(document).ready(function() {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
 		var gstincode=resp["gkresult"];
-		$("#gstin_panno").val(gstincode.substring(2, 12)).prop("disabled", true);
-		$("#gstin").val(gstincode.substring(12,15)).prop("disabled", true);
-         	  }
-                })
-                .fail(function() {
-                    console.log("error");
-                })
-                .always(function() {
-                    console.log("complete");
-                });
+		console.log(gstincode);
+		if (gstincode.length > 0) {
+		    $("#gstin_panno").val(gstincode.substring(2, 12)).prop("disabled", true);
+		    $("#gstin").val(gstincode.substring(12,15)).prop("disabled", true);
+		}
+		else {
+		    $("#gstin_panno").val("").prop("disabled", false);
+		    $("#gstin").val("").prop("disabled", false);
+		}
+            }
+        }).fail(function() {
+            console.log("error");
+        }).always(function() {
+            console.log("complete");
+        });
     });
     $('#invoice_state').change();
 
