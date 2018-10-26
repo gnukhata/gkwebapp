@@ -77,7 +77,13 @@
 	<div class="modal-content">
 	  <div class="modal-header">
 	    <div class="modal-title">
-              <strong>{% trans %}List of all Godowns{% endtrans %}</strong><button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <strong>
+							{%if gbflag == 7%}
+							{% trans %}List of all Godowns{% endtrans %}
+							{%else%}
+							{% trans %}List of all Branches{% endtrans %}
+							{%endif%}
+							</strong><button type="button" class="close" data-dismiss="modal" aria-label="Close">
 	        <span aria-hidden="true">&times;</span>
 	      </button>
             </div>
@@ -92,7 +98,11 @@
 		      {% trans %}Sr.No.{% endtrans %}
 		    </th>
 		    <th class="mdwrap lalign">
+				{%if gbflag == 7%}
 		      {% trans %}Godown Name{% endtrans %}
+					{%else%}
+					{% trans %}Branch Name{% endtrans %}
+					{%endif%}
 		    </th>
 		    <th class="lngwrap lalign">
 		      {% trans %}Address{% endtrans %}
@@ -103,9 +113,11 @@
 		    <th class="dtwrap lalign">
 		      {% trans %}Contact Number{% endtrans %}
 		    </th>
+				{%if gbflag == 7%}
 		    <th class="smwrap lalign">
 		      {% trans %}Status{% endtrans %}
 		    </th>
+				{%endif%}
 		  </tr>
 		</thead>
 		<tbody>
@@ -127,6 +139,7 @@
 		      <td class="dtwrap lalign" >
 			{{record["godowncontact"]}}
 		      </td>
+					{%if gbflag == 7%}
 		      {% if record["godownstatus"] == "Active" %}
 
 			<td class="smwrap lalign text-success">
@@ -138,7 +151,7 @@
 			  {{record["godownstatus"]}}
 			</td>
 		      {% endif %}
-
+					{%endif%}
 		    </tr>
 		  {% endfor %}
 
@@ -149,6 +162,8 @@
         </div>
       </div>
     </div>
+
+		<input type="hidden" id="gbflag" value="{{ gbflag }}">
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 		<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofgodownspopup.js')}}"></script>
 	</body>
