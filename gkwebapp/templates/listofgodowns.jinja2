@@ -65,7 +65,13 @@
   </head>
   <body>
     <div class="col-xs-10 nopadding">
-      <span style="margin-left:50%; display:table; font-size:120%;"><strong>{% trans %}List of Godowns{% endtrans %}</strong></span>
+      <span style="margin-left:50%; display:table; font-size:120%;"><strong>
+        {%if gbflag == 7%}
+        {% trans %}List of Godowns{% endtrans %}
+        {%else%}
+        {% trans %}List of Branch{% endtrans %}
+        {%endif%}
+        </strong></span>
     </div>
     <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
@@ -81,7 +87,11 @@
             {% trans %}Sr.No.{% endtrans %}
           </th>
           <th class="mdwrap lalign">
+            {%if gbflag == 7%}
             {% trans %}Godown Name{% endtrans %}
+            {%else%}
+            {% trans %}Branch Name{% endtrans %}
+            {%endif%}
           </th>
           <th class="lngwrap lalign">
             {% trans %}Address{% endtrans %}
@@ -92,8 +102,11 @@
           <th class="dtwrap lalign">
             {% trans %}Contact Number{% endtrans %}
           </th>
+          {%if gbflag == 7%}
           <th class="smwrap lalign">
             {% trans %}Status{% endtrans %}
+          {%endif%}
+            
           </th>
 	</tr>
       </thead>
@@ -116,6 +129,7 @@
             <td class="dtwrap lalign" >
               {{record["godowncontact"]}}
             </td>
+            {%if gbflag == 7%}
             {% if record["godownstatus"] == "Active" %}
               <td class="smwrap lalign text-success">
 		{{record["godownstatus"]}}
@@ -125,6 +139,7 @@
 		{{record["godownstatus"]}}
               </td>
             {% endif %}
+            {%endif%}
 	  </tr>
 	{% endfor %}
 
@@ -138,5 +153,6 @@
     </span>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofgodowns.js')}}"></script>
+    <input type="hidden" id="gbflag" value="{{ gbflag }}">
 </body>
 </html>

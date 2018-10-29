@@ -1414,6 +1414,29 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
+  $('#listofbranches').click(function (e) {
+    //calls list of godowns report.
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/godown?type=list",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"gbflag": 2},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+  });
+
   $('#listofcategories').click(function (e) {
     // calls list of categories report.
     $.ajax(
