@@ -78,7 +78,15 @@ $(document).ready(function(){
   $(document).off("change","#userrole").on("change","#userrole",function(e){
     /* Act on the event */
     var role = $("#userrole option:selected").val();
-    if (role==3){
+    if(role == 3)
+    {
+      var gbflag = 7;
+    }
+    if(role == 4)
+    {
+      var gbflag = 2;
+    }
+    if (role==3 || role==4){
       $.ajax(
          {
 
@@ -87,6 +95,7 @@ $(document).ready(function(){
          global: false,
          async: false,
          datatype: "text/html",
+         data: {"gbflag":gbflag},
          beforeSend: function(xhr)
            {
              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
