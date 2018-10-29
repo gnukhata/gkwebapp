@@ -200,6 +200,7 @@ $(document).ready(function() {
                 data: {
                     "goid": goid
                 },
+                
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },
@@ -209,7 +210,15 @@ $(document).ready(function() {
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#delsuccess-alert").hide();
-                        $("#godown").click();
+                        if($("#gbflag").val() == 7)
+                        {
+                          $("#godown").click();
+                        }
+                        else
+                        {
+                          $("#branch").click();
+                        }
+                       
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();

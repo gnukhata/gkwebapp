@@ -54,8 +54,7 @@ def showgodown(request):
 		gdata= {"godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"])}
 		
 		goddata.append(gdata)
-	print(request.params["gbflag"])
-	print("addtab")
+
 	return {"gbflag":(int(request.params["gbflag"])),"gkresult":goddata }
 
 @view_config(route_name="godown",request_param="type=addpopup", renderer="gkwebapp:templates/creategodownpopup.jinja2")
@@ -69,7 +68,7 @@ def showmultigodown(request):
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
 	header={"gktoken":request.headers["gktoken"]}
-	gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
+	gkdata = {"gbflag":(int(request.params["gbflag"])),"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
 	result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
 	if result.json()["gkstatus"] == 0:
 		gkdata = {"activity":request.params["godownname"] + " godown created"}
@@ -100,8 +99,7 @@ def showeditgodown(request):
 		gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
 		goddata.append(gdata)
 
-		print(request.params["gbflag"])
-    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"status":True}
+    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"gbflag":(int(request.params["gbflag"])),"status":True}
 
 @view_config(route_name="godown",request_param="type=getallgodowns", renderer="json")
 def getallgodowns(request):
