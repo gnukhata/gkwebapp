@@ -3,7 +3,11 @@
     <div class="panel-body" >
       <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
-	{% trans %}Godown edited successfully.{% endtrans %}
+				{%if gbflag == 7%}
+				{% trans %}Godown edited successfully.{% endtrans %}
+				{%else%}
+				{% trans %}Branch edited successfully.{% endtrans %}
+				{%endif%}
       </div>
       <div class="alert alert-danger" id="prod-alert"  aria-live="rude" role="alert" hidden>
 
@@ -12,21 +16,35 @@
 
       <div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
-	{% trans %}Godown deleted successfully.{% endtrans %}
+				{%if gbflag == 7%}
+				{% trans %}Godown deleted successfully.{% endtrans %}
+				{%else%}
+				{% trans %}Branch deleted successfully.{% endtrans %}
+				{%endif%}
       </div>
 
       <div class="alert alert-danger" id="failure-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
-	{% trans %}Godown could not be edited.{% endtrans %}
+				{%if gbflag == 7%}
+				{% trans %}Godown could not be edited.{% endtrans %}
+				{%else%}
+				{% trans %}Branch could not be edited.{% endtrans %}
+				{%endif%}
       </div>
       <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
-
-	{% trans %}Godown already exists!{% endtrans %}
+				{%if gbflag == 7%}
+				{% trans %}Godown already exists!{% endtrans %}
+				{%else%}
+				{% trans %}Branch already exists!{% endtrans %}
+				{%endif%}
       </div>
 
       <div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
-
-	{% trans %}Godown cannot be deleted!{% endtrans %}
+				{%if gbflag == 7%}
+				{% trans %}Godown cannot be deleted!{% endtrans %}
+				{%else%}
+				{% trans %}Branch cannot be deleted!{% endtrans %}
+				{%endif%}
       </div>
 
       <div class="col-xs-12">
@@ -34,9 +52,21 @@
 	  {% if numberofgodown ==0 %}
 	    <label class="text-danger">{% trans %}No Godown Found!{% endtrans %}</label>
 	  {% else %}
-	    <label for="editgoddet">{% trans %}List of Godowns{% endtrans %} :</label>
+	    <label for="editgoddet">
+				{%if gbflag == 7%}
+				{% trans %}List of Godowns{% endtrans %} :
+				{%else%}
+				{% trans %}List of Branches{% endtrans %} :
+				{%endif%}
+				</label>
 	    <select class = "form-control input-sm" id="editgoddet">
-	      <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+	      <option value="disabled" disabled selected hidden>
+					{%if gbflag == 7%}
+					{% trans %}Select Godown{% endtrans %}
+					{%else%}
+					{% trans %}Select Branch{% endtrans %}
+					{%endif%}
+					</option>
 	      {% for gods in gkresult %}
 		<option value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</option>
 	      {% endfor %}
@@ -46,11 +76,20 @@
       </div>
       <div class="col-sm-6 editgodownform" hidden>
 	<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
-
-	  {% trans %}Please enter godown name!{% endtrans %}
+		{%if gbflag == 7%}
+		{% trans %}Please enter godown name!{% endtrans %}
+		{%else%}
+		{% trans %}Please enter branch name!{% endtrans %}
+		{%endif%}
 	</div>
 	<div class="form-group">
-	  <label for="goname">{% trans %}New Name of Godown{% endtrans %} :</label><label for="goname" style="color:red;font-size: 120%;">*</label>
+	  <label for="goname">
+		{%if gbflag == 7%}
+		{% trans %}New Name of Godown{% endtrans %} :
+		{%else%}
+		{% trans %}New Name of Branch{% endtrans %} :
+		{%endif%}
+		</label><label for="goname" style="color:red;font-size: 120%;">*</label>
 	  <input type="text" id="goname" name="goname" class="form-control input-sm" accesskey="g"></input>
 	</div>
 	<div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
@@ -151,6 +190,7 @@
 	<button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="t"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
       </div>
     </div>
-  </div>
+	</div>
+	<input type="hidden" id="gbflag" value="{{ gbflag }}">
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editgodown.js')}}"></script>
 </body>

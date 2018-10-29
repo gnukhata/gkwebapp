@@ -208,7 +208,14 @@ $(document).ready(function()
             {
               if(resp["gkstatus"]==0)
               {
-                $("#godown").click();
+                if($("#gbflag").val() == 7)
+                {
+                  $("#godown").click();
+                }
+                else
+                {
+                  $("#branch").click();
+                }
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#success-alert").hide();
