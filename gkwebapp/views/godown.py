@@ -152,18 +152,15 @@ def listofgodowns(request):
 	header={"gktoken":request.headers["gktoken"]}
 	result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
 	goddata=[]
-	print("this...")
-	print(request.params["gbflag"])
-	print (result)
+
 	for record in result.json()["gkresult"]:
 		if(int(request.params["gbflag"]) == 2):
 			gdata= {"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 			
 		else:
 			gdata= { "godownstatus":str(record["godownstatus"]),"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-		# 
 		goddata.append(gdata)
-		print (goddata)
+
 	return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
 
 @view_config(route_name="godown",request_param="type=role_list", renderer="gkwebapp:templates/createusergodowntable.jinja2")
@@ -224,70 +221,81 @@ It is decoded and returned along with mime information.
 '''
 @view_config(route_name="godown",request_param="type=spreadsheet", renderer="")
 def listofgodownssspreadsheet(request):
+	
     try:
-        header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/godown", headers=header)
-        result = result.json()["gkresult"]
-        fystart = str(request.params["fystart"]);
-        fyend = str(request.params["fyend"]);
-        orgname = str(request.params["orgname"])
-        # A workbook is opened.
-        godownwb = openpyxl.Workbook()
-        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
-        sheet = godownwb.active
-        # Title of the sheet and width of columns are set.
-        sheet.title = "List of Godowns"
-        sheet.column_dimensions['A'].width = 8
-        sheet.column_dimensions['B'].width = 18
-        sheet.column_dimensions['C'].width = 36
-        sheet.column_dimensions['D'].width = 24
-        sheet.column_dimensions['E'].width = 16
-        sheet.column_dimensions['F'].width = 16
-        # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:F2')
-        # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
-        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
-        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
-        # Organisation name and financial year are displayed.
-        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
-        sheet.merge_cells('A3:F3')
-        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
-        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'List of Godowns'
-        sheet.merge_cells('A3:F3')
-        sheet['A4'] = 'Sr. No.'
-        sheet['B4'] = 'Godown Name'
-        sheet['C4'] = 'Address'
-        sheet['D4'] = 'Contact Person'
-        sheet['E4'] = 'Contact Number'
-        sheet['F4'] = 'Status'
-        titlerow = sheet.row_dimensions[4]
-        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
-        row=5
-        srno = 1
-        for godown in result:
-            sheet['A'+str(row)] = srno
-            sheet['A'+str(row)].alignment = Alignment(horizontal='left')
-            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['B'+str(row)] = godown['goname']
-            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['C'+str(row)] = godown["goaddr"]+" , "+godown["state"]
-            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['D'+str(row)] = godown["contactname"]
-            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = godown["gocontact"]
-            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['F'+str(row)] = godown["godownstatus"]
-            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            row = row + 1
-            srno += 1
-        godownwb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())       
+   
+		header={"gktoken":request.headers["gktoken"]}
+		result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+		result = result.json()["gkresult"]
+		fystart = str(request.params["fystart"])
+		fyend = str(request.params["fyend"])
+		orgname = str(request.params["orgname"])
+		# A workbook is opened.
+		godownwb = openpyxl.Workbook()
+		# The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+		sheet = godownwb.active
+		# Title of the sheet and width of columns are set.
+		sheet.title = "List of Godowns"
+		sheet.column_dimensions['A'].width = 8
+		sheet.column_dimensions['B'].width = 18
+		sheet.column_dimensions['C'].width = 36
+		sheet.column_dimensions['D'].width = 24
+		sheet.column_dimensions['E'].width = 16
+		sheet.column_dimensions['F'].width = 16
+		# Cells of first two rows are merged to display organisation details properly.
+		sheet.merge_cells('A1:F2')
+		# Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+		sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+		sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+		# Organisation name and financial year are displayed.
+		sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+		sheet.merge_cells('A3:F3')
+		sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+		sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+		if((int(request.params["gbflag"])) == 7):
+			sheet['A3'] = 'List of Godowns'
+		else:
+			sheet['A3'] = 'List of Branches'
+		sheet.merge_cells('A3:F3')
+		sheet['A4'] = 'Sr. No.'
+		if((int(request.params["gbflag"])) == 7):
+			sheet['B4'] = 'Godown Name'
+		else:
+			sheet['B4'] = 'Branch Name'	
+		sheet['C4'] = 'Address'
+		sheet['D4'] = 'Contact Person'
+		sheet['E4'] = 'Contact Number'
+		if((int(request.params["gbflag"])) == 7):
+			sheet['F4'] = 'Status'
+		titlerow = sheet.row_dimensions[4]
+		titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+		row=5
+		srno = 1
+		for godown in result:
+			sheet['A'+str(row)] = srno
+			sheet['A'+str(row)].alignment = Alignment(horizontal='left')
+			sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+			sheet['B'+str(row)] = godown['goname']
+			sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+			sheet['C'+str(row)] = godown["goaddr"]+" , "+godown["state"]
+			sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+			sheet['D'+str(row)] = godown["contactname"]
+			sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+			sheet['E'+str(row)] = godown["gocontact"]
+			sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+			if((int(request.params["gbflag"])) == 7):
+				sheet['F'+str(row)] = godown["godownstatus"]
+				sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+
+			row = row + 1
+			srno += 1
+		godownwb.save('report.xlsx')
+		xlsxfile = open("report.xlsx","r")
+		reportxslx = xlsxfile.read()
+		headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+		xlsxfile.close()
+		os.remove("report.xlsx")
+		return Response(reportxslx, headerlist=headerList.items())       
     except:
         return {"gkstatus":3}
 
