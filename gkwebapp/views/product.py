@@ -51,7 +51,7 @@ def showproducttab(request):
 @view_config(route_name="product",request_param="type=stkmodal", renderer="gkwebapp:templates/addstockgstpopup.jinja2")
 def addstkgstpopup(request):
     header={"gktoken":request.headers["gktoken"]}
-    result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    result2 = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     productdetails=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
     return{"products":productdetails.json()["gkresult"],"godown":result2.json()["gkresult"], "tax":request.params["tax"]}
     
@@ -61,7 +61,7 @@ def addProductTabVat(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-    result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    result2 = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
@@ -72,7 +72,7 @@ def addproducttab(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
-    result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    result2 = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     userrole = requests.get("http://127.0.0.1:6543/user?type=role", headers=header)
@@ -331,7 +331,7 @@ def productdetails(request):
         result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 
         result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
-        result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+        result4 = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
         numberofgodowns = int(result.json()["numberofgodowns"])
         return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
     else:
@@ -357,7 +357,7 @@ def productDetailsVat(request):
         result2 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
 
         result3 = requests.get("http://127.0.0.1:6543/categories", headers=header)
-        result4 = requests.get("http://127.0.0.1:6543/godown", headers=header)
+        result4 = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
         numberofgodowns = int(result.json()["numberofgodowns"])
         return{"proddesc":result.json()["gkresult"],"prodspecs":prodspecs,"uom":result2.json()["gkresult"],"category":result3.json()["gkresult"],"godown":result4.json()["gkresult"],"numberofgodowns":numberofgodowns,"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"]}
     else:
@@ -478,7 +478,7 @@ def viewstockreport(request):
 
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products?invdc=4",headers=header)
-    result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
+    result1 = requests.get("http://127.0.0.1:6543/godown?gbflag=7",headers=header)
     result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
     userrole = result2.json()["gkresult"]["userrole"]
     return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
@@ -857,7 +857,7 @@ def viewStockOnHandReport(request):
 
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products?invdc=4",headers=header)
-    result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
+    result1 = requests.get("http://127.0.0.1:6543/godown?gbflag=7",headers=header)
     result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
     userrole = result2.json()["gkresult"]["userrole"]
     return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
@@ -867,7 +867,7 @@ def viewCategorywiseStockOnHandReport(request):
 
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/categories",headers=header)
-    result1 = requests.get("http://127.0.0.1:6543/godown",headers=header)
+    result1 = requests.get("http://127.0.0.1:6543/godown?gbflag=7",headers=header)
     result2 = requests.get("http://127.0.0.1:6543/login", headers=header)
     userrole = result2.json()["gkresult"]["userrole"]
     return{"gkresult":result.json()["gkresult"], "godown":result1.json()["gkresult"], "gkstatus":result.json()["gkstatus"], "userrole":userrole}
