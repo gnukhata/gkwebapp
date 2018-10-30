@@ -330,15 +330,37 @@
 		  </div>
 		  {% if resultgstvat == '29' or resultgstvat == '22' %}
 		    {% if resultgstvat == '22' %}
-		      <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
+		      <div class="col-sm-12 bg-info" style="padding:10;">
+			<div class="col-sm-9">
 			<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+			</div>
+			<div class="row col-sm-2" style="float:right;">
+			  <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
+			  <small class="row col-sm-12 form-text text-muted">O = Original Price</small><br>
+			  <small class="row col-sm-12 form-text text-muted">M = MRP</small><br>
+			  {% if gkstatus=="out" %}
+			    <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
+			  {% endif %}
+			  <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			</div>
 		      </div>
 		      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		    {% else %}
-			<div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
+			<div class="col-sm-12 bg-info" style="padding:10;" id="vathelp" hidden>
+			  <div class="col-sm-9">
 			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			  <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+			  </div>
+			  <div class="row col-sm-2" style="float:right;">
+			    <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
+			    <small class="row col-sm-12 form-text text-muted">O = Original Price</small><br>
+			    <small class="row col-sm-12 form-text text-muted">M = MRP</small><br>
+			    {% if gkstatus=="out" %}
+			      <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
+			    {% endif %}
+			    <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			  </div>
 			</div>
 			<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		    {% endif %}
@@ -437,10 +459,21 @@
 		  {% endif %}
 		  {% if resultgstvat == '29' or resultgstvat == '7' %}
 		    <div class="row col-sm-12" id="gstproducttable">
-		      <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
+		      <div class="col-sm-12 bg-info" style="padding:10;">
+			<div class="col-sm-9">
 			<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 			<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+			</div>
+			<div class="row col-sm-2" style="float:right;">
+			  <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
+			  <small class="row col-sm-12 form-text text-muted">O = Original Price</small><br>
+			  <small class="row col-sm-12 form-text text-muted">M = MRP</small><br>
+			  {% if gkstatus=="out" %}
+			    <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
+			  {% endif %}
+			  <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			</div>
 		      </div>
 		      <div class="col-sm-10" style="overflow-x:scroll;">
 			<div class="row">
