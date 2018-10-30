@@ -50,8 +50,8 @@ def showtransfernote(request):
 def showcreatetransfernote(request):
                 header={"gktoken":request.headers["gktoken"]}
                 products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
-                godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
-                fromgodowns = requests.get("http://127.0.0.1:6543/godown?value=1", headers=header)
+                godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
+                fromgodowns = requests.get("http://127.0.0.1:6543/godown?value=1&gbflag=7", headers=header)
                 return {"products": products.json()["gkresult"],"godowns":godowns.json()["gkresult"],"fromgodowns":fromgodowns.json()["gkresult"]}
 
 
@@ -65,7 +65,7 @@ def showreceivedtransfernote(request):
 @view_config(route_name="transfernotes",request_param="action=viewlist",renderer="gkwebapp:templates/viewlistoftransfernotes.jinja2")
 def viewlistoftransfernotes(request):
                 header={"gktoken":request.headers["gktoken"]}
-                result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+                result = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
                 goddata=[]
                 for record in result.json()["gkresult"]:
                     gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
@@ -334,7 +334,7 @@ def showstockreport(request):
 @view_config(route_name="transfernotes",request_param="action=getgodowns", renderer="json")
 def listofgodowns(request):
         header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/godown?type=togodown", headers=header)
+        result = requests.get("http://127.0.0.1:6543/godown?type=togodown&gbflag=7", headers=header)
         goddata=[]
         for record in result.json()["gkresult"]:
                 gdata= {"goid": str(record["goid"]), "goname" : str(record["goname"]), "goaddr": str(record["goaddr"])}
