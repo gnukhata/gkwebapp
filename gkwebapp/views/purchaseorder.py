@@ -61,7 +61,7 @@ def showaddpurchaseorder(request):
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
-    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"status":16,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"], "productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"], "states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
@@ -74,7 +74,7 @@ def showaddsalesorder(request):
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
-    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"status":19,"customers": customers.json()["gkresult"],"products": products.json()["gkresult"],"productsnservices": productsnservices.json()["gkresult"],"godowns":godowns.json()["gkresult"],"states": states.json()["gkresult"], "resultgstvat":resultgstvat.json()["gkresult"]}
