@@ -77,7 +77,7 @@ def showeditdeliverychallan(request):
     delchalouts = requests.get("http://127.0.0.1:6543/delchal?delchal=all&inoutflag=15", headers=header)
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     customers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
-    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"delchalins":delchalins.json()["gkresult"],"delchalouts":delchalouts.json()["gkresult"],"suppliers":suppliers.json()["gkresult"],"customers":customers.json()["gkresult"],"godowns":godowns.json()["gkresult"],"numberofgodowns":len(godowns.json()["gkresult"]),"resultgstvat":resultgstvat.json()["gkresult"],"numberofdeliveryinnotes":len(delchalins.json()["gkresult"]),"numberofdeliveryoutnotes":len(delchalouts.json()["gkresult"]),"status":True}
        
@@ -86,7 +86,7 @@ def showeditpopupdeliverychallan(request):
     header={"gktoken":request.headers["gktoken"]}
     dcid = request.params["dcid"]
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(dcid)), headers=header)
-    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"]}
 
@@ -375,7 +375,7 @@ def show_unbilled_deliveries_report(request):
 @view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
 def view_unbilled_deliveries(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
