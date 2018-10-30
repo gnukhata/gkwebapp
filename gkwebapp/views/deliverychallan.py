@@ -63,7 +63,7 @@ def showadddeliverychallan(request):
     productsnservices = requests.get("http://127.0.0.1:6543/products", headers=header)
     products = requests.get("http://127.0.0.1:6543/products?invdc=4", headers=header)
     states = requests.get("http://127.0.0.1:6543/state", headers=header)
-    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
     result = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=16",headers=header)
     result1 = requests.get("http://127.0.0.1:6543/purchaseorder?psflag=20",headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
