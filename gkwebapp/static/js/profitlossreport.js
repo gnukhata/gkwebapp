@@ -31,7 +31,7 @@ $(document).ready(function() {
   var oninvoice = 0;
   $(".fixed-table-loading").remove();
     $('.modal-backdrop').remove();
-    $("tbody tr:not('.group,.cl,.')").hide();
+    $("tbody tr:not('.group,.cl')").hide();
   $("#msspinmodal").modal("hide");
     $("#realprintpnl, #compress").hide();
   $('#expensetbl tbody tr:first-child td:first a').focus();
