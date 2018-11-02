@@ -198,7 +198,8 @@ $(document).ready(function() {
 		url: "/godown?type=role_list",
 		global: false,
 		async: false,
-		datatype: "text/html",
+    datatype: "text/html",
+    data: {'gbflag':7},
 		beforeSend: function(xhr)
 		{
 		  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
