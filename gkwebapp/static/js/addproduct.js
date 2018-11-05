@@ -1394,7 +1394,8 @@ $("#addgodown").click(function() {
           $.ajax({
             url: 'godown?type=getallgodowns',
             type: 'POST',
-            dataType: 'json',
+              dataType: 'json',
+	      data: {"gbflag":7},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
