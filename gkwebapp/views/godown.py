@@ -254,14 +254,14 @@ def listofgodownssspreadsheet(request):
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
         # Organisation name and financial year are displayed.
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
-        sheet.merge_cells('A3:F3')
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
         if((int(request.params["gbflag"])) == 7):
             sheet['A3'] = 'List of Godowns'
+            sheet.merge_cells('A3:F3')
         else:
             sheet['A3'] = 'List of Branches'
-        sheet.merge_cells('A3:F3')
+            sheet.merge_cells('A3:E3')
         sheet['A4'] = 'Sr. No.'
         if((int(request.params["gbflag"])) == 7):
             sheet['B4'] = 'Godown Name'
