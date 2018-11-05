@@ -153,7 +153,7 @@ $(document).ready(function()
             global: false,
             async: false,
             datatype: "json",
-            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowncontact":$("#godowncontact").val()},
+              data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowncontact":$("#godowncontact").val(), "gbflag":7},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
