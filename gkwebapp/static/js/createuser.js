@@ -82,11 +82,7 @@ $(document).ready(function(){
     {
       var gbflag = 7;
     }
-    if(role == 4)
-    {
-      var gbflag = 2;
-    }
-    if (role==3 || role==4){
+    if (role==3){
       $.ajax(
          {
 
