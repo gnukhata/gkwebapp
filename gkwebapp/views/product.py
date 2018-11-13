@@ -548,7 +548,7 @@ It is decoded and returned along with mime information.
 '''
 @view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
 def stockreportspreadsheet(request):
-    # try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         godownflag = int(request.params["godownflag"])
         goid = int(request.params["goid"])
@@ -885,8 +885,8 @@ def stockreportspreadsheet(request):
         xlsxfile.close()
         os.remove("report.xlsx")
         return Response(reportxslx, headerlist=headerList.items())
-    # except:
-    #     return {"gkstatus":3}
+    except:
+        return {"gkstatus":3}
 
 
 @view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
