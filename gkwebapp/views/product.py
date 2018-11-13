@@ -548,7 +548,7 @@ It is decoded and returned along with mime information.
 '''
 @view_config(route_name="product",request_param="type=stockreportspreadsheet", renderer="")
 def stockreportspreadsheet(request):
-    try:
+    # try:
         header={"gktoken":request.headers["gktoken"]}
         godownflag = int(request.params["godownflag"])
         goid = int(request.params["goid"])
@@ -597,6 +597,7 @@ def stockreportspreadsheet(request):
         sheet.merge_cells('A4:J4')
         sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        trn=""
         if godownflag > 0:
             sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
             sheet['A3'] = "Godown Wise Product Report  (Period : "+calculatefrom+" to "+calculateto+")"
@@ -624,7 +625,20 @@ def stockreportspreadsheet(request):
             sheet['J6'].alignment = Alignment(horizontal='right')
             sheet['J6'].font = Font(name='Liberation Serif',size=12,bold=True)
             row = 7
+
             for stock in result:
+                if(stock["trntype"] == "delchal"):
+                    trn = "Delivery Note"
+                if(stock["trntype"] == "invoice"):
+                    trn = "Invoice "
+                if(stock["trntype"] == "delchal&invoice"):
+                    trn = "Delivery Note & Invoice"
+                if(stock["trntype"] == "transfer note"):
+                    trn = "Transfer Note "
+                if(stock["trntype"] == "Rejection Note"):
+                    trn = "Rejection Note"
+                if(stock["trntype"] == "Debit Note"):
+                    trn = "Debit Note"
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -752,7 +766,21 @@ def stockreportspreadsheet(request):
             sheet['I5'].alignment = Alignment(horizontal='right')
             sheet['I5'].font = Font(name='Liberation Serif',size=12,bold=True)
             row = 6
+            
             for stock in result:
+                if(stock["trntype"] == "delchal"):
+                    trn = "Delivery Note"
+                if(stock["trntype"] == "invoice"):
+                    trn = "Invoice "
+                if(stock["trntype"] == "delchal&invoice"):
+                    trn = "Delivery Note & Invoice"
+                if(stock["trntype"] == "transfer note"):
+                    trn = "Transfer Note "
+                if(stock["trntype"] == "Rejection Note"):
+                    trn = "Rejection Note"
+                if(stock["trntype"] == "Debit Note"):
+                    trn = "Debit Note"
+
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -787,8 +815,10 @@ def stockreportspreadsheet(request):
                      sheet['A'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['B'+str(row)] = stock["particulars"]
                      sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['C'+str(row)] = stock["trntype"]
+
+                     sheet['C'+str(row)] = trn
                      sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+
                      sheet['C'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['D'+str(row)] = stock["dcno"]
                      sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -855,8 +885,8 @@ def stockreportspreadsheet(request):
         xlsxfile.close()
         os.remove("report.xlsx")
         return Response(reportxslx, headerlist=headerList.items())
-    except:
-        return {"gkstatus":3}
+    # except:
+    #     return {"gkstatus":3}
 
 
 @view_config(route_name="product",request_param="type=viewstockonhandreport", renderer="gkwebapp:templates/viewstockonhandreport.jinja2")
