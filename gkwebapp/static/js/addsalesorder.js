@@ -100,7 +100,7 @@ $(document).ready(function() {
         let cessamount = (rowtaxableamount * cessrate)/100;  //Amount of Cess to be applied is found out.
 	$('.salesorder_product_cessamount:eq(' + curindex + ')').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = parseFloat(parseFloat(rowtaxableamount).toFixed(2)) + parseFloat(parseFloat(2*sgstamount).toFixed(2)) + parseFloat(parseFloat(igstamount).toFixed(2)) + parseFloat(parseFloat(cessamount).toFixed(2)); //Sum of Taxable Amount and Tax Amount is found out.
+	rowtotal = parseFloat(parseFloat(rowtaxableamount).toFixed(2)) + 2*parseFloat(parseFloat(sgstamount).toFixed(2)) + parseFloat(parseFloat(igstamount).toFixed(2)) + parseFloat(parseFloat(cessamount).toFixed(2)); //Sum of Taxable Amount and Tax Amount is found out.
         $('.salesorder_product_total_gst:eq(' + curindex + ')').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
@@ -170,7 +170,7 @@ $(document).ready(function() {
 	$('.salesorder_product_taxablevalue_vat:eq(' + curindex + ')').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 	taxamount = (rowtaxableamount * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	 $('.salesorder_product_tax_amount_vat:eq(' + curindex + ')').val(parseFloat(taxamount).toFixed(2));
-	 rowtotal = rowtaxableamount + taxamount;
+	 rowtotal = parseFloat(parseFloat(rowtaxableamount).toFixed(2)) + parseFloat(parseFloat(taxamount).toFixed(2));
 	 $('.salesorder_product_total_vat:eq(' + curindex + ')').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#salesorder_product_table_vat tbody tr").length; i++) {
