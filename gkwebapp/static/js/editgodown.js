@@ -216,7 +216,7 @@ $(document).ready(function() {
                         }
                         else
                         {
-                          $("#branch").click();
+                          $("#branchmenu").click();
                         }
                        
                         });
