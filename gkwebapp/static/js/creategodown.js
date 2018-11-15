@@ -214,7 +214,7 @@ $(document).ready(function()
                 }
                 else
                 {
-                  $("#branch").click();
+                  $("#branchmenu").click();
                 }
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){

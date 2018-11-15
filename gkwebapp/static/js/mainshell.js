@@ -802,7 +802,7 @@ $(document).ready(function(){
      });
   });
 
-  $('#branch').click(function (e) {
+  $('#branchmenu').click(function (e) {
     // Loads godown page in the main div.
     $.ajax({
       url: '/godown',
