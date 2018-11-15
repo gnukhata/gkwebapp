@@ -639,6 +639,9 @@ def stockreportspreadsheet(request):
                     trn = "Rejection Note"
                 if(stock["trntype"] == "Debit Note"):
                     trn = "Debit Note"
+                if(stock["trntype"] == "Credit Note"):
+                    trn = "Credit Note"
+
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -671,22 +674,26 @@ def stockreportspreadsheet(request):
                      sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]!="Total" and (stock["dcno"]!="" or stock["invno"]!="" or stock["tnno"]!="" or stock["rnno"] != "") and stock["date"]!="":
+
                      sheet['A'+str(row)] = stock["date"]
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['A'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['B'+str(row)] = stock["particulars"]
                      sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-                     sheet['C'+str(row)] = stock["trntype"]
+                     sheet['C'+str(row)] = trn
                      sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['C'+str(row)].alignment = Alignment(horizontal='center')
                      sheet['D'+str(row)] = stock["dcno"]
                      sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['D'+str(row)].alignment = Alignment(horizontal='center')
                      if stock["invno"] != "":
+
                          sheet['E'+str(row)] = stock["invno"]
                      elif "drcrno" in stock and stock["drcrno"] != "":
+
                          sheet['E'+str(row)] = stock["drcrno"]
                      else:
+
                          sheet['E'+str(row)] = ""
                      sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['E'+str(row)].alignment = Alignment(horizontal='center')
@@ -697,11 +704,13 @@ def stockreportspreadsheet(request):
                      sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['G'+str(row)].alignment = Alignment(horizontal='center')
                      if stock["inwardqty"]!= "":
+
                          sheet['H'+str(row)]=float("%.2f"%float(stock["inwardqty"]))
                          sheet['H'+str(row)].number_format = '0.00'
                          sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                          sheet['H'+str(row)].alignment = Alignment(horizontal='right')
                      if stock["outwardqty"]!= "":
+
                          sheet['I'+str(row)]=float("%.2f"%float(stock["outwardqty"]))
                          sheet['I'+str(row)].number_format = '0.00'
                          sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
@@ -711,6 +720,7 @@ def stockreportspreadsheet(request):
                      sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['J'+str(row)].alignment = Alignment(horizontal='right')
                 if stock["particulars"]=="Total" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
+
                      sheet['A'+str(row)] =""
                      sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['A'+str(row)].alignment = Alignment(horizontal='center')
@@ -780,6 +790,8 @@ def stockreportspreadsheet(request):
                     trn = "Rejection Note"
                 if(stock["trntype"] == "Debit Note"):
                     trn = "Debit Note"
+                if(stock["trntype"] == "Credit Note"):
+                    trn = "Credit Note"
 
                 if stock["particulars"]=="opening stock" and stock["dcno"]=="" and stock["invno"]=="" and stock["date"]=="":
                      sheet['A'+str(row)] =""
@@ -825,7 +837,7 @@ def stockreportspreadsheet(request):
                      sheet['D'+str(row)].alignment = Alignment(horizontal='center')
                      if stock["invno"] != "":
                          sheet['E'+str(row)] = stock["invno"]
-                     elif stock["drcrno"] != "":
+                     elif "drcrno" in stock and stock["drcrno"] != "":
                          sheet['E'+str(row)] = stock["drcrno"]
                      else:
                          sheet['E'+str(row)] = ""
