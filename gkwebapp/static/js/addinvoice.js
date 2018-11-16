@@ -1917,12 +1917,14 @@ $(document).ready(function() {
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(1) .invoice_product_hsncode').text(resp["gscode"]);
 	     //Last price of purchase is shown by default for Purchase Invoice.
 	     //Selling Price is shown for Sale Invoice.
-	     if ($("#status").val() == 9) {
-		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodlp"]);
-	     }
-	     else {
-		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
-	     }
+             if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val() == 0) {
+                 if ($("#status").val() == 9) {
+		     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodlp"]);
+	         }
+	         else {
+		     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["prodsp"]);
+	         }
+             }
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodsp", resp["prodsp"]);
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodmrp", resp["prodmrp"]);
 	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) span').data("prodlp", resp["prodlp"]);
@@ -2284,7 +2286,7 @@ $(document).ready(function() {
 	//Index of current row
 	var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
 	//Product code of selected product or service.
-	let productCode = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').filter(function() {return $(this).css('display') == 'none';}).val();
+	let productCode = $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select').val();
 	//Validation for Discount fields for goods and services. Discount must not be greater than price.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option[value=' + productCode + ']').attr("gsflag") == 7) {
 	    //For goods, price is product of rate and quantity.
@@ -2363,7 +2365,6 @@ if (event.which == 13) {
 	}
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option[value=' + productCode + ']').attr("gsflag") == '7') {
 	    if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2)))) {
-		console.log(parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(2) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(4) input').val()).toFixed(2)));
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
 		$(".invoice_product_discount_gst:eq(" + curindex1 + ")").focus().select();
