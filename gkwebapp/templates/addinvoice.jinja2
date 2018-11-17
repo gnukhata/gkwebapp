@@ -324,6 +324,11 @@
 		      <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+                      {% if gkstatus=="out" %}
+			<small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP, Last Selling Price and Selling Price.</small>
+                      {% else %}
+                        <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP and Last Purchase Price.</small>
+		      {% endif %}
 		      </div>
 		      <div class="row col-sm-2" style="float:right;">
 			<div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
@@ -331,7 +336,7 @@
 			{% if gkstatus=="out" %}
 			  <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
 			{% endif %}
-			<small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			<small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 		      </div>
 		    </div>
 		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -341,6 +346,11 @@
 			  <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			  <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+                          {% if gkstatus=="out" %}
+			    <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP, Last Selling Price and Selling Price.</small>
+                          {% else %}
+                            <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP and Last Purchase Price.</small>
+		          {% endif %}
 			</div>
 			<div class="row col-sm-2" style="float:right;">
 			  <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
@@ -348,7 +358,7 @@
 			  {% if gkstatus=="out" %}
 			    <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
 			  {% endif %}
-			  <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
 		      </div>
 		      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
@@ -458,14 +468,19 @@
 			<div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 			<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Invoice. Press 'Esc' key to exit from the table.</small>
+                        {% if gkstatus=="out" %}
+			  <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP, Last Selling Price and Selling Price.</small>
+                        {% else %}
+                          <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between MRP and Last Purchase Price.</small>
+		        {% endif %}
 		      </div>
 		      <div class="row col-sm-2" style="float:right;">
 			<div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
-		      <small class="row col-sm-12 form-text text-muted">M = MRP</small><br>
-		      {% if gkstatus=="out" %}
-			<small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
-		      {% endif %}
-		      <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+		        <small class="row col-sm-12 form-text text-muted">M = MRP</small><br>
+		        {% if gkstatus=="out" %}
+			  <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
+		        {% endif %}
+		        <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 		    </div>
 		    </div>
 		    <div class="col-sm-10" style="overflow-x:scroll;">

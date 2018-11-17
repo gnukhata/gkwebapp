@@ -334,6 +334,11 @@
 			<div class="col-sm-9">
 			<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+                        {% if gkstatus=="out" %}
+			  <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP, Last Selling Price and Selling Price.</small>
+                        {% else %}
+                          <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP and Last Purchase Price.</small>
+		        {% endif %}
 			</div>
 			<div class="row col-sm-2" style="float:right;">
 			  <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
@@ -342,7 +347,7 @@
 			  {% if gkstatus=="out" %}
 			    <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
 			  {% endif %}
-			  <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
 		      </div>
 		      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
@@ -351,6 +356,11 @@
 			  <div class="col-sm-9">
 			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 			  <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+                          {% if gkstatus=="out" %}
+			    <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP, Last Selling Price and Selling Price.</small>
+                          {% else %}
+                            <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP and Last Purchase Price.</small>
+		          {% endif %}
 			  </div>
 			  <div class="row col-sm-2" style="float:right;">
 			    <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
@@ -359,7 +369,7 @@
 			    {% if gkstatus=="out" %}
 			      <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
 			    {% endif %}
-			    <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			    <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			  </div>
 			</div>
 			<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
@@ -402,8 +412,8 @@
 			</td>
 			<td class="smvwrap">
 			  <div class="input-group">
-			      <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
-			      <span class="input-group-addon input-sm unitaddon priceaddon pricespan_vat"  data-prodsp=""  data-prodmrp="" data-prodlp="">O</span>
+			    <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
+			    <span class="input-group-addon input-sm unitaddon priceaddon pricespan_vat"  data-prodsp=""  data-prodmrp="" data-prodlp="">O</span>
 			  </div>
 			</td>
 			<td class="smvwrap">
@@ -461,9 +471,14 @@
 		    <div class="row col-sm-12" id="gstproducttable">
 		      <div class="col-sm-12 bg-info" style="padding:10;">
 			<div class="col-sm-9">
-			<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
-			<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
-			<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+			  <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
+			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
+			  <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to update Invoice. Press 'Esc' key to exit from the table.</small>
+                          {% if gkstatus=="out" %}
+			    <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP, Last Selling Price and Selling Price.</small>
+                          {% else %}
+                            <small class="row col-sm-12 form-text text-muted">Press 'T' to toggle between Original Price, MRP and Last Purchase Price.</small>
+		          {% endif %}
 			</div>
 			<div class="row col-sm-2" style="float:right;">
 			  <div class="row col-sm-12 text-primary">{% trans %}In the Rate field,{% endtrans %}</div>
@@ -472,7 +487,7 @@
 			  {% if gkstatus=="out" %}
 			    <small class="row col-sm-12 form-text text-muted">S = Selling Price</small><br>
 			  {% endif %}
-			  <small class="row col-sm-12 form-text text-muted">L = Last Price</small>
+			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
 		      </div>
 		      <div class="col-sm-10" style="overflow-x:scroll;">
