@@ -3474,4 +3474,39 @@ if (event.which == 13) {
                 console.log("complete");
             });
     });
+    $("#invoice_addproduct").click(function(event){
+	var call;
+      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+	   call = '/product?type=addtab&extrabuttons=0';
+      }
+
+      else{
+	   call = '/product?type=addtabvat&extrabuttons=0';
+      }
+      
+    /* Tab to load add product page. */
+    $.ajax({
+
+        url: call,
+      type: 'POST',
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      $("#viewproduct").html("");
+        $("#viewproduct").html(resp);
+        $("#addproductmodal").modal("show");
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+
+  });
 });
