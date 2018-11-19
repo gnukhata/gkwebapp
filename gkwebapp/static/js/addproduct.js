@@ -1895,12 +1895,18 @@ console.log(addformdata)
 	if ($("#additem input:radio:checked").val() == 7) {
 	    $("#addproduct-success-alert").alert();
 	    $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		if(sessionStorage.invflag==0){
-		    $("#product").click();
-		}
-		else{
-		    $("#productinmaster").click();
-		}
+		if (parseInt($("#extrabuttons").val()) == 1) {
+                    if(sessionStorage.invflag==0){
+		        $("#product").click();
+		    }
+		    else{
+		        $("#productinmaster").click();
+		    }
+                }
+                else{
+                    $('.modal-backdrop').remove();
+                    $("#addproductmodal").modal("hide");
+                }
 		$("#addproduct-success-alert").hide();
 	    });
 	}
@@ -1945,7 +1951,12 @@ console.log(addformdata)
 $(document).on('click', '#apreset', function(event) {
   event.preventDefault();
   /* Act on the event */
-  $("#addproduct").click();
+    if ($("#extrabuttons").val() == 1) {
+        $("#addproduct").click();
+    }
+    else {
+        $("#addproductmodal").find("input:not(:hidden), select:not(:hidden, #additem)").val("");
+    }
 });
     /*code for reseting the fields*/
 $(document).on('click', '#stockreset', function(event) {

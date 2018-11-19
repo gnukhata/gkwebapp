@@ -16,6 +16,131 @@
       <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
 
       <div class="panel-body">
+        {% if not extrabuttons %}
+          <div class="col-md-12">
+            <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Product saved successfully and corresponding accounts created.{% endtrans %}
+            </div>
+
+	    <div class="alert alert-success" id="addservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Service saved successfully and corresponding accounts created.{% endtrans %}
+            </div>
+
+            <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Product and corresponding accounts edited successfully.{% endtrans %}
+            </div>
+            <div class="alert alert-success" id="editservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Service and corresponding accounts edited successfully.{% endtrans %}
+            </div>
+            <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Product deleted successfully.{% endtrans %}
+            </div>
+            <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Service deleted successfully.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}This unit exists. Please select it from the list.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Duplicate Product.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please Specify IGST tax.{% endtrans %}
+            </div>
+	    
+            <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+
+                 {% trans %}You can create products under categories.{% endtrans %}
+                 </div> -->
+            <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please select Item!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please enter product name!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
+              {% trans %}HSN No. cannot be blank.{% endtrans %}
+            </div>
+	    <div class="alert alert-danger" id="hsnno-must-be-positive"  aria-live="rude" role="alert" hidden>
+	      {% trans %}HSN No. cannot be zero.{% endtrans %}
+	    </div>
+            <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="service-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Service name cannot be blank.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
+            </div>
+            <div class="alert alert-warning" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please select a different godown.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+              <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+            </div>
+            <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}This tax has already been applied.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please Specify Tax for Product.{% endtrans %}
+            </div>
+	    <div class="alert alert-danger" id="tax-service-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please Specify Tax for Service.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
+            </div>
+	    <div class="alert alert-danger" id="edit_cvat-alert"  aria-live="rude" role="alert" hidden>
+
+	      {% trans %}CVAT can be applied only once.{% endtrans %}
+	    </div>
+            <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please select the unit of measurement.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Duplicate Tax!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="no-godown-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}There are no more godowns!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Cannot delete Product!{% endtrans %}<br>
+            </div>
+	    <div class="alert alert-danger" id="failure-service-delete-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Cannot delete Service!{% endtrans %}<br>
+            </div>
+	    <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+              {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
+            </div>
+          </div>
+        {% endif %}
         <form id="addprodform">
           <div class="col-sm-6" >
 	    {% if userrole|int != 3 %}
@@ -361,16 +486,15 @@
 	  <div class="container-fluid">
             <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save" title="Please enter aleast two digit positive number" ><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
             <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
+            {% if extrabuttons %}
 	    {% if userrole|int != 3 %}
               <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
 	      
 	    {% endif %}
 	    {%if userrole|int==3%}
-	      <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
-	      </td>
+              <button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
 	    {% endif %}
-		      </tr>
-			</td>
+            {% endif %}
 	  </div> 
 	  
         </div>
@@ -423,9 +547,14 @@
         </p>
       </div>
 
-      </div>
-      </div>
-      </div>
+    </div>
+  </div>
+    </div>
+    {% if extrabuttons %}
+      <input id="extrabuttons" value="1" hidden/>
+    {% else %}
+      <input id="extrabuttons" value="0" hidden/>
+    {% endif %}
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproduct.js')}}"></script>
 </body>
 

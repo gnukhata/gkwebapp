@@ -878,6 +878,7 @@
               {% else %}
 		<button id="invoice_addcust" class="btn btn-info btn-sm" accesskey="d"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}A<u>d</u>d Supplier{% endtrans %}</button>
               {% endif %}
+              <button id="invoice_addproduct" class="btn btn-sm" accesskey="u" style="background-color:#333; color:white;"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Prod<u>u</u>ct{% endtrans %}</button>
 	      <label class="btn btn-primary btn-sm" for="my-file-selector">
 		<input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 		<i class="fa fa-paperclip" aria-hidden="true"></i>
@@ -914,6 +915,44 @@
 
 	<div id="viewcustsup"></div>
 	<input type="hidden" id="selectedcustsup" value="">
+        <div id="addproductmodal" class="modal" tabindex="-1" role="dialog">
+	  <div class="vertical-alignment-helper">
+	    <div class="modal-dialog modal-lg vertical-align-center">
+              <div class="modal-content">
+		<div class="modal-header">
+
+		  <h4 class="modal-title">{% trans %}Add Product{% endtrans %}</h4>
+		</div>
+		<div class="modal-body">
+                  <style>
+                  #product_tax_table td {
+                      font-size: 75%;
+                      padding: 4 !important;
+                      margin: 4 !important;
+                  }
+                  #product_tax_table tbody {
+                      display:block;
+                      height: calc(100vh - 39em);
+                      min-height: 100px;
+                      overflow-y:scroll;
+                  }
+
+                  #product_tax_table thead ,#product_tax_table tbody tr {
+                      display:table;
+                      width:100%;
+                      table-layout:fixed;
+                  }
+                  #product_tax_table thead {
+                      width: calc( 100% - 0.75em )
+                  }
+                  </style>
+		  <div id="viewproduct"></div>
+	          <input type="hidden" id="selectedproductid" value="">
+		</div>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addinvoice.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
 </body>
