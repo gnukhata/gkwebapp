@@ -23,13 +23,22 @@
 	    {% else %}
 		<div class="row" hidden id="serviceproductdiv">
 	    {% endif %}
-	    <div class="form-group col-sm-11 pd">
-
+	    <div class="form-group form-inline  pd">
+				<div class="col-sm-3">
 	      <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
-	      <select name="gsflag" class="form-control input-sm" id="additem">
+			</div>
+				<div id="additem">
+					<div class="radio">
+						<label><input type="radio" name="selector" value="7" checked> Product</label>
+					</div>
+					<div class="radio" style="margin-left:15px" >
+						<label><input type="radio" name="selector" value="19"> Service</label>
+					</div>
+							</div>
+				<!-- <select name="gsflag" class="form-control input-sm" id="additem">
                 <option value="7">Product</option>
                 <option value="19">Service</option>
-	      </select>
+	      </select> -->
 
 	    </div>
             </div>

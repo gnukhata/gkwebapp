@@ -75,8 +75,9 @@ $(".serviceclass").hide();
     if(sessionStorage.invflag != 0) {
         $("#addgodown").show();
     }
-  $("#additem").change(function(event) {
-    if($("#additem option:selected").val() == '7') {
+  $("#additem input:radio").change(function(event) {
+
+    if($("#additem input:radio:checked").val() == '7') {
 
 	$(".serviceclass").hide();
 	if(sessionStorage.invflag != 0) {
@@ -91,7 +92,8 @@ $(".serviceclass").hide();
 	$("#defaultprice").text("Sale Price :");
       $(".common").show();
     }
-    if($("#additem option:selected").val() == '19'){
+
+    if($("#additem input:radio:checked").val() == '19'){
       $(".productclass").hide();
       $(".serviceclass").show();
       $("#proservlabel").text("Service Name :");
@@ -102,11 +104,11 @@ $(".serviceclass").hide();
     }
   });
 
-    $("#additem").change();
+    $("#additem input:radio").change();
 
-if($("#additem").is(':visible'))
+if($("#additem input:radio:checked").is(':visible'))
     {
-	$("#additem").focus();
+	$("#additem input:radio:checked").focus();
   }
     else{
 	if($("#addcatselect").length == 0){
@@ -200,18 +202,18 @@ $(document).off('blur', '#newuom').on('blur', '#newuom', function(event) {
 	}});
 			
     
-$("#additem").keydown(function(event) {
+$("#additem input:radio").keydown(function(event) {
   if(event.which == 13) {
-    if ($.trim($("#additem").val())=="") {
+    if ($.trim($("#additem input:radio:checked").val())=="") {
       $("#item-blank-alert").alert();
       $("#item-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#item-blank-alert").hide();
       });
-      $("#additem").focus();
+      $("#additem input:radio:checked").focus();
       return false;
     }
 
-    if($("#additem option:selected").val() == '19')
+    if($("#additem input:radio:checked").val() == '19')
     {
         event.preventDefault();
     $("#addproddesc").focus().select();
@@ -235,7 +237,7 @@ $("#addproddesc").keydown(function(event) {
   if (event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
-      if($("#additem option:selected").val() == '7')
+      if($("#additem input:radio:checked").val() == '7')
       {
       $("#product-blank-alert").alert();
       $("#product-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -264,7 +266,7 @@ $("#addproddesc").keydown(function(event) {
 	  $("#addcatselect").focus();
       }
       else {
-	  $("#additem").focus();
+	  $("#additem input:radio:checked").focus();
       }
   }
 });
@@ -283,7 +285,7 @@ $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
     if ($(this).val()=="") {
-      if($("#additem option:selected").val() == '7') {
+      if($("#additem input:radio:checked").val() == '7') {
       $("#hsnno-blank-alert").alert();
       $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#hsnno-blank-alert").hide();
@@ -307,7 +309,7 @@ $("#hsnno").keydown(function(event) {
 		});
 		return false;
 	    }
-      if ($("#additem option:selected").val()=='7'){
+      if ($("#additem input:radio:checked").val()=='7'){
     $("#adduom").focus();
     }
       else {
@@ -404,7 +406,7 @@ $("#openingstock").focus(function(event) {
 		$("#product_tax_table tbody tr:first td:eq(0) select").focus();
 	    }
 	    else{
-		if ($("#additem option:selected").val()=='7'){
+		if ($("#additem input:radio:checked").val()=='7'){
 		    if ($("#godownpresence").val()==0) {
 			$("#openingstock").focus().select();
 		    }
@@ -453,7 +455,7 @@ $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',functi
 
   }
     else if (event.which == 38 && (document.getElementById('addcatselect').selectedIndex==1||document.getElementById('addcatselect').selectedIndex==0)){
-	$("#additem").focus();
+	$("#additem input:radio:checked").focus();
     }
 
 });
@@ -523,7 +525,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 	    }
 		else{
 		    //Events triggered in case of Goods.
-		if ($("#additem option:selected").val()=='7'){
+		if ($("#additem input:radio:checked").val()=='7'){
 		    if ($("#godownpresence").val()==0) {
 			$("#openingstock").focus().select();
 		    }
@@ -807,7 +809,7 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   }
   else if (event.which==27) {
     event.preventDefault();
-    if ($("#additem option:selected").val()=='7'){
+    if ($("#additem input:radio:checked").val()=='7'){
 
       if ($("#godownpresence").val()==0) {
         $("#openingstock").focus().select();
@@ -1007,7 +1009,7 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	}
 	else if (event.which==27) {
 	    event.preventDefault();
-	    if($("#additem option:selected").val()=='19'){
+	    if($("#additem input:radio:checked").val()=='19'){
 		$("#apsubmit").focus();
 	    }
 	    else{
@@ -1099,7 +1101,7 @@ $(document).off("keydown",".tax_rate_all").on("keydown",".tax_rate_all",function
   else if (event.which==27) {
     event.preventDefault();
 
-    if($("#additem option:selected").val()=='19'){
+    if($("#additem input:radio:checked").val()=='19'){
     $("#apsubmit").focus();
     }
     else{
@@ -1136,7 +1138,7 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
 /*$(document).off('keydown', '#igstrate').on('keydown', '#igstrate',function(event) {
   if (event.which==13) {
       event.preventDefault();
-      if($("#additem option:selected").val()=='19'){
+      if($("#additem input:radio:checked").val()=='19'){
     $("#apsubmit").focus();
     }
     else{
@@ -1155,7 +1157,7 @@ $(document).off("click",".tax_del").on("click", ".tax_del", function() {
   }
     else if (event.which == 38) {
 	event.preventDefault();
-	if($("#additem option:selected").val()=='19'){
+	if($("#additem input:radio:checked").val()=='19'){
     $("#hsnno").focus();
 	}
 	else {
@@ -1682,7 +1684,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
 
 
 
-if($("#additem option:selected").val()=='7'){
+if($("#additem input:radio:checked").val()=='7'){
   if ($("#addproddesc").val()=="")
   {
     $('.modal-backdrop').remove();
@@ -1829,7 +1831,7 @@ else{
 
   });
     if(taxes.length == '0' && $("#product_tax_table").length > 0){
-	if($("#additem option:selected").val() == 7){
+	if($("#additem input:radio:checked").val() == 7){
 	    $("#tax-alert").alert();
             $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#tax-alert").hide();
@@ -1856,21 +1858,21 @@ else{
 
   var  addformdata = $("#addprodform").serializeArray();
 
-if ($("#additem option:selected").val() == 7){
-  addformdata.push("gscode",$("#hsnno").val());
+if ($("#additem input:radio:checked").val() == 7){
+  addformdata.push({name: "gscode", value: $("#hsnno").val()});
 }
 else{
-  addformdata.push("gscode",$("#serviceno").val());
+  addformdata.push({name:"gscode", value: $("#serviceno").val()});
 
 }
-  addformdata.push("gsflag",$("#additem option:selected").val());
+  addformdata.push({name:"gsflag", value: $("#additem input:radio:checked").val()});
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
   if ($("#godownflag").val() == 1) {
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
-
+console.log(addformdata)
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1890,7 +1892,7 @@ else{
 
 	//$("#addproduct").click();
 	$('.modal-backdrop').remove();
-	if ($("#additem option:selected").val() == 7) {
+	if ($("#additem input:radio:checked").val() == 7) {
 	    $("#addproduct-success-alert").alert();
 	    $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
 		if(sessionStorage.invflag==0){
@@ -1919,7 +1921,7 @@ else{
     {
 	$('.modal-backdrop').remove();
         
-	if ($("#additem option:selected").val() == 7){
+	if ($("#additem input:radio:checked").val() == 7){
       $("#duplicate-alert").alert();
       $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#duplicate-alert").hide();
