@@ -285,7 +285,7 @@ $(document).ready(function() {
                 url: '/invoice?action=print',
                 type: 'POST',
                 dataType: 'html',
-            data: {"invid":invid},
+            data: {"invid":invid,"pflag":'0'},
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 }

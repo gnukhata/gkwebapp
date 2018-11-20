@@ -27,6 +27,7 @@ Contributors:
 
 $(document).ready(function() {
   oninvoice = 1;
+  console.log("aaaaaaaaaaaa");
     $("title").html("");
     window.scrollTo(0,0);
   /*$("#subject").focus();// Focus is set to subject field on load.
@@ -65,6 +66,14 @@ var beforePrint = function() {
     if ($("#notes").val()!='') {// same as subject
       $("#notespara").html("<strong>Notes :</strong> "+$("#notes").val());
     } else {
+      //       url: '/invoice?action=print',
+      //       type: 'POST',
+      //       dataType: 'html',
+      //   data: {"invid":invid},
+      //       beforeSend: function(xhr) {
+      //           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      //       }
+      //   })
       $("#notespara").html("");
     }
 };
@@ -124,5 +133,80 @@ $.ajax({
     .always(function() {
         console.log("complete");
     });
+
+    $("a[href='#printinvoice2']").click(function() {
+      console.log("ccdssssdsdadsasdadasd");
+      $.ajax(
+      {
+      type: "POST",
+      url: "/invoice?action=print",
+      // global: false,
+      // async: false,
+      datatype: "html",
+      data: {"invid":$("#invid").val(),"pflag":'2'}, 
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        console.log("hhhhhhhhhhhhhh");
+        $("#printinvoice2").html(resp);
+        $("#printinvoice3").html("");
+        $("#printinvoice1").html("");
+      }
+      }
+    );
+    });
+
+    $("a[href='#printinvoice3']").click(function() {
+      console.log("ccdssssdsdadsasdadasd")
+      $.ajax(
+      {
+      type: "POST",
+      url: "/invoice?action=print",
+      // global: false,
+      // async: false,
+      datatype: "html",
+      data: {"invid":$("#invid").val(),"pflag":'3'}, 
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#printinvoice3").html(resp);
+        $("#printinvoice2").html("");
+        $("#printinvoice1").html("");
+      }
+      }
+    );
+    });
+
+    $("a[href='#printinvoice1']").click(function() {
+      console.log("ccdssssdsdadsasdadasd")
+      $.ajax(
+      {
+      type: "POST",
+      url: "/invoice?action=print",
+      // global: false,
+      // async: false,
+      datatype: "html",
+      data: {"invid":$("#invid").val(),"pflag":'1'}, 
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#printinvoice1").html(resp);
+        $("#printinvoice2").html("");
+        $("#printinvoice3").html("");
+        // $("#godown_edit").html("");
+      }
+      }
+    );
+    });
+    $("a[href='#printinvoice1']").click();
 
 });
