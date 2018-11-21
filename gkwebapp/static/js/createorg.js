@@ -125,7 +125,7 @@ $(document).ready(function(){
       }
 
       var s1 = $("#orgcase option:selected").index();
-      var s2 = $("#orgtype option:selected").index();
+      var s2 = $("#orgtype input:radio:checked").index();
       var s3 = $("#finalyears option:selected").index();
       if ((e.which == 38 && sel1 == 1 && s1 == 0) || (e.which == 38 && sel2 == 1 && s2 == 0) ||(e.which == 38 && sel3 == 1 && s3 == 0) || (e.which == 38 && (sel1 == 0 && sel2==0 && sel3==0)))
       {
@@ -481,11 +481,11 @@ $(document).ready(function(){
         }
 
         var orgname = $("#orgname").val().replace(/\s/g, "+");
-        var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
+        var orgtype = $("#orgtype input:radio:checked").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
         var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
         var financialyears = fdate+tdate;
-        var otype = $("#orgtype option:selected").val();
+        var otype = $("#orgtype input:radio:checked").val();
         var fadate = $("#fromday").val()+"-"+$("#frommonth").val()+"-"+$("#fromyear").val();
         var tadate = $("#today").val()+"-"+$("#tomonth").val()+"-"+$("#toyear").val();
     var date1 = "2017-07-01";
@@ -581,7 +581,7 @@ $(document).ready(function(){
 		}
 		$("#addorg").fadeIn();
 		$("footer").hide();
-		var otype = $("#orgtype option:selected").val();
+		var otype = $("#orgtype input:radio:checked").val();
 		if (otype =="Profit Making"){
 		    $(".noprofit").hide();
 		    $("#orgaddr").focus().select();
@@ -641,7 +641,7 @@ $(document).ready(function(){
           }
     
         var orgname = $("#orgname").val().replace(/\s/g, "+");
-        var orgtype = $("#orgtype option:selected").val().replace(/\s/g, "+");
+        var orgtype = $("#orgtype input:radio:checked").val().replace(/\s/g, "+");
         var fdate = $("#fromyear").val()+"-"+$("#frommonth").val()+"-"+$("#fromday").val();
         var tdate = $("#toyear").val()+"-"+$("#tomonth").val()+"-"+$("#today").val();
        
@@ -731,7 +731,7 @@ var gstinstring = ""; // for cocatination of GSTIN.
  // $(".regdate").numeric({negative: false});
   //$(".fcradate").numeric({negative: false});
 
-  if ($("#orgtype").val()=="Not For Profit")
+  if ($("#orgtype input:radio:checked").val()=="Not For Profit")
   {
     $("#orgregno").focus().select();
   }
@@ -1220,7 +1220,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     }
      if (event.which==38)  {
          event.preventDefault();
-	 if ($("#orgtype").val()=="Not For Profit"){
+	 if ($("#orgtype input:radio:checked").val()=="Not For Profit"){
 	     $("#fcraregyear").focus().select();
 	 }else{
 	     $("#orgwebsite").focus();
@@ -1243,7 +1243,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
     $("#orgwebsite").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	if ($("#orgtype").val()=="Not For Profit"){
+	if ($("#orgtype input:radio:checked").val()=="Not For Profit"){
 	    $("#regday").focus().select();
 	}else{
 	    $("#orgemail").focus().select();
@@ -1678,7 +1678,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	  }
       });
 
-      if($("#orgtype").val()=="Not For Profit")
+      if($("#orgtype input:radio:checked").val()=="Not For Profit")
       {
 	  if ($("#regyear").val()!="" || $("#regmonth").val()!="" || $("#regday").val()!="" )
 	  {
@@ -1914,7 +1914,7 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
       form_data.append("logo",file);
     }
     form_data.append("orgname", $("#orgname").val());
-    form_data.append("orgtype", $("#orgtype").val());
+    form_data.append("orgtype", $("#orgtype input:radio:checked").val());
     form_data.append("yearstart", sessionStorage.yyyymmddyear1);
     form_data.append("yearend", sessionStorage.yyyymmddyear2);
     form_data.append("username", $("#username").val());
