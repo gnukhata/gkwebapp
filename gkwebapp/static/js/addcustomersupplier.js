@@ -34,9 +34,9 @@ Contributors:
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
 
-    $("#add_cussup").change(function(event) {
+    $("#add_cussup input:radio").change(function(event) {
 	event.preventDefault();
-	if($("#add_cussup option:selected").val() == '3'){
+	if($("#add_cussup input:radio:checked").val() == '3'){
 	    $("#bankdetails").hide();
 	    $(".custlbl").show();
 	    $(".suplbl").hide();
@@ -46,7 +46,7 @@ $(document).ready(function() {
 	    $(".suplbl").show();
 	}
     });
-    $("#add_cussup").change();
+    $("#add_cussup input:radio").change();
     var gstinstring = "";
 
     // append remove button to all gstin field added.
@@ -55,16 +55,16 @@ $(document).ready(function() {
 	$("#gstintable tbody tr:last td:last").append('<div style="text-align: center;"><a href="#" class="state_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
     }
     
-  $("#add_cussup").focus().select();
-  $("#add_cussup").keydown(function(event) {
+  $("#add_cussup input:radio:checked").focus().select();
+  $("#add_cussup input:radio").keydown(function(event) {
       if (event.which==13) {
 
-	if ($.trim($("#add_cussup").val())=="") {
+	if ($.trim($("#add_cussup input:radio:checked").val())=="") {
             $("#role-blank-alert").alert();
             $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#role-blank-alert").hide();
             });
-            $("#add_cussup").focus();
+            $("#add_cussup input:radio:checked").focus();
             return false;
           }
         event.preventDefault();
@@ -83,7 +83,7 @@ $(document).ready(function() {
   $("#add_cussup_name").keydown(function(event) {
     if (event.which==13||event.which==9) {
     	if ($.trim($("#add_cussup_name").val())=="") {
-	    if($("#add_cussup option:selected").val() == '3'){
+	    if($("#add_cussup input:radio:checked").val() == '3'){
 		$("#custname-blank-alert").alert();
 		$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){    
 		    $("#custname-blank-alert").hide();
@@ -207,7 +207,7 @@ $("#add_state").keydown(function(event) {
   }
   else if (event.which==27) {
       event.preventDefault();
-      if($("#add_cussup").val() == '19'){
+      if($("#add_cussup input:radio:checked").val() == '19'){
 	  $("#checkbnk").focus();
       } else {
 	  $("#cussup_save").focus();
@@ -302,7 +302,7 @@ $("#add_state").keydown(function(event) {
       event.preventDefault();
       gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
       if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val()=="" && $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val()=="" ){
-	  if($("#add_cussup").val() == '19'){
+	  if($("#add_cussup input:radio:checked").val() == '19'){
 	      $("#checkbnk").focus();
 	  } else {
 	      $("#cussup_save").focus();
@@ -364,7 +364,7 @@ $("#add_state").keydown(function(event) {
   }
   else if (event.which==27) {
       event.preventDefault();
-      if($("#add_cussup").val() == '19'){
+      if($("#add_cussup input:radio:checked").val() == '19'){
 	  $("#checkbnk").focus();
       } else {
 	  $("#cussup_save").focus();
@@ -708,7 +708,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		});
 		$("#add_cussup_tan").focus();
 		return false;
-            } else if($("#add_cussup").val() == '19'){
+            } else if($("#add_cussup input:radio:checked").val() == '19'){
 		$("#checkbnk").focus();
 	    } else {
 	      $("#cussup_save").focus();
@@ -738,7 +738,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       //save event for saving the customer/supplier
       event.preventDefault();
 	var allow = 1;
-	var custsupdata=$("#add_cussup option:selected").val(); //select with option either customer or supplier
+	var custsupdata=$("#add_cussup input:radio:checked").val(); //select with option either customer or supplier
     // custsupdata = 3 if customer or 19 if supplier
 	var groupcode = -1;
 	var cuss_pan = $("#add_cussup_pan").val();
@@ -795,7 +795,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	}
     //validations to check if none of the required fields are left blank
 	    
-    if ($.trim($("#add_cussup option:selected").val())=="") {
+    if ($.trim($("#add_cussup input:radio:checked").val())=="") {
       $("#cussup-blank-alert").alert();
       $("#cussup-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#cussup-blank-alert").hide();
@@ -805,7 +805,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
 
     if ($.trim($("#add_cussup_name").val())=="") {
-	if($("#add_cussup option:selected").val() == '3'){
+	if($("#add_cussup input:radio:checked").val() == '3'){
 		$("#custname-blank-alert").alert();
 		$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){    
 		    $("#custname-blank-alert").hide();
@@ -912,8 +912,8 @@ if($("#vatorgstflag").val() == '22'){
 	form_data.append("custtan", custtan);
 	form_data.append("gstin", JSON.stringify(gobj));
 	form_data.append("state", $("#add_state").val());
-	form_data.append("csflag", $("#add_cussup option:selected").val());
-	if ($("#add_cussup option:selected").val() == "19"){
+	form_data.append("csflag", $("#add_cussup input:radio:checked").val());
+	if ($("#add_cussup input:radio:checked").val() == "19"){
 	    var bankdetails = {}; //for bank details
 	if ($.trim($("#accountno").val()) != "" && $.trim($("#bankname").val()) !="" && $.trim($("#ifsc").val()) !="" && $.trim($("#branchname").val()) !=""){
 	    bankdetails["accountno"] = $.trim($("#accountno").val());
@@ -925,7 +925,7 @@ if($("#vatorgstflag").val() == '22'){
 	}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
-	    var csflag = $("#add_cussup option:selected").val();
+	    var csflag = $("#add_cussup input:radio:checked").val();
 	  $.ajax({
 	      url: '/customersuppliers?action=save',
 	      type: 'POST',
@@ -962,7 +962,7 @@ if($("#vatorgstflag").val() == '22'){
 				  if(resp["gkstatus"]==0)
 				  {
 				      $("#customersupplier_create").click();
-				      $("#add_cussup").val(csflag);
+				      $("#add_cussup input:radio:checked").val(csflag);
 				      if (custsupdata == '3') {
 					  $("#cus-success-alert").alert();
 					  $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -996,7 +996,7 @@ if($("#vatorgstflag").val() == '22'){
 		      return false;
 		  }
 		  else {
-		      $("#add_cussup").focus();
+		      $("#add_cussup input:radio:checked").focus();
 		      $("#failure-alert").alert();
 		      $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
 			  $("#failure-alert").hide();
@@ -1011,6 +1011,6 @@ if($("#vatorgstflag").val() == '22'){
 		  console.log("complete");
 	      });
 	}
-	$("#add_cussup").change();
+	$("#add_cussup input:radio:checked").change();
     });
 });

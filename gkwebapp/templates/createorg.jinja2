@@ -113,12 +113,24 @@
                 <br/>
               {% endif %}
 
+						<div class=" row form-inline">
+							<div class="col-sm-3">
+							 <label for="orgtype">{% trans %}Company Type{% endtrans %} : </label>
+							</div>
+							<div id="orgtype" data-validation-required-message="Please select Company Type">
+									<div class="radio">
+										<label><input type="radio" name="selector" value="Profit Making" checked> Profit Making</label>
+									</div>
+									<div class="radio" style="margin-left:15px" >
+										<label><input type="radio" name="selector" value="Not For Profit"> Not For Profit</label>
+									</div>
+							</div>
+						</div>	
 
-              <label for="orgtype">{% trans %}Company Type{% endtrans %} : </label>
-              <select name="orgtype" class="form-control orgfields" id="orgtype" data-validation-required-message="Please select Company Type">
+							<!-- <select name="orgtype" class="form-control orgfields" id="orgtype" data-validation-required-message="Please select Company Type">
                 <option value="Profit Making">{% trans %}Profit Making{% endtrans %}</option>
                 <option value="Not For Profit">{% trans %}Not For Profit{% endtrans %}</option>
-              </select>
+              </select> -->
 
               <br/>
 
