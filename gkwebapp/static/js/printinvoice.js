@@ -135,13 +135,12 @@ $.ajax({
     });
 
     $("a[href='#printinvoice2']").click(function() {
-      console.log("ccdssssdsdadsasdadasd");
+   
       $.ajax(
       {
       type: "POST",
       url: "/invoice?action=print",
-      // global: false,
-      // async: false,
+  
       datatype: "html",
       data: {"invid":$("#invid").val(),"pflag":'2'}, 
       beforeSend: function(xhr)
@@ -150,23 +149,23 @@ $.ajax({
         },
       success: function(resp)
       {
-        console.log("hhhhhhhhhhhhhh");
+       
         $("#printinvoice2").html(resp);
         $("#printinvoice3").html("");
         $("#printinvoice1").html("");
+        $("#printinvoice4").html("");
       }
       }
     );
     });
 
     $("a[href='#printinvoice3']").click(function() {
-      console.log("ccdssssdsdadsasdadasd")
+      
       $.ajax(
       {
       type: "POST",
       url: "/invoice?action=print",
-      // global: false,
-      // async: false,
+
       datatype: "html",
       data: {"invid":$("#invid").val(),"pflag":'3'}, 
       beforeSend: function(xhr)
@@ -178,19 +177,18 @@ $.ajax({
         $("#printinvoice3").html(resp);
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
+        $("#printinvoice4").html("");
       }
       }
     );
     });
 
     $("a[href='#printinvoice1']").click(function() {
-      console.log("ccdssssdsdadsasdadasd")
+     
       $.ajax(
       {
       type: "POST",
       url: "/invoice?action=print",
-      // global: false,
-      // async: false,
       datatype: "html",
       data: {"invid":$("#invid").val(),"pflag":'1'}, 
       beforeSend: function(xhr)
@@ -202,7 +200,31 @@ $.ajax({
         $("#printinvoice1").html(resp);
         $("#printinvoice2").html("");
         $("#printinvoice3").html("");
-        // $("#godown_edit").html("");
+        $("#printinvoice4").html("");
+      }
+      }
+    );
+    });
+
+    $("a[href='#printinvoice4']").click(function() {
+      
+      $.ajax(
+      {
+      type: "POST",
+      url: "/invoice?action=print",
+   
+      datatype: "html",
+      data: {"invid":$("#invid").val(),"pflag":'4'}, 
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#printinvoice4").html(resp);
+        $("#printinvoice2").html("");
+        $("#printinvoice1").html("");
+        $("#printinvoice3").html("");
       }
       }
     );
