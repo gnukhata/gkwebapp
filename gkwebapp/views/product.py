@@ -183,7 +183,7 @@ def saveproduct(request):
     if request.params.has_key("gscode"):
         proddetails["gscode"]=request.params["gscode"]
     if request.params.has_key("gsflag"):
-        proddetails["gsflag"]=request.params["gsflag"
+        proddetails["gsflag"]=request.params["gsflag"]
     else:
         proddetails["gsflag"] = 7
 
