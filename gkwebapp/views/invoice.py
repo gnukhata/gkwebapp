@@ -288,11 +288,9 @@ def Invoiceprint(request):
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
     statecode = invoicedata.json()["gkresult"]["sourcestatecode"]
     org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
-    print("______________________")
-    print((int(request.params["invid"])))
-    print("______________________")
+ 
     if(request.params["pflag"] == '2'):
-        print("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+     
         return render_to_response("gkwebapp:templates/printinvoice2.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
     elif(request.params["pflag"] == '3'):
         return render_to_response("gkwebapp:templates/printinvoice3.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
