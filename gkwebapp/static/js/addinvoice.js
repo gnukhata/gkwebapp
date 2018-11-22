@@ -3474,6 +3474,7 @@ if (event.which == 13) {
                 console.log("complete");
             });
     });
+    //Click event that opens a modal to add Product from Invoice.
     $("#invoice_addproduct").click(function(event){
 	var call;
       if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
@@ -3508,5 +3509,48 @@ if (event.which == 13) {
       console.log("complete");
     });
 
+        $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
+            $('#additem').focus();
+          });
+        $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
+            /*$("#invoice_customer").prop("disabled", false);
+            var text1 = $('#selectedcustsup').val();
+            if (text1 == '') {
+              $('#invoice_customer').focus();
+              return false;
+            }
+            var urlcustsup = "/customersuppliers?action=getallsups";
+            if ($("#status").val() == '15') {
+                urlcustsup = "/customersuppliers?action=getallcusts";
+            }
+	    else {
+                urlcustsup = "/customersuppliers?action=getallsups";
+	      }
+            $.ajax({
+              type: "POST",
+              url: urlcustsup,
+              global: false,
+              async: false,
+              datatype: "text/json",
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader("gktoken", sessionStorage.gktoken);
+              }
+            })
+             .done(function(resp) {
+               var custs = resp["customers"];
+               $("#invoice_customer").empty();
+
+               for (i in custs) {
+                 $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
+               }
+		 $("#invoice_customer option").filter(function() {
+                     return this.text == text1;
+                 }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
+		 $("#invoice_customer").change();
+             });
+            $("#selectedcustsup").val("");
+              $("#invoice_customer").focus();
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');*/
+          });
   });
 });
