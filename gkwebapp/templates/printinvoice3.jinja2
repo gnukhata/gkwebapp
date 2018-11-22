@@ -135,7 +135,7 @@
 
 	<div class="row">
 	<div class="col-xs-9 nopaddng" style="width:100%;width:100%;border-bottom: 0.3px solid lightgrey;padding-bottom: 1%;">
-	<div style="word-wrap: break-word;min-width: 40%;max-width: 40%;float:left;font-size:135%;padding-left: 2%;display: block;">
+	<div style="word-wrap: break-word;min-width: 50%;max-width: 50%;float:left;font-size:135%;padding-left: 2%;display: block;">
 	<h5><b>DETAILS OF RECEIVER | BILLED TO</b></h5>  
 		    {% if gkresult["inoutflag"] == 9 %}
 		      {% trans %}<b>Supplier</b>{% endtrans %} :
@@ -175,7 +175,7 @@
 
 	</div>
 
-	<div style="word-wrap: break-word;min-width: 40%;max-width: 40%;float:left;font-size:135%;padding-left: 7%;display: block;">
+	<div style="word-wrap: break-word;min-width: 50%;max-width: 50%;float:left;font-size:135%;padding-left: 7%;display: block;">
 	<h5><b>DETAILS OF CONSIGNEE | SHIPPED TO</b></h5>
 					{% trans %}<b>Name</b>{% endtrans %} : 
 			{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}<br>
