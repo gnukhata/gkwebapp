@@ -3513,19 +3513,12 @@ if (event.which == 13) {
             $('#additem').focus();
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
-            /*$("#invoice_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
-              $('#invoice_customer').focus();
+                $('.product_name_gst:visible, .product_name_vat:visible').first().focus();
+                $('html,body').animate({scrollTop: ($("#gst").offset().top)},'fast');
               return false;
             }
-            var urlcustsup = "/customersuppliers?action=getallsups";
-            if ($("#status").val() == '15') {
-                urlcustsup = "/customersuppliers?action=getallcusts";
-            }
-	    else {
-                urlcustsup = "/customersuppliers?action=getallsups";
-	      }
             $.ajax({
               type: "POST",
               url: urlcustsup,
@@ -3548,9 +3541,9 @@ if (event.which == 13) {
                  }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
 		 $("#invoice_customer").change();
              });
-            $("#selectedcustsup").val("");
+            $("#selectedproductid").val("");
               $("#invoice_customer").focus();
-	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');*/
+	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           });
   });
 });
