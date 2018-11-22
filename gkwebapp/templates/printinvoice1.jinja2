@@ -404,7 +404,7 @@
       <div class="row">
 			<table class="col-sm-12 nopadding" >
 			<tr>
-			<td style="width:30%">
+			<td style="width:50%">
 					<table class="table table-bordered table-condensed" >
 	      <tbody>
 		<tr>
@@ -448,13 +448,13 @@
 		<tbody>
 		  <tr>
 		    <td>
-		      <label for="accountno">{% trans %}Account No.{% endtrans %} :</label>
+		      <label for="accountno">{% trans %}Account No.{% endtrans %} </label>
 		    </td>
 		    <td>
 		      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
 		    </td>
 		    <td>
-		      <label for="bankname">{% trans %}Bank Name{% endtrans %} :</label>
+		      <label for="bankname">{% trans %}Bank Name{% endtrans %} </label>
 		    </td>
 		    <td>
 		      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
@@ -462,13 +462,13 @@
 		  </tr>
 		  <tr>
 		    <td>
-		      <label for="branch">{% trans %}Branch Name{% endtrans %} :</label>
+		      <label for="branch">{% trans %}Branch Name{% endtrans %} </label>
 		    </td>
 		    <td>
 		      {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
 		    </td>
 		    <td>
-		      <label for="ifsc">{% trans %}IFSC code{% endtrans %} :</label>
+		      <label for="ifsc">{% trans %}IFSC code{% endtrans %} </label>
 		    </td>
 		    <td>
 		      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
@@ -486,7 +486,7 @@
 	  {% endif %}
 		
 			</td>
-			<td style="width:30%;">
+			<td style="width:10%;">
 			</td>
 			<td style="width:90%;">
  

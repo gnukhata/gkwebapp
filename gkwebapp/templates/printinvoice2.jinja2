@@ -110,17 +110,17 @@
 	<div style="float:right;font-size:150%;padding-right:1%">
 	<h5> <b>DETAILS Of INVOICE </b></h5>
 	{% if gkresult["dcno"] %}
-		  {% trans %}Deli. Note No.{% endtrans %} : 
+		  {% trans %}<b>Deli. Note No.</b>{% endtrans %} : 
 		  {{gkresult["dcno"]}}
 	{% endif %}
-			{% trans %}Invoice No.{% endtrans %} : 
+			{% trans %}<b>Invoice No.</b>{% endtrans %} : 
 		  {{ gkresult["invoiceno"] }}<br>
-			{% trans %}Invoice Date{% endtrans %} : 
+			{% trans %}<b>Invoice Date</b>{% endtrans %} : 
 		  {{ gkresult["invoicedate"] }}<br>
 	{% if gkresult["inoutflag"] == 9 %}
-		  {% trans %}State of Destination{% endtrans %} :
+		  {% trans %}<b>State of Destination</b>{% endtrans %} :
 	{% else %}
-		  {% trans %}State of Origin{% endtrans %} :
+		  {% trans %}<b>State of Origin</b>{% endtrans %} :
 	{% endif %}
 		  
 	{% if gkresult["inoutflag"] == 15 %}
@@ -130,7 +130,7 @@
 			{{ gkresult["destinationstate"] }}
 	{% endif %}<br>
 
-			{% trans %}State Code{% endtrans %} : 
+			{% trans %}<b>State Code</b>{% endtrans %} : 
 	{% if gkresult["inoutflag"] == 15 %}
 			{{ '%02d' | format(gkresult["sourcestatecode"] | int) }}
 	{% endif %}
