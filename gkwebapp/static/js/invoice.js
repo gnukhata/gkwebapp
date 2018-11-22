@@ -103,7 +103,7 @@ $(document).ready(function() {
     }
     );
   });
-    $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
+  $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
     $.ajax(
 	{
 	    type: "POST",
@@ -111,8 +111,8 @@ $(document).ready(function() {
 	    global: false,
 	    async: false,
 	    data: {"inputdate": wholedate},
-    datatype: "text/html",
-    beforeSend: function(xhr)
+      datatype: "text/html",
+      beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
@@ -120,6 +120,27 @@ $(document).ready(function() {
     {
 	$("#invoice_div").html(resp);
 	return false;
+    }
+    }
+    );
+    });
+  $("#invoice_view_list").click(function(event) {// calls view invoice page.
+    $.ajax(
+  {
+      type: "POST",
+      url: "/invoice?action=invoiceviewlist", 
+      global: false,
+      async: false,
+      data: {"inputdate": wholedate},
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+  $("#invoice_div").html(resp);
+  return false;
     }
     }
     );
