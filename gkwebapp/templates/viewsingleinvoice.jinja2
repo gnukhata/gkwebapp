@@ -2,7 +2,7 @@
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
-    <div class="col-md-4">
+    <div class="col-md-4" style="word-wrap: break-word;min-width: 160px;max-width: 30%;">
       {% if gkresult["inoutflag"] == 9 %}
 	<h4>Details of Purchase Invoice: </h4>
       {% else %}
@@ -58,7 +58,7 @@
       {% endif %}
     </div>
 
-    <div class="col-md-4 borderdiv">
+    <div class="col-md-4 borderdiv" style="word-wrap: break-word;min-width: 160px;max-width: 30%;">
       {% if gkresult["inoutflag"] == 9 %}
 	<h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
       {% else %}
@@ -119,7 +119,7 @@
 	{{ gkresult["custSupDetails"]["custaddr"] }}
       </div>
     </div>
-    <div class="col-md-4 borderdiv">
+    <div class="col-md-4 borderdiv" style="word-wrap: break-word;min-width: 160px;max-width: 30%;">
       <h4>Details of Consignee | Shipped to: </h4>
       <div class="form-inline form-group col-sm-12 nopadding">
 	<label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
