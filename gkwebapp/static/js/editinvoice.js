@@ -3521,7 +3521,7 @@ if (event.which == 13) {
                 url: '/invoice?action=print',
                 type: 'POST',
                 dataType: 'html',
-            data: {"invid":$("#invselect option:selected").val()},
+            data: {"invid":$("#invselect option:selected").val(),"pflag":'0'},
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 }
