@@ -121,7 +121,7 @@
 		
 		<tbody>
 			<tr style="width:100% !important">
-			<td style="word-wrap: break-word;min-width: 120px;max-width: 120px;">
+			<td style="word-wrap: break-word;min-width: 30%;max-width: 30%;">
 					{% if gkresult["dcno"] %}
 		    	<label class="normal" for="instrumentno">{% trans %}Deli. Note No.{% endtrans %} : </label>
 		    	{{gkresult["dcno"]}}
@@ -150,7 +150,7 @@
 					{{ '%02d' | format(gkresult["taxstatecode"] | int) }}{% endif %}
 			</td>
 
-			<td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+			<td style="word-wrap: break-word;min-width: 35%;max-width: 35%;">
 			
 				<label for="invoice_customer">
 		    {% if gkresult["inoutflag"] == 9 %}{% trans %}Supplier{% endtrans %} :
@@ -196,7 +196,7 @@
 				
 			</td>
 
-			<td style="word-wrap: break-word;min-width: 160px;max-width: 160px;">
+			<td style="word-wrap: break-word;min-width: 35%;max-width: 35%;">
 				<label for="consignee" class=" col-form-label col-form-label-sm" id="consigneelbl">{% trans %}Name{% endtrans %} : </label>
 		  	{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}
 				<br>
