@@ -36,11 +36,34 @@ $(document).ready(function() {
     window.print();
   });
 
-    $("#invback").click(function(event) {
-	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-	$("#invoice").click();
-	return false;
-  });
+  //   $("#invback").click(function(event) {
+	// $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	// $("#invoice").click();
+	// return false;
+  // });
+
+  $("#invback").click(function(event){
+    
+    $.ajax(
+      {
+        type: "POST",
+        url: "/invoice?action=showinv",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: {"invid":$("#invid").val()},
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      })
+        .done(function(resp)
+        {
+          $("#viewsingleinvoice").html(resp);
+        }
+      );
+});
+// ////////////////////
   (function() {
 var beforePrint = function() {
 // catch beforeprint event just before printing takes place and remove the organisation name from print.
