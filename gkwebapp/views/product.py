@@ -219,7 +219,7 @@ def saveproduct(request):
                     taxdata["state"]=tax["state"]
 
                 taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-    return {"gkstatus": result.json()["gkstatus"]}
+    return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
 
 
 @view_config(route_name="product",request_param="type=edit", renderer="json")

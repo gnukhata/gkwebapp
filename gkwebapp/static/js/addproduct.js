@@ -1872,7 +1872,6 @@ else{
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
-console.log(addformdata)
   $.ajax({
     url: '/product?type=save',
     type: 'POST',
@@ -1887,15 +1886,12 @@ console.log(addformdata)
     }
   })
 	.done(function(resp) {
-	    
     if (resp["gkstatus"] ==0) {
-
-	//$("#addproduct").click();
-	$('.modal-backdrop').remove();
 	if ($("#additem input:radio:checked").val() == 7) {
 	    $("#addproduct-success-alert").alert();
 	    $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
 		if (parseInt($("#extrabuttons").val()) == 1) {
+                    $('.modal-backdrop').remove();
                     if(sessionStorage.invflag==0){
 		        $("#product").click();
 		    }
@@ -1904,8 +1900,9 @@ console.log(addformdata)
 		    }
                 }
                 else{
-                    $('.modal-backdrop').remove();
+                    $("#selectedproductid").val(resp.gkresult);
                     $("#addproductmodal").modal("hide");
+                    $('.modal-backdrop').remove();
                 }
 		$("#addproduct-success-alert").hide();
 	    });
