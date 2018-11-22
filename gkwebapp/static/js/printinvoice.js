@@ -27,16 +27,10 @@ Contributors:
 
 $(document).ready(function() {
   oninvoice = 1;
-  console.log("aaaaaaaaaaaa");
+  
     $("title").html("");
     window.scrollTo(0,0);
-  /*$("#subject").focus();// Focus is set to subject field on load.
-
-  $("#subject").keydown(function(event) {
-    if (event.which==13) {
-      $("#notes").focus().select();
-    }
-  });*/
+ 
   $("#notes").focus().select();
   $("#invprint").click(function(event) {
     window.print();
@@ -55,25 +49,12 @@ var beforePrint = function() {
     $("#printorgnameyear").removeClass('visible-print').addClass('hidden-print');
   }
   $("#notes").hide();
-    /*$("#subject").hide();
 
-    if ($("#subject").val()!='') {// if subject is not blank then print it in a label.
-      $("#sublabel").html("Subject : "+$("#subject").val());
-    } else {
-      $("#sublabel").html("");
-    }*/
 
     if ($("#notes").val()!='') {// same as subject
       $("#notespara").html("<strong>Notes :</strong> "+$("#notes").val());
     } else {
-      //       url: '/invoice?action=print',
-      //       type: 'POST',
-      //       dataType: 'html',
-      //   data: {"invid":invid},
-      //       beforeSend: function(xhr) {
-      //           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      //       }
-      //   })
+
       $("#notespara").html("");
     }
 };
@@ -84,7 +65,7 @@ var afterPrint = function() {
     $("#printyears").removeClass('hidden-print');
     $("#sublabel").html("Subject :");
     $("#notespara").html("Notes : ");
-    //$("#subject").show();
+
     $("#notes").show();
 };
 
