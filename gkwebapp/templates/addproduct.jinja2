@@ -15,7 +15,7 @@
     <div class=' addprod panel'>
       <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
 
-      <div class="panel-body">
+      <div class="panel-body" id="addproductpanelboody">
           <div class="col-md-12">
             <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
@@ -482,9 +482,9 @@
 	</form>
 	<div class="btn-group-sm panel-footer">
 	  <div class="container-fluid">
-            <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save" title="Please enter aleast two digit positive number" ><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
-            <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
             {% if extrabuttons %}
+              <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save" title="Please enter aleast two digit positive number" ><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+            <button id="apreset" class="btn btn-warning btn-sm common" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 	    {% if userrole|int != 3 %}
               <button id="addgodown" class="btn btn-info btn-sm productclass" accesskey="a" style="display:none"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}<u>A</u>dd Godown{% endtrans %}</button>
 	      
@@ -492,6 +492,9 @@
 	    {%if userrole|int==3%}
               <button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
 	    {% endif %}
+            {% else %}
+            <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save" title="Please enter aleast two digit positive number" ><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+            <button id="apreset" class="btn btn-warning btn-sm common"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
             {% endif %}
 	  </div> 
 	  

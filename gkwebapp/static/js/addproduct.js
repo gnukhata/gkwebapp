@@ -160,7 +160,7 @@ $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
 
 });
 
-$(document).off('keyup').on('keyup',function(event)
+$("#addproductpanelboody").off('keyup').on('keyup',function(event)
 {
   /* Act on the event */
   if (event.which == 45)

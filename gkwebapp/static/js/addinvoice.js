@@ -1157,13 +1157,17 @@ $(document).ready(function() {
 	}
     });
     var modalpresent = 0;
-    $(document).off("keyup").on("keyup", function(event) {
-      if (event.which == 45) {
-	  event.preventDefault();
-	  if (modalpresent == 0) {
+    var productmodal = 0;
+    $("#invaddpanel").off("keyup").on("keyup", function(event) {
+        if (event.which == 45) {
+	    event.preventDefault();
+	  if (modalpresent == 0 && productmodal == 0) {
 	      $("#invoice_save").click();
 	  }
-	  else {
+          else if (productmodal != 0) {
+              $("#apsubmit").click();
+          }
+	  else if (modalpresent != 0) {
 	      $("#cussup_save").click();
 	  }
       return false;
@@ -3510,9 +3514,11 @@ if (event.which == 13) {
     });
 
         $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
+            productmodal = 1;
             $('#additem').focus();
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
+            productmodal = 0;
             let productcode = $('#selectedproductid').val();
             if (productcode == '') {
                 $('.product_name_gst:visible, .product_name_vat:visible').first().focus();
