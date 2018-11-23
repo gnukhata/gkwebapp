@@ -42,6 +42,7 @@ $(document).ready(function() {
       $("#b2cs-container").hide();
       $("#cdnr-container").hide();
       $("#cdnur-container").hide();
+      $("#hsn-container").hide();  
     }
     if ($(this).val() == "b2cs") {
       $("#b2b-container").hide();
@@ -49,22 +50,34 @@ $(document).ready(function() {
       $("#b2cs-container").show();
       $("#cdnr-container").hide();
       $("#cdnur-container").hide();
+      $("#hsn-container").hide();  
     }
     if ($(this).val() == "cdnr") {
       $("#b2b-container").hide();
       $("#b2cl-container").hide();
       $("#b2cs-container").hide();
       $("#cdnr-container").show();
+      $("#hsn-container").hide();
       $("#cdnur-container").hide();
     }
     if ($(this).val() == "cdnur") {
       $("#b2b-container").hide();
       $("#b2cl-container").hide();
       $("#b2cs-container").hide();
-      $("#cdnr-container").hide();
+        $("#cdnr-container").hide();
+        $("#hsn-container").hide();
       $("#cdnur-container").show();
     }
-  })
+
+    if ($(this).val() == "hsn") {
+      $("#b2b-container").hide();
+      $("#b2cl-container").hide();
+      $("#b2cs-container").hide();
+      $("#cdnr-container").hide();
+        $("#cdnur-container").hide();
+        $("#hsn-container").show();
+    }
+  });
 
   $('#spreadsheet').click(function (event) {
     event.preventDefault();
