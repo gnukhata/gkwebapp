@@ -9,7 +9,7 @@
 	 margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
      }
      td {
-	 font-size: 70%;
+	 font-size: 65%;
 	 padding: 2px !important;
 	 margin:  0 !important;
      }
@@ -17,7 +17,7 @@
 	 background-image: none;
      }
      th {
-	 font-size: 80%;
+	 font-size: 75%;
 	 padding: 3px !important;
 	 margin:  0 !important;
      }
@@ -210,7 +210,7 @@
 	 <b style="font-size:130%"> VAT </b>
 	</div>
 	<div class="row">
-	  <br>
+	  
 	  <table class=" table table-condensed table-bordered">
 	    <thead class="bg-primary">
 	      <tr>
@@ -288,20 +288,20 @@
       {% else %}
 	<div class="row">
 	  <label for="tax applicable" name="taxflag"><b style="font-size:130%">{% trans %}Tax Applicable{% endtrans %} :</b></label>
-	 <b style="font-size:130%"> GST </b>
+	 <b style="font-size:130%"> GST</b>
 	</div>
 	
 	<div class="row">
 	  <table class="table table-condensed table-bordered">
 	    <thead class="bg-primary">
 	      <tr>
-		<th rowspan="2" class="text-center"style="width:15%"><small>{% trans %}Product{% endtrans %}</small></th>
+		<th rowspan="2" class="text-center"><small>{% trans %}Product{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}HSN/ACS {% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Billed Qty{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Free Qty{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Rate{% endtrans %}</small></th>
-		<th rowspan="2" class="text-center"style="width:10%"><small>{% trans %}Discount Amount{% endtrans %}</small></th>
-		<th rowspan="2" class="text-center"style="width:10%"><small>{% trans %}Taxable Value {% endtrans %}</small></th>
+		<th rowspan="2" class="text-center"><small>{% trans %}Discount Amount{% endtrans %}</small></th>
+		<th rowspan="2" class="text-center"><small>{% trans %}Taxable Value {% endtrans %}</small></th>
 		{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="text-center"><small>{% trans %}CGST{% endtrans %}</small></th>{% endif %}
 		{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="text-center"><small>{% trans %}SGST/UTGST{% endtrans %}</small></th>{% endif %}
 		{% if gkresult["taxname"]=='IGST' %}<th colspan="2" class="text-center"><small>{% trans %}IGST{% endtrans %}</small></th>{% endif %}
@@ -377,6 +377,7 @@
 	  </table>
 	</div>
       {% endif %}
+
 
       <div class="row">
 			<table class="col-sm-12 nopadding" >
