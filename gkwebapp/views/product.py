@@ -153,6 +153,7 @@ def saveproduct(request):
     godowns={}
     goid=0
     goopeningstock=0.00
+    savedproductcode = ""
     for prd in request.params:
         if prd=="type":
             continue
@@ -205,6 +206,7 @@ def saveproduct(request):
     result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
 
     if result.json()["gkstatus"] == 0:
+        savedproductcode = result.json()["gkresult"]
         if godownflag == True:
             gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
         else:
@@ -219,7 +221,7 @@ def saveproduct(request):
                     taxdata["state"]=tax["state"]
 
                 taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-    return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
+    return {"gkstatus": result.json()["gkstatus"], "gkresult":savedproductcode}
 
 
 @view_config(route_name="product",request_param="type=edit", renderer="json")
