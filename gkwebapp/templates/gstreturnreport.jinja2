@@ -87,6 +87,7 @@
             <option value="b2cs">{% trans %}B2CS{% endtrans %}</option>
             <option value="cdnr">{% trans %}CDNR{% endtrans %}</option>
             <option value="cdnur">{% trans %}CDNUR{% endtrans %}</option>
+            <option value="hsn">{% trans %}HSN{% endtrans %}</option>
           </select>
         </div>
         <span class="pull-right" style="padding-right:15px">
@@ -540,6 +541,89 @@
         </tbody>
       </table>
     </div>
+
+    <div id="hsn-container" hidden>
+      <table class="table shadow table-bordered">
+        <thead class="bg-primary">
+          <tr>
+            <th class="calign">
+              {% trans %}HSN{% endtrans %}
+            </th>
+            <th class="calign">
+              {% trans %}Description{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}UQC{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Total Quantity{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Total Value{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}Taxable Value{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}Integrated Tax Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %}Central Tax Amount{% endtrans %}
+            </th>
+
+            <th class="calign" >
+              {% trans %}State/UT Tax Amount{% endtrans %}
+            </th>
+            <th class="calign" >
+              {% trans %} Cess Amount{% endtrans %}
+            </th>
+            
+          </tr>
+        </thead>
+        <tbody> 
+          {% for data in hsn %}
+            <tr>
+              <td class="calign">
+                {{ data["hsn"] }}
+              </td>
+
+              <td class="calign" >
+                {{ data["prodctname"] }}
+              </td>
+              <td class="calign">
+                {{ data["qty"] }}
+              </td>
+              <td class="calign">
+                {{ data["uqc"] }}
+              </td>
+              <td class="ralign" >
+                {{ data["totalvalue"] }}
+              </td>
+
+              <td class="ralign" >
+                {{ data["taxableamt"] }}
+              </td>
+              <td class="ralign" >
+                {{ data["IGSTamt"] }}
+              </td>
+              <td class="ralign" >
+                {{ data["SGSTamt"] }}
+              </td>
+
+              <td class="ralign">
+                {{ data["SGSTamt"] }}
+              </td>
+              <td class="ralign" >
+                {{ data["CESSamt"] }}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+
 
     <span class="hidden-print" style="margin:auto; display:table;">
       <button class="btn btn-sm btn-info" type="button"  id="spreadsheet" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
