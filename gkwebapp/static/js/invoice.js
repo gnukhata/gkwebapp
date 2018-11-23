@@ -125,8 +125,7 @@ $(document).ready(function() {
     );
     });
   $("#invoice_view_list").click(function(event) {// calls view invoice page.
-    $.ajax(
-  {
+    $.ajax({
       type: "POST",
       url: "/invoice?action=invoiceviewlist", 
       global: false,
@@ -137,14 +136,16 @@ $(document).ready(function() {
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
-    success: function(resp)
-    {
+    success: function(resp){
   $("#invoice_div").html(resp);
+  $("#invload").attr("id", "invload123");
+  $("#printload").attr("id", "printload123");
+  $("#listdiv").attr("id", "listdiv123");
+  $("#viewinvdiv").attr("id", "viewinvdiv123");
   return false;
-    }
-    }
-    );
+  }
     });
+  });
     if (sessionStorage.salepurchase == "15") {
 	$("#invoice_create").click();// loads record purchase invoice page by default.
 	return false;
