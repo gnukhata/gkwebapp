@@ -1407,7 +1407,23 @@ def fill_data(result, wb):
     set_number_format(wb["cdnur"], ["H5", "J5", "K5", "L5"], "0.00")
     set_number_format(wb["cdnur"], ["C5", "F5"], "dd-mmm-yy")
 
+    for entry in result["gkdata"]["hsn1"]:
+        print(entry.keys())
+        
+        row = (
+             entry["prodctname"],
+            entry["uqc"],
+            float_or_none(entry["qty"]),float_or_none(entry["totalvalue"]),
+            float_or_none(entry["taxableamt"]), float_or_none(entry["IGSTamt"]),
+            float_or_none(entry["SGSTamt"]), float_or_none(entry["CESSamt"])
+        )
 
+        wb["hsn"].append(row)
+
+    set_number_format(wb["hsn"], ["H5", "J5", "K5", "L5"], "0.00")
+    set_number_format(wb["hsn"], ["C5", "F5"], "dd-mmm-yy")
+
+        
 def gst_r1_template(result):
     wb = openpyxl.Workbook()
     wb.active.title = "Help Instruction"

@@ -51,8 +51,8 @@ def gstr1(request):
                           headers=header,
                           params=params)
     result1 = results.json()
-    l = len(result1["gkdata"]["hsn"]) -1
-    del result1["gkdata"]["hsn"][l]
+    l = len(result1["gkdata"]["hsn1"]) -1
+    del result1["gkdata"]["hsn1"][l]
     result1["gkdata"]["report_type"] = "r1"
     result1["gkdata"]["startdate"] = params["start"]
     result1["gkdata"]["enddate"] = params["end"]
