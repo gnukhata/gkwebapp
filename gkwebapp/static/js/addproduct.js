@@ -42,7 +42,6 @@ $(".serviceclass").hide();
     $(".common").hide();
     $(".tax_rate_gst").hide();
   var godownflag = 0;
-    $('.modal-backdrop').remove();
     var taxfieldhtml = $("#product_tax_table tbody").html();
     var stateshtml = $("#product_tax_table tbody tr:first td:eq(1) select").html();
     var delhtml = '<a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>';
@@ -1681,13 +1680,16 @@ $("#addgodown").click(function() {
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
   /* Act on the event */
+<<<<<<< HEAD
 
 
 
 if($("#additem input:radio:checked").val()=='7'){
+=======
+if($("#additem option:selected").val()=='7'){
+>>>>>>> Removed line that removes modal backdrop from add product
   if ($("#addproddesc").val()=="")
   {
-    $('.modal-backdrop').remove();
     $("#product-name-blank-alert").alert();
     $("#product-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#product-name-blank-alert").hide();
@@ -1716,7 +1718,6 @@ if($("#additem input:radio:checked").val()=='7'){
     
   if ($("#adduom option:selected").val()=="")
   {
-    $('.modal-backdrop').remove();
     $("#uomblank-alert").alert();
     $("#uomblank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#uomblank-alert").hide();
@@ -1730,7 +1731,6 @@ if($("#additem input:radio:checked").val()=='7'){
 else{
   if ($("#addproddesc").val()=="")
   {
-    $('.modal-backdrop').remove();
     $("#service-name-blank-alert").alert();
     $("#service-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#service-name-blank-alert").hide();
@@ -1752,7 +1752,6 @@ else{
 
     if ($("#openingstock").val()=="")
   {
-    $('.modal-backdrop').remove();
     $("#openingstock").val("0.00");
     return false;
   }
