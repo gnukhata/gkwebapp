@@ -3513,37 +3513,42 @@ if (event.which == 13) {
             $('#additem').focus();
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
-            var text1 = $('#selectedcustsup').val();
-            if (text1 == '') {
+            let productcode = $('#selectedproductid').val();
+            if (productcode == '') {
                 $('.product_name_gst:visible, .product_name_vat:visible').first().focus();
-                $('html,body').animate({scrollTop: ($("#gst").offset().top)},'fast');
+                $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
               return false;
             }
+            let vatgst = 'vat';
+            if ($(".taxapplicable").val() == 7) {
+                vatgst = 'gst';
+            }
+            let curindex = $('#invoice_product_table_' + vatgst + ' tbody tr:last').index();
             $.ajax({
-              type: "POST",
-              url: urlcustsup,
-              global: false,
-              async: false,
-              datatype: "text/json",
-              beforeSend: function(xhr) {
-                xhr.setRequestHeader("gktoken", sessionStorage.gktoken);
-              }
-            })
-             .done(function(resp) {
-               var custs = resp["customers"];
-               $("#invoice_customer").empty();
-
-               for (i in custs) {
-                 $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
-               }
-		 $("#invoice_customer option").filter(function() {
-                     return this.text == text1;
-                 }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.
-		 $("#invoice_customer").change();
-             });
+		url: '/invoice?action=getproduct',
+		type: 'POST',
+		dataType: 'json',
+		async: false,
+		data: { "productcode": productcode, "custid":$("#invoice_customer").val(), "inoutflag":$("#status").val() },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    }).done(function(resp) {
+		console.log("success");
+		if (resp["gkstatus"] == 0) {
+		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').append('<option value=' + productcode + ' gsflag="' + resp["gsflag"] +'">' + resp["productdesc"] + '<option>'); //Append a product
+                    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').searchify();
+                    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').val(productcode).change();
+                    $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
+                    $('.product_name_gst:visible, .product_name_vat:visible').last().focus();
+		}
+		
+	    }).fail(function() {
+                console.log("error");
+            }).always(function() {
+                console.log("complete");
+            });
             $("#selectedproductid").val("");
-              $("#invoice_customer").focus();
-	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-          });
+        });
   });
 });

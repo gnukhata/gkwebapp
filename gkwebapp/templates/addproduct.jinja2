@@ -16,7 +16,6 @@
       <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
 
       <div class="panel-body">
-        {% if not extrabuttons %}
           <div class="col-md-12">
             <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
@@ -48,7 +47,7 @@
 
               {% trans %}This unit exists. Please select it from the list.{% endtrans %}
             </div>
-            <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+            <div class="alert alert-danger" id="duplicateproducterror-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Duplicate Product.{% endtrans %}
             </div>
@@ -65,7 +64,7 @@
 
               {% trans %}Please select Item!{% endtrans %}
             </div>
-            <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
+            <div class="alert alert-danger" id="product-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Please enter product name!{% endtrans %}
             </div>
@@ -79,7 +78,7 @@
 
               {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
             </div>
-            <div class="alert alert-danger" id="service-blank-alert"  aria-live="rude" role="alert" hidden>
+            <div class="alert alert-danger" id="service-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Service name cannot be blank.{% endtrans %}
             </div>
@@ -140,7 +139,6 @@
               {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
             </div>
           </div>
-        {% endif %}
         <form id="addprodform">
           <div class="col-sm-6" >
 	    {% if userrole|int != 3 %}
