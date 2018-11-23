@@ -1,22 +1,26 @@
-<head>
-
-</head>
+<html>
 <body>
+  <div class="col-md-12">
     <div class=" panel shadow panel-body ">
-        <div class=" row form-group form-inline col-sm-3">
-            <label for="invoice_view_list">{% trans %}Type of Invoice:{% endtrans %}</label>
-              </div>
-                
-              <div class="row form-inline form-group">
-            <div class="radio">
-              <label><input type="radio" class="Invoicelist" name="delradio" id="viewallinvoice" checked> All</label>
-            </div>
-            <div class="radio">
-              <label><input type="radio" class="invoicelist" name="delradio" id="viewpurchesinvoices"> Purches</label>
-            </div>
-            <div class="radio">
-                <label><input type="radio" class="invoicelist" name="delradio" id="viewsaleinvoices"> sale</label>
-              </div>
-              </div>
+      <div class="col-md-12">
+        <div class=" row form-group form-inline col-sm-2">
+          <label for="invoiceviewlist">{% trans %}Type of Invoice:{% endtrans %}</label>
+        </div>          
+        <div id="invoiceviewlist" class="row form-inline form-group">
+          <div class="radio">
+            <label><input type="radio" class="invoicelist" name="delradio" value="0" id="viewallinvoice" checked> All</label>
+          </div>
+          <div class="radio" style="margin-left:15px">
+            <label><input type="radio" class="invoicelist" name="delradio" value="1" id="viewsaleinvoices"> Sales</label>
+          </div>
+          <div class="radio" style="margin-left:15px">
+            <label><input type="radio" class="invoicelist" name="delradio" value="2" id="viewpurchesinvoices"> Purchase</label>
+          </div>
+        </div>
+      </div>
+    <div id="slectedlist" class="col-md-12" ></div>
     </div>
-</body>
+  </div>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/invoiceviewlist.js')}}"></script>
+  </body>
+</html>
