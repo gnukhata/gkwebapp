@@ -47,14 +47,16 @@ def gstr1(request):
 
     header = {"gktoken": request.headers["gktoken"]}
     params = request.params
-    result = requests.get("http://127.0.0.1:6543/gstreturns",
+    results = requests.get("http://127.0.0.1:6543/gstreturns",
                           headers=header,
                           params=params)
-    result = result.json()
-    result["gkdata"]["report_type"] = "r1"
-    result["gkdata"]["startdate"] = params["start"]
-    result["gkdata"]["enddate"] = params["end"]
-    return result["gkdata"]
+    result1 = results.json()
+    l = len(result1["gkdata"]["hsn"]) -1
+    del result1["gkdata"]["hsn"][l]
+    result1["gkdata"]["report_type"] = "r1"
+    result1["gkdata"]["startdate"] = params["start"]
+    result1["gkdata"]["enddate"] = params["end"]
+    return result1["gkdata"]
 
 
 @view_config(route_name="gstreturns",
