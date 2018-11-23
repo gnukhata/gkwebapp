@@ -57,6 +57,13 @@ $(document).ready(function() {
     success: function(resp)
     {
       $("#invoice_div").html(resp);
+      $(".tab-content").show();
+      if($("#invload123").length > 0){
+        $("#invload123").attr("id", "invload");
+        $("#printload123").attr("id", "printload");
+        $("#listdiv123").attr("id", "listdiv");
+        $("#viewinvdiv123").attr("id", "viewinvdiv");
+      }
     }
     }
   );
@@ -78,6 +85,13 @@ $(document).ready(function() {
     success: function(resp)
     {
       $("#invoice_div").html(resp);
+      $(".tab-content").show();
+      if($("#invload123").length > 0){
+        $("#invload123").attr("id", "invload");
+        $("#printload123").attr("id", "printload");
+        $("#listdiv123").attr("id", "listdiv");
+        $("#viewinvdiv123").attr("id", "viewinvdiv");
+      }
     }
     }
   );
@@ -97,7 +111,14 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
-	$("#invoice_div").html(resp);
+  $("#invoice_div").html(resp);
+  $(".tab-content").show();
+  if($("#invload123").length > 0){
+    $("#invload123").attr("id", "invload");
+    $("#printload123").attr("id", "printload");
+    $("#listdiv123").attr("id", "listdiv");
+    $("#viewinvdiv123").attr("id", "viewinvdiv");
+  }
 	return false;
     }
     }
@@ -118,7 +139,14 @@ $(document).ready(function() {
       },
     success: function(resp)
     {
-	$("#invoice_div").html(resp);
+  $("#invoice_div").html(resp);
+  $(".tab-content").show();
+  if($("#invload123").length > 0){
+    $("#invload123").attr("id", "invload");
+    $("#printload123").attr("id", "printload");
+    $("#listdiv123").attr("id", "listdiv");
+    $("#viewinvdiv123").attr("id", "viewinvdiv");
+  }
 	return false;
     }
     }
@@ -138,6 +166,7 @@ $(document).ready(function() {
       },
     success: function(resp){
   $("#invoice_div").html(resp);
+  $(".tab-content").show();
   $("#invload").attr("id", "invload123");
   $("#printload").attr("id", "printload123");
   $("#listdiv").attr("id", "listdiv123");

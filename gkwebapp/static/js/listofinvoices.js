@@ -28,9 +28,10 @@ $(document).ready(function() {
     $(".fixed-table-loading").remove();
     var currentrow = 0;
 
-    $('#latable tbody tr:first td:eq(1) a').focus();
+    if($("#invoiceviewlistdiv").length==0){
+        $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first').addClass('selected');
-
+    }
 
     $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
         $('#latable tr').removeClass('selected');
@@ -213,6 +214,10 @@ $(document).ready(function() {
                 $("#invload").html(resp).show();
                 $("#printload").hide();
                 $('#listdiv').hide();
+                if($('#invoiceviewlistdiv').length>0){
+                    $(".tab-content").hide();
+                }
+
 		if (csflag == '19') {
 		    $("#printbutton").hide();
 		}
@@ -261,6 +266,9 @@ $(document).ready(function() {
 	$('#listdiv').show();
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
         $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
+        if($('#invoiceviewlistdiv').length>0){
+            $(".tab-content").show();
+        }
     });
     $("#print").click(function(event) {
         event.preventDefault();
