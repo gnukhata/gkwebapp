@@ -3515,7 +3515,7 @@ if (event.which == 13) {
 
         $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
             productmodal = 1;
-            $('#additem').focus();
+            $('#additem input:radio:checked').focus();
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
             productmodal = 0;

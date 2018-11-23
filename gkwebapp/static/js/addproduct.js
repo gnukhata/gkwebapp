@@ -1676,18 +1676,12 @@ $("#addgodown").click(function() {
   });
 
 
-    
+    var saveflag = 1;
 $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
   event.preventDefault();
-  /* Act on the event */
-<<<<<<< HEAD
-
-
-
+    /* Act on the event */
+    
 if($("#additem input:radio:checked").val()=='7'){
-=======
-if($("#additem option:selected").val()=='7'){
->>>>>>> Removed line that removes modal backdrop from add product
   if ($("#addproddesc").val()=="")
   {
     $("#product-name-blank-alert").alert();
@@ -1871,7 +1865,8 @@ else{
     addformdata.push({name: 'godowns', value: JSON.stringify(gobj)}); //Pushing taxes and specs into addformdata
 
   }
-  $.ajax({
+  if (saveflag == 1) {
+      $.ajax({
     url: '/product?type=save',
     type: 'POST',
     global: false,
@@ -1883,9 +1878,9 @@ else{
       xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 
     }
-  })
-	.done(function(resp) {
-    if (resp["gkstatus"] ==0) {
+      }).done(function(resp) {
+          if (resp["gkstatus"] ==0) {
+              saveflag = 0;
 	if ($("#additem input:radio:checked").val() == 7) {
 	    $("#addproduct-success-alert").alert();
 	    $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1948,6 +1943,7 @@ else{
   .always(function() {
     console.log("complete");
   });
+  }
   event.stopPropagation();
 });
 
