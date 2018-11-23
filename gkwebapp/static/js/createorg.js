@@ -131,6 +131,9 @@ $(document).ready(function(){
       {
         var prevIndex = f.index(this) - 1;
         if(prevIndex < n){
+            if($(this).attr('id')=="fromday"){
+                $("#orgtype input:radio:checked").focus().select();
+            }
           e.preventDefault();
           f[prevIndex].focus();
           f[prevIndex].select();
@@ -245,6 +248,39 @@ $(document).ready(function(){
 	}
     });
 
+    $("#orgcase").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $("#orgtypeprofit").focus().select();
+        }
+    });
+
+    $("#orgtype input:radio").keydown(function(event) {
+    if (event.which==13) {
+      if ($.trim($("#orgtype input:radio:checked").val())=="") {
+              $("#role-blank-alert").alert();
+              $("#role-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#role-blank-alert").hide();
+              });
+              $("#orgtype input:radio:checked").focus();
+              return false;
+            }
+          event.preventDefault();
+            $("#fromday").focus().select();
+          }
+    if(event.which==38){
+        event.preventDefault();
+        $("#orgcase").focus().select();
+    }
+    });
+
+    // $("#fromday").keydown(function(e){
+    //     if(e.which==38){
+    //       event.preventDefault();
+    //       $("#orgtype input:radio:checked").focus().select();
+    //     }
+    //   });
+    
     $("#toyear").keydown(function(event) {
           if (event.which==13) {
 	      event.preventDefault();
