@@ -36,14 +36,8 @@ $(document).ready(function() {
     window.print();
   });
 
-  //   $("#invback").click(function(event) {
-	// $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-	// $("#invoice").click();
-	// return false;
-  // });
-
   $("#invback").click(function(event){
-    
+  
     $.ajax(
       {
         type: "POST",
@@ -59,11 +53,14 @@ $(document).ready(function() {
       })
         .done(function(resp)
         {
-          $("#viewsingleinvoice").html(resp);
+          $("#invload").html(resp).show();
+          $('#listdiv').hide();
+          $("#printload").html("");
+          $("#buttondiv").show();
         }
       );
 });
-// ////////////////////
+
   (function() {
 var beforePrint = function() {
 // catch beforeprint event just before printing takes place and remove the organisation name from print.

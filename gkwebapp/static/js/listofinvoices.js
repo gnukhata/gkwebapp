@@ -210,7 +210,8 @@ $(document).ready(function() {
             })
             .done(function(resp) {
                 $("#invload").html("");
-                $("#invload").html(resp);
+                $("#invload").html(resp).show();
+                $("#printload").hide();
                 $('#listdiv').hide();
 		if (csflag == '19') {
 		    $("#printbutton").hide();
@@ -292,7 +293,7 @@ $(document).ready(function() {
             })
             .done(function(resp) {
                 console.log("success");
-                $('#printload').html(resp);
+                $('#printload').html(resp).show();
 		$("#invload").hide();
 		$("#buttondiv").hide();
             })
