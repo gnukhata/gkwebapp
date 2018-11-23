@@ -15,6 +15,109 @@
     <div class=' addprod panel'>
 
       <div class="panel-body">
+        {% if not extrabuttons %}
+        <div class="col-sm-12">
+          <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product saved successfully and corresponding accounts created.{% endtrans %}
+          </div>
+
+	  <div class="alert alert-success" id="addservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service saved successfully and corresponding accounts created.{% endtrans %}
+          </div>
+
+          <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product and corresponding accounts edited successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Product deleted successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Service deleted successfully.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}This unit exists. Please select it from the list.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="duplicateproducterror-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Duplicate Product.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify IGST tax.{% endtrans %}
+          </div>
+	  
+          <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+
+               {% trans %}You can create products under categories.{% endtrans %}
+               </div> -->
+          <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select Item!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="product-name-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please enter product name!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
+          </div>
+          <div class="alert alert-warning" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select a different godown.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+
+            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}This tax has already been applied.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please Specify Tax for Product.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
+          </div>
+	  <div class="alert alert-danger" id="edit_cvat-alert"  aria-live="rude" role="alert" hidden>
+
+	    {% trans %}CVAT can be applied only once.{% endtrans %}
+	  </div>
+          <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Please select the unit of measurement.{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Duplicate Tax!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="no-godown-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}There are no more godowns!{% endtrans %}
+          </div>
+          <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Cannot delete Product!{% endtrans %}<br>
+          </div>
+	  <div class="alert alert-danger" id="failure-service-delete-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Cannot delete Service!{% endtrans %}<br>
+          </div>
+	  <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+
+            {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
+          </div>
+        </div>
+        {% endif %}
         <form id="addprodform">
           <div class="col-sm-6" >
             <div class="row">
@@ -311,17 +414,22 @@
       </div>
       <div class="btn-group-sm panel-footer">
 	<div class="container-fluid">
-          <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
-          <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
-          {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
+          {% if extrabuttons %}
+            <button class="btn btn-success btn-sm" id="apsubmit" name="submit" accesskey="s" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}<u>S</u>ave{% endtrans %}</button>
+            <button id="apreset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}R<u>e</u>set{% endtrans %}</button>
+            {% if userrole|int != 3 %}<button id="addgodown" class="btn btn-info btn-sm" accesskey="a" style="display:none">{% trans %}<u>A</u>dd Godown{% endtrans %}</button>{% endif %}
 
-	  {%if userrole|int==3%}
-	    <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
-	    </td>
-	  {% endif %}
+	    {%if userrole|int==3%}
+	      <td> 	<button class="btn btn-primary btn-sm stockfield" type="button" id="prostock"  data-toggle="modal" data-target="#addstockmodal"><i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Stock{% endtrans %}</button>
+	      </td>
+	    {% endif %}
+          {% else %}
+            <button class="btn btn-success btn-sm" id="apsubmit" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save">{% trans %}Save{% endtrans %}</button>
+            <button id="apreset" class="btn btn-warning btn-sm" >{% trans %}Reset{% endtrans %}</button>
+          {% endif %}
 	</div>
-    </div>
-    </div>
+      </div>
+      </div>
     </div>
   </div>
   <div id="addgodownpopup">
@@ -334,15 +442,15 @@
           <strong>{% trans %}Help!{% endtrans %}</strong>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
-            </button> </div>
+          </button> </div>
         <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
 
           <p>   <font color=" #566573"> {%trans%}
             This module is for creating products. {% endtrans %}
             </br> {% trans %}To create a Product, we have to provide Product Name, Unit of Measurement and Tax. We can have products under categories. To use this feature create categories and then while creating products we can choose a category they will belong to.
 {% endtrans %}
-              </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
-	      You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one.
+            </br>{% trans %}Alternatively you may create a Product without a Category and or Sub-Category with all its specifications.
+	    You can also create a Unit of Measurement. Note that you can choose a Unit of measurement previously created or create one.
  {%endtrans %} </br>
  {% trans %}Products can have opening stock. If inventory is enabled for this organisation and we have godowns we can add them using a popup which can be activated by clicking Add Godown button. Godowns can also be added using the Create Godown Module.
 {%endtrans %}</font>
@@ -352,7 +460,12 @@
 
       </div>
     </div>
-    </div>
+  </div>
+  {% if extrabuttons %}
+    <input id="extrabuttons" value="1" hidden/>
+  {% else %}
+    <input id="extrabuttons" value="0" hidden/>
+  {% endif %}
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/addproductvat.js')}}"></script>
 </body>
 

@@ -16,7 +16,8 @@
       <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
 
       <div class="panel-body" id="addproductpanelboody">
-          <div class="col-md-12">
+        <div class="col-md-12">
+          {% if not extrabuttons %}
             <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Product saved successfully and corresponding accounts created.{% endtrans %}
@@ -138,6 +139,7 @@
 
               {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
             </div>
+            {% endif %}
           </div>
         <form id="addprodform">
           <div class="col-sm-6" >

@@ -2,188 +2,188 @@
 <html>
   <head>
 
-  <style>
-  .nopadding {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-
-  .fixed-table td {
-      font-size: 75%;
-      padding: 4 !important;
-      margin: 4 !important;
+    <style>
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
     }
-  .fixed-table tbody {
-      display:block;
-      height: calc(100vh - 39em);
-      min-height: 100px;
-      overflow-y:scroll;
-  }
 
-  .fixed-table thead ,.fixed-table tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  .fixed-table thead {
-      width: calc( 100% - 0.75em )
-  }
-  .specsdiv {
-      display:block;
-      max-height: calc(100vh - 36em);
-      overflow-y:scroll;
-      border-style: solid;
-      border-color: grey;
-      border-width: thin;
-      border-radius: 2px;
-      padding: 10px;
-      margin-bottom: 5px;
-  }
-  .nopadding {
-   padding: 0 !important;
-   margin: 0 !important;
-}
-#specifications {
-margin-bottom: 10px;
-}
-.panel-body {
-padding-bottom: 0px;
-margin-bottom: 0px;
-}
-  </style>
+    .fixed-table td {
+        font-size: 75%;
+        padding: 4 !important;
+        margin: 4 !important;
+    }
+    .fixed-table tbody {
+        display:block;
+        height: calc(100vh - 39em);
+        min-height: 100px;
+        overflow-y:scroll;
+    }
+
+    .fixed-table thead ,.fixed-table tbody tr {
+        display:table;
+        width:100%;
+        table-layout:fixed;
+    }
+    .fixed-table thead {
+        width: calc( 100% - 0.75em )
+    }
+    .specsdiv {
+        display:block;
+        max-height: calc(100vh - 36em);
+        overflow-y:scroll;
+        border-style: solid;
+        border-color: grey;
+        border-width: thin;
+        border-radius: 2px;
+        padding: 10px;
+        margin-bottom: 5px;
+    }
+    .nopadding {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+    #specifications {
+        margin-bottom: 10px;
+    }
+    .panel-body {
+        padding-bottom: 0px;
+        margin-bottom: 0px;
+    }
+    </style>
 
   </head>
   <body>
 
     <div class="container-fluid  row">
 
-        <ul class="nav nav-pills nav-tabs " role="tablist">
-          <li class="active nopadding" id="addproduct" role="presentation"><a id="addProduct" data-toggle="pill" href="" accesskey="1">{% trans %}Create Product / Service{% endtrans %}</a></li>
-          <li class="nopadding" id="editproduct" role="presentation"><a id="editProduct" data-toggle="pill" href="" accesskey="2">{% trans %}Edit Product / Service{% endtrans %}</a></li>
-        </ul>
-        <div class='tab-content '>
-          <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
+      <ul class="nav nav-pills nav-tabs " role="tablist">
+        <li class="active nopadding" id="addproduct" role="presentation"><a id="addProduct" data-toggle="pill" href="" accesskey="1">{% trans %}Create Product / Service{% endtrans %}</a></li>
+        <li class="nopadding" id="editproduct" role="presentation"><a id="editProduct" data-toggle="pill" href="" accesskey="2">{% trans %}Edit Product / Service{% endtrans %}</a></li>
+      </ul>
+      <div class='tab-content '>
+        <div class="alert alert-success" id="addproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Product saved successfully and corresponding accounts created.{% endtrans %}
-          </div>
+          {% trans %}Product saved successfully and corresponding accounts created.{% endtrans %}
+        </div>
 
-	  <div class="alert alert-success" id="addservice-success-alert"  aria-live="rude" role="alert" hidden>
+	<div class="alert alert-success" id="addservice-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Service saved successfully and corresponding accounts created.{% endtrans %}
-          </div>
+          {% trans %}Service saved successfully and corresponding accounts created.{% endtrans %}
+        </div>
 
-          <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
+        <div class="alert alert-success" id="editproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Product and corresponding accounts edited successfully.{% endtrans %}
-          </div>
-          <div class="alert alert-success" id="editservice-success-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Product and corresponding accounts edited successfully.{% endtrans %}
+        </div>
+        <div class="alert alert-success" id="editservice-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Service and corresponding accounts edited successfully.{% endtrans %}
-          </div>
-          <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Service and corresponding accounts edited successfully.{% endtrans %}
+        </div>
+        <div class="alert alert-success" id="deleteproduct-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Product deleted successfully.{% endtrans %}
-          </div>
-          <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Product deleted successfully.{% endtrans %}
+        </div>
+        <div class="alert alert-success" id="deleteservice-success-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Service deleted successfully.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Service deleted successfully.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="duplicate-unit-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}This unit exists. Please select it from the list.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="duplicate-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}This unit exists. Please select it from the list.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="duplicateproducterror-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Duplicate Product.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Duplicate Product.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="igst-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please Specify IGST tax.{% endtrans %}
-          </div>
-	  
-          <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please Specify IGST tax.{% endtrans %}
+        </div>
+	
+        <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}You can create products under categories.{% endtrans %}
-        </div> -->
-          <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
+             {% trans %}You can create products under categories.{% endtrans %}
+             </div> -->
+        <div class="alert alert-danger" id="item-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please select Item!{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="product-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please select Item!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="product-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please enter product name!{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
-            {% trans %}HSN No. cannot be blank.{% endtrans %}
-          </div>
-	  <div class="alert alert-danger" id="hsnno-must-be-positive"  aria-live="rude" role="alert" hidden>
-	    {% trans %}HSN No. cannot be zero.{% endtrans %}
-	  </div>
-          <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please enter product name!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="hsnno-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}HSN No. cannot be blank.{% endtrans %}
+        </div>
+	<div class="alert alert-danger" id="hsnno-must-be-positive"  aria-live="rude" role="alert" hidden>
+	  {% trans %}HSN No. cannot be zero.{% endtrans %}
+	</div>
+        <div class="alert alert-danger" id="serviceno-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="service-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Accounting Code for Services cannot be blank.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="service-name-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Service name cannot be blank.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Service name cannot be blank.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="os-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
-          </div>
-          <div class="alert alert-warning" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}<b>Opening Stock</b> is blank. Please enter <b>0.00</b> if you have no opening stock.{% endtrans %}
+        </div>
+        <div class="alert alert-warning" id="godown-same-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please select a different godown.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please select a different godown.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="date-alert"  aria-live="rude" role="alert" hidden>
 
-            <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
-          </div>
-          <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
+          <label for="vno">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="tax-same-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}This tax has already been applied.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}This tax has already been applied.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="tax-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please Specify Tax for Product.{% endtrans %}
-          </div>
-	  <div class="alert alert-danger" id="tax-service-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please Specify Tax for Product.{% endtrans %}
+        </div>
+	<div class="alert alert-danger" id="tax-service-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please Specify Tax for Service.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please Specify Tax for Service.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="cvat-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
-          </div>
-	  <div class="alert alert-danger" id="edit_cvat-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}CVAT/IGST can be applied only once.{% endtrans %}
+        </div>
+	<div class="alert alert-danger" id="edit_cvat-alert"  aria-live="rude" role="alert" hidden>
 
-	    {% trans %}CVAT can be applied only once.{% endtrans %}
-	  </div>
-          <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
+	  {% trans %}CVAT can be applied only once.{% endtrans %}
+	</div>
+        <div class="alert alert-danger" id="uomblank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Please select the unit of measurement.{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Please select the unit of measurement.{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="tax-duplicate-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Duplicate Tax!{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="no-godown-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Duplicate Tax!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="no-godown-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}There are no more godowns!{% endtrans %}
-          </div>
-          <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}There are no more godowns!{% endtrans %}
+        </div>
+        <div class="alert alert-danger" id="failure-delete-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Cannot delete Product!{% endtrans %}<br>
-          </div>
-	  <div class="alert alert-danger" id="failure-service-delete-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Cannot delete Product!{% endtrans %}<br>
+        </div>
+	<div class="alert alert-danger" id="failure-service-delete-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Cannot delete Service!{% endtrans %}<br>
-          </div>
-	  <div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
+          {% trans %}Cannot delete Service!{% endtrans %}<br>
+        </div>
+	<div class="alert alert-danger" id="tax-rate-blank-alert"  aria-live="rude" role="alert" hidden>
 
-            {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
-          </div>
-	  <div class="tab-pane active" role="tabpanel" id="productdiv">
+          {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
+        </div>
+	<div class="tab-pane active" role="tabpanel" id="productdiv">
           </div>
         </div>
 
