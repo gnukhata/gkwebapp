@@ -61,6 +61,7 @@ $(document).ready(function() {
 	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
 	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
 	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
+        $(".taxapplicable").val("22");
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
