@@ -219,7 +219,7 @@ def getproduct(request):
     if data.has_key("unitname"):
         return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata), "productdesc":data["productdesc"]}
     else:
-        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata)}
+        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata), "productdesc":data["productdesc"]}
 
 
 
