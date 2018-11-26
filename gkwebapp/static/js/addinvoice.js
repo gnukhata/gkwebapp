@@ -3482,7 +3482,7 @@ if (event.which == 13) {
     //Click event that opens a modal to add Product from Invoice.
     $("#invoice_addproduct").click(function(event){
 	var call;
-      if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
+      if($(".taxapplicable").val() == 7){
 	   call = '/product?type=addtab&extrabuttons=0';
       }
 
@@ -3531,6 +3531,7 @@ if (event.which == 13) {
                 vatgst = 'gst';
             }
             let curindex = $('#invoice_product_table_' + vatgst + ' tbody tr:last').index();
+            $("#msspinmodal").modal("show");
             $.ajax({
 		url: '/invoice?action=getproduct',
 		type: 'POST',
@@ -3556,6 +3557,8 @@ if (event.which == 13) {
                 console.log("complete");
             });
             $("#selectedproductid").val("");
+            $("#msspinmodal").modal("hide");
+            $(".modal-backdrop").remove();
         });
   });
 });
