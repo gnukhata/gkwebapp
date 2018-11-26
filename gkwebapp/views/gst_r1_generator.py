@@ -1226,9 +1226,7 @@ def exemp_sheet(wb):
 
 def hsn_sheet(wb):
     wb.create_sheet(title="hsn")
-    sheet=wb.active
-    n = sheet.max_row
-    print n
+
     style_range_of_cells(wb["hsn"], "A1:A1", "summary")
     style_range_of_cells(wb["hsn"], "A2:J2", "summary")
     
