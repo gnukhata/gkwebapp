@@ -180,6 +180,12 @@ $(document).ready(function() {
             e.preventDefault();
             $('#latable tbody tr:eq(' + currindex + ')').dblclick();
         }
+        if (e.which == 38) {
+            e.preventDefault();
+            if($("#invoiceviewlistdiv").length!=0){
+            $("#invoiceviewlist input:radio:checked").focus();          
+          }
+        }
     });
 
     var invoice_id = "";
@@ -214,9 +220,8 @@ $(document).ready(function() {
                 $("#invload").html(resp).show();
                 $("#printload").hide();
                 $('#listdiv').hide();
-                if($('#invoiceviewlistdiv').length>0){
-                    $(".tab-content").hide();
-                }
+                $("#invoiceviewlistdiv").hide();
+
 
 		if (csflag == '19') {
 		    $("#printbutton").hide();
@@ -260,10 +265,11 @@ $(document).ready(function() {
             console.log("complete");
         });	
     });
-    $("#backbutton").click(function(event){
-	$("#invload").html("");
+    $("#list_backbutton").click(function(event){
+    $("#invload").html("");
 	$("#viewinvdiv").hide();
-	$('#listdiv').show();
+    $('#listdiv').show();
+  $("#invoiceviewlistdiv").show();    
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
         $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
         if($('#invoiceviewlistdiv').length>0){

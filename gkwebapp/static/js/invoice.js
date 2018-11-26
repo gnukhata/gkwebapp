@@ -41,6 +41,14 @@ $(document).ready(function() {
   var wholedate = year + "-" + month + "-" + date;
 
   $("#invoice_record").click(function() { // calls record invoice page i.e purchase invoice.
+    if($("#invload123").length > 0){
+      $("#invload123").attr("id", "invload");
+      $("#printload123").attr("id", "printload");
+      $("#listdiv123").attr("id", "listdiv");
+      $("#viewinvdiv123").attr("id", "viewinvdiv");
+      $("#buttondiv123").attr("id", "buttondiv");
+
+    }
     $.ajax(
     {
 
@@ -58,17 +66,18 @@ $(document).ready(function() {
     {
       $("#invoice_div").html(resp);
       $(".tab-content").show();
-      if($("#invload123").length > 0){
-        $("#invload123").attr("id", "invload");
-        $("#printload123").attr("id", "printload");
-        $("#listdiv123").attr("id", "listdiv");
-        $("#viewinvdiv123").attr("id", "viewinvdiv");
-      }
     }
     }
   );
   });
   $("#invoice_create").click(function() {// calls create invoice page i.e sales invoice.
+    if($("#invload123").length > 0){
+      $("#invload123").attr("id", "invload");
+      $("#printload123").attr("id", "printload");
+      $("#listdiv123").attr("id", "listdiv");
+      $("#viewinvdiv123").attr("id", "viewinvdiv");
+      $("#buttondiv123").attr("id", "buttondiv");
+    }  
     $.ajax(
     {
 
@@ -86,17 +95,18 @@ $(document).ready(function() {
     {
       $("#invoice_div").html(resp);
       $(".tab-content").show();
-      if($("#invload123").length > 0){
-        $("#invload123").attr("id", "invload");
-        $("#printload123").attr("id", "printload");
-        $("#listdiv123").attr("id", "listdiv");
-        $("#viewinvdiv123").attr("id", "viewinvdiv");
-      }
     }
     }
   );
   });
   $("#invoice_view_sale").click(function(event) {// calls view invoice page.
+    if($("#invload123").length > 0){
+      $("#invload123").attr("id", "invload");
+      $("#printload123").attr("id", "printload");
+      $("#listdiv123").attr("id", "listdiv");
+      $("#viewinvdiv123").attr("id", "viewinvdiv");
+      $("#buttondiv123").attr("id", "buttondiv");
+    }
     $.ajax(
 	{
 	    type: "POST",
@@ -113,18 +123,21 @@ $(document).ready(function() {
     {
   $("#invoice_div").html(resp);
   $(".tab-content").show();
-  if($("#invload123").length > 0){
-    $("#invload123").attr("id", "invload");
-    $("#printload123").attr("id", "printload");
-    $("#listdiv123").attr("id", "listdiv");
-    $("#viewinvdiv123").attr("id", "viewinvdiv");
-  }
+
+
 	return false;
     }
     }
     );
   });
   $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
+    if($("#invload123").length > 0){
+      $("#invload123").attr("id", "invload");
+      $("#printload123").attr("id", "printload");
+      $("#listdiv123").attr("id", "listdiv");
+      $("#viewinvdiv123").attr("id", "viewinvdiv");
+      $("#buttondiv123").attr("id", "buttondiv");
+    }
     $.ajax(
 	{
 	    type: "POST",
@@ -141,18 +154,17 @@ $(document).ready(function() {
     {
   $("#invoice_div").html(resp);
   $(".tab-content").show();
-  if($("#invload123").length > 0){
-    $("#invload123").attr("id", "invload");
-    $("#printload123").attr("id", "printload");
-    $("#listdiv123").attr("id", "listdiv");
-    $("#viewinvdiv123").attr("id", "viewinvdiv");
-  }
 	return false;
     }
     }
     );
     });
   $("#invoice_view_list").click(function(event) {// calls view invoice page.
+    $("#invload").attr("id", "invload123");
+  $("#printload").attr("id", "printload123");
+  $("#listdiv").attr("id", "listdiv123");
+  $("#viewinvdiv").attr("id", "viewinvdiv123");
+  $("#buttondiv").attr("id", "buttondiv123");
     $.ajax({
       type: "POST",
       url: "/invoice?action=invoiceviewlist", 
@@ -167,10 +179,8 @@ $(document).ready(function() {
     success: function(resp){
   $("#invoice_div").html(resp);
   $(".tab-content").show();
-  $("#invload").attr("id", "invload123");
-  $("#printload").attr("id", "printload123");
-  $("#listdiv").attr("id", "listdiv123");
-  $("#viewinvdiv").attr("id", "viewinvdiv123");
+  console.log($("#invoicebody").html());
+  console.log("Invload", $("#invoicebody").find("#invload"))
   return false;
   }
     });

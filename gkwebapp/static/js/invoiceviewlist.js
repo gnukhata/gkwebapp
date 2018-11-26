@@ -3,6 +3,14 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#invoiceviewlist input:radio:checked").focus().click();
 
+    $("#invoiceviewlist input:radio").keydown(function(e) {
+        if (e.which == 13) {
+            e.preventDefault();
+            $('#latable tbody tr:first td:eq(1) a').focus();
+            $('#latable tbody tr:first').addClass('selected');
+        }
+    });
+
     $("#invoiceviewlist input:radio").change(function(event) {
         $("body").css("padding-right", '0px');
         // creating dataset for retrieving report from the server.
