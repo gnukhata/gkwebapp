@@ -55,7 +55,7 @@
 	{% if proddesc["gsflag"]==7 %}
 	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
 	{%else%}
-	  <label for="gscode" class="" id="hsnorservnolabel">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+	  <label for="gscode" class="" id="hsnorservnolabel" style="font-size: 99%;">New Accounting Code for Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
 	{%endif%}
 	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="Non-zero">
       </div>
