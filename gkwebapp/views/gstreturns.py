@@ -22,7 +22,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
 Contributors:
 "Akhil KP" <akhilkpdasan@protonmail.com>
-"""
+'Prajkta Patkar'<prajakta@dff.org.in>"""
 
 import os
 import requests
@@ -51,6 +51,7 @@ def gstr1(request):
                           headers=header,
                           params=params)
     result1 = results.json()
+    
     l = len(result1["gkdata"]["hsn1"]) -1
     del result1["gkdata"]["hsn1"][l]
     result1["gkdata"]["report_type"] = "r1"
