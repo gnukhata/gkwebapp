@@ -3526,7 +3526,7 @@ if (event.which == 13) {
 
         $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
             productmodal = 1;
-            $('#addproductmodal input:visible:first').focus();
+            $('#addproductmodal input:not(":hidden"), #addproductmodal select:not(":hidden")').first().focus();
             $(".product_name_gst:disabled, .product_name_vat:disabled").prop("disabled", false);
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened

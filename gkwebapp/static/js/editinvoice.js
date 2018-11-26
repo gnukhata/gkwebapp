@@ -1050,13 +1050,17 @@ $(document).ready(function() {
 	}
     });
     var modalpresent = 0;
+    var productmodal = 0;
   $(document).off("keyup").on("keyup", function(event) {
       if (event.which == 45) {
 	event.preventDefault();
-	if (modalpresent == 0) {
-	    $("#invoice_save").click();
-	}
-	  else {
+	if (modalpresent == 0 && productmodal == 0) {
+	      $("#invoice_save").click();
+	  }
+          else if (productmodal != 0) {
+              $("#apsubmit").click();
+          }
+	  else if (modalpresent != 0) {
 	      $("#cussup_save").click();
 	  }
       return false;
@@ -1239,6 +1243,11 @@ $(document).ready(function() {
     }
       else if (event.which == 27) {
 	  $("#chkpaymentmode").focus();
+      }
+      else if (event.which == 32){
+          event.preventDefault();
+          $(this).prop("disabled", true);
+          $("#invoice_addproduct").click();
       }
   });
 
@@ -1875,6 +1884,11 @@ $(document).ready(function() {
     }
     else if (event.which == 27) {
 	$("#chkpaymentmode").focus();
+    }
+      else if (event.which == 32){
+          event.preventDefault();
+          $(this).prop("disabled", true);
+          $("#invoice_addproduct").click();
       }
   });
 
@@ -3693,7 +3707,7 @@ $("#chkpaymentmode").change(function(event) {
     //Click event that opens a modal to add Product from Invoice.
     $("#invoice_addproduct").click(function(event){
 	var call;
-      if($(".taxapplicable").val() == 7){
+      if($("#taxapplicable").val() == 7){
 	   call = '/product?type=addtab&extrabuttons=0';
       }
 
@@ -3727,7 +3741,7 @@ $("#chkpaymentmode").change(function(event) {
     });
     $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
             productmodal = 1;
-            $('#addproductmodal input:visible:first').focus();
+        $('#addproductmodal input:not(":hidden"), #addproductmodal select:not(":hidden")').first().focus();
             $(".product_name_gst:disabled, .product_name_vat:disabled").prop("disabled", false);
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
