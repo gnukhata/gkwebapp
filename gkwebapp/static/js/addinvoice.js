@@ -1379,6 +1379,11 @@ $(document).ready(function() {
       else if (event.which == 27) {
 	  $("#chkpaymentmode").focus().click();
       }
+      else if (event.which == 32){
+          event.preventDefault();
+          $(this).prop("disabled", true);
+          $("#invoice_addproduct").click();
+      }
   });
 
     $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
@@ -2012,6 +2017,11 @@ $(document).ready(function() {
     }
     else if (event.which == 27) {
 	  $("#chkpaymentmode").focus().click();
+    }
+      else if (event.which == 32){
+          event.preventDefault();
+          $(this).prop("disabled", true);
+          $("#invoice_addproduct").click();
       }
   });
 
@@ -3517,6 +3527,7 @@ if (event.which == 13) {
         $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
             productmodal = 1;
             $('#addproductmodal input:visible:first').focus();
+            $(".product_name_gst:disabled, .product_name_vat:disabled").prop("disabled", false);
           });
         $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
             productmodal = 0;
