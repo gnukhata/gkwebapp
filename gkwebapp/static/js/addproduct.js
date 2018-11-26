@@ -1904,12 +1904,20 @@ else{
 	else {
 	    $("#addservice-success-alert").alert();
 	    $("#addservice-success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		if(sessionStorage.invflag==0){
+                if (parseInt($("#extrabuttons").val()) == 1) {
+                    $('.modal-backdrop').remove();
+                    if(sessionStorage.invflag==0){
 		    $("#product").click();
-		}
-		else{
-		    $("#productinmaster").click();
-		}
+		    }
+		    else{
+		        $("#productinmaster").click();
+		    }
+                }
+                else{
+                    $("#selectedproductid").val(resp.gkresult);
+                    $("#addproductmodal").modal("hide");
+                    $('.modal-backdrop').remove();
+                }
 		$("#addservice-success-alert").hide();
 	    });
 	}

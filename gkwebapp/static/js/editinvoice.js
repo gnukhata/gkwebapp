@@ -3690,4 +3690,86 @@ $("#chkpaymentmode").change(function(event) {
 	 $("#branch").focus().select();
        };
     });
+    //Click event that opens a modal to add Product from Invoice.
+    $("#invoice_addproduct").click(function(event){
+	var call;
+      if($(".taxapplicable").val() == 7){
+	   call = '/product?type=addtab&extrabuttons=0';
+      }
+
+      else{
+	   call = '/product?type=addtabvat&extrabuttons=0';
+      }
+      
+    /* Tab to load add product page. */
+    $.ajax({
+
+        url: call,
+      type: 'POST',
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+    })
+    .done(function(resp) {
+      $("#viewproduct").html("");
+        $("#viewproduct").html(resp);
+        $("#addproductmodal").modal("show");
+      console.log("success");
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    });
+    $('#addproductmodal').on('shown.bs.modal', function(e) { // shown.bs.modal is an event which fires when the modal is opened
+            productmodal = 1;
+            $('#addproductmodal input:visible:first').focus();
+            $(".product_name_gst:disabled, .product_name_vat:disabled").prop("disabled", false);
+          });
+        $('#addproductmodal').on('hidden.bs.modal', function(e) { // hidden.bs.modal is an event which fires when the modal is opened
+            productmodal = 0;
+            let productcode = $('#selectedproductid').val();
+            if (productcode == '') {
+                $('.product_name_gst:visible, .product_name_vat:visible').first().focus();
+                $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
+              return false;
+            }
+            let vatgst = 'vat';
+            if ($(".taxapplicable").val() == 7) {
+                vatgst = 'gst';
+            }
+            let curindex = $('#invoice_product_table_' + vatgst + ' tbody tr:last').index();
+            $("#msspinmodal").modal("show");
+            $.ajax({
+		url: '/invoice?action=getproduct',
+		type: 'POST',
+		dataType: 'json',
+		async: false,
+		data: { "productcode": productcode, "custid":$("#invoice_customer").val(), "inoutflag":$("#status").val() },
+		beforeSend: function(xhr) {
+		    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	    }).done(function(resp) {
+		console.log("success");
+		if (resp["gkstatus"] == 0) {
+		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').append('<option value=' + productcode + ' gsflag="' + resp["gsflag"] +'">' + resp["productdesc"] + '<option>'); //Append a product
+                    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').searchify();
+                    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').val(productcode).change();
+                    $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
+                    $('.product_name_gst:visible, .product_name_vat:visible').last().focus();
+		}
+		
+	    }).fail(function() {
+                console.log("error");
+            }).always(function() {
+                console.log("complete");
+            });
+            $("#selectedproductid").val("");
+            $("#msspinmodal").modal("hide");
+            $(".modal-backdrop").remove();
+        });
 });
