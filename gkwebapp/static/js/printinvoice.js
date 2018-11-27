@@ -30,12 +30,23 @@ $(document).ready(function() {
   
     $("title").html("");
     window.scrollTo(0,0);
- 
+
+//  if ($("#print_heading").length==0){
+//   $("#invprint_duplicate").hide();
+//   $("#invprint_triplicate").hide();
+//  }
   $("#notes").focus().select();
-  $("#invprint").click(function(event) {
+  $("#invprint_origin").click(function(event) {
     window.print();
   });
-
+  $("#invprint_duplicate").click(function(event) {
+    $("#print_heading").text("TAX INVOICE - DUPLICATE FOR TRANSPORTER");
+    window.print();
+  });
+  $("#invprint_triplicate").click(function(event) {
+    $("#print_heading").text("TAX INVOICE - TRIPLICATE FOR SUPPLIER");
+    window.print();
+  });
   $("#invback").click(function(event){
   
     $.ajax(
