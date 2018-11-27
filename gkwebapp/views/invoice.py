@@ -253,6 +253,7 @@ def showeditableinvoices(request):
 def getInvoiceDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
+
     return {"gkstatus": invoicedata.json()["gkstatus"],"invoicedata": invoicedata.json()["gkresult"]}
 
 @view_config(route_name="invoice", request_param="action=showlist", renderer="gkwebapp:templates/listofinvoices.jinja2")
@@ -280,10 +281,10 @@ def showsingleinvoice(request):
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
-@view_config(route_name="invoice",request_param="action=cancel",renderer="json")
+@view_config(route_name="invoice",request_param="type=delete",renderer="json")
 def Invoicedelete(request):
     header={"gktoken":request.headers["gktoken"]}
-    invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"],"cancelflag":1,"icflag":9}), headers=header)
+    invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"]}), headers=header)
     return {"gkstatus": invoicedata.json()["gkstatus"]}
 
 @view_config(route_name="invoice",request_param="action=print")
