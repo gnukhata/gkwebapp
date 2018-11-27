@@ -2540,7 +2540,8 @@ if (event.which == 13) {
 				$("#invoice_deliverynote").val(resp.invoicedata.dcid);
 			    }
 			    // Loading other details of invoice.
-			    //Loading consignee details when deliverynote selected
+				//Loading consignee details when deliverynote selected
+				$("#invid").val(invid);
 			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
 			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
 			    $("#statecodeofconsignee").val(pad(resp.invoicedata.consignee.consigneestatecode, 2));
