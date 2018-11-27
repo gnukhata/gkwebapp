@@ -179,8 +179,6 @@ $(document).ready(function() {
     success: function(resp){
   $("#invoice_div").html(resp);
   $(".tab-content").show();
-  console.log($("#invoicebody").html());
-  console.log("Invload", $("#invoicebody").find("#invload"))
   return false;
   }
     });
