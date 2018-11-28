@@ -110,6 +110,7 @@
 		</tr>
 	      {% endif %}
 	    {% endfor %}
+            
 	    <tr class="group iegroup">
 	      <td>
 		<span class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </span>
@@ -225,11 +226,16 @@
 	    {% endfor %}
 	    <tr class="cl accountfield">
 	      <td>
-	      <span class="col-xs-8 accounttd"><a href="#">Closing Stock</a></span>
-	      <span class="col-xs-4 text-right accounttd"><span style="margin-right:6em;">{{ClosingStock}}</span></span>
+	        <span class="col-xs-8 accounttd"><a href="#">Closing Stock</a></span>
+	        <span class="col-xs-4 text-right accounttd"><span style="margin-right:6em;">{{ClosingStock}}</span></span>
 	    </tr>
 	    
-	    
+	    {% if 'gslCF' in gross %}
+	      <tr class="cl accountfield">
+		<td class="col-xs-8"><a class="accounttd text-danger" href="#" style="text-decoration: none;">Gross loss C/F</a></td>
+		<td class="col-xs-4 text-right accounttd text-danger"><span style="margin-right:2em;">{{gross["gslCF"]}}</span></td>
+	      </tr>
+	    {% endif %}
 	    <tr class="group iigroup">
 	      <td>
 		<span class="col-xs-8"> <a class="pyaccname"  href="#" style="text-decoration: none;" >INDIRECT INCOME</a> </span>
