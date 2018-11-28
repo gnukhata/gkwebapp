@@ -30,11 +30,7 @@ $(document).ready(function() {
   
     $("title").html("");
     window.scrollTo(0,0);
-
-//  if ($("#print_heading").length==0){
-//   $("#invprint_duplicate").hide();
-//   $("#invprint_triplicate").hide();
-//  }
+    
   $("#notes").focus().select();
   $("#invprint_origin").click(function(event) {
     window.print();
