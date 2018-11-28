@@ -85,10 +85,12 @@ $(document).ready(function()
     if ((($('#m_vtype').val()=="sales") || ($('#m_vtype').val()=="purchase") || ($('#m_vtype').val()=="payment") || ($('#m_vtype').val()=="receipt")) && sessionStorage.invflag==1)
     {
 	if ($("#viewinvsel").length > 0){
-      $(".invhide").show();
+            $(".invhide").show();
+            $("#delete").hide().prop("disabled", true);
     }
     else {
-      $(".invhide").hide();
+        $(".invhide").hide();
+        $("#delete").show().prop("disabled", false);
     }
 
     var inv = $("#invsel option:selected").attr("total");
