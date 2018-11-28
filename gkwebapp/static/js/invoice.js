@@ -38,7 +38,8 @@ $(document).ready(function() {
   if(date < 10) {
     date = "0" + date;
   }
-  var wholedate = year + "-" + month + "-" + date;
+    var wholedate = year + "-" + month + "-" + date;
+    sessionStorage.wholedate = wholedate;
 
   $("#invoice_record").click(function() { // calls record invoice page i.e purchase invoice.
     if($("#invload123").length > 0){
@@ -99,7 +100,8 @@ $(document).ready(function() {
     }
   );
   });
-  $("#invoice_view_sale").click(function(event) {// calls view invoice page.
+    $("#invoice_view_sale").click(function(event) {// calls view invoice page.
+        sessionStorage.salepurchase = 15;
     if($("#invload123").length > 0){
       $("#invload123").attr("id", "invload");
       $("#printload123").attr("id", "printload");
@@ -130,7 +132,8 @@ $(document).ready(function() {
     }
     );
   });
-  $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
+    $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
+        sessionStorage.salepurchase = 9;
     if($("#invload123").length > 0){
       $("#invload123").attr("id", "invload");
       $("#printload123").attr("id", "printload");
@@ -184,6 +187,13 @@ $(document).ready(function() {
     });
   });
     if (sessionStorage.salepurchase == "15") {
+        if (sessionStorage.editprint == 1) {
+            let invid = $("#info").data("invid");
+            $("#invoice_view_sale").click();
+            $("#invselect").val(invid);
+            sessionStorage.editprint = 0;
+            return false;
+        }
 	$("#invoice_create").click();// loads record purchase invoice page by default.
 	return false;
     }

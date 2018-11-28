@@ -2784,6 +2784,9 @@ if (event.which == 13) {
 	    $("#invdetailsdiv").hide();
 	}
     });
+    if ($("#invselect").val()!="") {
+        $("#invselect").change();
+    }
     // Click event for invoice edit button.
     $("#invoice_edit").click(function(event){
 	editflag = false;

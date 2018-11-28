@@ -44,7 +44,12 @@ $(document).ready(function() {
     window.print();
   });
   $("#invback").click(function(event){
-  
+      if ($("#invload").length == 0) {
+          sessionStorage.editprint = 1;
+          $("#info").load("/invoice");
+          $("#info").data("invid",$("#invid").val());
+          return false;
+      }
     $.ajax(
       {
         type: "POST",
@@ -66,7 +71,7 @@ $(document).ready(function() {
           $("#buttondiv").show();
         }
       );
-});
+  });
 
   (function() {
 var beforePrint = function() {
