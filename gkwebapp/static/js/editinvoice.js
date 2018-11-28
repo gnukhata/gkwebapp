@@ -3051,8 +3051,10 @@ if (event.which == 13) {
 	      return false;
 	  }
       }
-      
-      var tax = {};
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+      $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
+          var tax = {};
       var cess = {};
       var contents = {};
       var freeqty = {};
@@ -3383,9 +3385,6 @@ if (event.which == 13) {
 	  }
 	  form_data.append("file" + i, files[i]);
     }
-    $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
-    $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
 	if (allow == 1){
 	    $.ajax({
                 url: '/invoice?action=update',
