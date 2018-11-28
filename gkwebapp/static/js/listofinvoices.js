@@ -226,7 +226,13 @@ $(document).ready(function() {
 		if (csflag == '19') {
 		    $("#printbutton").hide();
 		}
-		$("#viewinvdiv").show();
+        $("#viewinvdiv").show();
+        if($("#deletable").val() > 0){
+            $("#delete").hide();
+        }
+        else{
+            $("#delete").show(); 
+        }
 		if ($("#attachmentcount").val() > 0) {
 		    $("#viewattachment").show();
 		}
@@ -318,4 +324,83 @@ $(document).ready(function() {
                 console.log("complete");
             });
     });
+
+    $(document).off("click", "#delete").on("click", "#delete", function(event) {
+        console.log("asdasdaaadasd")
+        event.preventDefault();
+		$('.modal-backdrop').remove();
+        $('.modal').modal('hide');
+        console.log($("#invid").val())
+		$('#m_confirmdel').modal('show').one('click', '#invcancel', function(e) {
+            console.log("sdaadsadsaa")
+            $.ajax({
+				type: "POST",
+				url: "/invoice?type=delete",
+				global: false,
+				async: false,
+				datatype: "json",
+				data: {
+					"invid": $("#invid").val()
+				},
+				
+				beforeSend: function(xhr) {
+					xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+				},
+				success: function(resp) {
+                    dataset = { 
+                        "flag": $("#invoicetypeselect").val() ,
+                        "fromdate": $("#fromdate").data("fromdate"),
+                        "todate": $("#todate").data("todate")
+                    };
+					if (resp["gkstatus"] == 0) {
+						$('.modal-backdrop').remove();
+						$("#delsuccess-alert").alert();
+						$("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
+                            $("#delsuccess-alert").hide();
+                        });
+                            $("#msspinmodal").modal("show");
+                            $.ajax({
+                                    type: "POST",
+                                    url: "/invoice?action=showlist",
+                                    global: false,
+                                    async: false,
+                                    datatype: "text/html",
+                                    data: dataset,
+                                    beforeSend: function(xhr) {
+                                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                    },
+                                })
+                                .done(function(resp) {
+                                    $("#info").html(resp);
+                                });
+                }
+                    else {
+						$("#transaction-alert").alert();
+						$("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
+							$("#transaction-alert").hide();
+						});
+
+						$("#msspinmodal").modal("show");
+                            $.ajax({
+                                    type: "POST",
+                                    url: "/invoice?action=showlist",
+                                    global: false,
+                                    async: false,
+                                    datatype: "text/html",
+                                    data: dataset,
+                                    beforeSend: function(xhr) {
+                                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                    },
+                                })
+                                .done(function(resp) {
+                                    $("#info").html(resp);
+                                });
+						
+					} 
+	
+				}
+			});
+			
+		});
+});
 });
