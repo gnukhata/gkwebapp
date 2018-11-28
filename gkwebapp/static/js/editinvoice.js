@@ -3779,7 +3779,6 @@ $("#chkpaymentmode").change(function(event) {
                     $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
                     $('.product_name_gst:visible, .product_name_vat:visible').last().focus();
 		}
-		
 	    }).fail(function() {
                 console.log("error");
             }).always(function() {
