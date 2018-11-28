@@ -227,6 +227,7 @@ $(document).ready(function() {
 		    $("#printbutton").hide();
 		}
         $("#viewinvdiv").show();
+        // delete button hide or show depends on deletable data
         if($("#deletable").val() > 0){
             $("#delete").hide();
         }
@@ -324,15 +325,12 @@ $(document).ready(function() {
                 console.log("complete");
             });
     });
-
+// below function is for delete invoice and reload to previous list
     $(document).off("click", "#delete").on("click", "#delete", function(event) {
-        console.log("asdasdaaadasd")
         event.preventDefault();
 		$('.modal-backdrop').remove();
         $('.modal').modal('hide');
-        console.log($("#invid").val())
 		$('#m_confirmdel').modal('show').one('click', '#invcancel', function(e) {
-            console.log("sdaadsadsaa")
             $.ajax({
 				type: "POST",
 				url: "/invoice?type=delete",
@@ -342,7 +340,6 @@ $(document).ready(function() {
 				data: {
 					"invid": $("#invid").val()
 				},
-				
 				beforeSend: function(xhr) {
 					xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 				},
@@ -352,6 +349,7 @@ $(document).ready(function() {
                         "fromdate": $("#fromdate").data("fromdate"),
                         "todate": $("#todate").data("todate")
                     };
+                    // here reload previously selected list page after deleting
 					if (resp["gkstatus"] == 0) {
 						$('.modal-backdrop').remove();
 						$("#delsuccess-alert").alert();
@@ -379,7 +377,6 @@ $(document).ready(function() {
 						$("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
 							$("#transaction-alert").hide();
 						});
-
 						$("#msspinmodal").modal("show");
                             $.ajax({
                                     type: "POST",
@@ -395,12 +392,9 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                     $("#info").html(resp);
                                 });
-						
 					} 
-	
 				}
 			});
-			
 		});
 });
 });
