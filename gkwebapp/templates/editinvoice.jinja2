@@ -88,20 +88,7 @@
 		{% trans %}Please enter Address!{% endtrans %}
 
 	      </div>
-				{# ///////////////////////////////////////////////////////////////////////////////// #}
-				
-				<input type="hidden" id="invid">
-				<div class="alert alert-danger" id="prod-alert"  aria-live="rude" role="alert" hidden>
-				{% trans %}Cannot Delete invoice, transaction! {% endtrans %}
-      </div>
-			     <div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
-	<a href="" class="close" aria-label="close">&times;</a>
-				{% trans %}invoice deleted successfully.{% endtrans %}
-      </div>
-			<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
-				{% trans %}invoice cannot be deleted!{% endtrans %}
-      </div>
-				{# ///////////////////////////////////////////////////////////////////////////////// #}
+
 	      <form class="form-horizontal" >
 		<div class="col-md-12">
 		  <div class="col-md-4">
@@ -986,7 +973,7 @@
               <h4 class="modal-title">{% trans %}Delete?{% endtrans %}</h4>
             </div>
             <div class="modal-body">
-              <p>{% trans %}Are you hhh sure?{% endtrans %}</p>
+              <p>{% trans %}Are you sure?{% endtrans %}</p>
             </div>
             <div class="modal-footer">
               <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-close" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
