@@ -3273,7 +3273,7 @@ if (event.which == 13) {
             .done(function(resp) {
                 console.log("success");
                 $('#invload').html(resp);
-		$("#buttondiv").remove();
+		$("#buttondiv").hide();
             })
             .fail(function() {
                 console.log("error");
