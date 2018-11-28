@@ -1434,22 +1434,23 @@ def fill_data(result, wb):
     set_number_format(wb["cdnur"], ["H5", "J5", "K5", "L5"], "0.00")
     set_number_format(wb["cdnur"], ["C5", "F5"], "dd-mmm-yy")
 
-    l = len(result["gkdata"]["hsn1"]) -1
-    del result["gkdata"]["hsn1"][l]
-    for entry in result["gkdata"]["hsn1"]:
-        
-        row = (
-            entry["hsnsac"],
-             entry["prodctname"],
-            entry["uqc"],
-            float_or_none(entry["qty"]),float_or_none(entry["totalvalue"]),
-            float_or_none(entry["taxableamt"]), float_or_none(entry["IGSTamt"]),
-            float_or_none(entry["SGSTamt"]),float_or_none(entry["SGSTamt"]), float_or_none(entry["CESSamt"])
-        )
+    if len(result["gkdata"]["hsn1"]) > 0:
+        l = len(result["gkdata"]["hsn1"]) -1
+        del result["gkdata"]["hsn1"][l]
+        for entry in result["gkdata"]["hsn1"]:
 
-        wb["hsn"].append(row)
+            row = (
+                entry["hsnsac"],
+                 entry["prodctname"],
+                entry["uqc"],
+                float_or_none(entry["qty"]),float_or_none(entry["totalvalue"]),
+                float_or_none(entry["taxableamt"]), float_or_none(entry["IGSTamt"]),
+                float_or_none(entry["SGSTamt"]),float_or_none(entry["SGSTamt"]), float_or_none(entry["CESSamt"])
+            )
 
-    set_number_format(wb["hsn"], ["D5","E5","F5","G5","H5", "I5","J5"], "0.00")
+            wb["hsn"].append(row)
+
+        set_number_format(wb["hsn"], ["D5","E5","F5","G5","H5", "I5","J5"], "0.00")
     
 
         
