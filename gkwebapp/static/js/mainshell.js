@@ -40,6 +40,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 $(document).ready(function(){
     var username1;
     var userrole1;
+    sessionStorage.editprint = 0;
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
