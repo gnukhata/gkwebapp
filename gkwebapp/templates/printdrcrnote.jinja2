@@ -75,8 +75,8 @@
 	  {% if org["orgpincode"] %}
 	    - {{org["orgpincode"]}},
           {% endif %}
-          {% if org["orgstate"]!='' %}
-            , {{org["orgstate"]}}.
+          {% if org["orgstate"]!='null' %}
+             {{org["orgstate"]}}.
           {% endif %}
 	  <br>
           {% if org["orgtelno"]!='' %}
