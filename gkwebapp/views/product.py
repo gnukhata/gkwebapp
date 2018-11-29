@@ -188,7 +188,6 @@ def saveproduct(request):
         else:
             proddetails["specs"]= json.loads(request.params["specs"])
 
-    print request.params["gscode"]
     if request.params.has_key("gscode"):
         proddetails["gscode"]=request.params["gscode"]
     if request.params.has_key("gsflag"):
