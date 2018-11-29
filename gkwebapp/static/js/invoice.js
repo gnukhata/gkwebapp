@@ -168,6 +168,7 @@ $(document).ready(function() {
   $("#listdiv").attr("id", "listdiv123");
   $("#viewinvdiv").attr("id", "viewinvdiv123");
   $("#buttondiv").attr("id", "buttondiv123");
+  sessionStorage.onview=1;
     $.ajax({
       type: "POST",
       url: "/invoice?action=invoiceviewlist", 
