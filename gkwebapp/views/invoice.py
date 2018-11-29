@@ -232,14 +232,14 @@ def showeditableinvoices(request):
         if request.params.has_key("invid"):
             invlist = [{"invid":request.params["invid"], "invoiceno":"", "invoicedata":"", "custname":""}]
         else:
-            result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=sale", headers=header)
+            result = requests.get("http://127.0.0.1:6543/invoice?type=rectifyinvlist&invtype=15", headers=header)
             invlist = result.json()["invoices"]
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     else:
         if request.params.has_key("invid"):
             invlist = [{"invid":request.params["invid"], "invoiceno":"", "invoicedata":"", "custname":""}]
         else:
-            result = requests.get("http://127.0.0.1:6543/billwise?type=pending&invtype=purchase", headers=header)
+            result = requests.get("http://127.0.0.1:6543/invoice?type=rectifyinvlist&invtype=9", headers=header)
             invlist = result.json()["invoices"]
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
     unbilled_delnotes = requests.get("http://127.0.0.1:6543/invoice?unbilled_delnotes", data=json.dumps(gkdata), headers=header)
