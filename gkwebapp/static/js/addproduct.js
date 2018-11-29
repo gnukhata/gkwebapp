@@ -1851,13 +1851,8 @@ else{
 
   var  addformdata = $("#addprodform").serializeArray();
 
-if ($("#additem input:radio:checked").val() == 7){
-  addformdata.push({name: "gscode", value: $("#hsnno").val()});
-}
-else{
-  addformdata.push({name:"gscode", value: $("#serviceno").val()});
 
-}
+  addformdata.push({name: "gscode", value: $("#hsnno").val()});
   addformdata.push({name:"gsflag", value: $("#additem input:radio:checked").val()});
   addformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
   addformdata.push({name: 'specs', value: JSON.stringify(specs)});
