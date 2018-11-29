@@ -3292,14 +3292,6 @@ if (event.which == 13) {
 	  stock["inout"] = 15;
 	  issuername = $("#invoice_issuer_name").val();
 	  designation = $("#invoice_issuer_designation").val();
-	  if (issuername == "") {
-	      $("#invoice_issuer_name").focus();
-	      $("#issuer-blank-alert").alert();
-	      $("#issuer-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		  $("#issuer-blank-alert").hide();
-	      });
-	      return false;
-	  }
       }
       //For sales invoice store address.
       if($("#status").val() == 15){
