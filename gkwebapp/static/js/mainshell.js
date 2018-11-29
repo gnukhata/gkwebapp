@@ -41,6 +41,7 @@ $(document).ready(function(){
     var username1;
     var userrole1;
     sessionStorage.editprint = 0;
+    sessionStorage.onview=0;
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
@@ -1852,6 +1853,7 @@ $('#listofaccounts').click(function (e) {
 
     $('#listofinvoices').click(function (e) {
     // calls list of invoices report
+    sessionStorage.onview=0;
     $.ajax(
       {
 
@@ -1874,6 +1876,7 @@ $('#listofaccounts').click(function (e) {
 
     $('#listofunpaidinvoices').click(function (e) {
     // calls list of invoices report
+    sessionStorage.onview=0;
     $.ajax(
       {
 

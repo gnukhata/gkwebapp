@@ -357,7 +357,8 @@ $(document).ready(function() {
 						$("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#delsuccess-alert").hide();
                             $("#msspinmodal").modal("show");
-                            $.ajax({
+                            if(sessionStorage.onview == 0){
+                                $.ajax({
                                     type: "POST",
                                     url: "/invoice?action=showlist",
                                     global: false,
@@ -371,6 +372,10 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                     $("#info").html(resp);
                                 });
+                            }
+                            else{
+                                $("#invoice_view_list").click();
+                            }
                         });        
                 }
                     else {
@@ -379,7 +384,8 @@ $(document).ready(function() {
 						$("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#transaction-alert").hide();
                             $("#msspinmodal").modal("show");
-                            $.ajax({
+                            if(sessionStorage.onview == 1){
+                                $.ajax({
                                     type: "POST",
                                     url: "/invoice?action=showlist",
                                     global: false,
@@ -393,6 +399,10 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                     $("#info").html(resp);
                                 });
+                            }
+                            else{
+                                $("#invoice_view_list").click();
+                            }
 						});
 					} 
 				}
