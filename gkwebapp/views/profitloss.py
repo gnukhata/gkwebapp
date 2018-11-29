@@ -53,7 +53,11 @@ def printprofitandloss(request):
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
-    
+    gross = {}
+    try:
+        gross["gspCF"] = result.json()["gkresult"]["grossprofitcf"]
+    except:
+        gross["gslCF"] = result.json()["gkresult"]["grosslosscf"]
     net = {}
     try:
         net["netprofit"] = result.json()["gkresult"]["netprofit"]
@@ -167,6 +171,17 @@ def printprofitandloss(request):
             sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
 
+    #If there is Gross Profit it is shown in Expense side
+    if "gspCF" in gross:
+        sheet["A" + str(row)] = "Gross Profit C/F"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["B" + str(row)] = gross["gspCF"]
+        sheet["B" + str(row)]=float("%.2f"%float(gross["gspCF"]))
+        sheet["B" + str(row)].number_format="0.00"
+        sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        row = row + 1
+
     #Loading data for Indirect Expense group.
     sheet["A" + str(row)] = "INDIRECT EXPENSE"
     sheet["B" + str(row)] = InDirectExpense["indirexpbal"]
@@ -211,7 +226,6 @@ def printprofitandloss(request):
     if "netprofit" in net:
         sheet["A" + str(row)] = "Net Profit"
         sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet["B" + str(row)] = net["netprofit"]
         sheet["B" + str(row)]=float("%.2f"%float(net["netprofit"]))
         sheet["B" + str(row)].number_format="0.00"
         sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
@@ -283,6 +297,16 @@ def printprofitandloss(request):
             sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
+    #If there is Gross Profit it is shown in Expense side
+    if "gslCF" in gross:
+        sheet["A" + str(row)] = "Gross Loss C/F"
+        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["B" + str(row)] = gross["gslCF"]
+        sheet["B" + str(row)]=float("%.2f"%float(gross["gslCF"]))
+        sheet["B" + str(row)].number_format="0.00"
+        sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        row = row + 1
     sheet["C" + str(row)] = "Closing Stock"
     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
     sheet["D" + str(row)]=float("%.2f"%float(result.json()["gkresult"]["Closing Stock"]))
@@ -334,7 +358,6 @@ def printprofitandloss(request):
     if "netloss" in net:
         sheet["C" + str(row)] = "Net Loss"
         sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet["D" + str(row)] = net["netloss"]
         sheet["D" + str(row)]=float("%.2f"%float(net["netloss"]))
         sheet["D" + str(row)].number_format="0.00"
         sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
