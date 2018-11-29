@@ -355,7 +355,6 @@ $(document).ready(function() {
 						$("#delsuccess-alert").alert();
 						$("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#delsuccess-alert").hide();
-                        });
                             $("#msspinmodal").modal("show");
                             $.ajax({
                                     type: "POST",
@@ -371,13 +370,13 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                     $("#info").html(resp);
                                 });
+                        });        
                 }
                     else {
 						$("#transaction-alert").alert();
 						$("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
-							$("#transaction-alert").hide();
-						});
-						$("#msspinmodal").modal("show");
+                            $("#transaction-alert").hide();
+                            $("#msspinmodal").modal("show");
                             $.ajax({
                                     type: "POST",
                                     url: "/invoice?action=showlist",
@@ -392,6 +391,7 @@ $(document).ready(function() {
                                 .done(function(resp) {
                                     $("#info").html(resp);
                                 });
+						});
 					} 
 				}
 			});
