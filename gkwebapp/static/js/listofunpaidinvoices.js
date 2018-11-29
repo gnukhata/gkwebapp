@@ -33,7 +33,6 @@ $(document).ready(function() {
     $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first').addClass('selected');
 
-
     //A row is highlighted when focus shifts to it.
     $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
         $('#latable tr').removeClass('selected');
@@ -189,7 +188,14 @@ $(document).ready(function() {
                 $("#invload").html("");
                 $("#invload").html(resp);
                 $('#listdiv').hide();
-		$("#viewinvdiv").show();
+        $("#viewinvdiv").show();
+        // delete button hide or show depends on deletable data
+        if($("#deletable").val() > 0){
+            $("#delete").hide();
+        }
+        else{
+            $("#delete").show(); 
+        }
             });
     });
     //Back button closes the Invoice view.
@@ -244,4 +250,80 @@ $(document).ready(function() {
                 console.log("complete");
             });
     });
+// below function is for delete invoice and reload to previous list
+$(document).off("click", "#delete").on("click", "#delete", function(event) {
+    event.preventDefault();
+    $('.modal-backdrop').remove();
+    $('.modal').modal('hide');
+    $('#m_confirmdel').modal('show').one('click', '#invcancel', function(e) {
+        $.ajax({
+            type: "POST",
+            url: "/invoice?type=delete",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {
+                "invid": $("#invid").val()
+            },
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp) {
+                dataset = {
+                    "inoutflag": $("#reportinoutselect").val(),
+                    "orderflag": $("#reportorderselect").val(),
+                        "typeflag": $("#reporttypeselect").val(),
+                        "fromdate": $("#fromdate").data("fromdate"),
+                        "todate": $("#todate").data("todate")
+                    };
+                // here reload previously selected list page after deleting
+                if (resp["gkstatus"] == 0) {
+                    $('.modal-backdrop').remove();
+                    $('html,body').animate({scrollTop: ($("#viewinvdiv").offset().top)},'fast');
+                    $("#delsuccess-alert").alert();
+                    $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
+                        $("#delsuccess-alert").hide();
+                        $("#msspinmodal").modal("show");
+                        $.ajax({
+                                type: "POST",
+                                url: "/billwise?action=showlist",
+                                global: false,
+                                async: false,
+                                datatype: "text/html",
+                                data: dataset,
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                },
+                            })
+                            .done(function(resp) {
+                                $("#info").html(resp);
+                            });
+                    });        
+            }
+                else {
+                    $('html,body').animate({scrollTop: ($("#viewinvdiv").offset().top)},'fast');
+                    $("#transaction-alert").alert();
+                    $("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
+                        $("#transaction-alert").hide();
+                        $("#msspinmodal").modal("show");
+                        $.ajax({
+                                type: "POST",
+                                url: "/billwise?action=showlist",
+                                global: false,
+                                async: false,
+                                datatype: "text/html",
+                                data: dataset,
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                },
+                            })
+                            .done(function(resp) {
+                                $("#info").html(resp);
+                            });
+                    });
+                } 
+            }
+        });
+    });
+});
 });
