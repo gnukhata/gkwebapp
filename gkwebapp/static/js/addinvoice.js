@@ -2056,7 +2056,7 @@ $(document).ready(function() {
 	event.preventDefault();
 	calculategstaxamt(curindex);
 	if ($("#invoice_deliverynote option:selected").val() != '') {
-	    var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_vat tbody tr:eq(" + curindex + ") td:eq(3) input").val());
+	    var quantity = parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(2) input").val()) + parseFloat($("#invoice_product_table_gst tbody tr:eq(" + curindex + ") td:eq(3) input").val());
 	    if (parseFloat(parseFloat(quantity).toFixed(2)) > parseFloat(parseFloat($(this).attr("data")).toFixed(2))) {
           $("#quantity-exceed-alert").alert();
           $("#quantity-exceed-alert").fadeTo(2250, 500).slideUp(500, function() {
