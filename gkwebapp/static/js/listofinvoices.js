@@ -317,6 +317,9 @@ $(document).ready(function() {
                 $('#printload').html(resp).show();
 		$("#invload").hide();
 		$("#buttondiv").hide();
+                if ($(".tab-content").is(":visible")) {
+                    $(".printnopadding").css({"padding":"0px","margin":"0px","border":"none"});
+                }
             })
             .fail(function() {
                 console.log("error");

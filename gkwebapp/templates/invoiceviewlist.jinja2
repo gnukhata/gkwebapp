@@ -1,7 +1,7 @@
 <html>
-<body>
+  <body>
   <div class="col-md-12">
-    <div class=" panel shadow panel-body ">
+    <div class=" panel shadow panel-body printnopadding">
       <div class="col-md-12" id="invoiceviewlistdiv" style="margin-bottom:-30px">
         <div class=" row form-group form-inline col-sm-2">
           <label for="invoiceviewlist">{% trans %}Type of Invoice:{% endtrans %}</label>
@@ -18,7 +18,7 @@
           </div>
         </div>
       </div>
-    <div id="slectedlist" class="col-md-12 row" style="margin:0 0 0 2px" ></div>
+    <div id="slectedlist" class="col-md-12 row printnopadding" style="margin:0 0 0 2px" ></div>
     </div>
   </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/invoiceviewlist.js')}}"></script>
