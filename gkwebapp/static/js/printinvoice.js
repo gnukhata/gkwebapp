@@ -166,7 +166,8 @@ $.ajax({
         $("#printinvoice2").html(resp);
         $("#printinvoice3").html("");
         $("#printinvoice1").html("");
-        $("#printinvoice4").html("");
+          $("#printinvoice4").html("");
+          $("#notes").focus().select();
       }
       }
     );
@@ -190,7 +191,8 @@ $.ajax({
         $("#printinvoice3").html(resp);
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
-        $("#printinvoice4").html("");
+          $("#printinvoice4").html("");
+          $("#notes").focus().select();
       }
       }
     );
@@ -213,7 +215,8 @@ $.ajax({
         $("#printinvoice1").html(resp);
         $("#printinvoice2").html("");
         $("#printinvoice3").html("");
-        $("#printinvoice4").html("");
+          $("#printinvoice4").html("");
+          $("#notes").focus().select();
       }
       }
     );
@@ -237,7 +240,8 @@ $.ajax({
         $("#printinvoice4").html(resp);
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
-        $("#printinvoice3").html("");
+          $("#printinvoice3").html("");
+          $("#notes").focus().select();
       }
       }
     );
