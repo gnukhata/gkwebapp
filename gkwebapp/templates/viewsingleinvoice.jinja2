@@ -5,7 +5,7 @@
 		{# delete invoice alerts #}
 	<div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
-			{{ gkresult["invoiceno"] }}{% trans %} invoice has deleted.{% endtrans %}
+			{%trans %}Invoice{% endtrans%}{{ gkresult["invoiceno"] }}{% trans %} has been deleted.{% endtrans %}
     </div>
 	<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 			{% trans %}invoice cannot be deleted!{% endtrans %}
