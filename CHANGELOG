@@ -1,4 +1,22 @@
-[15 August 2018 Release 5.10]
+[29 November 2018 Release 5.50]
+* Implemented GSTR1 Report and Spreadsheet.  
+* Presentation of Profit and Loss Report revised.  
+* New fields in Product module to save MRP and Selling Price.  
+* Last Price/MRP/Selling Price autoloads in Invoice.  
+* Enhanced searching experience in dropdowns.  
+* Plus button in product details table in documents such as invoice, delivery note etc  to add new row.  
+* Facility to add product from Invoice.  
+* Functionality to delete invoices with no transactions/debit note/credit note/rejection note.   
+* Duplicate and Triplicate Printable versions of Invoice.  
+* More formats for printing invoices.  
+* Notes field in print invoice.  
+* List of invoices in Invoice Module.  
+* Security enhancements.  
+* Drill down facility in unbilled deliveries.  
+* Preview of delivery note and attatchment in view delivery note.   
+* Minor bugs resolved.  
+
+[15 August 2018 Release 5.25]
 * Invoice attachments are getting saved again. 
 * Narration of previous voucher can be used while creating a new voucher. 
 * Fixed bugs related to Debit/Credit Note, Company Setup and Edit Profile. 
