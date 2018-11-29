@@ -297,15 +297,15 @@ def printprofitandloss(request):
             sheet["D" + str(row)].number_format="0.00"
             sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
             row = row + 1
-    #If there is Gross Profit it is shown in Expense side
+    #If there is Gross Loss it is shown in Expense side
     if "gslCF" in gross:
-        sheet["A" + str(row)] = "Gross Loss C/F"
-        sheet["A" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet["B" + str(row)] = gross["gslCF"]
-        sheet["B" + str(row)]=float("%.2f"%float(gross["gslCF"]))
-        sheet["B" + str(row)].number_format="0.00"
-        sheet["B" + str(row)].alignment = Alignment(horizontal = "right")
-        sheet["B" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["C" + str(row)] = "Gross Loss C/F"
+        sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet["D" + str(row)] = gross["gslCF"]
+        sheet["D" + str(row)]=float("%.2f"%float(gross["gslCF"]))
+        sheet["D" + str(row)].number_format="0.00"
+        sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
+        sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
         row = row + 1
     sheet["C" + str(row)] = "Closing Stock"
     sheet["C" + str(row)].font = Font(name='Liberation Serif',size=12,italic=True)
