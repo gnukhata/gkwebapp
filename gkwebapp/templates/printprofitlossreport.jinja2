@@ -8,32 +8,32 @@
     {% endif %}
 
     <style type="text/css">
-     .shadow {
-	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-     }
-     td {
-	 font-size:75%;
-     }
-     th {
-	 font-size:85%;
-     }
-     tr {
-	 height:26px !important;
-     }
-     .nopadding{
-	 padding:0 !important;
-     }
-     td.subgrouptd{
-	 font-weight:normal !important;
-     }
-     td.accounttd {
-	 font-weight:normal !important;
-	 font-style:italic !important;
-     }
-     a, a:hover {
-	 color:black;
-	 text-decoration:none;
-     }
+    .shadow {
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    td {
+	font-size:75%;
+    }
+    th {
+	font-size:85%;
+    }
+    tr {
+	height:26px !important;
+    }
+    .nopadding{
+	padding:0 !important;
+    }
+    td.subgrouptd{
+	font-weight:normal !important;
+    }
+    td.accounttd {
+	font-weight:normal !important;
+	font-style:italic !important;
+    }
+    a, a:hover {
+	color:black;
+	text-decoration:none;
+    }
     </style>
   </head>
   <body>
@@ -110,7 +110,14 @@
 		</tr>
 	      {% endif %}
 	    {% endfor %}
-            
+            {% if 'gspCF' in gross %}
+	      <tr class="cl">
+		<td>
+                  <span class="col-xs-8"><a class="rcaccname accounttd text-danger" href="#" style="text-decoration: none;" >Gross profit C/F</a></span>
+                  <span class="col-xs-4 text-right text-primary"><span style="margin-right:2em;">{{gross["gspCF"]}}</span></span>
+                </td>
+	      </tr>
+	    {% endif %}
 	    <tr class="group iegroup">
 	      <td>
 		<span class="col-xs-8"> <a class="rcaccname"  href="#" style="text-decoration: none;" >INDIRECT EXPENSE</a> </span>
@@ -226,14 +233,16 @@
 	    {% endfor %}
 	    <tr class="cl accountfield">
 	      <td>
-	        <span class="col-xs-8 accounttd"><a href="#">Closing Stock</a></span>
+	        <span class="col-xs-8 accounttd"><a class="pyaccname" href="#">Closing Stock</a></span>
 	        <span class="col-xs-4 text-right accounttd"><span style="margin-right:6em;">{{ClosingStock}}</span></span>
 	    </tr>
 	    
 	    {% if 'gslCF' in gross %}
 	      <tr class="cl accountfield">
-		<td class="col-xs-8"><a class="accounttd text-danger" href="#" style="text-decoration: none;">Gross loss C/F</a></td>
-		<td class="col-xs-4 text-right accounttd text-danger"><span style="margin-right:2em;">{{gross["gslCF"]}}</span></td>
+                <td>
+		  <span class="col-xs-8"><a class="accounttd text-danger pyaccname" href="#" style="text-decoration: none;">Gross loss C/F</a></span>
+		  <span class="col-xs-4 text-right accounttd text-danger"><span style="margin-right:2em;">{{gross["gslCF"]}}</span></span>
+                </td>
 	      </tr>
 	    {% endif %}
 	    <tr class="group iigroup">
@@ -288,7 +297,7 @@
     </div>
     <span class="hidden-print" style="margin:auto; display:table;">
       <button type="button" class="btn btn-sm btn-danger" id="pnlback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
-	   <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+      <button class="btn btn-sm btn-info" type="button"  id="realprintpnl" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
     </span>
     <input type="hidden" id="ledtodate" value="{{to}}">
     <input type="hidden" id="ledfromdate" value="{{from}}">
