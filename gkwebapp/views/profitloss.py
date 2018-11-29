@@ -399,10 +399,15 @@ def printprofitloss(request):
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    gross = {}
+    try:
+        gross["gspCF"] = result.json()["gkresult"]["grossprofitcf"]
+    except:
+        gross["gslCF"] = result.json()["gkresult"]["grosslosscf"]
     net = {}
     try:
         net["netprofit"] = result.json()["gkresult"]["netprofit"]
     except:
         net["netloss"] = result.json()["gkresult"]["netloss"]
     Total = result.json()["gkresult"]["Total"]
-    return {"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectExpense":InDirectExpense,"net":net,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total}
+    return {"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total}
