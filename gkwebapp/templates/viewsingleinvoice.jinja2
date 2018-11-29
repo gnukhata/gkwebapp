@@ -432,7 +432,7 @@
 {# delete invoice alerts #}
 			     <div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
-				{% trans %}invoice deleted successfully.{% endtrans %}
+				{% trans %}{{ gkresult["invoiceno"] }} invoice has deleted.{% endtrans %}
       </div>
 			<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 				{% trans %}invoice cannot be deleted!{% endtrans %}
