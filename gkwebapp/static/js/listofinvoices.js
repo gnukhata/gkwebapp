@@ -351,7 +351,8 @@ $(document).ready(function() {
                     };
                     // here reload previously selected list page after deleting
 					if (resp["gkstatus"] == 0) {
-						$('.modal-backdrop').remove();
+                        $('.modal-backdrop').remove();
+                        $('html,body').animate({scrollTop: ($("#viewinvdiv").offset().top)},'fast');
 						$("#delsuccess-alert").alert();
 						$("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#delsuccess-alert").hide();
@@ -373,6 +374,7 @@ $(document).ready(function() {
                         });        
                 }
                     else {
+                        $('html,body').animate({scrollTop: ($("#viewinvdiv").offset().top)},'fast');
 						$("#transaction-alert").alert();
 						$("#transaction-alert").fadeTo(2250, 500).slideUp(500, function() {
                             $("#transaction-alert").hide();
