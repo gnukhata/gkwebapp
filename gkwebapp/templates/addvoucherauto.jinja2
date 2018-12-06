@@ -53,6 +53,11 @@
           {% trans %}You are entering a post-dated transaction!{% endtrans %}
       </div>
 
+      <div class="alert alert-danger" id="inv-date-alert" aria-live="rude" role="alert" hidden>
+
+        {% trans %}Transaction date cannot be prior to Invoice date!{% endtrans %}
+            </div>
+
       <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
           {% trans %}Please enter voucher date from within the financial year!{% endtrans %}
       </div>
