@@ -284,7 +284,8 @@ $(document).ready(function() {
     var curdate = Date.parseExact($("#year").val()+$("#month").val()+$("#vdate").val(), "yyyyMMdd");
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-
+    var invoicedate= Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy");
+   
     if (!curdate.between(financialstart,financialend)) {
       $("#between-date-alert").alert();
       $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -293,8 +294,18 @@ $(document).ready(function() {
         $('#vdate').focus().select();
       });
       return false;
-    }
+  }
 
+  if(curdate < invoicedate){
+    $("#inv-date-alert").alert();
+      $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+        $("#inv-date-alert").hide();
+        $("#postdate-alert").hide();
+        $('#vdate').focus().select();
+      });
+      return false;
+  }
+  
   });
 
   $("#payment-mode").change(function() {
