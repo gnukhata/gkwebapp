@@ -444,7 +444,8 @@ $(document).ready(function() {
 							    '<span class="input-group-addon input-sm" id="unitaddon"></span>' +
 							    '</div>' +
 							    '</td>' +
-							    '<td class="col-xs-1">' +
+                  '<td class="col-xs-1">' +
+                  '<a href="#" class="product_add" style="color:black;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>'+
 							    '</td>' +
 							    '</tr>');
 		for (product of resp["products"]) {
@@ -665,7 +666,7 @@ $(document).ready(function() {
 				'</div>'+
 				'</td>'+
 				'<td class="col-xs-1">'+
-				'<div style="text-align: center;"><a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'+
+                  '<div style="text-align: center;"><a href="#" class="product_add" style="color:black; margin-right:10px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'+
 				'</td>'+
 				'</tr>');
 		      for (product of resp["products"]) {
@@ -738,7 +739,15 @@ $(document).ready(function() {
     });
     $('#transfernote_product_table tbody tr:last td:eq(0) select').select();
   });
-
+  $(document).off("click", ".product_add").on("click", ".product_add", function(event) {
+    event.preventDefault();
+    var curindex = $(this).closest('tr').index();
+    var nextindex = curindex + 1;
+    var previndex = curindex - 1;
+    var jqEvent = jQuery.Event("keydown");
+    jqEvent.which = 13; // # Some keycode value
+    $("#transfernote_product_table tbody tr:eq(" + curindex + ")").find("input:not(:disabled)").last().trigger(jqEvent);
+      });
     // Change event for quantity exceed alert box.
     $(document).off("change",".transfernote_product_quantity").on("change",".transfernote_product_quantity",function(event){
 	var curindex1 = $(this).closest('tr').index();
