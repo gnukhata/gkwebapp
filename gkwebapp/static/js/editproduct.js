@@ -62,10 +62,9 @@ $(document).ready(function() {
 		/* Act on the event */
 		$(".numtype").numeric();
 	    });
-	}
+  }
     }
   });
-
     if(sessionStorage.invflag==0){
 	$(".noinventory").hide();
 	$("#taxhelp3").hide();
@@ -379,6 +378,14 @@ $(document).ready(function() {
           $("#taxhelp5").show();  
 
         }
+       // delete button hide or show depends on deletable data
+      if($("#deletable").val() > 0){
+        $("#epdelete").prop('disabled',true);
+        }
+      else{
+        $("#epdelete").prop('disabled',false); 
+        }
+
         $("#unitaddon").html($("#edituom option:selected").attr('uname'));
         $(".pbutn").show();
         $("#epsubmit").hide();
