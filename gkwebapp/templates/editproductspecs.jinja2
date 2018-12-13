@@ -37,7 +37,7 @@
         {%endif%}
 	{% if proddesc["gsflag"]==7 %}
 	  <label for="editproddesc" class="" id="prodlabel">New Name of the Product :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
-	{%else%}
+		{%else%}
 	  <label for="editproddesc" class="" id="servicelabel">New Name of the Service :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
 	{%endif%}
 	<input type='text' class="form-control input-sm" name="editproddesc"  id="editproddesc" value="{{proddesc['productdesc']}}" placeholder="Alphanumeric">
@@ -375,12 +375,16 @@
               </td>
             </tr>
           {% endfor %}
-        </tbody>
-      </table>
+				</tbody>
+			</table>
     </div>
   </div>
   {% endif %}
     {% endif %}
 </div>
 {%endif%}
+</div>
+
+<div>
+	<input type="text" id="deletable" value="{{ proddesc["deletable"] }}" hidden>
 </div>
