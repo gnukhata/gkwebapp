@@ -131,6 +131,17 @@ def editOrganisation(request):
     except:
         print "no file found "
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
+    if result.json()["gkstatus"]==0 and request.params.has_key("bankdetails"):
+        try:
+            subgroupcode = requests.get("http://127.0.0.1:6543/groupsubgroups?orgbank", headers=header)
+            bankacc = {"accountname":json.loads(request.params["bankdetails"])['bankname'],"openingbal":0.00,"groupcode":subgroupcode.json()['gkresult']}
+            saveacc = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(bankacc),headers=header)
+            if saveacc.json()["gkstatus"] == 0:
+                logdata = {"activity":json.loads(request.params["bankdetails"])['bankname'] + " account created"}
+                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(logdata),headers=header)
+        except:
+            pass
+
     return {"gkstatus":result.json()["gkstatus"]}
 
 
