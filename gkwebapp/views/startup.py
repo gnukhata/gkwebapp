@@ -79,7 +79,11 @@ def yearcode(request):
 
 @view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
 def login(request):
-    return {"code":request.params["orgcode"], "flag": request.params["flag"]}
+    result = requests.get("http://127.0.0.1:6543/organisations?type=orgbranch&gbflag=2&orgcode=%d"%int(request.params["orgcode"]))
+    branch = []
+    for row in result.json()["gkdata"]:
+        branch.append({"bid":int(row["bid"]), "bname":row["bname"]})
+    return {"code":request.params["orgcode"], "flag": request.params["flag"], "branches":branch}
 
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
