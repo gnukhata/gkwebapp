@@ -68,6 +68,10 @@
 
         {% trans %}Username or Password is incorrect!{% endtrans %}
       </div>
+      <div class="alert alert-danger" id="login-branch-alert" aria-live="rude" role="alert" hidden>
+
+        {% trans %}Please select correct branch!{% endtrans %}
+      </div>
       <div id="signin" class="panel shadow col-sm-6 col-sm-offset-3" style="padding:0 !important;" >
         <div class="panel-heading">
           <div class="panel-title">{% trans %}Sign In{% endtrans %}</div>
@@ -84,8 +88,10 @@
             <div style="margin-bottom: 15px" class="input-group col-xs-12">
               <label for="userpassword">{% trans %}<u>P</u>assword :{% endtrans %}</label>
               <input id="userpassword" style="border-radius: 4px" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
+            
             </div>
-
+            {# below div is for branch selection. It will show only when the selected company has branches #}
+            {%if len > 0 %}
             <div style="margin-bottom: 15px" class="input-group col-xs-12">
             <label for="userpassword">{% trans %}<u>B</u>ranch :{% endtrans %}</label>
             <select class="form-control input-sm col-sm-8 selectfieldwidth"  id="orgbranch">
@@ -95,7 +101,8 @@
             {% endfor %}
             </select>
             </div>
-            
+            {%endif%}
+
             <div style="margin-bottom: 5px" class="input-group col-xs-12">
               <a id="forgotpwdlink" href="" aria-label="Forgot Password Link" accesskey="f">{% trans %}<u>F</u>orgot Password?{% endtrans %}</a>
             </div>
@@ -122,8 +129,10 @@
         </div>
     </div>
   </div>
+  
   <!-- ClickJacking Defence Code -->
   <style type="text/css" id="antiClickjack">body{display:none !important;}</style>
+  <input type="hidden" id="blength" value="{{ len }}">
   <script type="text/javascript">
       if (self === top) {
           var antiClickjack = document.getElementById("antiClickjack");

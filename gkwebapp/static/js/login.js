@@ -104,6 +104,17 @@ $(document).ready(function()
         $("#userpassword").focus();
         return false;
     }
+    if (($("#blength").val()) > 0) {
+        if($("#orgbranch option:selected").val() == '') {
+          var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
+        }
+        else {
+          var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val(),"goid": $("#orgbranch option:selected").val()}
+        }
+    }
+    if (($("#blength").val()) == 0) {
+      var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
+    }
     $("#loginspinmodal").modal("show");
       $.ajax(
       {
@@ -112,7 +123,7 @@ $(document).ready(function()
       global: false,
       async: false,
       datatype: "json",
-      data: {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()},
+      data: orgdata,
       success: function(resp)
       {
       if(resp["gkstatus"]==0)
@@ -154,6 +165,17 @@ $(document).ready(function()
           $("#login-blank-alert").hide();
         });
         $("#login_username").focus();
+        $("#loginspinmodal").modal("hide");
+        $('.modal-backdrop').remove();
+        return false;
+      }
+      else if(resp["gkstatus"]==4)
+      {
+        $("#login-branch-alert").alert();
+        $("#login-branch-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#login-branch-alert").hide();
+        });
+        $("#orgbranch").focus();
         $("#loginspinmodal").modal("hide");
         $('.modal-backdrop').remove();
         return false;
