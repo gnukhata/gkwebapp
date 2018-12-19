@@ -111,7 +111,7 @@ def edituser(request):
 def createuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     goflag = False
-    if int(request.params["userrole"]) == 3: 
+    if "godowns" in request.params:
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"],"golist":json.loads(request.params["godowns"])}
     else:
         gkdata = {"username":request.params["username"],"userpassword":request.params["userpassword"],"userrole":int(request.params["userrole"]),"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
@@ -127,6 +127,7 @@ def createuser(request):
             userrole = "Internal Auditor"
         else:
             userrole = "Godown In Charge"
+        if "godowns" in request.params:
             godnames = ""
             j = 1;
             godlist = json.loads(request.params["godowns"])
@@ -136,7 +137,7 @@ def createuser(request):
                 if j != len(godlist):
                     godnames += ", "
                 j += 1
-        if request.params["userrole"] == "3":
+        if "godowns" in request.params:
             gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " godown"}
         else:
             gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
