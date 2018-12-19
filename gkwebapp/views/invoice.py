@@ -100,6 +100,8 @@ def saveinvoice(request):
         invoicedata["address"] = request.params["address"]
     if request.params.has_key("pricedetails"):
         invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
+    if request.params.has_key("goid"):
+        invoicedata["goid"] = json.loads(request.params["goid"])
     try:
         files = {}
         count = 0

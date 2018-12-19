@@ -175,6 +175,7 @@ def godownsusers(request):
             gdata= { "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
 
         goddata.append(gdata)
+        
     return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
 
 @view_config(route_name="godown",request_param="type=check", renderer="json")

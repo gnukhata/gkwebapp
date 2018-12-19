@@ -189,8 +189,14 @@ $(document).ready(function() {
 	  }
 
 	  
-	  //This ajax gives the assign list of godowns for particular user. 
-	  if (userdetails["userrole"] == 3){
+	  //This ajax gives the assign list of godowns/branches for particular user. 
+    // gbflag =7 is for godown and 2 is branch
+    if (userdetails["userrole"] == 3){
+      var gbflag =7;
+    }
+    else if (userdetails["userrole"] == 0 || userdetails["userrole"] == 1 || userdetails["userrole"] == 2){
+      var gbflag =2;
+    }
 	    $("#usertable").show();
 	    $.ajax(
 	      {
@@ -199,7 +205,7 @@ $(document).ready(function() {
 		global: false,
 		async: false,
     datatype: "text/html",
-    data: {'gbflag':7},
+    data: {'gbflag':gbflag},
 		beforeSend: function(xhr)
 		{
 		  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -208,17 +214,17 @@ $(document).ready(function() {
 		{
 		  $("#usertable").html(resp);
 		  for(let i=0; i<$('#latable tbody tr').length; i++){
+        $('#latable tbody tr td input').prop("disabled", true);
 		    if($('#latable tbody tr:eq('+i+')').attr("value") in userdetails["godowns"]){
 		      $('#latable tbody tr:eq('+i+') td input').prop("checked", true);
-		      $('#latable tbody tr td input').prop("disabled", true);
 		    }
 		  }
 		}
 	      });
-	  }
-	  if (userdetails["userrole"] != 3){
-	    $("#usertable").hide();
-	  }
+	  
+	  // if (userdetails["userrole"] != 3){
+	  //   $("#usertable").hide();
+	  // }
         }
       });
     }
@@ -737,9 +743,9 @@ $(document).ready(function() {
 	dataset["userpassword"]=$("#password").val();
       }
     }
-    if($("#userrole").val()==3){
+    // if($("#userrole").val()==3){
       dataset["godowns"]=JSON.stringify(selectedgodowns);
-    }
+    // }
     $.ajax({
       type: "POST",
       url: "/showuser?type=updateuser",

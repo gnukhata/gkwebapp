@@ -104,16 +104,21 @@ $(document).ready(function()
         $("#userpassword").focus();
         return false;
     }
+    // Bellow:goid is branchid.Checking wheather organisation has goid's. If they have then,
+    // goid is selected, and if yes then send orgdata with goid and session store goid for complete session.
     if (($("#blength").val()) > 0) {
         if($("#orgbranch option:selected").val() == '') {
           var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
+          sessionStorage.goid = '';
         }
         else {
           var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val(),"goid": $("#orgbranch option:selected").val()}
+          sessionStorage.goid = $("#orgbranch option:selected").val();
         }
     }
     if (($("#blength").val()) == 0) {
       var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
+      sessionStorage.goid = '';
     }
     $("#loginspinmodal").modal("show");
       $.ajax(

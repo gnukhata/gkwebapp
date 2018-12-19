@@ -82,7 +82,9 @@ $(document).ready(function(){
     {
       var gbflag = 7;
     }
-    if (role==3){
+    else if (role == 0 || role == 1 || role == 2){
+      var gbflag = 2;
+    }
       $.ajax(
          {
 
@@ -102,10 +104,6 @@ $(document).ready(function(){
            $("#latable tbody tr:first td:first input").focus().select();
          }
          });
-         }
-         else {
-           $("#usertable").html("");
-         }
   });
 
   $(document).off("keydown",".user_role").on("keydown",".user_role",function(e){
