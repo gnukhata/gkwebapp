@@ -1450,7 +1450,10 @@ if (!curdate.between(financialstart, financialend)) {
       voucherdetails["cess"] = cess;
 
       form_data.append("vdetails",JSON.stringify(voucherdetails));
-    
+	//   goid is branchid. If login as branchvise then should send goid which is in session storage
+	if (sessionStorage.goid != ''){
+		form_data.append("goid",sessionStorage.goid);	
+	}
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
       $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
