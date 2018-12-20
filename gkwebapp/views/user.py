@@ -138,7 +138,10 @@ def createuser(request):
                     godnames += ", "
                 j += 1
         if "godowns" in request.params:
-            gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " godown"}
+            if (userrole == "Godown In Charge"):
+                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " godown"}
+            else:
+                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " branch"}
         else:
             gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
@@ -155,18 +158,23 @@ def removeuser(request):
 def deleteuser(request):
     headers={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/user?userAllData&userid=%d"%(int(request.params["username"])), headers=headers)
+    gkresult = result.json()["gkresult"]
     uname = result.json()["gkresult"]["username"]
     #urole in terms of integer
     urole = result.json()["gkresult"]["userrole"]
-    #urole in terms of string
+    # gbflag for branch or godown
+    if (urole == 3):
+        gbflag = 7
+    else:
+        gbflag = 2
     userrole = result.json()["gkresult"]["userroleName"]
-    if urole == 3:
-        resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d"%(int(request.params["username"])), headers=headers)
+    if "godowns" in gkresult:
+        resultgodown = requests.get("http://127.0.0.1:6543/godown?type=byuser&userid=%d&gbflag=%d"%(int(request.params["username"]),gbflag), headers=headers)
         resultgodown = resultgodown.json()["gkresult"]
     gkdata={"userid":request.params["username"]}
     result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
     if result.json()["gkstatus"] == 0:
-        if urole == 3:
+        if "godowns" in gkresult:
             godnames = ""
             j = 1
             for godown in resultgodown:
@@ -174,7 +182,10 @@ def deleteuser(request):
                 if j != len(resultgodown):
                     godnames += ", "
                 j += 1
-            gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " godown"}
+            if (userrole == "Godown In Charge"):
+                gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " godown"}
+            else:
+                gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted from " + godnames + " branch"}
         else:
             gkdata = {"activity":uname + "(" + userrole + ")" + " user deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=headers)
