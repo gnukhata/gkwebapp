@@ -2742,7 +2742,11 @@ if (event.which == 13) {
 		    return false;
 		}
 		form_data.append("file" + i, files[i]);
-	    }
+		}
+		//   goid is branchid. If login as branchvise then should send goid which is in session storage
+		if (sessionStorage.goid != ''){
+			form_data.append("goid",sessionStorage.goid);
+		}
 
 	$.ajax({
                 url: '/purchaseorder?action=save',
