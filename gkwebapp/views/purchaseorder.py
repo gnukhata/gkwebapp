@@ -94,6 +94,8 @@ def savepurchaseorder(request):
     if "issuername" in request.params:
         purchaseorderdata["issuername"] = request.params["issuername"]
         purchaseorderdata["designation"] = request.params["designation"]
+    if "goid" in request.params:
+        purchaseorderdata["goid"] = request.params["goid"]
     try:
         files = {}
         count = 0
