@@ -71,7 +71,10 @@ def addgodown(request):
     gkdata = {"gbflag":(int(request.params["gbflag"])),"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
     result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
-        gkdata = {"activity":request.params["godownname"] + " godown created"}
+        if (int(request.params["gbflag"])== 7):
+            gkdata = {"activity":request.params["godownname"] + " godown created"}
+        else:
+            gkdata = {"activity":request.params["godownname"] + " branch created"}    
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
