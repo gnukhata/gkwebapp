@@ -166,7 +166,9 @@ def addvoucher(request):
         gkdata["bankname"]=vdetails["bankname"]
         gkdata["branchname"]=vdetails["branchname"]
         gkdata["instrumentdate"] = vdetails["instrumentdate"]
-
+    # goid is branchid. if logged in is branchwise
+    if "goid" in request.params:
+        gkdata["goid"] = request.params["goid"]
 
     try:
         files = {}
@@ -236,6 +238,9 @@ def addvoucherauto(request):
         data["transactions"]["camount"] = request.params["camount"]
     if "invid" in request.params:
         data["vdetails"]["invid"] = request.params["invid"]
+    # goid is for branchid. when branchwise logged in.
+    if "goid" in request.params:
+        data["vdetails"]["goid"] = request.params["goid"]
 
     try:
         files = {}
