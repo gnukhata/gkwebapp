@@ -2102,7 +2102,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	  form_data.append("billdetails",JSON.stringify(billdetails));
 	  form_data.append("invoice", $("#invsel option:selected").text());
       }
-      
+    // goid is branchid. If logged in branchwise then send goid.
+    if (sessionStorage.goid != ''){
+      form_data.append("goid",sessionStorage.goid);
+    }
       $("#msspinmodal").modal("show");
     $.ajax({
       type: "POST",

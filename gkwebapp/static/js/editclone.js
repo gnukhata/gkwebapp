@@ -1909,6 +1909,10 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
       form_data.append("vdetails",JSON.stringify(details));
       form_data.append("transactions",JSON.stringify(output));
+      // branchwise loggedin then send goid which is branchid.
+      if (sessionStorage.goid != ''){
+        form_data.append("goid",sessionStorage.goid);
+      }
       $.ajax({
         type: "POST",
         url: "/addvoucher",
