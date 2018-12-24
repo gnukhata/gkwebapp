@@ -133,6 +133,7 @@ def orglogin(request):
     result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
     if result.json()["gkstatus"]==0:
         if request.params.has_key("bankdetails"):
+            #this is use when bank account details are available it create  bank account of that details  when we create new organization.
             try:
                 header={"gktoken":result.json()["token"]}
                 subgroupcode = requests.get("http://127.0.0.1:6543/groupsubgroups?orgbank", headers=header)

@@ -132,6 +132,7 @@ def editOrganisation(request):
         print "no file found "
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
     if result.json()["gkstatus"]==0 and request.params.has_key("bankdetails"):
+            #this is use when bank account details are available it create  bank account of that details  when we editorganization.
         try:
             subgroupcode = requests.get("http://127.0.0.1:6543/groupsubgroups?orgbank", headers=header)
             bankacc = {"accountname":json.loads(request.params["bankdetails"])['bankname'],"openingbal":0.00,"groupcode":subgroupcode.json()['gkresult']}
