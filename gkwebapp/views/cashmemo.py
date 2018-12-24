@@ -84,6 +84,8 @@ def savecashmemo(request):
         cashmemodata["discount"]=json.loads(request.params["discount"])
     if request.params.has_key("bankdetails"):
         cashmemodata["bankdetails"]=json.loads(request.params["bankdetails"])
+    if request.params.has_key("goid"):
+        cashmemodata["goid"]=json.loads(request.params["goid"])
     stock = json.loads(request.params["stock"])
     invoicewholedata = {"invoice":cashmemodata,"stock":stock}
 
