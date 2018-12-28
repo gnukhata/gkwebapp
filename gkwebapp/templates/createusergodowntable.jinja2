@@ -1,4 +1,5 @@
 <label>
+{# gbflag is checking wheather godown or branch #}
   {%if gbflag == 7%}
   {% trans %}List of Godowns{% endtrans %} : 
   {%else%}
@@ -8,7 +9,11 @@
 <div class="panel-body nopadding">
   {% if not gkresult %}
     <div class="bg-danger col-xs-12" style="padding:10;">
-    <label class="text-danger">No Godowns Found</label>
+    {%if gbflag == 7%}
+    <label class="text-danger">No Godowns Found</label> 
+    {%else%}
+    <label class="text-danger">No Branch Found</label>
+    {%endif%}
     </div>
   {%else%} 
 <table id="latable" class="table shadow table-bordered">
