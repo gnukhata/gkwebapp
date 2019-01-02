@@ -101,7 +101,11 @@ $(document).ready(function(){
          success: function(resp)
          {
            $("#usertable").html(resp);
-           $("#latable tbody tr:first td:first input").focus().select();
+          //  role 3 is for godown tehirfore it is compulsion to select godown and focus on first godown.
+           if(role == 3)
+          {
+            $("#latable tbody tr:first td:first input").focus().select();
+          }  
          }
          });
   });
