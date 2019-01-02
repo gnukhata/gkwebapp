@@ -101,11 +101,6 @@ $(document).ready(function(){
          success: function(resp)
          {
            $("#usertable").html(resp);
-          //  role 3 is for godown tehirfore it is compulsion to select godown and focus on first godown.
-           if(role == 3)
-          {
-            $("#latable tbody tr:first td:first input").focus().select();
-          }  
          }
          });
   });
@@ -116,7 +111,6 @@ $(document).ready(function(){
       $("#question").focus();
     }
     if (e.which == 13) {
-      e.preventDefault();
       var index = $('.user_role').index(this) + 1;
          $('.user_role').eq(index).focus();
     }
@@ -214,12 +208,7 @@ $(document).ready(function(){
           return false;
         }
           e.preventDefault();
-         if ($(this).val()==3) {
-           $("#latable tbody tr:first td:first input").focus().select();
-         }
-         else {
-           $("#question").focus().select();
-         }
+          $("#latable tbody tr:first td:first input").focus().select();
      }
 
       if (e.which==38) {
