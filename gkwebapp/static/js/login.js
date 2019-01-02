@@ -58,10 +58,18 @@ $(document).ready(function()
       if (e.which == 38)
       {
         e.preventDefault();
-        $("#login_username").focus();
+        $("#orgbranch").focus();
 
         }
   });
+  $("#orgbranch").keydown(function(e) {
+    if (e.which == 38)
+    {
+      e.preventDefault();
+      $("#login_username").focus();
+
+      }
+});
   $("#back").click(function(event){
   // loads select organisation page on back.
     event.preventDefault();
@@ -165,6 +173,7 @@ $(document).ready(function()
       }
       else if(resp["gkstatus"]==2)
       {
+        console.log("ffff");
         $("#login-blank-alert").alert();
         $("#login-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#login-blank-alert").hide();
