@@ -651,6 +651,9 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
     //Click event for '+' button which trigger click event of 'gstin' field. 
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	$(".gstin").trigger({type:"keydown",which:"13"});
+	$("#gstintable tbody tr:last").find(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled",false);
+	$("#gstintable tbody tr:last").find(".state_del").show();
+
     });
 
     // Keydown events for bank details
@@ -925,13 +928,14 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_address").prop("disabled", false);
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
-      $("#edit_cussup_tan").prop("disabled", false);
-      $(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled",false);
-      $("#edit_state").prop("disabled", false);
-      $("#edit_accountno").prop("disabled", false);
-      $("#edit_bankname").prop("disabled", false);
-      $("#edit_branchname").prop("disabled", false);
-      $("#edit_ifsc").prop("disabled", false);
+	$("#edit_cussup_tan").prop("disabled", false);
+	$(".state_del").hide();
+	$(".addbtn").prop("disabled",false);
+    $("#edit_state").prop("disabled", false);
+    $("#edit_accountno").prop("disabled", false);
+    $("#edit_bankname").prop("disabled", false);
+    $("#edit_branchname").prop("disabled", false);
+    $("#edit_ifsc").prop("disabled", false);
   });
   $(document).keyup(function(event) {
       if(event.which == 45) {
