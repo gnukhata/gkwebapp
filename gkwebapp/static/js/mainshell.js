@@ -668,7 +668,8 @@ $(document).ready(function(){
 	 $(".administrationmenu").remove();
 	 $(".intauditor").remove();
 	 $("#fevoucher").text("Find Voucher");
-	 $("#business").remove();
+   $("#business").remove();
+   $("#help-message").hide();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
@@ -737,6 +738,7 @@ $(document).ready(function(){
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
+  var branchname = sessionStorage.getItem('goname');
   var orgdata = orname + " (" + ortype + ")";	
   var userdata = "\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
   var yeardata = "Financial Year : " + styear + " to " + enyear;
@@ -744,6 +746,10 @@ $(document).ready(function(){
   // organisation details are stored in items that are only visible in print.
   $("title").append(orname);
   $("#printorgname").append(orname);
+  // shown branchname when logged in to branch
+  if (branchname != ''){
+    $("#branch").append('('+branchname+')');
+  }
   $("#printyears").append(styear + " to " + enyear);
   $("#showedituser").click(function(e){
     // calls edit user form.
