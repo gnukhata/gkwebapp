@@ -35,6 +35,8 @@ $(document).ready(function()
   var orgdata = orname + " (" + ortype + ")";
   var pathname = window.location.pathname;
   var yeardata = "Financial Year : " + styear + " to " + enyear;
+  var len;
+  $("#branchdiv").hide();
   if(orgdata!=""||yeardata!="")
   {
   // displays organisation details in the status bar.
@@ -55,20 +57,71 @@ $(document).ready(function()
         }
       });
   $("#userpassword").keydown(function(e) {
-      if (e.which == 38)
+    if (e.which == 13)
       {
         e.preventDefault();
-        $("#orgbranch").focus();
-
+        // if there are branches only that time branch selection option is availale. so only that time 
+        // it will focus on branch selection otherwise focus on login
+        if (len['blen']>0){
+          $("#orgbranch").focus();
         }
-  });
-  $("#orgbranch").keydown(function(e) {
-    if (e.which == 38)
+        else{
+          $("#login").focus();
+        }   
+      }
+      if(e.which == 38)
     {
       e.preventDefault();
       $("#login_username").focus();
+    }
+    });
+    // This ajax is for fetching number of branches of entered username.
+  $("#login_username").change(function(){
+    userdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val()};
+        $.ajax(
+          {
+          type: "POST",
+          url: "/editorganisation?type=userloginbranch",
+          global: false,
+          async: false,
+          datatype: "json",
+          data: userdata,
+          success: function(jsonObj){
+            len = jsonObj["len"]
+            // if their are more than zero branches, only that time it will show branch selection option.
+            if (len['blen'] > 0){
+              $("#branchdiv").show();
+            }
+            else{
+              $("#branchdiv").hide();
+            }
+            var br = jsonObj["branches"];
+            for (let i in br ){
+		      $('#orgbranch').append('<option value="' + br[i].bid + '">' + br[i].bname+' </option>');                  
+            }
+          }
+          });
+  });
 
+  $("#orgbranch").keydown(function(e) {
+    if (e.which == 13)
+    {
+      e.preventDefault();
+      $("#login").focus();
       }
+    if(e.which == 38)
+    {
+      e.preventDefault();
+      $("#userpassword").focus();
+    }
+});
+
+$("#login").keydown(function(e) {
+  if (e.which == 38)
+  {
+    e.preventDefault();
+    $("#orgbranch").focus();
+    }
 });
   $("#back").click(function(event){
   // loads select organisation page on back.
@@ -112,21 +165,24 @@ $(document).ready(function()
         $("#userpassword").focus();
         return false;
     }
-    // Bellow:goid is branchid.Checking wheather organisation has goid's. If they have then,
-    // goid is selected, and if yes then send orgdata with goid and session store goid for complete session.
-    if (($("#blength").val()) > 0) {
+    // Bellow:blen is number of branches of user enetered.Checking wheather user has branches. If they have then,
+    // goid(branchid) is selected, and if yes then send orgdata with goid and session store goid for complete session.
+    if (len['blen'] > 0) {
         if($("#orgbranch option:selected").val() == '') {
           var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
           sessionStorage.goid = '';
+          sessionStorage.goname = '';
         }
         else {
           var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val(),"goid": $("#orgbranch option:selected").val()}
           sessionStorage.goid = $("#orgbranch option:selected").val();
+          sessionStorage.goname = $("#orgbranch option:selected").text();
         }
     }
-    if (($("#blength").val()) == 0) {
+    if (len['blen'] == 0) {
       var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
       sessionStorage.goid = '';
+      sessionStorage.goname = '';
     }
     $("#loginspinmodal").modal("show");
       $.ajax(

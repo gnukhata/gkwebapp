@@ -55,7 +55,7 @@
     </ul>
   </div>
   <div id="loader" class="container-fluid">
-    <div id="forgotpassworddiv" class="mainbox">
+    <div id="forgotpassworddiv" class="mainbox"z>
       <div class="alert alert-danger" id="login_username-blank-alert" aria-live="rude" role="alert" hidden>
 
         {% trans %}Please enter username!{% endtrans %}
@@ -91,18 +91,14 @@
               <input id="userpassword" style="border-radius: 4px" type="password" class="form-control col-xs-12" name="userpassword" accesskey="p"></input>
             
             </div>
-            {# below div is for branch selection. It will show only when the selected company has branches #}
-            {%if len > 0 %}
-            <div style="margin-bottom: 15px" class="input-group col-xs-12">
+
+            {# below div is for branch selection. It will show only when the entered username has branches #}
+            <div style="margin-bottom: 15px" class="input-group col-xs-12" id="branchdiv">
             <label for="userpassword">{% trans %}<u>B</u>ranch :{% endtrans %}</label>
-            <select class="form-control input-sm col-sm-8 selectfieldwidth"  id="orgbranch">
-			      <option value="" invoiceno = "" selected>Select Branch</option>
-            {% for branch in branches %}
-            <option value="{{branch['bid']}}">{{branch['bname']}}</option>
-            {% endfor %}
+            <select style="border-radius: 4px" class = "form-control col-xs-12" id="orgbranch" name="orgcode" accesskey="f">
+                <option value="" disabled selected hidden>{% trans %}Select Branch{% endtrans %}</option>
             </select>
             </div>
-            {%endif%}
 
             <div style="margin-bottom: 5px" class="input-group col-xs-12">
               <a id="forgotpwdlink" href="" aria-label="Forgot Password Link" accesskey="f">{% trans %}<u>F</u>orgot Password?{% endtrans %}</a>
@@ -133,7 +129,6 @@
   
   <!-- ClickJacking Defence Code -->
   <style type="text/css" id="antiClickjack">body{display:none !important;}</style>
-  <input type="hidden" id="blength" value="{{ len }}">
   <script type="text/javascript">
       if (self === top) {
           var antiClickjack = document.getElementById("antiClickjack");
