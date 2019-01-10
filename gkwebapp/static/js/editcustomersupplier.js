@@ -380,8 +380,8 @@ $(document).ready(function() {
 		$("#edit_cussup_tan").focus();
 	    }
 	    else {
-		$(".gstinstate:first").focus();
-	    }
+			$(".gstinstate:first").focus();
+	}
 	}
     }
     if (event.which==38){
@@ -929,6 +929,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
 	$("#edit_cussup_tan").prop("disabled", false);
+	if($(".gstinstate:first option:selected").val()==""){
+		$(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled", false);
+	}
 	$(".state_del").hide();
 	$(".addbtn").prop("disabled",false);
     $("#edit_state").prop("disabled", false);
