@@ -37,7 +37,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os, StringIO
+import os, cStringIO
 
 '''
 This function returns a spreadsheet form of List of Accounts Report.
@@ -100,7 +100,7 @@ def spreadsheetofaccounts(request):
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)            
             row = row + 1
             srno += 1  
-        output = StringIO.StringIO()
+        output = cStringIO.StringIO()
         accountwb.save(output)
         contents = output.getvalue()
         output.close()
