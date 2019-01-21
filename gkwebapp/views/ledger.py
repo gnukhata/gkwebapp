@@ -40,7 +40,7 @@ import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles.colors import RED
-import os
+import os, cStringIO
 
 '''
 This function returns a spreadsheet form of Monthly Ledger Report.
@@ -147,13 +147,12 @@ def printmonthlyledgerreport(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        mledgerwb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())
+        output = cStringIO.StringIO()
+        mledgerwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         print "File not found"
         return {"gkstatus":3}
@@ -312,13 +311,12 @@ def printLedgerReport(request):
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
                 sheet['D'+str(row)].alignment = Alignment(vertical='center')
             row +=1
-        ledgerwb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())
+        output = cStringIO.StringIO()
+        ledgerwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         print "File not found"
         return {"gkstatus":3}
