@@ -36,7 +36,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os
+import os, cStringIO
 
 @view_config(route_name="category",renderer="gkwebapp:templates/category.jinja2")
 def showcategory(request):
@@ -255,13 +255,12 @@ def listofgodownssspreadsheet(request):
             else:
                 row = subrow
             srno += 1  
-        categorywb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())       
+        output = cStringIO.StringIO()
+        categorywb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         return {"gkstatus":3}
     

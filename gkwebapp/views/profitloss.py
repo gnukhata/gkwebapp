@@ -34,7 +34,7 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import os
+import os, cStringIO
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import calendar
@@ -370,13 +370,12 @@ def printprofitandloss(request):
     sheet["D" + str(row)].number_format="0.00"
     sheet["D" + str(row)].alignment = Alignment(horizontal = "right")
     sheet["D" + str(row)].font = Font(name='Liberation Serif',size=12,bold=True)
-    pandlwb.save("response.xlsx")
-    repFile = open("response.xlsx")
-    rep = repFile.read()
-    repFile.close()
-    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(rep),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-    os.remove("response.xlsx")
-    return Response(rep, headerlist=headerList.items())
+    output = cStringIO.StringIO()
+    pandlwb.save(output)
+    contents = output.getvalue()
+    output.close()
+    headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+    return Response(contents, headerlist=headerList.items())
 
 
 @view_config(route_name="showprofitloss", renderer="gkwebapp:templates/viewprofitloss.jinja2")
