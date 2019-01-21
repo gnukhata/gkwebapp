@@ -37,7 +37,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os
+import os, StringIO
 
 '''
 This function returns a spreadsheet form of List of Accounts Report.
@@ -100,13 +100,12 @@ def spreadsheetofaccounts(request):
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)            
             row = row + 1
             srno += 1  
-        accountwb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())       
+        output = StringIO.StringIO()
+        accountwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         return {"gkstatus":3}
 
