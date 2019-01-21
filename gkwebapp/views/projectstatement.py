@@ -34,7 +34,7 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import os
+import os, cStringIO
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import calendar
@@ -112,13 +112,12 @@ def printprojectstatementreport(request):
             sheet['E'+str(row)].alignment = Alignment(horizontal='right')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        projstmtwb.save('report.xlsx')
-        xlsxfile = open("report.xlsx","r")
-        reportxslx = xlsxfile.read()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        xlsxfile.close()
-        os.remove("report.xlsx")
-        return Response(reportxslx, headerlist=headerList.items())
+        output = cStringIO.StringIO()
+        projstmtwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         print "File not found"
         return {"gkstatus":3}
