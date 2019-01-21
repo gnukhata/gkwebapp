@@ -297,6 +297,7 @@ $(document).ready(function() {
   }
 
   if(curdate < invoicedate){
+    $('#vdate').focus().select();
     $("#inv-date-alert").alert();
       $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function() {
         $("#inv-date-alert").hide();
