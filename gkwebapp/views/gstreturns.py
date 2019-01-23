@@ -73,7 +73,7 @@ def gstr1_spreadsheet(request):
     wb = gst_r1_template(result)
 
     output = cStringIO.StringIO()
-    categorywb.save(output)
+    wb.save(output)
     contents = output.getvalue()
     output.close()
     headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}

@@ -900,7 +900,7 @@ def stockreportspreadsheet(request):
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 row += 1
         output = cStringIO.StringIO()
-        categorywb.save(output)
+        prowb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
