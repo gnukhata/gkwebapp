@@ -38,7 +38,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os, StringIO
+import StringIO
 
 
 #This function calls User Tab 

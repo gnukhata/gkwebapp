@@ -35,7 +35,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os, cStringIO
+import cStringIO
 '''
 This function brings data of unpaid bills and unadjusted amounts.
 This could be either called after a voucher is created or from the Unadjusted Amounts module.

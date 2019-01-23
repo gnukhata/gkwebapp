@@ -41,7 +41,6 @@ import base64
 import cStringIO
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os
 
 
 @view_config(route_name="deliverychallan",renderer="gkwebapp:templates/deliverychallan.jinja2")

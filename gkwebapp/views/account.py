@@ -37,7 +37,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os, cStringIO
+import cStringIO
 
 '''
 This function returns a spreadsheet form of List of Accounts Report.
