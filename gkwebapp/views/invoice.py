@@ -39,7 +39,6 @@ from PIL import Image
 import cStringIO
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import os
 from openpyxl.utils import get_column_letter
 import base64
 

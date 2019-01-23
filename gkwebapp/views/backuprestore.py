@@ -32,7 +32,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import base64
-import os, shutil
+import cStringIO, shutil
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -297,13 +297,12 @@ def exportLedger(request):
                 a = Voucher.cell(row=rowCounter,column=2,value=v["narration"])
                 a.font = Font(italic=True , size = 10)
                 rowCounter = rowCounter + 1      
-        gkwb.save(filename = "AllLedger.xlsx")
-        AllLedgerfile = open("AllLedger.xlsx","r")
-        bf = AllLedgerfile.read()
-        AllLedgerfile.close()
-        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(bf),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        os.remove("AllLedger.xlsx")
-        return Response(bf, headerlist=headerList.items())
+        output = cStringIO.StringIO()
+        gkwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=AllLedger.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
     except:
         print "file not found"
         return {"gkstatus":3}

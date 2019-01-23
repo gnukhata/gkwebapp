@@ -40,7 +40,7 @@ import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles.colors import RED
-import os, cStringIO
+import cStringIO
 
 '''
 This function returns a spreadsheet form of Monthly Ledger Report.
