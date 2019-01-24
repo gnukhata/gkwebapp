@@ -157,6 +157,7 @@ def main(global_config, **settings):
     config.add_route('printledger', '/printledger')
     config.add_route('unitofmeasurements','/unitofmeasurements')
     config.add_route('godown', '/godown')
+    config.add_route('budget', '/budget')
     config.add_route('customersuppliers','/customersuppliers')
     config.add_route('transfernotes','/transfernotes')
     config.add_route('cashmemos','/cashmemos')

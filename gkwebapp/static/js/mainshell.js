@@ -830,6 +830,26 @@ $(document).ready(function(){
      });
   });
 
+  $('#budget').click(function (e) {
+    // Loads budget page in the main div.
+    $.ajax({
+      url: '/budget',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+
+    })
+     .done(function(resp) {
+       $("#info").html(resp);
+     });
+
+  });
+
   $("#exportbutton").click(function(e){
     // This function serves the client with a spreadsheet file having ledgers.
     var xhr = new XMLHttpRequest();

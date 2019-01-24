@@ -1,0 +1,37 @@
+<label>
+{# gbflag is checking wheather godown or branch #}
+  {% trans %}List of Accounts{% endtrans %} : 
+  </label>
+<div class="panel-body nopadding">
+  {% if not gkresult %}
+    <div class="bg-danger col-xs-12" style="padding:10;">
+    <label class="text-danger">No Godowns Found</label> 
+    </div>
+  {%else%} 
+<table id="latable" class="table shadow table-bordered">
+    <thead>
+      <tr>
+        <th class="lalign">
+        {% trans %}Accounts Name{% endtrans %}
+        </th>
+        <th class="lalign" >
+        {% trans %}Budget Amount{% endtrans %}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+    {% for record in gkresult %}
+    <tr	value="{{record["accountcode"]}}">
+      <td class="smwrap lalign">
+        {{record["accountname"]}}
+      </td>
+      <td class="smwrap lalign" >
+          <input style="border-radius: 4px" id="amount" type="integer" class="form-control input-sm" name="username" accesskey="e"></input>        
+      </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+  </table>
+    
+    {%endif%}
+
