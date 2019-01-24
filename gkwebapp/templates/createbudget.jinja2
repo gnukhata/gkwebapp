@@ -1,0 +1,123 @@
+  <style>
+  .login-box{
+    background-color: rgba(220, 225,225,0.4);
+  }
+
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 20%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 24em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .smwrap1{
+   width: 1.34%
+ }
+
+ .lngwrap{
+  width:13%
+ }
+ .mdwrap{
+  width:8%
+ }
+  </style>
+<body>
+	  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+      <div class="panel shadow col-md-4">
+
+        <form id="addbudget" method="post"  class="form-horizontal">
+        <div style="padding-top:15px" class="panel-body" >
+            
+			<div id = "gaflag" style="margin-bottom: 10px" class="input-group col-xs-12">
+				{# <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label> #}
+				<label><input type="radio"  name="cashmemo" id="group" aria-label="gst" value="7" checked> Group Wise</label>&nbsp
+				<label><input type="radio"  name="cashmemo" id="account" aria-label="vat" value="1"> Account Wise</label>
+			</div>
+
+            <div style="margin-bottom: 10px" class="input-group col-xs-12">
+              <label for="name" id="usrname">{% trans %}Budget name{% endtrans %} :</label>
+              <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="e"></input>
+            </div>
+
+			<div style="margin-bottom: 10px" class="col-xs-12 from-group">
+				<label for="viewbalsht_fromday">{% trans %}From Date{% endtrans %} :</label>
+				<div class="form-inline" >
+					<div class="form-group">
+					<input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_fromday"  size="2" maxlength="2" placeholder="DD">
+					<input type="text" id="viewbalsht_frommonth" class="viewbalsht_date dis form-control input-sm"  size="2" maxlength="2" placeholder="MM">
+					<input type="text" id="viewbalsht_fromyear" class="viewbalsht_date dis form-control input-sm"  size="4" maxlength="4" placeholder="YYYY">
+					</div>
+				</div>
+          		<br>
+				<label for="viewbalsht_today">{% trans %}To <u>D</u>ate{% endtrans %} :</label>
+				<div class="form-inline" >
+            		<div class="form-group">
+					<input type="text" class="viewbalsht_date form-control input-sm dis" id="viewbalsht_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+					<input type="text" id="viewbalsht_tomonth" class="viewbalsht_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
+					<input type="text" id="viewbalsht_toyear" class="viewbalsht_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
+            	</div>
+          	</div>
+			</div>
+          	<br>
+
+            <div style="margin-bottom: 10px" class="input-group col-xs-12">
+              <label for="userrole" id="pwdconfirm">{% trans %}Budget Type{% endtrans %} :</label>
+              <select name="userrole" style="border-radius: 4px" id="userrole" type="text" class="form-control input-sm" accesskey="t">
+                <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
+                <option value="0">{% trans %}Cash{% endtrans %}</option>
+                <option value="1">{% trans %}Expense{% endtrans %}</option>
+                <option value="2">{% trans %}Sales{% endtrans %}</option>
+                
+              </select>
+            </div>
+          </div>
+      </form>
+      <div class="panel-footer">
+        <button type="submit" id="adduser_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i>S<u>a</u>ve{% endtrans %}</button>
+	<button id="adduser_reset" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
+      </div>
+      </div>
+    <div id="accounttable" style="margin-left:10%; float:right;" class="mainbox col-md-6">
+
+    </div>
+  </div>
+
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createbudget.js')}}"></script>
+</body>
