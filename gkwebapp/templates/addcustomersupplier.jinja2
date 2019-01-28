@@ -110,11 +110,10 @@
             <div class="col-sm-2">
             <label for="add_cussup">{% trans %}Role:{% endtrans %}</label><label for="add_cussup" style="color:red;font-size: 120%;">*</label>
             </div>
-            <div id="add_cussup">
+            <div id="add_cussup" class="col-sm-4">
               <div class="radio">
                 <label><input type="radio" name="selector" value="3" checked> Customer</label>
-              </div>
-              <div class="radio" style="margin-left:15px" >
+              
                 <label><input type="radio" name="selector" value="19"> Supplier</label>
               </div>
             </div>
@@ -187,19 +186,19 @@
 	  <i class="fa fa-question-circle pull-right" style="font-size:16px;color:black;"data-toggle="modal" data-target="#accModal"></i>
 	  <div class="form-group"  id ="gstin">
             <label for="gstin">{% trans %}GSTIN:{% endtrans %}</label>
-	    <div class ="panel panel-default">
-	      <table id="gstintable" class="table table-condensed table-bordered fixed-table">
+	    <div class ="panel panel-default table-responsive">
+	      <table id="gstintable" class="table table-responsive table-condensed table-bordered fixed-table">
                 <thead class="bg-primary input-sm">
                   <tr>
-                    <th class="col-xs-6 text-center">{% trans %}State{% endtrans %}</th>
-                    <th class="col-xs-4 text-center">{% trans %}GSTIN{% endtrans %}</th>
-                    <th class="col-xs-1"></th>
-		    <th class="col-xs-1"></th>
+                    <th class="text-center" style="width:40%">{% trans %}State{% endtrans %}</th>
+                    <th class=" text-center" style="width:40%">{% trans %}GSTIN{% endtrans %}</th>
+                    <th class="" style="width:10%"></th>
+		                <th class="" style="width:10%"></th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr>
-                    <td class="col-xs-6">
+                    <td class=""style="width:40%">
                       <select class="form-control input-sm gstinstate">
                         <option value="" disabled hidden selected>Select State</option>
                         {% for state in states %}
@@ -209,19 +208,25 @@
 			{% endfor %}
                       </select>
                     </td>
-                    <td class="col-xs-4">
+                    <td class="" style="width:40%">
 		      <div class="form-inline nopadding">
 			<div class="form-group nopadding">
-			  <input type="text" class="form-control input-sm nopadding statecode" size="4" maxlength="2" disabled >
-			  <input type="text" class="form-control input-sm nopadding panno" size="12" maxlength="10">
-			  <input type="text" class="form-control input-sm nopadding gstin" size="6" maxlength="3">
-			</div>
+        <div class="col-xs-2" >
+          <input type="text" style="min-width:35px" class="form-control input-sm nopadding statecode" size="4" maxlength="2" disabled >
+        </div>
+        <div class="col-xs-6" >
+          <input type="text" style="min-width:105px" class="form-control input-sm nopadding panno" size="12" maxlength="10">
+        </div>
+        <div class="col-xs-3" >
+          <input type="text" style="min-width:15px" class="form-control input-sm nopadding gstin" size="6" maxlength="3">
+      </div>
+    </div>
 		      </div>
                     </td>
-                    <td class="col-xs-1">
+                    <td class="" style="width:10%">
 		      <div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>
                     </td>
-		    <td class="col-xs-1">
+		    <td class="" style="width:10%">
                     </td>
                   </tr>
                 </tbody>

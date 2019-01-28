@@ -247,7 +247,52 @@
 	      {% endif %}
 	      <div class="form-group hidden-load" hidden style="padding-bottom:0px !important; margin-bottom:0px !important;">
 		<label for="edit_cussup_gstin">{% trans %}GSTIN:{% endtrans %}</label>
-		<div class ="panel panel-default" style="padding-bottom:0px !important; margin-bottom:0px !important;"> 
+		<div class ="panel panel-default table-responsive">
+			<table id="gstintable" class="table table-responsive table-condensed table-bordered fixed-table">
+							<thead class="bg-primary input-sm">
+								<tr>
+									<th class="text-center" style="width:40%">{% trans %}State{% endtrans %}</th>
+									<th class=" text-center" style="width:40%">{% trans %}GSTIN{% endtrans %}</th>
+									<th class="" style="width:10%"></th>
+									<th class="" style="width:10%"></th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td class=""style="width:40%">
+										<select class="form-control input-sm gstinstate">
+											<option value="" disabled hidden selected>Select State</option>
+											{% for state in states %}
+			{% for key, value in state.items() %}
+				<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+			{% endfor %}
+		{% endfor %}
+										</select>
+									</td>
+									<td class="" style="width:40%">
+				<div class="form-inline nopadding">
+		<div class="form-group nopadding">
+			<div class="col-xs-2" >
+				<input type="text" style="min-width:35px" class="form-control input-sm nopadding statecode" size="4" maxlength="2" disabled >
+			</div>
+			<div class="col-xs-6" >
+				<input type="text" style="min-width:105px" class="form-control input-sm nopadding panno" size="12" maxlength="10">
+			</div>
+			<div class="col-xs-3" >
+				<input type="text" style="min-width:15px" class="form-control input-sm nopadding gstin" size="6" maxlength="3">
+		</div>
+	</div>
+				</div>
+									</td>
+									<td class="" style="width:10%">
+				<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>
+									</td>
+			<td class="" style="width:10%">
+									</td>
+								</tr>
+							</tbody>
+			</table>
+		</div><!-- <div class ="panel panel-default" style="padding-bottom:0px !important; margin-bottom:0px !important;"> 
 		  <table id="gstintable" class="table table-condensed table-bordered fixed-table">
 		    <thead class="bg-primary input-sm">
                       <tr>
@@ -285,7 +330,7 @@
                       </tr>
 		    </tbody>
 		  </table>
-		</div>
+		</div> -->
               </div>
 	      <small id="textareahelp2" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Save button.</small>
 	      <small id="textareahelp3" class="form-text text-muted">Press Esc key from any field in the table to shift focus to Account No.</small> 
