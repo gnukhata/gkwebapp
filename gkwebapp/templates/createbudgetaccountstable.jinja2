@@ -3,12 +3,15 @@
   {% trans %}List of Accounts{% endtrans %} : 
   </label>
 <div class="panel-body nopadding">
+      <div class="alert alert-danger" id="account-alert" aria-live="rude" role="alert" hidden>
+          <label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
   {% if not gkresult %}
     <div class="bg-danger col-xs-12" style="padding:10;">
-    <label class="text-danger">No Godowns Found</label> 
+      <label class="text-danger">No Godowns Found</label> 
     </div>
   {%else%} 
-<table id="latable" class="table shadow table-bordered">
+  <table id="latable" class="table shadow table-bordered">
     <thead>
       <tr>
         <th class="lalign">
@@ -21,12 +24,14 @@
     </thead>
     <tbody>
     {% for record in gkresult %}
-    <tr	value="{{record["accountcode"]}}">
-      <td class="smwrap lalign">
-        {{record["accountname"]}}
+    <tr	id="{{record["accountcode"]}}_id" value="{{record["accountcode"]}}">
+      <td id="{{record["accountcode"]}}_name" class="smwrap lalign">
+        {{record["accountname"] | trim}} {{record["accountcode"]}}
       </td>
-      <td class="smwrap lalign" >
-          <input style="border-radius: 4px" id="amount" type="integer" class="form-control input-sm" name="username" accesskey="e"></input>        
+      <td class="smwrap lalign">
+          <input id="{{record["accountcode"]}}_value" type="text" 
+            class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+            value="0.00" size="8" placeholder="0.00" />        
       </td>
     </tr>
     {% endfor %}
@@ -34,4 +39,4 @@
   </table>
     
     {%endif%}
-
+</div>
