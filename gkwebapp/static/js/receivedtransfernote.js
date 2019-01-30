@@ -173,10 +173,10 @@ This script is for the Received transfer note page.
           $('#transfernote_product_table tbody').empty();
           $.each(result.productdetails, function(key, value) {
             $('#transfernote_product_table tbody').append('<tr>'+
-							  '<td class="col-xs-9">'+
+							  '<td class="col-xs-8">'+
 							  value.productdesc+
 							  '</td>'+
-							  '<td class="col-xs-3">'+
+							  '<td class="col-xs-4">'+
 							  value.qty+' ' +value.unitname+
 							  '</td>'+
 

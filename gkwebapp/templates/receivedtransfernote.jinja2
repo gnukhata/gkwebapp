@@ -20,6 +20,8 @@
 	 display:table;
 	 width:100%;
 	 table-layout:fixed;
+	 /* overflow-y:scroll; */
+
      }
      .fixed-table thead {
 	 width: calc( 100% - 0.7em )
@@ -86,45 +88,42 @@
 	      <div class="col-sm-6">
 		<label >{% trans %}Expected Date of Receipt :{% endtrans %}</label> <label id="tn_duedate"></label>
               </div>
+              <br class="hidden-md hidden-lg">
 	      <div class ="col-sm-6">
          	<label >{% trans %}Grace Period :{% endtrans %}</label> <label id="tn_grace"></label>
 
 		<small >   <b> days</b></small>
 	      </div>
-
-            </br>
-	    </br>
+      </br>
+          </br>
 
 	    </div>
-	    <div class="form-group"  >
-	      <div class="form-inline">
+	    <div class="form-group form-inline "style="margin-left:-5px" >
+          <div class="col-sm-4"style="margin-left:-10px">
 		<label for="received_transfernote_date">{% trans %}Date of Receipt:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
-                <div>
-                <form class="form-inline">
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="received_tn_date" accesskey="v">
+  </div>
+                <div class="form-inline col-sm-6"style="margin-left:-25px">
+                  <div class="col-xs-4">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" style="width:50;" id="received_tn_date" accesskey="v">
                   </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="received_tn_month" accesskey="v">
+                  <div class="col-xs-4">
+                    <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM"style="width:50;margin-left:-25px" id="received_tn_month" accesskey="v">
                   </div>
-                  <div class="form-group">
-                    <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="received_tn_year" accesskey="v">
+                  <div class="col-xs-4">
+                    <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY"style="width:60;margin-left:-50px" id="received_tn_year" accesskey="v">
                   </div>
-                </form>
-              </div>
-              </div>
+                </div>
             </div>
 
               </div>
-
+              <br>
               <div class="form-group hidden-load" hidden>
 		<div class="panel">
                   <table id="transfernote_product_table" class="table table-condensed table-borderd fixed-table">
                     <thead class="bg-primary">
                       <tr>
-			<th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
-      <th class="col-xs-3" style="margin-right:10px">{% trans %}Quantity{% endtrans %}</th>
-      
+			<th class="col-xs-8">{% trans %}Product{% endtrans %}</th>
+			<th class="col-xs-4">{% trans %}Quantity{% endtrans %}</th>
 
                       </tr>
                     </thead>
