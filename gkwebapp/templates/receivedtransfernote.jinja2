@@ -99,7 +99,7 @@
 	    <div class="form-group"  >
 	      <div class="form-inline">
 		<label for="received_transfernote_date">{% trans %}Date of Receipt:{% endtrans %}</label><label for="received_transfernote_date" style="color:red;font-size: 120%;">*</label>
-
+                <div>
                 <form class="form-inline">
                   <div class="form-group">
                     <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="received_tn_date" accesskey="v">
@@ -112,6 +112,7 @@
                   </div>
                 </form>
               </div>
+              </div>
             </div>
 
               </div>
@@ -122,7 +123,8 @@
                     <thead class="bg-primary">
                       <tr>
 			<th class="col-xs-9">{% trans %}Product{% endtrans %}</th>
-			<th class="col-xs-3">{% trans %}Quantity{% endtrans %}</th>
+      <th class="col-xs-3" style="margin-right:10px">{% trans %}Quantity{% endtrans %}</th>
+      
 
                       </tr>
                     </thead>

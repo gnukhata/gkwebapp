@@ -124,28 +124,27 @@
             <label for="vno">{% trans %}From and To godown can not be same !{% endtrans %}</label>
           </div>
 
-	  <form>
+	  
             <div class="form-group">
               <label for="transfernote_no">{% trans %}Transfer Note No:{% endtrans %}</label><label for="transfernote_no" style="color:red;font-size: 120%;">*</label>
               <input class="form-control input-sm" id="transfernote_no" placeholder="{% trans %}Enter Transfer Note no{% endtrans %}" >
             </div>
           </form>
-	  <div class="form-group">
-	    <form class="form-inline">
-	      <label for="transfernote_date">{% trans %}Date :{% endtrans %}</label><label style="color:red;font-size: 120%;">*</label>
-	      
-	      
-	      <div class="form-group ">
+	  <div class="row form-group form-inline">
+      <div class="row col-md-8">
+        <div class="col-xs-3">
+	              <label for="transfernote_date">{% trans %}Date :{% endtrans %}</label><label style="color:red;font-size: 120%;">*</label>
+        </div>
+	      <div class="col-xs-3"style="margin-left:-25px">
                 <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
 	      </div>
-	      <div class="form-group ">
+	      <div class="col-xs-3"style="margin-left:-25px">
                 <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
 	      </div>
-	      <div class="form-group">
+	      <div class="col-xs-3"style="margin-left:-25px">
                 <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
 	      </div>
-	      
-	    </form>
+      </div>
 	  </div>
 	  
           <form>
@@ -231,29 +230,27 @@
             <input class="form-control input-sm" id="designation">
           </div>
 
-	  <div "class=" form-group">
-	    <form class="form-inline">
+	  <div class="row form-group form-inline col-md-10">
+	          <div class="col-sm-6" style="margin-left:-15px">
               <label for="transfernote_duedate">{% trans %}Expected Date of Reciept :{% endtrans %}</label>
-              
-              <form class="form-inline nopadding">
-		<div class="form-group ">
-                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="DD" id="tn_duedate" accesskey="v">
-		</div>
-		<div class="form-group ">
-                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" placeholder="MM" id="tn_duemonth" accesskey="v">
-		</div>
-		<div class="form-group">
-                  <input type="text" class="form-control input-sm tnduedate" size="4" maxlength="4" placeholder="YYYY" id="tn_dueyear" accesskey="v">
-		</div>
-              </form>
-	    </form>
-	  </div>
+            </div>
+            <div class="form-inline row nopadding col-sm-6">
+	            	<div class="col-xs-2"style="margin-left:-15px">
+                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" style="width:45px" placeholder="DD" id="tn_duedate" accesskey="v">
+		            </div>
+		            <div class="col-xs-2"style="margin-left:-15px">
+                  <input type="text" class="form-control input-sm tnduedate" size="2" maxlength="2" style="width:45px; margin-left: 25px" placeholder="MM" id="tn_duemonth" accesskey="v">
+	          	  </div>
+		            <div class="col-xs-3"style="margin-left:-15px">
+                  <input type="text" class="form-control input-sm tnduedate" size="4" maxlength="4" style="width:60px; margin-left:50px" placeholder="YYYY" id="tn_dueyear" accesskey="v">
+	            	</div>
+            </div>
+    </div>
 	  <div>
 	    <form class="form-inline nopadding">
-	      <div class="form-group ">
+	      <div class="form-group form-inline">
 		<label for="tn_grace">{% trans %} Grace Period :{% endtrans %}</label>
-		
-		<input type="text" class="form-control input-sm " size="2" maxlength="2" id="tn_grace"><small> <b>days</b></small>
+		<input type="text" class="form-control input-sm" size="2" maxlength="2" style="width:60px" id="tn_grace"><small> <b>days</b></small>
 		
 	      </div>
 	  </div>
