@@ -1,0 +1,144 @@
+<body >
+  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+      <div class="panel shadow col-md-4">
+	    <div class="form-group">
+            {% if numberofbudget ==0 %}
+            <label class="text-danger">{% trans %}No Budget Found!{% endtrans %}
+            </label>
+            {% else %}
+            <label for="editbud" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :
+            </label>
+            <select class = "form-control input-sm" id="editbud">
+            <option value="disabled" disabled selected hidden>{% trans %}Select Budget{% endtrans %}</option>
+            {% for buds in gkresult %}
+            <option value="{{buds['budid']}}">{{buds["budname"]}} ({{buds["startdate"]}} - {{buds["enddate"]}})</option>
+            {% endfor %}
+            {% endif %}
+            </select>
+        </div>
+        <div hidden >
+            <form id="addbudget" method="post"  class="form-horizontal">
+            <div style="padding-top:15px" class="panel-body" >
+                <div style="margin-bottom: 10px" class="input-group col-xs-12">
+                <label for="bname" >{% trans %}<u>B</u>udget <u>N</u>ame{% endtrans %} :</label>
+                <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="e"></input>
+                </div>
+				<label for="budget_fromday">{% trans %}<u>F</u>rom <u>D</u>ate{% endtrans %} :</label>
+				    <div class="form-inline input-group" id = "startdate">
+                        <div class="col-xs-4">
+					    <input type="text" class="budget_date dis form-control input-sm " id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
+					    </div>
+                        <div class="col-xs-4">
+                        <input type="text" id="budget_frommonth" class="budget_date dis form-control input-sm"  size="2" maxlength="2" placeholder="MM">
+					    </div>
+                        <div class="col-xs-4">
+                        <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm"  size="4" maxlength="4" placeholder="YYYY">
+					    </div>
+				    </div>
+				    <label for="budget_today">{% trans %}<u>T</u>o <u>D</u>ate{% endtrans %} :</label>
+				    <div class="form-inline input-group" id="enddate">
+                        <div class="col-xs-4">
+					    <input type="text" class="budget_date form-control input-sm dis" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+					    </div>
+                        <div class="col-xs-4">
+                        <input type="text" id="budget_tomonth" class="budget_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
+					    </div>
+                        <div class="col-xs-4">
+                        <input type="text" id="budget_toyear" class="budget_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
+                        </div>
+                    </div>
+                    <br>
+                    <div style="margin-bottom: 10px" class="input-group col-xs-12">
+                    <label for="btype" id="pwdconfirm">{% trans %}<u>B</u>udget <u>T</u>ype{% endtrans %} :</label>
+                    <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
+                        <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
+                        <option value="3">{% trans %}Cash{% endtrans %}</option>
+                        {# <option value="5">{% trans %}Expense{% endtrans %}</option> #}
+                        {# <option value="19">{% trans %}Sales{% endtrans %}</option> #}
+                    </select>
+                    </div>
+                    <br>
+                    <div id = "gaflag" style="margin-bottom: 10px" class="input-group ">
+				      {# <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label> #}
+				        <div class = "input-group ">
+                        <label><input type="radio"  name="cashmemo" id="account" aria-label="vat" value="1" > Account Wise</label>
+                        </div>
+                        <div class = "input-group ">
+                        <label><input type="radio"  name="cashmemo" id="group" aria-label="vat" value="7" > Group Wise</label>
+                        </div>
+                        <div class = "input-group ">
+                        <label><input type="radio"  name="cashmemo" id="subgroup" aria-label="gst" value="19" > Subgroup Wise</label>	
+                        </div>
+                    </div>
+                </div>
+                <div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
+                    <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+	                    <div class="vertical-alignment-helper">
+                            <div class="modal-dialog modal-sm vertical-align-center">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h4 class="modal-title">{% trans %}Delete?{% endtrans %}
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	                                <span aria-hidden="true">&times;</span>
+	                                </button>
+                                    </h4>
+	                                </div>
+	                                <div class="modal-body">
+		                            <p>{% trans %}Are you sure?{% endtrans %}</p>
+	                                </div>
+	                                <div class="modal-footer">
+                                    <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+                                    <button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+	                                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="form-footer" class="panel-footer" hidden >
+        <div class="container-fluid">
+	        <button type="submit" class="btn btn-success btn-sm" id="add" name="submit"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="a"></i> {% trans %}S<u>a</u>ve{% endtrans %}</button>
+	        <button id="edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true" accesskey="e"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>	
+	        <button id="delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true" accesskey="d"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+	        <button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="t"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
+        </div>
+        </div>
+{# --------------------------------------------------------------------------------------- #}
+	{# <div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
+      <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+	<div class="vertical-alignment-helper">
+	  <div class="modal-dialog modal-sm vertical-align-center">
+	    <div class="modal-content">
+	      <div class="modal-header">
+
+		<h4 class="modal-title">{% trans %}Delete?{% endtrans %}
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	            <span aria-hidden="true">&times;</span>
+	          </button></h4>
+	      </div>
+	      <div class="modal-body">
+		<p>{% trans %}Are you sure?{% endtrans %}</p>
+	      </div>
+	      <div class="modal-footer">
+		<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+		<button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+	      </div>
+	    </div><!-- /.modal-content -->
+	  </div><!-- /.modal-dialog -->
+	</div>
+      </div><!-- /.modal -->
+    </div> #}
+    {# <div id="form-footer" class="panel-footer" hidden>
+      <div class="container-fluid">
+	<button type="submit" class="btn btn-success btn-sm" id="add" name="submit"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="a"></i> {% trans %}S<u>a</u>ve{% endtrans %}</button>
+	<button id="edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true" accesskey="e"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>	
+	<button id="delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true" accesskey="d"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
+	<button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="t"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
+      </div>
+    </div> #}
+	</div>
+    </div>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editbudget.js')}}"></script>
+</body>
