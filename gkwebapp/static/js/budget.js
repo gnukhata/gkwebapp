@@ -20,12 +20,13 @@ $(document).ready(function() {
     }
   );
   });
+
   $("a[href ='#budget_edit']").click(function() {
     $.ajax(
     {
 
     type: "POST",
-    url: "/budget?type=edit_tab",
+    url: "/budget?type=edittab",
     global: false,
     async: false,
     datatype: "text/html",

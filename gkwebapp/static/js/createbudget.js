@@ -180,7 +180,6 @@ $(document).ready(function(){
           return str
         }
       }
-
     $("#budget_fromday").blur(function(event) {
         $(this).val(pad($(this).val(),2));
     });
@@ -202,9 +201,7 @@ $(document).ready(function(){
 // ------------------ end date validation -------------
     $("#gaflag input:radio").change(function(event) {
         $("body").css("padding-right", '0px');
-            // var flag = $("#gaflag input:radio:checked").val();
             var data ={"flag": $("#gaflag input:radio:checked").val()}
-            console.log(data);
             $.ajax({
                     type: "POST",
                     url: "/budget?type=galisttable",
@@ -250,8 +247,6 @@ $(document).ready(function(){
             $('#budget_today').focus().select();
             return false;
         }
-        // var todate = $("#budget_today").val()+'-'+$("#budget_tomonth").val()+'-'+$("#budget_toyear").val();
-        // var fromdate = $("#budget_fromday").val()+'-'+$("#budget_frommonth").val()+'-'+$("#budget_fromyear").val();
         var todate = $("#budget_toyear").val()+$("#budget_tomonth").val()+$("#budget_today").val();
         var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
         if(!Date.parseExact(fromdate,"yyyyMMdd")){
@@ -303,7 +298,6 @@ $(document).ready(function(){
             return false;
         }
 // ----------- end validation -----------
- 
         //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table
@@ -334,6 +328,14 @@ $(document).ready(function(){
             }
         }
         vd.push(content);
+        if(Object.keys(content).length == 0){
+            $("#content-alert").alert();
+            $("#content-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#content-alert").hide();
+            });
+            $("#latable tbody tr:eq(0) input").focus();
+            return false;
+        }
         dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": $("#gaflag input:radio:checked").val()};
         $("#msspinmodal").modal("show");
         $.ajax(
