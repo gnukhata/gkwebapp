@@ -20,26 +20,23 @@ def addbudgetpage(request):
     header={"gktoken":request.headers["gktoken"]}
     return {"status":True}
 
-@view_config(route_name="budget",request_param="type=edit_tab", renderer="gkwebapp:templates/editbudget.jinja2")
+@view_config(route_name="budget",request_param="type=edittab", renderer="gkwebapp:templates/editbudget.jinja2")
 def editbudgetpage(request):
-    print("fff")
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/budget?bud=all", headers=header)
     buddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"budname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"]}
         buddata.append(gdata)
-    print(buddata)
     return {"gkresult":buddata,"numberofbudget":len(result.json()["gkresult"]),"status":True}
     
 @view_config(route_name="budget",request_param="type=getbuddetails", renderer="json")
-def editbudgetpage(request):
+def getbuddetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/budget?bud=details&budid=%d"%int(request.params["budid"]), headers=header)
     if(result.json()["gkstatus"] == 0):
         record = result.json()["gkresult"]
-        resp = {"budnname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"],"contents":record["contents"],"btype":record["btype"],"gaflag":record["gaflag"]}
-        return {"gkstatus":0, "gkresult":resp}
+        return {"gkstatus":0, "gkresult":record}
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="budget",request_param="type=add", renderer="json")
@@ -83,4 +80,15 @@ def editbudget(request):
         gkdata = {"budid":request.params["budid"],"budname":request.params["budname"],"startdate":request.params["startdate"], "enddate":request.params["enddate"], "contents": json.loads(request.params["contents"])[0], "budtype":request.params["btype"],"gaflag":request.params["gaflag"]}
         result = requests.put("http://127.0.0.1:6543/budget", data =json.dumps(gkdata),headers=header)
         return {"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name="budget",request_param="type=delete", renderer="json")
+def deletebudget(request):
+    header={"gktoken":request.headers["gktoken"]}
+    budname = request.params["budname"]
+    gkdata={"budid":request.params["budid"]}
+    result = requests.delete("http://127.0.0.1:6543/budget",data =json.dumps(gkdata), headers=header)
+    if result.json()["gkstatus"] == 0:
+        gkdata = {"activity":budname + " budget deleted"}
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+    return {"gkstatus":result.json()["gkstatus"]}
         

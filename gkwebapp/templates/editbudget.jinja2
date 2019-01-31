@@ -1,6 +1,89 @@
+  <style>
+  .login-box{
+    background-color: rgba(220, 225,225,0.4);
+  }
+
+  #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 20%;
+      text-align: left !important;
+  }
+
+  #latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+  }
+  #latable thead,#latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .smwrap1{
+   width: 1.34%
+ }
+
+ .lngwrap{
+  width:13%
+ }
+ .mdwrap{
+  width:8%
+ }
+  </style>
 <body >
   <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
       <div class="panel shadow col-md-4">
+        {# -------------- alerts------------------------- #}
+        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+          <label for="budget_fromday">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+          <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+          <label for="budget_today">{% trans %}From Date should be smaller or equal to To Date !{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="blank-name-alert" aria-live="rude" role="alert" hidden>
+          <label for="bname">{% trans %}Please enter budget name!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="btype-alert" aria-live="rude" role="alert" hidden>
+          <label for="btype">{% trans %}Please select budget type{% endtrans %}</label>
+        </div>
+        <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
+          <label for="btype">{% trans %}Budget edited successfully!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="delete-alert" aria-live="rude" role="alert" hidden>
+          <label for="btype">{% trans %}Budget deleted successfully!{% endtrans %}</label>
+        </div>
+        {# -------------- end alerts------------------------- #}
 	    <div class="form-group">
             {% if numberofbudget ==0 %}
             <label class="text-danger">{% trans %}No Budget Found!{% endtrans %}
@@ -16,7 +99,8 @@
             {% endif %}
             </select>
         </div>
-        <div hidden >
+        
+        <div id="editbudget" hidden >
             <form id="addbudget" method="post"  class="form-horizontal">
             <div style="padding-top:15px" class="panel-body" >
                 <div style="margin-bottom: 10px" class="input-group col-xs-12">
@@ -71,31 +155,27 @@
                         </div>
                     </div>
                 </div>
-                <div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
-                    <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
-	                    <div class="vertical-alignment-helper">
-                            <div class="modal-dialog modal-sm vertical-align-center">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                    <h4 class="modal-title">{% trans %}Delete?{% endtrans %}
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	                                <span aria-hidden="true">&times;</span>
-	                                </button>
-                                    </h4>
-	                                </div>
-	                                <div class="modal-body">
-		                            <p>{% trans %}Are you sure?{% endtrans %}</p>
-	                                </div>
-	                                <div class="modal-footer">
-                                    <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
-                                    <button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
-	                                </div>
+                <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="vertical-alignment-helper">
+                        <div class="modal-dialog modal-sm vertical-align-center">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title">{% trans %}Delete?{% endtrans %}
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                                </button></h4>
+                                </div>
+                                <div class="modal-body">
+		                        <p>{% trans %}Are you sure?{% endtrans %}</p>
 	                            </div>
-	                        </div>
-	                    </div>
-                    </div>
-                </div>
-            </form>
+	                            <div class="modal-footer">
+		                        <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+		                        <button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+	                            </div>
+	                        </div><!-- /.modal-content -->
+	                    </div><!-- /.modal-dialog -->
+	                </div>
+                </div><!-- /.modal -->  
         </div>
         <div id="form-footer" class="panel-footer" hidden >
         <div class="container-fluid">
@@ -105,40 +185,12 @@
 	        <button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="t"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
         </div>
         </div>
-{# --------------------------------------------------------------------------------------- #}
-	{# <div class="alert alert-danger" id="stateblank-alert"  aria-live="rude" role="alert" hidden>
-      <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">
-	<div class="vertical-alignment-helper">
-	  <div class="modal-dialog modal-sm vertical-align-center">
-	    <div class="modal-content">
-	      <div class="modal-header">
-
-		<h4 class="modal-title">{% trans %}Delete?{% endtrans %}
-		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-	            <span aria-hidden="true">&times;</span>
-	          </button></h4>
-	      </div>
-	      <div class="modal-body">
-		<p>{% trans %}Are you sure?{% endtrans %}</p>
-	      </div>
-	      <div class="modal-footer">
-		<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
-		<button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
-	      </div>
-	    </div><!-- /.modal-content -->
-	  </div><!-- /.modal-dialog -->
+        </form>
 	</div>
-      </div><!-- /.modal -->
-    </div> #}
-    {# <div id="form-footer" class="panel-footer" hidden>
-      <div class="container-fluid">
-	<button type="submit" class="btn btn-success btn-sm" id="add" name="submit"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="a"></i> {% trans %}S<u>a</u>ve{% endtrans %}</button>
-	<button id="edit" class="btn btn-primary btn-sm"><i class="fa fa-pencil-square-o" aria-hidden="true" accesskey="e"></i> {% trans %}<u>E</u>dit{% endtrans %}</button>	
-	<button id="delete" class="btn btn-danger btn-sm"><i class="fa fa-trash-o" aria-hidden="true" accesskey="d"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
-	<button id="reset" class="btn btn-warning btn-sm"><i class="fa fa-refresh" aria-hidden="true" accesskey="t"></i> {% trans %}Rese<u>t</u>{% endtrans %}</button>
-      </div>
-    </div> #}
-	</div>
+    <div id="accounttable" style="float:right;" class="mainbox col-md-6">
+    {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
     </div>
+    </div>
+    
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editbudget.js')}}"></script>
 </body>
