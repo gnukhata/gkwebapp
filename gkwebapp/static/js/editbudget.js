@@ -151,6 +151,7 @@ $(document).ready(function() {
         $("#add").show();
         $("#reset").show();
         $("#edit").hide();
+        $("#delete").hide();
            // ----------------  keydown functions -----------
             $("#bname").keydown(function(e){
                 if (e.which==13)
@@ -502,6 +503,20 @@ $(document).ready(function() {
                     }
                 }
             });
+        });
+        $("#goddel").keydown(function(e){
+            if (e.which==37 || e.which==38)
+            {
+            e.preventDefault();
+            $("#m_cancel").focus();
+            }
+        });
+        $("#m_cancel").keydown(function(e){
+            if (e.which==39)
+            {
+            e.preventDefault();
+            $("#goddel").focus();
+            }
         });
         $('#m_confirmdel').on('shown.bs.modal', function(event) {
             $("#m_cancel").focus();
