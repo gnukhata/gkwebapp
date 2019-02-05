@@ -850,6 +850,25 @@ $(document).ready(function(){
 
   });
 
+  $('#showviewbudget').click(function (e) {
+    // Loads list of all budget to view budget report.
+    $.ajax({
+      url: '/budget?type=bdg_list',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+
+    })
+     .done(function(resp) {
+       $("#info").html(resp);
+     });
+  });
+
   $("#exportbutton").click(function(e){
     // This function serves the client with a spreadsheet file having ledgers.
     var xhr = new XMLHttpRequest();

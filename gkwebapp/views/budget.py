@@ -29,6 +29,16 @@ def editbudgetpage(request):
         gdata= {"budname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"]}
         buddata.append(gdata)
     return {"gkresult":buddata,"numberofbudget":len(result.json()["gkresult"]),"status":True}
+
+@view_config(route_name="budget",request_param="type=bdg_list", renderer="gkwebapp:templates/viewbudgetreport.jinja2")
+def alllist(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/budget?bud=all", headers=header)
+    buddata=[]
+    for record in result.json()["gkresult"]:
+        gdata= {"budname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"]}
+        buddata.append(gdata)
+    return {"gkresult":buddata,"numberofbudget":len(result.json()["gkresult"]),"status":True}
     
 @view_config(route_name="budget",request_param="type=getbuddetails", renderer="json")
 def getbuddetails(request):
@@ -91,4 +101,22 @@ def deletebudget(request):
         gkdata = {"activity":budname + " budget deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
-        
+
+@view_config(route_name="budget",request_param="type=report", renderer="gkwebapp:templates/budgetreport.jinja2")
+def budgetreport(request):
+    header={"gktoken":request.headers["gktoken"]}
+    financialstart = request.params["financialstart"]
+    result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    reportdata=[]
+    if "groupname" in result.json()["gkresult"][0]:
+        for record in result.json()["gkresult"]:
+            reportdata.append({"groupname":record["groupname"],"budget":record["budget"],"gaflag":record["gaflag"],"variance":abs(record["variance"]),"vartype":record["vartype"],"accountdata":record["accountdata"]})
+    else :
+        for record in result.json()["gkresult"]:
+            reportdata.append({"accountname":record["accountname"],"budget":record["budget"],"variance":abs(record["variance"]),"totalcr":record["totalcr"],"totaldr":record["totaldr"],"vartype":record["vartype"]})
+    total=[]
+    for record in result.json()["total"]:
+        total.append({"totalBudget":record["totalBudget"],"totalVariance":record["totalVariance"],"budgetCr":record["budgetCr"],"budgetDr":record["budgetDr"]})
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":reportdata, "budgetdetail":request.params["buddetails"], "total":total }
+    
+    
