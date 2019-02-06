@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Create Account{% endtrans %}</title>
+   
+  <style type="text/css">
+    .shadow {
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    #latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+    }
+
+    #latable th {
+    font-size: 85%;
+    }
+
+    .smwrap{
+    width:4.9%
+    }
+
+    .calign{
+    text-align:center;
+    }
+
+    .card-view .title {
+    font-weight: bold;
+    display: inline-block;
+    min-width: 30%;
+    text-align: left !important;
+    }
+
+    #latable tbody {
+    display:block;
+    height: calc(69vh);
+    overflow-y:scroll;
+    }
+    #latable thead,#latable tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+    }
+    #latable thead {
+    width: calc( 99.1%);
+    }
+
+   </style>
+</head>
+<body>
+  <div class="container-fluid">
+    <ul class="nav nav-pills nav-tabs" role="tablist">
+      <li role="presentation" class="active"><a href="" id="create_account" role="tab" data-toggle="tab" accesskey="1">{% trans %}Create Account{% endtrans %}</a></li>
+      <li role="presentation"><a href="" id="edit_account" role="tab" data-toggle="tab" accesskey="2">{% trans %}Edit Account{% endtrans %}</a></li>
+      <li role="presentation"><a href="" id="list_of_account" role="tab" data-toggle="tab" accesskey="3">{% trans %}List of Account{% endtrans %}</a></li>
+
+    </ul>
+    <div class="tab-content">
+      <div role="tabpanel" class="tab-pane active" id="account_div">
+
+      </div>
+    </div>
+
+
+  </div>
+</div>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createeditlistofacc.js')}}"></script>
+</body>
+</html>
