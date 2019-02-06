@@ -66,21 +66,33 @@ $(document).ready(function() {
                 $("#budget_toyear").prop("disabled", true);
                 $("#btype").val(goddetails[0]["btype"]);
                 $("#btype").prop("disabled", true);
-                $("#account").prop("disabled", false);
-                $("#group").prop("disabled", false);
-                $("#subgroup").prop("disabled", false);
-                hideshowflag = 0;
-                if(goddetails[0]["gaflag"] == 1){
-                    $("#gaflag").val(goddetails[0]["gaflag"]);
-                    $("#account").click();
+                if(goddetails[0]["btype"] == 3){
+                    $("#gaflag").hide();
+                    $("#flow").show();
+                    $("#outflow").val(goddetails[0]["contents"]["outflow"]);
+                    $("#outflow").prop("disabled", true);
+                    $("#inflow").val(goddetails[0]["contents"]["inflow"]);
+                    $("#inflow").prop("disabled", true);
                 }
-                if(goddetails[0]["gaflag"] == 7){
-                    $("#gaflag").val(goddetails[0]["gaflag"]);
-                    $("#group").click();
-                }
-                if(goddetails[0]["gaflag"] == 19){
-                    $("#gaflag").val(goddetails[0]["gaflag"]);
-                    $("#subgroup").click();
+                else{
+                    $("#flow").hide();
+                    $("#gaflag").show();
+                    $("#account").prop("disabled", false);
+                    $("#group").prop("disabled", false);
+                    $("#subgroup").prop("disabled", false);
+                    hideshowflag = 0;
+                    if(goddetails[0]["gaflag"] == 1){
+                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                        $("#account").click();
+                    }
+                    if(goddetails[0]["gaflag"] == 7){
+                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                        $("#group").click();
+                    }
+                    if(goddetails[0]["gaflag"] == 19){
+                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                        $("#subgroup").click();
+                    }
                 }
                 $("#editbudget").show();
                 $("#form-footer").show();
@@ -89,7 +101,6 @@ $(document).ready(function() {
                 $("#account").prop("disabled", true);
                 $("#group").prop("disabled", true);
                 $("#subgroup").prop("disabled", true);
-                
             }
         });
     });
@@ -137,7 +148,14 @@ $(document).ready(function() {
         hideshowflag = 1;
         $("#bname").prop("disabled", false);
         $("#bname").focus();
-        $("#btype").prop("disabled", false);
+        if($("#btype").val() == 3){
+            $("#btype").prop("disabled", true);
+        }
+        else{
+            $("#btype").prop("disabled", false);
+        }
+        $("#outflow").prop("disabled", false);
+        $("#inflow").prop("disabled", false);
         $("#account").prop("disabled", false);
         $("#group").prop("disabled", false);
         $("#subgroup").prop("disabled", false);
@@ -328,8 +346,8 @@ $(document).ready(function() {
         $("#budget_toyear").blur(function(event) {
             $(this).val(yearpad($(this).val(),4));
         });
-// ------------------ end date validation -------------
     });
+    // ------------------ end date validation -------------
 // ----- ------- submit button -------------
     $("#add").click(function(e){
         e.preventDefault();
@@ -411,7 +429,13 @@ $(document).ready(function() {
             return false;
         }
 // ----------- end validation -----------
-        //gets table data
+        if($("#btype").val() == 3){
+            vd =[]
+            vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
+            dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
+        }
+        else{
+            //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table
         var rowLength = oTable.rows.length;
@@ -450,6 +474,7 @@ $(document).ready(function() {
             return false;
         }
         dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": $("#gaflag input:radio:checked").val()};
+        }
         $("#msspinmodal").modal("show");
         $.ajax(
             {

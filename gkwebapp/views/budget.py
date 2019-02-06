@@ -106,17 +106,11 @@ def deletebudget(request):
 def budgetreport(request):
     header={"gktoken":request.headers["gktoken"]}
     financialstart = request.params["financialstart"]
-    result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     reportdata=[]
-    if "groupname" in result.json()["gkresult"][0]:
-        for record in result.json()["gkresult"]:
-            reportdata.append({"groupname":record["groupname"],"budget":record["budget"],"gaflag":record["gaflag"],"variance":abs(record["variance"]),"vartype":record["vartype"],"accountdata":record["accountdata"]})
-    else :
-        for record in result.json()["gkresult"]:
-            reportdata.append({"accountname":record["accountname"],"budget":record["budget"],"variance":abs(record["variance"]),"totalcr":record["totalcr"],"totaldr":record["totaldr"],"vartype":record["vartype"]})
-    total=[]
-    for record in result.json()["total"]:
-        total.append({"totalBudget":record["totalBudget"],"totalVariance":record["totalVariance"],"budgetCr":record["budgetCr"],"budgetDr":record["budgetDr"]})
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":reportdata, "budgetdetail":request.params["buddetails"], "total":total }
+    for record in result.json()["gkresult"]:
+            reportdata.append({"totalopeningbal":record["totalopeningbal"],"budgetIn":record["budgetIn"],"budgetOut":record["budgetOut"],"budgetBal":record["budgetBal"],"varCr":record["varCr"],"varDr":record["varDr"],"varBal":record["varBal"],"accData":record["accData"]})
+    
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":reportdata, "budgetdetail":request.params["buddetails"] }
     
     

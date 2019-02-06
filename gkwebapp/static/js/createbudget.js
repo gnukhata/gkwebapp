@@ -6,6 +6,8 @@ $(document).ready(function(){
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
+    $("#flow").hide();
+    $("#gaflag").hide();
     $("#bname").focus();
     var dataset = {};
     // for reset Button
@@ -86,12 +88,54 @@ $(document).ready(function(){
         if (e.which==13 || e.which==39)
         {
           e.preventDefault();
-          $("#account").focus().click();
+          if($("#btype option:selected").val() == 3){
+              $("#gaflag").hide();
+              $("#flow").show();
+              $("#inflow").focus();
+          }
+          else{
+            $("#gaflag").show();
+            $("#flow").hide();
+            $("#account").focus().click();
+          }
+          
         }
         if (e.which==37 || e.which==38)
           {
           e.preventDefault();
           $("#budget_toyear").focus();
+          }
+    });
+    
+    $("#btype").change(function(e){
+        if($("#btype option:selected").val() == 3){
+            $("#gaflag").hide();
+            $("#flow").show();
+        }
+        if($("#btype option:selected").val() == 5 || ("#btype option:selected").val() == 19){
+            $("#flow").hide();
+            $("#gaflag").show();
+            $("#account").focus().click();
+        }
+    });
+    $("#inflow").keydown(function(e){
+        if (e.which==13 || e.which==39)
+        {e.preventDefault();
+          $("#outflow").focus();
+        }
+        if (e.which==37 || e.which==38)
+          {e.preventDefault();
+          $("#btype").focus();
+          }
+    });
+    $("#outflow").keydown(function(e){
+        if (e.which==13 || e.which==39)
+        {e.preventDefault();
+          $("#add_button").focus();
+        }
+        if (e.which==37 || e.which==38)
+          {e.preventDefault();
+          $("#inflow").focus();
           }
     });
     $("#add_button").keydown(function(e){
@@ -103,7 +147,13 @@ $(document).ready(function(){
         if (e.which==37 || e.which==38)
           {
           e.preventDefault();
-          $("#gaflag input:radio:checked").focus().select();
+          if($("#btype option:selected").val() == 3){
+            $("#outflow").focus();
+        }
+        else{
+            $("#gaflag input:radio:checked").focus().select();
+        }
+          
           }
     });
     $("#reset_button").keydown(function(e){
@@ -298,7 +348,30 @@ $(document).ready(function(){
             return false;
         }
 // ----------- end validation -----------
-        //gets table data
+        if($("#btype option:selected").val() == 3){  // Cash budget 
+            if ($.trim($("#inflow").val())=="") {
+                $("#inflow-alert").alert();
+                $("#inflow-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#inflow-alert").hide();
+                });
+                $("#inflow").focus();
+                return false;
+            }
+            if ($.trim($("#outflow").val())=="") {
+                $("#outflow-alert").alert();
+                $("#outflow-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#outflow-alert").hide();
+                });
+                $("#outflow").focus();
+                return false;
+            }
+            vd=[]
+            vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
+
+        dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
+        }
+        else{  // Sales and Expense budget
+                    //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table
         var rowLength = oTable.rows.length;
@@ -337,6 +410,8 @@ $(document).ready(function(){
             return false;
         }
         dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": $("#gaflag input:radio:checked").val()};
+        }
+    
         $("#msspinmodal").modal("show");
         $.ajax(
             {

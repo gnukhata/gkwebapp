@@ -44,119 +44,65 @@ th {
 <body>
   <div class="container-fluid ">
     <div class = "panel">
-        <div class="panel heading"><center>
+        <div class="bg-primary"><center>
             <span style="margin:auto; display:table;"> {{budgetdetail}} </span></center>
         </div>
         <div class="panel-body">
+        <div >
+            <h><b>Total Opening Balance : </b></h>{{gkresult[0]["totalopeningbal"]}}
+        </div>
         <div class="table-responsive">
           <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
-          {% if "groupname" in gkresult[0] %}
             <thead class="bg-primary">
 			    <tr>
-			      <th rowspan="2" class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
-			      <th rowspan="2" class="taxwrap text-center sgstfield">{% trans %}Budget{% endtrans %}</th>
-			      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}Actuals{% endtrans %}</th>
-			      <th rowspan="2" class="taxwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
-			    </tr>
-			    <tr>
-			      <th class="sgstfield text-center">{% trans %}<small>Total Cr </small>{% endtrans %} </th>
-			      <th class="sgstfield text-center">{% trans %}<small>Total Dr </small>{% endtrans %}</th>
+			      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
+			      <th  class="taxwrap text-center igstfield">{% trans %}Balance{% endtrans %}</th>
 			    </tr>
 			  </thead>
             <tbody>
-                {% for record in gkresult %}
                 <tr >
-                    <td> <b>{{record["groupname"]}}</b> <br> 
+                    <td> Budget Amount</td>
+                    <td style="text-align:right"> {{gkresult[0]["budgetIn"]}} </td>
+                    <td style="text-align:right"> {{gkresult[0]["budgetOut"]}} </td>
+                    <td style="text-align:right"> {{gkresult[0]["budgetBal"]}} </td>   
+                </tr>
+                <tr >
+                    <td><h> Actuals </h> <br>
                     <div style="text-align:right">
-                    {% for account in record["accountdata"] %}
-                        <small ><i >{{account["accountname"]}}</i></small><br>
-                    {% endfor %} 
+                    {% for acc in gkresult[0]["accData"] %}
+                        {{acc["accountname"]}} <br>
+                    {% endfor %}
                     </div>
                     </td>
-                    <td> {{record["budget"]}} 
-                    {% for account in record["accountdata"] %}
-                    <br> --
+                    <td style="text-align:right"><br>
+                    {% for acc in gkresult[0]["accData"] %}
+                        {{acc["accDr"]}} <br>
                     {% endfor %}
-                    </td>
-                    <td> 
-                    --<br>
-                    {% for account in record["accountdata"] %}
-                        <small><i>{{account["totalcr"]}}</i></small><br>
-                    {% endfor %}
-                    </td>
-                    <td> 
-                    --<br>
-                    {% for account in record["accountdata"] %}
-                        <small><i>{{account["totaldr"]}}</i></small><br>
-                    {% endfor %}
-                    </td>
-                    <td>  
-                    
-                    {% for account in record["accountdata"] %}
-                    --<br>
-                    {% endfor %}
-                    {% if record["vartype"] == 'Dr'%}
-                        (+{{record["variance"]}})
-                    {% elif record["vartype"] == 'Cr'%}
-                        (-{{record["variance"]}})
-                    {% else %}
-                        {{record["variance"]}}
-                    {% endif %}
-                    </td>
-                </tr>
-                {% endfor %}
-                <tr >
-                    <td> Budget Total </td>
-                    <td> {{total[0]["totalBudget"]}} </td>
-                    <td> {{total[0]["budgetCr"]}} </td>
-                    <td> {{total[0]["budgetDr"]}}</td>
-                    <td> {{total[0]["totalVariance"]}}</td>
-                </tr>
-            </tbody>
-            {% else %}
-            <thead class="bg-primary">
-			    <tr>
-			      <th rowspan="2" class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
-			      <th rowspan="2" class="taxwrap text-center sgstfield">{% trans %}Budget{% endtrans %}</th>
-			      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}Actuals{% endtrans %}</th>
-			      <th rowspan="2" class="taxwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
-			    </tr>
-			    <tr>
-			      <th class="sgstfield text-center">{% trans %}<small>Total Cr </small>{% endtrans %} </th>
-			      <th class="sgstfield text-center">{% trans %}<small>Total Dr </small>{% endtrans %}</th>
-			    </tr>
-			  </thead>
-            <tbody>
-                {% for record in gkresult %}
-                <tr >
-                    <td>{{record["accountname"]}}  </td>
-                    <td> {{record["budget"]}} </td>
-                    <td> {{record["totalcr"]}} </td> 
-                    <td> {{record["totaldr"]}} </td>
-                    <td>
-                    {% if record["vartype"] == 'Cr' %}
-                        (-{{record["variance"]}})
-                    {% elif record["vartype"] == 'Dr' %}
-                        (+{{record["variance"]}})
-                    {% else %}
-                        {{record["variance"]}}
-                    {% endif %}
                      </td>
+                    <td style="text-align:right"><br>
+                    {% for acc in gkresult[0]["accData"] %}
+                        {{acc["accCr"]}} <br>
+                    {% endfor %}
+                    </td>
+                    <td style="text-align:right"><br>
+                    {% for acc in gkresult[0]["accData"] %}
+                        {{acc["accBal"]}} <br>
+                    {% endfor %}
+                    </td>
                 </tr>
-                {% endfor %}
-                <tr >
-                    <td> Budget Total </td>
-                    <td> {{total[0]["totalBudget"]}} </td>
-                    <td> {{total[0]["budgetCr"]}} </td>
-                    <td> {{total[0]["budgetDr"]}}</td>
-                    <td> {{total[0]["totalVariance"]}}</td>
+                <tr>
+                    <td>Variance</td>
+                    <td style="text-align:right"> {{gkresult[0]["varDr"]}} </td>
+                    <td style="text-align:right"> {{gkresult[0]["varCr"]}} </td>
+                    <td style="text-align:right"> {{gkresult[0]["varBal"]}} </td> 
                 </tr>
             </tbody>
-            {% endif %}
             </table>
         </div>
         </div>    
         </div>
     </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
+  {# <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script> #}
 </body> 

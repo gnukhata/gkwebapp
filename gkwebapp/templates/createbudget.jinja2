@@ -118,8 +118,8 @@
             <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
               <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
               <option value="3">{% trans %}Cash{% endtrans %}</option>
-              {# <option value="5">{% trans %}Expense{% endtrans %}</option> #}
-              {# <option value="19">{% trans %}Sales{% endtrans %}</option> #}
+              {# <option value="5">{% trans %}Expense{% endtrans %}</option>
+              <option value="19">{% trans %}Sales{% endtrans %}</option> #}
             </select>
         </div>
             <br>
@@ -134,6 +134,16 @@
               <div class = "input-group ">
               <label><input type="radio"  name="cashmemo" id="group" aria-label="gst" value="19" > Subgroup Wise</label>	
               </div>
+            </div>
+            <div id="flow">
+            <div style="margin-bottom: 10px" class="input-group col-xs-12">
+              <label for="inflow" >{% trans %}InFlow Budget{% endtrans %} :</label>
+              <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm" name="username" accesskey="e" placeholder="00.0"></input>
+            </div>
+            <div style="margin-bottom: 10px" class="input-group col-xs-12">
+              <label for="outflow" >{% trans %}OutFlow Budget{% endtrans %} :</label>
+              <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm" name="username" accesskey="e" placeholder="00.0"></input>
+            </div>
             </div>
           </div>
         <div class="panel-footer">
