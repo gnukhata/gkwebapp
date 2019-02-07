@@ -80,6 +80,12 @@
         <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
           <label for="btype">{% trans %}Budget added successfully!{% endtrans %}</label>
         </div>
+        <div class="alert alert-danger" id="inflow-alert" aria-live="rude" role="alert" hidden>
+          <label for="btype">{% trans %}Please enter inFlow budget!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="outflow-alert" aria-live="rude" role="alert" hidden>
+          <label for="btype">{% trans %}Please enter outFlow budget!{% endtrans %}</label>
+        </div>
       {# -------------- end alerts------------------------- #}
         <form id="addbudget" method="post"  class="form-horizontal">
         <div style="padding-top:15px" class="panel-body" >

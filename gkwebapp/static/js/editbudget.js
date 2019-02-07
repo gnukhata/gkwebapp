@@ -1,3 +1,30 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc.,51 Franklin Street, 
+  Fifth Floor, Boston, MA 02110, United States
+
+
+   Contributors:
+   "rohan khairnar" <rohankhairnar@gmail.com>
+ */
+// This js is use in editbudget.jinja2 file
+
 $(document).ready(function() {
     // for reset Button
     $("#reset").click(function()
@@ -45,7 +72,7 @@ $(document).ready(function() {
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
-            success: function(resp) {
+            success: function(resp) { // load all value return from api to show selected budget values. 
                 goddetails = resp["gkresult"];
                 contents = goddetails[0]["contents"];
                 $("#bname").val(goddetails[0]["budname"]);
@@ -104,7 +131,7 @@ $(document).ready(function() {
             }
         });
     });
-    $("#gaflag ").change(function(event) {
+    $("#gaflag ").change(function(event) { // load accounts/groups/subgroups table 
         $("body").css("padding-right", '0px');
         
             var data ={"flag": $("#gaflag input:radio:checked").val()}
@@ -376,8 +403,6 @@ $(document).ready(function() {
             $('#budget_today').focus().select();
             return false;
         }
-        // var todate = $("#budget_today").val()+'-'+$("#budget_tomonth").val()+'-'+$("#budget_toyear").val();
-        // var fromdate = $("#budget_fromday").val()+'-'+$("#budget_frommonth").val()+'-'+$("#budget_fromyear").val();
         var todate = $("#budget_toyear").val()+$("#budget_tomonth").val()+$("#budget_today").val();
         var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
         if(!Date.parseExact(fromdate,"yyyyMMdd")){
@@ -429,12 +454,28 @@ $(document).ready(function() {
             return false;
         }
 // ----------- end validation -----------
-        if($("#btype").val() == 3){
+        if($("#btype").val() == 3){ // when Cash Budget
+            if ($.trim($("#inflow").val())=="") {
+                $("#inflow-alert").alert();
+                $("#inflow-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#inflow-alert").hide();
+                });
+                $("#inflow").focus();
+                return false;
+            }
+            if ($.trim($("#outflow").val())=="") {
+                $("#outflow-alert").alert();
+                $("#outflow-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#outflow-alert").hide();
+                });
+                $("#outflow").focus();
+                return false;
+            }
             vd =[]
             vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
             dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
         }
-        else{
+        else{   // when sale or wxpense budget
             //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table

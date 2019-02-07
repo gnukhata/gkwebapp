@@ -34,6 +34,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "Reshma Bhatawadekar" <reshma@dff.org.in>
    "Pravin Dake" <pravindake24@gmail.com>
    "Aditya Shukla" <adityashukla9158.as@gmail.com>
+   "Rohan Khairnar" <rohankhairnar5@gmail.com>
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -624,6 +625,8 @@ $(document).ready(function(){
        $("#invoice").remove();
        $("#addcashmemo").remove();
        $("#godown").remove();
+       $("#showviewbudget").remove();
+       $("#budget").remove();
        $("#purchaseorder").remove();
        $("#transaction").remove();
        $("#showviewledger").remove();
@@ -654,6 +657,8 @@ $(document).ready(function(){
        $(".hideoperator").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
+       $("#showviewbudget").remove();
+       $("#budget").remove();
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
@@ -670,6 +675,8 @@ $(document).ready(function(){
 	 $("#fevoucher").text("Find Voucher");
    $("#business").remove();
    $("#help-message").hide();
+   $("#showviewbudget").remove();
+   $("#budget").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
@@ -947,6 +954,7 @@ $(document).ready(function(){
 
           }
         });
+
 	 
         $("#mode").keydown(function(event) {
           if (event.which == 13) {
