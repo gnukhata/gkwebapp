@@ -138,7 +138,7 @@ $(document).ready(function(){
             $("#gaflag").hide();
             $("#flow").show();
         }
-        if($("#btype option:selected").val() == 5 || ("#btype option:selected").val() == 19){
+        if($("#btype option:selected").val() == 5 || $("#btype option:selected").val() == 19){
             $("#flow").hide();
             $("#gaflag").show();
             $("#account").focus().click();

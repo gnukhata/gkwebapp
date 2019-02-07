@@ -278,16 +278,42 @@ $(document).ready(function() {
                 $("#budget_toyear").focus();
                 }
             });
+            $("#inflow").keydown(function(e){
+                if (e.which==13 )
+                {e.preventDefault();
+                  $("#outflow").focus();
+                }
+                if (e.which==38)
+                  {e.preventDefault();
+                  $("#btype").focus();
+                  }
+            });
+            $("#outflow").keydown(function(e){
+                if (e.which==13 )
+                {e.preventDefault();
+                  $("#add").focus();
+                }
+                if ( e.which==38)
+                  {e.preventDefault();
+                  $("#inflow").focus();
+                  }
+            });
             $("#add").keydown(function(e){
                 if (e.which==39)
                 {
                 e.preventDefault();
                 $("#reset").focus();
                 }
-                if (e.which==37 || e.which==38)
+                if ( e.which==38)
                 {
                 e.preventDefault();
-                $("#gaflag input:radio:checked").focus().select();
+                if($("#btype option:selected").val() == 3)
+                {
+                    $("#outflow").focus();
+                }
+                else{
+                    $("#gaflag input:radio:checked").focus().select();
+                }
                 }
             });
             $("#reset").keydown(function(e){
