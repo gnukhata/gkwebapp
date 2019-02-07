@@ -110,25 +110,25 @@
 				<label for="budget_fromday">{% trans %}<u>F</u>rom <u>D</u>ate{% endtrans %} :</label>
 				    <div class="form-inline input-group" id = "startdate">
                         <div class="col-xs-4">
-					    <input type="text" class="budget_date dis form-control input-sm " id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
+					    <input type="text" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
 					    </div>
                         <div class="col-xs-4">
-                        <input type="text" id="budget_frommonth" class="budget_date dis form-control input-sm"  size="2" maxlength="2" placeholder="MM">
+                        <input type="text" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
 					    </div>
                         <div class="col-xs-4">
-                        <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm"  size="4" maxlength="4" placeholder="YYYY">
+                        <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
 					    </div>
 				    </div>
 				    <label for="budget_today">{% trans %}<u>T</u>o <u>D</u>ate{% endtrans %} :</label>
 				    <div class="form-inline input-group" id="enddate">
                         <div class="col-xs-4">
-					    <input type="text" class="budget_date form-control input-sm dis" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+					    <input type="text" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
 					    </div>
                         <div class="col-xs-4">
-                        <input type="text" id="budget_tomonth" class="budget_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM">
+                        <input type="text" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
 					    </div>
                         <div class="col-xs-4">
-                        <input type="text" id="budget_toyear" class="budget_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY">
+                        <input type="text" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
                         </div>
                     </div>
                     <br>
@@ -157,11 +157,11 @@
                     <div id="flow">
                     <div style="margin-bottom: 10px" class="input-group col-xs-12">
                     <label for="inflow" >{% trans %}InFlow Budget{% endtrans %} :</label>
-                    <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm" name="username" accesskey="e" placeholder="00.0"></input>
+                    <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm numtype" name="username" accesskey="e" placeholder="00.0"></input>
                     </div>
                     <div style="margin-bottom: 10px" class="input-group col-xs-12">
                     <label for="outflow" >{% trans %}OutFlow Budget{% endtrans %} :</label>
-                    <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm" name="username" accesskey="e" placeholder="00.0"></input>
+                    <input style="border-radius: 4px" id="outflow" type="integer" class="form-control input-sm numtype" name="username" accesskey="e" placeholder="00.0"></input>
                     </div>
                     </div>
                   </div>

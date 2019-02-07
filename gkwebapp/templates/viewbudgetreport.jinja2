@@ -68,16 +68,15 @@
             {% for buds in gkresult %}
             <option value="{{buds['budid']}}">{{buds["budname"]}} ({{buds["startdate"]}} - {{buds["enddate"]}})</option>
             {% endfor %}
-            {% endif %}
             </select>
           <br>
         </div>
       </div>
-
       <div class="panel-footer">
         <button class="btn btn-primary btn-sm" id="submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
 
       </div>
+      {% endif %}
     </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewbudgetreport.js')}}"></script>
