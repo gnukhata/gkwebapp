@@ -281,10 +281,6 @@ $(document).ready(function(){
       $("#addaccounttb").click();
       event.preventDefault();
     }
-    // if(event.keyCode == 114) {
-    //   $("#editaccount").click();
-    //   event.preventDefault();
-    // }
     if(event.keyCode == 122) {
       $("#showviewledger").click();
       event.preventDefault();
@@ -2115,9 +2111,6 @@ $('#listofaccounts').click(function (e) {
   $('#purchasereturntb').click(function(){
     $('#showpurchasereturn').click();
   });
-  // $('#editaccounttb').click(function(){
-  //   $('#editaccount').click();
-  // });
   $('#projecttb').click(function(){
     $('#showproject').click();
   });
