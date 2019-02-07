@@ -1,3 +1,29 @@
+/*
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc.,51 Franklin Street, 
+  Fifth Floor, Boston, MA 02110, United States
+
+
+   Contributors:
+   "rohan khairnar" <rohankhairnar@gmail.com>
+ */
+// This js is use in createbudget.jinja2 file
 $(document).ready(function(){
     // Retrives organisation details from sessionstorage.
     var orname = sessionStorage.getItem('orgn');
@@ -85,7 +111,7 @@ $(document).ready(function(){
           }
     });
     $("#btype").keydown(function(e){
-        if (e.which==13 || e.which==39)
+        if (e.which==13 )
         {
           e.preventDefault();
           if($("#btype option:selected").val() == 3){
@@ -100,7 +126,7 @@ $(document).ready(function(){
           }
           
         }
-        if (e.which==37 || e.which==38)
+        if ( e.which==38)
           {
           e.preventDefault();
           $("#budget_toyear").focus();
@@ -119,21 +145,21 @@ $(document).ready(function(){
         }
     });
     $("#inflow").keydown(function(e){
-        if (e.which==13 || e.which==39)
+        if (e.which==13 )
         {e.preventDefault();
           $("#outflow").focus();
         }
-        if (e.which==37 || e.which==38)
+        if (e.which==38)
           {e.preventDefault();
           $("#btype").focus();
           }
     });
     $("#outflow").keydown(function(e){
-        if (e.which==13 || e.which==39)
+        if (e.which==13 )
         {e.preventDefault();
           $("#add_button").focus();
         }
-        if (e.which==37 || e.which==38)
+        if ( e.which==38)
           {e.preventDefault();
           $("#inflow").focus();
           }
@@ -144,7 +170,7 @@ $(document).ready(function(){
           e.preventDefault();
           $("#reset_button").focus();
         }
-        if (e.which==37 || e.which==38)
+        if ( e.which==38)
           {
           e.preventDefault();
           if($("#btype option:selected").val() == 3){
@@ -249,7 +275,7 @@ $(document).ready(function(){
         $(this).val(yearpad($(this).val(),4));
     });
 // ------------------ end date validation -------------
-    $("#gaflag input:radio").change(function(event) {
+    $("#gaflag input:radio").change(function(event) { // load accounts/groups/subgroups table
         $("body").css("padding-right", '0px');
             var data ={"flag": $("#gaflag input:radio:checked").val()}
             $.ajax({
@@ -348,7 +374,7 @@ $(document).ready(function(){
             return false;
         }
 // ----------- end validation -----------
-        if($("#btype option:selected").val() == 3){  // Cash budget 
+        if($("#btype option:selected").val() == 3){  // if Cash budget 
             if ($.trim($("#inflow").val())=="") {
                 $("#inflow-alert").alert();
                 $("#inflow-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -367,8 +393,7 @@ $(document).ready(function(){
             }
             vd=[]
             vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
-
-        dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
+            var gaflag = 16;
         }
         else{  // Sales and Expense budget
                     //gets table data
@@ -401,6 +426,7 @@ $(document).ready(function(){
             }
         }
         vd.push(content);
+        
         if(Object.keys(content).length == 0){
             $("#content-alert").alert();
             $("#content-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -409,9 +435,14 @@ $(document).ready(function(){
             $("#latable tbody tr:eq(0) input").focus();
             return false;
         }
-        dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": $("#gaflag input:radio:checked").val()};
+        var gaflag = $("#gaflag input:radio:checked").val();
         }
-    
+        if (sessionStorage.goid != ''){
+            var goid = sessionStorage.goid;
+          }
+        
+        dataset = {"goid" : parseInt(goid),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": parseInt(gaflag)};
+        console.log(dataset)
         $("#msspinmodal").modal("show");
         $.ajax(
             {
