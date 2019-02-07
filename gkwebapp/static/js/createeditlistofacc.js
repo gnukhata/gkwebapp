@@ -21,10 +21,8 @@
 
 
    Contributors:
-   "Krishnakant Mane" <kk@gmail.com>
-   "Navin Karkera" <navin@dff.org.in>
-   "Bhavesh Bhawadhane" <bbhavesh07@gmail.com>
-   "Sachin Patil" <sachin619patil@rediffmail.com>
+   "Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+  
  */
 
 $(document).ready(function() {
@@ -34,7 +32,7 @@ $(document).ready(function() {
       {
   
       type: "POST",
-      url: "/customersuppliers?action=showadd",
+      url: "/showaccount?action=showadd",
       global: false,
       async: false,
       datatype: "text/html",
@@ -44,7 +42,7 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
-        $("#customersupplier_div").html(resp);
+        $("#createeditlistofacc_div").html(resp);
       }
       }
     );
@@ -54,7 +52,7 @@ $(document).ready(function() {
       {
   
       type: "POST",
-      url: "/customersuppliers?action=showedit",
+      url: "/showeditaccount",
       global: false,
       async: false,
       datatype: "text/html",
@@ -64,12 +62,32 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
-        $("#customersupplier_div").html(resp);
+        $("#createeditlistofacc_div").html(resp);
       }
       }
     );
     });
-    $("#customersupplier_create").click();
+    $("#list_of_account").click(function() {
+      $.ajax(
+      {
+  
+      type: "POST",
+      url: "/showlistofaccounts",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#createeditlistofacc_div").html(resp);
+      }
+      }
+    );
+    });
+    $("#create_account").click();
   
   });
   

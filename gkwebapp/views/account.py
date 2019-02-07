@@ -105,8 +105,11 @@ def spreadsheetofaccounts(request):
     except:
         return {"gkstatus":3}
 
-
-@view_config(route_name="showaccount", renderer="gkwebapp:templates/createaccount.jinja2")
+@view_config(route_name="showaccount",renderer="gkwebapp:templates/createeditlistofacc.jinja2")
+def showaddeditaccount(request):
+    return {"status":True}
+    
+@view_config(route_name="showaccount",request_param="action=showadd", renderer="gkwebapp:templates/createaccount.jinja2")
 def showaccount(request):
 
     header={"gktoken":request.headers["gktoken"]}
