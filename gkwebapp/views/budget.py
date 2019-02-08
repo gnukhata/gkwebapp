@@ -136,9 +136,7 @@ def budgetreport(request):
     financialstart = request.params["financialstart"]
     result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     reportdata=[]
-    for record in result.json()["gkresult"]:
-            reportdata.append({"totalopeningbal":record["totalopeningbal"],"budgetIn":record["budgetIn"],"budgetOut":record["budgetOut"],"budgetBal":record["budgetBal"],"varCr":record["varCr"],"varDr":record["varDr"],"varBal":record["varBal"],"accData":record["accData"]})
     
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":reportdata, "budgetdetail":request.params["buddetails"] }
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"] }
     
     
