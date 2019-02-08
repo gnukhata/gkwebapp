@@ -21,7 +21,11 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
 
    Contributors:
-   "Rohan kahirnar" <rohankhairnar5@gmail.com>
+   "Krishnakant Mane" <kk@gmail.com>
+   "Karan Kamdar" <kamdar.karan@gmail.com>
+   "Prajkta Patkar" <prajkta@riseup.com>
+   "Abhijith Balan" <abhijith@dff.org.in>
+   "rohan khairnar" <rohankhairnar@gmail.com>
  */
 // This js is use in budget.jinja2 file.
 $(document).ready(function() {
