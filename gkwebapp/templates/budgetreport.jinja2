@@ -50,7 +50,7 @@ th {
         </div>
         <div class="panel-body">
         <div >
-            <h><b>Total Opening Balance : </b></h>{{gkresult[0]["totalopeningbal"]}}
+            <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
         </div>
         <div class="table-responsive">
           <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
@@ -65,39 +65,39 @@ th {
             <tbody>
                 <tr >
                     <td> Budget Amount</td>
-                    <td style="text-align:right"> {{gkresult[0]["budgetIn"]}} </td>
-                    <td style="text-align:right"> {{gkresult[0]["budgetOut"]}} </td>
-                    <td style="text-align:right"> {{gkresult[0]["budgetBal"]}} </td>   
+                    <td style="text-align:right"> {{gkresult["budgetIn"]}} </td>
+                    <td style="text-align:right"> {{gkresult["budgetOut"]}} </td>
+                    <td style="text-align:right"> {{gkresult["budgetBal"]}} </td>   
                 </tr>
                 <tr >
                     <td><h> Actuals </h> <br>
                     <div style="text-align:right">
-                    {% for acc in gkresult[0]["accData"] %}
+                    {% for acc in gkresult["accData"] %}
                         {{acc["accountname"]}} <br>
                     {% endfor %}
                     </div>
                     </td>
                     <td style="text-align:right"><br>
-                    {% for acc in gkresult[0]["accData"] %}
+                    {% for acc in gkresult["accData"] %}
                         {{acc["accDr"]}} <br>
                     {% endfor %}
                      </td>
                     <td style="text-align:right"><br>
-                    {% for acc in gkresult[0]["accData"] %}
+                    {% for acc in gkresult["accData"] %}
                         {{acc["accCr"]}} <br>
                     {% endfor %}
                     </td>
                     <td style="text-align:right"><br>
-                    {% for acc in gkresult[0]["accData"] %}
+                    {% for acc in gkresult["accData"] %}
                         {{acc["accBal"]}} <br>
                     {% endfor %}
                     </td>
                 </tr>
                 <tr>
                     <td>Variance</td>
-                    <td style="text-align:right"> {{gkresult[0]["varDr"]}} </td>
-                    <td style="text-align:right"> {{gkresult[0]["varCr"]}} </td>
-                    <td style="text-align:right"> {{gkresult[0]["varBal"]}} </td> 
+                    <td style="text-align:right"> {{gkresult["varDr"]}} </td>
+                    <td style="text-align:right"> {{gkresult["varCr"]}} </td>
+                    <td style="text-align:right"> {{gkresult["varBal"]}} </td> 
                 </tr>
             </tbody>
             </table>
