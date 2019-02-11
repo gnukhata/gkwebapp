@@ -30,6 +30,20 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 // This js is use in budget.jinja2 file.
 $(document).ready(function() {
   $("a[href ='#budget_create']").click(function() {
+    var financialstart = sessionStorage.yyyymmddyear1;
+    var today = new Date();
+    var dd = today.getDate();
+    var mm = today.getMonth()+1; //January is 0!
+    var yyyy = today.getFullYear();
+    
+    if(dd<10) {
+      dd = '0'+dd
+    } 
+    if(mm<10) {
+        mm = '0'+mm
+    } 
+    today = yyyy + '-' + mm + '-' + dd;
+    var uptodate = String(today)
     $.ajax(
     {
 
@@ -38,6 +52,7 @@ $(document).ready(function() {
     global: false,
     async: false,
     datatype: "text/html", 
+    data: {"financialstart":financialstart,"uptodate":uptodate},
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -73,7 +88,6 @@ $(document).ready(function() {
     }
   );
   });
-
 
   $("a[href ='#budget_create']").click();
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
