@@ -90,11 +90,11 @@
         <form id="addbudget" method="post"  class="form-horizontal">
         <div style="padding-top:15px" class="panel-body" >
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="bname" >{% trans %}<u>B</u>udget <u>N</u>ame{% endtrans %} :</label>
-              <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="e"></input>
+              <label for="bname" >{% trans %}<u>B</u>udget Name{% endtrans %} :</label>
+              <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="b"></input>
             </div>
 
-				<label for="budget_fromday">{% trans %}<u>F</u>rom <u>D</u>ate{% endtrans %} :</label>
+				<label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
 				<div class="form-inline input-group" >
           <div class="col-xs-4">
 					  <input type="text" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
@@ -106,7 +106,7 @@
             <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
 					</div>
 				</div>
-				<label for="budget_today">{% trans %}<u>T</u>o <u>D</u>ate{% endtrans %} :</label>
+				<label for="budget_today">{% trans %}To Date{% endtrans %} :</label>
 				<div class="form-inline input-group" >
           <div class="col-xs-4">
 					  <input type="text" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
@@ -120,7 +120,7 @@
         </div>
             <br>
         <div style="margin-bottom: 10px" class="input-group col-xs-12">
-          <label for="btype" id="pwdconfirm">{% trans %}<u>B</u>udget <u>T</u>ype{% endtrans %} :</label>
+          <label for="btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
             <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
               <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
               <option value="3">{% trans %}Cash{% endtrans %}</option>
@@ -154,7 +154,7 @@
           </div>
         <div class="panel-footer">
           <button type="submit" id="add_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i>S<u>a</u>ve{% endtrans %}</button>
-	        <button id="reset_button" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
+	        <button id="reset_button" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Res<u>e</u>t{% endtrans %}</button>
       </div>
       </form>
       </div>

@@ -83,7 +83,7 @@ def addbudget(request):
     if "goid" in request.params:
         gkdata = {"goid":int(request.params["goid"]),"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"])[0], "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
     else:
-        gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"])[0], "budtype":request.params["btype"], "gaflag":request.params["gaflag"]}
+        gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"])[0], "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
 
     result = requests.post("http://127.0.0.1:6543/budget", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:

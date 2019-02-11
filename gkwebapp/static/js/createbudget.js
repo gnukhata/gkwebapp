@@ -441,12 +441,14 @@ $(document).ready(function(){
         }
         var gaflag = $("#gaflag input:radio:checked").val();
         }
-        if (sessionStorage.goid != ''){
+        if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;
+            dataset = {"goid":goid,"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": parseInt(gaflag)};
           }
-        
-        dataset = {"goid" : parseInt(goid),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": parseInt(gaflag)};
-        console.log(dataset)
+        else{
+            dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": parseInt(gaflag)};
+        }
+       console.log(dataset)
         $("#msspinmodal").modal("show");
         $.ajax(
             {
