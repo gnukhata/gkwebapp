@@ -35,6 +35,8 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "Pravin Dake" <pravindake24@gmail.com>
    "Aditya Shukla" <adityashukla9158.as@gmail.com>
    "Rohan Khairnar" <rohankhairnar5@gmail.com>
+   "Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+
  */
 // This script is for the mainshell page and loads when the main page of GNUKhata is loaded.
 // Also all the external js libraries we have used is loaded along with the mainshell.
@@ -125,6 +127,22 @@ $(document).ready(function(){
       sessionStorage.reload = 0;
       location.reload();
     }
+
+  $("#add_customer").click(function() {
+    $("#customersupplier").click();
+  });
+
+  $("#add_product").click(function() {
+    $("#productinmaster").click();
+  });
+
+  $("#add_invoice").click(function() {
+    $("#invoice").click();
+  });
+
+  $("#add_del_chal").click(function() {
+    $("#deliverychallan").click();
+  });
 
   $("#create-cust").click(function() {
     $("#customersupplier").click();

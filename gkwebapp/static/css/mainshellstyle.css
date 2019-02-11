@@ -46,6 +46,11 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
     outline: 2px #1f0e5e solid !important;
     
 }
+.grow { transition: all .2s ease-in-out; 
+    opacity: 0.7;}
+.grow:hover {     opacity: 1;
+	transform: scale(1.1); }
+
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;
@@ -69,3 +74,4 @@ option {
 	margin-bottom:1px;
     }
 }
+
