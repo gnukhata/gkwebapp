@@ -104,10 +104,10 @@
             <form id="addbudget" method="post"  class="form-horizontal">
             <div style="padding-top:15px" class="panel-body" >
                 <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                <label for="bname" >{% trans %}<u>B</u>udget <u>N</u>ame{% endtrans %} :</label>
+                <label for="bname" >{% trans %}Budg<u>e</u>t Name{% endtrans %} :</label>
                 <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="e"></input>
                 </div>
-				<label for="budget_fromday">{% trans %}<u>F</u>rom <u>D</u>ate{% endtrans %} :</label>
+				<label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
 				    <div class="form-inline input-group" id = "startdate">
                         <div class="col-xs-4">
 					    <input type="text" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
@@ -133,7 +133,7 @@
                     </div>
                     <br>
                     <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                    <label for="btype" id="pwdconfirm">{% trans %}<u>B</u>udget <u>T</u>ype{% endtrans %} :</label>
+                    <label for="btype" id="pwdconfirm">{% trans %}Budget <u>T</u>ype{% endtrans %} :</label>
                     <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
                         <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
                         <option value="3">{% trans %}Cash{% endtrans %}</option>
