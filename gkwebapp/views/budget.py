@@ -46,7 +46,8 @@ def budget(request):
 @view_config(route_name="budget",request_param="type=addtab", renderer="gkwebapp:templates/createbudget.jinja2")
 def addbudgetpage(request):
     header={"gktoken":request.headers["gktoken"]}
-    return {"status":True}
+    result = requests.get("http://127.0.0.1:6543/budget?type=addtab&financialstart=%s&uptodate=%s"%(request.params["financialstart"],request.params["uptodate"]), headers=header)
+    return {"status":True,"gkresult":result.json()["gkresult"]}
 
 @view_config(route_name="budget",request_param="type=edittab", renderer="gkwebapp:templates/editbudget.jinja2")
 def editbudgetpage(request):
