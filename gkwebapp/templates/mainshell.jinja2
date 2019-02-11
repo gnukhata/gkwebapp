@@ -14,6 +14,21 @@
 	 height: 60vh;
 	 overflow-y: scroll;
      }
+     .dashboard{
+       background-color: rgb(248,248,248);
+       width: 85%;
+       height: 200px;
+       padding: 15px;
+       border-radius: 3px;
+     }
+     .dashboardoutdiv{
+       background-color: rgba(255, 255, 255, 0,0);
+       padding-top: 10px;
+     }
+
+     .paymentdivheader{
+       background-color: #1b2631;
+     }
     </style>
 
   </head>
@@ -250,8 +265,81 @@
     </div>
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
-      <div id="help-message" class="panel shadow col-md-4" style="padding:0 !important; margin:10px !important;">
-        <div class="panel-heading">
+      
+    <div class=" ">
+      <div class="col-md-4 dashboardoutdiv">
+      <div style="position:relative;">
+        <div class="dashboard shadow grow">
+
+          <div class="text-center" style="font-size:10rem">
+              <i class="fa fa-user-plus fa-10x"></i>
+          </div>
+          <br>
+          <div class="text-center"style="width:100%"><button class="btn btn-danger" id="add_customer" style="width:100%">Customer and Supplier</button></div>
+        </div>
+      </div>  
+      </div>
+
+      <div class="col-md-4 dashboardoutdiv">
+          <div style="position:relative;">
+        <div class=" dashboard shadow grow">
+          <div class="text-center" style="font-size:10rem">
+              <i class="fa fa-cart-plus fa-10x"></i>
+          </div>
+          <br>
+          <div class="text-center"><button class="btn btn-danger" id="add_product" style="width:100%">Product/ Service</button></div>
+        </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 dashboardoutdiv">
+          <div style="position:relative;">
+        <div class="dashboard shadow grow text-center">
+          <div class="text-center" style="font-size:10rem">
+              <i class="fa fa-file fa-10x"></i>
+          </div>
+          <br>
+          <div class="text-center">
+            <button class="btn btn-danger" id="add_invoice" style="width:47%">Invoice</button>
+            <button class="btn btn-danger" id="add_del_chal" style="width:47%">Delivery Note</button>
+          </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div>
+      <div>
+      <div class="col-sm-6 dashboardoutdiv">
+      <div class="dashboard shadow grow">
+        <div class="">
+          header
+        </div>
+        <div class="hborderdiv">
+          body
+        </div>
+        <div>
+          footer
+        </div>
+      </div>
+      </div>
+    </div>
+
+      <div class="col-sm-6">
+          <div class="paymentdivheader">
+            header
+          </div>
+          <div>
+            body
+          </div>
+          <div>
+            footer
+          </div>
+        </div>
+    </div>
+
+      <!-- <div id="help-message" class="panel shadow col-md-4" style="padding:0 !important; margin:10px !important;"> -->
+        <!-- <div class="panel-heading">
           <div class="panel-title">{% trans %}Welcome to GNUKhata{% endtrans %}</div>
         </div>
         <div style="padding-top:20px" class="panel-body">
@@ -292,7 +380,7 @@
           <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
 	  <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
 	</div>
-      </div>
+      </div> -->
     </div>
     <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
