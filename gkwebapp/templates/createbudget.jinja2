@@ -90,7 +90,7 @@
         <form id="addbudget" method="post"  class="form-horizontal">
         <div style="padding-top:15px" class="panel-body" >
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-            <label for="bname" >{% trans %}<i>Cash balance at beginning</i>{% endtrans %} :</label> <b>{{gkresult}} </b><br>
+            
               <label for="bname" >{% trans %}<u>B</u>udget Name{% endtrans %} :</label>
               <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="b"></input>
             </div>
@@ -144,9 +144,11 @@
             </div>
             <div id="flow" class="input group">
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
+            <label for="bname" >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "balance" > </b><br>
               <label for="inflow" >{% trans %}InFlow Budget{% endtrans %} :</label>
               <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm text-right numtype"  value="00.0" placeholder="00.0"></input>
             </div>
+            <label for="bname" >{% trans %}<i>Cash Available</i>{% endtrans %} :</label> <b id = "cashavailable" > </b><br>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
               <label for="outflow" >{% trans %}OutFlow Budget{% endtrans %} :</label>
               <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm text-right common numtype"  value="00.0" placeholder="00.0"></input>

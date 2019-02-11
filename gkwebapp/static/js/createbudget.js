@@ -39,6 +39,8 @@ $(document).ready(function(){
     $("#flow").hide();
     $("#gaflag").hide();
     $("#bname").focus();
+    $("#balance").text(00);
+    $("#cashavailable").text(00)
     var dataset = {};
     // for reset Button
     $("#reset_button").click(function()
@@ -123,12 +125,6 @@ $(document).ready(function(){
               $("#flow").show();
               $("#inflow").focus();
           }
-          else{
-            $("#gaflag").show();
-            $("#flow").hide();
-            $("#account").focus().click();
-          }
-          
         }
         if ( e.which==38)
           {
@@ -146,6 +142,15 @@ $(document).ready(function(){
             $("#flow").hide();
             $("#gaflag").show();
             $("#account").focus().click();
+        }
+    });
+    $("#inflow").change(function(e){
+        var b = parseInt($("#balance").text());
+        if(b != 0){
+            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+        }
+        else{
+            $("#cashavailable").text(parseInt($("#inflow").val()))
         }
     });
     $("#inflow").keydown(function(e){
@@ -180,10 +185,6 @@ $(document).ready(function(){
           if($("#btype option:selected").val() == 3){
             $("#outflow").focus();
         }
-        else{
-            $("#gaflag input:radio:checked").focus().select();
-        }
-          
           }
     });
     $("#reset_button").keydown(function(e){
@@ -299,6 +300,111 @@ $(document).ready(function(){
                     $("#gaflag input:radio:checked").focus();
                 });
        });
+    //    -------------------------------- date change event ---------
+    var financial = sessionStorage.yyyymmddyear1;
+    $("#budget_fromday").change(function(event) { 
+        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
+        if(!Date.parseExact(fromdate,"yyyyMMdd")){
+            $("#balance").text(00);
+            return false;
+        }
+        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+            $("#balance").text(00);
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
+        $.ajax({
+            type: "POST",
+            url: "/budget?type=balance",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"financialstart":financial,"uptodate":fromdate},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+        })
+        .done(function(resp) { 
+            $("#balance").text(resp["gkresult"]); 
+        });
+    });
+    $("#budget_frommonth").change(function(event) { 
+        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
+        if(!Date.parseExact(fromdate,"yyyyMMdd")){
+            $("#balance").text(00);
+            return false;
+        }
+        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+            $("#balance").text(00);
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
+        $.ajax({
+            type: "POST",
+            url: "/budget?type=balance",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"financialstart":financial,"uptodate":fromdate},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+        })
+        .done(function(resp) { 
+            $("#balance").text(resp["gkresult"]);
+        });
+    });
+    $("#budget_fromyear").change(function(event) { 
+        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
+        if(!Date.parseExact(fromdate,"yyyyMMdd")){
+            $("#balance").text(00);
+            return false;
+        }
+        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+            $("#balance").text(00);
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
+        $.ajax({
+            type: "POST",
+            url: "/budget?type=balance",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"financialstart":financial,"uptodate":fromdate},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+        })
+        .done(function(resp) {
+            $("#balance").text(resp["gkresult"]);
+        });
+    });
+
 // submit button
     $("#addbudget").submit(function(e){
         e.preventDefault();
@@ -448,7 +554,6 @@ $(document).ready(function(){
         else{
             dataset = {"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": parseInt(gaflag)};
         }
-       console.log(dataset)
         $("#msspinmodal").modal("show");
         $.ajax(
             {
