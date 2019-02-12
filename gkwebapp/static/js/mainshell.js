@@ -144,6 +144,14 @@ $(document).ready(function(){
     $("#deliverychallan").click();
   });
 
+  $('#make_payment').click(function(){
+    $('#showpayment').click();
+  });
+
+  $('#receive_payment').click(function(){
+    $('#showreceipt').click();
+  });
+
   $("#create-cust").click(function() {
     $("#customersupplier").click();
   });
