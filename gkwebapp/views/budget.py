@@ -138,7 +138,6 @@ def deletebudget(request):
 
 @view_config(route_name="budget",request_param="type=report", renderer="gkwebapp:templates/budgetreport.jinja2")
 def budgetreport(request):
-    print("ffff")
     header={"gktoken":request.headers["gktoken"]}
     financialstart = request.params["financialstart"]
     result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
