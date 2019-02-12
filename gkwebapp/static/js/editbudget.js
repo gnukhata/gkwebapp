@@ -122,9 +122,9 @@ $(document).ready(function() {
                         },
                     })
                     .done(function(resp) { 
-                        $("#balance").text(resp["gkresult"]);
-                        $("#cashavailable").text(parseInt($("#inflow").val())+parseInt(resp["gkresult"])) 
-                        $("#budgetbalance").text(parseInt($("#cashavailable").text())-parseInt($("#outflow").val()))
+                        $("#balance").text(parseFloat(resp["gkresult"]));
+                        $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+                        $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
                     });
                 }
                 else{
@@ -469,9 +469,9 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) { 
-            $("#balance").text(resp["gkresult"]); 
-            $("#cashavailable").text(parseInt($("#inflow").val())+parseInt(resp["gkresult"])) 
-            $("#budgetbalance").text(parseInt($("#cashavailable").text())-parseInt($("#outflow").val()))
+            $("#balance").text(parseFloat(resp["gkresult"])); 
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
         });
     });
     $("#budget_frommonth").change(function(event) {
@@ -514,9 +514,9 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) { 
-            $("#balance").text(resp["gkresult"]);
-            $("#cashavailable").text(parseInt($("#inflow").val())+parseInt(resp["gkresult"])) 
-            $("#budgetbalance").text(parseInt($("#cashavailable").text())-parseInt($("#outflow").val()))
+            $("#balance").text(parseFloat(resp["gkresult"]));
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
         });
     });
     $("#budget_fromyear").change(function(event) { 
@@ -559,41 +559,41 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) {
-            $("#balance").text(resp["gkresult"]);
-            $("#cashavailable").text(parseInt($("#inflow").val())+parseInt(resp["gkresult"])) 
-            $("#budgetbalance").text(parseInt($("#cashavailable").text())-parseInt($("#outflow").val()))
+            $("#balance").text(parseFloat(resp["gkresult"]));
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
         });
     });
     $("#inflow").change(function(e){
-        var b = parseInt($("#balance").text());
+        var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
         }
         else{
-            $("#cashavailable").text(parseInt($("#inflow").val()))
+            $("#cashavailable").text(parseFloat($("#inflow").val()))
         }
-        var ca = parseInt($("#cashavailable").text());
+        var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
         }
         else{
-            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
+            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
         }
     });
     $("#outflow").change(function(e){
-        var b = parseInt($("#balance").text());
+        var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
         }
         else{
-            $("#cashavailable").text(parseInt($("#inflow").val()))
+            $("#cashavailable").text(parseFloat($("#inflow").val()))
         }
-        var ca = parseInt($("#cashavailable").text());
+        var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
         }
         else{
-            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
+            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
         }
     });
     });

@@ -39,7 +39,7 @@ $(document).ready(function(){
     $("#flow").hide();
     $("#gaflag").hide();
     $("#bname").focus();
-    $("#balance").text(00);
+    $("#balance").text("0.00");
     $("#cashavailable").text("0.00");
     $("#budgetbalance").text("0.00");
     var dataset = {};
@@ -147,35 +147,35 @@ $(document).ready(function(){
         }
     });
     $("#inflow").change(function(e){
-        var b = parseInt($("#balance").text());
+        var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
         }
         else{
-            $("#cashavailable").text(parseInt($("#inflow").val()))
+            $("#cashavailable").text(parseFloat($("#inflow").val()))
         }
-        var ca = parseInt($("#cashavailable").text());
+        var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
         }
         else{
-            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
+            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
         }
     });
     $("#outflow").change(function(e){
-        var b = parseInt($("#balance").text());
+        var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
         }
         else{
-            $("#cashavailable").text(parseInt($("#inflow").val()))
+            $("#cashavailable").text(parseFloat($("#inflow").val()))
         }
-        var ca = parseInt($("#cashavailable").text());
+        var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
         }
         else{
-            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
+            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
         }
     });
     $("#inflow").keydown(function(e){
@@ -367,7 +367,7 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(resp["gkresult"]); 
+            $("#balance").text(parseFloat(resp["gkresult"])); 
         });
     });
     $("#budget_frommonth").change(function(event) {
@@ -410,7 +410,7 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(resp["gkresult"]);
+            $("#balance").text(parseFloat(resp["gkresult"]));
         });
     });
     $("#budget_fromyear").change(function(event) { 
@@ -453,7 +453,7 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) {
-            $("#balance").text(resp["gkresult"]);
+            $("#balance").text(parseFloat(resp["gkresult"]));
         });
     });
 
