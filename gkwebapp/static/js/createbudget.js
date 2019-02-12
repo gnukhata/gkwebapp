@@ -40,8 +40,8 @@ $(document).ready(function(){
     $("#gaflag").hide();
     $("#bname").focus();
     $("#balance").text(00);
-    $("#cashavailable").text(00);
-    $("#budgetbalance").text(00);
+    $("#cashavailable").text("0.00");
+    $("#budgetbalance").text("0.00");
     var dataset = {};
     // for reset Button
     $("#reset_button").click(function()
