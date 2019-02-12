@@ -134,6 +134,7 @@ $(document).ready(function(){
     });
     
     $("#btype").change(function(e){
+        $("#budget_fromday").change();
         if($("#btype option:selected").val() == 3){
             $("#gaflag").hide();
             $("#flow").show();
