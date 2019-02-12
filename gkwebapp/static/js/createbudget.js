@@ -40,7 +40,8 @@ $(document).ready(function(){
     $("#gaflag").hide();
     $("#bname").focus();
     $("#balance").text(00);
-    $("#cashavailable").text(00)
+    $("#cashavailable").text(00);
+    $("#budgetbalance").text(00);
     var dataset = {};
     // for reset Button
     $("#reset_button").click(function()
@@ -152,6 +153,29 @@ $(document).ready(function(){
         }
         else{
             $("#cashavailable").text(parseInt($("#inflow").val()))
+        }
+        var ca = parseInt($("#cashavailable").text());
+        if(ca != 0){
+            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+        }
+        else{
+            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
+        }
+    });
+    $("#outflow").change(function(e){
+        var b = parseInt($("#balance").text());
+        if(b != 0){
+            $("#cashavailable").text(b+parseInt($("#inflow").val()))
+        }
+        else{
+            $("#cashavailable").text(parseInt($("#inflow").val()))
+        }
+        var ca = parseInt($("#cashavailable").text());
+        if(ca != 0){
+            $("#budgetbalance").text(ca-parseInt($("#outflow").val()))
+        }
+        else{
+            $("#budgetbalance").text("-"+parseInt($("#outflow").val()))
         }
     });
     $("#inflow").keydown(function(e){
