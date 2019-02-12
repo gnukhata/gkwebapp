@@ -31,6 +31,7 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#msspinmodal").modal("hide");
     $("#budgetlist").focus();
+    var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
        $.ajax({
         type: "POST",

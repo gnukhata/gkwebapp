@@ -303,6 +303,7 @@ $(document).ready(function(){
     //    -------------------------------- date change event ---------
     var financial = sessionStorage.yyyymmddyear1;
     $("#budget_fromday").change(function(event) { 
+        $(this).val(pad($(this).val(),2));
         if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
             $("#date-alert").alert();
             $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -313,11 +314,19 @@ $(document).ready(function(){
         }
         var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
         if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#balance").text(00);
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#balance").text(00);
+            $("#between-date-alert").alert();
+            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#between-date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
@@ -336,7 +345,8 @@ $(document).ready(function(){
             $("#balance").text(resp["gkresult"]); 
         });
     });
-    $("#budget_frommonth").change(function(event) { 
+    $("#budget_frommonth").change(function(event) {
+        $(this).val(pad($(this).val(),2));
         if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
             $("#date-alert").alert();
             $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -347,11 +357,19 @@ $(document).ready(function(){
         }
         var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
         if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#balance").text(00);
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#balance").text(00);
+            $("#between-date-alert").alert();
+            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#between-date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
@@ -371,6 +389,7 @@ $(document).ready(function(){
         });
     });
     $("#budget_fromyear").change(function(event) { 
+        $(this).val(yearpad($(this).val(),4));
         if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
             $("#date-alert").alert();
             $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -381,11 +400,19 @@ $(document).ready(function(){
         }
         var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
         if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#balance").text(00);
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#balance").text(00);
+            $("#between-date-alert").alert();
+            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#between-date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
             return false;
         }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
