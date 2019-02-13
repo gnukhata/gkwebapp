@@ -105,9 +105,9 @@ $(document).ready(function() {
                 if(goddetails[0]["btype"] == 3){
                     $("#gaflag").hide();
                     $("#flow").show();
-                    $("#outflow").val(goddetails[0]["contents"]["outflow"]);
+                    $("#outflow").val(parseFloat(goddetails[0]["contents"]["outflow"]).toFixed(2));
                     $("#outflow").prop("disabled", true);
-                    $("#inflow").val(goddetails[0]["contents"]["inflow"]);
+                    $("#inflow").val(parseFloat(goddetails[0]["contents"]["inflow"]).toFixed(2));
                     $("#inflow").prop("disabled", true);
                     var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
                     $.ajax({
