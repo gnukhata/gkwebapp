@@ -314,7 +314,7 @@ $(document).ready(function() {
                 }
                 if (e.which==38)
                   {e.preventDefault();
-                  $("#btype").focus();
+                  $("#budget_toyear").focus();
                   }
             });
             $("#outflow").keydown(function(e){

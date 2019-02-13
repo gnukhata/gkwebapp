@@ -367,7 +367,9 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(parseFloat(resp["gkresult"])); 
+            $("#balance").text(parseFloat(resp["gkresult"]));
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())) 
         });
     });
     $("#budget_frommonth").change(function(event) {
@@ -411,6 +413,8 @@ $(document).ready(function(){
         })
         .done(function(resp) { 
             $("#balance").text(parseFloat(resp["gkresult"]));
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
         });
     });
     $("#budget_fromyear").change(function(event) { 
@@ -454,6 +458,8 @@ $(document).ready(function(){
         })
         .done(function(resp) {
             $("#balance").text(parseFloat(resp["gkresult"]));
+            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
+            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
         });
     });
 
