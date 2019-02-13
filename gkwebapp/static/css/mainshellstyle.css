@@ -36,6 +36,10 @@ a:focus,
 .table{
 	font-family: Courier New,Courier,Lucida Sans Typewriter,Lucida Typewriter,monospace;
 }
+.invoiceslist{
+	font-weight:normal !important;
+	font-size: 90%;
+}
 #msspinmodalcontent {
 	background: inherit;
 }

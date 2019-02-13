@@ -128,26 +128,6 @@ $(document).ready(function(){
       location.reload();
     }
 
-  $("#add_customer").click(function() {
-    $("#customersupplier").click();
-  });
-
-  $("#add_product").click(function() {
-    $("#productinmaster").click();
-  });
-
-  $("#add_invoice").click(function() {
-    $("#invoice").click();
-  });
-
-  $("#add_del_chal").click(function() {
-    $("#deliverychallan").click();
-  });
-
-  $('#make_payment').click(function(){
-    $('#showpayment').click();
-  });
-
   $('#receive_payment').click(function(){
     $('#showreceipt').click();
   });

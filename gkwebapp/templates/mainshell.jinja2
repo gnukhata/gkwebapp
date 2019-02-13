@@ -28,9 +28,9 @@
      .payment{
       background-color: rgb(248,248,248);
        width: 85%;
-       height: 300px;
+       height: 350px;
        padding: 15px;
-       border-radius: 3px;
+       border-radius: 5px;
      }
      .paymentoutdiv{
       background-color: rgba(255, 255, 255, 0,0);
@@ -321,31 +321,72 @@
       <div class="payment shadow grow">
         <div class="">
          <h4>Make Payment</h4>
+         <select id='dropdownid'>
+            <option value='1' selected="selected">Amount Wise</option>
+            <option value='4'>Date wase</option>
+          </select>
+         <!-- <div class="dropdown">
+            <a class="dropdown-toggle"type="button" role="button" data-toggle="dropdown">add</a>
+            <ul id="selecttype" class="dropdown-menu">
+              <li value="1" class=""><a href="#">Amount Wise</a></li>
+              <li value="4"><a href="#">Date wise</a></li>
+            </ul>
+          </div>  -->
         </div>
         <hr>
-        <div>
-         body
-        </div>
-        <hr>
-        <div>
+        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-15px">
+          <thead>
+            <tr>
+              <td class="col-sm-8" style="font-weight:150">
+                Invoice
+              </td>
+              <td class="col-sm-4" style="font-weight:150;text-align:right">
+                Pending Amount
+              </td>
+            </tr>
+          </thead>
+          <tbody id="fivepurchaseinvoicelist">
+
+          </tbody>
+        </table>
+        <div class="text-center">
             <button id="make_payment" style="width:45%" class="btn btn-danger">Make Payment</button>
-          <button id="adj_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
+          <button id="Adjustable_purchase_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
         </div>
       </div>
       </div>
     </div>
-
-      <div class="col-sm-6">
-          <div class="">
-            header
-          </div>
-          <div>
-            body
-          </div>
-          <div>
-            footer
-          </div>
+          
+    <div class="col-sm-6 paymentoutdiv">
+        <div style="position:relative;">
+      <div class="payment shadow grow">
+        <div class="">
+         <h4>Receive Payment</h4>
         </div>
+        <hr>
+        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-15px">
+          <thead>
+            <tr>
+              <td class="col-sm-8" style="font-weight:150">
+                Invoice
+              </td>
+              <td class="col-sm-4" style="font-weight:150;text-align:right">
+                Pending Amount
+              </td>
+            </tr>
+          </thead>
+          <tbody id="fivesaleinvoicelist">
+
+          </tbody>
+        </table>
+        <div class="text-center">
+            <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receipt Payment</button>
+          <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
+        </div>
+      </div>
+      </div>
+    </div>
+      
     </div>
 
       <!-- <div id="help-message" class="panel shadow col-md-4" style="padding:0 !important; margin:10px !important;"> -->
@@ -790,6 +831,7 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showvoucher.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.browser.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.searchabledropdown-1.0.8.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dashboard.js')}}"></script>
     
   </body>
 </html>
