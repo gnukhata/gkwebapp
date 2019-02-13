@@ -149,33 +149,33 @@ $(document).ready(function(){
     $("#inflow").change(function(e){
         var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
+            $("#cashavailable").text((b+parseFloat($("#inflow").val())).toFixed(2))
         }
         else{
-            $("#cashavailable").text(parseFloat($("#inflow").val()))
+            $("#cashavailable").text((parseFloat($("#inflow").val())).toFixed(2))
         }
         var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
+            $("#budgetbalance").text((ca-parseFloat($("#outflow").val())).toFixed(2))
         }
         else{
-            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
+            $("#budgetbalance").text(("-"+parseFloat($("#outflow").val())).toFixed(2))
         }
     });
     $("#outflow").change(function(e){
         var b = parseFloat($("#balance").text());
         if(b != 0){
-            $("#cashavailable").text(b+parseFloat($("#inflow").val()))
+            $("#cashavailable").text((b+parseFloat($("#inflow").val())).toFixed(2))
         }
         else{
-            $("#cashavailable").text(parseFloat($("#inflow").val()))
+            $("#cashavailable").text((parseFloat($("#inflow").val())).toFixed(2))
         }
         var ca = parseFloat($("#cashavailable").text());
         if(ca != 0){
-            $("#budgetbalance").text(ca-parseFloat($("#outflow").val()))
+            $("#budgetbalance").text((ca-parseFloat($("#outflow").val())).toFixed(2))
         }
         else{
-            $("#budgetbalance").text("-"+parseFloat($("#outflow").val()))
+            $("#budgetbalance").text(("-"+parseFloat($("#outflow").val())).toFixed(2))
         }
     });
     $("#inflow").keydown(function(e){
@@ -367,9 +367,9 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(parseFloat(resp["gkresult"]));
-            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
-            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())) 
+            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
         });
     });
     $("#budget_frommonth").change(function(event) {
@@ -412,9 +412,9 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(parseFloat(resp["gkresult"]));
-            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
-            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
+            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
         });
     });
     $("#budget_fromyear").change(function(event) { 
@@ -457,9 +457,9 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) {
-            $("#balance").text(parseFloat(resp["gkresult"]));
-            $("#cashavailable").text(parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])) 
-            $("#budgetbalance").text(parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val()))
+            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
         });
     });
 
