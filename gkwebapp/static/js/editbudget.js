@@ -199,6 +199,7 @@ $(document).ready(function() {
        });
 // ------------ edit button ------------
     $("#edit").click(function(e){
+        e.preventDefault();
         hideshowflag = 1;
         $("#bname").prop("disabled", false);
         $("#bname").focus();
@@ -294,16 +295,16 @@ $(document).ready(function() {
                 $("#budget_tomonth").focus();
                 }
             });
-            $("#btype").keydown(function(e){
-                if (e.which==13 || e.which==39)
+            $("#budget_toyear").keydown(function(e){
+                if (e.which==13 )
                 {
                 e.preventDefault();
-                $("#account").focus().click();
+                $("#inflow").focus().click();
                 }
                 if (e.which==37 || e.which==38)
                 {
                 e.preventDefault();
-                $("#budget_toyear").focus();
+                $("#budget_tomonth").focus();
                 }
             });
             $("#inflow").keydown(function(e){
