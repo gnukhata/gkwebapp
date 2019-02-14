@@ -24,62 +24,81 @@ $(document).ready(function() {
   $("#Adjustable_sale_bill").click(function() {
     $("#showbillwiseaccounting").click();
   });
-    purchesedataset={
-        "inoutflag": 9,
-        // "typeflag": 1,
-        "typeflag": $("#dropdownid option:selected").val(),
 
-        };
-     
-      $.ajax(
-      {
-  
-      type: "POST",
-      url: "/dashboard?action=showlist",
-      global: false,
-      async: false,
-      datatype: "json",
-      data: purchesedataset,
-      beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      success: function(resp)
-      {
-        var list = resp["gkresult"];
-        for (let index in list ){
-          $('#fivepurchaseinvoicelist').append('<tr> <td  style="font-weight:normal" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
-        }
-      }
-      }
-    );
-    saledataset={
-        "inoutflag": 15,
+
+
+   
+function calldata(dataset){
+  $.ajax(
+  {
+
+  type: "POST",
+  url: "/dashboard?action=showlist",
+  global: false,
+  async: false,
+  datatype: "json",
+  data: dataset,
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    var tablediv="";
+    if (dataset["inoutflag"] == 9){
+      tablediv=$('#fivepurchaseinvoicelist');
+    }
+    else{
+      tablediv=$('#fivesaleinvoicelist');
+    }
+    var list = resp["gkresult"];
+    tablediv.html("");
+    for (let index in list ){
+      tablediv.append('<tr> <td  style="font-weight:normal" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
+    }
+  }
+  });
+}   
+    $("#pur_amount_wise").click(function(){
+      dataset={
+        "inoutflag": 9,
         "typeflag": 1
         };
-     
-      $.ajax(
-      {
-  
-      type: "POST",
-      url: "/dashboard?action=showlist",
-      global: false,
-      async: false,
-      datatype: "json",
-      data: saledataset,
-      beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      success: function(resp)
-      {
-        var list = resp["gkresult"];
-        for (let index in list ){
-          $('#fivesaleinvoicelist').append('<tr> <td  style="font-weight:normal" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
-        }
-      }
-      }
-    );   
-  
+    $("#pur_date_wise").removeClass("active");
+    $("#pur_amount_wise").addClass("active");
+    calldata(dataset);
+  });
+
+  $("#pur_date_wise").click(function(){
+    dataset={
+      "inoutflag": 9,
+      "typeflag": 4
+      };
+    $("#pur_amount_wise").removeClass("active");
+    $("#pur_date_wise").addClass("active");
+    calldata(dataset);
+  });
+    $("#pur_amount_wise").click();
+
+  $("#sale_amount_wise").click(function(){
+   dataset={
+      "inoutflag": 15,
+      "typeflag": 1
+      };
+  $("#sale_date_wise").removeClass("active");
+  $("#sale_amount_wise").addClass("active");
+  calldata(dataset);
+});
+
+$("#sale_date_wise").click(function(){
+ dataset={
+    "inoutflag": 15,
+    "typeflag": 4
+    };
+  $("#sale_amount_wise").removeClass("active");
+  $("#sale_date_wise").addClass("active");
+  calldata(dataset);
+});
+$("#sale_amount_wise").click();
   });
   

@@ -28,13 +28,13 @@
      .payment{
       background-color: rgb(248,248,248);
        width: 85%;
-       height: 350px;
+       height: 320px;
        padding: 15px;
        border-radius: 5px;
      }
      .paymentoutdiv{
       background-color: rgba(255, 255, 255, 0,0);
-       padding-top: 20px;
+       /* padding-top: 20px; */
      }
     </style>
 
@@ -319,22 +319,20 @@
       <div class="col-sm-6 paymentoutdiv">
         <div style="position:relative;">
       <div class="payment shadow grow">
-        <div class="">
+        <div> 
+          <div class="pull-left" style="margin-top:-15px">
          <h4>Make Payment</h4>
-         <select id='dropdownid'>
-            <option value='1' selected="selected">Amount Wise</option>
-            <option value='4'>Date wase</option>
-          </select>
-         <!-- <div class="dropdown">
-            <a class="dropdown-toggle"type="button" role="button" data-toggle="dropdown">add</a>
-            <ul id="selecttype" class="dropdown-menu">
-              <li value="1" class=""><a href="#">Amount Wise</a></li>
-              <li value="4"><a href="#">Date wise</a></li>
-            </ul>
-          </div>  -->
+        </div>
+         <div class="dropdown pull-right">
+          <a class="dropdown-toggle" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+          <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+            <li class="active" id="pur_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
+            <li id="pur_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
+          </ul>
+        </div> 
         </div>
         <hr>
-        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-15px">
+        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
             <tr>
               <td class="col-sm-8" style="font-weight:150">
@@ -360,11 +358,21 @@
     <div class="col-sm-6 paymentoutdiv">
         <div style="position:relative;">
       <div class="payment shadow grow">
-        <div class="">
-         <h4>Receive Payment</h4>
-        </div>
+          <div> 
+              <div class="pull-left" style="margin-top:-15px">
+             <h4>Receive Payment</h4>
+            </div>
+             <div class="dropdown pull-right">
+              <a class="dropdown-toggle " style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+              <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                <li class="active" id="sale_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
+                <li id="sale_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
+              </ul>
+            </div> 
+            </div>
+          
         <hr>
-        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-15px">
+        <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
             <tr>
               <td class="col-sm-8" style="font-weight:150">
@@ -383,55 +391,11 @@
             <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receipt Payment</button>
           <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
         </div>
-      </div>
+      
       </div>
     </div>
       
     </div>
-
-      <!-- <div id="help-message" class="panel shadow col-md-4" style="padding:0 !important; margin:10px !important;"> -->
-        <!-- <div class="panel-heading">
-          <div class="panel-title">{% trans %}Welcome to GNUKhata{% endtrans %}</div>
-        </div>
-        <div style="padding-top:20px" class="panel-body">
-          <div id="recentuser">{% trans %}It seems you have created a new company in GNUKhata. You can start by doing the following.{% endtrans %}</div>
-          <div>
-            <a id="create-cust" style="font-weight:bold">{% trans %}Create customer and supplier{% endtrans %}</a>
-          </div>
-          <div>
-            <a id="create-prod">{% trans %}Create product records{% endtrans %}</a>
-          </div>
-          <div>
-            <a id="create-invoice">{% trans %}Start invoicing{% endtrans %}</a>
-          </div>
-          <div>
-            <a id="make-payments">{% trans %}Make payments and receive payments{% endtrans %}</a>
-          </div>
-          <div>
-            <a id="view-charts">{% trans %}View Charts of accounts{% endtrans %}</a>
-          </div>
-        </div>
-      </div>
-      <div class="panel shadow col-md-7" style="padding:0 !important; margin:10px !important;">
-	<div class="panel-heading">
-	  <div class="panel-title">{% trans %}About Keyboard Shortcuts{% endtrans %}</div>
-
-	</div>
-	<div style="padding-top:20px" class="panel-body" >
-
-	  <p>{% trans %}To access Tabs of the Menu Bar press{% endtrans %} "Ctrl + Shift + {% trans %}Underlined Character{% endtrans %}."</p>
-          <p>{% trans %}To view Toolbar press  "F1".{% endtrans %}</p>
-          <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
-          <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character{% endtrans %}".</p>
-          <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}the underlined character".{% endtrans %}</p>
-          <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc + {% trans %}the underlined character".{% endtrans %}</p>
-          <p><a data-toggle="modal" id="shortcutslink" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a> {% trans %}are given in the Toolbar and the Help Tab of the Menu Bar.{% endtrans %}</p>
-	  <p>{% trans %}To access "n" th tab inside a page{% endtrans %} : </p>
-	  <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-          <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-	  <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-	</div>
-      </div> -->
     </div>
     <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
