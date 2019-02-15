@@ -33,6 +33,14 @@ $(document).ready(function() {
     $("#budgetlist").focus();
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
+        if ($.trim($("#budgetlist option:selected").val())=="") {
+            $("#budgetlist-alert").alert();
+            $("#budgetlist-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#budgetlist-alert").hide();
+            });
+            $("#budgetlist").focus();
+            return false;
+        }
        $.ajax({
         type: "POST",
         url: "/budget?type=report",
