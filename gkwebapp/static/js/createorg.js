@@ -582,6 +582,8 @@ $(document).ready(function(){
         sessionStorage.setItem('invsflag', invsflag );
         sessionStorage.setItem('billflag', billflag );
         sessionStorage.setItem('modeflag', modeflag);
+        sessionStorage.goid = '';
+        sessionStorage.goname = '';
         $.ajax({
           url: '/oexists',
           type: 'POST',
