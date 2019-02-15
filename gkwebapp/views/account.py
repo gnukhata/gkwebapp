@@ -63,6 +63,8 @@ def spreadsheetofaccounts(request):
         sheet.column_dimensions['B'].width = 18
         sheet.column_dimensions['C'].width = 14
         sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 24
+
         # Cells of first two rows are merged to display organisation details properly.
         sheet.merge_cells('A1:G2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
@@ -79,6 +81,7 @@ def spreadsheetofaccounts(request):
         sheet['B4'] = 'Account Name'
         sheet['C4'] = 'Group Name'
         sheet['D4'] = 'Sub-group Name'
+        sheet['E4'] = 'Default A/C for'
         titlerow = sheet.row_dimensions[4]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
         row=5
@@ -93,6 +96,8 @@ def spreadsheetofaccounts(request):
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             sheet['D'+str(row)] = accrow["subgroupname"]
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = accrow["defaultflag"]
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)            
             row = row + 1
             srno += 1  
         accountwb.save('report.xlsx')
