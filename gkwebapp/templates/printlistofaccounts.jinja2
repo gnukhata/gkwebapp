@@ -38,17 +38,20 @@
           </th>
         </tr>
         <tr>
-          <th class="col-xs-1">
-            {% trans %}Sr. No.{% endtrans %}
+          <th class="col-xs-1 smwrap" >
+            {% trans %}Sr.No.{% endtrans %}
           </th>
-          <th class="col-xs-5">
+          <th class="col-xs-3" >
             {% trans %}Account Name{% endtrans %}
           </th>
-          <th class="col-xs-3">
+          <th class="col-xs-3" >
             {% trans %}Group Name{% endtrans %}
           </th>
-          <th class="col-xs-3">
+          <th class="col-xs-3" >
             {% trans %}Sub-Group Name{% endtrans %}
+          </th>
+          <th class="col-xs-2" >
+            {% trans %}Default A/C for{% endtrans %}
           </th>
         </tr>
       </thead>
@@ -56,17 +59,22 @@
 
         {% for record in gkresult %}
         <tr	value="{{record["accountcode"]}}">
-          <td class="col-xs-1" >
-            {{record["srno"]}}
-          </td>
-          <td class="col-xs-5">
-            {{record["accountname"]}}
-          </td>
-          <td class="col-xs-3" >
-            {{record["groupname"]}}
+          <td class="col-xs-1 smwrap calign" >
+{{record["srno"]}}
           </td>
           <td class="col-xs-3">
-            {{record["subgroupname"]}}
+{{record["accountname"]}}
+          </td>
+          <td class="col-xs-3" >
+
+
+{{record["groupname"]}}
+          </td>
+          <td class="col-xs-3">
+{{record["subgroupname"]}}
+          </td>
+          <td class="col-xs-2">
+            {{record["defaultflag"]}}
           </td>
         </tr>
         {% endfor %}
