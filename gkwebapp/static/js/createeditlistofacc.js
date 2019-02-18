@@ -21,7 +21,10 @@
 
 
    Contributors:
-   "Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+    "Krishnakant Mane" <kk@gmail.com>
+    "Prajkta Patkar"<prajakta@dff.org.in>
+    "Abhijith Balan"<abhijith@dff.org.in>
+    "Rupali Badgujar" <rupalibadgujar1234@gmail.com>
   
  */
 
