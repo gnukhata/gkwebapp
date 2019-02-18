@@ -273,25 +273,37 @@
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
       
-    <div class=" ">
-      <div class="col-md-4 dashboardoutdiv">
+    <div class="row form-inline ">
+        <div class="col-xs-3 dashboardoutdiv">
+            <div style="position:relative;">
+              <div id="my_profile" class="dashboard  grow animationContainer enableCircleHoverAnimation ">
+      
+                <div class="text-center" style="font-size:7rem">
+                    <i class="fa fa-user-circle fa-7x"></i>
+                </div>
+                <br>
+                <div class="text-center" style="width:100%">Profile</div>
+              </div>
+            </div>  
+            </div>
+      <div class="col-xs-3 dashboardoutdiv">
       <div style="position:relative;">
         <div id="add_customer" class="dashboard  grow animationContainer enableCircleHoverAnimation ">
 
-          <div class="text-center" style="font-size:10rem">
-              <i class="fa fa-user-plus fa-10x"></i>
+          <div class="text-center" style="font-size:7rem">
+              <i class="fa fa-user-plus fa-7x"></i>
           </div>
           <br>
-          <div class="text-center"style="width:100%" style="width:100%">Customer and Supplier</div>
+          <div class="text-center" style="width:100%">Customer and Supplier</div>
         </div>
       </div>  
       </div>
 
-      <div class="col-md-4 dashboardoutdiv">
+      <div class="col-xs-3 dashboardoutdiv">
           <div style="position:relative;">
         <div id="add_product" class=" dashboard grow">
-          <div class="text-center" style="font-size:10rem">
-              <i class="fa fa-cart-plus fa-10x"></i>
+          <div class="text-center" style="font-size:7rem">
+              <i class="fa fa-cart-plus fa-7x"></i>
           </div>
           <br>
           <div class="text-center">Product/ Service</div>
@@ -299,11 +311,11 @@
         </div>
       </div>
 
-      <div class="col-md-4 dashboardoutdiv">
+      <div class="col-xs-3 dashboardoutdiv">
           <div style="position:relative;">
         <div id="add_invoice" class="dashboard grow text-center">
-          <div class="text-center" style="font-size:10rem">
-              <i class="fa fa-file fa-10x"></i>
+          <div class="text-center" style="font-size:7rem">
+              <i class="fa fa-file fa-7x"></i>
           </div>
           <br>
           <div class="text-center">
@@ -335,12 +347,8 @@
         <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
             <tr>
-              <td class="col-sm-8" style="font-weight:150">
-                Invoice
-              </td>
-              <td class="col-sm-4" style="font-weight:150;text-align:right">
-                Pending Amount
-              </td>
+              <td class="col-xs-8" style="font-weight:150; width: 200px">Invoice</td>
+              <td class="col-xs-4" style="font-weight:150;text-align:right; width: 113px">Pending Amount</td>
             </tr>
           </thead>
           <tbody id="fivepurchaseinvoicelist">
@@ -354,7 +362,7 @@
       </div>
       </div>
     </div>
-          
+          <!-- <br class="hidden-md hidden-lg"> -->
     <div class="col-sm-6 paymentoutdiv">
         <div style="position:relative;">
       <div class="payment shadow grow">
@@ -372,21 +380,19 @@
             </div>
           
         <hr>
+        <div>
         <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
             <tr>
-              <td class="col-sm-8" style="font-weight:150">
-                Invoice
-              </td>
-              <td class="col-sm-4" style="font-weight:150;text-align:right">
-                Pending Amount
-              </td>
+              <td class="col-xs-8" style="font-weight:150; width:200px">Invoice</td>
+              <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Pending Amount</td>
             </tr>
           </thead>
           <tbody id="fivesaleinvoicelist">
 
           </tbody>
         </table>
+        </div>
         <div class="text-center">
             <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receipt Payment</button>
           <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
@@ -394,8 +400,16 @@
       
       </div>
     </div>
-      
     </div>
+    </div>
+
+    <div>
+      <div>
+        
+      </div>
+      <div>
+
+      </div>
     </div>
     <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
