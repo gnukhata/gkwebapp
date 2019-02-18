@@ -1282,28 +1282,6 @@ $(document).ready(function(){
     );
   });
 
-  // $('#editaccount').click(function (e) {
-  //   // calls edit account page.
-  //   $("#msspinmodal").modal("show");
-  //   $.ajax(
-  //     {
-
-	// type: "POST",
-	// url: "/showeditaccount",
-	// global: false,
-	// async: false,
-	// datatype: "text/html",
-	// beforeSend: function(xhr)
-  //       {
-  //         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-  //       },
-	// success: function(resp)
-	// {
-  //         $("#info").html(resp);
-	// }
-  //     });
-  // });
-
   $('#changeorg').click(function (e) {
     // clears sessionstorage and logs the user out to show select organisation page.
     sessionStorage.clear();
