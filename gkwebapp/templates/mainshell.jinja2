@@ -6,7 +6,19 @@
     <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
     <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
+   
     <style>
+      .percentage:after {
+  content: "";
+  display: block;
+  background-color: #3d9970;
+}
+.percentage-20:after {
+  width: 20%;
+}
+.percentage-30:after {
+  width: 30%;
+}
      .bgcolor{
 	 background-color:#1b2631;
      }
@@ -29,14 +41,61 @@
       background-color: rgb(248,248,248);
        width: 85%;
        height: 320px;
-       padding: 15px;
+       padding: 10px;
        border-radius: 5px;
      }
      .paymentoutdiv{
       background-color: rgba(255, 255, 255, 0,0);
        /* padding-top: 20px; */
      }
+     .chartdiv{
+      background-color: rgb(248,248,248);
+       width: 85%;
+       height: 320px;
+       padding: 10px;
+       border-radius: 5px;
+     }
+     .chartouterdiv{
+      background-color: rgba(255, 255, 255, 0,0);
+       padding-top: 20px;
+     }
     </style>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+      google.charts.load('current', {'packages':['bar']});
+      google.charts.setOnLoadCallback(drawChart);
+
+      function drawChart() {
+        var data = google.visualization.arrayToDataTable([
+          ['Monthly Invoice','Invoice'],
+          ['Jan',2],
+          ['Feb',4],
+          ['Mar',0],
+          ['Apr',0],
+          ['May',2],
+          ['Jun',4],
+          ['Jul',50],
+          ['Aug',5],
+          ['Sept',2],
+          ['Oct',4],
+          ['Nov',50],
+          ['Dec',5],
+          
+        ]);
+
+        var options = {
+          chart: {
+            title: 'Monthly Invoice',
+            subtitle: 'No of Invoice',
+          }
+        };
+
+        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
+
+        chart.draw(data, google.charts.Bar.convertOptions(options));
+      }
+    </script>
+
 
   </head>
   <body>
@@ -362,7 +421,6 @@
       </div>
       </div>
     </div>
-          <!-- <br class="hidden-md hidden-lg"> -->
     <div class="col-sm-6 paymentoutdiv">
         <div style="position:relative;">
       <div class="payment shadow grow">
@@ -402,12 +460,17 @@
     </div>
     </div>
     </div>
-
-    <div>
-      <div>
-        
+<br>
+    <div class="row">
+      <div class="col-sm-6 chartouterdiv">
+      <div class="chartdiv shadow grow">
+          <div id="columnchart_material" style="height:250px; width:450px"></div>
       </div>
-      <div>
+      </div>
+      <div class="col-sm-6 chartouterdiv">
+        <div class="chartdiv shadow grow">
+          <div id="chartdiv"> </div>
+        </div>
 
       </div>
     </div>
