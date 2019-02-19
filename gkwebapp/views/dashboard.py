@@ -13,8 +13,8 @@ def fiveinvoicelist(request):
     result = requests.get("http://127.0.0.1:6543/dashboard?type=fiveinvoicelist&inoutflag=%d&typeflag=%d"%(int(request.params["inoutflag"]),int(request.params["typeflag"])), headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["invoices"], "type": result.json()["type"], "inoutflag":int(request.params["inoutflag"]), "typeflag": request.params["typeflag"]}
 
-@view_config(route_name="dashboard", request_param="action=showlist", renderer="json")
-def fiveinvoicelist(request):
+@view_config(route_name="dashboard", request_param="action=countinvoice", renderer="json")
+def invoicecountbymonth(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/dashboard?type=fiveinvoicelist"%headers=header)
-    return {"gkstatus":result.json()["gkstatus"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=invoicecountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
+    return {"gkstatus":result.json()["gkstatus"],"gkresult": result.json()["monthlysortdataset"],"inoutflag":int(request.params["inoutflag"])}

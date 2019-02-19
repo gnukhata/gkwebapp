@@ -100,5 +100,46 @@ $("#sale_date_wise").click(function(){
   calldata(dataset);
 });
 $("#sale_amount_wise").click();
+
+
+dataset1={'inoutflag':9}
+$.ajax(
+  {
+
+  type: "POST",
+  url: "/dashboard?action=countinvoice",
+  global: false,
+  async: false,
+  datatype: "json",
+  data: dataset1,
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    console.log(resp,'rrrrrrrrrr')
+    // var tablediv="";
+    // if (dataset["inoutflag"] == 9){
+    //   tablediv=$('#fivepurchaseinvoicelist');
+    // }
+    // else{
+    //   tablediv=$('#fivesaleinvoicelist');
+    // }
+    // var list = resp["gkresult"];
+    // tablediv.html("");
+    // for (let index in list ){
+    //   tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
+    // }
+    var list = resp["gkresult"];
+    for (let index in list ){
+      // console.log(index['January'],"reeeeee")
+      $('#chartdiv').append('<div col-xs-6>'+list[index].January+' </div><div col-xs-6>'+list[index].February+'</div>');
+    }
+  }
   });
+  });
+
+
+
   
