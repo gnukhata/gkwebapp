@@ -119,23 +119,6 @@ $.ajax(
   success: function(resp)
   {
     console.log(resp,'rrrrrrrrrr')
-    // var tablediv="";
-    // if (dataset["inoutflag"] == 9){
-    //   tablediv=$('#fivepurchaseinvoicelist');
-    // }
-    // else{
-    //   tablediv=$('#fivesaleinvoicelist');
-    // }
-    // var list = resp["gkresult"];
-    // tablediv.html("");
-    // for (let index in list ){
-    //   tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
-    // }
-    var list = resp["gkresult"];
-    for (let index in list ){
-      console.log(list[index])
-      $('#chartdiv').append('<div col-xs-6>'+list[index].January+' </div><div col-xs-6>'+list[index].May+' </div><div col-xs-6>'+list[index].February+'</div>');
-    }
   }
   });
   });
