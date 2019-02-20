@@ -133,8 +133,8 @@ $.ajax(
     // }
     var list = resp["gkresult"];
     for (let index in list ){
-      // console.log(index['January'],"reeeeee")
-      $('#chartdiv').append('<div col-xs-6>'+list[index].January+' </div><div col-xs-6>'+list[index].February+'</div>');
+      console.log(list[index])
+      $('#chartdiv').append('<div col-xs-6>'+list[index].January+' </div><div col-xs-6>'+list[index].May+' </div><div col-xs-6>'+list[index].February+'</div>');
     }
   }
   });
