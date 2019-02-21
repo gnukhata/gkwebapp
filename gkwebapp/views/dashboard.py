@@ -17,4 +17,4 @@ def fiveinvoicelist(request):
 def invoicecountbymonth(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=invoicecountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"gkresult": result.json()["monthlysortdataset"],"inoutflag":int(request.params["inoutflag"])}
+    return {"gkstatus":result.json()["gkstatus"],"month": result.json()["month"],"invcount":result.json()["invcount"],"inoutflag":int(request.params["inoutflag"])}
