@@ -6,7 +6,6 @@
     <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
     <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
-   
     <style>
       .percentage:after {
   content: "";
@@ -68,42 +67,6 @@
       
      }
     </style>
-    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-    <script type="text/javascript">
-      google.charts.load('current', {'packages':['bar']});
-      google.charts.setOnLoadCallback(drawChart);
-
-      function drawChart() {
-        var data = google.visualization.arrayToDataTable([
-          ['Monthly Invoice','Invoice'],
-          ['Jan',2],
-          ['Feb',4],
-          ['Mar',0],
-          ['Apr',0],
-          ['May',2],
-          ['Jun',4],
-          ['Jul',50],
-          ['Aug',5],
-          ['Sept',2],
-          ['Oct',4],
-          ['Nov',50],
-          ['Dec',5],
-          
-        ]);
-
-        var options = {
-          chart: {
-            title: 'Monthly Invoice',
-            subtitle: 'No of Invoice',
-          }
-        };
-
-        var chart = new google.charts.Bar(document.getElementById('columnchart_material'));
-
-        chart.draw(data, google.charts.Bar.convertOptions(options));
-      }
-    </script>
-
 
   </head>
   <body>
@@ -472,42 +435,13 @@
     <div class="row">
       <div class="col-sm-6 chartouterdiv">
       <div class="chartdiv shadow grow">
-          <div id="columnchart_material" style="height:250px; width:450px"></div>
+          <canvas id="chart_content_purchase" style="height:280px; width:100%"></canvas>
       </div>
       </div>
       <div class="col-sm-6 chartouterdiv">
         <div class="row chartdiv shadow grow">
-          <div>
-          <div class="row" style="height:280px">
-          <div id="jan" class="col-xs-1"style=""><div class="graph" style="height:100px;margin-top:180px"></div></div>
-          <div id="feb" class="col-xs-1"style=""><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="mar" class="col-xs-1"style=""><div class="graph" style="height:50px;margin-top:230px"></div></div>
-          <div id="apr" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="may" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="jun" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="jul" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="aug" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="sept" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="oct" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="nov" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-          <div id="dec" class="col-xs-1 "><div class="graph" style="height:200px;margin-top:80px"></div></div>
-        </div>
-        <div class="row">
-          <div class="col-xs-1">Jan</div>
-          <div class="col-xs-1">Feb</div>
-          <div class="col-xs-1">Mar</div>
-          <div class="col-xs-1">Apr</div>
-          <div class="col-xs-1">May</div>
-          <div class="col-xs-1">Jun</div>
-          <div class="col-xs-1">Jul</div>
-          <div class="col-xs-1">Aug</div>
-          <div class="col-xs-1">Sept</div>
-          <div class="col-xs-1">Oct</div>
-          <div class="col-xs-1">Nov</div>
-          <div class="col-xs-1">Dec</div>
-
-        </div>
-      </div>
+          <canvas id="chart_content_sale" style="height:280px; width:100%"></canvas>
+         
       </div>
 
       </div>
@@ -911,6 +845,7 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.browser.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.searchabledropdown-1.0.8.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dashboard.js')}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
     
   </body>
 </html>

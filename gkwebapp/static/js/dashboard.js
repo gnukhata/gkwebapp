@@ -101,8 +101,7 @@ $("#sale_date_wise").click(function(){
 });
 $("#sale_amount_wise").click();
 
-
-dataset1={'inoutflag':9}
+function monthlyinvoice(inoutflag){
 $.ajax(
   {
 
@@ -111,18 +110,59 @@ $.ajax(
   global: false,
   async: false,
   datatype: "json",
-  data: dataset1,
+  data: {"inoutflag":inoutflag},
   beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     },
   success: function(resp)
   {
-    console.log(resp,'rrrrrrrrrr')
+  if (inoutflag==9){
+  var ctx = document.getElementById("chart_content_purchase").getContext('2d');
   }
+  else{
+  var ctx = document.getElementById("chart_content_sale").getContext('2d');
+  }
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: resp["month"],
+        datasets: [{
+            label: 'No of Invoices',
+            data: resp["invcount"],
+            backgroundColor: [
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)', 
+                'rgba(51, 51, 51)', 
+
+            ],
+        
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+    }
+});
+}
+});
+}
+monthlyinvoice(9);
+monthlyinvoice(15);
+
   });
-  });
 
-
-
-  
