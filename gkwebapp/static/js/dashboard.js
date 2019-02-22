@@ -163,6 +163,39 @@ $.ajax(
 }
 monthlyinvoice(9);
 monthlyinvoice(15);
+   
+function topfivecustsup(inoutflag){
+  $.ajax(
+  {
 
+  type: "POST",
+  url: "/dashboard?action=topcustlist",
+  global: false,
+  async: false,
+  datatype: "json",
+  data: {"inoutflag":inoutflag},
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+    console.log(resp);
+    var tablediv="";
+    if (dataset["inoutflag"] == 15){
+      tablediv=$('#topfivecust');
+    }
+    else{
+      tablediv=$('#topfivecust');
+    }
+    var list = resp["gkresult"];
+    tablediv.html("");
+    for (let index in list ){
+      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].invoicecount+' </td> </tr>');                  
+    }
+  }
+  });
+}
+topfivecustsup(15);
   });
 

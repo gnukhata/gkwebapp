@@ -434,18 +434,54 @@
 <br>
     <div class="row">
       <div class="col-sm-6 chartouterdiv">
+      <div style="position:relative;">
       <div class="chartdiv shadow grow">
           <canvas id="chart_content_purchase" style="height:280px; width:100%"></canvas>
       </div>
       </div>
-      <div class="col-sm-6 chartouterdiv">
-        <div class="row chartdiv shadow grow">
-          <canvas id="chart_content_sale" style="height:280px; width:100%"></canvas>
-         
       </div>
+      <div class="col-sm-6 chartouterdiv">
+        <div style="position:relative;">
+        <div class="row chartdiv shadow grow">
+          <canvas id="chart_content_sale" style="height:280px; width:100%"></canvas>  
+      </div>
+      </div>
+    </div>
+    </div>
+
+    <div>
+      <div class="col-sm-6 paymentoutdiv">
+        <div style="position:relative;">
+      <div class="payment shadow grow">
+        <div class="pull-left"> 
+          <h4>Most Valued Customer</h4>
+        </div>
+        <hr>
+        <div>
+          <table id="" class="table table-bordered table-striped invoiceslist">
+              <thead>
+                  <tr>
+                    <td class="col-xs-8" style="font-weight:150; width:200px">Customer Name</td>
+                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Invoice Count</td>
+                  </tr>
+                </thead>
+                <tbody id="topfivecust">
+      
+                </tbody>
+              </table>
+        </div>
+        <div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div>
 
       </div>
     </div>
+
     <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
 	<div class="modal-content">
