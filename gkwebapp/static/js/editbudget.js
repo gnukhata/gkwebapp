@@ -63,8 +63,9 @@ $(document).ready(function() {
         }
     });
     
-    $("#editbud").bind("change", function(e) {
-        $("#add").hide();
+    $("#editbud").keydown(function(e) {
+        if(e.which==13){
+            $("#add").hide();
         $("#reset").hide();
         var budid = $("#editbud option:selected").val();
         $.ajax({
@@ -157,6 +158,7 @@ $(document).ready(function() {
                 
             }
         });
+        }
     });
     $("#gaflag ").change(function(event) { // load accounts/groups/subgroups table 
         $("body").css("padding-right", '0px');
