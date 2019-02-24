@@ -78,6 +78,7 @@ def alllist(request):
 def getbuddetails(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/budget?bud=details&budid=%d"%int(request.params["budid"]), headers=header)
+    
     if(result.json()["gkstatus"] == 0):
         record = result.json()["gkresult"]
         return {"gkstatus":0, "gkresult":record}

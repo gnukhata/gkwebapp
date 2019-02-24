@@ -63,7 +63,7 @@
       <div class="panel shadow col-md-4">
       {# -------------- alerts------------------------- #}
       <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+          <label for="budget_fromday">{% trans %}From Date should be prior or equal To Date!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
           <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
@@ -145,12 +145,12 @@
             <div id="flow" class="input group">
             <div style="margin-bottom: 10px;" class="input-group col-xs-12">
             <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "balance" > </b><br>
-              <label for="inflow" >{% trans %}InFlow Budget{% endtrans %} :</label>
+              <label for="inflow" >{% trans %}Inflow{% endtrans %} :</label>
               <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
             </div>
             <label  >{% trans %}<i>Cash Available</i>{% endtrans %} :</label> <b id = "cashavailable" > </b><br>
             <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="outflow" >{% trans %}OutFlow Budget{% endtrans %} :</label>
+              <label for="outflow" >{% trans %}Outflow{% endtrans %} :</label>
               <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
             </div>
             <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>

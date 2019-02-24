@@ -81,33 +81,33 @@ $(document).ready(function() {
             },
             success: function(resp) { // load all value return from api to show selected budget values. 
                 goddetails = resp["gkresult"];
-                contents = goddetails[0]["contents"];
+                contents = goddetails["contents"];
                 $("#budget_fromday").change();
                 $("#bal").prop("disabled", true);
-                $("#bname").val(goddetails[0]["budname"]);
+                $("#bname").val(goddetails["budname"]);
                 $("#bname").prop("disabled", true);
-                var fromdatearray = goddetails[0]["startdate"].split(/\s*\-\s*/g)
+                var fromdatearray = goddetails["startdate"].split(/\s*\-\s*/g)
                 $("#budget_fromday").val(fromdatearray[0])
                 $("#budget_fromday").prop("disabled", true);
                 $("#budget_frommonth").val(fromdatearray[1])
                 $("#budget_frommonth").prop("disabled", true);
                 $("#budget_fromyear").val(fromdatearray[2])
                 $("#budget_fromyear").prop("disabled", true);
-                var fromdatearray = goddetails[0]["enddate"].split(/\s*\-\s*/g)
+                var fromdatearray = goddetails["enddate"].split(/\s*\-\s*/g)
                 $("#budget_today").val(fromdatearray[0])
                 $("#budget_today").prop("disabled", true);
                 $("#budget_tomonth").val(fromdatearray[1])
                 $("#budget_tomonth").prop("disabled", true);
                 $("#budget_toyear").val(fromdatearray[2])
                 $("#budget_toyear").prop("disabled", true);
-                $("#btype").val(goddetails[0]["btype"]);
+                $("#btype").val(goddetails["btype"]);
                 $("#btype").prop("disabled", true);
-                if(goddetails[0]["btype"] == 3){
+                if(goddetails["btype"] == 3){
                     $("#gaflag").hide();
                     $("#flow").show();
-                    $("#outflow").val(parseFloat(goddetails[0]["contents"]["outflow"]).toFixed(2));
+                    $("#outflow").val(parseFloat(goddetails["contents"]["outflow"]).toFixed(2));
                     $("#outflow").prop("disabled", true);
-                    $("#inflow").val(parseFloat(goddetails[0]["contents"]["inflow"]).toFixed(2));
+                    $("#inflow").val(parseFloat(goddetails["contents"]["inflow"]).toFixed(2));
                     $("#inflow").prop("disabled", true);
                     var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
                     $.ajax({
@@ -134,16 +134,16 @@ $(document).ready(function() {
                     $("#group").prop("disabled", false);
                     $("#subgroup").prop("disabled", false);
                     hideshowflag = 0;
-                    if(goddetails[0]["gaflag"] == 1){
-                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                    if(goddetails["gaflag"] == 1){
+                        $("#gaflag").val(goddetails["gaflag"]);
                         $("#account").click();
                     }
-                    if(goddetails[0]["gaflag"] == 7){
-                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                    if(goddetails["gaflag"] == 7){
+                        $("#gaflag").val(goddetails["gaflag"]);
                         $("#group").click();
                     }
-                    if(goddetails[0]["gaflag"] == 19){
-                        $("#gaflag").val(goddetails[0]["gaflag"]);
+                    if(goddetails["gaflag"] == 19){
+                        $("#gaflag").val(goddetails["gaflag"]);
                         $("#subgroup").click();
                     }
                 }
@@ -177,7 +177,7 @@ $(document).ready(function() {
                     $("#accounttable").html("");      
                     $("#accounttable").html(resp);
                     flagg = $("#gaflag input:radio:checked").val();
-                    if(flagg == goddetails[0]["gaflag"]){
+                    if(flagg == goddetails["gaflag"]){
                     var objects = Object.keys(contents);
                     var objectlength = Object.keys(contents).length;
                     var oTable = document.getElementById('latable');
