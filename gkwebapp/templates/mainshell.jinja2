@@ -62,9 +62,17 @@
        background-color: #1b2631;
        width: 15px;
        overflow-x: auto;
-       
-       
-      
+     }
+     .custdiv{
+      background-color: rgb(248,248,248);
+       width: 85%;
+       min-height: 310px;
+       padding: 10px;
+       border-radius: 5px;
+     }
+     .custoutdiv{
+      background-color: rgba(255, 255, 255, 0,0);
+       /* padding-top: 20px; */
      }
     </style>
 
@@ -449,10 +457,10 @@
     </div>
     </div>
 
-    <div>
-      <div class="col-sm-6 paymentoutdiv">
+    <div style="margin-top:15px">
+      <div class="col-sm-6 custoutdiv">
         <div style="position:relative;">
-      <div class="payment shadow grow">
+      <div class="custdiv shadow grow">
         <div class="pull-left"> 
           <h4>Most Valued Customer</h4>
         </div>
@@ -462,13 +470,16 @@
               <thead>
                   <tr>
                     <td class="col-xs-8" style="font-weight:150; width:200px">Customer Name</td>
-                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Invoice Count</td>
+                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Balance</td>
                   </tr>
                 </thead>
                 <tbody id="topfivecust">
       
                 </tbody>
               </table>
+        </div>
+        <div>
+          <button class="btn btn-danger" id="add_cust" style="float:right;margin-top:-15px">Add Customer</button>
         </div>
         <div>
 
