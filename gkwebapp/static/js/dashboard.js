@@ -27,6 +27,9 @@ $(document).ready(function() {
   $('#my_profile').click(function(){
   $('#showeditorg').click();
 });
+$("#add_cust").click(function() {
+  $("#customersupplier").click();
+});
    
 function calldata(dataset){
   $.ajax(
@@ -191,7 +194,7 @@ function topfivecustsup(inoutflag){
     var list = resp["gkresult"];
     tablediv.html("");
     for (let index in list ){
-      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].invoicecount+' </td> </tr>');                  
+      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].balance+' </td> </tr>');                  
     }
   }
   });
