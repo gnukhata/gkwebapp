@@ -31,6 +31,18 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#msspinmodal").modal("hide");
     $("#budgetlist").focus();
+    $("#budgetlist").keydown(function(e){
+        if (e.which==13)
+        {e.preventDefault();
+        $("#submit").focus();
+        }
+    });
+    $("#submit").keydown(function(e){
+        if (e.which==38 || e.which==37)
+        {e.preventDefault();
+        $("#budgetlist").focus();
+        }
+    });
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
         if ($.trim($("#budgetlist option:selected").val())=="") {
@@ -53,6 +65,7 @@ $(document).ready(function() {
         },
         success: function(resp) {
             $("#info").html(resp);
+            $("#back").focus();
         }
     }); 
 
