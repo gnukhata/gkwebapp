@@ -44,7 +44,7 @@ $(document).ready(function() {
     $("#editbud").keydown(function(e){
         if (e.which==13 || e.which==39)
         {e.preventDefault();
-        $("#edit").focus();
+        $("#edit").focus().click();
         }
     });
     $("#edit").keydown(function(e){
@@ -64,7 +64,7 @@ $(document).ready(function() {
     });
     
     $("#editbud").change(function(e) {
-            $("#add").hide();
+        $("#add").hide();
         $("#reset").hide();
         var budid = $("#editbud option:selected").val();
         $.ajax({
