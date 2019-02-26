@@ -63,7 +63,10 @@
       <div class="panel shadow col-md-4">
       {# -------------- alerts------------------------- #}
       <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}From Date should be prior or equal To Date!{% endtrans %}</label>
+          <label for="budget_fromday">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
+        </div>
+        <div class="alert alert-danger" id="date-valid-alert" aria-live="rude" role="alert" hidden>
+          <label for="budget_fromday">{% trans %}Please enter valid date!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
           <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
@@ -81,10 +84,10 @@
           <label for="btype">{% trans %}Budget added successfully!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="inflow-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Please enter inFlow budget!{% endtrans %}</label>
+          <label for="btype">{% trans %}Please enter budget inFlow!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="outflow-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Please enter outFlow budget!{% endtrans %}</label>
+          <label for="btype">{% trans %}Please enter budget outFlow!{% endtrans %}</label>
         </div>
       {# -------------- end alerts------------------------- #}
         <form id="addbudget" method="post"  class="form-horizontal">
@@ -96,34 +99,30 @@
             </div>
 
 				<label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
-				<div class="form-inline input-group" >
-          <div class="col-xs-4">
-					  <input type="text" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
-					</div>
-          <div class="col-xs-4">
-            <input type="text" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
-					</div>
-          <div class="col-xs-4">
-            <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
-					</div>
+				<div class="form-inline input-group col-xs-6" >
+          
+					  <input type="text" style="float:left;width:40px;" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
+					
+            <input type="text" style="float:left;width:40px;margin-left:1%" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
+					
+            <input type="text" style="float:left;width:50px;margin-left:1%" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
+					
 				</div>
+        <br>
 				<label for="budget_today">{% trans %}To Date{% endtrans %} :</label>
-				<div class="form-inline input-group" >
-          <div class="col-xs-4">
-					  <input type="text" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-					</div>
-          <div class="col-xs-4">
-            <input type="text" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
-					</div>
-          <div class="col-xs-4">
-            <input type="text" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
-          </div>
+				<div class="form-inline input-group col-xs-6" >
+					  <input type="text" style="float:left;width:40px;" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+					
+            <input type="text" style="float:left;width:40px;margin-left:1%" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
+					
+            <input type="text" style="float:left;width:50px;margin-left:1%" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
+          
         </div>
             <br>
         <div style="margin-bottom: 10px" class="input-group col-xs-12">
           <label for="btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
             <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
-              <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
+              <option value="" disabled selected hidden>{% trans %}Select budget type{% endtrans %}</option>
               <option value="3">{% trans %}Cash{% endtrans %}</option>
               {# <option value="5">{% trans %}Expense{% endtrans %}</option>
               <option value="19">{% trans %}Sales{% endtrans %}</option> #}

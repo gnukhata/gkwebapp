@@ -63,7 +63,7 @@
       <div class="panel shadow col-md-4">
         {# -------------- alerts------------------------- #}
         <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}From Date should be prior or equal To Date!{% endtrans %}</label>
+          <label for="budget_fromday">{% trans %}Please enter date within the financial year!{% endtrans %}</label>
         </div>
         <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
           <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
@@ -108,28 +108,24 @@
                 <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="e"></input>
                 </div>
 				<label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
-				    <div class="form-inline input-group" id = "startdate">
-                        <div class="col-xs-4">
-					    <input type="text" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
-					    </div>
-                        <div class="col-xs-4">
-                        <input type="text" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
-					    </div>
-                        <div class="col-xs-4">
-                        <input type="text" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
-					    </div>
+				    <div class="form-inline input-group col-xs-6" id = "startdate">
+               
+					    <input type="text" style="float:left;width:40px;" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
+					    
+              <input type="text" style="float:left;width:40px;margin-left:1%" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
+					    
+              <input type="text" style="float:left;width:50px;margin-left:1%" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
+					    
 				    </div>
 				    <label for="budget_today">{% trans %}To Date{% endtrans %} :</label>
-				    <div class="form-inline input-group" id="enddate">
-                        <div class="col-xs-4">
-					    <input type="text" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-					    </div>
-                        <div class="col-xs-4">
-                        <input type="text" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
-					    </div>
-                        <div class="col-xs-4">
-                        <input type="text" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
-                        </div>
+				    <div class="form-inline input-group col-xs-6" id="enddate">
+                        
+					      <input type="text" style="float:left;width:40px;" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+					    
+                <input type="text" style="float:left;width:40px;margin-left:1%" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
+					    
+                <input type="text" style="float:left;width:50px;margin-left:1%" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
+                       
                     </div>
                     <br>
                     <div style="margin-bottom: 10px" class="input-group col-xs-12">
