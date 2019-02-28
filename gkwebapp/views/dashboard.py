@@ -17,10 +17,16 @@ def fiveinvoicelist(request):
 def invoicecountbymonth(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=invoicecountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"month": result.json()["month"],"invcount":result.json()["invcount"],"inoutflag":int(request.params["inoutflag"])}
+    return {"gkstatus":result.json()["gkstatus"],"invcount":result.json()["invcount"],"inoutflag":int(request.params["inoutflag"])}
 
 @view_config(route_name="dashboard", request_param="action=topcustlist", renderer="json")
 def topfivecustsuplist(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=topfivecustsup&inoutflag=%d"%(int(request.params["inoutflag"])), headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["topfivecustlist"],"inoutflag":int(request.params["inoutflag"])}
+
+@view_config(route_name="dashboard", request_param="action=topfiveproduct", renderer="json")
+def topfiveproductlist(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=topfiveproduct&inoutflag=%d"%(int(request.params["inoutflag"])), headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["topfiveprod"],"inoutflag":int(request.params["inoutflag"])}
