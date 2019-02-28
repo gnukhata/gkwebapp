@@ -25,7 +25,8 @@ $(document).ready(function() {
     $("#showbillwiseaccounting").click();
   });
   $('#my_profile').click(function(){
-  $('#showeditorg').click();
+    $('#showeditorg').click();
+
 });
 $("#add_cust").click(function() {
   $("#customersupplier").click();
@@ -129,7 +130,7 @@ $.ajax(
   var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: resp["month"],
+        labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
         datasets: [{
             label: 'No of Invoices',
             data: resp["invcount"],
@@ -183,10 +184,9 @@ function topfivecustsup(inoutflag){
     },
   success: function(resp)
   {
-    console.log(resp);
     var tablediv="";
-    if (dataset["inoutflag"] == 15){
-      tablediv=$('#topfivecust');
+    if (inoutflag == 9){
+      tablediv=$('#topfivesup');
     }
     else{
       tablediv=$('#topfivecust');
@@ -194,11 +194,39 @@ function topfivecustsup(inoutflag){
     var list = resp["gkresult"];
     tablediv.html("");
     for (let index in list ){
-      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].balance+' </td> </tr>');                  
+      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].data+' </td> </tr>');                  
     }
-  }
+ }
   });
+  $("#chart_content_purchase").css("height", 280);
+  $("#chart_content_sale").css("height", 280);
+
 }
 topfivecustsup(15);
+topfivecustsup(9);
+
+
+function topfiveprod(inoutflag){
+  $.ajax(
+  {
+
+  type: "POST",
+  url: "/dashboard?action=topfiveproduct",
+  global: false,
+  async: false,
+  datatype: "json",
+  data: {"inoutflag":inoutflag},
+  beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+  success: function(resp)
+  {
+   console.log(resp);
+ }
   });
+}
+topfiveprod(15);
+});
+
 

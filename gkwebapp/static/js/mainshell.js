@@ -1247,9 +1247,12 @@ $(document).ready(function(){
       success: function(resp)
       {
         $('#info').html(resp);
+        $("#msspinmodal").modal("hide");
+
       }
     });
   });
+
 
 
   $('#REMOVEuser').click(function (e) {
