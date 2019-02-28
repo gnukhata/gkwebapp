@@ -34,6 +34,22 @@ $(document).ready(function(){
     $("#back").click(function(e){
         $("#showviewbudget").click();
     });
+    $("#printversion").click(function(e){
+      $.ajax({
+        type: "POST",
+        url: "/budget?type=printreport",
+        global: false,
+        async: false,
+        datatype: "json",
+        data: {"buddetails":$("#budgetdetails").text(),"budid":$("#budid").val(),"financialstart":sessionStorage.yyyymmddyear1},
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        success: function(resp) {
+            $("#info").html(resp);
+        }
+    });
+    });
     $("#spreadsheet").click(function(e){
         // event.preventDefault();
         var xhr = new XMLHttpRequest();
@@ -53,4 +69,25 @@ $(document).ready(function(){
 
       xhr.send();
     });
+    oninvoice = 0;
+     $("#loaprint").click(function(event) {
+      $("title").html("GNUKhata")
+       window.print();
+     });
+     $("#loaback").click(function(event){
+        $.ajax({
+        type: "POST",
+        url: "/budget?type=report",
+        global: false,
+        async: false,
+        datatype: "json",
+        data: {"buddetails":$("#printbudgetdetails").text(),"budid": $("#printbudid").val(),"financialstart":sessionStorage.yyyymmddyear1},
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        success: function(resp) {
+            $("#info").html(resp);
+        }
+    });
+     });
 });

@@ -149,6 +149,14 @@ def budgetreport(request):
     
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "budid":int(request.params["budid"]) }
 
+@view_config(route_name="budget",request_param="type=printreport", renderer="gkwebapp:templates/printbudgetreport.jinja2")
+def printbudgetreport(request):
+    header={"gktoken":request.headers["gktoken"]}
+    financialstart = request.params["financialstart"]
+    result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart }
+
 @view_config(route_name="budget",request_param="type=spreadsheet", renderer="") 
 def reportspreadsheet(request):
     try:
