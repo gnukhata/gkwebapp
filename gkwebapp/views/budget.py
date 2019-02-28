@@ -174,7 +174,7 @@ def reportspreadsheet(request):
         # Title of the sheet and width of columns are set.
         sheet.title = "Budget Report"
 
-        sheet.column_dimensions['A'].width =36
+        sheet.column_dimensions['A'].width = 36
         sheet.column_dimensions['B'].width = 20
         sheet.column_dimensions['C'].width = 20
         sheet.column_dimensions['D'].width = 20
