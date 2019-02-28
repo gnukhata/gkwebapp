@@ -34,4 +34,23 @@ $(document).ready(function(){
     $("#back").click(function(e){
         $("#showviewbudget").click();
     });
+    $("#spreadsheet").click(function(e){
+        // event.preventDefault();
+        var xhr = new XMLHttpRequest();
+
+        xhr.open('GET', '/budget?type=spreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+        if (this.status == 200) {
+        // get binary data as a response
+          var blob = this.response;
+          var url = window.URL.createObjectURL(blob);
+          window.location.assign(url)
+        }
+      };
+
+      xhr.send();
+    });
 });
