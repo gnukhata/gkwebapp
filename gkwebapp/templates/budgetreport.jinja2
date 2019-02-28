@@ -46,7 +46,7 @@ th {
     <h4> <b>Budget Report </b> </h4></center>
     <div class = "panel">
         <div ><center>
-             <strong> {{budgetdetail}} </strong> </center>
+             <strong id="budgetdetails"> {{budgetdetail}} </strong> </center>
         </div>
         <div class="panel-body">
         <div >
@@ -115,7 +115,9 @@ th {
       </div>
       <center>
       <button type="button" class="btn btn-sm btn-danger " id="back" name="back" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
+	<button class="btn btn-sm btn-primary" type="button"  id="spreadsheet" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>    
       </center>
+      <input type="hidden" id="budid" value="{{ budid }}">
     </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
 </body> 

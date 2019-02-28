@@ -65,7 +65,6 @@ $(document).ready(function() {
         },
         success: function(resp) {
             $("#info").html(resp);
-            $("#back").focus();
         }
     }); 
 
