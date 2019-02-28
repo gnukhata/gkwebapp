@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Budget Report{% endtrans %}</title>
+  <style type="text/css">
+
+  td {
+  	font-size: 70%;
+  	color: black;
+  }
+
+  th {
+  	font-size: 75%;
+  }
+
+  @page {
+    size : 21cm 29.7cm;
+    margin : 10mm 10mm 20mm 10mm
+  }
+  thead{
+    display: table-header-group;
+  }
+  tfoot{
+    display: table-footer-group;
+  }
+  .calign{
+    text-align:center;
+  }
+  .lalign{
+    text-align:left;
+  }
+  .dtwrap{
+    width :5%
+     }
+ .smwrap{
+  width:3%
+ }
+
+ .lngwrap{
+  width:14%
+ }
+ .mdwrap{
+  width:8%
+ }
+
+  </style>
+</head>
+<body>
+  <div class="container-fluid ">
+    <div class = "panel">
+        <div class="panel-body">
+        <div ><center>
+             <strong id="budgetdetails"> {{budgetdetails}} </strong> </center>
+        </div>
+        <div >
+            <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
+        </div>
+        <div class="table-responsive">
+          <table id="mthltable" class=" table table-bordered table-condensed tabledesign">
+            <thead class="bg-primary">
+			    <tr >
+			      <th  class="lngwrap lalign text-center">{% trans %}Particulars {% endtrans %} </th>
+			      <th  class="mdwrap text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
+			      <th  class="mdwrap text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
+			      <th  class="mdwrap text-center igstfield">{% trans %}Balance{% endtrans %}</th>
+			    </tr>
+			  </thead>
+            <tbody>
+                <tr >
+                    <td class="lngwrap lalign"> Budget Amount</td>
+                    <td class="mdwrap lalign" style="text-align:right"> {{gkresult["budgetIn"]}} </td>
+                    <td class="mdwrap lalign" style="text-align:right"> {{gkresult["budgetOut"]}} </td>
+                    <td class="mdwrap lalign"style="text-align:right"> {{gkresult["budgetBal"]}} </td>   
+                </tr>
+                <tr  >
+                    <td class="lngwrap lalign"><h> Actuals </h> <br>
+                    <div style="text-align:right">
+                    {% for acc in gkresult["accData"] %}
+                        {{acc["accountname"]}} <br>
+                    {% endfor %}
+                    </div>
+                    </td>
+                    <td style="text-align:right" class="mdwrap lalign"><br>
+                    {% for acc in gkresult["accData"] %}
+                        {{acc["accDr"]}} <br>
+                    {% endfor %}
+                     </td>
+                    <td style="text-align:right" class="mdwrap lalign"><br>
+                    {% for acc in gkresult["accData"] %}
+                        {{acc["accCr"]}} <br>
+                    {% endfor %}
+                    </td>
+                    <td style="text-align:right" class="mdwrap lalign"><br>
+                    {% for acc in gkresult["accData"] %}
+                        {{acc["accBal"]}} <br>
+                    {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td style="text-align:left" class="lngwrap lalign">Total</td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["totalDr"]}} </td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["totalCr"]}} </td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["budgetclosingbal"]}} </td> 
+                </tr>
+                <tr>
+                    <td class="lngwrap lalign">Variance</td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["varDr"]}} </td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["varCr"]}} </td>
+                    <td style="text-align:right" class="mdwrap lalign"> {{gkresult["varBal"]}} </td> 
+                </tr>
+            </tbody>
+            </table>
+            <div >
+            <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}}
+        </div>
+        </div>
+        </div>   
+      </div>
+      <center>
+      <button type="button" class="btn btn-sm btn-danger " id="loaback" name="back" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>   
+  		<button type="button" class="btn btn-sm btn-info hidden-print" id="loaprint" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> Prin<u>t</u>{% endtrans %}</button>      
+      </center>
+    </div>
+    <input type="hidden" id="printbudid" value="{{ budid }}">
+</body> 
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
+</html>
