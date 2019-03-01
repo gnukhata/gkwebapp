@@ -1,170 +1,95 @@
-  <style>
-  .login-box{
-    background-color: rgba(220, 225,225,0.4);
-  }
 
-  #latable td {
-    font-size: 75%;
-    padding: 4 !important;
-    margin: 4 !important;
-  }
-
-  #latable th {
-    font-size: 85%;
-  }
-
-  .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 20%;
-      text-align: left !important;
-  }
-
-  #latable tbody {
-      display:block;
-      height: calc(100vh - 18em);
-      overflow-y:scroll;
-  }
-  #latable thead,#latable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-  }
-  #latable thead {
-      width: calc( 100% - 0.65em );
-  }
-
-  .calign{
-    text-align:center;
-  }
-  .lalign{
-    text-align:left;
-  }
-  .dtwrap{
-    width :5%
-     }
- .smwrap{
-  width:3%
- }
-
- .smwrap1{
-   width: 1.34%
- }
-
- .lngwrap{
-  width:13%
- }
- .mdwrap{
-  width:8%
- }
-  </style>
-<body>
-	  <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
-      <div class="panel shadow col-md-4">
-      {# -------------- alerts------------------------- #}
-      <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}From Date should be prior or equal to To Date!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="date-valid-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}Please enter valid date!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
-          <label for="budget_today">{% trans %}From Date should be smaller or equal to To Date !{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="blank-name-alert" aria-live="rude" role="alert" hidden>
-          <label for="bname">{% trans %}Please enter budget name!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="btype-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Please select budget type{% endtrans %}</label>
-        </div>
-        <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Budget added successfully!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="inflow-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Please enter budget inFlow!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="outflow-alert" aria-live="rude" role="alert" hidden>
-          <label for="btype">{% trans %}Please enter budget outFlow!{% endtrans %}</label>
-        </div>
-      {# -------------- end alerts------------------------- #}
-        <form id="addbudget" method="post"  class="form-horizontal">
-        <div style="padding-top:15px" class="panel-body" >
-            <div style="margin-bottom: 10px" class="input-group col-xs-12">
-            
-              <label for="bname" >{% trans %}<u>B</u>udget Name{% endtrans %} :</label>
-              <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="b"></input>
-            </div>
-
-				<label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
-				<div class="form-inline input-group col-xs-6" >
+  <body>
+    <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
+      <div class="panel">
+        <div class="panel panel-body">
+          <div class="panel col-md-4">
+            {# ----------------------------- ALERTS ------------------------ #}
+              <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+                <label for="budget_fromday">{% trans %}From Date should be prior or equal to To Date!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="date-valid-alert" aria-live="rude" role="alert" hidden>
+                <label for="budget_fromday">{% trans %}Please enter valid date!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+                <label for="budget_fromday">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+                <label for="budget_today">{% trans %}From Date should be smaller or equal to To Date !{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="blank-name-alert" aria-live="rude" role="alert" hidden>
+                <label for="bname">{% trans %}Please enter budget name!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="btype-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Please select budget type{% endtrans %}</label>
+              </div>
+              <div class="alert alert-success" id="success-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Budget added successfully!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="inflow-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Please enter budget inFlow!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="outflow-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Please enter budget outFlow!{% endtrans %}</label>
+              </div>
+            {# ----------------------------- ALERTS ------------------------ #}
+              <form id="addbudget" method="post"  class="form-horizontal">
+              <div class="col-md-12" style="margin-top:2%">
+                  <div style="margin-bottom: 10px" class="input-group col-xs-12">
+                    <label for="bname" >{% trans %}<u>B</u>udget Name{% endtrans %} :</label>
+                    <input style="border-radius: 4px" id="bname" type="text" class="form-control input-sm" name="username" accesskey="b"></input>
+                  </div>
+              </div>
+              <div class="col-md-12">
+                <label for="budget_fromday">{% trans %}From Date{% endtrans %} :</label>
+                <div class="form-inline input-group col-xs-12" >
+                  <input type="text" style="float:left;width:45px;" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
+                  <input type="text" style="float:left;width:45px;margin-left:2%" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
+                  <input type="text" style="float:left;width:55px;margin-left:2%" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
+                </div>
+                <br>
+                <label for="budget_today">{% trans %}To Date{% endtrans %} :</label>
+                <div class="form-inline input-group col-xs-12" >
+                  <input type="text" style="float:left;width:45px;" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
+                  <input type="text" style="float:left;width:45px;margin-left:2%" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
+                  <input type="text" style="float:left;width:55px;margin-left:2%" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
+                </div>
+              </div>
+              <br>
+              <div class="col-md-12" style="margin-top:2%">
+                <label for="btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
+                <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
+                  <option value="" disabled selected hidden>{% trans %}Select budget type{% endtrans %}</option>
+                  <option value="3">{% trans %}Cash{% endtrans %}</option> 
+                </select>
+              </div>
+              <div id="flow" class="col-md-12">
+                <div style="margin-bottom: 10px;" class="input-group col-xs-12">
+                  <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "balance" > </b><br>
+                  <label for="inflow" >{% trans %}Inflow{% endtrans %} :</label>
+                  <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
+                </div>
+                  <label  >{% trans %}<i>Cash Available</i>{% endtrans %} :</label> <b id = "cashavailable" > </b><br>
+                  <div style="margin-bottom: 10px" class="input-group col-xs-12">
+                    <label for="outflow" >{% trans %}Outflow{% endtrans %} :</label>
+                    <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
+                  </div>
+                  <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>
+              </div>
+          </div> {# main body #}
           
-					  <input type="text" style="float:left;width:45px;" class="budget_date dis form-control input-sm common numtype" id="budget_fromday"  size="2" maxlength="2" placeholder="DD">
-					
-            <input type="text" style="float:left;width:45px;margin-left:2%" id="budget_frommonth" class="budget_date dis form-control input-sm common numtype"  size="2" maxlength="2" placeholder="MM">
-					
-            <input type="text" style="float:left;width:55px;margin-left:2%" id="budget_fromyear" class="budget_date dis form-control input-sm common numtype"  size="4" maxlength="4" placeholder="YYYY">
-					
-				</div>
-        <br>
-				<label for="budget_today">{% trans %}To Date{% endtrans %} :</label>
-				<div class="form-inline input-group col-xs-6" >
-					  <input type="text" style="float:left;width:45px;" class="budget_date form-control input-sm dis common numtype" id="budget_today" value="" size="2" maxlength="2" placeholder="DD" accesskey="d">
-					
-            <input type="text" style="float:left;width:45px;margin-left:2%" id="budget_tomonth" class="budget_date form-control input-sm dis common numtype" value="" size="2" maxlength="2" placeholder="MM">
-					
-            <input type="text" style="float:left;width:55px;margin-left:2%" id="budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
+          <div class="panel col-md-4">
+            <div id="accounttable" style="float:right;" class="mainbox col-xs-12">
+              {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
+            </div>
+          </div> {# table #}
           
-        </div>
-            <br>
-        <div style="margin-bottom: 10px" class="input-group col-xs-12">
-          <label for="btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
-            <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
-              <option value="" disabled selected hidden>{% trans %}Select budget type{% endtrans %}</option>
-              <option value="3">{% trans %}Cash{% endtrans %}</option>
-              {# <option value="5">{% trans %}Expense{% endtrans %}</option>
-              <option value="19">{% trans %}Sales{% endtrans %}</option> #}
-            </select>
-        </div>
-            <br>
-            <div id = "gaflag" style="margin-bottom: 10px" class="input-group ">
-				      {# <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label> #}
-				      <div class = "input-group ">
-              <label><input type="radio"  name="cashmemo" id="account" aria-label="vat" value="1" > Account Wise</label>
-              </div>
-              <div class = "input-group ">
-              <label><input type="radio"  name="cashmemo" id="account" aria-label="vat" value="7" > Group Wise</label>
-              </div>
-              <div class = "input-group ">
-              <label><input type="radio"  name="cashmemo" id="group" aria-label="gst" value="19" > Subgroup Wise</label>	
-              </div>
-            </div>
-            <div id="flow" class="input group">
-            <div style="margin-bottom: 10px;" class="input-group col-xs-12">
-            <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "balance" > </b><br>
-              <label for="inflow" >{% trans %}Inflow{% endtrans %} :</label>
-              <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
-            </div>
-            <label  >{% trans %}<i>Cash Available</i>{% endtrans %} :</label> <b id = "cashavailable" > </b><br>
-            <div style="margin-bottom: 10px" class="input-group col-xs-12">
-              <label for="outflow" >{% trans %}Outflow{% endtrans %} :</label>
-              <input style="border-radius: 4px" id="outflow" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
-            </div>
-            <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>
-            </div>
-          </div>
+        </div> {# body#}
         <div class="panel-footer">
-          <button type="submit" id="add_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i>S<u>a</u>ve{% endtrans %}</button>
-	        <button id="reset_button" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Res<u>e</u>t{% endtrans %}</button>
-      </div>
-      </form>
-      </div>
-
-    <div id="accounttable" style="float:right;" class="mainbox col-md-6">
-    {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
+              <button type="submit" id="add_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i>S<u>a</u>ve{% endtrans %}</button>
+              <button id="reset_button" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Res<u>e</u>t{% endtrans %}</button>
+        </div>   {# footer #}
+      </div> {# panel #}
     </div>
-  </div>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createbudget.js')}}"></script>
-</body>
+  </body>
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/createbudget.js')}}"></script>
