@@ -426,8 +426,10 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text(parseFloat($("#openingbal").val()).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
         });
     });
@@ -474,9 +476,13 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) { 
-            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            console.log("lll")
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text(parseFloat($("#openingbal").val()).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
+            
         });
     });
     $("#budget_fromyear").change(function(event) { 
@@ -522,8 +528,10 @@ $(document).ready(function(){
             },
         })
         .done(function(resp) {
-            $("#balance").text(parseFloat(resp["gkresult"]).toFixed(2));
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) 
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text(parseFloat($("#openingbal").val()).toFixed(2));
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2)) 
         });
     });

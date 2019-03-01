@@ -52,10 +52,11 @@ def addbudgetpage(request):
     header={"gktoken":request.headers["gktoken"]}
     return {"status":True}
 
-@view_config(route_name="budget",request_param="type=balance", renderer="json")
+@view_config(route_name="budget",request_param="type=balance", renderer="gkwebapp:templates/createbudgetaccountstable.jinja2")
 def balance(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/budget?type=addtab&financialstart=%s&uptodate=%s"%(request.params["financialstart"],request.params["uptodate"]), headers=header)
+    
     return {"status":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
 
 @view_config(route_name="budget",request_param="type=edittab", renderer="gkwebapp:templates/editbudget.jinja2")
@@ -101,27 +102,6 @@ def addbudget(request):
         gkdata = {"activity":request.params["budname"] + " budget created"}   
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
-
-@view_config(route_name="budget",request_param="type=galisttable", renderer="gkwebapp:templates/createbudgetaccountstable.jinja2")
-def galist(request):
-    header={"gktoken":request.headers["gktoken"]}
-    if(request.params["flag"] == '1'):
-        result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
-        return {"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"flag":request.params["flag"] }
-    if(request.params["flag"] == '7'):
-        result = requests.get("http://127.0.0.1:6543/groupsubgroups", headers=header)
-        grpdata=[]
-        for record in result.json()["gkresult"]:
-            gdata= {"accountname":str(record["groupname"]),"accountcode":str(record["groupcode"])}
-            grpdata.append(gdata)
-        return {"gkresult":grpdata,"gkstatus":result.json()["gkstatus"],"flag":request.params["flag"] }
-    if(request.params["flag"] == '19'):
-        result = requests.get("http://127.0.0.1:6543/groupsubgroups?allsubgroup", headers=header)
-        sgrpdata=[]
-        for record in result.json()["gkresult"]:
-            gdata= {"accountname":str(record["groupname"]),"accountcode":str(record["groupcode"])}
-            sgrpdata.append(gdata)
-        return {"gkresult":sgrpdata,"gkstatus":result.json()["gkstatus"],"flag":request.params["flag"] }
 
 @view_config(route_name="budget",request_param="type=edit", renderer="json")
 def editbudget(request):
