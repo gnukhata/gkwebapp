@@ -103,7 +103,6 @@ $(document).ready(function() {
                 $("#btype").val(goddetails["btype"]);
                 $("#btype").prop("disabled", true);
                 if(goddetails["btype"] == 3){
-                    $("#gaflag").hide();
                     $("#flow").show();
                     $("#outflow").val(parseFloat(goddetails["contents"]["outflow"]).toFixed(2));
                     $("#outflow").prop("disabled", true);
@@ -122,81 +121,25 @@ $(document).ready(function() {
                         },
                     })
                     .done(function(resp) { 
-                        $("#balance").text((parseFloat(resp["gkresult"])).toFixed(2));
-                        $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)) ;
+                        $("#accounttable").html("");      
+                        $("#accounttable").html(resp);
+                        $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2));
+                        $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) ;
                         $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
                     });
                 }
                 else{
                     $("#flow").hide();
-                    $("#gaflag").show();
-                    $("#account").prop("disabled", false);
-                    $("#group").prop("disabled", false);
-                    $("#subgroup").prop("disabled", false);
                     hideshowflag = 0;
-                    if(goddetails["gaflag"] == 1){
-                        $("#gaflag").val(goddetails["gaflag"]);
-                        $("#account").click();
-                    }
-                    if(goddetails["gaflag"] == 7){
-                        $("#gaflag").val(goddetails["gaflag"]);
-                        $("#group").click();
-                    }
-                    if(goddetails["gaflag"] == 19){
-                        $("#gaflag").val(goddetails["gaflag"]);
-                        $("#subgroup").click();
-                    }
                 }
                 $("#editbudget").show();
                 $("#form-footer").show();
                 $("#delete").show();
                 $("#edit").show();
-                $("#account").prop("disabled", true);
-                $("#group").prop("disabled", true);
-                $("#subgroup").prop("disabled", true);
                 
             }
         });
     });
-    $("#gaflag ").change(function(event) { // load accounts/groups/subgroups table 
-        $("body").css("padding-right", '0px');
-        
-            var data ={"flag": $("#gaflag input:radio:checked").val()}
-            $.ajax({
-                    type: "POST",
-                    url: "/budget?type=galisttable",
-                    global: false,
-                    async: false,
-                    datatype: "text/html",
-                    data: data,
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    },
-                })
-                .done(function(resp) {    
-                    $("#accounttable").html("");      
-                    $("#accounttable").html(resp);
-                    flagg = $("#gaflag input:radio:checked").val();
-                    if(flagg == goddetails["gaflag"]){
-                    var objects = Object.keys(contents);
-                    var objectlength = Object.keys(contents).length;
-                    var oTable = document.getElementById('latable');
-                    //gets rows of table
-                    var rowLength = oTable.rows.length;
-                    for (i=0; i<objectlength; i++){
-                        for (j=0 ; j<rowLength ; j++){
-                            var rowId = (document.getElementsByTagName("tr")[j].id).slice(0,document.getElementsByTagName("tr")[j].id.indexOf('_'));
-                            if(rowId == objects[i]){
-                                $("#latable tbody tr:eq("+(j-1)+") td input").val(contents[objects[i]]);
-                            }
-                        }
-                    }
-                }
-                if(hideshowflag == 0){
-                    $("#latable tbody tr td input").prop("disabled", true);
-                }
-                });
-       });
 // ------------ edit button ------------
     $("#edit").click(function(e){
         e.preventDefault();
@@ -212,9 +155,6 @@ $(document).ready(function() {
         $("#outflow").prop("disabled", false);
         $("#bal").prop("disabled", false);
         $("#inflow").prop("disabled", false);
-        $("#account").prop("disabled", false);
-        $("#group").prop("disabled", false);
-        $("#subgroup").prop("disabled", false);
         $("#budget_fromday").prop("disabled", false);
         $("#budget_frommonth").prop("disabled", false);
         $("#budget_fromyear").prop("disabled", false);
@@ -384,9 +324,6 @@ $(document).ready(function() {
                 {
                     $("#outflow").focus();
                 }
-                else{
-                    $("#gaflag input:radio:checked").focus().select();
-                }
                 }
             });
             $("#reset").keydown(function(e){
@@ -394,41 +331,6 @@ $(document).ready(function() {
                 {
                 e.preventDefault();
                 $("#add").focus();
-                }
-            });
-            $(document).off("keydown","#account").on("keydown", '#account', function(e){
-                if (e.which == 13) {
-                    // e.preventDefault();
-                    $("#latable tbody tr:eq(0) input").focus();
-                }
-            });
-            $(document).off("keydown","#group").on("keydown", '#group', function(e){
-                if (e.which == 13) {
-                    // e.preventDefault();
-                    $("#latable tbody tr:eq(0) input").focus();
-                }
-            });
-            $(document).off("keydown","#latable tbody tr input").on("keydown", "#latable tbody tr input", function(e){
-                if (e.which == 13) {
-                    e.preventDefault();
-                    $("#add").focus().select();
-                }
-                if(e.which == 27){
-                    $("#gaflag input:radio:checked").focus().select();
-                }
-                if(e.which == 40){e.preventDefault();
-                    var i = $("#latable tbody tr input").index(this) + 1;
-                    $("#latable tbody tr:eq("+i+") input").focus().select();
-                }
-                if(e.which == 38){e.preventDefault();
-                    var i = $("#latable tbody tr input").index(this) - 1;
-                    $("#latable tbody tr:eq("+i+") input").focus().select();
-                }
-            });
-            $(document).off("keydown","#add").on("keydown", '#add', function(e){
-                if (e.which == 38) {
-                    // e.preventDefault();
-                    $("#latable tbody tr:eq(0) input").focus();
                 }
             });
         // ----------------- end keydown ----------------
@@ -517,8 +419,10 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) { 
-            $("#balance").text((parseFloat(resp["gkresult"])).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)); 
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
         });
     });
@@ -562,8 +466,10 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) { 
-            $("#balance").text((parseFloat(resp["gkresult"])).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)); 
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
         });
     });
@@ -607,8 +513,10 @@ $(document).ready(function() {
             },
         })
         .done(function(resp) {
-            $("#balance").text((parseFloat(resp["gkresult"])).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat(resp["gkresult"])).toFixed(2)); 
+            $("#accounttable").html("");      
+            $("#accounttable").html(resp);
+            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
+            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
             $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
         });
     });
@@ -785,7 +693,7 @@ $(document).ready(function() {
             $("#latable tbody tr:eq(0) input").focus();
             return false;
         }
-        dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": $("#gaflag input:radio:checked").val()};
+        dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 1};
         }
         $("#msspinmodal").modal("show");
         $.ajax(

@@ -1,4 +1,20 @@
-<label style="padding-left:2.8%">
+<style>
+.panel{
+margin-bottom: 20px;
+background-color: #fff;
+border: 1px solid transparent;
+border-radius: 4px;
+}
+
+.table{
+    width:100%;
+    overflow:hidden;
+    display:block;
+}
+
+</style>
+
+<label style="padding-left:2.8%;margin-top:2%">
   {% trans %}<u>L</u>ist of <u>A</u>ccounts{% endtrans %} : 
   </label>
 <div class="panel-body nopadding">
@@ -9,30 +25,37 @@
     <thead>
       <tr>
         <th class="lalign">
-        {% trans %}Accounts Name{% endtrans %}
+        {% trans %}Accounts Name {% endtrans %}
         </th>
         <th class="lalign" >
         {% trans %}Balance{% endtrans %}
         </th>
       </tr>
     </thead>
-    <tbody >
-    <tr	>
-      <td class="smwrap lalign">
-      </td>
-      <td class="smwrap lalign">
+    <tbody style="height:40%;">
+    <tr>
+      <td colspan="2" style="font-size:15">
+         Cash
       </td>
     </tr>
+    {% for acc in gkresult["cashaccountdata"]%}
+    <tr>
+          <td> <i>{{acc["accountname"]}}</i></td>
+          <td style="text-align:right">  {{acc["accountbal"]}}</td>
+    </tr>
+    {% endfor %}
+    <tr>
+      <td colspan="2" style="font-size:15">
+          Bank
+      </td>
+    </tr>
+    {% for acc in gkresult["bankaccountdata"]%}
+    <tr>
+          <td ><i>{{acc["accountname"]}}</i></td>
+          <td style="text-align:right">{{acc["accountbal"]}}</td>
+    </tr>
+    {% endfor %}
     </tbody>
     <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
   </table>
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Groups Lists to shift focus to Save Button.{% endtrans %}</small><br>
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'DownArrow' Key or 'UpArrow' Key in Groups Lists to change focus on Group present in List.{% endtrans %}</small>
-    
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from SubGroups Lists to shift focus to Save Button.{% endtrans %}</small><br>
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'DownArrow' Key or 'UpArrow' Key in SubGroups Lists to change focus on SubGroup present in List.{% endtrans %}</small>
-    
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Accounts Lists to shift focus to Save.{% endtrans %}</small><br>
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'DownArrow' Key or 'UpArrow' Key in Accounts Lists to change focus on Account present in List.{% endtrans %}</small>
-    
-</div>
+ </div>
