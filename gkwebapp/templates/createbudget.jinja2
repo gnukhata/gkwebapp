@@ -1,4 +1,18 @@
+<style>
+.panel{
 
+background-color: #fff;
+border: 0px solid transparent;
+border-radius: 0px;
+}
+
+.table{
+    width:100%;
+    overflow:hidden;
+    display:block;
+}
+
+</style>
   <body>
     <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
       <div class="panel">
@@ -64,7 +78,7 @@
                 </select>
               </div>
               <div id="flow" class="col-md-12">
-                <div style="margin-bottom: 10px;" class="input-group col-xs-12">
+                <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
                   <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "balance" > </b><br>
                   <label for="inflow" >{% trans %}Inflow{% endtrans %} :</label>
                   <input style="border-radius: 4px" id="inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
@@ -78,14 +92,14 @@
               </div>
           </div> {# main body #}
           
-          <div class="panel col-md-4">
+          <div class="panel col-md-6">
             <div id="accounttable" style="float:right;" class="mainbox col-xs-12">
               {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
             </div>
           </div> {# table #}
           
-        </div> {# body#}
-        <div class="panel-footer">
+        </div> {# body #}
+        <div class="panel-footer" style="padding-left:3%">
               <button type="submit" id="add_button" class="btn btn-success btn-sm" accesskey="a">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i>S<u>a</u>ve{% endtrans %}</button>
               <button id="reset_button" class="btn btn-warning btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> Res<u>e</u>t{% endtrans %}</button>
         </div>   {# footer #}

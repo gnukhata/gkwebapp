@@ -37,7 +37,6 @@ $(document).ready(function(){
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#flow").hide();
-    $("#gaflag").hide();
     $("#bname").focus();
     $("#balance").text("0.00");
     $("#cashavailable").text("0.00");
@@ -158,7 +157,6 @@ $(document).ready(function(){
         {
           e.preventDefault();
           if($("#btype option:selected").val() == 3){
-              $("#gaflag").hide();
               $("#flow").show();
               $("#inflow").focus();
           }
@@ -173,13 +171,10 @@ $(document).ready(function(){
     $("#btype").change(function(e){
         $("#budget_fromday").change();
         if($("#btype option:selected").val() == 3){
-            $("#gaflag").hide();
             $("#flow").show();
         }
         if($("#btype option:selected").val() == 5 || $("#btype option:selected").val() == 19){
             $("#flow").hide();
-            $("#gaflag").show();
-            $("#account").focus().click();
         }
     });
     $("#inflow").change(function(e){
@@ -275,41 +270,6 @@ $(document).ready(function(){
           $("#add_button").focus();
           }
     });
-    $(document).off("keydown","#account").on("keydown", '#account', function(e){
-        if (e.which == 13) {
-            // e.preventDefault();
-            $("#latable tbody tr:eq(0) input").focus();
-          }
-    });
-    $(document).off("keydown","#group").on("keydown", '#group', function(e){
-        if (e.which == 13) {
-            // e.preventDefault();
-            $("#latable tbody tr:eq(0) input").focus();
-          }
-    });
-    $(document).off("keydown","#latable tbody tr input").on("keydown", "#latable tbody tr input", function(e){
-        if (e.which == 13) {
-            e.preventDefault();
-            $("#add_button").focus().select();
-          }
-        if(e.which == 27){
-            $("#gaflag input:radio:checked").focus().select();
-        }
-        if(e.which == 40){e.preventDefault();
-            var i = $("#latable tbody tr input").index(this) + 1;
-            $("#latable tbody tr:eq("+i+") input").focus().select();
-        }
-        if(e.which == 38){e.preventDefault();
-            var i = $("#latable tbody tr input").index(this) - 1;
-            $("#latable tbody tr:eq("+i+") input").focus().select();
-        }
-    });
-    $(document).off("keydown","#add_button").on("keydown", '#add_button', function(e){
-        if (e.which == 38) {
-            // e.preventDefault();
-            $("#latable tbody tr:eq(0) input").focus();
-          }
-    });
 // ----------------- end keydown ----------------
 // ------------------ date validations --------------
     var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
@@ -361,26 +321,6 @@ $(document).ready(function(){
         $(this).val(yearpad($(this).val(),4));
     });
 // ------------------ end date validation -------------
-    $("#gaflag input:radio").change(function(event) { // load accounts/groups/subgroups table
-        $("body").css("padding-right", '0px');
-            var data ={"flag": $("#gaflag input:radio:checked").val()}
-            $.ajax({
-                    type: "POST",
-                    url: "/budget?type=galisttable",
-                    global: false,
-                    async: false,
-                    datatype: "text/html",
-                    data: data,
-                    beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    },
-                })
-                .done(function(resp) {    
-                    $("#accounttable").html("");      
-                    $("#accounttable").html(resp);
-                    $("#gaflag input:radio:checked").focus();
-                });
-       });
     //    -------------------------------- date change event ---------
     var financial = sessionStorage.yyyymmddyear1;
     $("#budget_fromday").change(function(event) { 
@@ -475,8 +415,7 @@ $(document).ready(function(){
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
         })
-        .done(function(resp) { 
-            console.log("lll")
+        .done(function(resp) {
             $("#accounttable").html("");      
             $("#accounttable").html(resp);
             $("#balance").text(parseFloat($("#openingbal").val()).toFixed(2));
@@ -486,9 +425,6 @@ $(document).ready(function(){
         });
     });
     $("#budget_fromyear").change(function(event) { 
-        // if($("#btype").val()==null){
-        //     return false;
-        // }
         $(this).val(yearpad($(this).val(),4));
         if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
             $("#date-alert").alert();
@@ -515,6 +451,9 @@ $(document).ready(function(){
             $('#budget_fromday').focus().select();
             return false;
         }
+        if($("#btype").val()==null){
+            return false;
+        }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
         $.ajax({
             type: "POST",
@@ -537,7 +476,7 @@ $(document).ready(function(){
     });
 
 // submit button
-    $("#addbudget").submit(function(e){
+    $("#add_button").click(function(e){
         e.preventDefault();
 // ------------ validation  ----------------
         if ($.trim($("#bname").val())=="") {
@@ -676,7 +615,7 @@ $(document).ready(function(){
             $("#latable tbody tr:eq(0) input").focus();
             return false;
         }
-        var gaflag = $("#gaflag input:radio:checked").val();
+        var gaflag = 1;
         }
         if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;
