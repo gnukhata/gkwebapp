@@ -441,7 +441,7 @@
       <div class="col-sm-6 chartouterdiv">
       <div style="position:relative;">
       <div class="chartdiv shadow grow">
-          <h4>Purchase Invoice</h4>
+          <h5 >Purchase Invoice</h5 >
           <canvas id="chart_content_purchase" style="height:280px !important; width:100%"></canvas>
       </div>
       </div>
@@ -450,7 +450,7 @@
         <div style="position:relative;">
         <div class="chartdiv shadow grow">
           <div>
-          <h4>sale Invoice</h4>
+          <h5 >Sale Invoice</h5 >
           <canvas id="chart_content_sale" style="height:280px !important; width:100%"></canvas>  
       </div>
     </div>
@@ -482,12 +482,9 @@
         <div>
           <button class="btn btn-danger" id="add_cust" style="float:right;margin-top:-15px">Add Customer</button>
         </div>
-        <div>
-
         </div>
       </div>
     </div>
-  </div>
 
       <div class="col-sm-6 custoutdiv">
         <div style="position:relative;">
@@ -511,6 +508,109 @@
             </div>
             <div>
               <button class="btn btn-danger" id="add_cust" style="float:right;margin-top:-15px">Add Supplier</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 custoutdiv">
+        <div style="position:relative;">
+      <div class="custdiv shadow grow">
+        <div class="pull-left"> 
+          <h4>Most Sold Product</h4>
+        </div>
+        <hr>
+        <div>
+          <table id="" class="table table-bordered table-striped invoiceslist">
+              <thead>
+                  <tr>
+                    <td class="col-xs-8" style="font-weight:150; width:200px">Product</td>
+                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Stock on hand</td>
+                  </tr>
+                </thead>
+                <tbody id="topfivesoldprod">
+      
+                </tbody>
+              </table>
+        </div>
+        <div>
+          <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="col-sm-6 custoutdiv">
+        <div style="position:relative;">
+          <div class="custdiv shadow grow">
+            <div class="pull-left"> 
+              <h4>Most Bought Product</h4>
+            </div>
+            <hr>
+            <div>
+              <table id="" class="table table-bordered table-striped invoiceslist">
+                  <thead>
+                      <tr>
+                        <td class="col-xs-8" style="font-weight:150; width:200px">Product</td>
+                        <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Count</td>
+                      </tr>
+                    </thead>
+                    <tbody id="topfiveboughtprod">
+          
+                    </tbody>
+                  </table>
+            </div>
+            <div>
+              <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="row">
+      <div class="col-sm-6 custoutdiv">
+        <div style="position:relative;">
+      <div class="custdiv shadow grow">
+        <div class="pull-left"> 
+          <!-- <h4>Most Sold product</h4> -->
+        </div>
+        <hr>
+        <div>
+          <!-- <table id="" class="table table-bordered table-striped invoiceslist">
+              <thead>
+                  <tr>
+                    <td class="col-xs-8" style="font-weight:150; width:200px">Product</td>
+                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Stock on hand</td>
+                  </tr>
+                </thead>
+                <tbody id="topfivesoldprod">
+      
+                </tbody>
+              </table> -->
+        </div>
+        <div>
+          <!-- <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button> -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+      <div class="col-sm-6 custoutdiv">
+        <div style="position:relative;">
+          <div class="custdiv shadow grow">
+            <div class="pull-left"> 
+              <h4>Profit and Loss</h4>
+            </div>
+            <!-- <hr> -->
+            <div>
+              <canvas id="barChart"></canvas>
+            </div>
+            <div>
+              <!-- <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button> -->
             </div>
             <div>
     

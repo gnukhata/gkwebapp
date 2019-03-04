@@ -29,4 +29,29 @@ def topfivecustsuplist(request):
 def topfiveproductlist(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=topfiveproduct&inoutflag=%d"%(int(request.params["inoutflag"])), headers=header)
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["topfiveprod"],"inoutflag":int(request.params["inoutflag"])}
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["topfiveprod"]}
+
+@view_config(route_name="dashboard", request_param="action=stockonhandfordashboard", renderer="json")
+def stockonhandfordashboard(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/report?stockonhandfordashboard&calculateto=%s"%(request.params["calculateto"]),headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"productname":result.json()["productname"]}
+
+@view_config(route_name="dashboard", request_param="action=profitlosschart", renderer="json")
+def showprofitlossreport(request):
+    calculateto = request.params["calculateto"]
+    # financialstart = request.params["financialstart"]
+    # orgtype = request.params["orgtype"]
+    header={"gktoken":request.headers["gktoken"]}
+
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    DirectIncome = result.json()["gkresult"]["Direct Income"]
+    InDirectIncome = result.json()["gkresult"]["Indirect Income"]
+    DirectExpense = result.json()["gkresult"]["Direct Expense"]
+    InDirectExpense = result.json()["gkresult"]["Indirect Expense"]
+    print (DirectIncome,"DI")
+    print (InDirectIncome,"II")
+    print (DirectExpense,"DE")
+    print (InDirectExpense,"IE")
+
+    # return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total},request=request)
