@@ -1,6 +1,8 @@
 $(document).ready(function() {
-    $('#make_payment').click(function(){
-    $('#showpayment').click();
+  var element;
+
+  $('#make_payment').click(function(){
+  $('#showpayment').click();
   });
 
   $('#receipt_payment').click(function(){
@@ -30,6 +32,9 @@ $(document).ready(function() {
 });
 $("#add_cust").click(function() {
   $("#customersupplier").click();
+});
+$("#add_prod").click(function() {
+  $("#productinmaster").click();
 });
    
 function calldata(dataset){
@@ -164,6 +169,8 @@ $.ajax(
 });
 }
 });
+$("#chart_content_purchase").css("height", 280);
+$("#chart_content_sale").css("height", 280);
 }
 monthlyinvoice(9);
 monthlyinvoice(15);
@@ -198,9 +205,6 @@ function topfivecustsup(inoutflag){
     }
  }
   });
-  $("#chart_content_purchase").css("height", 280);
-  $("#chart_content_sale").css("height", 280);
-
 }
 topfivecustsup(15);
 topfivecustsup(9);
@@ -222,11 +226,96 @@ function topfiveprod(inoutflag){
     },
   success: function(resp)
   {
-   console.log(resp);
+    element=resp["gkresult"]
+    for (let index in element ){
+      $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+element[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ element[index].count+' </td> </tr>');                  
+  
  }
-  });
+ }
+ });
 }
-topfiveprod(15);
+topfiveprod(9);
+
+$.ajax({
+  type: "POST",
+  url: "/dashboard?action=stockonhandfordashboard",
+  global: false,
+  async: false,
+  data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
+  datatype: "json",
+  beforeSend: function(xhr)
+  {
+    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  },
+  success: function(resp)
+  {
+    for (let item in resp["gkresult"]){
+      list =resp["gkresult"][item].gkstatus
+      if (list == 3){
+      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">--</td> </tr>');                  
+      }
+      else{
+           list =resp["gkresult"][item].gkresult
+            for (let index in list) {
+            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
+        }}
+      }
+}
+
+});
+$.ajax(
+  {
+    type: "POST",
+    url: "/dashboard?action=profitlosschart",
+    global: false,
+    async: false,
+    datatype: "json",
+    data: {"calculateto":sessionStorage.yyyymmddyear2},
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+    success: function(resp){
+       console.log(resp);
+  }
+  });
+  
+var canvas = document.getElementById("barChart");
+var ctx = canvas.getContext('2d');
+// Global Options:
+ Chart.defaults.global.defaultFontColor = 'black';
+ Chart.defaults.global.defaultFontSize = 18;
+var data = {
+    labels: ["Indirect Expence", "Direct Expence","Indirect Income", "Direct Income"],
+      datasets: [
+        {
+            fill: true,
+            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+            data: [400,1000,125,400],
+        }
+    ]
+};
+// Notice the rotation from the documentation.
+var options = {
+        title: {
+                  display: true,
+                  // text: 'What happens when you lend your favorite t-shirt to a girl ?',
+                  position: 'top'
+              },
+        rotation: -0.7 * Math.PI
+};
+// Chart declaration:
+var myBarChart = new Chart(ctx, {
+    type: 'pie',
+    data: data,
+    options: options
+});
+$("#barChart").css("height", 320);
+$("#barChart").css("width", 320);
+
+
+
+
 });
 
 
