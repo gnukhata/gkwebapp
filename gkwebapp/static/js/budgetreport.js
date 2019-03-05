@@ -25,7 +25,7 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "Karan Kamdar" <kamdar.karan@gmail.com>
    "Prajkta Patkar" <prajkta@riseup.com>
    "Abhijith Balan" <abhijith@dff.org.in>
-   "rohan khairnar" <rohankhairnar@gmail.com>
+   "Rohan khairnar" <rohankhairnar@gmail.com>
  */
 // This js is use in createbudget.jinja2 file
 $(document).ready(function(){
@@ -41,7 +41,7 @@ $(document).ready(function(){
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#budgetdetails").text(),"budid":$("#budid").val(),"financialstart":sessionStorage.yyyymmddyear1},
+        data: {"buddetails":$("#budgetdetails").text(),"budid":$("#budid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#btype").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
@@ -53,8 +53,12 @@ $(document).ready(function(){
     $("#spreadsheet").click(function(e){
         // event.preventDefault();
         var xhr = new XMLHttpRequest();
-
-        xhr.open('GET', '/budget?type=spreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);
+        if($("#btype").val() == 3){
+            xhr.open('GET', '/budget?type=cashspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);
+        }
+        if($("#btype").val() == 5){
+            xhr.open('GET', '/budget?type=expensespreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
+        }
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';
 
@@ -81,7 +85,7 @@ $(document).ready(function(){
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#printbudgetdetails").text(),"budid": $("#printbudid").val(),"financialstart":sessionStorage.yyyymmddyear1},
+        data: {"buddetails":$("#printbudgetdetails").text(),"budid": $("#printbudid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#printbtype").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },

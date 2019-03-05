@@ -39,12 +39,21 @@ $(document).ready(function() {
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var financial = sessionStorage.yyyymmddyear1;
-    var contents;
     var hideshowflag;
-    $("#editbud").keydown(function(e){
+    $("#nobudget").hide();
+    $("#flow").hide();
+    $("#cash").select();
+    $("#footer").hide();
+    $("#budgetlist").keydown(function(e){
         if (e.which==13 || e.which==39)
         {e.preventDefault();
+            if($("#budgetlist").val()==""){
+                return false;
+            }
         $("#edit").focus().click();
+        }
+        if (e.which==38){
+            $("#budgettype").focus();
         }
     });
     $("#edit").keydown(function(e){
@@ -62,11 +71,195 @@ $(document).ready(function() {
         $("#edit").focus();
         }
     });
-    
-    $("#editbud").change(function(e) {
+    $("#cash").keydown(function(e){
+        if (e.which==13)
+        {e.preventDefault();
+        $("#budgetlist").focus();
+        }
+        if (e.which==39)
+        {e.preventDefault();
+        $("#expense").focus().click();
+        }
+    });$("#expense").keydown(function(e){
+        if (e.which==37)
+        {e.preventDefault();
+        $("#cash").focus().click();
+        }
+        if (e.which==13)
+        {e.preventDefault();
+        $("#budgetlist").focus();
+        }
+    });
+    // ------------------ date validations --------------
+    function pad (str, max) { //to add leading zeros in date
+        str = str.toString();
+        if (str.length==1) {
+        return str.length < max ? pad("0" + str, max) : str;
+        }
+        else{
+        return str
+        }
+    }
+    function yearpad (str, max) { //to add leading 20 or 200 to year
+        str = str.toString();
+        if (str.length==1) {
+        return str.length < max ? pad("200" + str, max) : str;
+        }
+        else if (str.length==2) {
+        return str.length < max ? pad("20" + str, max) : str;
+        }
+        else{
+        return str
+        }
+    }
+    $("#budget_fromday").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+    });
+    $("#budget_frommonth").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+    });
+    $("#budget_today").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+    });
+    $("#budget_tomonth").blur(function(event) {
+        $(this).val(pad($(this).val(),2));
+    });
+    $("#budget_fromyear").blur(function(event) {
+        $(this).val(yearpad($(this).val(),4));
+    });
+    $("#budget_toyear").blur(function(event) {
+        $(this).val(yearpad($(this).val(),4));
+    });
+    // ------------------- balance by date -------------
+    function tablecall() {
+        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
+        if(!Date.parseExact(fromdate,"yyyyMMdd")){
+            $("#date-alert").alert();
+            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+            $("#between-date-alert").alert();
+            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#between-date-alert").hide();
+            });
+            $('#budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
+        
+        if($("#btype").val() == 3){
+            $.ajax({
+                type: "POST",
+                url: "/budget?type=balance",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"financialstart":financial,"uptodate":fromdate,"budgettype":3},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+            })
+            .done(function(resp) { 
+                $("#accounttable").html("");      
+                $("#accounttable").html(resp);
+                $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
+                $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
+                $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
+            });
+        }
+        if($("#btype").val() == 5){
+            $.ajax({
+                type: "POST",
+                url: "/budget?type=balance",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"financialstart":financial,"uptodate":fromdate,"budgettype":5},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+            })
+            .done(function(resp) {    
+                $("#accounttable").html("");      
+                $("#accounttable").html(resp);
+                if(hideshowflag == 1){
+                    $("#latable tbody tr td input").prop("disabled", false);
+                }
+                else{
+                    $("#latable tbody tr td input").prop("disabled", true);
+                    
+                }
+                var keys=[];
+                    var budgetAmount=0;
+                    budgetedBalance=0;
+                    keys = Object.keys(goddetails["contents"]);   //all acountcode 
+                    for (i = 0; i < (keys.length); i++){
+                        $("#"+keys[i]+"_value").val((goddetails["contents"][keys[i]]).toFixed(2));
+                        $("#"+keys[i]+"_bal").text((goddetails["contents"][keys[i]] + parseFloat($("#"+keys[i]+"_id").text())).toFixed(2));
+                        budgetAmount = budgetAmount + goddetails["contents"][keys[i]] ;
+                        $("#budgetamount").text((budgetAmount).toFixed(2));
+                        budgetedBalance = budgetedBalance + parseFloat($("#"+keys[i]+"_bal").text());
+                        $("#budgetedbalance").text((budgetedBalance).toFixed(2));
+                }
+        });
+        }
+    }
+    $("#budgettype").change(function(e){
+        if($("#cash").is(":checked")) {
+             var val = 3;
+         }
+         if($("#expense").is(":checked")) {
+             var val = 5;
+         }
+         $.ajax(
+             {
+             type: "POST",
+             url: "/budget?type=bdg_list",
+             global: false,
+             async: false,
+             datatype: "json",
+             data: {"btype":val},
+             beforeSend: function(xhr) {
+               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+           },
+             success: function(jsonObj){
+               
+               len = jsonObj["numberofbudget"]
+               // if their are more than zero branches, only that time it will show branch selection option.
+               $('#budgetlist').html("");
+               if (len > 0){
+                   $("#nobudget").hide();
+                   $("#list").show();
+               }
+               else{
+                   $("#nobudget").show();
+                   $("#list").hide();
+               }
+               var br = jsonObj["gkresult"];
+               $('#budgetlist').append('<option value="">' + "Select Budget" +' </option>');                  
+               for (let i in br ){
+                 $('#budgetlist').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
+               }
+             }
+             });
+     });
+    $("#budgettype").change();
+    $("#budgetlist").change(function(e) {
+        $("#budgettype").hide();
         $("#add").hide();
-        $("#reset").hide();
-        var budid = $("#editbud option:selected").val();
+        var budid = $("#budgetlist option:selected").val();
         $.ajax({
             type: "POST",
             url: "/budget?type=getbuddetails",
@@ -108,28 +301,11 @@ $(document).ready(function() {
                     $("#outflow").prop("disabled", true);
                     $("#inflow").val(parseFloat(goddetails["contents"]["inflow"]).toFixed(2));
                     $("#inflow").prop("disabled", true);
-                    var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
-                    $.ajax({
-                        type: "POST",
-                        url: "/budget?type=balance",
-                        global: false,
-                        async: false,
-                        datatype: "text/html",
-                        data: {"financialstart":financial,"uptodate":fromdate},
-                        beforeSend: function(xhr) {
-                            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                        },
-                    })
-                    .done(function(resp) { 
-                        $("#accounttable").html("");      
-                        $("#accounttable").html(resp);
-                        $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2));
-                        $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) ;
-                        $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
-                    });
+                    tablecall();
                 }
-                else{
+                if(goddetails["btype"] == 5){
                     $("#flow").hide();
+                    tablecall();
                     hideshowflag = 0;
                 }
                 $("#editbudget").show();
@@ -146,12 +322,7 @@ $(document).ready(function() {
         hideshowflag = 1;
         $("#bname").prop("disabled", false);
         $("#bname").focus();
-        if($("#btype").val() == 3){
-            $("#btype").prop("disabled", true);
-        }
-        else{
-            $("#btype").prop("disabled", false);
-        }
+        $("#btype").prop("disabled", true);
         $("#outflow").prop("disabled", false);
         $("#bal").prop("disabled", false);
         $("#inflow").prop("disabled", false);
@@ -239,6 +410,7 @@ $(document).ready(function() {
             $("#budget_toyear").keydown(function(e){
                 if (e.which==13 || e.which==39)
                 {e.preventDefault();
+                if($("#btype").val() == 3){
                   $("#inflow").focus();
                   if ($("#budget_toyear").val()==0 ||$("#budget_tomonth").val()==0 ||$("#budget_todate").val()==0 ) {
                     $("#date-valid-alert").alert();
@@ -247,6 +419,7 @@ $(document).ready(function() {
                     });
                     $('#budget_today').focus().select();
                     return false;
+                } 
                 }
                 var todate = $("#budget_toyear").val()+$("#budget_tomonth").val()+$("#budget_today").val();        
                 if(!Date.parseExact(todate,"yyyyMMdd")){
@@ -333,193 +506,64 @@ $(document).ready(function() {
                 $("#add").focus();
                 }
             });
+            $(document).off("keydown","#budget_toyear").on("keydown", '#budget_toyear', function(e){
+                if (e.which == 13) {
+                    // e.preventDefault();
+                    $("#latable tbody tr:eq(1) input").focus();
+                }
+            });
+            $(document).off("keydown","#group").on("keydown", '#group', function(e){
+                if (e.which == 13) {
+                    // e.preventDefault();
+                    $("#latable tbody tr:eq(0) input").focus();
+                }
+            });
+            $(document).off("keydown","#latable tbody tr input").on("keydown", "#latable tbody tr input", function(e){
+                if (e.which == 13) {
+                    e.preventDefault();
+                    $("#add").focus().select();
+                }
+                if(e.which == 27){
+                    $("#budget_toyear").focus();
+                }
+                if(e.which == 40){e.preventDefault();
+                    var i = $("#latable tbody tr input").index(this) + 1;
+                    $("#latable tbody tr:eq("+i+") input").focus().select();
+                }
+                if(e.which == 38){e.preventDefault();
+                    var i = $("#latable tbody tr input").index(this) - 1;
+                    $("#latable tbody tr:eq("+i+") input").focus().select();
+                }
+            });
+            $(document).off("keydown","#add").on("keydown", '#add', function(e){
+                if (e.which == 38) {
+                    // e.preventDefault();
+                    $("#latable tbody tr:eq(1) input").focus();
+                }
+            });
         // ----------------- end keydown ----------------
-        // ------------------ date validations --------------
-        function pad (str, max) { //to add leading zeros in date
-            str = str.toString();
-            if (str.length==1) {
-            return str.length < max ? pad("0" + str, max) : str;
-            }
-            else{
-            return str
-            }
-        }
-        function yearpad (str, max) { //to add leading 20 or 200 to year
-            str = str.toString();
-            if (str.length==1) {
-            return str.length < max ? pad("200" + str, max) : str;
-            }
-            else if (str.length==2) {
-            return str.length < max ? pad("20" + str, max) : str;
-            }
-            else{
-            return str
-            }
-        }
-        $("#budget_fromday").blur(function(event) {
-            $(this).val(pad($(this).val(),2));
-        });
-        $("#budget_frommonth").blur(function(event) {
-            $(this).val(pad($(this).val(),2));
-        });
-        $("#budget_today").blur(function(event) {
-            $(this).val(pad($(this).val(),2));
-        });
-        $("#budget_tomonth").blur(function(event) {
-            $(this).val(pad($(this).val(),2));
-        });
-        $("#budget_fromyear").blur(function(event) {
-            $(this).val(yearpad($(this).val(),4));
-        });
-        $("#budget_toyear").blur(function(event) {
-            $(this).val(yearpad($(this).val(),4));
-        });
-        // ------------------- balance by date -------------
         
         $("#budget_fromday").change(function(event) { 
             if($("#btype").val()==null){
                 return false;
             }
-        $(this).val(pad($(this).val(),2));
-        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
-        if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#between-date-alert").alert();
-            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#between-date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
-        $.ajax({
-            type: "POST",
-            url: "/budget?type=balance",
-            global: false,
-            async: false,
-            datatype: "text/html",
-            data: {"financialstart":financial,"uptodate":fromdate},
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-        })
-        .done(function(resp) { 
-            $("#accounttable").html("");      
-            $("#accounttable").html(resp);
-            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
+            $(this).val(pad($(this).val(),2));
+            tablecall();
         });
-    });
-    $("#budget_frommonth").change(function(event) {
-        $(this).val(pad($(this).val(),2));
-        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
-        if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#between-date-alert").alert();
-            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#between-date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
-        $.ajax({
-            type: "POST",
-            url: "/budget?type=balance",
-            global: false,
-            async: false,
-            datatype: "text/html",
-            data: {"financialstart":financial,"uptodate":fromdate},
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-        })
-        .done(function(resp) { 
-            $("#accounttable").html("");      
-            $("#accounttable").html(resp);
-            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
+        $("#budget_frommonth").change(function(event) {
+            if($("#btype").val()==null){
+                return false;
+            }
+            $(this).val(pad($(this).val(),2));
+            tablecall();
         });
-    });
-    $("#budget_fromyear").change(function(event) { 
-        $(this).val(yearpad($(this).val(),4));
-        if ($("#budget_fromyear").val()==0 ||$("#budget_frommonth").val()==0 ||$("#budget_fromdate").val()==0 ) {
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+$("#budget_frommonth").val()+$("#budget_fromday").val();        
-        if(!Date.parseExact(fromdate,"yyyyMMdd")){
-            $("#date-alert").alert();
-            $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
-            $("#between-date-alert").alert();
-            $("#between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#between-date-alert").hide();
-            });
-            $('#budget_fromday').focus().select();
-            return false;
-        }
-        var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
-        $.ajax({
-            type: "POST",
-            url: "/budget?type=balance",
-            global: false,
-            async: false,
-            datatype: "text/html",
-            data: {"financialstart":financial,"uptodate":fromdate},
-            beforeSend: function(xhr) {
-                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-        })
-        .done(function(resp) {
-            $("#accounttable").html("");      
-            $("#accounttable").html(resp);
-            $("#balance").text((parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#cashavailable").text((parseFloat($("#inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)); 
-            $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
+        $("#budget_fromyear").change(function(event) { 
+            if($("#btype").val()==null){
+                return false;
+            }
+            $(this).val(pad($(this).val(),4));
+            tablecall();
         });
-    });
     $("#inflow").change(function(e){
         var b = parseFloat($("#balance").text());
         if(b != 0){
@@ -652,9 +696,9 @@ $(document).ready(function() {
             }
             vd =[]
             vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
-            dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
+            dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
         }
-        else{   // when sale or wxpense budget
+        if($("#btype").val() == 5){   // when sale or wxpense budget
             //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table
@@ -662,7 +706,7 @@ $(document).ready(function() {
         vd=[];
         var content= {};
         //loops through rows    
-        for (i = 0; i < rowLength; i++){
+        for (i = 0; i < (rowLength-1); i++){
             //gets cells of current row  
             var oCells = oTable.rows.item(i).cells;
             //gets amount of cells of current row
@@ -693,7 +737,7 @@ $(document).ready(function() {
             $("#latable tbody tr:eq(0) input").focus();
             return false;
         }
-        dataset = {"budid":$("#editbud option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 1};
+        dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
         }
         $("#msspinmodal").modal("show");
         $.ajax(

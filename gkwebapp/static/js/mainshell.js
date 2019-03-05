@@ -860,7 +860,7 @@ $(document).ready(function(){
   $('#showviewbudget').click(function (e) {
     // Loads list of all budget to view budget report.
     $.ajax({
-      url: '/budget?type=bdg_list',
+      url: '/budget?type=viewbudgetreportpage',
       type: 'POST',
       global: false,
       async: false,

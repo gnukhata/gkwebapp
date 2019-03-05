@@ -79,13 +79,13 @@ $(document).ready(function() {
   $("a[href ='#budget_create']").click();
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if(e.target.attributes.href.value=="#budget_create"){
-      $("#bname").focus();
+      $("#c_bname").focus();
     }
     else if(e.target.attributes.href.value=="#budget_edit"){
-      $("#editbud").focus();
+      $("#cash").focus();
     }
   });
   $("a[href ='#budget_edit']").click(function(event) {
-    $("#editbud").focus();
+    $("#cash").focus();
   });
   });

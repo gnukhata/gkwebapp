@@ -52,6 +52,7 @@
         <div ><center>
              <strong id="printbudgetdetails"> {{budgetdetails}} </strong> </center>
         </div>
+        {% if btype == '3'%}
         <div >
             <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
         </div>
@@ -114,6 +115,88 @@
             <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}}
         </div>
         </div>
+        {%else%}
+            <div>
+                  <h><b>Total Previous Expense: </b></h>{{gkresult["totalpreviousbal"]}}
+            </div>
+            <div class="table-responsive">
+                <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
+                  <thead class="bg-primary">
+                <tr>
+                  <th  class="lngwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+                  <th  class="mdwrap text-center sgstfield">{% trans %}Budgeted Expense{% endtrans %}</th>
+                  <th  class="mdwrap text-center sgstfield">{% trans %}Actual Expense{% endtrans %}</th>
+                  <th  class="mdwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
+                  <th  class="mdwrap text-center igstfield">{% trans %}Budgeted Balance{% endtrans %}</th>
+                  <th  class="mdwrap text-center igstfield">{% trans %}Actual Balance{% endtrans %}</th>
+                </tr>
+                  </thead>
+                  <tbody>
+                <tr>
+                    <td class="lngwrap"><h> Accounts </h> <br>
+                    <div style="text-align:right">
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["accountname"]}} <br>
+                      {% endfor %}
+                      </div>
+                      
+                    </td>
+                    <td style="text-align:right">
+                    <br>
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["budgetamount"]}}<br>
+                      {% endfor %}
+                    </td>
+                    <td style="text-align:right">
+                    <br>
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["actualamount"]}}<br>
+                      {% endfor %}
+                    </td>
+                    <td style="text-align:right"> 
+                    <br>
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["accvariance"]}}<br>
+                      {% endfor %}
+                    </td>
+                    <td style="text-align:right">
+                    <br>
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["budgetedbal"]}}<br>
+                      {% endfor %}
+                    </td>
+                    <td style="text-align:right">
+                    <br>
+                    {% for record in gkresult["accountdata"] %}
+                      {{record["actualbal"]}}<br> 
+                      {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td >
+                    Total
+                    </td>
+                    <td style="text-align:right">
+                        {{gkresult["totalbudget"]}}
+                    </td>
+                    <td style="text-align:right">
+                        {{gkresult["totalactual"]}}
+                    </td>
+                    <td style="text-align:right">
+                        {{gkresult["totalvariance"]}}
+                    </td>
+                    <td style="text-align:right">
+                        {{gkresult["totalbudgetedbal"]}}
+                    </td>
+                    <td style="text-align:right">
+                        {{gkresult["totalactualbal"]}}
+                    </td>
+                </tr>
+                  </tbody>
+                </table>
+                <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}}
+            </div>
+            {%endif%}
         </div>   
       </div>
       <center>
@@ -122,6 +205,7 @@
       </center>
     </div>
     <input type="hidden" id="printbudid" value="{{ budid }}">
+    <input type="hidden" id="printbtype" value="{{ btype }}">
 </body> 
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
 </html>

@@ -30,19 +30,64 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#msspinmodal").modal("hide");
-    $("#budgetlist").focus();
-    $("#budgetlist").keydown(function(e){
-        if (e.which==13)
+    $("#budgettype").focus();
+    $("#nobudget").hide();
+    $("#list").show();
+    // ------------------   Keydown functions -------------
+    $("#budgettype").keydown(function(e){
+        if (e.which==13 )
         {e.preventDefault();
-        $("#submit").focus();
+          $("#budgetlist").focus();
+        }
+    });
+    $("#budgetlist").keydown(function(e){
+        if (e.which==38 )
+        {e.preventDefault();
+          $("#budgettype").focus();
+        }
+        if (e.which==13 )
+        {e.preventDefault();
+          $("#submit").focus();
         }
     });
     $("#submit").keydown(function(e){
-        if (e.which==38 || e.which==37)
+        if (e.which==38 )
         {e.preventDefault();
-        $("#budgetlist").focus();
+          $("#budgetlist").focus();
         }
     });
+    // ------- end Keydown --------------
+    $("#budgettype ").change(function(){   // This is for load list of selected type of budget.
+            $.ajax(
+              {
+              type: "POST",
+              url: "/budget?type=bdg_list",
+              global: false,
+              async: false,
+              datatype: "json",
+              data: {"btype":$("#budgettype option:selected").val()},
+              beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+              success: function(jsonObj){
+                len = jsonObj["numberofbudget"]
+                // if their are more than zero branches, only that time it will show branch selection option.
+                $('#budgetlist').html("");
+                if (len > 0){
+                    $("#nobudget").hide();
+                    $("#list").show();
+                }
+                else{
+                    $("#nobudget").show();
+                    $("#list").hide();
+                }
+                var br = jsonObj["gkresult"];
+                for (let i in br ){
+                  $('#budgetlist').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
+                }
+              }
+              });
+      });
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
         if ($.trim($("#budgetlist option:selected").val())=="") {
@@ -59,7 +104,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#budgetlist option:selected").text(),"budid": $("#budgetlist option:selected").val(),"financialstart":financialstart},
+        data: {"buddetails":$("#budgetlist option:selected").text(),"budid": $("#budgetlist option:selected").val(),"financialstart":financialstart,"btype":$("#budgettype option:selected").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
