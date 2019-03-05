@@ -683,6 +683,7 @@ $(document).ready(function(){
    $("#help-message").hide();
    $("#showviewbudget").remove();
    $("#budget").remove();
+  //  $(".hidediv").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {

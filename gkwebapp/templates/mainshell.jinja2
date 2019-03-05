@@ -43,7 +43,7 @@
      }
      .paymentoutdiv{
       background-color: rgba(255, 255, 255, 0,0);
-       /* padding-top: 20px; */
+       padding-top: 10px;
      }
      .chartdiv{
       background-color: rgb(248,248,248);
@@ -64,7 +64,7 @@
      .custdiv{
       background-color: rgb(248,248,248);
        width: 85%;
-       min-height: 310px;
+       min-height: 320px;
        padding: 10px;
        border-radius: 5px;
      }
@@ -309,7 +309,7 @@
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
       
-    <div class="row form-inline ">
+    <div class="row form-inline hidediv">
         <div class="col-xs-3 dashboardoutdiv">
             <div style="position:relative;">
               <div id="my_profile" class="dashboard  grow animationContainer enableCircleHoverAnimation ">
@@ -362,13 +362,13 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row hidediv">
       <div class="col-sm-6 paymentoutdiv">
         <div style="position:relative;">
       <div class="payment shadow grow">
         <div> 
           <div class="pull-left" style="margin-top:-15px">
-         <h4>Make Payment</h4>
+         <h5>Make Payment</h5>
         </div>
          <div class="dropdown pull-right">
           <a class="dropdown-toggle" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -390,7 +390,7 @@
 
           </tbody>
         </table>
-        <div class="text-center">
+        <div class="text-center"style="margin-top:-10px">
             <button id="make_payment" style="width:45%" class="btn btn-danger">Make Payment</button>
           <button id="Adjustable_purchase_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
         </div>
@@ -402,7 +402,7 @@
       <div class="payment shadow grow">
           <div> 
               <div class="pull-left" style="margin-top:-15px">
-             <h4>Receive Payment</h4>
+             <h5>Receive Payment</h5>
             </div>
              <div class="dropdown pull-right">
               <a class="dropdown-toggle " style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -427,7 +427,7 @@
           </tbody>
         </table>
         </div>
-        <div class="text-center">
+        <div class="text-center" style="margin-top:-10px">
             <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receipt Payment</button>
           <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
         </div>
@@ -458,14 +458,34 @@
     </div>
     </div>
 
-    <div class="row">
+    <div class="row hidediv">
+      <div class="col-sm-6 chartouterdiv">
+      <div style="position:relative;">
+      <div class="chartdiv shadow grow">
+          <h5 >Delivery In</h5 >
+          <canvas id="delivery_in" style="height:280px !important; width:100%"></canvas>
+      </div>
+      </div>
+      </div>
+      <div class="col-sm-6 chartouterdiv">
+        <div style="position:relative;">
+        <div class="chartdiv shadow grow">
+          <div>
+          <h5 >delivery Out</h5 >
+          <canvas id="delivery_out" style="height:280px !important; width:100%"></canvas>  
+      </div>
+    </div>
+      </div>
+    </div>
+    </div>
+
+    <div class="row hidediv">
       <div class="col-sm-6 custoutdiv">
         <div style="position:relative;">
       <div class="custdiv shadow grow">
         <div class="pull-left"> 
-          <h4>Most Valued Customer</h4>
+          <h5>Most Valued Customer</h5>
         </div>
-        <hr>
         <div>
           <table id="" class="table table-bordered table-striped invoiceslist">
               <thead>
@@ -481,18 +501,16 @@
         </div>
         <div>
           <button class="btn btn-danger" id="add_cust" style="float:right;margin-top:-15px">Add Customer</button>
-        </div>
+          </div>
+          </div>
         </div>
       </div>
-    </div>
-
       <div class="col-sm-6 custoutdiv">
         <div style="position:relative;">
           <div class="custdiv shadow grow">
             <div class="pull-left"> 
-              <h4>Most Valued Supplier</h4>
+              <h5>Most Valued Supplier</h5>
             </div>
-            <hr>
             <div>
               <table id="" class="table table-bordered table-striped invoiceslist">
                   <thead>
@@ -507,7 +525,7 @@
                   </table>
             </div>
             <div>
-              <button class="btn btn-danger" id="add_cust" style="float:right;margin-top:-15px">Add Supplier</button>
+              <button class="btn btn-danger" id="add_sup" style="float:right;margin-top:-15px">Add Supplier</button>
             </div>
           </div>
         </div>
@@ -519,7 +537,7 @@
         <div style="position:relative;">
       <div class="custdiv shadow grow">
         <div class="pull-left"> 
-          <h4>Most Sold Product</h4>
+          <h5>Most Sold Product/ Service</h5>
         </div>
         <hr>
         <div>
@@ -536,7 +554,7 @@
               </table>
         </div>
         <div>
-          <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button>
+          <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-17px">Add Product</button>
         </div>
       </div>
     </div>
@@ -546,7 +564,7 @@
         <div style="position:relative;">
           <div class="custdiv shadow grow">
             <div class="pull-left"> 
-              <h4>Most Bought Product</h4>
+              <h5>Most Bought Product/ Service</h5>
             </div>
             <hr>
             <div>
@@ -576,24 +594,10 @@
         <div style="position:relative;">
       <div class="custdiv shadow grow">
         <div class="pull-left"> 
-          <!-- <h4>Most Sold product</h4> -->
-        </div>
-        <hr>
-        <div>
-          <!-- <table id="" class="table table-bordered table-striped invoiceslist">
-              <thead>
-                  <tr>
-                    <td class="col-xs-8" style="font-weight:150; width:200px">Product</td>
-                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Stock on hand</td>
-                  </tr>
-                </thead>
-                <tbody id="topfivesoldprod">
-      
-                </tbody>
-              </table> -->
+          <h5>Balance Sheet</h5>
         </div>
         <div>
-          <!-- <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button> -->
+          <canvas id="doughnut-chart"></canvas>
         </div>
       </div>
     </div>
@@ -603,17 +607,10 @@
         <div style="position:relative;">
           <div class="custdiv shadow grow">
             <div class="pull-left"> 
-              <h4>Profit and Loss</h4>
+              <h5>Profit and Loss</h5>
             </div>
-            <!-- <hr> -->
             <div>
               <canvas id="barChart"></canvas>
-            </div>
-            <div>
-              <!-- <button class="btn btn-danger" id="add_prod" style="float:right;margin-top:-15px">Add Product</button> -->
-            </div>
-            <div>
-    
             </div>
           </div>
         </div>
