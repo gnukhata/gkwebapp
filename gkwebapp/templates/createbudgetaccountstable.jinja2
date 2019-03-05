@@ -14,48 +14,130 @@ border-radius: 4px;
 
 </style>
 
-<label style="padding-left:2.8%;margin-top:2%">
-  {% trans %}<u>L</u>ist of <u>A</u>ccounts{% endtrans %} : 
-  </label>
 <div class="panel-body nopadding">
       <div class="alert alert-danger" id="content-alert" aria-live="rude" role="alert" hidden>
           <label for="viewledger_fromdate">{% trans %}Please enter atleast one budget amount!{% endtrans %}</label>
         </div>
-  <table id="latable" class="table shadow table-bordered">
-    <thead>
-      <tr>
-        <th class="lalign">
-        {% trans %}Accounts Name {% endtrans %}
-        </th>
-        <th class="lalign" >
-        {% trans %}Balance{% endtrans %}
-        </th>
-      </tr>
-    </thead>
-    <tbody style="height:40%;">
-    <tr>
-      <td colspan="2" style="font-size:15">
-         Cash
-      </td>
-    </tr>
-    {% for acc in gkresult["cashaccountdata"]%}
-    <tr>
-          <td> <i>{{acc["accountname"]}}</i></td>
-          <td style="text-align:right">  {{acc["accountbal"]}}</td>
-    </tr>
-    {% endfor %}
-    <tr>
-      <td colspan="2" style="font-size:15">
-          Bank
-      </td>
-    </tr>
-    {% for acc in gkresult["bankaccountdata"]%}
-    <tr>
-          <td ><i>{{acc["accountname"]}}</i></td>
-          <td style="text-align:right">{{acc["accountbal"]}}</td>
-    </tr>
-    {% endfor %}
-    </tbody>
-    <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
-  </table>
+  {% if btype == 3 %}
+      <table id="latable" class="table shadow table-bordered">
+        <thead>
+        <tr>
+            <th  colspan="2"> <center>{% trans %}List of Accounts{% endtrans %} </center></th>
+        </tr>
+          <tr>
+            <th class="lalign">
+            {% trans %}Accounts Name {% endtrans %}
+            </th>
+            <th class="lalign" >
+            {% trans %}Balance{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody style="height:40%;">
+        <tr>
+          <td colspan="2" style="font-size:15">
+            Cash
+          </td>
+        </tr>
+        {% for acc in gkresult["cashaccountdata"]%}
+        <tr>
+              <td> <i>{{acc["accountname"]}}</i></td>
+              <td style="text-align:right">  {{acc["accountbal"]}}</td>
+        </tr>
+        {% endfor %}
+        <tr>
+          <td colspan="2" style="font-size:15">
+              Bank
+          </td>
+        </tr>
+        {% for acc in gkresult["bankaccountdata"]%}
+        <tr>
+              <td ><i>{{acc["accountname"]}}</i></td>
+              <td style="text-align:right">{{acc["accountbal"]}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
+      </table>
+  {% else %}
+      <table id="latable"   class="table table-bordered">
+        <thead>
+        <tr>
+            <th  colspan="4"> <center>{% trans %}List of Accounts{% endtrans %} </center></th>
+        </tr>
+          <tr>
+            <th class="lalign">
+            {% trans %}Accounts Name{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Accounts Balance{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Budget Amount{% endtrans %}
+            </th>
+            <th class="lalign" >
+            {% trans %}Budgeted Balance{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody  style="height:43%; overflow: auto;">
+        <tr><td colspan="2">
+        <b>Direct Expense </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["DirectExpense"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
+        </tr>
+        {% endfor %}
+        <tr><td colspan="2">
+        <b>Indirect Expense </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["IndirectExpense"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
+        </tr>
+        {% endfor %}
+        
+        <tr style="border-top: 1.5pt solid grey;">
+          <td >Total</td>
+          <td style="text-align:right;">{{gkresult["totalbal"]}}
+          </td>
+          <td style="text-align:right;" id="budgetamount">0.00
+          </td>
+          <td style="text-align:right;" id="budgetedbalance">0.00
+          </td>
+        </tr>
+        </tbody>
+      </table>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Accounts Lists to shift focus to Save Button.{% endtrans %}</small><br>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'DownArrow' Key or 'UpArrow' Key in Accounts Lists to change focus on Account present in List.{% endtrans %}</small>
+  {% endif %}
  </div>

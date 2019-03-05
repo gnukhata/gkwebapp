@@ -44,18 +44,23 @@ border-radius: 5px;
             <label for="btype">{% trans %}Budget deleted successfully!{% endtrans %}</label>
           </div>
         {# ---------------------ALERTS --------------------- #}
-          <div class="form-group col-md-12">
-            {% if numberofbudget ==0 %}
-            <label class="text-danger">{% trans %}No Budget Found!{% endtrans %}</label>
-            {% else %}
-            <label for="editbud" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editbud">
-              <option value="disabled" disabled selected hidden>{% trans %}Select Budget{% endtrans %}</option>
-              {% for buds in gkresult %}
-              <option value="{{buds['budid']}}">{{buds["budname"]}} ({{buds["startdate"]}} - {{buds["enddate"]}})</option>
-              {% endfor %}
-            {% endif %}
+          <div class="form-group col-xs-12" >
+            <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
+				      <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>
+                  <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash Budget</label>
+                  <label><input type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Expense Budget</label>    
+            </div>
+
+            <label class="text-danger" id="nobudget">{% trans %}No Budget Found!{% endtrans %}
+            </label>
+
+            <div id = "list" class="input-group col-xs-12">
+              <label for="budgetlist" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :
+              </label>
+              <select class = "form-control input-sm" id="budgetlist">
+              <option value="" disabled selected hidden>{% trans %}Select Budget{% endtrans %}</option>
               </select>
+            </div> {# list of budget#}
           </div>
           <div id="editbudget" class="col-md-12" hidden >
             <form id="addbudget" method="post"  class="form-horizontal">
@@ -83,6 +88,7 @@ border-radius: 5px;
                     <select name="btype" style="border-radius: 4px" id="btype" type="text" class="form-control input-sm" accesskey="t">
                         <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
                         <option value="3">{% trans %}Cash{% endtrans %}</option> 
+                        <option value="5">{% trans %}Expense{% endtrans %}</option> 
                     </select>
               </div>
               <div id="flow">
@@ -96,8 +102,9 @@ border-radius: 5px;
                     <label for="outflow" >{% trans %}Outflow{% endtrans %} :</label>
                     <input style="border-radius: 4px; text-align:right" id="outflow" type="text" class="form-control input-sm common numtype"  accesskey="e" value="0.00" placeholder="0.00"></input>
                 </div>
+                <label >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>
               </div>
-                  <label >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>
+                  
           </div>
         </div>    {# main panel #}
         <div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">

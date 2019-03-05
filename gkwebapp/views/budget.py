@@ -55,24 +55,24 @@ def addbudgetpage(request):
 @view_config(route_name="budget",request_param="type=balance", renderer="gkwebapp:templates/createbudgetaccountstable.jinja2")
 def balance(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/budget?type=addtab&financialstart=%s&uptodate=%s"%(request.params["financialstart"],request.params["uptodate"]), headers=header)
+    result = requests.get("http://127.0.0.1:6543/budget?type=addtab&financialstart=%s&uptodate=%s&btype=%d"%(request.params["financialstart"],request.params["uptodate"],int(request.params["budgettype"])), headers=header)
     
-    return {"status":result.json()["gkstatus"],"gkresult":result.json()["gkresult"]}
+    return {"status":result.json()["gkstatus"],"gkresult":result.json()["gkresult"],"btype":int(request.params["budgettype"])}
 
 @view_config(route_name="budget",request_param="type=edittab", renderer="gkwebapp:templates/editbudget.jinja2")
 def editbudgetpage(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/budget?bud=all", headers=header)
-    buddata=[]
-    for record in result.json()["gkresult"]:
-        gdata= {"budname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"]}
-        buddata.append(gdata)
-    return {"gkresult":buddata,"numberofbudget":len(result.json()["gkresult"]),"status":True}
+    return {"status":True}
 
-@view_config(route_name="budget",request_param="type=bdg_list", renderer="gkwebapp:templates/viewbudgetreport.jinja2")
+@view_config(route_name="budget",request_param="type=viewbudgetreportpage", renderer="gkwebapp:templates/viewbudgetreport.jinja2")
+def viewreportpage(request):
+    header={"gktoken":request.headers["gktoken"]}
+    return {"status":True}
+
+@view_config(route_name="budget",request_param="type=bdg_list", renderer="json")
 def alllist(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/budget?bud=all", headers=header)
+    result = requests.get("http://127.0.0.1:6543/budget?bud=all&btype=%d"%int(request.params["btype"]), headers=header)
     buddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"budname":str(record["budname"]),"budid":str(record["budid"]),"startdate": record["startdate"],"enddate": record["enddate"]}
@@ -125,20 +125,26 @@ def deletebudget(request):
 def budgetreport(request):
     header={"gktoken":request.headers["gktoken"]}
     financialstart = request.params["financialstart"]
-    result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    if (request.params["btype"] == '3'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    if (request.params["btype"] == '5'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "budid":int(request.params["budid"]) }
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]) }
 
 @view_config(route_name="budget",request_param="type=printreport", renderer="gkwebapp:templates/printbudgetreport.jinja2")
 def printbudgetreport(request):
     header={"gktoken":request.headers["gktoken"]}
     financialstart = request.params["financialstart"]
-    result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    if (request.params["btype"] == '3'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+    if (request.params["btype"] == '5'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart }
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"] }
 
-@view_config(route_name="budget",request_param="type=spreadsheet", renderer="") 
-def reportspreadsheet(request):
+@view_config(route_name="budget",request_param="type=cashspreadsheet", renderer="") 
+def cashspreadsheet(request):
     try:
         header={"gktoken":request.headers["gktoken"]}
         financialstart = request.params["financialstart"]
@@ -146,7 +152,7 @@ def reportspreadsheet(request):
         fyend = str(request.params["fyend"])
         orgname = str(request.params["orgname"])
         budgetdetails = str(request.params["budgetdetails"])
-        result = requests.get("http://127.0.0.1:6543/budget?type=budgetReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
         result = result.json()["gkresult"];
         budgetwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
@@ -238,3 +244,108 @@ def reportspreadsheet(request):
     except:
         return {"gkstatus":3}
 
+@view_config(route_name="budget",request_param="type=expensespreadsheet", renderer="") 
+def expensespreadsheet(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        financialstart = request.params["financialstart"]
+        fystart = str(request.params["fystart"])
+        fyend = str(request.params["fyend"])
+        orgname = str(request.params["orgname"])
+        budgetdetails = str(request.params["budgetdetails"])
+        result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = result.json()["gkresult"]
+        budgetwb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = budgetwb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "Budget Report"
+
+        sheet.column_dimensions['A'].width = 36
+        sheet.column_dimensions['B'].width = 25
+        sheet.column_dimensions['C'].width = 25
+        sheet.column_dimensions['D'].width = 25
+        sheet.column_dimensions['E'].width = 25
+        sheet.column_dimensions['F'].width = 25
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'Budget Report :'+ str(budgetdetails)
+        sheet.merge_cells('A3:F3')
+
+        sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A4'] = 'Total Previous Expense : '+ result["totalpreviousbal"]
+        sheet.merge_cells('A4:F4')
+
+        sheet['A5'] = 'Particulars'
+        sheet['B5'] = 'Budgeted Expense'
+        sheet['C5'] = 'Actual Expense'
+        sheet['D5'] = 'Variance'
+        sheet['E5'] = 'Budgeted Balance'
+        sheet['F5'] = 'Actual Balance'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
+        titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
+
+        row = 6
+        for budget in result["accountdata"]:
+            sheet['A'+str(row)] = budget["accountname"]
+            sheet['A'+str(row)].font = Font(italic=True )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['B'+str(row)] = budget["budgetamount"]
+            sheet['B'+str(row)].font = Font(name='Liberation Serif')
+            sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['C'+str(row)] = budget["actualamount"]
+            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['D'+str(row)] = budget["accvariance"]
+            sheet['D'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['E'+str(row)] = budget["budgetedbal"]
+            sheet['E'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['F'+str(row)] = budget["actualbal"]
+            sheet['F'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            row=row+1
+        sheet['A'+str(row)] = 'Total'
+        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['B'+str(row)] = result["totalbudget"]
+        sheet['B'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['C'+str(row)] = result["totalactual"]
+        sheet['C'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row)] = result["totalvariance"]
+        sheet['D'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['E'+str(row)] = result["totalbudgetedbal"]
+        sheet['E'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['F'+str(row)] = result["totalactualbal"]
+        sheet['F'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A'+str(row+2)] = 'Budget Closing Expense : '+ result["totalactual"]
+
+        a = 'A'+str(row+1)
+        d = 'D'+str(row+1)
+        sheet.merge_cells('A'+str(row+1)+':D'+str(row+1))
+
+        budgetwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items()) 
+    except:
+        return {"gkstatus":3}
