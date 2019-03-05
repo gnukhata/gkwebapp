@@ -33,6 +33,9 @@ $(document).ready(function() {
 $("#add_cust").click(function() {
   $("#customersupplier").click();
 });
+$("#add_sup").click(function() {
+  $("#customersupplier").click();
+});
 $("#add_prod").click(function() {
   $("#productinmaster").click();
 });
@@ -128,9 +131,11 @@ $.ajax(
   {
   if (inoutflag==9){
   var ctx = document.getElementById("chart_content_purchase").getContext('2d');
+  Chart.defaults.global.responsive = true;
   }
   else{
   var ctx = document.getElementById("chart_content_sale").getContext('2d');
+  Chart.defaults.global.responsive = true;
   }
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -174,7 +179,75 @@ $("#chart_content_sale").css("height", 280);
 }
 monthlyinvoice(9);
 monthlyinvoice(15);
-   
+
+
+function monthlydelchal(inoutflag){
+  $.ajax(
+    {
+  
+    type: "POST",
+    url: "/dashboard?action=countdelchal",
+    global: false,
+    async: false,
+    datatype: "json",
+    data: {"inoutflag":inoutflag},
+    beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+    success: function(resp)
+    {
+    if (inoutflag==9){
+    var ctx = document.getElementById("delivery_in").getContext('2d');
+    Chart.defaults.global.responsive = true;
+    }
+    else{
+    var ctx = document.getElementById("delivery_out").getContext('2d');
+    Chart.defaults.global.responsive = true;
+    }
+    var myChart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+          labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+          datasets: [{
+              label: 'No of delchal',
+              data: resp["delchalcount"],
+              backgroundColor: [
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)',
+                  'rgba(51, 51, 51)', 
+                  'rgba(51, 51, 51)', 
+  
+              ],
+          
+          }]
+      },
+      options: {
+          scales: {
+              yAxes: [{
+                  ticks: {
+                      beginAtZero:true
+                  }
+              }]
+          }
+      }
+  });
+  }
+  });
+  $("#delivery_in").css("height", 280);
+  $("#delivery_out").css("height", 280);
+  }
+  monthlydelchal(9);
+  monthlydelchal(15);
+
 function topfivecustsup(inoutflag){
   $.ajax(
   {
@@ -275,47 +348,80 @@ $.ajax(
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     },
-    success: function(resp){
-       console.log(resp);
+    success: function(resp){  
+    var canvas = document.getElementById("barChart");
+    var ctx = canvas.getContext('2d');
+    // Global Options:
+     Chart.defaults.global.defaultFontColor = 'black';
+    //  Chart.defaults.global.defaultFontSize = 16;
+    var data = {
+        labels: ["Direct Expence", "Indirect Expence","Direct Income", "Indirect Income"],
+          datasets: [
+            {
+                fill: true,
+                backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                data: [resp["DirectExpense"],resp["InDirectExpense"],resp["DirectIncome"],resp["InDirectIncome"]],
+            }
+        ]
+    };
+    // Notice the rotation from the documentation.
+    var options = {
+            title: {
+                      display: true,
+                      position: 'top'
+                  },
+            rotation: -0.7 * Math.PI
+    };
+    // Chart declaration:
+    var myBarChart = new Chart(ctx, {
+        type: 'pie',
+        data: data,
+        options: options
+    });
+    $("#barChart").css("height", 320);
+    $("#barChart").css("width", 320);
+
   }
-  });
-  
-var canvas = document.getElementById("barChart");
-var ctx = canvas.getContext('2d');
-// Global Options:
- Chart.defaults.global.defaultFontColor = 'black';
- Chart.defaults.global.defaultFontSize = 18;
-var data = {
-    labels: ["Indirect Expence", "Direct Expence","Indirect Income", "Direct Income"],
-      datasets: [
-        {
-            fill: true,
-            backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-            data: [400,1000,125,400],
-        }
-    ]
-};
-// Notice the rotation from the documentation.
-var options = {
-        title: {
-                  display: true,
-                  // text: 'What happens when you lend your favorite t-shirt to a girl ?',
-                  position: 'top'
-              },
-        rotation: -0.7 * Math.PI
-};
-// Chart declaration:
-var myBarChart = new Chart(ctx, {
-    type: 'pie',
-    data: data,
-    options: options
 });
-$("#barChart").css("height", 320);
-$("#barChart").css("width", 320);
+  
+  $.ajax(
+    {
+      type: "POST",
+      url: "/dashboard?action=balancesheetchart",
+      global: false,
+      async: false,
+      datatype: "json",
+      data: {"calculateto":sessionStorage.yyyymmddyear2},
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp){  
+       console.log(resp);
+      }
+    })
 
-
-
-
+   new Chart(document.getElementById("doughnut-chart"), {
+      type: 'doughnut',
+      data: {
+        labels: ["Capital and Liabilities", "Property and Assets"],
+        datasets: [
+          {
+            label: "Population (millions)",
+            backgroundColor: ["#3e95cd", "#8e5ea2"],
+            data: [2478,5267]
+          }
+        ]
+      },
+      options: {
+        title: {
+          display: true,
+        }
+      }
+      
+  });
+  $("#doughnut-chart").css("height", 320);
+      $("#doughnut-chart").css("width", 320);
 });
 
 
