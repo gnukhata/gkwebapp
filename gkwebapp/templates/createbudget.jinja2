@@ -17,7 +17,7 @@ border-radius: 5px;
     <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
       <div class="panel shadow" style="border: 1px solid ;">
         <div class="panel panel-body">
-          <div class="panel col-md-4" style="border: 1px solid ; padding-bottom:2%">
+          <div class="panel col-md-4" style="border-radius: 4px; padding-bottom:2%;padding-top:1%">
             {# ----------------------------- ALERTS ------------------------ #}
               <div class="alert alert-danger" id="c_date-alert" aria-live="rude" role="alert" hidden>
                 <label for="budget_fromday">{% trans %}From Date should be prior or equal to To Date!{% endtrans %}</label>
@@ -92,12 +92,12 @@ border-radius: 5px;
                   <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
               </div>
           </div> {# main body #}
-          
-          <div class="panel col-md-6">
-            <div id="c_accounttable" style="float:right;padding-left:25%" class="mainbox col-xs-12">
+
+          <div class="panel col-md-8" id="c_accounttable" style="float:right;padding-left:8%;">
+            {# <div id="c_accounttable" style="float:right;padding-left:8%;" class="panel col-md-12"> #}
               {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
-            </div>
-          </div> {# table #}
+            {# </div> #}
+          </div> 
           
         </div> {# body #}
         <div class="panel-footer" style="padding-left:3%">
