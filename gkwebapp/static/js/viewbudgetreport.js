@@ -74,6 +74,7 @@ $(document).ready(function() {
                 // if their are more than zero branches, only that time it will show branch selection option.
                 $('#budgetlist').html("");
                 if (len > 0){
+                    $("#submit").show();
                     $("#nobudget").hide();
                     $("#list").show();
                 }
