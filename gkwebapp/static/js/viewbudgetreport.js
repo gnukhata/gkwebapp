@@ -39,7 +39,7 @@ $(document).ready(function() {
     $("#budgetlist").keydown(function(e){
         if (e.which==38 )
         {e.preventDefault();
-          $("#budgettype").focus();
+          $("#cash").focus().click();
         }
         if (e.which==13 )
         {e.preventDefault();
