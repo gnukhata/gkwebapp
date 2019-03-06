@@ -80,6 +80,7 @@ $(document).ready(function() {
                 else{
                     $("#nobudget").show();
                     $("#list").hide();
+                    $("#submit").hide();
                 }
                 var br = jsonObj["gkresult"];
                 for (let i in br ){
