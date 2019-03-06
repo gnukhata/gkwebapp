@@ -159,7 +159,7 @@ $(document).ready(function() {
         }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
         
-        if($("#btype").val() == 3){
+        if($("#btype").val() == 3){   // Cash budget
             $.ajax({
                 type: "POST",
                 url: "/budget?type=balance",
@@ -179,7 +179,7 @@ $(document).ready(function() {
                 $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
             });
         }
-        if($("#btype").val() == 5){
+        if($("#btype").val() == 5){  //expense budget
             $.ajax({
                 type: "POST",
                 url: "/budget?type=balance",
@@ -216,7 +216,7 @@ $(document).ready(function() {
         });
         }
     }
-    $("#budgettype").change(function(e){
+    $("#budgettype").change(function(e){    // radio buttons Cash and Expense
         if($("#cash").is(":checked")) {
              var val = 3;
          }
@@ -255,8 +255,8 @@ $(document).ready(function() {
              }
              });
      });
-    $("#budgettype").change();
-    $("#budgetlist").change(function(e) {
+    $("#budgettype").change();     // on change list cash will be load
+    $("#budgetlist").change(function(e) {      // Budget list change
         $("#budgettype").hide();
         $("#add").hide();
         var budid = $("#budgetlist option:selected").val();

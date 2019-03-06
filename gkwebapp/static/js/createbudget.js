@@ -294,10 +294,6 @@ $(document).ready(function(){
           $("#c_add_button").focus();
           }
     });
-
-
-
-    // --------------------- added --------------------
     $(document).off("keydown","#c_btype").on("keydown", '#c_btype', function(e){
         if (e.which == 13) {
             e.preventDefault();
@@ -334,8 +330,7 @@ $(document).ready(function(){
             $("#latable tbody tr:eq(1) input").focus();
           }
     });
-
-    // ------------------ table row total -------------
+    // ------------------Expense table row total -------------
     function total () {
         var oTable = document.getElementById('latable');
         //gets rows of table
@@ -355,11 +350,6 @@ $(document).ready(function(){
         $("#latable tbody tr:eq(-1) td:eq(3)").text((totalBalance).toFixed(2));
     }
 // -----------------end table row total ------------
-    // ------------- added----------------------
-
-
-
-// ----------------- end keydown ----------------
 // ------------------ date validations --------------
     var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
     $("#c_budget_fromday").val(fromdatearray[2])
@@ -443,7 +433,7 @@ $(document).ready(function(){
             return false;
         }
         var fromdate = $("#c_budget_fromyear").val()+"-"+$("#c_budget_frommonth").val()+"-"+$("#c_budget_fromday").val();
-        if($("#c_btype option:selected").val() == 3) {
+        if($("#c_btype option:selected").val() == 3) {   // Cash budget
             $.ajax({
                 type: "POST",
                 url: "/budget?type=balance",
@@ -463,7 +453,7 @@ $(document).ready(function(){
                 $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").val())).toFixed(2)) 
             });
         }
-        if ($("#c_btype option:selected").val() == 5){
+        if ($("#c_btype option:selected").val() == 5){   // Expense budget
             $.ajax({
                 type: "POST",
                 url: "/budget?type=balance",
@@ -590,7 +580,7 @@ $(document).ready(function(){
             vd = [{"inflow":$("#c_inflow").val(),"outflow":$("#c_outflow").val()}]
             var gaflag = 19;
         }
-        if($("#c_btype option:selected").val() == 5){  // Sales and Expense budget
+        if($("#c_btype option:selected").val() == 5){  // Expense budget
             //gets table data
             var oTable = document.getElementById('latable');
             //gets rows of table
