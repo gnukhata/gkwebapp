@@ -661,6 +661,8 @@ $(document).ready(function(){
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
+       $(".divhide").remove();
+
      }
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();

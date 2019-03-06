@@ -417,7 +417,6 @@ $.ajax(
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
       success: function(resp){  
-       console.log(resp["data"][2]);
        new Chart(document.getElementById("doughnut-chart"), {
         type: 'doughnut',
         data: {
@@ -447,7 +446,6 @@ $.ajax(
     global: false,
     async: false,
     datatype: "json",
-    // data: {"inoutflag":inoutflag},
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -495,5 +493,23 @@ $.ajax(
   }
   });
 
+  $.ajax({
+    type: "POST",
+    url: "/dashboard?action=stockonhandforgodownincharge",
+    global: false,
+    async: false,
+    data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
+    datatype: "json",
+    beforeSend: function(xhr)
+    {
+      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+    },
+    success: function(resp)
+    {
+      for (let item in resp["gkresult"]){
+        // $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">+resp["gkresult"][item].balance+</td> </tr>');                  
+        }
+  }
   
+  });
 });
