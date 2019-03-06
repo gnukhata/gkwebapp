@@ -13,7 +13,7 @@
   </style>
 </head>
 <body>
-  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
         <h3 class="panel-title">{% trans %}View Budget Report{% endtrans %}
@@ -22,14 +22,13 @@
       <div class="alert alert-danger" id="budgetlist-alert" aria-live="rude" role="alert" hidden>
           <label for="budgetlist">{% trans %}Please select budget!{% endtrans %}</label>
         </div>
-        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+            <div id="budgettype" class="col-xs-12 from-group">
             <label for="budgettype" style="padding-top:2%">{% trans %}Type of Budget{% endtrans %} :
-            </label>
-            <select class = "form-control input-sm" id="budgettype">
-            <option value="" disabled selected hidden>{% trans %}Select Budget Type{% endtrans %}</option>
-            <option value="3"> Cash Budget</option>
-            <option value="5"> Expense Budget</option>
-            </select>
+            </label><br>
+              <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash Budget</label>
+              <label><input style="margin-left:20px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Expense Budget</label>  
+            </div>
+            <div class="col-xs-12 from-group">
             <label class="text-danger" id="nobudget">{% trans %}No Budget Found!{% endtrans %}
             </label>
             <div id = "list">
@@ -42,7 +41,7 @@
           <br>
         </div>
       </div>
-      <div class="panel-footer">
+      <div class="panel-footer" style="margin-left:3%">
         <button class="btn btn-primary btn-sm" id="submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
       </div>
     </div>
