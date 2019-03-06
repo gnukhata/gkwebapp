@@ -53,7 +53,31 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 .grow { transition: all .2s ease-in-out; 
 }
 .grow:hover {transform: scale(1.1); }
-
+.flowdiv{
+	width: 85%;
+	height: 150px;
+	padding: 15px;
+	border-radius: 3%;
+  }
+  .flowouterdiv{
+	padding-top: 10px;
+  }
+  .dashboarddiv{
+   background-color: rgb(248,248,248);
+	width: 85%;
+	height: 320px;
+	padding: 10px;
+	border-radius: 5px;
+  }
+  .dashboardouterdiv{
+   background-color: rgba(255, 255, 255, 0,0);
+	padding-top: 20px;
+  }
+  .graph{
+	background-color: #1b2631;
+	width: 15px;
+	overflow-x: auto;
+  }
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;

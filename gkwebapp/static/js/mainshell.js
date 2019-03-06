@@ -83,6 +83,7 @@ $(document).ready(function(){
       $(".invoicemenu").hide();
       $(".businessmenu").hide();	 
       $(".gstmenuitem").hide();
+      $(".accountinghide").hide();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -655,6 +656,8 @@ $(document).ready(function(){
        $("#orgpref").remove();
        $("#gstmenu").remove();
        $("#business").remove();	 
+       $(".godownhide").remove();	 
+
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
@@ -684,6 +687,7 @@ $(document).ready(function(){
    $("#showviewbudget").remove();
    $("#budget").remove();
   //  $(".hidediv").remove();
+   $(".hidediv").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {

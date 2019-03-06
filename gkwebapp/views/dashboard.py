@@ -1,3 +1,33 @@
+
+"""
+Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+
+  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+
+  GNUKhata is Free Software; you can redistribute it and/or modify
+  it under the terms of the GNU Affero General Public License as
+  published by the Free Software Foundation; either version 3 of
+  the License, or (at your option) any later version.
+
+  GNUKhata is distributed in the hope that it will be useful, but
+  WITHOUT ANY WARRANTY; without even the implied warranty of
+  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  GNU Affero General Public License for more details.
+
+  You should have received a copy of the GNU Affero General Public
+  License along with GNUKhata (COPYING); if not, write to the
+  Free Software Foundation, Inc., 51 Franklin Street, Fifth Floor,
+  Boston, MA  02110-1301  USA59 Temple Place, Suite 330,
+
+
+Contributors:
+"Krishnakant Mane" <kk@dff.org.in>
+"Abhijith Balan" <abhijithb21@openmailbox.org>
+"prajkta Patkar" <prajkta@riseup.net>
+"Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+   """
+
 from pyramid.view import view_config
 import requests, json
 from datetime import datetime
@@ -19,6 +49,12 @@ def invoicecountbymonth(request):
     result = requests.get("http://127.0.0.1:6543/dashboard?type=invoicecountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
     return {"gkstatus":result.json()["gkstatus"],"invcount":result.json()["invcount"],"inoutflag":int(request.params["inoutflag"])}
 
+@view_config(route_name="dashboard", request_param="action=countdelchal", renderer="json")
+def delchalcountbymonth(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=delchalcountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
+    return {"gkstatus":result.json()["gkstatus"],"delchalcount":result.json()["delchalcount"],"inoutflag":int(request.params["inoutflag"])}
+
 @view_config(route_name="dashboard", request_param="action=topcustlist", renderer="json")
 def topfivecustsuplist(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -37,11 +73,23 @@ def stockonhandfordashboard(request):
     result = requests.get("http://127.0.0.1:6543/report?stockonhandfordashboard&calculateto=%s"%(request.params["calculateto"]),headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"],"productname":result.json()["productname"]}
 
+@view_config(route_name="dashboard", request_param="action=balancesheetchart", renderer="json")
+def balancesheetreport(request):
+    calculateto = request.params["calculateto"]
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
+    data =[]
+    for content in result.json()["gkresult"]["rightlist"]:
+        if (content["groupAccname"]=="Total"):
+            data.append(content["amount"])
+    for content in result.json()["gkresult"]["leftlist"]:
+        if (content["groupAccname"]=="Total"):
+            data.append(content["amount"])
+    return {"gkstatus":result.json()["gkstatus"],"data":data}
+
 @view_config(route_name="dashboard", request_param="action=profitlosschart", renderer="json")
 def profitlossreport(request):
     calculateto = request.params["calculateto"]
-    # financialstart = request.params["financialstart"]
-    # orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
 
     result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
@@ -51,16 +99,8 @@ def profitlossreport(request):
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]["indirexpbal"]
     return {"gkstatus":result.json()["gkstatus"],"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense}
 
-@view_config(route_name="dashboard", request_param="action=countdelchal", renderer="json")
-def delchalcountbymonth(request):
+@view_config(route_name="dashboard", request_param="action=transfernotecount", renderer="json")
+def transfernotecountmonthly(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/dashboard?type=delchalcountbymonth&inoutflag=%d"%(int(request.params["inoutflag"])),headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"delchalcount":result.json()["delchalcount"],"inoutflag":int(request.params["inoutflag"])}
-
-@view_config(route_name="dashboard", request_param="action=balancesheetchart", renderer="json")
-def balancesheetreport(request):
-    calculateto = request.params["calculateto"]
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-    # print result.json()
-    # return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"verticalbalancesheet","to":calculateto,"orgtype":orgtype,"flag":flag},request=request)
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth",headers=header)
+    return {"gkstatus":result.json()["gkstatus"],"notecount":result.json()["notecount"]}

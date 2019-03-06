@@ -53,7 +53,9 @@ $(document).ready(function(){
       .always(function() {
           console.log("complete");
       });
-  $("#msspinmodal").modal("hide");
+  $("#msspinmodal").hide("hide");
+  $(".modal-backdrop").remove();
+
   $(".regdate").autotab('number');
     // '+' Button is attach only last record of gstin. 
     $("#gstintable tbody tr:last td:eq(2)").append('<div style="text-align:center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
