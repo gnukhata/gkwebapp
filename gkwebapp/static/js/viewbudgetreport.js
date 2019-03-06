@@ -33,13 +33,9 @@ $(document).ready(function() {
     $("#budgettype").focus();
     $("#nobudget").hide();
     $("#list").show();
+    $("#cash").focus();
+    var val;
     // ------------------   Keydown functions -------------
-    $("#budgettype").keydown(function(e){
-        if (e.which==13 )
-        {e.preventDefault();
-          $("#budgetlist").focus();
-        }
-    });
     $("#budgetlist").keydown(function(e){
         if (e.which==38 )
         {e.preventDefault();
@@ -56,8 +52,33 @@ $(document).ready(function() {
           $("#budgetlist").focus();
         }
     });
+    $("#cash").keydown(function(e){
+        if (e.which==13)
+        {e.preventDefault();
+        $("#budgetlist").focus();
+        }
+        if (e.which==39)
+        {e.preventDefault();
+        $("#expense").focus().click();
+        }
+    });$("#expense").keydown(function(e){
+        if (e.which==37)
+        {e.preventDefault();
+        $("#cash").focus().click();
+        }
+        if (e.which==13)
+        {e.preventDefault();
+        $("#budgetlist").focus();
+        }
+    });
     // ------- end Keydown --------------
-    $("#budgettype ").change(function(){   // This is for load list of selected type of budget.
+    $("#budgettype ").change(function(e){   // This is for load list of selected type of budget.
+        if($("#cash").is(":checked")) {
+            val = 3;
+        }
+        if($("#expense").is(":checked")) {
+            val = 5;
+        }
             $.ajax(
               {
               type: "POST",
@@ -65,7 +86,7 @@ $(document).ready(function() {
               global: false,
               async: false,
               datatype: "json",
-              data: {"btype":$("#budgettype option:selected").val()},
+              data: {"btype":val},
               beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
@@ -84,12 +105,14 @@ $(document).ready(function() {
                     $("#submit").hide();
                 }
                 var br = jsonObj["gkresult"];
+                $('#budgetlist').append('<option value="">' + "Select Budget" +' </option>');
                 for (let i in br ){
                   $('#budgetlist').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
                 }
               }
               });
       });
+      $("#budgettype").change();
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
         if ($.trim($("#budgetlist option:selected").val())=="") {
@@ -106,7 +129,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#budgetlist option:selected").text(),"budid": $("#budgetlist option:selected").val(),"financialstart":financialstart,"btype":$("#budgettype option:selected").val()},
+        data: {"buddetails":$("#budgetlist option:selected").text(),"budid": $("#budgetlist option:selected").val(),"financialstart":financialstart,"btype":val},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
