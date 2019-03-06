@@ -254,8 +254,8 @@ th {
                   </thead>
                   <tbody>
                 <tr>
-                    <td><h> Accounts </h> <br>
-                    <div style="text-align:right">
+                    <td>
+                    <div style="text-align:left">
                     {% for record in gkresult["accountdata"] %}
                       {{record["accountname"]}} <br>
                       {% endfor %}
@@ -263,31 +263,26 @@ th {
                       
                     </td>
                     <td style="text-align:right">
-                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["budgetamount"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right">
-                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["actualamount"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right"> 
-                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["accvariance"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right">
-                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["budgetedbal"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right">
-                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["actualbal"]}}<br> 
                       {% endfor %}
