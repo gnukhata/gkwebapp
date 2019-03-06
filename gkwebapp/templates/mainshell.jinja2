@@ -25,53 +25,6 @@
 	 height: 60vh;
 	 overflow-y: scroll;
      }
-     .dashboard{
-       width: 85%;
-       height: 150px;
-       padding: 15px;
-       border-radius: 3%;
-     }
-     .dashboardoutdiv{
-       padding-top: 10px;
-     }
-     .payment{
-      background-color: rgb(248,248,248);
-       width: 85%;
-       height: 320px;
-       padding: 10px;
-       border-radius: 5px;
-     }
-     .paymentoutdiv{
-      background-color: rgba(255, 255, 255, 0,0);
-       padding-top: 10px;
-     }
-     .chartdiv{
-      background-color: rgb(248,248,248);
-       width: 85%;
-       height: 330px;
-       padding: 10px;
-       border-radius: 5px;
-     }
-     .chartouterdiv{
-      background-color: rgba(255, 255, 255, 0,0);
-       padding-top: 20px;
-     }
-     .graph{
-       background-color: #1b2631;
-       width: 15px;
-       overflow-x: auto;
-     }
-     .custdiv{
-      background-color: rgb(248,248,248);
-       width: 85%;
-       min-height: 320px;
-       padding: 10px;
-       border-radius: 5px;
-     }
-     .custoutdiv{
-      background-color: rgba(255, 255, 255, 0,0);
-       padding-top: 20px;
-     }
     </style>
 
   </head>
@@ -309,10 +262,10 @@
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
       
-    <div class="row form-inline hidediv">
-        <div class="col-xs-3 dashboardoutdiv">
+    <div class="row form-inline hidediv godownhide accountinghide">
+        <div class="col-xs-3 flowouterdiv">
             <div style="position:relative;">
-              <div id="my_profile" class="dashboard  grow animationContainer enableCircleHoverAnimation ">
+              <div id="my_profile" class="flowdiv  grow animationContainer enableCircleHoverAnimation ">
       
                 <div class="text-center" style="font-size:7rem">
                     <i class="fa fa-user-circle fa-7x"></i>
@@ -322,9 +275,9 @@
               </div>
             </div>  
             </div>
-      <div class="col-xs-3 dashboardoutdiv">
+      <div class="col-xs-3 flowouterdiv">
       <div style="position:relative;">
-        <div id="add_customer" class="dashboard  grow animationContainer enableCircleHoverAnimation ">
+        <div id="add_customer" class="flowdiv  grow animationContainer enableCircleHoverAnimation ">
 
           <div class="text-center" style="font-size:7rem">
               <i class="fa fa-user-plus fa-7x"></i>
@@ -335,9 +288,9 @@
       </div>  
       </div>
 
-      <div class="col-xs-3 dashboardoutdiv">
+      <div class="col-xs-3 flowouterdiv">
           <div style="position:relative;">
-        <div id="add_product" class=" dashboard grow">
+        <div id="add_product" class=" flowdiv grow">
           <div class="text-center" style="font-size:7rem">
               <i class="fa fa-cart-plus fa-7x"></i>
           </div>
@@ -347,9 +300,9 @@
         </div>
       </div>
 
-      <div class="col-xs-3 dashboardoutdiv">
+      <div class="col-xs-3 flowouterdiv">
           <div style="position:relative;">
-        <div id="add_invoice" class="dashboard grow text-center">
+        <div id="add_invoice" class="flowdiv grow text-center">
           <div class="text-center" style="font-size:7rem">
               <i class="fa fa-file fa-7x"></i>
           </div>
@@ -362,10 +315,10 @@
       </div>
     </div>
 
-    <div class="row hidediv">
-      <div class="col-sm-6 paymentoutdiv">
+    <div class="row hidediv godownhide">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-      <div class="payment shadow grow">
+      <div class="dashboarddiv shadow grow">
         <div> 
           <div class="pull-left" style="margin-top:-15px">
          <h5>Make Payment</h5>
@@ -379,17 +332,19 @@
         </div> 
         </div>
         <hr>
+        <div>
         <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
             <tr>
-              <td class="col-xs-8" style="font-weight:150; width: 200px">Invoice</td>
-              <td class="col-xs-4" style="font-weight:150;text-align:right; width: 113px">Pending Amount</td>
+              <td class="col-xs-8" style="font-weight:100;">Invoice</td>
+              <td class="col-xs-4" style="font-weight:100;text-align:right;">Pending Amount</td>
             </tr>
           </thead>
           <tbody id="fivepurchaseinvoicelist">
 
           </tbody>
         </table>
+      </div>
         <div class="text-center"style="margin-top:-10px">
             <button id="make_payment" style="width:45%" class="btn btn-danger">Make Payment</button>
           <button id="Adjustable_purchase_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
@@ -397,9 +352,9 @@
       </div>
       </div>
     </div>
-    <div class="col-sm-6 paymentoutdiv">
+    <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-      <div class="payment shadow grow">
+      <div class="dashboarddiv shadow grow">
           <div> 
               <div class="pull-left" style="margin-top:-15px">
              <h5>Receive Payment</h5>
@@ -412,8 +367,7 @@
               </ul>
             </div> 
             </div>
-          
-        <hr>
+          <hr>
         <div>
         <table id="" class="table table-bordered table-striped invoiceslist" style="margin-top:-10px">
           <thead>
@@ -436,53 +390,72 @@
     </div>
     </div>
     </div>
-<br>
-    <div class="row">
-      <div class="col-sm-6 chartouterdiv">
+
+    <div class="row accountinghide">
+      <div class="col-sm-6 dashboardouterdiv">
       <div style="position:relative;">
-      <div class="chartdiv shadow grow">
+      <div class="dashboarddiv shadow grow">
           <h5 >Purchase Invoice</h5 >
-          <canvas id="chart_content_purchase" style="height:280px !important; width:100%"></canvas>
+          <canvas id="chart_content_purchase" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
       </div>
       </div>
       </div>
-      <div class="col-sm-6 chartouterdiv">
+    <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-        <div class="chartdiv shadow grow">
+        <div class="dashboarddiv shadow grow">
           <div>
           <h5 >Sale Invoice</h5 >
-          <canvas id="chart_content_sale" style="height:280px !important; width:100%"></canvas>  
+          <canvas id="chart_content_sale" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
       </div>
     </div>
       </div>
     </div>
     </div>
 
-    <div class="row hidediv">
-      <div class="col-sm-6 chartouterdiv">
+    <div class="row accountinghide">
+      <div class="col-sm-6 dashboardouterdiv">
       <div style="position:relative;">
-      <div class="chartdiv shadow grow">
+      <div class="dashboarddiv shadow grow">
           <h5 >Delivery In</h5 >
-          <canvas id="delivery_in" style="height:280px !important; width:100%"></canvas>
+          <canvas id="delivery_in" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
       </div>
       </div>
       </div>
-      <div class="col-sm-6 chartouterdiv">
+   <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-        <div class="chartdiv shadow grow">
+        <div class="dashboarddiv shadow grow">
           <div>
-          <h5 >delivery Out</h5 >
-          <canvas id="delivery_out" style="height:280px !important; width:100%"></canvas>  
+          <h5 >Delivery Out</h5 >
+          <canvas id="delivery_out" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
       </div>
     </div>
       </div>
     </div>
     </div>
-
-    <div class="row hidediv">
-      <div class="col-sm-6 custoutdiv">
+    <div class="row accountinghide">
+      <div class="col-sm-6 dashboardouterdiv">
+      <div style="position:relative;">
+      <div class="dashboarddiv shadow grow">
+          <h5 >Transfer Note</h5 >
+          <canvas id="transfer_note" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+      </div>
+      </div>
+      </div>
+   <div class="col-sm-6 dashboardouterdiv">
+        <!-- <div style="position:relative;">
+        <div class="dashboarddiv shadow grow">
+          <div>
+          <h5 >Delivery Out</h5 >
+          <canvas id="delivery_out" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
+      </div>
+    </div>
+      </div> -->
+    </div>
+    </div>
+    <div class="row hidediv accountinghide">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-      <div class="custdiv shadow grow">
+      <div class="dashboarddiv shadow grow">
         <div class="pull-left"> 
           <h5>Most Valued Customer</h5>
         </div>
@@ -505,9 +478,9 @@
           </div>
         </div>
       </div>
-      <div class="col-sm-6 custoutdiv">
+   <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-          <div class="custdiv shadow grow">
+          <div class="dashboarddiv shadow grow">
             <div class="pull-left"> 
               <h5>Most Valued Supplier</h5>
             </div>
@@ -532,10 +505,10 @@
       </div>
     </div>
 
-    <div class="row">
-      <div class="col-sm-6 custoutdiv">
+    <div class="row hidediv accountinghide">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-      <div class="custdiv shadow grow">
+      <div class="dashboarddiv shadow grow">
         <div class="pull-left"> 
           <h5>Most Sold Product/ Service</h5>
         </div>
@@ -559,10 +532,10 @@
       </div>
     </div>
   </div>
-
-      <div class="col-sm-6 custoutdiv">
+  <br class="hidden-mg hidden-lg"> 
+  <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-          <div class="custdiv shadow grow">
+          <div class="dashboarddiv shadow grow">
             <div class="pull-left"> 
               <h5>Most Bought Product/ Service</h5>
             </div>
@@ -588,29 +561,29 @@
       </div>
     </div>
 
-
-    <div class="row">
-      <div class="col-sm-6 custoutdiv">
+    <div class="row godownhide">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-      <div class="custdiv shadow grow">
+      <div class="dashboarddiv shadow grow">
         <div class="pull-left"> 
           <h5>Balance Sheet</h5>
         </div>
+        <br>
         <div>
           <canvas id="doughnut-chart"></canvas>
         </div>
       </div>
     </div>
   </div>
-
-      <div class="col-sm-6 custoutdiv">
+   <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
-          <div class="custdiv shadow grow">
+          <div class="dashboarddiv shadow grow">
             <div class="pull-left"> 
               <h5>Profit and Loss</h5>
             </div>
+            <br>
             <div>
-              <canvas id="barChart"></canvas>
+              <canvas id="peiChart"></canvas>
             </div>
           </div>
         </div>
@@ -1016,7 +989,10 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.browser.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.searchabledropdown-1.0.8.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dashboard.js')}}"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script>
-    
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/Chart.min.js')}}"></script>
+
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.5.0/Chart.min.js"></script> -->
+    <!-- <script src="/static/Chart.min.js"> </script> -->
+
   </body>
 </html>
