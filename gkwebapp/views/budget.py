@@ -298,7 +298,7 @@ def expensespreadsheet(request):
         for budget in result["accountdata"]:
             sheet['A'+str(row)] = budget["accountname"]
             sheet['A'+str(row)].font = Font(italic=True )
-            sheet['A'+str(row)].alignment = Alignment(horizontal = 'center', vertical='center')
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
             sheet['B'+str(row)] = budget["budgetamount"]
             sheet['B'+str(row)].font = Font(name='Liberation Serif')
             sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
@@ -317,6 +317,7 @@ def expensespreadsheet(request):
             row=row+1
         sheet['A'+str(row)] = 'Total'
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
         sheet['B'+str(row)] = result["totalbudget"]
         sheet['B'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
@@ -332,9 +333,9 @@ def expensespreadsheet(request):
         sheet['F'+str(row)] = result["totalactualbal"]
         sheet['F'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['A'+str(row+2)] = 'Budget Closing Expense : '+ result["totalactual"]
+        sheet['A'+str(row+1)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A'+str(row+1)].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A'+str(row+1)] = 'Budget Closing Expense : '+ result["totalactual"]
 
         a = 'A'+str(row+1)
         d = 'D'+str(row+1)
