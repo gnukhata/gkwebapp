@@ -47,7 +47,7 @@ $(document).ready(function() {
         }
         if (e.which==13 )
         {e.preventDefault();
-          $("#submit").focus();
+          $("#submit").focus().click();
         }
     });
     $("#submit").keydown(function(e){

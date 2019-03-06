@@ -90,7 +90,31 @@ $(document).ready(function(){
         if (e.which==13 || e.which==39)
         {e.preventDefault();
         $("#c_budget_today").focus();
-        $("#c_budget_fromyear").change();
+        if ($("#c_budget_fromyear").val()==0 ||$("#c_budget_frommonth").val()==0 ||$("#c_budget_fromday").val()==0 ) {
+            $("#c_date-alert").alert();
+            $("#c_date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#c_date-alert").hide();
+            });
+            $('#c_budget_fromday').focus().select();
+            return false;
+        }
+        var fromdate = $("#c_budget_fromyear").val()+$("#c_budget_frommonth").val()+$("#c_budget_fromday").val();        
+        if(!Date.parseExact(fromdate,"yyyyMMdd")){
+            $("#c_date-alert").alert();
+            $("#c_date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#c_date-alert").hide();
+            });
+            $('#c_budget_fromday').focus().select();
+            return false;
+        }
+        if (!Date.parseExact(fromdate,"yyyyMMdd").between(financialstart,financialend)) {
+            $("#c_between-date-alert").alert();
+            $("#c_between-date-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#c_between-date-alert").hide();
+            });
+            $('#c_budget_fromday').focus().select();
+            return false;
+        }
         }
         if (e.which==37 || e.which==38)
           {e.preventDefault();
@@ -326,7 +350,6 @@ $(document).ready(function(){
                 totalInput = totalInput + parseFloat($("#latable tbody tr:eq("+i+") input").val());
                 totalBalance = totalBalance + parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").text());
             }
-            
         }
         $("#latable tbody tr:eq(-1) td:eq(2)").text((totalInput).toFixed(2));
         $("#latable tbody tr:eq(-1) td:eq(3)").text((totalBalance).toFixed(2));
@@ -459,6 +482,7 @@ $(document).ready(function(){
         }
     });
     $("#c_budget_frommonth").change(function(event) {
+        $(this).val(pad($(this).val(),2));
         $("#c_budget_fromday").change();
     });
     $("#c_budget_fromyear").change(function(event) { 

@@ -10,6 +10,7 @@ border-radius: 4px;
     width:100%;
     overflow:hidden;
     display:block;
+    border-radius: 4px;
 }
 
 </style>
@@ -18,12 +19,12 @@ border-radius: 4px;
       <div class="alert alert-danger" id="content-alert" aria-live="rude" role="alert" hidden>
           <label for="viewledger_fromdate">{% trans %}Please enter atleast one budget amount!{% endtrans %}</label>
         </div>
+        <div >
+          <label for="c_bname" >{% trans %}List of Accounts{% endtrans %} :</label>
+        </div>
   {% if btype == 3 %}
-      <table id="latable" class="table shadow table-bordered">
+      <table id="latable" style="width:80%;border:1px solid grey" class="table shadow table-bordered">
         <thead>
-        <tr>
-            <th  colspan="2"> <center>{% trans %}List of Accounts{% endtrans %} </center></th>
-        </tr>
           <tr>
             <th class="lalign">
             {% trans %}Accounts Name {% endtrans %}
@@ -41,7 +42,7 @@ border-radius: 4px;
         </tr>
         {% for acc in gkresult["cashaccountdata"]%}
         <tr>
-              <td> <i>{{acc["accountname"]}}</i></td>
+              <td class="text-muted"> <i>{{acc["accountname"]}}</i></td>
               <td style="text-align:right">  {{acc["accountbal"]}}</td>
         </tr>
         {% endfor %}
@@ -52,7 +53,7 @@ border-radius: 4px;
         </tr>
         {% for acc in gkresult["bankaccountdata"]%}
         <tr>
-              <td ><i>{{acc["accountname"]}}</i></td>
+              <td class="text-muted" ><i>{{acc["accountname"]}}</i></td>
               <td style="text-align:right">{{acc["accountbal"]}}</td>
         </tr>
         {% endfor %}
@@ -60,11 +61,8 @@ border-radius: 4px;
         <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
       </table>
   {% else %}
-      <table id="latable"   class="table table-bordered">
+      <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
-        <tr>
-            <th  colspan="4"> <center>{% trans %}List of Accounts{% endtrans %} </center></th>
-        </tr>
           <tr>
             <th class="lalign">
             {% trans %}Accounts Name{% endtrans %}
@@ -80,7 +78,7 @@ border-radius: 4px;
             </th>
           </tr>
         </thead>
-        <tbody  style="height:43%; overflow: auto;">
+        <tbody  style="height:40%; overflow: auto;">
         <tr><td colspan="2">
         <b>Direct Expense </b> <input hidden></td>
         </tr>
