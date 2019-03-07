@@ -40,6 +40,7 @@ $(document).ready(function() {
         if (e.which==38 )
         {e.preventDefault();
           $("#cash").focus().click();
+          $("#budgetlist").change();
         }
         if (e.which==13 )
         {e.preventDefault();
@@ -105,7 +106,7 @@ $(document).ready(function() {
                     $("#submit").hide();
                 }
                 var br = jsonObj["gkresult"];
-                $('#budgetlist').append('<option value="">' + "Select Budget" +' </option>');
+                $('#budgetlist').append('<option value="" disabled selected hidden >' + "Select Budget" +' </option>'); 
                 for (let i in br ){
                   $('#budgetlist').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
                 }
