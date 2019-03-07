@@ -81,7 +81,7 @@ function calldata(dataset){
     var list = resp["gkresult"];
     tablediv.html("");
     for (let index in list ){
-      tablediv.append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].balanceamount+' </td> </tr>');                  
+      tablediv.append('<tr> <td  style="font-weight:normal;" class="col-xs-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;" class="col-xs-4">'+ list[index].balanceamount+' </td> </tr>');                  
     }
   }
   });
@@ -361,7 +361,7 @@ $.ajax(
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     },
     success: function(resp){  
-    var canvas = document.getElementById("peiChart");
+    var canvas = document.getElementById("pieChart");
     var ctx = canvas.getContext('2d');
     // Global Options:
      Chart.defaults.global.defaultFontColor = 'black';
