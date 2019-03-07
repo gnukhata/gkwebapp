@@ -155,7 +155,7 @@ $.ajax(
     data: {
         labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
         datasets: [{
-            label: 'No of Invoices',
+            label: 'No. of Invoices',
             data: resp["invcount"],
             backgroundColor: [
                 'rgba(51, 51, 51)',
@@ -221,7 +221,7 @@ function monthlydelchal(inoutflag){
       data: {
           labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
           datasets: [{
-              label: 'No of delchal',
+              label: 'No. of delivery notes',
               data: resp["delchalcount"],
               backgroundColor: [
                   'rgba(51, 51, 51)',
@@ -444,7 +444,7 @@ $.ajax(
       data: {
           labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
           datasets: [{
-              label: 'No of Transfer Note',
+              label: 'No. of Transfer Notes',
               data: resp["notecount"],
               backgroundColor: [
                   'rgba(51, 51, 51)',
