@@ -688,8 +688,6 @@ $(document).ready(function(){
    $("#help-message").hide();
    $("#showviewbudget").remove();
    $("#budget").remove();
-  //  $(".hidediv").remove();
-   $(".hidediv").remove();
    $(".internalaud").remove();
      }
      
