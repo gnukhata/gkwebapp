@@ -79,7 +79,7 @@ $(document).ready(function() {
   $("a[href ='#budget_create']").click();
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if(e.target.attributes.href.value=="#budget_create"){
-      $("#c_bname").focus();
+      $("#c_btype").focus();
     }
     else if(e.target.attributes.href.value=="#budget_edit"){
       $("#cash").focus();

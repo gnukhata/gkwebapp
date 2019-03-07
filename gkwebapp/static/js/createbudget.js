@@ -37,7 +37,7 @@ $(document).ready(function(){
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#c_flow").hide();
-    $("#c_bname").focus();
+    $("#c_btype").focus();
     $("#c_balance").text("0.00");
     $("#c_cashavailable").text("0.00");
     $("#c_budgetbalance").text("0.00");
@@ -64,6 +64,9 @@ $(document).ready(function(){
           $("#c_budget_fromday").focus();
         }
           }
+        if(e.which==38){
+            $("#c_btype").focus();
+        }
       });
     $("#c_budget_fromday").keydown(function(e){
         
@@ -144,7 +147,7 @@ $(document).ready(function(){
     $("#c_budget_toyear").keydown(function(e){
         if (e.which==13 || e.which==39)
         {e.preventDefault();
-          $("#c_btype").focus();
+          $("#c_inflow").focus();
           if ($("#c_budget_toyear").val()==0 ||$("#c_budget_tomonth").val()==0 ||$("#c_budget_today").val()==0 ) {
             $("#c_date-valid-alert").alert();
             $("#c_date-valid-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -177,21 +180,10 @@ $(document).ready(function(){
           }
     });
     $("#c_btype").keydown(function(e){
-        if (e.which==13 )
-        {
-          e.preventDefault();
-          if($("#c_btype option:selected").val() == 3){
-              $("#c_flow").show();
-              $("#c_inflow").focus();
-          }
+        if (e.which==13){
+            $("#c_bname").focus();
         }
-        if ( e.which==38)
-          {
-          e.preventDefault();
-          $("#c_budget_toyear").focus();
-          }
     });
-    
     $("#c_btype").change(function(e){
         $("#c_budget_fromday").change();
         if($("#c_btype option:selected").val() == 3){
@@ -250,7 +242,7 @@ $(document).ready(function(){
         }
         if (e.which==38)
           {e.preventDefault();
-          $("#c_btype").focus();
+          $("#c_budget_toyear").focus();
           }
     });
     $("#c_outflow").keydown(function(e){
@@ -294,7 +286,7 @@ $(document).ready(function(){
           $("#c_add_button").focus();
           }
     });
-    $(document).off("keydown","#c_btype").on("keydown", '#c_btype', function(e){
+    $(document).off("keydown","#c_budget_toyear").on("keydown", '#c_budget_toyear', function(e){
         if (e.which == 13) {
             e.preventDefault();
             $("#latable tbody tr:eq(1) input").focus();
@@ -313,7 +305,7 @@ $(document).ready(function(){
             $("#c_add_button").focus().select();
           }
         if(e.which == 27){
-            $("#c_btype").focus().select();
+            $("#c_budget_toyear").focus().select();
         }
         if(e.which == 40){e.preventDefault();
             var i = $("#latable tbody tr input").index(this)+1;
