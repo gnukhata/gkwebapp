@@ -115,7 +115,7 @@
             <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}}
         </div>
         </div>
-        {%else%}
+        {%elif btype == '5' %}
             <div>
                   <h><b>Total Previous Expense: </b></h>{{gkresult["totalpreviousbal"]}}
             </div>
@@ -134,7 +134,7 @@
                   <tbody>
                 <tr>
                     <td class="lngwrap">
-                    <div style="text-align:left">
+                    <div style="text-align:right">
                     {% for record in gkresult["accountdata"] %}
                       {{record["accountname"]}} <br>
                       {% endfor %}
@@ -195,6 +195,69 @@
                   </tbody>
                 </table>
                 <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}}
+            </div>
+            {%else%}
+              <div>
+                  <h><b>Total Opening Balance: </b></h>{{gkresult["openingbal"]}}
+            </div>
+            <div class="table-responsive">
+                <table id="mthltable" class="table table-bordered table-condensed tabledesign">
+                  <thead class="bg-primary">
+                <tr>
+                  <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+                  <th colspan = "2" class="taxwrap text-center sgstfield">{% trans %}Expenses{% endtrans %}</th>
+                  <th colspan = "2" class="taxwrap text-center sgstfield">{% trans %}Sales{% endtrans %}</th>
+                  <th  class="taxwrap text-center igstfield">{% trans %}Profit{% endtrans %}</th>
+                </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td> Budget </td>
+                      <td colspan = "2" style="text-align:right"> {{gkresult["budgetexpense"]}} </td>
+                      <td colspan = "2" style="text-align:right"> {{gkresult["budgetincome"]}} </td>
+                      <td style="text-align:right"> {{gkresult["budgetprofit"]}} </td>
+                    </tr>
+                    <tr>
+                      <td> Actuals </td>
+                      <td style="text-align:right">
+                          {% for record in gkresult["expensedata"] %}
+                            {{record["accountname"]}} <br>
+                          {% endfor %}
+                      </td> 
+                      <td style="text-align:right">
+                          {% for record in gkresult["expensedata"] %}
+                            {{record["actual"]}} <br>
+                          {% endfor %}
+                      </td>
+                      <td style="text-align:right"> 
+                          {% for record in gkresult["incomedata"] %}
+                            {{record["accountname"]}} <br>
+                          {% endfor %}
+                      </td >
+                      <td style="text-align:right">
+                          {% for record in gkresult["incomedata"] %}
+                            {{record["actual"]}} <br>
+                          {% endfor %}
+                      </td>
+                      <td>
+                          
+                      </td>
+                    </tr>
+                    <tr>
+                        <td> Total </td>
+                        <td colspan = "2" style="text-align:right"> {{gkresult["actualexpense"]}} </td>
+                        <td colspan = "2" style="text-align:right"> {{gkresult["actualincome"]}} </td>
+                        <td style="text-align:right"> {{gkresult["actualprofit"]}} </td>
+                    </tr>
+                    <tr>
+                        <td> Variance </td> 
+                        <td colspan = "2" style="text-align:right"> {{gkresult["varexpense"]}} </td>
+                        <td colspan = "2" style="text-align:right"> {{gkresult["varincome"]}} </td>
+                        <td style="text-align:right"> {{gkresult["varprofit"]}} </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h><b>Total Closing Balance: </b></h>{{gkresult["closingbal"]}}
             </div>
             {%endif%}
         </div>   
