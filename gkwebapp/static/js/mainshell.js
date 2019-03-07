@@ -661,7 +661,7 @@ $(document).ready(function(){
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
-       $(".divhide").remove();
+       $(".adminhide").remove();
 
      }
      if(resp["gkresult"]["userrole"]==1){
@@ -690,6 +690,7 @@ $(document).ready(function(){
    $("#budget").remove();
   //  $(".hidediv").remove();
    $(".hidediv").remove();
+   $(".internalaud").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {

@@ -91,7 +91,6 @@ def balancesheetreport(request):
 def profitlossreport(request):
     calculateto = request.params["calculateto"]
     header={"gktoken":request.headers["gktoken"]}
-
     result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
     DirectIncome = result.json()["gkresult"]["Direct Income"]["Sales"]["balance"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]["indirincmbal"]

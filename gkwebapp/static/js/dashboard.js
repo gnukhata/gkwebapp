@@ -33,19 +33,12 @@ $(document).ready(function() {
   $('#make_payment').click(function(){
   $('#showpayment').click();
   });
-
   $('#receipt_payment').click(function(){
     $('#showreceipt').click();
   });
-  
-  $("#add_customer").click(function() {
+  $(".add_custsup").click(function() {
     $("#customersupplier").click();
   });
-
-  $("#add_product").click(function() {
-    $("#productinmaster").click();
-  });
-
   $("#add_invoice").click(function() {
     $("#invoice").click();
   });
@@ -57,15 +50,8 @@ $(document).ready(function() {
   });
   $('#my_profile').click(function(){
     $('#showeditorg').click();
-
 });
-$("#add_cust").click(function() {
-  $("#customersupplier").click();
-});
-$("#add_sup").click(function() {
-  $("#customersupplier").click();
-});
-$("#add_prod").click(function() {
+$(".add_prod").click(function() {
   $("#productinmaster").click();
 });
    
@@ -507,7 +493,7 @@ $.ajax(
     success: function(resp)
     {
       for (let item in resp["gkresult"]){
-        // $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">+resp["gkresult"][item].balance+</td> </tr>');                  
+        $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][item].balance+'</td> </tr>');                  
         }
   }
   
