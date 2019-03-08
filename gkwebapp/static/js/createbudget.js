@@ -37,6 +37,7 @@ $(document).ready(function(){
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#c_flow").hide();
+    $("#c_sales").hide();
     $("#c_btype").focus();
     $("#c_balance").text("0.00");
     $("#c_cashavailable").text("0.00");
@@ -188,9 +189,15 @@ $(document).ready(function(){
         $("#c_budget_fromday").change();
         if($("#c_btype option:selected").val() == 3){
             $("#c_flow").show();
+            $("#c_sales").hide();
         }
-        if($("#c_btype option:selected").val() == 5 || $("#c_btype option:selected").val() == 19){
+        if($("#c_btype option:selected").val() == 5){
             $("#c_flow").hide();
+            $("#c_sales").hide();
+        }
+        if($("#c_btype option:selected").val() == 19){
+            $("#c_flow").hide();
+            $("#c_sales").show();
         }
     });
     $("#c_inflow").change(function(e){
@@ -453,6 +460,23 @@ $(document).ready(function(){
                 async: false,
                 datatype: "text/html",
                 data: {"financialstart":financial,"uptodate":fromdate,"budgettype":5},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+            })
+            .done(function(resp) {    
+                $("#c_accounttable").html("");      
+                $("#c_accounttable").html(resp);
+            });
+        }
+        if ($("#c_btype option:selected").val() == 19){   // Sales budget
+            $.ajax({
+                type: "POST",
+                url: "/budget?type=balance",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"financialstart":financial,"uptodate":fromdate,"budgettype":19},
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },

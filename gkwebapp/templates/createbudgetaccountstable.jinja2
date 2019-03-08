@@ -12,6 +12,9 @@ border-radius: 4px;
     display:block;
     border-radius: 4px;
 }
+.lalign{
+  text-align:center;
+}
 
 </style>
 
@@ -60,7 +63,7 @@ border-radius: 4px;
         </tbody>
         <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
       </table>
-  {% else %}
+  {% elif btype == 5 %}
       <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
           <tr>
@@ -138,5 +141,61 @@ border-radius: 4px;
       </table>
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
+  {% else %}
+      <table id="sales_latable" style="width:100%;border:1px solid grey;float:left"   class="table shadow table-bordered">
+        <thead>
+          <th class=" lalign" style="width:13%">
+            {% trans %}Select{% endtrans %}
+            </th>
+            <th class=" lalign">
+            {% trans %}Account{% endtrans %}
+            </th>
+            <th class=" lalign">
+            {% trans %}Balance{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody style="height:inherit;">
+          <tr >
+            <td> Expense Accounts </td>
+          </tr>
+        </tbody>
+        <tbody  style="height:27%; overflow: auto;">
+          {% for record in gkresult["expense"] %}
+            <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+              <td style="width:13%">
+                <input class="user_role" accesskey="t" type="checkbox">
+              </td>
+              <td class=" form-text text-muted">
+                <i>{{record["accountname"]}}</i>
+              </td>
+              <td id="{{record["accountcode"]}}_id" style="text-align:right">
+                  {{record["accountbal"]}}
+              </td>
+            </tr>
+          {% endfor %}
+          </tbody>
+          <tbody style="height:inherit;">
+            <tr>
+              <td> Income Accounts </td>
+            </tr>
+          </tbody>
+          <tbody style="height:27%; overflow: auto;">
+          {% for record in gkresult["income"] %}
+            <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+              <td style="width:13%">
+                <input class="user_role" accesskey="t" type="checkbox">
+              </td>
+              <td class=" form-text text-muted">
+                <i>{{record["accountname"]}}</i>
+              </td>
+              <td id="{{record["accountcode"]}}_id" style="text-align:right">
+                  {{record["accountbal"]}}
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
   {% endif %}
  </div>
