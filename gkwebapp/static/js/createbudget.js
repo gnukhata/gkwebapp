@@ -332,7 +332,7 @@ $(document).ready(function(){
         //loops through rows 
         var totalInput = 0.00;
         var totalBalance = 0.00;
-        for (i = 1; i < (rowLength-3); i++){
+        for (i = 1; i < (rowLength-2); i++){
             if($("#latable tbody tr:eq("+i+") input").val() != ''){
                 totalInput = totalInput + parseFloat($("#latable tbody tr:eq("+i+") input").val());
                 totalBalance = totalBalance + parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").text());
