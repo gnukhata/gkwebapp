@@ -777,7 +777,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "json",
-                data: {"budid": $("#editbud option:selected").val(),"budname":$("#bname").val()},
+                data: {"budid": $("#budgetlist option:selected").val(),"budname":$("#bname").val()},
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
                 },
