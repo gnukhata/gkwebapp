@@ -8,6 +8,7 @@
   </label>
 <div class="panel-body nopadding">
   {% if not gkresult %}
+  <input type="hidden" id="godown" value="0">
     <div class="bg-danger col-xs-12" style="padding:10;">
     {%if gbflag == 7%}
     <label class="text-danger">No Godowns Found</label> 
@@ -16,6 +17,7 @@
     {%endif%}
     </div>
   {%else%} 
+  <input type="hidden" id="godown" value="1">
 <table id="latable" class="table shadow table-bordered">
     <thead>
       <tr>

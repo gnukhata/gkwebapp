@@ -218,8 +218,13 @@ $(document).ready(function(){
         }
       }
     });
-
-  
+    $("#userrole").keydown(function(e){
+      if (e.which==13 || e.which == 9)
+        if($("#godown").val() == 0){
+          $("#question").focus();
+        }
+      }
+    });
     $("#question").keydown(function(e){
           if (e.which==13)
           {
