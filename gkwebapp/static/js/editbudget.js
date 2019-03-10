@@ -76,15 +76,16 @@ $(document).ready(function() {
         {e.preventDefault();
         $("#budgetlist").focus();
         }
-        if (e.which==39)
+    });
+    $("#expense").keydown(function(e){
+        
+        if (e.which==13)
         {e.preventDefault();
-        $("#expense").focus().click();
+        $("#budgetlist").focus();
         }
-    });$("#expense").keydown(function(e){
-        if (e.which==37)
-        {e.preventDefault();
-        $("#cash").focus().click();
-        }
+    });
+    $("#sales").keydown(function(e){
+        
         if (e.which==13)
         {e.preventDefault();
         $("#budgetlist").focus();
@@ -179,6 +180,33 @@ $(document).ready(function() {
                 $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").val())).toFixed(2));
             });
         }
+        if($("#btype").val() == 19){   // Cash budget
+            $.ajax({
+                type: "POST",
+                url: "/budget?type=balance",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {"financialstart":financial,"uptodate":fromdate,"budgettype":19},
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                },
+            })
+            .done(function(resp) { 
+                $("#accounttable").html("");      
+                $("#accounttable").html(resp);
+                if(hideshowflag == 1){
+                    $("#sales_latable tbody tr td input").prop("disabled", false);
+                }
+                else{
+                    $("#sales_latable tbody tr td input").prop("disabled", true);
+                }
+                keys =(goddetails["contents"]["accounts"]);
+                for (var i = 0;i<keys.length;i++){
+                    $('#'+keys[i]+'_in').prop("checked", true);
+                }
+            });
+        }
         if($("#btype").val() == 5){  //expense budget
             $.ajax({
                 type: "POST",
@@ -223,6 +251,9 @@ $(document).ready(function() {
          if($("#expense").is(":checked")) {
              var val = 5;
          }
+         if($("#sales").is(":checked")) {
+            var val = 19;
+        }
          $.ajax(
              {
              type: "POST",
@@ -296,6 +327,7 @@ $(document).ready(function() {
                 $("#btype").val(goddetails["btype"]);
                 $("#btype").prop("disabled", true);
                 if(goddetails["btype"] == 3){
+                    $("#salesdiv").hide();
                     $("#flow").show();
                     $("#outflow").val(parseFloat(goddetails["contents"]["outflow"]).toFixed(2));
                     $("#outflow").prop("disabled", true);
@@ -305,6 +337,17 @@ $(document).ready(function() {
                 }
                 if(goddetails["btype"] == 5){
                     $("#flow").hide();
+                    $("#salesdiv").hide();
+                    tablecall();
+                    hideshowflag = 0;
+                }
+                if(goddetails["btype"] == 19){
+                    $("#flow").hide();
+                    $("#salesdiv").show();
+                    $("#expenseedit").val(parseFloat(goddetails["contents"]["expense"]).toFixed(2));
+                    $("#expenseedit").prop("disabled", true);
+                    $("#income").val(parseFloat(goddetails["contents"]["income"]).toFixed(2));
+                    $("#income").prop("disabled", true);
                     tablecall();
                     hideshowflag = 0;
                 }
@@ -326,6 +369,8 @@ $(document).ready(function() {
         $("#outflow").prop("disabled", false);
         $("#bal").prop("disabled", false);
         $("#inflow").prop("disabled", false);
+        $("#income").prop("disabled", false);
+        $("#expenseedit").prop("disabled", false);
         $("#budget_fromday").prop("disabled", false);
         $("#budget_frommonth").prop("disabled", false);
         $("#budget_fromyear").prop("disabled", false);
@@ -333,6 +378,7 @@ $(document).ready(function() {
         $("#budget_tomonth").prop("disabled", false);
         $("#budget_toyear").prop("disabled", false);
         $("#latable tbody tr td input").prop("disabled", false);
+        $("#sales_latable tbody tr td input").prop("disabled", false);
         $("#add").show();
         $("#reset").show();
         $("#edit").hide();
@@ -506,10 +552,54 @@ $(document).ready(function() {
                 $("#add").focus();
                 }
             });
+            $("#expenseedit").keydown(function(e){
+                if (e.which==13)
+                {
+                e.preventDefault();
+                if ($.trim($("#expenseedit").val())=="" ) {
+                    $("#expenseedit-alert").alert();
+                    $("#expenseedit-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#expenseedit-alert").hide();
+                    });
+                    $("#expenseedit").focus();
+                    return false;
+                }
+                $("#income").focus();
+                }
+                if (e.which==38)
+                {
+                e.preventDefault();
+                $("#budget_toyear").focus();
+                }
+            });
+            $("#income").keydown(function(e){
+                if (e.which==13)
+                {
+                e.preventDefault();
+                if ($.trim($("#income").val())=="" ) {
+                    $("#income-alert").alert();
+                    $("#income-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#income-alert").hide();
+                    });
+                    $("#income").focus();
+                    return false;
+                }
+                $("#add").focus();
+                }
+                if (e.which==38)
+                {
+                e.preventDefault();
+                $("#expenseedit").focus();
+                }
+            });
             $(document).off("keydown","#budget_toyear").on("keydown", '#budget_toyear', function(e){
                 if (e.which == 13) {
-                    // e.preventDefault();
-                    $("#latable tbody tr:eq(1) input").focus();
+                    if($("#btype").val() == 5){
+                        $("#latable tbody tr:eq(1) input").focus();
+                    }
+                    else{
+                        $("#sales_latable tbody tr:eq(1) input").focus();
+                    }
                 }
             });
             $(document).off("keydown","#group").on("keydown", '#group', function(e){
@@ -535,12 +625,45 @@ $(document).ready(function() {
                     $("#latable tbody tr:eq("+i+") input").focus().select();
                 }
             });
-            $(document).off("keydown","#add").on("keydown", '#add', function(e){
-                if (e.which == 38) {
-                    // e.preventDefault();
-                    $("#latable tbody tr:eq(1) input").focus();
+            $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody:eq(1) tr input", function(e){
+        
+                if(e.which == 27){
+                    $("#expenseedit").focus();
+                }
+                if(e.which == 40){e.preventDefault();
+                    var i = $("#sales_latable tbody:eq(1) tr input").index(this)+1;
+                    $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+                }
+                if(e.which == 38){e.preventDefault();
+                    var i = $("#sales_latable tbody:eq(1) tr input").index(this)-1;;
+                    $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
                 }
             });
+            $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
+                
+                if(e.which == 27){
+                    $("#expenseedit").focus();
+                }
+                if(e.which == 40){e.preventDefault();
+                    var i = $("#sales_latable tbody:eq(3) tr input").index(this)+1;
+                    $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+                }
+                if(e.which == 38){e.preventDefault();
+                    var i = $("#sales_latable tbody:eq(3) tr input").index(this)-1;
+                    $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+                }
+            });
+            $(document).off("keydown","#add").on("keydown", '#add', function(e){
+                if (e.which == 38) {
+                    if($("#btype").val() == 5){
+                        $("#latable tbody tr:eq(1) input").focus();
+                    }
+                    else{
+                        $("#income").focus();
+                    }
+                }
+            });
+            
         // ----------------- end keydown ----------------
         
         $("#budget_fromday").change(function(event) { 
@@ -597,7 +720,6 @@ $(document).ready(function() {
         }
     });
     });
-    // ------------------ end date validation -------------
 // ----- ------- submit button -------------
     $("#add").click(function(e){
         e.preventDefault();
@@ -738,6 +860,43 @@ $(document).ready(function() {
             return false;
         }
         dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
+        }
+        if($("#btype option:selected").val() == 19){
+            if ($.trim($("#income").val())=="") {
+                $("#income-alert").alert();
+                $("#income-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#income-alert").hide();
+                });
+                $("#income").focus();
+                return false;
+            }
+            if ($.trim($("#expenseedit").val())=="" ) {
+                $("#expenseedit-alert").alert();
+                $("#expenseedit-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#expenseedit-alert").hide();
+                });
+                $("#expenseedit").focus();
+                return false;
+            }
+            var selectedaccounts = [];
+            vd=[];
+            $('#sales_latable tbody tr').each(function(){
+            if ($(".user_role",this).is(":checked")) {
+            selectedaccounts.push($(this).attr("value"));
+            }
+            });
+            if (selectedaccounts.length < 1) {
+                $("#account-alert").alert();
+                $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#account-alert").hide();
+                });
+                $("#sales_latable tbody:eq(1) tr:eq(0) input").focus().select();
+                return false;
+              }
+            vd.push({"expense":$("#expenseedit").val(),"income":$("#income").val(),"accounts":selectedaccounts});
+        
+            dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
+         
         }
         $("#msspinmodal").modal("show");
         $.ajax(
