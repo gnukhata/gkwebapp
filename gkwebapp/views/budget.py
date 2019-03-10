@@ -129,7 +129,9 @@ def budgetreport(request):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '5'):
         result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
-    
+    if (request.params["btype"] == '19'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=salesReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]) }
 
 @view_config(route_name="budget",request_param="type=printreport", renderer="gkwebapp:templates/printbudgetreport.jinja2")
@@ -140,7 +142,9 @@ def printbudgetreport(request):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '5'):
         result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
-    
+    if (request.params["btype"] == '19'):
+        result = requests.get("http://127.0.0.1:6543/budget?type=salesReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"] }
 
 @view_config(route_name="budget",request_param="type=cashspreadsheet", renderer="") 
@@ -340,6 +344,136 @@ def expensespreadsheet(request):
         a = 'A'+str(row+1)
         d = 'D'+str(row+1)
         sheet.merge_cells('A'+str(row+1)+':D'+str(row+1))
+
+        budgetwb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items()) 
+    except:
+        return {"gkstatus":3}
+
+@view_config(route_name="budget",request_param="type=salesspreadsheet", renderer="") 
+def salesspreadsheet(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        financialstart = request.params["financialstart"]
+        fystart = str(request.params["fystart"])
+        fyend = str(request.params["fyend"])
+        orgname = str(request.params["orgname"])
+        budgetdetails = str(request.params["budgetdetails"])
+        result = requests.get("http://127.0.0.1:6543/budget?type=salesReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = result.json()["gkresult"]
+        budgetwb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = budgetwb.active
+        # Title of the sheet and width of columns are set.
+        sheet.title = "Budget Report"
+
+        sheet.column_dimensions['A'].width = 15
+        sheet.column_dimensions['B'].width = 30
+        sheet.column_dimensions['C'].width = 15
+        sheet.column_dimensions['D'].width = 30
+        sheet.column_dimensions['E'].width = 15
+        sheet.column_dimensions['F'].width = 20
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A3'] = 'Budget Report :'+ str(budgetdetails)
+        sheet.merge_cells('A3:F3')
+
+        sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A4'] = 'Total Opening Balance : '+ result["openingbal"]
+        sheet.merge_cells('A4:F4')
+
+        sheet['A5'] = 'Particulars'
+        sheet['B5'] = 'Expenses'
+        sheet.merge_cells('B5:C5')
+        sheet['D5'] = 'Sales'
+        sheet.merge_cells('D5:E5')
+        sheet['F5'] = 'Profit'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
+        titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
+
+        sheet['A6'] = 'Budget'
+        sheet['A6'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['B6'] = result["budgetexpense"]
+        sheet.merge_cells('B6:C6')
+        sheet['B6'].font = Font(name='Liberation Serif' )
+        sheet['B6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D6'] = result["budgetincome"]
+        sheet.merge_cells('D6:E6')
+        sheet['D6'].font = Font(name='Liberation Serif' )
+        sheet['D6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['F6'] = result["budgetprofit"]
+        sheet['F6'].font = Font(name='Liberation Serif' )
+        sheet['F6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A7'] = 'Actuals'
+        sheet['A7'].font = Font(name='Liberation Serif',size='12',bold=True)
+        row=7
+        for expense in result["expensedata"]:
+            sheet['B'+str(row)] = expense["accountname"]
+            sheet['B'+str(row)].font = Font(italic=True,size='12' )
+            sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['C'+str(row)] = expense["actual"]
+            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            row=row+1
+        row=7
+        for income in result["incomedata"]:
+            sheet['D'+str(row)] = expense["accountname"]
+            sheet['D'+str(row)].font = Font(italic=True,size='12' )
+            sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['E'+str(row)] = expense["actual"]
+            sheet['E'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            row=row+1
+        if(len(result["incomedata"]) > len(result["expensedata"]) ):
+            row = 7+len(result["incomedata"])
+        else:
+            row = 7+len(result["expensedata"])
+        sheet['A'+str(row)] = 'Total'
+        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['B'+str(row)] = result["actualexpense"]
+        sheet.merge_cells('B'+str(row)+':C'+str(row))
+        sheet['B'+str(row)].font = Font(name='Liberation Serif' )
+        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row)] = result["actualincome"]
+        sheet.merge_cells('D'+str(row)+':E'+str(row))
+        sheet['D'+str(row)].font = Font(name='Liberation Serif' )
+        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['F'+str(row)] = result["actualprofit"]
+        sheet['F'+str(row)].font = Font(name='Liberation Serif' )
+        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+
+        sheet['A'+str(row+1)] = 'Variance'
+        sheet['A'+str(row+1)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['B'+str(row+1)] = result["varexpense"]
+        sheet.merge_cells('B'+str(row+1)+':C'+str(row+1))
+        sheet['B'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['B'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row+1)] = result["varincome"]
+        sheet.merge_cells('D'+str(row+1)+':E'+str(row+1))
+        sheet['D'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['D'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['F'+str(row+1)] = result["varprofit"]
+        sheet['F'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['F'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+
+        sheet['A'+str(row+2)] = 'Total Closing Balance : '+ result["closingbal"]
+        sheet.merge_cells('A'+str(row+2)+':F'+str(row+2))
+        sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
 
         budgetwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")

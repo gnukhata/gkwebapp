@@ -43,12 +43,19 @@ border-radius: 5px;
           <div class="alert alert-danger" id="delete-alert" aria-live="rude" role="alert" hidden>
             <label for="btype">{% trans %}Budget deleted successfully!{% endtrans %}</label>
           </div>
+          <div class="alert alert-danger" id="expenseedit-alert" aria-live="rude" role="alert" hidden>
+            <label for="btype">{% trans %}Please enter Expense amount!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="income-alert" aria-live="rude" role="alert" hidden>
+            <label for="btype">{% trans %}Please enter Sales amount!{% endtrans %}</label>
+          </div>
         {# ---------------------ALERTS --------------------- #}
           <div class="form-group col-xs-12" >
             <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
 				      <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>
-                  <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash Budget</label>
-                  <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Expense Budget</label>    
+                  <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash </label>
+                  <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Expense </label>    
+                  <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="sales" aria-label=" Sales Budget" value=19 > Sales </label> 
             </div>
 
             <label class="text-danger" id="nobudget">{% trans %}No Budget Found!{% endtrans %}
@@ -89,6 +96,7 @@ border-radius: 5px;
                         <option value="" disabled selected hidden>{% trans %}Budget type{% endtrans %}</option>
                         <option value="3">{% trans %}Cash{% endtrans %}</option> 
                         <option value="5">{% trans %}Expense{% endtrans %}</option> 
+                        <option value="19">{% trans %}Sales{% endtrans %}</option>
                     </select>
               </div>
               <div id="flow">
@@ -103,6 +111,17 @@ border-radius: 5px;
                     <input style="border-radius: 4px; text-align:right" id="outflow" type="text" class="form-control input-sm common numtype"  accesskey="e" value="0.00" placeholder="0.00"></input>
                 </div>
                 <label >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "budgetbalance" > </b><br>
+              </div>
+              <div id="salesdiv">
+                <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
+                  <label for="expenseedit" >{% trans %}Expense{% endtrans %} :</label>
+                  <input style="border-radius: 4px" id="expenseedit" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
+                </div>
+                  <div style="margin-bottom: 10px" class="input-group col-xs-12">
+                    <label for="income" >{% trans %}Sales{% endtrans %} :</label>
+                    <input style="border-radius: 4px" id="income" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
+                  </div>
+                  <label  >{% trans %}<i>Budget Profit</i>{% endtrans %} :</label> <b id = "profit" > </b><br>
               </div>
                   
           </div>

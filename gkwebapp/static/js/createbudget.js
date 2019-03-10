@@ -182,6 +182,14 @@ $(document).ready(function(){
     });
     $("#c_btype").keydown(function(e){
         if (e.which==13){
+            if($("#c_btype").val() == "" || $("#c_btype").val() == null){
+                $("#c_btype-alert").alert();
+            $("#c_btype-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#c_btype-alert").hide();
+            });
+            $("#c_btype").focus();
+            return false;
+            }
             $("#c_bname").focus();
         }
     });
@@ -272,6 +280,52 @@ $(document).ready(function(){
           $("#c_inflow").focus();
           }
     });
+    $("#c_expense").change(function(e){
+        var exp = parseFloat($("#c_expense").val());
+        var incm = parseFloat($("#c_income").val());
+        $("#c_profit").text((incm-exp).toFixed(2));
+    });
+    $("#c_income").change(function(e){
+        var exp = parseFloat($("#c_expense").val());
+        var incm = parseFloat($("#c_income").val());
+        $("#c_profit").text((incm-exp).toFixed(2));
+    });
+    $("#c_expense").keydown(function(e){
+        if (e.which==13){e.preventDefault();
+            if ($.trim($("#c_expense").val())=="" ) {
+                $("#c_expense-alert").alert();
+                $("#c_expense-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#c_expense-alert").hide();
+                });
+                $("#c_expense").focus();
+                return false;
+            }
+            else{
+                $("#c_income").focus();
+            }
+        }
+        if(e.which==38){e.preventDefault();
+                $("#c_budget_toyear").focus();
+            }
+    });
+    $("#c_income").keydown(function(e){
+        if (e.which==13){e.preventDefault();
+            if ($.trim($("#c_income").val())=="") {
+                $("#c_income-alert").alert();
+                $("#c_income-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#c_income-alert").hide();
+                });
+                $("#c_income").focus();
+                return false;
+            }
+            else{
+                $("#c_add_button").focus();
+            }
+        }
+        if(e.which==38){e.preventDefault();
+            $("#c_expense").focus();
+        }
+    });
     $("#c_add_button").keydown(function(e){
         if (e.which==39)
         {
@@ -283,6 +337,9 @@ $(document).ready(function(){
           e.preventDefault();
           if($("#c_btype option:selected").val() == 3){
             $("#c_outflow").focus();
+        }
+        if($("#c_btype option:selected").val() == 19){
+            $("#c_income").focus();
         }
           }
     });
@@ -296,7 +353,12 @@ $(document).ready(function(){
     $(document).off("keydown","#c_budget_toyear").on("keydown", '#c_budget_toyear', function(e){
         if (e.which == 13) {
             e.preventDefault();
-            $("#latable tbody tr:eq(1) input").focus();
+            if($("#c_btype").val() == 5){
+                $("#latable tbody tr:eq(1) input").focus();
+            }
+            else{
+                $("#sales_latable tbody tr:eq(1) input").focus();
+            }
           }
     });
     $(document).off("change","#latable tbody tr input").on("change", "#latable tbody tr input", function(e){
@@ -328,6 +390,34 @@ $(document).ready(function(){
             // e.preventDefault();
             $("#latable tbody tr:eq(1) input").focus();
           }
+    });
+    $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody:eq(1) tr input", function(e){
+        
+        if(e.which == 27){
+            $("#c_expense").focus();
+        }
+        if(e.which == 40){e.preventDefault();
+            var i = $("#sales_latable tbody:eq(1) tr input").index(this)+1;
+            $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+        }
+        if(e.which == 38){e.preventDefault();
+            var i = $("#sales_latable tbody:eq(1) tr input").index(this)-1;;
+            $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+        }
+    });
+    $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
+        
+        if(e.which == 27){
+            $("#c_expense").focus();
+        }
+        if(e.which == 40){e.preventDefault();
+            var i = $("#sales_latable tbody:eq(3) tr input").index(this)+1;
+            $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+        }
+        if(e.which == 38){e.preventDefault();
+            var i = $("#sales_latable tbody:eq(3) tr input").index(this)-1;
+            $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+        }
     });
     // ------------------Expense table row total -------------
     function total () {
@@ -636,6 +726,41 @@ $(document).ready(function(){
                 return false;
         }
         var gaflag = 1;
+        }
+        if($("#c_btype option:selected").val() == 19){
+            if ($.trim($("#c_income").val())=="") {
+                $("#c_income-alert").alert();
+                $("#c_income-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#c_income-alert").hide();
+                });
+                $("#c_income").focus();
+                return false;
+            }
+            if ($.trim($("#c_expense").val())=="" ) {
+                $("#c_expense-alert").alert();
+                $("#c_expense-alert").fadeTo(2250, 500).slideUp(500, function(){
+                $("#c_expense-alert").hide();
+                });
+                $("#c_expense").focus();
+                return false;
+            }
+            var selectedaccounts = [];
+            vd=[];
+            $('#sales_latable tbody tr').each(function(){
+            if ($(".user_role",this).is(":checked")) {
+            selectedaccounts.push($(this).attr("value"));
+            }
+            });
+            if (selectedaccounts.length < 1) {
+                $("#account-alert").alert();
+                $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
+                  $("#account-alert").hide();
+                });
+                $("#sales_latable tbody:eq(1) tr:eq(0) input").focus().select();
+                return false;
+              }
+            vd.push({"expense":$("#c_expense").val(),"income":$("#c_income").val(),"accounts":selectedaccounts});
+            gaflag=1;
         }
         if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;

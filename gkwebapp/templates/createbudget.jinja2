@@ -46,6 +46,12 @@ border-radius: 5px;
               <div class="alert alert-danger" id="c_outflow-alert" aria-live="rude" role="alert" hidden>
                 <label for="btype">{% trans %}Please enter budget outFlow!{% endtrans %}</label>
               </div>
+              <div class="alert alert-danger" id="c_expense-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Please enter Expense amount!{% endtrans %}</label>
+              </div>
+              <div class="alert alert-danger" id="c_outflow-alert" aria-live="rude" role="alert" hidden>
+                <label for="btype">{% trans %}Please enter Sales amount!{% endtrans %}</label>
+              </div>
             {# ----------------------------- ALERTS ------------------------ #}
               <form id="c_addbudget" method="post"  class="form-horizontal">
               <div class="col-md-12" style="margin-top:2%">
@@ -97,17 +103,15 @@ border-radius: 5px;
                   <input style="border-radius: 4px" id="c_expense" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
                 </div>
                   <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                    <label for="c_income" >{% trans %}Income{% endtrans %} :</label>
+                    <label for="c_income" >{% trans %}Sales{% endtrans %} :</label>
                     <input style="border-radius: 4px" id="c_income" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
                   </div>
-                  <label  >{% trans %}<i>Budgeted Profit</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
+                  <label  >{% trans %}<i>Budget Profit</i>{% endtrans %} :</label> <b id = "c_profit" > </b><br>
               </div>
           </div> {# main body #}
 
           <div class="panel col-md-8" id="c_accounttable" style="float:right;padding-left:8%;">
-            {# <div id="c_accounttable" style="float:right;padding-left:8%;" class="panel col-md-12"> #}
               {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
-            {# </div> #}
           </div> 
           
         </div> {# body #}

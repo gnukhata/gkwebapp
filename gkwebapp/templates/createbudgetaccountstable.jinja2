@@ -22,6 +22,9 @@ border-radius: 4px;
       <div class="alert alert-danger" id="content-alert" aria-live="rude" role="alert" hidden>
           <label for="viewledger_fromdate">{% trans %}Please enter atleast one budget amount!{% endtrans %}</label>
         </div>
+      <div class="alert alert-danger" id="account-alert" aria-live="rude" role="alert" hidden>
+          <label for="viewledger_fromdate">{% trans %}Please select atleast one account from each group!{% endtrans %}</label>
+        </div>
         <div >
           <label for="c_bname" >{% trans %}List of Accounts{% endtrans %} :</label>
         </div>
@@ -164,7 +167,7 @@ border-radius: 4px;
           {% for record in gkresult["expense"] %}
             <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
               <td style="width:13%">
-                <input class="user_role" accesskey="t" type="checkbox">
+                <input id="{{record["accountcode"]}}_in" class="user_role" accesskey="t" type="checkbox">
               </td>
               <td class=" form-text text-muted">
                 <i>{{record["accountname"]}}</i>
@@ -184,7 +187,7 @@ border-radius: 4px;
           {% for record in gkresult["income"] %}
             <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
               <td style="width:13%">
-                <input class="user_role" accesskey="t" type="checkbox">
+                <input id="{{record["accountcode"]}}_in" class="user_role" accesskey="t" type="checkbox">
               </td>
               <td class=" form-text text-muted">
                 <i>{{record["accountname"]}}</i>
@@ -196,6 +199,8 @@ border-radius: 4px;
           {% endfor %}
         </tbody>
       </table>
-
+    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Accounts Lists to shift focus to Expense.{% endtrans %}</small><br>
+    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Space' Key in Accounts Lists to Check or UnCheck CheckBox Button.{% endtrans %}</small><br>
+    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Tab' Key or 'UpArrow' Key in Accounts Lists to change focus on Account present in List.{% endtrans %}</small>
   {% endif %}
  </div>

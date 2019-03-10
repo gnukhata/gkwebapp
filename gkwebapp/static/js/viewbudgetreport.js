@@ -58,15 +58,14 @@ $(document).ready(function() {
         {e.preventDefault();
         $("#budgetlist").focus();
         }
-        if (e.which==39)
+    });
+    $("#expense").keydown(function(e){
+        if (e.which==13)
         {e.preventDefault();
-        $("#expense").focus().click();
+        $("#budgetlist").focus();
         }
-    });$("#expense").keydown(function(e){
-        if (e.which==37)
-        {e.preventDefault();
-        $("#cash").focus().click();
-        }
+    });
+    $("#sales").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
         $("#budgetlist").focus();
@@ -79,6 +78,9 @@ $(document).ready(function() {
         }
         if($("#expense").is(":checked")) {
             val = 5;
+        }
+        if($("#sales").is(":checked")) {
+            val = 19;
         }
             $.ajax(
               {
