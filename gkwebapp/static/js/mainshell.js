@@ -670,6 +670,7 @@ $(document).ready(function(){
        $("#orgpref").remove();
        $("#showviewbudget").remove();
        $("#budget").remove();
+       $(".operatorhide").remove();
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();

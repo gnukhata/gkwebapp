@@ -39,8 +39,8 @@
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;margin-top: -11px" /></a>
-          <a class="navbar-brand" style="pointer-events: none;margin-top: -9px;">{% trans %}GNUKhata <em>v5.50 </em> {% endtrans %}</a>
+          <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;" /></a>
+          <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v5.50 </em> {% endtrans %}</a>
 	</div>
 
 	<!-- Collect the nav links, forms, and other content for toggling -->
@@ -389,16 +389,19 @@
     </div>
     </div>
     </div>
-    <div class="row godownhide adminhide">
+    <div class="row godownhide adminhide operatorhide">
       <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
       <div class="dashboarddiv shadow grow">
         <div class="pull-left"> 
-          <h5>Balance Sheet</h5>
+          <h5>Assets and Liabilities</h5>
         </div>
         <br>
         <div>
           <canvas id="doughnut-chart"></canvas>
+        </div>
+        <div>
+            <button class="btn btn-danger" id="balance_sheet" style="float:right;margin-top:-17px">View details</button>
         </div>
       </div>
     </div>
@@ -407,11 +410,14 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow grow">
             <div class="pull-left"> 
-              <h5>Profit and Loss</h5>
+              <h5>Earning and Spending</h5>
             </div>
             <br>
             <div>
               <canvas id="pieChart"></canvas>
+            </div>
+            <div>
+                <button class="btn btn-danger" id="profit_loss" style="float:right;margin-top:-17px">View details</button>
             </div>
           </div>
         </div>
@@ -508,7 +514,7 @@
               <thead>
                   <tr>
                     <td class="col-xs-8" style="font-weight:150; width:200px">Customer Name</td>
-                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Balance</td>
+                    <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Amount</td>
                   </tr>
                 </thead>
                 <tbody id="topfivecust">
@@ -605,16 +611,19 @@
       </div>
     </div>
 
-    <div class="row godownhide internalaud">
+    <div class="row godownhide internalaud operatorhide">
       <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
       <div class="dashboarddiv shadow grow">
         <div class="pull-left"> 
-          <h5>Balance Sheet</h5>
+          <h5>Assets and Liabilities</h5>
         </div>
         <br>
         <div>
           <canvas id="doughnut-chart"></canvas>
+        </div>
+        <div>
+          <button class="btn btn-danger" id="balance_sheet" style="float:right;margin-top:-17px">View details</button>
         </div>
       </div>
     </div>
@@ -623,11 +632,14 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow grow">
             <div class="pull-left"> 
-              <h5>Profit and Loss</h5>
+              <h5>Earning and Spending</h5>
             </div>
             <br>
             <div>
               <canvas id="pieChart"></canvas>
+            </div>
+            <div>
+              <button class="btn btn-danger" id="profit_loss" style="float:right;margin-top:-17px">View details</button>
             </div>
           </div>
         </div>

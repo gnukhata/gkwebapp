@@ -54,6 +54,12 @@ $(document).ready(function() {
 $(".add_prod").click(function() {
   $("#productinmaster").click();
 });
+$("#profit_loss").click(function() {
+  $("#showprofitloss").click();
+});
+$("#balance_sheet").click(function() {
+  $("#showtrialbalance").click();
+});
    
 function calldata(dataset){
   $.ajax(
@@ -155,7 +161,7 @@ $.ajax(
     data: {
         labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
         datasets: [{
-            label: 'No. of Invoices',
+            label: 'Total Amount',
             data: resp["invcount"],
             backgroundColor: [
                 'rgba(51, 51, 51)',
@@ -179,7 +185,10 @@ $.ajax(
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero:true
+                    beginAtZero:true,
+                    // stepSize: 1,
+                    // suggestedMin: 1,
+                    // suggestedMax: 5,
                 }
             }]
         },
@@ -221,7 +230,7 @@ function monthlydelchal(inoutflag){
       data: {
           labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
           datasets: [{
-              label: 'No. of delivery notes',
+              label: 'Product Quantity',
               data: resp["delchalcount"],
               backgroundColor: [
                   'rgba(51, 51, 51)',
@@ -245,7 +254,11 @@ function monthlydelchal(inoutflag){
           scales: {
               yAxes: [{
                   ticks: {
-                      beginAtZero:true
+                      beginAtZero:true,
+                      stepSize: 50,
+                      suggestedMin: 1,
+                      suggestedMax: 100,
+
                   }
               }]
           },
@@ -462,13 +475,35 @@ $.ajax(
   
               ],
           
-          }]
+          },
+          {
+          labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+          label: 'No. of Transfer Notes',
+          data: [8,9,7,4,6,7,2,9,6,9,8,5],
+          backgroundColor: [
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)',
+            'rgba(100, 100, 100)', 
+            'rgba(100, 100, 100)', 
+        ],
+         },]
       },
       options: {
           scales: {
               yAxes: [{
                   ticks: {
-                      beginAtZero:true
+                      beginAtZero:true,
+                    //   stepSize: 1,
+                    // suggestedMin: 1,
+                    // suggestedMax: 5,
                   }
               }]
           },
