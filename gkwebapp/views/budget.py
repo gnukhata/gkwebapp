@@ -431,10 +431,10 @@ def salesspreadsheet(request):
             row=row+1
         row=7
         for income in result["incomedata"]:
-            sheet['D'+str(row)] = expense["accountname"]
+            sheet['D'+str(row)] = income["accountname"]
             sheet['D'+str(row)].font = Font(italic=True,size='12' )
             sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['E'+str(row)] = expense["actual"]
+            sheet['E'+str(row)] = income["actual"]
             sheet['E'+str(row)].font = Font(name='Liberation Serif' )
             sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             row=row+1
