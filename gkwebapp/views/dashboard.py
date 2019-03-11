@@ -110,9 +110,9 @@ def godowndesc(request):
     result = requests.get("http://127.0.0.1:6543/dashboard?type=godowndesc",headers=header)
     return {"gkstatus":result.json()["gkstatus"],"goname":result.json()["goname"]}
 
-@view_config(route_name="dashboard", request_param="action=transfernotecount", renderer="json")
-def transfernotecountmonthly(request):
-    header={"gktoken":request.headers["gktoken"]}
-    print "transfer note count monthly"
-    result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth&goid=%d"%(request.params["goid"]),headers=header)
-    # return {"gkstatus":result.json()["gkstatus"],"notecount":result.json()["notecount"]}
+# @view_config(route_name="dashboard", request_param="action=transfernotecount", renderer="json")
+# def transfernotecountmonthly(request):
+#     header={"gktoken":request.headers["gktoken"]}
+#     print "transfer note count monthly"
+#     result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth&goid=%d"%(request.params["goid"]),headers=header)
+#     # return {"gkstatus":result.json()["gkstatus"],"notecount":result.json()["notecount"]}
