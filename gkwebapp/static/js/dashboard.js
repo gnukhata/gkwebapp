@@ -381,12 +381,12 @@ $.ajax(
     // Global Options:
      Chart.defaults.global.defaultFontColor = 'black';
     var data = {
-        labels: ["Direct Expence", "Indirect Expence","Direct Income", "Indirect Income"],
+        labels: ["Direct Income", "Indirect Income","Direct Expence", "Indirect Expence"],
           datasets: [
             {
                 fill: true,
                 backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                data: [resp["DirectExpense"],resp["InDirectExpense"],resp["DirectIncome"],resp["InDirectIncome"]],
+                data: [resp["DirectIncome"],resp["InDirectIncome"],resp["DirectExpense"],resp["InDirectExpense"]],
             }
         ]
     };
@@ -440,25 +440,25 @@ $.ajax(
       }
     })
 
-  $.ajax({
-    type: "POST",
-    url: "/dashboard?action=stockonhandforgodownincharge",
-    global: false,
-    async: false,
-    data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
-    datatype: "json",
-    beforeSend: function(xhr)
-    {
-      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-    },
-    success: function(resp)
-    {
-      for (let item in resp["gkresult"]){
-        $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][item].balance+'</td> </tr>');                  
-        }
-  }
+  // $.ajax({
+  //   type: "POST",
+  //   url: "/dashboard?action=stockonhandforgodownincharge",
+  //   global: false,
+  //   async: false,
+  //   data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
+  //   datatype: "json",
+  //   beforeSend: function(xhr)
+  //   {
+  //     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+  //   },
+  //   success: function(resp)
+  //   {
+  //     for (let item in resp["gkresult"]){
+  //       $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][item].balance+'</td> </tr>');                  
+  //       }
+  // }
   
-  });
+  // });
 
 //   $.ajax({
 //     type: "POST",
