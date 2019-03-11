@@ -50,13 +50,13 @@
               <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
               <ul class="dropdown-menu">
 		<li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
-    <li><a  class="mastermenu" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
 		<li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
 		<li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
 
      <li><a  class="hideoperator hidemanager" data-toggle="tab" id="branchmenu" href="">{% trans %}Branch{% endtrans %}</a></li> 
 		<li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
 		<li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+    <li><a  class="mastermenu" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
 
 		<li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
 		<li><a class="addcategory categoryinmaster " data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
@@ -381,7 +381,7 @@
         </table>
         </div>
         <div class="text-center" style="margin-top:-10px">
-            <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receipt Payment</button>
+            <button id="receipt_payment" style="width:45%" class="btn btn-danger">Receive Payment</button>
           <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger" >Adjustable Bill</button>
         </div>
       
@@ -466,7 +466,7 @@
     </div>
     </div>
     
-    <div class="row internalaud accountinghide adminhide">
+    <div class="row internalaud accountinghide adminhide operatorhide">
    <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
         <div class="dashboarddiv shadow grow">
@@ -600,7 +600,7 @@
                   <thead>
                       <tr>
                         <td class="col-xs-8" style="font-weight:150; width:200px">Product and Service</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Count</td>
+                        <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Invoice Count</td>
                       </tr>
                     </thead>
                     <tbody id="topfiveboughtprod">
