@@ -862,6 +862,34 @@ $(document).ready(function() {
         dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
         }
         if($("#btype option:selected").val() == 19){
+            var s1 = [];
+            var s2 = [];
+            $('#sales_latable tbody:eq(1) tr').each(function(){
+                if ($(".user_role",this).is(":checked")) {
+                s1.push($(this).attr("value"));
+                }
+            });
+                if(s1.length < 1){
+                    $("#account-alert").alert();
+                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#account-alert").hide();
+                    });
+                    $("#sales_latable tbody:eq(1) tr:eq(0) input").focus();
+                    return false;
+                }
+            $('#sales_latable tbody:eq(3) tr').each(function(){
+                if ($(".user_role",this).is(":checked")) {
+                s2.push($(this).attr("value"));
+                }
+            });
+                if(s2.length < 1){
+                    $("#account-alert").alert();
+                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
+                    $("#account-alert").hide();
+                    });
+                    $("#sales_latable tbody:eq(3) tr:eq(0) input").focus();
+                    return false;
+                }
             if ($.trim($("#income").val())=="") {
                 $("#income-alert").alert();
                 $("#income-alert").fadeTo(2250, 500).slideUp(500, function(){
