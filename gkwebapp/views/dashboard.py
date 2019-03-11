@@ -98,14 +98,21 @@ def profitlossreport(request):
     InDirectExpense = result.json()["gkresult"]["Indirect Expense"]["indirexpbal"]
     return {"gkstatus":result.json()["gkstatus"],"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense}
 
-@view_config(route_name="dashboard", request_param="action=transfernotecount", renderer="json")
-def transfernotecountmonthly(request):
-    header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth",headers=header)
-    return {"gkstatus":result.json()["gkstatus"],"notecount":result.json()["notecount"]}
-
 @view_config(route_name="dashboard", request_param="action=stockonhandforgodownincharge", renderer="json")
 def stockonhandforgodownincharge(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/report?stockonhandforgodownincharge&productcode=all&enddate=%s"%(request.params["calculateto"]),headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
+
+@view_config(route_name="dashboard", request_param="action=godowndesc", renderer="json")
+def godowndesc(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=godowndesc",headers=header)
+    return {"gkstatus":result.json()["gkstatus"],"goname":result.json()["goname"]}
+
+@view_config(route_name="dashboard", request_param="action=transfernotecount", renderer="json")
+def transfernotecountmonthly(request):
+    header={"gktoken":request.headers["gktoken"]}
+    print "transfer note count monthly"
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth&goid=%d"%(request.params["goid"]),headers=header)
+    # return {"gkstatus":result.json()["gkstatus"],"notecount":result.json()["notecount"]}
