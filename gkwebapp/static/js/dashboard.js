@@ -176,9 +176,6 @@ $.ajax(
                 'rgba(51, 51, 51)',
                 'rgba(51, 51, 51)', 
                 'rgba(51, 51, 51)', 
-                'rgba(51, 51, 51)', 
-
-
             ],
         
         }]
@@ -247,7 +244,6 @@ function monthlydelchal(inoutflag){
                   'rgba(51, 51, 51)',
                   'rgba(51, 51, 51)', 
                   'rgba(51, 51, 51)', 
-  
               ],
           
           }]
@@ -424,8 +420,7 @@ $.ajax(
           labels: ["Capital and Liabilities", "Property and Assets"],
           datasets: [
             {
-              label: "Population (millions)",
-              backgroundColor: ["#3e95cd", "#8e5ea2"],
+              backgroundColor: ["#3e95cd","#8e5ea2"],
               data: [resp["data"][0],resp["data"][2]]
             }
           ]
