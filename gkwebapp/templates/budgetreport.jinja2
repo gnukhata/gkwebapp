@@ -1,129 +1,4 @@
-{# <head> </head>
-<style type="text/css">
-.shadow {
-  box-shadow: 0 8px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-td {
-  font-size: 80%;
-}
 
-th {
-  font-size: 85%;
-}
-
-.calign{
-    text-align:center;
-
-}
-  .ralign{
-    text-align:right;
-
-  }
-.mdwrap{
-	width:6%
-}
-
-.smwrap1{
-	width:15%
-}
-
-.smwrap2{
-  width:18%
-}
-
-.smwrap3{
-  width:20%
-}
-
-.cred{
-    color:red;
-  }
-
-
-</style>
-<body>
-  <div class="container-fluid "><center>
-    <h4> <b>Budget Report </b> </h4></center>
-    <div class = "panel">
-        <div ><center>
-             <strong id="budgetdetails"> {{budgetdetail}} </strong> </center>
-        </div>
-        <div class="panel-body">
-        <div >
-            <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
-        </div>
-        <div class="table-responsive">
-          <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
-            <thead class="bg-primary">
-			    <tr>
-			      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
-			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
-			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
-			      <th  class="taxwrap text-center igstfield">{% trans %}Balance{% endtrans %}</th>
-			    </tr>
-			  </thead>
-            <tbody>
-                <tr >
-                    <td> Budget Amount</td>
-                    <td style="text-align:right"> {{gkresult["budgetIn"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetOut"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetBal"]}} </td>   
-                </tr>
-                <tr >
-                    <td><h> Actuals </h> <br>
-                    <div style="text-align:right">
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accountname"]}} <br>
-                    {% endfor %}
-                    </div>
-                    </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accDr"]}} <br>
-                    {% endfor %}
-                     </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accCr"]}} <br>
-                    {% endfor %}
-                    </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accBal"]}} <br>
-                    {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">Total</td>
-                    <td style="text-align:right"> {{gkresult["totalDr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["totalCr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetclosingbal"]}} </td> 
-                </tr>
-                <tr>
-                    <td>Variance</td>
-                    <td style="text-align:right"> {{gkresult["varDr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["varCr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["varBal"]}} </td> 
-                </tr>
-            </tbody>
-            </table>
-            <div >
-            <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}}
-        </div>
-        </div>
-        </div>   
-      </div>
-      <center>
-      <button type="button" class="btn btn-sm btn-danger " id="back" name="back" accesskey="b"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}<u>B</u>ack{% endtrans %}</button>
-	<button class="btn btn-sm btn-primary" type="button"  id="spreadsheet" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>    
-	<button type="button" class="btn btn-sm btn-info" id="printversion" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>      
-      </center>
-      <input type="hidden" id="budid" value="{{ budid }}">
-    </div>
-  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
-</body>  #}
-
-{# //////////////////////////////////////////////////////////////////////////// #}
 <head> </head>
 <style type="text/css">
 .shadow {
@@ -169,7 +44,14 @@ th {
 </style>
 <body>
   <div class="container-fluid "><center>
-    <h4> <b>Budget Report </b> </h4></center>
+    {% if btype == '3' %}
+    <h4> <b>Cash Budget Report </b> </h4></center>
+    {% elif btype == '5' %}
+    <h4> <b>Expense Budget Report </b> </h4></center>
+    {% else %}
+    <h4> <b>Sales Budget Report </b> </h4></center>
+    {% endif %}
+
     <div class = "panel">
         <div ><center>
              <strong id="budgetdetails"> {{budgetdetail}} </strong> </center>
