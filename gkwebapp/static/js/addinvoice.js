@@ -157,8 +157,13 @@ $(document).ready(function() {
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
-	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-	    var res = totalamount.toString();
+		totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
+		if ($("#roundvalue").is(":checked")){
+			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		}
+		else{
+			var res = totalamount.toString();
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -178,22 +183,42 @@ $(document).ready(function() {
 	    }
 	}
 	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
-	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
-	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
-	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
-	$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
-	$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
-	$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
-	$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
-	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
-	$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
-	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
-	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
-	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
-	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-	$("#totalValueInWord").text(numbertowords);
-    }
+	
+		$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+		$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
+		$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
+		$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
+		$('#totaligst_product_gst').text(parseFloat(totaligst).toFixed(2));
+		$('#totalcess_product_gst').text(parseFloat(totalcess).toFixed(2));
+		$('#total_product_gst').text(parseFloat(totalamount).toFixed(2));
+		$("#totalinvoicevalue").text(parseFloat(totalamount).toFixed(2));
+		$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
+		$("#totalsgtax").text(parseFloat(totalsgst).toFixed(2));
+		$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
+		$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
+		$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
+		$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+		$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
+		$("#totalValueInWord").text(numbertowords);
+		if ($("#roundvalue").is(":checked")){
+			$("#roundvaluediv").show();
+			$("#totalValueInWord").text(numbertowords);
+		}
+		else{
+			$("#roundvaluediv").hide();
+			
+		}
+	}
+	$("#roundvaluediv").hide();
+	$("#roundvalue").change(function(e){
+		if($("#gst").is(":checked")){
+			$('.invoice_product_quantity_gst').change();
+		}
+		else{
+			$('.invoice_product_quantity_vat').change();
+		}
+	});
+	
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
     //This is similar to the function above.
@@ -224,7 +249,12 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-	    var res = totalamount.toString();
+	    if ($("#roundvalue").is(":checked")){
+			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		}
+		else{
+			var res = totalamount.toString();
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -252,7 +282,15 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-	$("#totalValueInWord").text(numbertowords);
+	$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
+		$("#totalValueInWord").text(numbertowords);
+		if ($("#roundvalue").is(":checked")){
+			$("#roundvaluediv").show();
+			$("#totalValueInWord").text(numbertowords);
+		}
+		else{
+			$("#roundvaluediv").hide();
+		}
     }
 
     function saveInvoice(invid,inoutflag){
@@ -2413,6 +2451,7 @@ if (event.which == 13) {
 	    return false;
 	    }
 	}
+
 	if (parseFloat($('.invoice_product_per_price_gst:eq(' + curindex1 + ')').val()) == 0 && parseFloat($('.invoice_product_quantity_gst:eq(' + curindex1 + ')').val()) > 0) {
       $("#price-blank-alert").alert();
           $("#price-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
