@@ -83,6 +83,7 @@ $(document).ready(function(){
       $(".invoicemenu").hide();
       $(".businessmenu").hide();	 
       $(".gstmenuitem").hide();
+      $("#gstmenu").hide();
       $(".accountinghide").hide();
     }
 
