@@ -78,14 +78,21 @@ def balancesheetreport(request):
     calculateto = request.params["calculateto"]
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-    data =[]
+    data1=[]
+    data2=[]
     for content in result.json()["gkresult"]["rightlist"]:
         if (content["groupAccname"]=="Total"):
-            data.append(content["amount"])
+            data1.append(content["amount"])
     for content in result.json()["gkresult"]["leftlist"]:
+        count = 0
         if (content["groupAccname"]=="Total"):
-            data.append(content["amount"])
-    return {"gkstatus":result.json()["gkstatus"],"data":data}
+            count = count + 1
+            data2.append(content["amount"])
+            if (count == 2):
+                data1.append (data2[1])
+            else:
+                data1.append (data2[0])
+    return {"gkstatus":result.json()["gkstatus"],"data":data1}
 
 @view_config(route_name="dashboard", request_param="action=profitlosschart", renderer="json")
 def profitlossreport(request):
