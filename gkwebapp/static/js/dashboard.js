@@ -58,7 +58,7 @@ $("#profit_loss").click(function() {
   $("#showprofitloss").click();
 });
 $("#balance_sheet").click(function() {
-  $("#showtrialbalance").click();
+  $("#showbalancesheet").click();
 });
    
 function calldata(dataset){
@@ -253,9 +253,9 @@ function monthlydelchal(inoutflag){
               yAxes: [{
                   ticks: {
                       beginAtZero:true,
-                      stepSize: 50,
-                      suggestedMin: 1,
-                      suggestedMax: 100,
+                      // stepSize: 50,
+                      // suggestedMin: 1,
+                      // suggestedMax: 100,
 
                   }
               }]
@@ -417,11 +417,12 @@ $.ajax(
        new Chart(document.getElementById("doughnut-chart"), {
         type: 'doughnut',
         data: {
-          labels: ["Capital and Liabilities", "Property and Assets"],
+          labels: ["Capital and Liabilities","Property and Assets"],
           datasets: [
             {
+              fill: true,
               backgroundColor: ["#3e95cd","#8e5ea2"],
-              data: [resp["data"][0],resp["data"][2]]
+              data: [resp["data"][0],resp["data"][1]],
             }
           ]
         },
