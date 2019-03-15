@@ -73,6 +73,14 @@ $("#subsidiary_div").hide();
 
           $("#authenticate").modal('show');
           $(document).off("click","#submit").on('click', '#submit', function(event) {
+            if($("#user_name").val() == '' || $("#user_pwd").val()== ''){
+              $("#danger-alert").alert();
+                      $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
+                      $("#danger-alert").hide();
+                      $("#user_name").focus().select();
+                    });
+                    return false;
+            }
           $.ajax({  //used to authenticate the selected subsidiary organisation.
                 type: "POST",
                 url: "/userlogin",
@@ -112,10 +120,7 @@ $("#subsidiary_div").hide();
             $(document).off("click","#cancel").on('click', '#cancel', function(event) {
                         $("#holdingorglist").focus();
                     });
-
-
           }
-
       }
     });
 //Coding of Next button
@@ -132,6 +137,14 @@ $("#subsidiary_div").hide();
     {
       $("#authenticate").modal("show");
       $(document).off("click","#submit").on('click', '#submit', function(event) {
+        if($("#user_name").val() == '' || $("#user_pwd").val()== ''){
+          $("#danger-alert").alert();
+                  $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
+                  $("#danger-alert").hide();
+                  $("#user_name").focus().select();
+                });
+                return false;
+        }
       $.ajax({  //used to authenticate the selected subsidiary organisation.
             type: "POST",
             url: "/userlogin",
@@ -153,11 +166,11 @@ $("#subsidiary_div").hide();
               }
               else
               {
-                  //alert("Organisation Authentication UnSuccessful");
+                  //alert("Organisation Authentication UnSuccessful");\
                   authuser = 1;
-                  $("#danger-alert").alert();
-                  $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
-                  $("#danger-alert").hide();
+                  $("#wrong-alert").alert();
+                  $("#wrong-alert").fadeTo(1000, 500).slideUp(100, function(){
+                  $("#wrong-alert").hide();
                   $("#user_name").focus().select();
                 });
               }
@@ -251,6 +264,14 @@ $("#subsidiary_div").hide();
 
       //$('#user').focus();
       $(document).off("click","#submit").on('click', '#submit', function(event) {
+        if($("#user_name").val() == '' || $("#user_pwd").val()== ''){
+          $("#danger-alert").alert();
+                  $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
+                  $("#danger-alert").hide();
+                  $("#user_name").focus().select();
+                });
+                return false;
+        }
       $.ajax({  //used to authenticate the selected subsidiary organisation.
             type: "POST",
             url: "/userlogin",
@@ -282,9 +303,9 @@ $("#subsidiary_div").hide();
               else
               {
                   authuser1 = 1;
-                  $("#danger-alert").alert();
-                  $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
-                  $("#danger-alert").hide();
+                  $("#wrong-alert").alert();
+                  $("#wrong-alert").fadeTo(1000, 500).slideUp(100, function(){
+                  $("#wrong-alert").hide();
                   $("#user_name").focus().select();
                 });
               }
