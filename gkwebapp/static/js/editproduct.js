@@ -1407,6 +1407,7 @@ $(document).ready(function() {
   $(document).off("click","#epsubmit").on("click", "#epsubmit", function(event) {
       event.preventDefault();
       /* Act on the event */
+      $("input[name=openingstock]:hidden").remove();
       if($("#gsflag").val() == '7'){
 	  if ($("#editproddesc").val()=="")
 	  {

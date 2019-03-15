@@ -786,7 +786,7 @@ $(document).ready(function() {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
 		    $("#invoice_customerstate").change();
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
-		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		    $("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
 		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
@@ -2800,7 +2800,7 @@ if (event.which == 13) {
 
       //validation for bankdetails on save button.
       if($("#chkpaymentmode option:selected").val()=="2"){
-	  if($("#accountno").val()=="" || $("#branch").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
+	  if($("#accountno").val()=="" || $("#branchname").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
 	      $("#bankdetails-blank-alert").alert();
 	      $("#bankdetails-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#bankdetails-blank-alert").hide();
@@ -2858,7 +2858,7 @@ if (event.which == 13) {
       bankdetails["accountno"] = $.trim($("#accountno").val());
       bankdetails["bankname"] = $.trim($("#bankname").val());
       bankdetails["ifsc"] = $.trim($("#ifsc").val());
-      bankdetails["branch"] = $.trim($("#branch").val());
+      bankdetails["branch"] = $.trim($("#branchname").val());
     if ($(".taxapplicable").val() == 22) {
     for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
 	productqtys.push(parseFloat($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(1) input").val()));
@@ -3321,7 +3321,7 @@ if (event.which == 13) {
 		.done(function(resp) {
                     console.log("success");
                     $("#accountno").val(resp["gkbankdata"]["bankdetails"]["accountno"]); //Account Number of organisation loaded
-		    $("#branch").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //branchname of organisation is loaded
+		    $("#branchname").val(resp["gkbankdata"]["bankdetails"]["branchname"]);   //branchname of organisation is loaded
 		    $("#ifsc").val(resp["gkbankdata"]["bankdetails"]["ifsc"]);           //ifsc code of organisation is loaded
 		    $("#bankname").val(resp["gkbankdata"]["bankdetails"]["bankname"]);   //branchname of organisation is loaded
 		})
@@ -3365,7 +3365,7 @@ if (event.which == 13) {
             return false;
           }
 	    
-      $("#branch").focus().select();
+      $("#branchname").focus().select();
     }
 	if (event.which==38) {
 	 event.preventDefault();
@@ -3373,9 +3373,9 @@ if (event.which == 13) {
 	};
     });
 
-    $("#branch").keydown(function(event) {
+    $("#branchname").keydown(function(event) {
 	if (event.which==13) {
-	     if ($.trim($("#accountno").val())=="" && $.trim($("#branch").val())!="" ) {
+	     if ($.trim($("#accountno").val())=="" && $.trim($("#branchname").val())!="" ) {
             $("#accountno-blank-alert").alert();
             $("#accountno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#accountno-blank-alert").hide();
@@ -3384,7 +3384,7 @@ if (event.which == 13) {
             return false;
           }
 
-	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branch").val())!="" ) {
+	     if ( $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())!="" ) {
             $("#bankname-blank-alert").alert();
             $("#bankname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#bankname-blank-alert").hide();
@@ -3394,12 +3394,12 @@ if (event.which == 13) {
           }
 
 
-	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())=="" ) {
+	if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branchname").val())=="" ) {
             $("#branch-blank-alert").alert();
             $("#branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#branch-blank-alert").hide();
             });
-            $("#branch").focus();
+            $("#branchname").focus();
             return false;
           }    
 	    
@@ -3416,7 +3416,7 @@ if (event.which == 13) {
     $("#ifsc").keydown(function(event) {
 	if (event.which==13) {
 
-         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+         if ($.trim($("#accountno").val())=="" && $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())=="" && $.trim($("#ifsc").val())!="" ) {
             $("#accountno_bankname_branch-blank-alert").alert();
             $("#accountno_bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#accountno_bankname_branch-blank-alert").hide();
@@ -3425,7 +3425,7 @@ if (event.which == 13) {
             return false;
          }
 
-	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branch").val())=="" && $.trim($("#ifsc").val())!="" ) {
+	    if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())=="" && $.trim($("#branchname").val())=="" && $.trim($("#ifsc").val())!="" ) {
             $("#bankname_branch-blank-alert").alert();
             $("#bankname_branch-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#bankname_branch-blank-alert").hide();
@@ -3434,7 +3434,7 @@ if (event.which == 13) {
             return false;
          }
 
-            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branch").val())!="" && $.trim($("#ifsc").val())=="" ) {
+            if ($.trim($("#accountno").val())!="" && $.trim($("#bankname").val())!="" && $.trim($("#branchname").val())!="" && $.trim($("#ifsc").val())=="" ) {
             $("#ifsc-blank-alert").alert();
             $("#ifsc-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
               $("#ifsc-blank-alert").hide();
@@ -3448,7 +3448,7 @@ if (event.which == 13) {
     }
     if (event.which==38) {
 	 event.preventDefault();
-	 $("#branch").focus().select();
+	 $("#branchname").focus().select();
        };
     });
 
