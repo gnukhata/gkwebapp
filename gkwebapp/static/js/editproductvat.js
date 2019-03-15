@@ -1383,6 +1383,7 @@ $(document).ready(function() {
     event.preventDefault();
     var allow = 0;
     /* Act on the event */
+    $("input[name=openingstock]:hidden").remove();
     if ($("#editproddesc").val()=="")
     {
       $('.modal-backdrop').remove();
