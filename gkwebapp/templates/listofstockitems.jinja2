@@ -63,6 +63,13 @@
     </style>
   </head>
   <body>
+    {% if gkresult == [] %}
+  <div class="panel shadow">
+    <div class="panel-body" style="text-align:center;color:#a94442"><b>
+        {% trans %}No Product/ Service found!{% endtrans %}
+    </b></div>
+  </div>
+    {% else %}
     <div class="col-xs-10 nopadding">
     <span style="margin-left:50%; display:table; font-size:120%;"><strong>
       {% trans %}List of Products{% endtrans %}
@@ -153,7 +160,7 @@
 	</div>
       </div>
     </div>
-    
+    {%endif%}
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofstockitems.js')}}"></script>
 </body>
