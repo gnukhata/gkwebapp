@@ -103,6 +103,16 @@
 	</style>
 </head>
 <body>
+{% if gkresult == [] %}
+  <div class="panel shadow">
+    <div class="panel-body" style="text-align:center;color:#a94442"><b>
+        {% trans %}No Unbilled Deliveries found!{% endtrans %}
+    </b></div>
+  </div>
+  <center>
+	    <button type="button" class="btn btn-sm btn-danger" id="backbutton" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+	</center>
+    {% else %}
   <div id="report_delchal">
   <div class="col-xs-10 nopadding">
 	{% if inout == "9" %}
@@ -205,7 +215,7 @@
 	    <button type="button" class="btn btn-sm btn-info" id="view_del_attachment" accesskey="w" style="display:none">{% trans %}Vie<u>w</u> Attachment{% endtrans %}</button>
 	  </div>
 	</div>
-	
+	{%endif%}
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unbilled_deliveries_report.js')}}"></script>
 </body>
