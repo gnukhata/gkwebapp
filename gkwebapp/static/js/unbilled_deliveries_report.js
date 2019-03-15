@@ -150,7 +150,10 @@ $(document).ready(function() {
 		$("#view_del_attachment").hide();
 	    }
 	});
-    });
+	});
+	$("#back").click(function(event){
+		$('#show_unbilled_deliveries').click();
+	});
 
     $("#backbutton").click(function(event){
 	$("#viewdc").html("");
