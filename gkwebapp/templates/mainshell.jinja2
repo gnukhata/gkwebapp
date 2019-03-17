@@ -625,48 +625,57 @@
       </div>
     </div>
     </div>
-    
-    <!-- <div class="row internalaud accountinghide adminhide operatorhide">
-   <div class="col-sm-6 dashboardouterdiv">
+    <div class="row internalaud accountinghide adminhide operatorhide">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
         <div class="dashboarddiv shadow grow">
-          <div class="pull-left"> 
-            <h5 style="color:#333">Stock on Hand</h5>
-          </div>
-          <hr>
           <div>
-            <table id="" class="table table-bordered table-striped invoiceslist">
-                <thead>
-                    <tr>
-                      <td class="col-xs-8" style="font-weight:150; width:200px">Product and Service</td>
-                      <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Stock</td>
-                    </tr>
-                  </thead>
-                  <tbody id="stock_on_hand">
-        
-                  </tbody>
-                </table>
-          </div>
-          <div>
-            <button class="btn btn-danger add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
-          </div>
-    </div>
-      </div>
-    </div> -->
-    <!-- <div class="col-sm-6 dashboardouterdiv">
-      <div style="position:relative;">
-      <div class="dashboarddiv shadow grow">
-          <h5 style="color:#333">Transfer Note</h5 >
-            <div>
-              <select id="godownwise"> 
-                
-              </select> 
+          <div class="pull-left">
+            <h5 >Transfer Note</h5 >
             </div>
-          <canvas id="transfer_note" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+              <div class="pull-rigth" style="float:right">
+                <select id="godownwise"></select> 
+              </div>
+            </div>
+            <div id="transfernotediv">
+            <canvas id="transfer_note" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+        </div></div>
+        </div>
+        </div>
+        <div class="col-sm-6 dashboardouterdiv">
+          <div style="position:relative;">
+          <div class="dashboarddiv shadow grow">
+            <div>
+              <div class="pull-left">
+                <h5 >Stock on Hand</h5 >
+                </div>
+                  <div class="pull-right" >
+                    <select id="godownwisestock"></select> 
+                  </div>
+                </div>
+            <div id="showstock">
+              <table class="table table-bordered table-striped invoiceslist">
+                  <thead >
+                      <tr>
+                        <td class="col-xs-8" style="font-weight:150; width:200px">Product and Service</td>
+                        <td class="col-xs-4" style="font-weight:150;text-align:right; width:113px">Stock</td>
+                      </tr>
+                    </thead>
+                    <tbody id="stock_on_hand">
+          
+                    </tbody>
+                  </table>
+            </div>
+            <div id="hidestock" class="centerdiv" style="text-align:center">
+            <h1>No Data Found</h1>
+          </div>
+            <div>
+              <button class="btn btn-danger add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
+            </div>
+      </div>
+        </div>
       </div>
       </div>
-      </div> -->
-    <!-- </div> -->
     <div class="row internalaud godownhide accountinghide">
       <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
