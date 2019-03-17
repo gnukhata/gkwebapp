@@ -446,126 +446,145 @@ $.ajax(
        
       }
     })
-
-  // $.ajax({
-  //   type: "POST",
-  //   url: "/dashboard?action=stockonhandforgodownincharge",
-  //   global: false,
-  //   async: false,
-  //   data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
-  //   datatype: "json",
-  //   beforeSend: function(xhr)
-  //   {
-  //     xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-  //   },
-  //   success: function(resp)
-  //   {
-  //     for (let item in resp["gkresult"]){
-  //       $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["gkresult"][item].productname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][item].balance+'</td> </tr>');                  
-  //       }
-  // }
   
-  // });
-
-//   $.ajax({
-//     type: "POST",
-//     url: "/dashboard?action=godowndesc",
-//     global: false,
-//     async: false,
-//     datatype: "json",
-//     beforeSend: function(xhr)
-//     {
-//       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//     },
-//     success: function(resp)
-//     {
-//     console.log(resp)
-//     for(let i in resp["goname"])
-//       $('#godownwise').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>')
-//   }
-//   });
-// console.log($("#godownwise option:selected").val());
-
-// $("#godownwise").change();
-//   function transfernote(goid){
-//     $.ajax(
-//     {
-//     type: "POST",
-//     url: "/dashboard?action=transfernotecount",
-//     global: false,
-//     async: false,
-//     data:{"goid":goid},
-//     datatype: "json",
-//     beforeSend: function(xhr)
-//       {
-//         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//       },
-//     success: function(resp)
-//     {
-//     var ctx = document.getElementById("transfer_note").getContext('2d');
-//     var myChart = new Chart(ctx, {
-//       type: 'bar',
-//       data: {
-//           labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-//           datasets: [{
-//               label: 'No. of Transfer Notes',
-//               data: resp["notecount"],
-//               backgroundColor: [
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)',
-//                   'rgba(51, 51, 51)', 
-//                   'rgba(51, 51, 51)', 
-  
-//               ],
-          
-//           },
-//           {
-//           labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-//           label: 'No. of Transfer Notes',
-//           data: [8,9,7,4,6,7,2,9,6,9,8,5],
-//           backgroundColor: [
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)',
-//             'rgba(100, 100, 100)', 
-//             'rgba(100, 100, 100)', 
-//         ],
-//          },]
-//       },
-//       options: {
-//           scales: {
-//               yAxes: [{
-//                   ticks: {
-//                       beginAtZero:true,
-//                     //   stepSize: 1,
-//                     // suggestedMin: 1,
-//                     // suggestedMax: 5,
-//                   }
-//               }]
-//           },
-//           responsive: true,
-//           maintainAspectRatio: true,
-//       }
-//   });
-//   }
-//   });
-//     }
-// $("#godownwise").change(function(e){
-// transfernote($("#godownwise option:selected").val())
-// })    
-});
+    $("#godownwisestock").change(function(e){
+      goid=$("#godownwisestock option:selected").val()
+      $.ajax({
+        type: "POST",
+        url: "/dashboard?action=stockonhandforgodownincharge",
+        global: false,
+        async: false,
+        data:{"calculateto":enddate=sessionStorage.yyyymmddyear2,"goid":goid},
+        datatype: "json",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          if(resp["gkresult"]==0){
+            $('#showstock').hide();  
+            $('#hidestock').show();      
+          }
+          else{
+          $('#hidestock').hide(); 
+          $('#showstock').show();  
+          $('#stock_on_hand').html("");      
+          for (let i=0; i<5; i++){      
+            $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["proddesc"][i]["proddesc"]+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][i]["balance"]+'</td> </tr>');                  
+            }
+          }
+      }
+      });
+    });
+    
+      function transfernotechart(indata,outdata){
+        document.getElementById("transfernotediv").innerHTML = '&nbsp;';
+        document.getElementById("transfernotediv").innerHTML = '<canvas id="transfer_note"></canvas>';
+    var ctx = document.getElementById("transfer_note").getContext("2d");
+       var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+            datasets: [{
+                label: 'No. of Quantity In',
+                data: indata,
+                backgroundColor: [
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)',
+                    'rgba(51, 51, 51)', 
+                    'rgba(51, 51, 51)', 
+    
+                ],
+            
+            },
+            {
+            labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+            label: 'No. of Quantity Out',
+            data: outdata,
+            backgroundColor: [
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)',
+              'rgba(100, 100, 100)', 
+              'rgba(100, 100, 100)', 
+          ],
+           },]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true,
+                    //     stepSize: 50,
+                    //       suggestedMin: 1,
+                    //       suggestedMax: 100,
+                    }
+                }]
+            },
+            responsive: true,
+            maintainAspectRatio: true,
+        }
+    });
+    }
+      $("#godownwise").change(function(e){
+        goid=$("#godownwise option:selected").val()
+        $.ajax(
+        {
+        type: "POST",
+        url: "/dashboard?action=transfernotecount",
+        global: false,
+        async: false,
+        data:{"goid":goid},
+        datatype: "json",
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+          indata=resp["innotecount"];
+          outdata=resp["outnotecount"]
+          transfernotechart(indata,outdata);
+      }
+      });
+    });   
+    
+      $.ajax({
+        type: "POST",
+        url: "/dashboard?action=godowndesc",
+        global: false,
+        async: false,
+        datatype: "json",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+        for(let i in resp["goname"]){
+          $('#godownwise').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>')
+          $('#godownwisestock').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>')
+    
+      }
+      $("#godownwise").change();
+      $("#godownwisestock").change();
+      
+    }
+      });    
+  });
