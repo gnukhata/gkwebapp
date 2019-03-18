@@ -3194,7 +3194,7 @@ if (event.which == 13) {
 			$("#link").click(function(e){
 				D = 0;
 				e.preventDefault();
-				var id = resp["gkvch"]["vchno"].slice(2,-1);
+				var id = resp["gkvch"]["vchid"];
 				console.log(id);
 				$("#vouchernumberinput").val(id);
 				$("#modalindex").val($(this).index());
@@ -3223,13 +3223,14 @@ if (event.which == 13) {
 
 					$('#myModal').on('hidden.bs.modal', function (e)
 					{
-						console.log("POPOPOPOPO")
+						
 						if($("#hideinp").val()==0)
 						{
 						$('.modal-backdrop').remove();
 						$("#viewvc").html("");
 						$("#submit").click();
 						}
+						saveInvoice(invid,inoutflag);
 					});
 					}
 				}
