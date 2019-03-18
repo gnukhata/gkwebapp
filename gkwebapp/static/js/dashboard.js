@@ -57,6 +57,9 @@ $(".add_prod").click(function() {
 $("#profit_loss").click(function() {
   $("#showprofitloss").click();
 });
+$("#balance_sheet").click(function(){
+$("#showbalancesheet").click();
+});
 
 $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
