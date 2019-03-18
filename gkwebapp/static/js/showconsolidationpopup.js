@@ -108,9 +108,9 @@ $("#subsidiary_div").hide();
                   {
                       //alert("Organisation Authentication UnSuccessful");
                       authuser = 1;
-                      $("#danger-alert").alert();
-                      $("#danger-alert").fadeTo(1000, 500).slideUp(100, function(){
-                      $("#danger-alert").hide();
+                      $("#wrong-alert").alert();
+                      $("#wrong-alert").fadeTo(1000, 500).slideUp(100, function(){
+                      $("#wrong-alert").hide();
                       $("#user_name").focus();
                     });
                   }
