@@ -3191,13 +3191,12 @@ if (event.which == 13) {
 			$("#inv-vch-success-alert").append("Invoice saved with corresponding entry no. <a id='link'><u>"+ resp["gkvch"]["vchno"]+"<u></a>");
 			$("#inv-vch-success-alert").alert();
 			let D = 1;
+			let invid = resp["gkresult"];
 			$("#link").click(function(e){
 				D = 0;
 				e.preventDefault();
 				var id = resp["gkvch"]["vchid"];
-				console.log(id);
 				$("#vouchernumberinput").val(id);
-				$("#modalindex").val($(this).index());
 				$.ajax({
 					type: "POST",
 					url: "/viewvoucher",
@@ -3216,6 +3215,12 @@ if (event.which == 13) {
 					$('.modal').modal('hide');
 					$("#viewvc").html(resp);
 					$('#myModal').modal('show');
+					$("#edit").hide();
+					$("#clone").hide();
+					$("#save").hide();
+					$("#delete").hide();
+					$("#printvoucher").hide();
+					$("#lock").hide();
 					$('#myModal').on('shown.bs.modal', function (e)
 					{
 						$(".btnfocus:enabled:first").focus();
@@ -3223,12 +3228,10 @@ if (event.which == 13) {
 
 					$('#myModal').on('hidden.bs.modal', function (e)
 					{
-						
 						if($("#hideinp").val()==0)
 						{
 						$('.modal-backdrop').remove();
 						$("#viewvc").html("");
-						$("#submit").click();
 						}
 						saveInvoice(invid,inoutflag);
 					});
@@ -3238,7 +3241,6 @@ if (event.which == 13) {
 			});
 			$("#inv-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 			    $("#inv-vch-success-alert").hide();
-				let invid = resp["gkresult"];
 				if (D == 1){
 					saveInvoice(invid,inoutflag);
 				}
