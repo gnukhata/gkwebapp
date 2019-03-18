@@ -57,10 +57,18 @@ $(".add_prod").click(function() {
 $("#profit_loss").click(function() {
   $("#showprofitloss").click();
 });
-$("#balance_sheet").click(function() {
-  $("#showbalancesheet").click();
+
+$(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
+  $('body').css('padding-right','0');
 });
-   
+
+$('#shortcutslink').click(function() { 
+  $('#keyshorcuts').modal('hide'); 
+});
+$('#secondmodal').click(function() { 
+  $('#keyshorcuts').modal('show'); 
+});
+
 function calldata(dataset){
   $.ajax(
   {
