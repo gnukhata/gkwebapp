@@ -76,10 +76,8 @@ def printvouchers(request):
 
 @view_config(route_name="getvouchers", renderer="gkwebapp:templates/findvouchertable.jinja2")
 def getvouchers(request):
-	print "lllll"
 	header={"gktoken":request.headers["gktoken"]}
 	searchby=request.params["searchby"]
-	print searchby
 	if searchby== "type":
 		vtype = request.params["vtype"]
 
@@ -123,7 +121,6 @@ def lockvoucher(request):
 
 @view_config(route_name="viewvoucher", renderer="gkwebapp:templates/viewvoucher.jinja2")
 def viewvoucher(request):
-	print "kkkkk"
 	header={"gktoken":request.headers["gktoken"]}
 	vcode =request.params["id"]
 	gkdata = {"code":int(vcode)}
