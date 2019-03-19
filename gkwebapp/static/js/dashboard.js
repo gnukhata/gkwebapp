@@ -30,6 +30,9 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 $(document).ready(function() {
   var element;
 
+$('.drawer').drawer();
+
+
   $('#make_payment').click(function(){
   $('#showpayment').click();
   });
@@ -70,6 +73,29 @@ $('#shortcutslink').click(function() {
 });
 $('#secondmodal').click(function() { 
   $('#keyshorcuts').modal('show'); 
+});
+$('.drawer').drawer({
+  class: {
+    nav: 'drawer-nav',
+    toggle: 'drawer-toggle',
+    overlay: 'drawer-overlay',
+    open: 'drawer-open',
+    close: 'drawer-close',
+    dropdown: 'drawer-dropdown'
+  },
+  iscroll: {
+    // Configuring the iScroll
+    // https://github.com/cubiq/iscroll#configuring-the-iscroll
+    mouseWheel: true,
+    preventDefault: false
+  },
+  showOverlay: true
+});
+$(".masterdata").hide();
+$(".submenu").click(function(){
+  $(this).data(data-menuname);
+  $(".masterdata").hide();
+
 });
 
 function calldata(dataset){

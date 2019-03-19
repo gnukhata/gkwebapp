@@ -6,6 +6,8 @@
     <link id="bootstrap" href="{{request.static_url('gkwebapp:static/css/Default.min.css')}}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
     <link href="{{request.static_url('gkwebapp:static/css/mainshellstyle.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{request.static_url('gkwebapp:static/css/drawer.min.css')}}" rel="stylesheet" type="text/css">
+
     <style>
       .percentage:after {
   content: "";
@@ -28,225 +30,265 @@
     </style>
 
   </head>
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container-fluid">
-	<!-- Brand and toggle get grouped for better mobile display -->
-	<div id="navhead" class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-            <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+  <body class="drawer drawer--left">
+      <header role="banner">
+          <button type="button" class="drawer-toggle drawer-hamburger">
+            <span class="sr-only">toggle navigation</span>
+            <span class="drawer-hamburger-icon"></span>
           </button>
-          <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;" /></a>
-          <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v5.50 </em> {% endtrans %}</a>
-	</div>
-
-	<!-- Collect the nav links, forms, and other content for toggling -->
-	<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-          <ul class="nav navbar-nav">
-            <li id="masterdropdown" class="dropdown closebooks">
-              <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Account{% endtrans %}</a></li>
-		<li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
-
-     <li><a  class="hideoperator hidemanager" data-toggle="tab" id="branchmenu" href="">{% trans %}Branch{% endtrans %}</a></li> 
-		<li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-		<li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
-    <li><a  class="mastermenu" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
-
-		<li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
-		<li><a class="addcategory categoryinmaster " data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
-                <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
-
-		<li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
-		<li><a class="mastermenu" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
-              </ul>
-            </li>
-            <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
-              <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product/Service</a></li>
-                <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
-                <li><a class="inventorymenu addcategory" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
-                <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
-		<li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
-                <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
-                <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
-		<li><a class="inventorymenu godownhide" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>
-              </ul>
-            </li>
-            <li id="transactiondropdown" class="dropdown">
-              <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>V</u>oucher{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpayment" href="">{% trans %}Payment{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showsales" href="">{% trans %}Sale{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpurchase" href="">{% trans %}Purchase{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showcontra" href="">{% trans %}Contra{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showjournal" href="">{% trans %}Journal{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showsalesreturn" href="">{% trans %}Sale Return{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpurchasereturn" href="">{% trans %}Purchase Return{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
-		<li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
-		<li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
-		<li><a class="transactionmenu intauditor" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
-              </ul>
-            </li>
-            <!-- Business Tab
-		 Cash Memo
-		 Invoice
-		 Rejection Note
-		 Debit/Credit Note
-	       -->
-	    <li id="businessdropdown" class="dropdown closebooks">
-              <a href="" id="business" class="dropdown-toggle businessmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Do<u>c</u>uments{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a class="businessmenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
-		<li><a class="businessmenu" data-toggle="tab" id="invoice" status="9" href="">{% trans %}Invoice{% endtrans %}</a></li>
-		<!--Rejection note work <li><a class="businessmenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>-->	
-                <li><a class="businessmenu" data-toggle="tab" id="drcrnote" href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
-	      </ul>
-            </li>
-            <li id="gstdropdown" class="dropdown">
-              <a href="" id="gstmenu" class="dropdown-toggle gstdropdownmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>G</u>ST{% endtrans %}</a>
-              <ul class="dropdown-menu">
-                <li><a class="gstmenuitem" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
-                <li><a class="gstmenuitem" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
-	      </ul>
-            </li>
-            <li id="reportdropdown" class="dropdown">
-              <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a class="reportmenu" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
-		<li><a class="reportmenu" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
-		<li><a class="reportmenu" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
-		<li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
-		<li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
-		<li class="hideoperator"><a class="reportmenu" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
-		<li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
-    <li><a class="reportmenu" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></li>
-		<li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
-		<li><a class="hideoperator hidemanager reportmenu intauditor" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
-		<li><a class="reportmenu intauditor" href="" data-toggle="tab" id="listofusers">List of Users</a></li>
-		<li><a class="reportmenu" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
-    <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofbranches">{% trans %}List of Branches{% endtrans %}</a></li>
-    <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
-		<li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
-
-		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
-		<li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
-		<li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
-		<li><a class="reportmenu hideoperator hidemanager" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
-              </ul>
-            </li>
-            <li id="administrationdropdown" class="dropdown">
-              <a href="" id="administration" class="dropdown-toggle administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}A<u>d</u>ministration{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li class="hideoperator closebooks hidemanager"><a class="administrationmenu" data-toggle="tab" id="user" href="">{% trans %}User{% endtrans %}</a></li>
-		<li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
-		<li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
-		
-		<li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Company Preferences{% endtrans %}</a></li>
-		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
-		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
-		<li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Company{% endtrans %}</a></li>
-		
-              </ul>
-            </li>
-            <li id="helpdropdown" class="dropdown">
-              <a href="" id="help" class="dropdown-toggle helpmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>H</u>elp{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a class="helpmenu" id="support" href="http://support.gnukhata.in/">{% trans %}Support{% endtrans %}</a></li>
-		<li><a class="helpmenu" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
-		<li><a class="helpmenu" data-toggle="modal" id="shortcuts" href="" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a></li>
-		<li><a class="helpmenu" data-toggle="modal" id="authors" href="" data-target="#gnukhataauthors">{% trans %}Authors{% endtrans %}</a></li>
-		<li><a class="helpmenu" data-toggle="modal" id="license" href="" data-target="#gnukhatalicense">{% trans %}License{% endtrans %}</a></li>
-		<li><a class="helpmenu" data-toggle="modal" id="about" href="" data-target="#aboutgnukhata">{% trans %}About{% endtrans %}</a></li>		
-	      </ul>
-            </li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
-            <li id="signoutdropdown" class="dropdown">
-              <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
-              <ul class="dropdown-menu">
-		<li><a class="signoutmenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
-		<li><a class="signoutmenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
-              </ul>
-            </li>
-            <li id="themesdropdown" class="dropdown">
-              <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
-              <ul class="dropdown-menu scrollable">
-		<li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Cerulean" href="">{% trans %}Cerulean{% endtrans %}<span id="Ceruleanspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Cosmo" href="">{% trans %}Cosmo{% endtrans %}<span id="Cosmospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Cyborg" href="">{% trans %}Cyborg{% endtrans %}<span id="Cyborgspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Flatly" href="">{% trans %}Flatly{% endtrans %}<span id="Flatlyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Journal" href="">{% trans %}Journal{% endtrans %}<span id="Journalspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Lumen" href="">{% trans %}Lumen{% endtrans %}<span id="Lumenspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Paper" href="">{% trans %}Paper{% endtrans %}<span id="Paperspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Sandstone" href="">{% trans %}Sandstone{% endtrans %}<span id="Sandstonespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Simplex" href="">{% trans %}Simplex{% endtrans %}<span id="Simplexspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Slate" href="">{% trans %}Slate{% endtrans %}<span id="Slatespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Spacelab" href="">{% trans %}Spacelab{% endtrans %}<span id="Spacelabspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}<span id="Ubuntuspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-		<li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-              </ul>
-            </li>
-	    <!--  
-		 <li id="langdropdown" class="dropdown">
-		 <a href="" id="lang" class="dropdown-toggle langmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Lan<u>g</u>uage{% endtrans %}</a>
-		 <ul class="dropdown-menu">
-		 <li><a  class="langmenu" id="eng" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
-		 <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
-		 <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
-		 </ul>
-		 </li>-->
-            <li id="toolbardropdown" class="dropdown">
-              <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
-              <ul class="dropdown-menu scrollable">
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="editaccounttb" href="">{% trans %}Find & Edit Account{% endtrans %} - F3</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="receipttb" href="">{% trans %}Receipt{% endtrans %} - F4</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="paymenttb" href="">{% trans %}Payment{% endtrans %} - F5</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="salestb" href="">{% trans %}Sale{% endtrans %} - F6</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="purchasetb" href="">{% trans %}Purchase{% endtrans %} - F7</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="contratb" href="">{% trans %}Contra{% endtrans %} - F8</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="journaltb" href="">{% trans %}Journal{% endtrans %} - F9</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="salesreturntb" href="">{% trans %}Sale Return{% endtrans %} - CTRL+1</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="purchasereturntb" href="">{% trans %}Purchase Return{% endtrans %} - CTRL+2</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="creditnotetb" href="">{% trans %}Credit Note{% endtrans %} - CTRL+3</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="debitnotetb" href="">{% trans %}Debit Note{% endtrans %} - CTRL+4</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="findvouchertb" href="">{% trans %}Find/Edit Voucher{% endtrans %} - F10</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="ledgertb" href="">{% trans %}Ledger{% endtrans %} - F11</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="trialbalancetb" href="">{% trans %}Trial Balance{% endtrans %} - F12</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="projectstatementtb" href="">{% trans %}Cost Center Statement{% endtrans %} - CTRL+5</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="cashflowtb" href="">{% trans %}Cash Flow{% endtrans %} - CTRL+6</a></li>
-		<li><a class="toolbarmenu" data-toggle="tab" id="listofaccountstb" href="">{% trans %}List of Accounts{% endtrans %} - CTRL+7</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="projecttb" href="">{% trans %}Cost Center{% endtrans %} - ALT+C</a></li>
-		<li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="brstb" href="">{% trans %}Bank Reconciliation Statement{% endtrans %} - ALT+R</a></li>
-		<!--<li class="hideoperator closebooks"><a class="toolbarmenu" data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
-		     <li class="hideoperator hidemanager"><a class="toolbarmenu" data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
-		     <li><a class="toolbarmenu" data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>-->
-		<li><a class="toolbarmenu" target="_blank" id="manualtb" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %} - ALT+M</a></li>
-		<!--<li><a class="toolbarmenu" data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
-		     <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
-              </ul>
-            </li>
-
-          </ul>
-	</div><!-- /.navbar-collapse -->
-      </div><!-- /.container-fluid -->
-    </nav>
-
+          <nav class="drawer-nav" role="navigation" style="height:100vh !important">
+            <ul class="drawer-menu">
+              <li><a class="drawer-brand" href="#">Brand</a></li>
+              <li><a class="drawer-menu-item" href="#">Nav1</a></li>
+              <li><a class="drawer-menu-item" href="#">Nav2</a></li>
+              <li id="masterdropdown" class="dropdown closebooks" data-menuname="masterdata">
+                  <a href="" id="master" class="dropdown-toggle mastermenu submenu" data-menuname="masterdata" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
+                </li>
+                <!-- <ul class="dropdown-menu"> -->
+        <li><a  class="mastermenu masterdata" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
+        <li><a  class="mastermenu masterdata" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
+        <li><a class="mastermenu masterdata" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
+    
+         <li><a  class="hideoperator hidemanager masterdata" data-toggle="tab" id="branchmenu" href="">{% trans %}Branch{% endtrans %}</a></li> 
+        <li><a class="mastermenu masterdata" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+        <li><a class="mastermenu masterdata" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+        <li><a  class="mastermenu masterdata" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
+    
+        <li><a class="mastermenu masterdata" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
+        <li><a class="addcategory categoryinmaster masterdata" data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
+                    <li><a  class="productinmaster masterdata " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
+    
+        <li><a class="uominmaster masterdata" data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+        <li><a class="mastermenu masterdata" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
+                  <!-- </ul> -->
+              
+            </ul>
+          </nav>
+          <nav class="navbar navbar-default navbar-fixed-top">
+              <div class="container-fluid">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div id="navhead" class="navbar-header">
+                  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                  </button>
+                  <a class="navbar-brand" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:24px;height:24px;" /></a>
+                  <a class="navbar-brand" style="pointer-events: none;">{% trans %}GNUKhata <em>v5.50 </em> {% endtrans %}</a>
+          </div>
+        
+          <!-- Collect the nav links, forms, and other content for toggling -->
+          <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                  <ul class="nav navbar-nav">
+                    <li id="masterdropdown" class="dropdown closebooks">
+                      <a href="" id="master" class="dropdown-toggle mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>M</u>aster{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a  class="mastermenu" data-toggle="tab" id="addaccount" href="">{% trans %}Create Account{% endtrans %}</a></li>
+            <li><a  class="mastermenu" data-toggle="tab" href="" id="editaccount">{% trans %}Edit Account{% endtrans %}</a></li>
+            <li><a class="mastermenu" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
+        
+             <li><a  class="hideoperator hidemanager" data-toggle="tab" id="branchmenu" href="">{% trans %}Branch{% endtrans %}</a></li> 
+            <li><a class="mastermenu" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+            <li><a class="mastermenu" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+            <li><a  class="mastermenu" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
+        
+            <li><a class="mastermenu" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
+            <li><a class="addcategory categoryinmaster " data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
+                        <li><a  class="productinmaster " data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
+        
+            <li><a class="uominmaster " data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+            <li><a class="mastermenu" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
+                      </ul>
+                    </li>
+                    <li id="inventorydropdown" class="dropdown closebooks inventory_hide">
+                      <a href="" id="inventory" class="dropdown-toggle inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>I</u>nventory{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a  class="inventorymenu" data-toggle="tab" id="product" href="">Product/Service</a></li>
+                        <li><a  class="inventorymenu" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
+                        <li><a class="inventorymenu addcategory" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
+                        <li><a class="inventorymenu" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+            <li><a class="inventorymenu" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
+                        <li><a class="inventorymenu" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
+                        <li><a class="inventorymenu" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
+            <li><a class="inventorymenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>
+                      </ul>
+                    </li>
+                    <li id="transactiondropdown" class="dropdown">
+                      <a href="" id="transaction" class="dropdown-toggle transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>V</u>oucher{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpayment" href="">{% trans %}Payment{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showsales" href="">{% trans %}Sale{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpurchase" href="">{% trans %}Purchase{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showcontra" href="">{% trans %}Contra{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showjournal" href="">{% trans %}Journal{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showsalesreturn" href="">{% trans %}Sale Return{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showpurchasereturn" href="">{% trans %}Purchase Return{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
+            <li><a class="transactionmenu closebooks intauditor" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
+            <li><a class="transactionmenu" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
+            <li><a class="transactionmenu intauditor" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+                      </ul>
+                    </li>
+                    <!-- Business Tab
+             Cash Memo
+             Invoice
+             Rejection Note
+             Debit/Credit Note
+                 -->
+              <li id="businessdropdown" class="dropdown closebooks">
+                      <a href="" id="business" class="dropdown-toggle businessmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Do<u>c</u>uments{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a class="businessmenu" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
+            <li><a class="businessmenu" data-toggle="tab" id="invoice" status="9" href="">{% trans %}Invoice{% endtrans %}</a></li>
+            <!--Rejection note work <li><a class="businessmenu" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>-->	
+                        <li><a class="businessmenu" data-toggle="tab" id="drcrnote" href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
+                </ul>
+                    </li>
+                    <li id="gstdropdown" class="dropdown">
+                      <a href="" id="gstmenu" class="dropdown-toggle gstdropdownmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>G</u>ST{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+                        <li><a class="gstmenuitem" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
+                        <li><a class="gstmenuitem" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
+                </ul>
+                    </li>
+                    <li id="reportdropdown" class="dropdown">
+                      <a href="" id="report" class="dropdown-toggle reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>R</u>eport{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
+            <li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
+            <li class="hideoperator"><a class="reportmenu" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
+            <li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
+            <li><a class="hideoperator hidemanager reportmenu intauditor" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
+            <li><a class="reportmenu intauditor" href="" data-toggle="tab" id="listofusers">List of Users</a></li>
+            <li><a class="reportmenu" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofbranches">{% trans %}List of Branches{% endtrans %}</a></li>
+            <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
+            <li><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
+        
+            <li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
+            <li><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
+            <li><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
+            <li><a class="reportmenu hideoperator hidemanager" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
+                      </ul>
+                    </li>
+                    <li id="administrationdropdown" class="dropdown">
+                      <a href="" id="administration" class="dropdown-toggle administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}A<u>d</u>ministration{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li class="hideoperator closebooks hidemanager"><a class="administrationmenu" data-toggle="tab" id="user" href="">{% trans %}User{% endtrans %}</a></li>
+            <li><a class="administrationmenu" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
+            <li class="hideoperator hidemanager rollover"><a class="administrationmenu" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
+            
+            <li class="hideoperator hidemanager "><a class="administrationmenu closebooks" data-toggle="tab" id="orgpref" href="">{% trans %}Company Preferences{% endtrans %}</a></li>
+            <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
+            <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
+            <li class="hideoperator hidemanager"><a class="administrationmenu" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Company{% endtrans %}</a></li>
+            
+                      </ul>
+                    </li>
+                    <li id="helpdropdown" class="dropdown">
+                      <a href="" id="help" class="dropdown-toggle helpmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>H</u>elp{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a class="helpmenu" id="support" href="http://support.gnukhata.in/">{% trans %}Support{% endtrans %}</a></li>
+            <li><a class="helpmenu" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
+            <li><a class="helpmenu" data-toggle="modal" id="shortcuts" href="" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a></li>
+            <li><a class="helpmenu" data-toggle="modal" id="authors" href="" data-target="#gnukhataauthors">{% trans %}Authors{% endtrans %}</a></li>
+            <li><a class="helpmenu" data-toggle="modal" id="license" href="" data-target="#gnukhatalicense">{% trans %}License{% endtrans %}</a></li>
+            <li><a class="helpmenu" data-toggle="modal" id="about" href="" data-target="#aboutgnukhata">{% trans %}About{% endtrans %}</a></li>		
+                </ul>
+                    </li>
+                  </ul>
+                  <ul class="nav navbar-nav navbar-right">
+                    <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
+                    <li id="signoutdropdown" class="dropdown">
+                      <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
+                      <ul class="dropdown-menu">
+            <li><a class="signoutmenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
+            <li><a class="signoutmenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
+                      </ul>
+                    </li>
+                    <li id="themesdropdown" class="dropdown">
+                      <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
+                      <ul class="dropdown-menu scrollable">
+            <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Cerulean" href="">{% trans %}Cerulean{% endtrans %}<span id="Ceruleanspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Cosmo" href="">{% trans %}Cosmo{% endtrans %}<span id="Cosmospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Cyborg" href="">{% trans %}Cyborg{% endtrans %}<span id="Cyborgspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Darkly" href="">{% trans %}Darkly{% endtrans %}<span id="Darklyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Flatly" href="">{% trans %}Flatly{% endtrans %}<span id="Flatlyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Journal" href="">{% trans %}Journal{% endtrans %}<span id="Journalspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Lumen" href="">{% trans %}Lumen{% endtrans %}<span id="Lumenspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Paper" href="">{% trans %}Paper{% endtrans %}<span id="Paperspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Readable" href="">{% trans %}Readable{% endtrans %}<span id="Readablespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Sandstone" href="">{% trans %}Sandstone{% endtrans %}<span id="Sandstonespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Simplex" href="">{% trans %}Simplex{% endtrans %}<span id="Simplexspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Slate" href="">{% trans %}Slate{% endtrans %}<span id="Slatespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Spacelab" href="">{% trans %}Spacelab{% endtrans %}<span id="Spacelabspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Superhero" href="">{% trans %}Superhero{% endtrans %}<span id="Superherospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}<span id="Ubuntuspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+            <li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
+                      </ul>
+                    </li>
+              <!--  
+             <li id="langdropdown" class="dropdown">
+             <a href="" id="lang" class="dropdown-toggle langmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Lan<u>g</u>uage{% endtrans %}</a>
+             <ul class="dropdown-menu">
+             <li><a  class="langmenu" id="eng" href="/locale?language=en">{% trans %}English{% endtrans %}</a></li>
+             <li><a  class="langmenu" id="mar" href="/locale?language=mr">{% trans %}मराठी{% endtrans %}</a></li>
+             <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
+             </ul>
+             </li>-->
+                    <li id="toolbardropdown" class="dropdown">
+                      <a href="" id="toolbar" class="dropdown-toggle toolbarmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Toolbar{% endtrans %}</a>
+                      <ul class="dropdown-menu scrollable">
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="addaccounttb" href="">{% trans %}Create Account{% endtrans %} - F2</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="editaccounttb" href="">{% trans %}Find & Edit Account{% endtrans %} - F3</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="receipttb" href="">{% trans %}Receipt{% endtrans %} - F4</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="paymenttb" href="">{% trans %}Payment{% endtrans %} - F5</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="salestb" href="">{% trans %}Sale{% endtrans %} - F6</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="purchasetb" href="">{% trans %}Purchase{% endtrans %} - F7</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="contratb" href="">{% trans %}Contra{% endtrans %} - F8</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="journaltb" href="">{% trans %}Journal{% endtrans %} - F9</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="salesreturntb" href="">{% trans %}Sale Return{% endtrans %} - CTRL+1</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="purchasereturntb" href="">{% trans %}Purchase Return{% endtrans %} - CTRL+2</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="creditnotetb" href="">{% trans %}Credit Note{% endtrans %} - CTRL+3</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="debitnotetb" href="">{% trans %}Debit Note{% endtrans %} - CTRL+4</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="findvouchertb" href="">{% trans %}Find/Edit Voucher{% endtrans %} - F10</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="ledgertb" href="">{% trans %}Ledger{% endtrans %} - F11</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="trialbalancetb" href="">{% trans %}Trial Balance{% endtrans %} - F12</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="projectstatementtb" href="">{% trans %}Cost Center Statement{% endtrans %} - CTRL+5</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="cashflowtb" href="">{% trans %}Cash Flow{% endtrans %} - CTRL+6</a></li>
+            <li><a class="toolbarmenu" data-toggle="tab" id="listofaccountstb" href="">{% trans %}List of Accounts{% endtrans %} - CTRL+7</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="projecttb" href="">{% trans %}Cost Center{% endtrans %} - ALT+C</a></li>
+            <li class="closebooks"><a class="toolbarmenu" data-toggle="tab" id="brstb" href="">{% trans %}Bank Reconciliation Statement{% endtrans %} - ALT+R</a></li>
+            <!--<li class="hideoperator closebooks"><a class="toolbarmenu" data-toggle="tab" id="createusertb" href="">New User - ALT+N</a></li>
+                 <li class="hideoperator hidemanager"><a class="toolbarmenu" data-toggle="tab" id="REMOVEusertb" href="">Remove User - ALT+U</a></li>
+                 <li><a class="toolbarmenu" data-toggle="tab" id="changepasswordtb" href="">Change Password - ALT+C</a></li>-->
+            <li><a class="toolbarmenu" target="_blank" id="manualtb" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %} - ALT+M</a></li>
+            <!--<li><a class="toolbarmenu" data-toggle="tab" id="logouttb" href="">Logout - CTRL+L</a></li>
+                 <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
+                      </ul>
+                    </li>
+        
+                  </ul>
+          </div><!-- /.navbar-collapse -->
+              </div><!-- /.container-fluid -->
+            </nav>
+        
+        </header>
+      <main role="main">
+    
     <div class="container-fluid hidden-print">
       <ul id="mainshellticker" class="shadow" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
 	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
@@ -813,7 +855,12 @@
         </div>
       </div>
     </div>
+<<<<<<< HEAD
     </div>
+=======
+  </div>
+
+>>>>>>> side bar menu
     <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">
       <div class="modal-dialog">
 	<div class="modal-content">
@@ -1200,6 +1247,7 @@
 	</div>
       </div>
     </div>
+  </main>
     <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
     <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.autotab.min.js')}}"></script>
@@ -1214,6 +1262,8 @@
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.searchabledropdown-1.0.8.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/dashboard.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/Chart.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/drawer.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/iscroll.min.js')}}"></script>
 
   </body>
 </html>
