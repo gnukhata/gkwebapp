@@ -97,6 +97,9 @@
      <div id="listdiv">
        <div class="col-xs-10 nopadding">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
+      {% if gkresult == [] %}
+      <center><label class= "text-danger" style="font-size:100% !important;"> No Invoice found! </label></center>
+      {% else %}
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
       <br>
@@ -201,7 +204,8 @@
 	 <button type="button" class="btn btn-sm btn-primary pull-right" id="printbutton" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 	 <button type="button" class="btn btn-sm btn-info pull-right" id="viewattachment" accesskey="e" style="display:none">{% trans %}Vi<u>e</u>w Attachment{% endtrans %}</button> 
        </div>
-     </div>     
+     </div>  
+     {% endif %}   
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofinvoices.js')}}"></script>
    </body>
