@@ -3397,38 +3397,115 @@ if (event.which == 13) {
                 }
             })
                 .done(function(resp) {
-		    console.log(resp["gkstatus"]);
                     if (resp["gkstatus"] == 0) {
 			allow = 0;
-			    let originvid = $("#invselect option:selected").val();
-                            if ($("#status").val() == '9') {
-				$("#invoice_view_purchase").click();
-                            } else {
-				$("#invoice_view_sale").click();
-                            }
-			    $("#invselect").val(originvid).change();
-                            $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
-                            if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
+			let originvid = $("#invselect option:selected").val();
+            if ((resp["gkstatus"] == 0) && (sessionStorage.avflag == 0)) {
 				$("#success-alert").alert();
 				$("#success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				    $("#success-alert").hide();
 				});
-		    }
-		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
-			$("#inv-vch-success-alert").text("Invoice saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
-			$("#inv-vch-success-alert").alert();
-			$("#inv-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
-			    $("#inv-vch-success-alert").hide();
-			});
-		    }
-		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
-			$("#inv-vch-failed-alert").alert();
-			$("#inv-vch-failed-alert").fadeTo(2500, 500).slideUp(500, function() {
-			    $("#inv-vch-failed-alert").hide();
-			});
-		    }
-			return false;
-                    } else if (resp["gkstatus"] == 1) {
+				
+            	if ($("#status").val() == '9') {
+					$("#invoice_view_purchase").click();
+            	} else {
+					$("#invoice_view_sale").click();
+                }
+				$("#invselect").val(originvid).change();
+				$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				return false;
+			}
+			else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+				$("#inv-vch-success-alert").append("Invoice saved with corresponding entry no. <a id='link'><u>"+ resp["gkvch"]["vchno"]+"<u></a>");
+				$("#inv-vch-success-alert").alert();
+				let D = 1;
+				let invid = resp["gkresult"];
+				$("#link").click(function(e){
+					D = 0;
+					e.preventDefault();
+					var id = resp["gkvch"]["vchid"];
+					$("#vouchernumberinput").val(id);
+					$.ajax({
+						type: "POST",
+						url: "/viewvoucher",
+						global: false,
+						async: false,
+						datatype: "text/html",
+						data : {"id":id},
+						beforeSend: function(xhr)
+						{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+						},
+						success: function(resp)
+						{
+						$("#viewvc").html("");
+						$('.modal-backdrop').remove();
+						$('.modal').modal('hide');
+						$("#viewvc").html(resp);
+						$('#myModal').modal('show');
+						$("#edit").hide();
+						$("#clone").hide();
+						$("#save").hide();
+						$("#delete").hide();
+						$("#printvoucher").hide();
+						$("#lock").hide();
+						$('#myModal').on('shown.bs.modal', function (e)
+						{
+							$(".btnfocus:enabled:first").focus();
+						});
+	
+						$('#myModal').on('hidden.bs.modal', function (e)
+						{
+							if($("#hideinp").val()==0)
+							{
+							$('.modal-backdrop').remove();
+							$("#viewvc").html("");
+							}
+
+							if ($("#status").val() == '9') {
+								$("#invoice_view_purchase").click();
+							} else {
+								$("#invoice_view_sale").click();
+							}
+							$("#invselect").val(originvid).change();
+							$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+						});
+						}
+					}
+					);
+				});
+				$("#inv-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+					$("#inv-vch-success-alert").hide();
+					if (D == 1){
+            			if ($("#status").val() == '9') {
+							$("#invoice_view_purchase").click();
+            			} else {
+							$("#invoice_view_sale").click();
+                    	}
+						// $("#invselect").val(originvid).change();
+						// $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+					}
+				});
+				return false;
+				}
+			
+		    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		
+				$("#inv-vch-failed-alert").alert();
+				$("#inv-vch-failed-alert").fadeTo(2500, 500).slideUp(500, function() {
+					$("#inv-vch-failed-alert").hide();
+				});
+				if ($("#status").val() == '9') {
+					$("#invoice_view_purchase").click();
+				} else {
+					$("#invoice_view_sale").click();
+						}
+				$("#invselect").val(originvid).change();
+				$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				return false;
+				}
+			} 
+
+			else if (resp["gkstatus"] == 1) {
                         $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
                         $("#invoice_challanno").focus();
                         $("#duplicate-alert").alert();
