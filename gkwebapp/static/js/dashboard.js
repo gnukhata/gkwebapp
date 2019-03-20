@@ -32,6 +32,32 @@ $(document).ready(function() {
 
 $('.drawer').drawer();
 
+$('.drawer').drawer({
+  class: {
+    nav: 'drawer-nav',
+    toggle: 'drawer-toggle',
+    overlay: 'drawer-overlay',
+    open: 'drawer-open',
+    close: 'drawer-close',
+    dropdown: 'drawer-dropdown'
+  },
+  iscroll: {
+    // Configuring the iScroll
+    // https://github.com/cubiq/iscroll#configuring-the-iscroll
+    mouseWheel: true,
+    preventDefault: false
+  },
+  showOverlay: true
+});
+$(".submenu_item").hide();
+$(".submenu_item").click(function(event){$('.drawer').drawer('close');});
+
+
+$(".submenu").click(function(event){
+  event.preventDefault();
+ var tog = $(this).data("menuname");
+  $('.'+tog).toggle();
+});
 
   $('#make_payment').click(function(){
   $('#showpayment').click();

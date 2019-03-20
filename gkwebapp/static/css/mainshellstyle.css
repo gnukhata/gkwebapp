@@ -78,6 +78,17 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	width: 15px;
 	overflow-x: auto;
   }
+  .submenu{
+	color: rgb(51, 51, 51);
+	  text-decoration: none !important;
+	  margin-left: 6px;
+	  font-size: 20px;
+  }
+  .submenu_item{
+	color: rgb(51, 51, 51);
+	text-decoration: none !important;
+	margin-left: 20px;
+  }
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;
