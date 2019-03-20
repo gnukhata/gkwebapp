@@ -7,11 +7,12 @@
     <div class="panel-body">
       <div class="container-fluid row">
 	<div class="row" id="invselectdiv">
-	  <div class="col-sm-6 form-group">
-	    
 			{% if gkresult == [] %}
-				<br>	<label class= "text-danger" style="font-size:100% !important;float:right;"> No Invoice found! </label>
+			<div class="bg-danger" style="text-align:center;padding-bottom:10px;margin:5px">
+				<br>	<label class= "text-danger" style="font-size:100% !important;"> No Invoice found! </label>
+				</div>
 			{% else %}
+			<div class="col-sm-6 form-group">
 			<label for="invselect" id="selectinvoice" style="font-size:100% !important;">{% trans %}List of Invoices{% endtrans %} :</label>
             <select class = "form-control input-sm wide" name = "productcode" id="invselect" >
               <option value="" disabled selected hidden>{% trans %}Select Invoice{% endtrans %}</option>
