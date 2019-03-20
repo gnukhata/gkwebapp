@@ -48,6 +48,13 @@
 <body>
   <div class="container-fluid ">
     <div class = "panel">
+    {% if btype == '3'%}
+        <center> <h4>Cash Budget Report  </h4></center> 
+    {% elif btype == '5' %}
+        <center> <h4>Expense Budget Report  </h4></center>
+    {% else %}
+        <center> <h4>Sales Budget Report  </h4></center>
+    {% endif %}
         <div class="panel-body">
         <div ><center>
              <strong id="printbudgetdetails"> {{budgetdetails}} </strong> </center>
