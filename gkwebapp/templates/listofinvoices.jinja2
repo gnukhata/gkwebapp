@@ -95,14 +95,12 @@
    </head>
    <body>
      <div id="listdiv">
-       <div class="col-xs-10 nopadding">
+       <div class="col-xs-12 nopadding">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
       {% if gkresult == [] %}
-      <center>
-      <div class="bg-danger " style="margin-left:10%;margin-top:2%;padding-top:10px;padding-bottom:10px">
-      <label class= "text-danger" style="font-size:100% !important;"> No Invoice found! </label>
-      </div>
-      </center>
+         <div class="bg-danger " style="margin-top:2%;padding-top:10px;padding-bottom:10px;text-align:center">
+         <label class= "text-danger" style="font-size:100% !important;"> No Invoice found! </label>
+         </div>
       {% else %}
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
