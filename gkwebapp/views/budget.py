@@ -177,7 +177,7 @@ def cashspreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Budget Report :'+ str(budgetdetails)
+        sheet['A3'] = 'Cash Budget Report :'+ str(budgetdetails)
         sheet.merge_cells('A3:D3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
@@ -198,10 +198,13 @@ def cashspreadsheet(request):
         titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['B6'] = result["budgetIn"]
         sheet['B6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['B6'].font = Font(name='Liberation Serif' )
         sheet['C6'] = result["budgetOut"]
         sheet['C6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['C6'].font = Font(name='Liberation Serif' )
         sheet['D6'] = result["budgetBal"]
         sheet['D6'].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D6'].font = Font(name='Liberation Serif' )
         row=8
         for budget in result["accData"]:
             sheet['A'+str(row)] = budget["accountname"]
@@ -209,27 +212,37 @@ def cashspreadsheet(request):
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['B'+str(row)] = budget["accDr"]
             sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)].font = Font(name='Liberation Serif' )
             sheet['C'+str(row)] = budget["accCr"]
             sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
             sheet['D'+str(row)] = budget["accBal"]
             sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['D'+str(row)].font = Font(name='Liberation Serif' )
             row=row+1
         sheet['A'+str(row)] = 'Total'
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row)] = result["totalDr"]
         sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['B'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['C'+str(row)] = result["totalCr"]
         sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['C'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['D'+str(row)] = result["budgetclosingbal"]
         sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+
         sheet['A'+str(row+1)] = 'Variance'
         sheet['A'+str(row+1)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row+1)] = result["varDr"]
         sheet['B'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['B'+str(row+1)].font = Font(name='Liberation Serif' )
         sheet['C'+str(row+1)] = result["varCr"]
         sheet['C'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['C'+str(row+1)].font = Font(name='Liberation Serif' )
         sheet['D'+str(row+1)] = result["varBal"]
         sheet['D'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row+1)].font = Font(name='Liberation Serif' )
 
         sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
@@ -280,7 +293,7 @@ def expensespreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Budget Report :'+ str(budgetdetails)
+        sheet['A3'] = 'Expense Budget Report :'+ str(budgetdetails)
         sheet.merge_cells('A3:F3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
@@ -387,7 +400,7 @@ def salesspreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Budget Report :'+ str(budgetdetails)
+        sheet['A3'] = 'Sales Budget Report :'+ str(budgetdetails)
         sheet.merge_cells('A3:F3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
@@ -461,14 +474,14 @@ def salesspreadsheet(request):
         sheet['A'+str(row+1)].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['B'+str(row+1)] = result["varexpense"]
         sheet.merge_cells('B'+str(row+1)+':C'+str(row+1))
-        sheet['B'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['B'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
         sheet['B'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['D'+str(row+1)] = result["varincome"]
         sheet.merge_cells('D'+str(row+1)+':E'+str(row+1))
-        sheet['D'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['D'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
         sheet['D'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['F'+str(row+1)] = result["varprofit"]
-        sheet['F'+str(row+1)].font = Font(name='Liberation Serif' )
+        sheet['F'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
         sheet['F'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
 
         sheet['A'+str(row+2)] = 'Total Closing Balance : '+ result["closingbal"]
