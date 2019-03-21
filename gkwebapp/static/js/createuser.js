@@ -223,7 +223,6 @@ $(document).ready(function(){
         if($("#godown").val() == 0){
           $("#question").focus();
         }
-      }
     });
     $("#question").keydown(function(e){
           if (e.which==13)
