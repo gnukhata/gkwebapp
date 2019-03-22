@@ -137,3 +137,9 @@
  .tooltip {
      min-width: 150px !important;
  }
+#add_shortcut:hover
+{
+     color: black!important;
+     text-decoration: none;
+     cursor: pointer;
+}
