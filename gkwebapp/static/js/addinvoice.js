@@ -794,6 +794,12 @@ $(document).ready(function() {
 	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
     });
+	//Shortcut Adding Supplier or Customer
+	$("#add_shortcut").click(function()
+	{
+		$(this).prop("disabled", true);
+		$("#invoice_addcust").click();
+	});
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
