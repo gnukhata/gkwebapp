@@ -283,6 +283,48 @@ def showsingleinvoice(request):
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
+@view_config(route_name="invoice",request_param="action=showvoucher",renderer="gkwebapp:templates/voucherininvoice.jinja2")
+def showvoucherininvoice(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/transaction?searchby=invoice&invid=%d"%(int(request.params["invid"])),headers=header)
+    vc=result.json()["gkresult"][0]
+    total = []
+    for vc in result.json()["gkresult"]:
+        type = vc["vouchertype"]        
+        projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
+        if type=="contra" or type=="journal":
+        	result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)
+        	if result1.json()["gkstatus"]==0:
+        		draccounts=result1.json()["gkresult"]
+        		craccounts=result1.json()["gkresult"]
+        elif type=="creditnote" or type=="debitnote" or type=="salesreturn" or type=="purchasereturn":
+        	result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=journal", headers=header)
+        	if result1.json()["gkstatus"]==0:
+        		draccounts=result1.json()["gkresult"]
+        		craccounts=result1.json()["gkresult"]   
+        else:
+        	drresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Dr"%(type), headers=header)
+        	crresult = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s&side=Cr"%(type), headers=header)
+        	if drresult.json()["gkstatus"]==0 and crresult.json()["gkstatus"]==0:
+        		draccounts=drresult.json()["gkresult"]
+        		craccounts=crresult.json()["gkresult"]
+        	else:
+        		return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request) 
+        if result.json()["gkstatus"]==0:    
+        	if vc["invid"]!=None:
+                    viewinvdata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(vc["invid"])), headers=header)
+                    vvi=viewinvdata.json()["gkresult"]
+                    vc["vvi"]=vvi
+        	if type=="sales" or type=="purchase"or type=="payment"or type=="receipt":
+        		invdata = requests.get("http://127.0.0.1:6543/invoice?forvoucher", headers=header)
+        		if invdata.json()["gkstatus"]==0:
+        			total.append({"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"draccounts":draccounts,"craccounts":craccounts,"invoicedata":invdata.json()["gkresult"]})
+        	else:
+        		total.append({"projects":projects.json()["gkresult"],"vtype":type,"voucher":vc,"userrole":result.json()["userrole"],"draccounts":draccounts,"craccounts":craccounts,"invoicedata":0})
+        else:
+        	return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)     
+    return {"total":total}
+
 @view_config(route_name="invoice",request_param="type=delete",renderer="json")
 def Invoicedelete(request):
     header={"gktoken":request.headers["gktoken"]}

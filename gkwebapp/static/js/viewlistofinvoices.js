@@ -272,7 +272,22 @@ $(document).ready(function() {
     });
     $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
         event.preventDefault();
-        $('#vch_confirmdel').modal('show');
+        $.ajax({
+            type: "POST",
+            url: "/invoice?action=showvoucher",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"invid":$("#invid").val()},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+        })
+        .done(function(resp) {
+            $("#info").html(resp);
+        });
+});
+        // $('#vch_confirmdel').modal('show');
 
         // $('.modal-backdrop').remove();
         // $('.modal').modal('hide');
@@ -319,5 +334,5 @@ $(document).ready(function() {
         // $('#m_confirmdel').on('hidden.bs.modal', function(event) {
         //     $("#editgoddet").focus();
         // });
-    });
+    // });
 });
