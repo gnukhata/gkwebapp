@@ -465,7 +465,7 @@ $("#openingbal").keydown(function(event) {
 
 $("#reset").click(function()
 {
-  $('#editaccount').click();
+  $('#edit_account').click();
 }
 );
 
@@ -590,6 +590,8 @@ $("#editaccountform").submit(function(e)
     var newgrpname = $("#newsubgroup").val();
     
   $("#msspinmodal").modal("show");
+  $('.modal-backdrop').remove();
+  $('.modal').modal('hide');
   
   $.ajax(
     {
