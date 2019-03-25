@@ -1,0 +1,725 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <style media="screen">
+     .rightJustified {
+	 text-align: right;
+     }
+     /*
+	Force table width to 100%
+      */
+     
+     #vptable tbody{
+	 display:block;
+	 height:calc(30vh);
+	 overflow-y:scroll;
+     }
+     #vptable thead, #vptable tbody tr{
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+
+     #vptable tfoot, #vptable tfoot tr {
+	 display:table;
+	 width:99.1%;
+	 table-layout:fixed;
+     }
+
+     #vctable tfoot, #vctable tfoot tr{
+	 display:table;
+	 width:99.2%;
+     }
+     
+     table.table-fixedheader {
+	 width: 100%;
+	 font-size:13px;
+     }
+     /*
+	Set table elements to block mode.  (Normally they are inline).
+	This allows a responsive table, such as one where columns can be stacked
+	if the display is narrow.
+      */
+     table.table-fixedheader, table.table-fixedheader>thead, table.table-fixedheader>tbody, table.table-fixedheader>tfoot, table.table-fixedheader>thead>tr, table.table-fixedheader>tbody>tr, table.table-fixedheader>tfoot>tr, table.table-fixedheader>thead>tr>th, table.table-fixedheader>tbody>tr>td, table.table-fixedheader>tfoot>tr>td {
+	 display: block;
+     }
+     table.table-fixedheader>thead>tr:after, table.table-fixedheader>tbody>tr:after, table.table-fixedheader>tfoot>tr:after  {
+	 content:' ';
+	 display: block;
+	 visibility: hidden;
+	 clear: both;
+     }
+     /*
+	When scrolling the table, actually it is only the tbody portion of the
+	table that scrolls (not the entire table: we want the thead to remain
+	fixed).  We must specify an explicit height for the tbody.  We include
+	100px as a default, but it can be overridden elsewhere.
+
+	Also, we force the scrollbar to always be displayed so that the usable
+	width for the table contents doesn't change (such as becoming narrower
+	when a scrollbar is visible and wider when it is not).
+      */
+     table.table-fixedheader>tbody {
+	 overflow-y: scroll;
+	 height: 24%;
+
+     }
+     /*
+	We really don't want to scroll the thead contents, but we want to force
+	a scrollbar to be displayed anyway so that the usable width of the thead
+	will exactly match the tbody.
+      */
+     table.table-fixedheader>tfoot {
+	 height: 25px;
+	 width: 100%;
+     }
+     table.table-fixedheader>thead{
+	 overflow-y: scroll;
+	 height: 24px;
+     }
+     /*
+	For browsers that support it (webkit), we set the background color of
+	the unneeded scrollbar in the thead to make it invisible.  (Setting
+	visiblity: hidden defeats the purpose, as this alters the usable width
+	of the thead.)
+      */
+     table.table-fixedheader>thead::-webkit-scrollbar {
+	 background-color: inherit;
+     }
+
+
+     table.table-fixedheader>thead>tr>th:after, table.table-fixedheader>tbody>tr>td:after, table.table-fixedheader>tfoot>tr>td:after {
+	 content:' ';
+	 display: table-cell;
+	 visibility: hidden;
+	 clear: both;
+     }
+
+     /*
+	We want to set <th> and <td> elements to float left.
+	We also must explicitly set the width for each column (both for the <th>
+	and the <td>).  We set to 20% here a default placeholder, but it can be
+	overridden elsewhere.
+      */
+
+     table.table-fixedheader>thead tr th, table.table-fixedheader>tbody tr td, table.table-fixedheader>tfoot tr td {
+	 float: left;
+
+     }
+     .nopadding {
+	 padding: 0 !important;
+	 margin: 0 !important;
+     }
+     #narr {
+	 max-height: 90%;
+	 max-width: 250%;
+     }
+     #project {
+	 max-width:100%;
+     }
+     label.normal {
+	 font-weight: bold;
+	 font-family: 'times new roman';
+	 font-size: 0.78em;
+     }
+    </style>
+
+  </head>
+  {%for data in total%}
+  <body>
+    <!-- Modal -->
+    {# {{data}} #}
+    
+
+    <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+
+              <h4 class="modal-title">{% trans %}Delete this voucher ?{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <p>{% trans %}Are you sure?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+              <button type="button" id="vcdel1" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+    </div><!-- /.modal -->
+
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+      <div class="modal-dialog modal-lg">
+	<div class="modal-content">
+          <div class="modal-body">
+            <div class="alert failure-alert" id="notran-del-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher could not be deleted.{% endtrans %}
+            </div>
+            <div class="alert failure-alert" id="notran-edit-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher could not be edited.{% endtrans %}
+            </div>
+            <div class="alert failure-alert" id="notran-clone-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher could not be cloned.{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="balance-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Totals misbalance!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="invoicebalance-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher total cannot be greater than Invoice total!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="zero-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher amount cannot be zero!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="zerorow-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Voucher with zero amount cannot be saved!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="accs-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}An account can be selected only once!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="vno-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please enter voucher number!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please enter voucher date in proper format!{% endtrans %}
+            </div>
+            <div class="alert alert-warning" id="attachment-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}No attachment found!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+              {% trans %}Please enter voucher date within the financial year!{% endtrans %}
+            </div>
+            <div class="alert alert-warning nopadding" id="postdate-alert" aria-live="rude" role="alert" hidden>
+              <strong>{% trans %}You are entering a post-dated transaction!{% endtrans %}</strong>
+            </div>
+            <div class="alert alert-danger" id="instrumentno-alert" aria-live="rude" role="alert" hidden>
+              {% trans %}Enter Instrument No.!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="bankname-alert" aria-live="rude" role="alert" hidden>
+              {% trans %}Enter Bank Name!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="branchname-alert" aria-live="rude" role="alert" hidden>
+              {% trans %}Enter Branch Name!{% endtrans %}
+            </div>
+            <div class="alert alert-danger" id="instrdate-alert" aria-live="rude" role="alert" hidden>
+              {% trans %}Enter Proper Instrument Date!{% endtrans %}
+            </div>
+            <form id="viewvoucher" name="voucher" class="" action="" method="get">
+              <div class="form-inline">
+		<div align="right">
+		  <strong><button type="button" data-dismiss ="modal" style="color:black; opacity:0.8; border:0; background:0; margin-top:-2%; font-size:25px">&times;</button></strong>
+		</div>
+		<div class="well well-sm" style="margin-top:0px;">
+                  <div class="form-group nopadding" style="width:24%">
+                    <label for="vno" class="vouchernoclone pull-left">{% trans %}Voucher No{% endtrans %} :</label><label for="vno" class="vouchernoclone pull-left" style="color:red;font-size: 120%;">*</label>
+                    <input type="text" name="vno" class="vouchernoclone form-control input-sm pull-left" id="vno" size="10" value="{{data["voucher"]["vouchernumber"]}}">
+                    
+		  </div>
+                  <div class="form-group col-xs-offset-2">
+                    {% if data["vtype"]=="contra" %}
+                      <label class="lblec"><i>{% trans %}Contra{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "payment" %}
+                      <label class="lblec"><i>{% trans %}Payment{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "receipt" %}
+                      <label class="lblec"><i>{% trans %}Receipt{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "journal" %}
+                      <label class="lblec"><i>{% trans %}Journal{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "sales" %}
+                      <label class="lblec"><i>{% trans %}Sales{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "purchase" %}
+                      <label class="lblec"><i>{% trans %}Purchase{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "creditnote" %}
+                      <label class="lblec"><i>{% trans %}Credit Note{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "debitnote" %}
+                      <label class="lblec"><i>{% trans %}Debit Note{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "salesreturn" %}
+                      <label class="lblec"><i>{% trans %}Sale Return{% endtrans %}</i></label>
+                    {% elif data["vtype"] == "purchasereturn" %}
+                      <label class="lblec"><i>{% trans %}Purchase Return{% endtrans %}</i></label>
+                    {% endif %}
+                  </div>
+
+                  <div class="pull-right form-group">
+                    <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="vdate" style="color:red;font-size: 120%;">*</label>
+                    <input type="text" class="vdate form-control input-sm" id="vdate" value="{{data["voucher"]['voucherdate'][:2]}}" size="2" maxlength="2" placeholder="DD"accesskey="d">
+                    <input type="text" id="vmonth" class="vdate form-control input-sm" value="{{data["voucher"]['voucherdate'][3:5]}}" size="2" maxlength="2" placeholder="MM">
+                    <input type="text" id="vyear" class="vdate form-control input-sm" value="{{data["voucher"]['voucherdate'][6:]}}" size="4" maxlength="4" placeholder="YYYY">
+                  </div>
+		</div>
+              </div>
+
+              {% if data["invoicedata"] %}
+		<div class="form-inline well well-sm invhide">
+
+		  {% if data["voucher"]["vvi"] %}
+		    <div class="form-group" id="viewdiv">
+		      
+		      {% if data["voucher"]["vvi"]["custSupDetails"] %}
+			<label for="invsel">{% trans %}Invoice {% endtrans %} :</label>
+
+			<input id="viewinvsel" value="{{data["voucher"]["vvi"]["invoiceno"]}},{{data["voucher"]["vvi"]["invoicedate"]}},{{data["voucher"]["vvi"]["custSupDetails"]["custname"]}}">
+		      {% else %}
+			<label for="invsel">{% trans %}Cash Memo{% endtrans %} :</label>
+
+			<input id="viewinvsel" value="{{data["voucher"]["vvi"]["invoiceno"]}},{{data["voucher"]["vvi"]["invoicedate"]}}">
+		      {% endif %}
+
+		    </div>
+		    <div class="form-group pull-right" id="invtotaldiv">
+		      {% if data["voucher"]["vvi"]["custSupDetails"] %}
+			<label for="invtotalvvi">{% trans %} Invoice Total Amount {% endtrans %} :</label>
+		      {% else %}
+			<label for="invtotalvvi">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
+		      {% endif %}
+                      <input type="text" id="invtotalvvi" class="form-control input-sm" value="{{data["voucher"]["vvi"]["invoicetotal"]}}" style="text-align:right;"  disabled>
+                      <input id="selinv" value="{{data["voucher"]["vvi"]["invid"]}}" hidden>
+		    </div>
+		  
+		  
+                  <div class="form-group" div="editdiv">
+		    
+		    {% if data["voucher"]["vvi"]["custSupDetails"] %}
+                      <label id="editinv">{% trans %}Invoice {% endtrans %} :</label>
+                      <select id="invsel" class="form-control input-sm invoice_no" hidden>
+			<option value="" total="">{% trans %}None{% endtrans %}</option>
+			{% for invoice in data["invoicedata"] %}
+			  {% if data["vtype"] == "purchase" or data["vtype"] == "payment" and invoice["csflag"]|int == 19 %}
+			    {% if data["voucher"]["invid"]|int== invoice['invid']|int %}
+			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+			    {% else %}
+			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+			    {% endif %}
+			  {% elif data["vtype"] == "sales" or data["vtype"] == "receipt" and invoice["csflag"]|int == 3 %}
+			    {% if data["voucher"]["invid"]|int== invoice['invid']|int %}
+			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+			    {% else %}
+			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
+			    {% endif %}
+			  {% endif %}
+			{% endfor %}
+                      </select>
+		    {% else %}
+		      <label id="editinv">{% trans %}Cash Memo {% endtrans %} :</label>
+                      <select id="invsel" class="form-control input-sm invoice_no" hidden>
+			<option value="" total="">{% trans %}None{% endtrans %}</option>
+			{% for invoice in data["invoicedata"] %}
+			  {% if data["vtype"] == "purchase" or data["vtype"] == "payment" and data["voucher"]["invid"]|int== invoice['invid']|int %}
+			    <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
+			  {% elif data["vtype"] == "sales" or data["vtype"] == "receipt" and data["voucher"]["invid"]|int== invoice['invid']|int %}
+			    <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}"  selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}</option>
+			    
+			  {% endif %}
+			  
+			{% endfor %}
+
+                      </select>
+		    {% endif %}
+
+		    
+		  </div>
+                  <div class="form-group pull-right" id="selinvtotal">
+		    {% if data["voucher"]["vvi"]["custSupDetails"] %}
+                      <label for="invtotal">{% trans %} Invoice Total Amount {% endtrans %} :</label>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00"  disabled>
+		    {% else %}
+		      <label for="invtotal">{% trans %} Cash Memo Total Amount {% endtrans %} :</label>
+                      <input type="text" id="invtotal" class="form-control input-sm" value="0.00" style="text-align:right;"  disabled>
+		    {% endif %}
+                  </div>
+		  {% endif %}
+		</div>
+	      {% endif %}
+
+		    <div class="table-responsive" id="demovctable">
+		      <table id="vptable" class="table table-condensed">
+			<thead style ="font-size:12px;width:99%;">
+			  <tr>
+			    <th width="20%">
+			      {% trans %}Cr/Dr{% endtrans %}
+			    </th>
+			    <th width="20%">
+			      {% trans %}Account Name{% endtrans %}
+			    </th>
+
+			    <th class="rightJustified">
+			      {% trans %}Dr Amount{% endtrans %}
+			    </th>
+			    <th class="rightJustified">
+			      {% trans %}Cr Amount{% endtrans %}
+			    </th>
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for dr in data["voucher"]["drs"] %}
+			    <tr>
+			      <td>
+				<select class="form-control input-sm democrdr" >
+				  <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
+				  <option value="Cr">{% trans %}Cr{% endtrans %}</option>
+				</select>
+			      </td>
+			      <td>
+				<select class="form-control input-sm demoaccs">
+				  {% for acc in data["draccounts"] %}
+				    {% if dr==acc['accountname'] %}
+				      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+				    {% else %}
+				      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+				    {% endif %}
+				  {% endfor %}
+				</select>
+			      </td>
+
+			      <td>
+				<input class="form-control input-sm demodramt rightJustified" type="text" value="{{data["voucher"]["drs"][dr]}}">
+			      </td>
+			      <td>
+				<input class="form-control input-sm democramt rightJustified" type="text" value="" disabled>
+			      </td>
+			    </tr>
+
+			  {% endfor %}
+
+			  {% for cr in data["voucher"]["crs"] %}
+			    <tr>
+			      <td>
+				<select class="form-control input-sm democrdr" >
+				  <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
+				  <option value="Dr">{% trans %}Dr{% endtrans %}</option>
+				</select>
+			      </td>
+			      <td>
+				<select class="form-control input-sm demoaccs">
+				  {% for acc in data["craccounts"] %}
+				    {% if cr==acc['accountname'] %}
+				      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+				    {% else %}
+				      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+				    {% endif %}
+
+				  {% endfor %}
+				</select>
+			      </td>
+
+			      <td>
+				<input class="form-control input-sm demodramt rightJustified" type="text" value="" disabled>
+			      </td>
+			      <td>
+				<input class="form-control input-sm democramt rightJustified" type="text" value="{{data["voucher"]["crs"][cr]}}">
+			      </td>
+			    </tr>
+
+			  {% endfor %}
+			</tbody>
+			<tfoot>
+			  <tr>
+			    <td colspan="2">
+			      <input type="text" class="form-control input-sm demottl" value="Total" disabled>
+			    </td>
+			    <td>
+			      <input class="form-control input-sm demottl rightJustified" type="text" value="0.00" disabled>
+			    </td>
+			    <td>
+			      <input class="form-control input-sm demottl rightJustified" type="text" value="0.00" disabled>
+			    </td>
+			  </tr>
+			</tfoot>
+		      </table>
+		    </div>
+
+
+		    <div class="table-responsive">
+		      <table id="vctable" class="table table-condensed table-fixedheader">
+			<thead style ="width:99%;">
+			  <tr>
+			    <th class="col-xs-1">
+			      {% trans %}Cr/Dr{% endtrans %}
+			    </th>
+			    <th class="col-xs-4">
+			      {% trans %}Account Name{% endtrans %}
+			    </th>
+			    <th class="col-xs-2">
+                              {% trans %}Balance{% endtrans %}
+			    </th>
+			    <th class="col-xs-2 rightJustified">
+			      {% trans %}Dr Amount{% endtrans %}
+			    </th>
+			    <th class="col-xs-2 rightJustified">
+			      {% trans %}Cr Amount{% endtrans %}
+			    </th>
+			    <th class="col-xs-1">
+			      {% trans %}Remove{% endtrans %}
+			    </th>
+			  </tr>
+			</thead>
+			<tbody>
+			  {% for dr in data["voucher"]["drs"] %}
+			    <tr>
+			      <td class="col-xs-1">
+				<select class="form-control input-sm crdr" >
+				  <option value="Dr" selected>{% trans %}Dr{% endtrans %}</option>
+				  <option value="Cr">{% trans %}Cr{% endtrans %}</option>
+				</select>
+			      </td>
+			      <td class="col-xs-4">
+				<select class="form-control input-sm accs">
+				  {% for acc in data["draccounts"] %}
+				    {% if dr==acc['accountname'] %}
+				      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+				    {% else %}
+				      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+				    {% endif %}
+				  {% endfor %}
+				</select>
+			      </td>
+			      <td class="col-xs-2">
+				<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
+			      </td>
+			      <td class="col-xs-2">
+				<input class="form-control input-sm dramt rightJustified" type="text" value="{{data["voucher"]["drs"][dr]}}">
+			      </td>
+			      <td class="col-xs-2">
+				<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>
+			      </td>
+			      <td class="col-xs-1">
+				<a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			      </td>
+			    </tr>
+
+			  {% endfor %}
+
+			  {% for cr in data["voucher"]["crs"] %}
+			    <tr>
+			      <td class="col-xs-1">
+				<select class="form-control input-sm crdr" >
+				  <option value="Cr" selected>{% trans %}Cr{% endtrans %}</option>
+				  <option value="Dr">{% trans %}Dr{% endtrans %}</option>
+				</select>
+			      </td>
+			      <td class="col-xs-4">
+				<select class="form-control input-sm accs">
+				  {% for acc in data["craccounts"] %}
+				    {% if cr==acc['accountname'] %}
+				      <option value="{{acc['accountcode']}}" selected>{{acc['accountname']}}</option>
+				    {% else %}
+				      <option value="{{acc['accountcode']}}">{{acc['accountname']}}</option>
+				    {% endif %}
+
+				  {% endfor %}
+				</select>
+			      </td >
+			      <td class="col-xs-2">
+				<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>
+			      </td>
+			      <td class="col-xs-2">
+				<input class="form-control input-sm dramt rightJustified" type="text" value="" disabled>
+			      </td>
+			      <td class="col-xs-2">
+				<input class="form-control input-sm cramt rightJustified" type="text" value="{{data["voucher"]["crs"][cr]}}">
+			      </td>
+			      <td class="col-xs-1">
+				<a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
+			      </td>
+			    </tr>
+
+			  {% endfor %}
+			</tbody>
+			<tfoot>
+			  <tr>
+			    <td class="col-xs-7" colspan="2">
+			      <input type="text" class="form-control input-sm ttl" value="Total" disabled>
+			    </td>
+			    <td class="col-xs-2">
+			      <input id="drtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+			    </td>
+			    <td class="col-xs-2">
+			      <input id="crtotal" class="form-control input-sm ttl rightJustified" type="text" value="0.00" disabled>
+			    </td>
+			  </tr>
+			</tfoot>
+		      </table>
+		    </div>
+
+		    <div class="row">
+		      <div class="col-md-4">
+			<div class ="form-group" style ="font-size:12px;">
+		      {% if  data["projects"] %}
+			<label for="project">{% trans %}Pro<u>j</u>ect{% endtrans %} :</label>
+		    
+		      <select class="form-control input-sm" id="project" accesskey="j">
+
+			{% for project in data["projects"] %}
+			  {% if project['projectcode']==data["voucher"]["project"] %}
+			    <option value="{{project['projectcode']}}" selected>{{project['projectname']}}</option>
+			    <option value="" >{% trans %}None{% endtrans %}</option>
+			  {% else %}
+			    <option value="{{project['projectcode']}}">{{project['projectname']}}</option>
+			  {% endif %}
+			{% endfor %}}
+
+			{% if data["voucher"]["project"]==None %}
+			  <option value="" selected>{% trans %}None{% endtrans %}</option>
+			{% endif %}
+		      </select>
+                      {% endif %}
+			</div>
+			<div class ="form-group" style ="font-size:12px;">
+			  <label for="narration" >{% trans %}Narration{% endtrans %}:</label>
+			  <textarea class="form-control" name="narration" id="narr" rows="2" cols="20" accesskey="">{{data["voucher"]["narration"]}}</textarea>
+			</div>
+		      </div>
+		    <div class=" col-md-8">
+			<input type="hidden" id="m_data["vtype"]" name="m_data["vtype"]" value="{{data["vtype"]}}">
+			{# {% if data["voucher"]['instrumentno'] != None %}
+			  <div id="instrumentmodal" tabindex="-1" role="dialog">
+			  
+			    <strong><label>{% trans %}Bank Details{% endtrans %}</label></strong>
+			    <input type="hidden" id="bankflag" name="bankflag" value="1">
+			    <div class="row">
+                              <div class="col-xs-12">
+				<table class="table table-bodered" >
+				  <tbody>
+
+                                    <tr>
+                                      <td><label class="normal" for="instrumentno">{% trans %}Instrument No{% endtrans %}:</label></td>
+                                      <td><input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}" value={{data["voucher"]['instrumentno']}}></td>
+				      <td><label class="normal"for="bankname">{% trans %}Bank Name{% endtrans %} :</label></td>
+                                      <td><input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %}Enter Bank Name{% endtrans %}" value="{{data["voucher"]["bankname"]}}"></td>
+                                    </tr>
+                                   
+                                    <tr>
+                                      <td><label for="branchname" class="normal">{% trans %}Branch Name{% endtrans %}:</label></td>
+                                      <td><input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %}Enter Branch Name{% endtrans %}" value="{{data["voucher"]["branchname"]}}"></td>
+				      <td><label for="instrument_date" class="normal">{% trans %}Instrument Date:{% endtrans %}</label></td>
+                                      <td>
+                                        <div class="form-inline">
+                                          <div class="form-group">
+                                            <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" value="{{data["voucher"]['instrumentdate'][:2]}}">
+					    <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month" value="{{data["voucher"]['instrumentdate'][3:5]}}">
+                                            <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year" value="{{data["voucher"]['instrumentdate'][6:]}}">
+                                          </div>
+                                        </div>
+				      </td>
+                                    </tr>
+                              </div>
+				  </tbody>
+				</table>
+                            </div>
+                          </div> 
+		      </div>
+			{%endif%} #}
+
+			<div id="addbankdetailsdiv" tabindex="-1" role="dialog" hidden>
+
+                          <h5>  {% trans %}Bank Details{% endtrans %}</h5>
+			  <input type="hidden" id="bankflag2" name="bankflag" value="1">
+                          <div class="row">
+                            <div class="col-xs-12">
+			      <table class="table table-bodered" >
+				<tbody>
+
+                                  <tr style="height:10px;">
+                                    <td><label class="normal" for="instrumentno">{% trans %}Instrument No{% endtrans %} :</label></td>
+                                    <td><input class="form-control input-sm" disabled id="instrumentno" placeholder="{% trans %}Enter Instrument no{% endtrans %}" ></td>
+                                  </tr>
+                                  <tr>
+                                    <td><label class="normal"for="bankname">{% trans %}Bank Name{% endtrans %} :</label></td>
+                                    <td><input class="form-control input-sm" disabled id="bankname" placeholder="{% trans %}Enter Bank Name{% endtrans %}" ></td>
+                                  </tr>
+                                  <tr>
+                                    <td><label for="branchname" class="normal">{% trans %}Branch Name{% endtrans %} :</label></td>
+                                    <td><input class="form-control input-sm" disabled id="branchname" placeholder="{% trans %}Enter Branch Name{% endtrans %}" ></td>
+                                  </tr>
+                                  <tr>
+                                    <td><label for="instrument_date" class="normal">{% trans %}Instrument Date:{% endtrans %}</label></td>
+                                    <td>
+                                      <div class="form-inline">
+                                        <div class="form-group">
+                                          <input type="text" class="form-control input-sm instrdate" disabled size="2" maxlength="2" placeholder="DD" id="instrument_date" >
+                                          <input type="text" class="form-control input-sm instrdate" size="2" disabled maxlength="2" placeholder="MM" id="instrument_month" >
+                                          <input type="text" class="form-control input-sm instrdate" size="4" disabled maxlength="4" placeholder="YYYY" id="instrument_year" >
+                                        </div>
+                                      </div>
+				    </td>
+
+				  </tr>
+                            </div> 
+				</tbody>
+			      </table>
+                          </div> 
+                        </div> 
+		    </div> 
+		    <!--Last div-->	   
+            </form>
+            <input type="hidden" id="vcode" name="vcode" value="{{data["voucher"]['vouchercode']}}"></input>
+	  </div>     
+	</div>    
+        <div class="modal-footer" style="padding:0px;">
+          <div id="butform" class="form-inline pull-left">
+            <div class="form-group pull-left" style="margin-top:10px;">
+              {% if data["voucher"]['status'] %}
+		<button type="button" class="btn btn-warning btn-sm" id="lock" value="Unlock" accesskey="k">{% trans %}Unloc<u>k</u>{% endtrans %}</button>
+              {% else %}
+		<button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">{% trans %}Loc<u>k</u>{% endtrans %}</button>
+              {% endif %}
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" >{% trans %}Edit{% endtrans %}</button>
+              <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">{% trans %}Cl<u>o</u>ne{% endtrans %}</button>
+              <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="a">{% trans %}S<u>a</u>ve{% endtrans %}</button>
+              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" >{% trans %}Delete{% endtrans %}</button>
+              <button type="button" class="btn btn-success btn-sm" id="printvoucher" accesskey="v">{% trans %}Print <u>V</u>oucher{% endtrans %}</button>
+
+	      {%if data["vtype"] == "receipt" or data["vtype"] == "payment"%}
+                {% if data["voucher"]['instrumentno'] == None or data["voucher"]['instrumentno'] == ""  %}
+                  <button class="btn btn-primary btn-sm" type="button" id="instrumentbtn2"  hidden accesskey="i">{% trans %}Add Bank Deta<u>i</u>ls{% endtrans %}</button>
+                {%endif%}
+
+              {%endif%}
+	      
+	      <div class="form-group">
+		<button type="button" class="btn btn-danger btn-sm pull-right" id="vouchercancel" accesskey="b" name="button">{% trans %}<u>B</u>ack{% endtrans %}</button>
+              </div>
+
+              {% if data["voucher"]["attachmentcount"]>0 %}
+		<button type="button" class="btn btn-info btnfocus btn-sm" id="viewattach" >{% trans %}View Attachment{% endtrans %}</button>
+            </div>
+              {% else %}
+            <div class="form-group" id="replaceattach">
+              <label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                <input name="img" accesskey="h" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+                <b id="attachtext">{% trans %}Add Attachment{% endtrans %}</b>
+              </label>
+              <span class='label label-info' id="upload-file-info"></span>
+	      <small class="form-text text-danger text-muted">(JPEG images only.)</small>
+            </div>
+              {% endif %}
+              <div class="form-group" id="clonereplaceattach">
+		<label class="btn btn-info btn-sm" id="attachlbl" for="my-edit-file-selector">
+                  <input name="img" accesskey="h" class="input-sm" multiple accept="image/*" id="my-edit-file-selector" type="file" style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
+                  <b id="attachtext">{% trans %}Add Attac<u>h</u>ment{% endtrans %}</b>
+		</label>
+		<span class='label label-info' id="upload-file-info"></span>
+              </div>      
+          </div> 
+        </div> 
+      </div> 
+    </div> 
+    
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/jquery.numeric.min.js')}}"></script>
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/editclone.js')}}"></script>
+</body>
+{%endfor%}
+</html>
