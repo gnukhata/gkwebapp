@@ -266,8 +266,58 @@ $(document).ready(function() {
     $("#viewlist_reset").click(function(event) {
         $("#listofinvoices").click();
     });
-    console.log("kjkjooo");
-    $("#transaction").click(function(){
-        console.log("lllll");
+    $("#vouchertransaction").click(function(e){
+        e.preventDefault();
+        
+    });
+    $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
+        event.preventDefault();
+        $('#vch_confirmdel').modal('show');
+
+        // $('.modal-backdrop').remove();
+        // $('.modal').modal('hide');
+        // $('#m_confirmdel').modal('show').on('click', '#goddel', function(e) {
+        //     $.ajax({
+        //         type: "POST",
+        //         url: "/budget?type=delete",
+        //         global: false,
+        //         async: false,
+        //         datatype: "json",
+        //         data: {"budid": $("#budgetlist option:selected").val(),"budname":$("#bname").val()},
+        //         beforeSend: function(xhr) {
+        //             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        //         },
+        //         success: function(resp) {
+        //             if (resp["gkstatus"] == 0) {
+        //                 $('.modal-backdrop').remove();
+        //                 $("#delete-alert").alert();
+        //                 $("#delete-alert").fadeTo(2250, 500).slideUp(500, function() {
+        //                     $("#delete-alert").hide();
+        //                     $("a[href ='#budget_edit']").click();
+        //                 });
+        //             }
+        //         }
+        //     });
+        // });
+        // $("#goddel").keydown(function(e){
+        //     if (e.which==37 || e.which==38)
+        //     {
+        //     e.preventDefault();
+        //     $("#m_cancel").focus();
+        //     }
+        // });
+        // $("#m_cancel").keydown(function(e){
+        //     if (e.which==39)
+        //     {
+        //     e.preventDefault();
+        //     $("#goddel").focus();
+        //     }
+        // });
+        // $('#m_confirmdel').on('shown.bs.modal', function(event) {
+        //     $("#m_cancel").focus();
+        // });
+        // $('#m_confirmdel').on('hidden.bs.modal', function(event) {
+        //     $("#editgoddet").focus();
+        // });
     });
 });

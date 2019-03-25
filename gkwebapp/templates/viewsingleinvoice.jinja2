@@ -6,7 +6,7 @@
 			{% if gkresult["vouchercount"] == 0 %}
 				<label class="alert alert-danger hidden-print pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
 			{% else %}
-			<button class="btn btn-lng btn-info hidden-print pull-right" id="transaction" style="border:solid 1px" accesskey="v"> <b><u>V</u>iew transactions </b></button>
+			<button type="button" class="btn btn-lng btn-info hidden-print pull-right" id="vouchertransaction" accesskey="v"> <b><u>V</u>iew transactions </b></button>
 			{% endif %} 
 	</div>
 	<br>
@@ -557,14 +557,31 @@
   </div>
   </div>
   </div>
+	{# //////////////////////////////////////////////////////////////////////////////////////////////////////////////////// #}
+	<div id="vch_confirmdel" class="modal fade" tabindex="-1" role="dialog">
+                    <div class="vertical-alignment">
+                        <div class="modal-dialog modal-lng vertical-align-top">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h4 class="modal-title">{% trans %}Vouchers{% endtrans %}</h4>
+                                </div>
+                                <div class="modal-body">
+		                        <p>{% trans %}{% endtrans %}</p>
+	                            </div>
+	                            <div class="modal-footer">
+		                        <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
+		                        <button type="button" id="goddel" data-dismiss="modal" class="btn btn-danger"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+	                            </div> 
+	                        </div><!-- /.modal-content -->
+	                    </div><!-- /.modal-dialog -->
+	                </div>
+                </div><!-- /.modal --> 
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>
 <input type="text" id="deletable" value="{{ gkresult["deletable"] }}" hidden>
 <input type="text" id="invid" value="{{ gkresult["invid"] }}" hidden>
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}">
-
-</script>
-      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlistofinvoices.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlistofinvoices.js')}}"></script>
 
 
 
