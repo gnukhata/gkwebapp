@@ -2,6 +2,14 @@
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
+			<div class="form-inline form-group col-sm-12 nopadding" style="margin-top:1px important!">
+			{% if gkresult["vouchercount"] == 0 %}
+				<label class="alert alert-danger hidden-print pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
+			{% else %}
+			<button class="btn btn-lng btn-info hidden-print pull-right" id="transaction" style="border:solid 1px" accesskey="v"> <b><u>V</u>iew transactions </b></button>
+			{% endif %} 
+	</div>
+	<br>
 		{# delete invoice alerts #}
 	<div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>
 	<a href="" class="close" aria-label="close">&times;</a>
@@ -544,8 +552,7 @@
 	    <br>
 	  </div>
 	</div>
-      </div>
-      
+			</div>
     {% endif %}
   </div>
   </div>
@@ -557,6 +564,8 @@
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}">
 
 </script>
+      <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlistofinvoices.js')}}"></script>
+
 
 
 

@@ -266,4 +266,8 @@ $(document).ready(function() {
     $("#viewlist_reset").click(function(event) {
         $("#listofinvoices").click();
     });
+    console.log("kjkjooo");
+    $("#transaction").click(function(){
+        console.log("lllll");
+    });
 });
