@@ -258,7 +258,7 @@
     </div>
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
-<div>
+<div class="row col-sm-12">
   <a data-toggle="modal" data-target="#keyshorcuts"><i class="fa fa-question-circle pull-right"style="font-size:16px;color:black;"></i></a>
   </div>
 
@@ -610,20 +610,18 @@
       <div style="position:relative;">
       <div class="dashboarddiv shadow grow">
           <h5 style="color:#333">Delivery In</h5 >
-          <canvas id="delivery_in" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+          <canvas id="delivery_in" style="height:280px !important; width:100%;"></canvas>
       </div>
       </div>
       </div>
-   <div class="col-sm-6 dashboardouterdiv">
+      <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
         <div class="dashboarddiv shadow grow">
-          <div>
-          <h5 style="color:#333">Delivery Out</h5 >
-          <canvas id="delivery_out" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
-      </div>
-    </div>
-      </div>
-    </div>
+            <h5 style="color:#333">Delivery Out</h5 >
+            <canvas id="delivery_out" style="height:280px !important; width:100%;"></canvas>
+        </div>
+        </div>
+        </div>
     </div>
     <div class="row internalaud accountinghide adminhide operatorhide">
       <div class="col-sm-6 dashboardouterdiv">
