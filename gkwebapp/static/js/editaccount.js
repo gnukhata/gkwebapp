@@ -590,8 +590,6 @@ $("#editaccountform").submit(function(e)
     var newgrpname = $("#newsubgroup").val();
     
   $("#msspinmodal").modal("show");
-  $('.modal-backdrop').remove();
-  $('.modal').modal('hide');
   
   $.ajax(
     {
@@ -621,6 +619,7 @@ $("#editaccountform").submit(function(e)
           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#duplicate-alert").hide();
           });
+        $('.modal-backdrop').remove();        
 	    $("#msspinmodal").modal("hide");
           $("#accountname").focus().select();
         }
