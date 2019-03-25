@@ -29,7 +29,6 @@
  */
 
 $(document).ready(function() {
-
     $("#create_account").click(function() {
       $.ajax(
       {
@@ -86,6 +85,7 @@ $(document).ready(function() {
       success: function(resp)
       {
         $("#createeditlistofacc_div").html(resp);
+       $("#titlehide").hide();
       }
       }
     );
