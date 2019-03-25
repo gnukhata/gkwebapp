@@ -461,18 +461,11 @@ $.ajax(
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
         success: function(resp)
-        {
-          if(resp["gkresult"]==0){
-            $('#showstock').hide();  
-            $('#hidestock').show();      
-          }
-          else{
-          $('#hidestock').hide(); 
-          $('#showstock').show();  
+        { 
           $('#stock_on_hand').html("");      
           for (let i=0; i<5; i++){      
             $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["proddesc"][i]["proddesc"]+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][i]["balance"]+'</td> </tr>');                  
-            }
+            
           }
       }
       });
