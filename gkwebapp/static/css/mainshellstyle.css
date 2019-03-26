@@ -92,16 +92,17 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	border: none;
 	}
 	.submenu_item:hover, .submenu:hover{
-		/* color: #0e0e87; */
+		color: #0e0e87;
 	}
 
-.submenuli{
+.submenuli, .submenuitem{
 	padding: 5px;
 }
 .submenuli:hover{
 	background-color: #ff7f2a;
 	color: #0e0e87;
 }
+
 .submenuitem:hover{
 	background-color: #ff7f2a;
 	/* color: #0e0e87; */
@@ -110,7 +111,8 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	position: fixed;
     top: 0;
 		bottom: 0;
-overflow-y: auto;}
+overflow-y: auto;
+}
 
 option {
 	 min-height: 15px !important;

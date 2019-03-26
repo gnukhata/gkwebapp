@@ -49,7 +49,7 @@ $('.drawer').drawer({
   },
   showOverlay: true
 });
-$(".submenu_item").hide();
+$(".submenuitem").hide();
 $(".submenu_item").click(function(event){$('.drawer').drawer('close');});
 
 
