@@ -409,7 +409,7 @@ def salesspreadsheet(request):
         sheet.merge_cells('A4:F4')
 
         sheet['A5'] = 'Particulars'
-        sheet['B5'] = 'Expenses'
+        sheet['B5'] = 'Purchases'
         sheet.merge_cells('B5:C5')
         sheet['D5'] = 'Sales'
         sheet.merge_cells('D5:E5')
