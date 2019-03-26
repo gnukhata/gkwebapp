@@ -79,16 +79,39 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	overflow-x: auto;
   }
   .submenu{
-	color: rgb(51, 51, 51);
+	color: #696969;
 	  text-decoration: none !important;
-	  margin-left: 6px;
-	  /* font-size: 20px; */
+		margin-left: 6px;
+		font-size: 14px;
+	border: none;		
   }
   .submenu_item{
-	color: rgb(51, 51, 51);
-	text-decoration: none !important;
+		color: #696969;
+		text-decoration: none !important;
 	margin-left: 20px;
-  }
+	border: none;
+	}
+	.submenu_item:hover, .submenu:hover{
+		/* color: #0e0e87; */
+	}
+
+.submenuli{
+	padding: 5px;
+}
+.submenuli:hover{
+	background-color: #ff7f2a;
+	color: #0e0e87;
+}
+.submenuitem:hover{
+	background-color: #ff7f2a;
+	/* color: #0e0e87; */
+}
+.sidebar:hover{
+	position: fixed;
+    top: 0;
+		bottom: 0;
+overflow-y: auto;}
+
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;

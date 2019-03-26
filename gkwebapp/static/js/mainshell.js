@@ -758,7 +758,7 @@ $(document).ready(function(){
   var branchname = sessionStorage.getItem('goname');
   var orgdata = orname + " (" + ortype + ")";	
   var userdata = "\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
-  var yeardata = "Financial Year : " + styear + " to " + enyear;
+  var yeardata =styear + " to " + enyear;
     
   // organisation details are stored in items that are only visible in print.
   $("title").append(orname);
