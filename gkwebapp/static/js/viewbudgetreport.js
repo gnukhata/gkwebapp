@@ -73,7 +73,6 @@ $(document).ready(function() {
     });
     // ------- end Keydown --------------
     $("#budgettype ").change(function(e){   // This is for load list of selected type of budget.
-        console.log("lllllttt")
         if($("#cash").is(":checked")) {
             val = 3;
         }
@@ -103,14 +102,12 @@ $(document).ready(function() {
                     $("#nobudget").hide();
                     $("#bdgt_list").show();
                     $("#foot").show();
-                    console.log("jjjj");
                 }
                 else{
                     $("#foot").hide();
                     $("#bdgt_list").hide();
                     $("#submit").hide();
                     $("#nobudget").show();
-                    console.log("kkkkkk");
                 }
                 var br = jsonObj["gkresult"];
                 $('#b_list').append('<option value="" disabled selected hidden >' + "Select Budget" +' </option>'); 
@@ -120,7 +117,6 @@ $(document).ready(function() {
               }
               });
       });
-      console.log("ooopoopo");
       $("#budgettype").change();
       
     var financialstart = sessionStorage.yyyymmddyear1;
