@@ -113,7 +113,12 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 		bottom: 0;
 overflow-y: auto;
 }
-
+.brand
+{
+	position: absolute;
+    left: 50%;
+    transform: translatex(-50%);
+}
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;

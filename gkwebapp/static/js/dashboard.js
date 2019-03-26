@@ -100,6 +100,7 @@ $('#shortcutslink').click(function() {
 $('#secondmodal').click(function() { 
   $('#keyshorcuts').modal('show'); 
 });
+
 $('.drawer').drawer({
   class: {
     nav: 'drawer-nav',
