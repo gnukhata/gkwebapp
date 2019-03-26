@@ -20,6 +20,9 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 
 Contributors:
   "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+  "prajkta Patkar" <prajkta@riseup.net>
+  "Abhijith Balan" <abhijithb21@openmailbox.org>
+  "Rohan Khairnar" <rohankhairnar5@gmail.com>
 */
 /*
 This script is for the view page of list of Invoices.
@@ -282,57 +285,28 @@ $(document).ready(function() {
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             },
-        })
-        .done(function(resp) {
-            $("#info").html(resp);
+            success: function(resp)
+        {
+          $("#viewvcc").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
+          $("#viewvcc").html(resp);
+          $('#myModal').modal('show');
+          $('#myModal').on('shown.bs.modal', function (e)
+          {
+            $(".btnfocus:enabled:first").focus();
+          });
+          $('#myModal').on('hidden.bs.modal', function (e)
+          {
+        	  if($("#hideinp").val()==0)
+        	  {
+            $('.modal-backdrop').remove();
+            $("#viewvcc").html("");
+            $("#submit").click();
+        	  }
+          });
+
+        }
         });
 });
-        // $('#vch_confirmdel').modal('show');
-
-        // $('.modal-backdrop').remove();
-        // $('.modal').modal('hide');
-        // $('#m_confirmdel').modal('show').on('click', '#goddel', function(e) {
-        //     $.ajax({
-        //         type: "POST",
-        //         url: "/budget?type=delete",
-        //         global: false,
-        //         async: false,
-        //         datatype: "json",
-        //         data: {"budid": $("#budgetlist option:selected").val(),"budname":$("#bname").val()},
-        //         beforeSend: function(xhr) {
-        //             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        //         },
-        //         success: function(resp) {
-        //             if (resp["gkstatus"] == 0) {
-        //                 $('.modal-backdrop').remove();
-        //                 $("#delete-alert").alert();
-        //                 $("#delete-alert").fadeTo(2250, 500).slideUp(500, function() {
-        //                     $("#delete-alert").hide();
-        //                     $("a[href ='#budget_edit']").click();
-        //                 });
-        //             }
-        //         }
-        //     });
-        // });
-        // $("#goddel").keydown(function(e){
-        //     if (e.which==37 || e.which==38)
-        //     {
-        //     e.preventDefault();
-        //     $("#m_cancel").focus();
-        //     }
-        // });
-        // $("#m_cancel").keydown(function(e){
-        //     if (e.which==39)
-        //     {
-        //     e.preventDefault();
-        //     $("#goddel").focus();
-        //     }
-        // });
-        // $('#m_confirmdel').on('shown.bs.modal', function(event) {
-        //     $("#m_cancel").focus();
-        // });
-        // $('#m_confirmdel').on('hidden.bs.modal', function(event) {
-        //     $("#editgoddet").focus();
-        // });
-    // });
 });

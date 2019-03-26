@@ -3199,45 +3199,38 @@ if (event.which == 13) {
 				$("#vouchernumberinput").val(id);
 				$.ajax({
 					type: "POST",
-					url: "/viewvoucher",
+					url: "/invoice?action=showvoucher",
 					global: false,
 					async: false,
 					datatype: "text/html",
-					data : {"id":id},
-					beforeSend: function(xhr)
-					{
-					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					data: {"invid":invid},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 					},
 					success: function(resp)
-					{
-					$("#viewvc").html("");
+				{
+				  $("#viewvc").html("");
+				  $('.modal-backdrop').remove();
+				  $('.modal').modal('hide');
+				  $("#viewvc").html(resp);
+				  $('#myModal').modal('show');
+				  $('#myModal').on('shown.bs.modal', function (e)
+				  {
+					$(".btnfocus:enabled:first").focus();
+				  });
+				  $('#myModal').on('hidden.bs.modal', function (e)
+				  {
+					  if($("#hideinp").val()==0)
+					  {
 					$('.modal-backdrop').remove();
-					$('.modal').modal('hide');
-					$("#viewvc").html(resp);
-					$('#myModal').modal('show');
-					$("#edit").hide();
-					$("#clone").hide();
-					$("#save").hide();
-					$("#delete").hide();
-					$("#printvoucher").hide();
-					$("#lock").hide();
-					$('#myModal').on('shown.bs.modal', function (e)
-					{
-						$(".btnfocus:enabled:first").focus();
-					});
-
-					$('#myModal').on('hidden.bs.modal', function (e)
-					{
-						if($("#hideinp").val()==0)
-						{
-						$('.modal-backdrop').remove();
-						$("#viewvc").html("");
-						}
-						saveInvoice(invid,inoutflag);
-					});
-					}
+					$("#viewvc").html("");
+					$("#submit").click();
+					  }
+					  saveInvoice(invid,inoutflag);
+				  });
+		
 				}
-				);
+				});
 			});
 			$("#inv-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 			    $("#inv-vch-success-alert").hide();

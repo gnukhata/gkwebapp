@@ -3419,7 +3419,6 @@ if (event.which == 13) {
 				$("#inv-vch-success-alert").append("Invoice saved with corresponding entry no. <a id='link'><u>"+ resp["gkvch"]["vchno"]+"<u></a>");
 				$("#inv-vch-success-alert").alert();
 				let D = 1;
-				let invid = resp["gkresult"];
 				$("#link").click(function(e){
 					D = 0;
 					e.preventDefault();
@@ -3427,32 +3426,25 @@ if (event.which == 13) {
 					$("#vouchernumberinput").val(id);
 					$.ajax({
 						type: "POST",
-						url: "/viewvoucher",
+						url: "/invoice?action=showvoucher",
 						global: false,
 						async: false,
 						datatype: "text/html",
-						data : {"id":id},
-						beforeSend: function(xhr)
-						{
-						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+						data: {"invid":$("#invselect option:selected").val()},
+						beforeSend: function(xhr) {
+							xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 						},
 						success: function(resp)
-						{
-						$("#viewvc").html("");
-						$('.modal-backdrop').remove();
-						$('.modal').modal('hide');
-						$("#viewvc").html(resp);
-						$('#myModal').modal('show');
-						$("#edit").hide();
-						$("#clone").hide();
-						$("#save").hide();
-						$("#delete").hide();
-						$("#printvoucher").hide();
-						$("#lock").hide();
-						$('#myModal').on('shown.bs.modal', function (e)
-						{
-							$(".btnfocus:enabled:first").focus();
-						});
+					{
+					  $("#viewvc").html("");
+					  $('.modal-backdrop').remove();
+					  $('.modal').modal('hide');
+					  $("#viewvc").html(resp);
+					  $('#myModal').modal('show');
+					  $('#myModal').on('shown.bs.modal', function (e)
+					  {
+						$(".btnfocus:enabled:first").focus();
+					  });
 	
 						$('#myModal').on('hidden.bs.modal', function (e)
 						{
