@@ -31,16 +31,16 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();
     $("#msspinmodal").modal("hide");
     $("#budgettype").focus();
-    $("#nobudget").hide();
-    $("#list").show();
-    $("#cash").focus();
+    $("#bdgt_list").show();
+    $("#cash").select();
+    $("#foot").hide();
     var val;
     // ------------------   Keydown functions -------------
-    $("#budgetlist").keydown(function(e){
+    $("#b_list").keydown(function(e){
         if (e.which==38 )
         {e.preventDefault();
           $("#cash").focus().click();
-          $("#budgetlist").change();
+          $("#b_list").change();
         }
         if (e.which==13 )
         {e.preventDefault();
@@ -50,29 +50,30 @@ $(document).ready(function() {
     $("#submit").keydown(function(e){
         if (e.which==38 )
         {e.preventDefault();
-          $("#budgetlist").focus();
+          $("#b_list").focus();
         }
     });
     $("#cash").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
-        $("#budgetlist").focus();
+        $("#b_list").focus();
         }
     });
     $("#expense").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
-        $("#budgetlist").focus();
+        $("#b_list").focus();
         }
     });
     $("#sales").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
-        $("#budgetlist").focus();
+        $("#b_list").focus();
         }
     });
     // ------- end Keydown --------------
     $("#budgettype ").change(function(e){   // This is for load list of selected type of budget.
+        console.log("lllllttt")
         if($("#cash").is(":checked")) {
             val = 3;
         }
@@ -96,34 +97,40 @@ $(document).ready(function() {
               success: function(jsonObj){
                 len = jsonObj["numberofbudget"]
                 // if their are more than zero branches, only that time it will show branch selection option.
-                $('#budgetlist').html("");
+                $('#b_list').html("");
                 if (len > 0){
                     $("#submit").show();
                     $("#nobudget").hide();
-                    $("#list").show();
+                    $("#bdgt_list").show();
+                    $("#foot").show();
+                    console.log("jjjj");
                 }
                 else{
-                    $("#nobudget").show();
-                    $("#list").hide();
+                    $("#foot").hide();
+                    $("#bdgt_list").hide();
                     $("#submit").hide();
+                    $("#nobudget").show();
+                    console.log("kkkkkk");
                 }
                 var br = jsonObj["gkresult"];
-                $('#budgetlist').append('<option value="" disabled selected hidden >' + "Select Budget" +' </option>'); 
+                $('#b_list').append('<option value="" disabled selected hidden >' + "Select Budget" +' </option>'); 
                 for (let i in br ){
-                  $('#budgetlist').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
+                  $('#b_list').append('<option value="' + br[i].budid + '">' + br[i].budname+' ('+br[i].startdate+' To '+br[i].enddate+')'+' </option>');                  
                 }
               }
               });
       });
+      console.log("ooopoopo");
       $("#budgettype").change();
+      
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
-        if ($.trim($("#budgetlist option:selected").val())=="") {
-            $("#budgetlist-alert").alert();
-            $("#budgetlist-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#budgetlist-alert").hide();
+        if ($.trim($("#b_list option:selected").val())=="") {
+            $("#b_list-alert").alert();
+            $("#b_list-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#b_list-alert").hide();
             });
-            $("#budgetlist").focus();
+            $("#b_list").focus();
             return false;
         }
        $.ajax({
@@ -132,7 +139,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#budgetlist option:selected").text(),"budid": $("#budgetlist option:selected").val(),"financialstart":financialstart,"btype":val},
+        data: {"buddetails":$("#b_list option:selected").text(),"budid": $("#b_list option:selected").val(),"financialstart":financialstart,"btype":val},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },

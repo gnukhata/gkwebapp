@@ -40,9 +40,9 @@ $(document).ready(function() {
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var financial = sessionStorage.yyyymmddyear1;
     var hideshowflag;
-    $("#nobudget").hide();
+    $("#noeditbudget").hide();
     $("#flow").hide();
-    $("#cash").select();
+    $("#e_cash").select();
     $("#footer").hide();
     $("#budgetlist").keydown(function(e){
         if (e.which==13 || e.which==39)
@@ -71,7 +71,7 @@ $(document).ready(function() {
         $("#edit").focus();
         }
     });
-    $("#cash").keydown(function(e){
+    $("#e_cash").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
         $("#budgetlist").focus();
@@ -245,7 +245,7 @@ $(document).ready(function() {
         }
     }
     $("#budgettype").change(function(e){    // radio buttons Cash and Expense
-        if($("#cash").is(":checked")) {
+        if($("#e_cash").is(":checked")) {
              var val = 3;
          }
          if($("#expense").is(":checked")) {
@@ -271,11 +271,11 @@ $(document).ready(function() {
                // if their are more than zero branches, only that time it will show branch selection option.
                $('#budgetlist').html("");
                if (len > 0){
-                   $("#nobudget").hide();
+                   $("#noeditbudget").hide();
                    $("#list").show();
                }
                else{
-                   $("#nobudget").show();
+                   $("#noeditbudget").show();
                    $("#list").hide();
                }
                var br = jsonObj["gkresult"];

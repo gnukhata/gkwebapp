@@ -19,8 +19,8 @@
         <h3 class="panel-title">{% trans %}View Budget Report{% endtrans %}
       </div>
       <div class="panel-body" style="padding-top:5px">
-      <div class="alert alert-danger" id="budgetlist-alert" aria-live="rude" role="alert" hidden>
-          <label for="budgetlist">{% trans %}Please select budget!{% endtrans %}</label>
+      <div class="alert alert-danger" id="b_list-alert" aria-live="rude" role="alert" hidden>
+          <label for="b_list">{% trans %}Please select budget!{% endtrans %}</label>
         </div>
             <div id="budgettype" class="col-xs-12 from-group">
             <label for="budgettype" style="padding-top:2%">{% trans %}Type of Budget{% endtrans %} :
@@ -28,21 +28,23 @@
               <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash</label>
               <label><input style="margin-left:20px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Expense</label> 
               <label><input style="margin-left:20px" type="radio"  name="budtypess" id="sales" aria-label=" Sales Budget" value="5" > Sales</label>  
-            </div>
+            </div >
             <div class="col-xs-12 from-group">
-            <label class="text-danger" id="nobudget">{% trans %}No Budget Found!{% endtrans %}
+              <div id="nobudget" class="bg-danger" style="text-align:center;margin-top:2%;padding:5px">
+                <label class="text-danger" >{% trans %}<b>No Budget Found!<b>{% endtrans %}
+              </div>
             </label>
-            <div id = "list">
-            <label for="budgetlist" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :
-            </label>
-            <select class = "form-control input-sm" id="budgetlist">
-            <option value="" disabled selected hidden>{% trans %}Select Budget{% endtrans %}</option>
-            </select>
+            <div id = "bdgt_list" >
+              <label for="b_list" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :
+              </label>
+              <select class = "form-control input-sm" id="b_list">
+              <option value="" disabled selected hidden>{% trans %}Select Budget{% endtrans %}</option>
+              </select>
             </div>
           <br>
         </div>
       </div>
-      <div class="panel-footer" style="margin-left:3%">
+      <div id="foot"class="panel-footer" style="margin-left:3%">
         <button class="btn btn-primary btn-sm" id="submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
       </div>
     </div>

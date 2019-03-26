@@ -76,16 +76,44 @@ $(document).ready(function() {
   );
   });
 
+  $("a[href ='#budget_report']").click(function (e) {
+    // Loads list of all budget to view budget report.
+    $.ajax({
+      url: '/budget?type=viewbudgetreportpage',
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+
+    })
+     .done(function(resp) {
+       $("#budget_report").html(resp);
+       $("#budget_edit").html("");
+      $("#budget_create").html("");
+      $("#budget_list").html("");
+     });
+  });
+
   $("a[href ='#budget_create']").click();
   $('a[data-toggle="tab"]').on('shown.bs.tab', function (e) {
     if(e.target.attributes.href.value=="#budget_create"){
       $("#c_btype").focus();
     }
     else if(e.target.attributes.href.value=="#budget_edit"){
+      $("#e_cash").focus();
+    }
+    else if(e.target.attributes.href.value=="#budget_report"){
       $("#cash").focus();
     }
   });
   $("a[href ='#budget_edit']").click(function(event) {
+    $("#e_cash").focus();
+  });
+  $("a[href ='#budget_report']").click(function(event) {
     $("#cash").focus();
   });
   });
