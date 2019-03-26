@@ -32,14 +32,14 @@
   </head>
   <body class="drawer drawer--left">
       <header role="banner">
-          <button type="button" class="drawer-toggle drawer-hamburger">
+  <div class="container-fluid" style="background-color: #fafafa"> 
+          <button type="button" class="drawer-toggle drawer-hamburger" style="margin-top:-10px">
             <span class="sr-only">toggle navigation</span>
             <span class="drawer-hamburger-icon"></span>
           </button>
           <nav class="drawer-nav sidebar" role="navigation" style="height:100vh !important">
           <ul class="drawer-menu">
           
-            <li><a class="drawer-brand" href="#">Brand</a></li>
           <li id="masterdropdown" class="godownhide closebooks submenuli" data-menuname="mastermenu">
           <a href="" id="master" class="dropdown-toggle submenu" data-menuname="mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Master{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
@@ -156,7 +156,7 @@
           </ul>
           </nav>
     <!-- <nav class="navbar navbar-default navbar-fixed-top" style="margin-left:10px"> -->
-    <div class="container-fluid">
+    <!-- <div class="container-fluid"> -->
           <!-- Brand and toggle get grouped for better mobile display -->
           <div id="navhead" class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
@@ -171,7 +171,7 @@
         
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                  <ul class="nav navbar-nav">
+                  <ul class="nav navbar-nav" style="">
                     <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
                     <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
                     <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
@@ -179,13 +179,7 @@
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
                     <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
-                    <li id="signoutdropdown" class="dropdown">
-                      <a href="" id="signout" class="dropdown-toggle signoutmenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}<u>S</u>ign Out{% endtrans %}</a>
-                      <ul class="dropdown-menu">
-            <li><a class="signoutmenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
-            <li><a class="signoutmenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
-                      </ul>
-                    </li>
+
                     <li id="themesdropdown" class="dropdown">
                       <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
                       <ul class="dropdown-menu scrollable">
@@ -248,7 +242,12 @@
                  <li><a class="toolbarmenu" data-toggle="tab" id="changeogtb" href="">Change Organisation - CTRL+O</a></li>-->
                       </ul>
                     </li>
-                    <li id="userdropdown" class="dropdown" style="float: left;"><a class="dropdown-toggl" data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a></li>        
+                    <li id="userdropdown" class="dropdown" style="float: left;"><a class="dropdown-toggle usermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a>
+                    <ul class="dropdown-menu">
+                    <li><a class="usermenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
+                    <li><a class="usermenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
+                    <li><a class="usermenu" data-toggle="tab" id="changecompany" href="">{% trans %}Change Password{% endtrans %}</a></li>
+                    </ul></li>
                   </ul>
           </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
@@ -256,15 +255,6 @@
         
         </header>
       <main role="main">
-    
-    <div class="container-fluid hidden-print">
-      <ul id="mainshellticker" class="shadow" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
-	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
-	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
-	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a></li>
-	<li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
-      </ul>
-    </div>
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 10px; margin-bottom: 10px;" class="container-fluid tab-pane">
 <div class="row col-sm-12">

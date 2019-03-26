@@ -2136,7 +2136,7 @@ $('#listofaccounts').click(function (e) {
     $('#showeditorg').click();
   });
 
-  $('#userdata').click(function(){// clicking on user name and role in status bar will call change password page.
+  $('#changecompany').click(function(){// clicking on user name and role in status bar will call change password page.
     $('#showedituser').click();
   });
     
