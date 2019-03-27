@@ -21,7 +21,7 @@ th {
 
   }
 .mdwrap{
-	width:100%
+	width:6%
 }
 
 .smwrap1{
@@ -39,12 +39,39 @@ th {
 .cred{
     color:red;
   }
+#mthltable td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
 
+     #mthltable th {
+	 font-size: 85%;
+     }
 
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 30%;
+	 text-align: left !important;
+     }
+
+     #mthltable tbody {
+	 display:block;
+	 
+	 overflow-y:scroll;
+     }
+     #mthltable thead,#mthltable tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     #mthltable thead {
+	 width: calc( 99.01% );
+     }
 </style>
 <body>
-  {# <div class="container-fluid "> #}
-  <center>
+  <div class="container-fluid "><center>
     {% if btype == '3' %}
     <h4> <b>Cash Budget Report </b> </h4></center>
     {% elif btype == '5' %}
@@ -63,13 +90,13 @@ th {
             <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
         </div>
         <div class="table-responsive">
-          <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign" >
+          <table id="mthltable" class="shadow table table-bordered table-condensed ">
             <thead class="bg-primary">
 			    <tr>
-			      <th  class=" text-center">{% trans %}Particulars {% endtrans %} </th>
-			      <th  class=" text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
-			      <th  class=" text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
-			      <th  class=" text-center igstfield">{% trans %}Balance{% endtrans %}</th>
+			      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
+			      <th  class="taxwrap text-center igstfield">{% trans %}Balance{% endtrans %}</th>
 			    </tr>
 			  </thead>
             <tbody>
@@ -268,8 +295,10 @@ th {
         <button class="btn btn-sm btn-primary" type="button"  id="spreadsheet" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>    
         <button type="button" class="btn btn-sm btn-info" id="printversion" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>      
       </center>
-    {# </div> #}
+      
+    </div>
     <input type="hidden" id="btype" value="{{btype }}">
     <input type="hidden" id="budid" value="{{ budid }}">
+    <input type="hidden" id="menuflag" value="{{ menuflag }}">
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
 </body> 
