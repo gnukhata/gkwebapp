@@ -50,12 +50,11 @@ $('.drawer').drawer({
   showOverlay: true
 });
 $(".submenuitem").hide();
-$(".submenu_item").click(function(event){$('.drawer').drawer('close');});
-$("#showdashboard").click(function(event){$('.drawer').drawer('close');});
+$(".submenuitem").click(function(event){$('.drawer').drawer('close');});
 
 
 
-$(".submenu").click(function(event){
+$(".submenuli").click(function(event){
   event.preventDefault();
  var tog = $(this).data("menuname");
   $('.'+tog).toggle();
