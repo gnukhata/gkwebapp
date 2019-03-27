@@ -138,7 +138,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#b_list option:selected").text(),"budid": $("#b_list option:selected").val(),"financialstart":financialstart,"btype":val},
+        data: {"buddetails":$("#b_list option:selected").text(),"budid": $("#b_list option:selected").val(),"financialstart":financialstart,"btype":val,"menuflag":$("#menuflag").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
@@ -152,9 +152,7 @@ $(document).ready(function() {
             $("#reportpage").html(resp).show();
             $("#printreportpage").html("");
             }
-            
         }
     }); 
-
     });
 });

@@ -53,7 +53,7 @@ $(document).ready(function() {
         $("#edit").focus().click();
         }
         if (e.which==38){
-            $("#budgettype").focus();
+            $("#e_budgettype").focus();
         }
     });
     $("#edit").keydown(function(e){
@@ -244,7 +244,7 @@ $(document).ready(function() {
         });
         }
     }
-    $("#budgettype").change(function(e){    // radio buttons Cash and Expense
+    $("#e_budgettype").change(function(e){    // radio buttons Cash and Expense
         if($("#e_cash").is(":checked")) {
              var val = 3;
          }
@@ -286,9 +286,9 @@ $(document).ready(function() {
              }
              });
      });
-    $("#budgettype").change();     // on change list cash will be load
+    $("#e_budgettype").change();     // on change list cash will be load
     $("#budgetlist").change(function(e) {      // Budget list change
-        $("#budgettype").hide();
+        $("#e_budgettype").hide();
         $("#add").hide();
         var budid = $("#budgetlist option:selected").val();
         $.ajax({

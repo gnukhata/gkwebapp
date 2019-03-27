@@ -32,7 +32,12 @@ $(document).ready(function(){
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#back").click(function(e){
-        $("#showviewbudget").click();
+        if($("#menuflag").val() == 2){
+            $("#showviewbudget").click();
+        }
+        else{
+            $("a[href ='#budget_report']").click();
+        }
     });
     $("#printversion").click(function(e){
       $.ajax({
@@ -41,12 +46,20 @@ $(document).ready(function(){
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#budgetdetails").text(),"budid":$("#budid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#btype").val()},
+        data: {"buddetails":$("#budgetdetails").text(),"budid":$("#budid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#btype").val(),"menuflag":$("#menuflag").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
         success: function(resp) {
-            $("#info").html(resp);
+            if($("#menuflag").val() == '2'){
+                $("#info").html(resp);
+            }
+            else{
+            $("#viewreportpage").hide();
+            $("#foot").hide();
+            $("#reportpage").html("");
+            $("#printreportpage").html(resp).show();
+            }
         }
     });
     });
@@ -88,12 +101,20 @@ $(document).ready(function(){
         global: false,
         async: false,
         datatype: "json",
-        data: {"buddetails":$("#printbudgetdetails").text(),"budid": $("#printbudid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#printbtype").val()},
+        data: {"buddetails":$("#printbudgetdetails").text(),"budid": $("#printbudid").val(),"financialstart":sessionStorage.yyyymmddyear1,"btype":$("#printbtype").val(),"menuflag":$("#menuflag").val()},
         beforeSend: function(xhr) {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
         success: function(resp) {
-            $("#info").html(resp);
+            if($("#menuflag").val() == '2'){
+                $("#info").html(resp);
+            }
+            else{
+            $("#viewreportpage").hide();
+            $("#foot").hide();
+            $("#reportpage").html(resp).show();
+            $("#printreportpage").html("");
+            }
         }
     });
      });

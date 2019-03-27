@@ -66,12 +66,8 @@ def editbudgetpage(request):
 
 @view_config(route_name="budget",request_param="type=viewbudgetreportpage", renderer="gkwebapp:templates/viewbudgetreport.jinja2")
 def viewreportpage(request):
-    if "menuflag" in request.params:
-        menuflag = 1
-    else:
-        menuflag = 2
     header={"gktoken":request.headers["gktoken"]}
-    return {"status":True,"menuflag":menuflag}
+    return {"status":True,"menuflag":int(request.params["menuflag"])}
 
 @view_config(route_name="budget",request_param="type=bdg_list", renderer="json")
 def alllist(request):
@@ -135,8 +131,8 @@ def budgetreport(request):
         result = requests.get("http://127.0.0.1:6543/budget?type=expenseReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '19'):
         result = requests.get("http://127.0.0.1:6543/budget?type=salesReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
-
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]) }
+    
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]),"menuflag":request.params["menuflag"] }
 
 @view_config(route_name="budget",request_param="type=printreport", renderer="gkwebapp:templates/printbudgetreport.jinja2")
 def printbudgetreport(request):
@@ -149,7 +145,7 @@ def printbudgetreport(request):
     if (request.params["btype"] == '19'):
         result = requests.get("http://127.0.0.1:6543/budget?type=salesReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
 
-    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"] }
+    return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"],"menuflag":request.params["menuflag"] }
 
 @view_config(route_name="budget",request_param="type=cashspreadsheet", renderer="") 
 def cashspreadsheet(request):
