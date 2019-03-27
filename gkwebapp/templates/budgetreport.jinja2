@@ -43,7 +43,8 @@ th {
 
 </style>
 <body>
-  <div class="container-fluid "><center>
+  {# <div class="container-fluid "> #}
+  <center>
     {% if btype == '3' %}
     <h4> <b>Cash Budget Report </b> </h4></center>
     {% elif btype == '5' %}
@@ -267,7 +268,7 @@ th {
         <button class="btn btn-sm btn-primary" type="button"  id="spreadsheet" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>    
         <button type="button" class="btn btn-sm btn-info" id="printversion" accesskey="t">{% trans %}<i class="fa fa-print" aria-hidden="true"></i> View Prin<u>t</u>able Version{% endtrans %}</button>      
       </center>
-    </div>
+    {# </div> #}
     <input type="hidden" id="btype" value="{{btype }}">
     <input type="hidden" id="budid" value="{{ budid }}">
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/budgetreport.js')}}"></script>
