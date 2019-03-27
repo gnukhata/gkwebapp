@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Budget Report{% endtrans %}</title>
-  {%%}
+  {% if menuflag == '2' %}
   <style media="screen">
   .shadow {
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -12,9 +12,26 @@
 		font-size: 90%;
 	}
   </style>
+  {%else%}
+  <style>
+.panel{
+margin-bottom: 20px;
+background-color: #fff;
+border: 1px solid transparent;
+border-radius: 5px;
+}
+
+.table{
+    width:100%;
+    overflow:hidden;
+    display:block;
+}
+
+</style>
+  {% endif %}
 </head>
 <body>
-{% if menuflag == '2' %}
+{% if menuflag == 2 %}
   <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
@@ -47,17 +64,16 @@
           <br>
         </div>
       </div>
-      <div id="foot"class="panel-footer" style="margin-left:3%">
+      <div id="foot"class="panel-footer" style="padding-left:3%">
         <button class="btn btn-primary btn-sm" id="submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
       </div>
     </div>
   </div>
   {%else%}
-  akskdsjahdamdah
   <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
       <div class="panel shadow" style="border: 1px solid ;">
         <div class="panel panel-body">
-          <div class="panel col-md-4" >
+          <div class="panel col-md-4" id="viewreportpage">
             <div class="form-group col-xs-12" >
               <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
                 <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>
@@ -70,7 +86,7 @@
                   <label class="text-danger" >{% trans %}<b>No Budget Found!<b>{% endtrans %}
                 </div>
 
-              <div id = "list" class="input-group col-xs-12">
+              <div id = "bdgt_list" class="input-group col-xs-12">
                 <label for="b_list" style="padding-top:2%">{% trans %}List of Budgets{% endtrans %} :
                 </label>
                 <select class = "form-control input-sm" id="b_list">
@@ -78,12 +94,19 @@
                 </select>
               </div> {# list of budget#}
             </div>
-
+          </div>
+          <div id="reportpage" class="panel col-md-12">
+          </div>
+          <div id="printreportpage" class="panel col-md-12">
           </div>
         </div>
+        <div id="foot"class="panel-footer" style="padding-left:3%">
+                <button class="btn btn-primary btn-sm" id="submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
+            </div>
       </div>
     </div>
   {%endif %}
+  <input hidden id="menuflag" value={{menuflag}}>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewbudgetreport.js')}}"></script>
 </body>
 </html>
