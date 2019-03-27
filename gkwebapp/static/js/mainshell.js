@@ -235,11 +235,10 @@ $(document).ready(function(){
       $("#lang").click();
       event.preventDefault();
     }
-    // if(event.keyCode == 113) {
-    //   $("#addaccount").click();
-    //   event.preventDefault();
-    //   return false;
-    // }
+    if(event.keyCode == 113) {
+      $("#addaccount").click();
+      event.preventDefault();
+    }
     if(event.keyCode == 122) {
       $("#showviewledger").click();
       event.preventDefault();
@@ -339,9 +338,6 @@ $(document).ready(function(){
         {
           $("#transaction").click();
         }
-    }
-    if(event.which == 37){// left arrow will select toolbar.
-      $("#toolbar").click();
     }
   });
   $(".inventorymenu").keydown(function(event){

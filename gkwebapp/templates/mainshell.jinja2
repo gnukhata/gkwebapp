@@ -33,16 +33,17 @@
   <body class="drawer drawer--left">
       <header role="banner">
       <div class="container-fluid navbar-fixed-top" style="background-color: #fafafa;" > 
-          <div>
           <button type="button" class="drawer-toggle drawer-hamburger" style="margin-top:-10px">
             <span class="sr-only">toggle navigation</span>
             <span class="drawer-hamburger-icon"></span>
           </button>
           <nav class="drawer-nav sidebar navbar navbar-light navbar-fixed-top" role="navigation" style="height:100vh !important">
           <ul class="drawer-menu">
-
-          <li id="showdashboard" class="submenuli"><a  class="submenu" href="">{% trans %}Dashboard{% endtrans %}</a></li>
-              
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+              <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
+            </button>
+            <li class="submenuli"><a style="color:#696969; margin-left:6px;text-decoration: none " class=""  href="">Dashboard </a></li>
+                          
           <li id="masterdropdown" class="godownhide closebooks submenuli" data-menuname="mastermenu">
           <a href="" id="master" class="dropdown-toggle submenu" data-menuname="mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Master{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
@@ -156,7 +157,7 @@
     <li class="submenuitem helpmenu"><a class="submenu_item" data-toggle="modal" id="license" href="" data-target="#gnukhatalicense">{% trans %}License{% endtrans %}</a></li>
     <li class="submenuitem helpmenu"><a class="submenu_item" data-toggle="modal" id="about" href="" data-target="#aboutgnukhata">{% trans %}About{% endtrans %}</a></li>		
           </ul>
-          </div>
+          </nav>
           <div id="navhead" class="navbar-header">
                   <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
                     <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
@@ -220,38 +221,12 @@
                   </ul>
           </div><!-- /.navbar-collapse -->
               </div><!-- /.container-fluid -->
-            </nav>
         </header>
 
       <main role="main">
     <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
     <div id="info" style="margin-top: 50px; margin-bottom: 10px;" class="container-fluid tab-pane">
-<!-- <div class="row col-sm-12"> -->
-  <!-- <a data-toggle="modal" data-target="#keyshorcuts"><i class="fa fa-keyboard-o pull-right"style="font-size:16px;color:black;"></i></a> -->
-<!-- </div> -->
 
-          <div id="keyshorcuts" tabindex="-1" class="modal fade" role="dialog">
-              <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-                    <button id="firstmodal" type="button" class="close" data-dismiss="modal">&times;</button>
-                    <h4 class="modal-title">{% trans %}Keyboard Shortcuts{% endtrans %}</h4>
-            </div>
-            <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-                <p> {% trans %}To use screen specific shortcuts{% endtrans %} : </p>
-                <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}the underlined character{% endtrans %}".</p>
-                <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}the underlined character".{% endtrans %}</p>
-                <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc + {% trans %}the underlined character".{% endtrans %}</p>
-                <p><a data-toggle="modal" id="shortcutslink" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a> {% trans %}are given in the Toolbar and the Help Tab of the Menu Bar.{% endtrans %}</p>
-          <p>{% trans %}To access "n" th tab inside a page{% endtrans %} : </p>
-          <p class="shortcut">{% trans %}If using Firefox, press{% endtrans %} "Alt + Shift + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-                <p class="shortcut">{% trans %}If using Google Chrome, Opera or Internet Explorer, press{% endtrans %} "Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-          <p class="shortcut">{% trans %}If using older versions of Opera(prior to version 12.1), press{% endtrans %} "Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3).</p>
-        
-            </div>
-          </div>
-              </div>
-            </div>
     <div class="row form-inline internalaud godownhide accountinghide">
         <div class="col-xs-3 flowouterdiv">
             <div style="position:relative;">
