@@ -72,18 +72,19 @@ $(document).ready(function(){
     // For Invoicing with Billwise Accounting invflag=0, invsflag=1 and billflag=1. Inventory Menu is hidden. Sub-menus viz., 'Category', 'Product/Service' and 'Unit of Measurement' are added under Master Menu. Also Unadjusted sub-menu is added under Voucher for Billwise Accounting.
     // For Inventory with Invoicing and Billwise Accounting invflag=1, invsflag=1 and billflag=1. It includes Inventory, Billwise Accounting, Invoicing and extra sub-menus(viz., 'Category', 'Product/Service' and 'Unit of Measurement') will be removed from Master menu.
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
-      $(".productinmaster").hide();
-      $(".categoryinmaster").hide();
+      $(".productinmaster").remove();
+      $(".categoryinmaster").remove();
       $(".uominmaster").hide();
       $('.inventorymenu').hide();
       $('.invsbill').hide();
-      $("#customersupplier").hide();
       $("#showviewregister").hide();
       $(".inventory_hide").hide();
       $("#showbillwiseaccounting").hide();
       $(".invoicemenu").hide();
-      $(".businessmenu").hide();	 
-      $(".gstmenuitem").hide();
+      $(".businessmenu").hide();	
+      $("#Documents_id").remove();	
+      $(".gstmenuitem").remove();
+      $("#gstmenu_id").remove();
       $("#gstmenu").hide();
       $(".accountinghide").hide();
     }
@@ -103,7 +104,6 @@ $(document).ready(function(){
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
       $(".productinmaster").show();
       $(".categoryinmaster").show();
-      $("#customersupplier").show();
       $(".uominmaster").show();
       $("#showbillwiseaccounting").show();
       $('.inventorymenu').hide();
@@ -115,12 +115,11 @@ $(document).ready(function(){
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
       $('.inventorymenu').show();
       $('.invsbill').show();
-      $("#customersupplier").show();
       $('.inventory_hide').show();
       $("#showviewregister").show();
       $("#showbillwiseaccounting").show();
-      $(".productinmaster").hide();
-      $(".categoryinmaster").hide();
+      $(".productinmaster").remove();
+      $(".categoryinmaster").remove();
       $(".uominmaster").hide();
       $(".businessmen").show();
     }
@@ -544,14 +543,13 @@ $(document).ready(function(){
        $("#showviewlog").remove();
        $("#orgpref").remove();
        $("#gstmenu").remove();
-       $("#business").remove();	 
+      //  $("#business").remove();	 
        $(".godownhide").remove();	 
-
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
        $(".adminhide").remove();
-
+       $(".uominmaster").remove();
      }
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
@@ -560,6 +558,9 @@ $(document).ready(function(){
        $("#showviewbudget").remove();
        $("#budget").remove();
        $(".operatorhide").remove();
+       $(".uominmaster").remove();
+
+       
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
@@ -579,6 +580,7 @@ $(document).ready(function(){
    $("#showviewbudget").remove();
    $("#budget").remove();
    $(".internalaud").remove();
+   $("#Documents_id").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {

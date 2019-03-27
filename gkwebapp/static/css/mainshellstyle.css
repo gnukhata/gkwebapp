@@ -102,6 +102,16 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	background-color: #ff7f2a;
 	color: #0e0e87;
 }
+.dashboardmenu{
+	color:#696969;
+	margin-top:6px;
+	text-decoration: none;
+	padding: 7px
+}
+.dashboardmenu:hover{
+	background-color: #ff7f2a;
+	color: #0e0e87;
+}
 
 .submenuitem:hover{
 	background-color: #ff7f2a;

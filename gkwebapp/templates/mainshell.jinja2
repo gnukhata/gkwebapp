@@ -42,113 +42,113 @@
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
               <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
             </button>
-            <li class="submenuli"><a style="color:#696969; margin-left:6px;text-decoration: none " class=""  href="">Dashboard </a></li>
+            <li class="dashboardmenu"> <a style="text-decoration: none;color:#696969;" class=""  href="">Dashboard </a></li>
                           
-          <li id="masterdropdown" class="godownhide closebooks submenuli" data-menuname="mastermenu">
+          <li id="masterdropdown" class="internalaud godownhide closebooks submenuli" data-menuname="mastermenu">
           <a href="" id="master" class="dropdown-toggle submenu" data-menuname="mastermenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Master{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
-              <li class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab"  href="" id="addaccount">{% trans %}Account{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab" href="" id="showeditorg">{% trans %}Edit Profile{% endtrans %}</a></li>
+              <li id="addaccount" class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab"  href="">{% trans %}Account{% endtrans %}</a></li>
+              <li id="showeditorg" class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab" href="" >{% trans %}Edit Profile{% endtrans %}</a></li>
         
-              <li class="submenuitem mastermenu hideoperator hidemanager"><a  class="  submenu_item" data-toggle="tab" id="branchmenu" href="">{% trans %}Branch{% endtrans %}</a></li> 
-              <li class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab" id="customersupplier" href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab" id="showproject" href="">{% trans %}Cost Center{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu"><a  class=" submenu_item" data-toggle="tab" id="budget" href="">{% trans %}Budget{% endtrans %}</a></li>
+              <li id="branchmenu" class="submenuitem mastermenu hideoperator hidemanager"><a  class="  submenu_item" data-toggle="tab" href="">{% trans %}Branch{% endtrans %}</a></li> 
+              <li id="customersupplier" class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab"  href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
+              <li id="showproject" class="submenuitem mastermenu"><a class=" submenu_item" data-toggle="tab" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+              <li id="budget" class="submenuitem mastermenu"><a  class=" submenu_item" data-toggle="tab"  href="">{% trans %}Budget{% endtrans %}</a></li>
     
-              <li class="submenuitem mastermenu"><a class="submenu_item" data-toggle="tab" id="BRS" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu addcategory categoryinmaster"><a class="submenu_item" data-toggle="tab" id="categoryinmaster" href="">{% trans %}Category{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu productinmaster"><a  class="submenu_item" data-toggle="tab" id="productinmaster" href="" >Product/Service</a></li>
+              <li id="BRS" class="submenuitem mastermenu"><a class="submenu_item" data-toggle="tab" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
+              <li id="categoryinmaster" class="submenuitem mastermenu addcategory categoryinmaster"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Category{% endtrans %}</a></li>
+              <li id="productinmaster" class="submenuitem mastermenu productinmaster"><a  class="submenu_item" data-toggle="tab" href="" >Product/Service</a></li>
     
-              <li class="submenuitem mastermenu uominmaster"><a class="submenu_item" data-toggle="tab" id="uominmaster" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
-              <li class="submenuitem mastermenu"><a class="submenu_item" data-toggle="modal" data-target="#newsmodal" id="shownews" href="">{% trans %}Tax News{% endtrans %}</a></li>
+              <li id="uominmaster" class="submenuitem mastermenu uominmaster"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+              <li id="shownews" class="submenuitem mastermenu"><a class="submenu_item" data-toggle="modal" data-target="#newsmodal"  href="">{% trans %}Tax News{% endtrans %}</a></li>
               
-          <li id="inventorydropdown" class="dropdown closebooks inventory_hide submenuli" data-menuname="inventorymenu">
+          <li id="inventorydropdown" class=" internalaud dropdown closebooks inventory_hide submenuli" data-menuname="inventorymenu">
           <a href="" id="inventory" class="dropdown-toggle submenu" data-menuname="inventorymenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Inventory{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
-              <li class="submenuitem inventorymenu"><a  class="submenu_item" data-toggle="tab" id="product" href="">Product/Service</a></li>
-              <li class="submenuitem inventorymenu godownhide"><a  class="submenu_item" data-toggle="tab" id="godown" href="">{% trans %}Godown{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu addcategory"><a class="submenu_item" data-toggle="tab" id="addcategory" href="">{% trans %}Category{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu"><a class="submenu_item" data-toggle="tab" id="addunit" href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu godownhide"><a class="submenu_item" data-toggle="tab" id="purchaseorder" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu"><a class="submenu_item" data-toggle="tab" id="deliverychallan" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu"><a class="submenu_item" data-toggle="tab" id="createtransfernote" href="">{% trans %}Transfer Note{% endtrans %}</a></li>
-              <li class="submenuitem inventorymenu"><a class="submenu_item" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>
-
+              <li id="product" class="submenuitem inventorymenu"><a  class="submenu_item" data-toggle="tab" href="">Product/Service</a></li>
+              <li id="godown" class="submenuitem inventorymenu godownhide"><a  class="submenu_item" data-toggle="tab"  href="">{% trans %}Godown{% endtrans %}</a></li>
+              <li id="addcategory" class="submenuitem inventorymenu addcategory operatorhide"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Category{% endtrans %}</a></li>
+              <li id="addunit" class="submenuitem inventorymenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+              <li id="purchaseorder" class="submenuitem inventorymenu godownhide"><a class="submenu_item" data-toggle="tab" href="">{% trans %}Purchase/Sales Order{% endtrans %}</a></li>
+              
           <li id="transactiondropdown" class="godownhide dropdown submenuli" data-menuname="transactionmenu">
             <a href="" id="transaction" class="dropdown-toggle submenu" data-menuname="transactionmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Voucher{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>          
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showreceipt" href="">{% trans %}Receipt{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showpayment" href="">{% trans %}Payment{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showsales" href="">{% trans %}Sale{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showpurchase" href="">{% trans %}Purchase{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showcontra" href="">{% trans %}Contra{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showjournal" href="">{% trans %}Journal{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showsalesreturn" href="">{% trans %}Sale Return{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showpurchasereturn" href="">{% trans %}Purchase Return{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showcreditnote" href="">{% trans %}Credit Note{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" id="showdebitnote" href="">{% trans %}Debit Note{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" href="" data-toggle="tab" id="fevoucher">{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
-              <li class="submenuitem transactionmenu intauditor"><a class="submenu_item" href="" data-toggle="tab" id="showbillwiseaccounting">{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+              <li id="showreceipt" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Receipt{% endtrans %}</a></li>
+              <li id="showpayment" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Payment{% endtrans %}</a></li>
+              <li id="showsales" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Sale{% endtrans %}</a></li>
+              <li  id="showpurchase" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab" href="">{% trans %}Purchase{% endtrans %}</a></li>
+              <li id="showcontra" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Contra{% endtrans %}</a></li>
+              <li id="showjournal" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Journal{% endtrans %}</a></li>
+              <li id="showsalesreturn" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Sale Return{% endtrans %}</a></li>
+              <li id="showpurchasereturn" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Purchase Return{% endtrans %}</a></li>
+              <li id="showcreditnote" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Credit Note{% endtrans %}</a></li>
+              <li id="showdebitnote" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Debit Note{% endtrans %}</a></li>
+              <li id="fevoucher" class="submenuitem transactionmenu closebooks "><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
+              <li id="showbillwiseaccounting" class="submenuitem transactionmenu intauditor"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
 
-          <li id="businessdropdown" class="godownhide dropdown closebooks submenuli" data-menuname="businessmenu">
+          <li id="Documents_id"class="dropdown closebooks submenuli" data-menuname="businessmenu">
             <a href="" id="business" class="dropdown-toggle submenu" data-menuname="businessmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Documents{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
   
-              <li class="submenuitem businessmenu"><a class=" submenu_item" data-toggle="tab" id="addcashmemo" href="">{% trans %}Cash Memo{% endtrans %}</a></li>
-              <li class="submenuitem businessmenu"><a class=" submenu_item" data-toggle="tab" id="invoice" status="9" href="">{% trans %}Invoice{% endtrans %}</a></li>
+              <li id="addcashmemo" class="godownhide submenuitem businessmenu"><a class=" submenu_item" data-toggle="tab"  href="">{% trans %}Cash Memo{% endtrans %}</a></li>
+              <li id="invoice" class="godownhide submenuitem businessmenu"><a class=" submenu_item" data-toggle="tab"  status="9" href="">{% trans %}Invoice{% endtrans %}</a></li>
               <!--Rejection note work <li class="submenuitem businessmenu"><a class="" data-toggle="tab" id="rejectionnote" href="">{% trans %}Rejection Note{% endtrans %}</a></li>-->	
-              <li class="submenuitem businessmenu"><a class="  submenu_item" data-toggle="tab" id="drcrnote" href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
-          
-          <li id="gstdropdown" class="godownhide dropdown submenuli" data-menuname="gstmenuitem">
+              <li id="drcrnote" class="godownhide submenuitem businessmenu"><a class="  submenu_item" data-toggle="tab"  href="">{% trans %}Debit/Credit Note{% endtrans %}</a></li>
+              <li id="deliverychallan" class="submenuitem businessmenu"><a class="submenu_item" data-toggle="tab" href="">{% trans %}Delivery Note{% endtrans %}</a></li>
+              <li id="createtransfernote" class="submenuitem businessmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Transfer Note{% endtrans %}</a></li>
+              <li id="rejectionnote" class="submenuitem businessmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Rejection Note{% endtrans %}</a></li>
+
+          <li id="gstmenu_id" class="godownhide dropdown submenuli" data-menuname="gstmenuitem">
             <a href="" id="gstmenu" class="dropdown-toggle gstdropdownmenu submenu" data-menuname="gstmenuitem" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}GST{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
-              <li class="submenuitem gstmenuitem"><a class="submenu_item" data-toggle="tab" id="r1" href="">{% trans %}R1{% endtrans %}</a></li>
-              <li class="submenuitem gstmenuitem"><a class="submenu_item" href="" data-toggle="tab" id="gstsummary">{% trans %}GST Summary{% endtrans %}</a></li>
+              <li id="r1" class="submenuitem gstmenuitem"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}R1{% endtrans %}</a></li>
+              <li id="gstsummary" class="submenuitem gstmenuitem"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}GST Summary{% endtrans %}</a></li>
  
           <li id="reportdropdown" class="dropdown submenuli" data-menuname="reportmenu">
             <a href="" id="report" class="dropdown-toggle submenu" data-menuname="reportmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Report{% endtrans %}  <i class="fa fa-caret-down"></i></a>
           </li>
              
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
-            <li class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
-            <li class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
-            <li class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide hideoperator hidemanager intauditor"><a class="submenu_item" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu intauditor"><a class="submenu_item" href="" data-toggle="tab" id="listofusers">List of Users</a></li>
-            <li class="submenuitem reportmenu"><a class="submenu_item" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="listofbranches">{% trans %}List of Branches{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu invsbill"><a class="submenu_item " href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu invsbill"><a class="submenu_item " href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></li>
+            <li id="showviewledger" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Ledger{% endtrans %}</a></li>
+            <li  id="showtrialbalance" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Trial Balance{% endtrans %}</a></li>
+            <li id="showprjstate" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Cost Center Statement{% endtrans %}</a></li>
+            <li id="showcashflow" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Cash Flow{% endtrans %}</a></li>
+            <li id="showbalancesheet" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href=""  data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
+            <li id="consolidatedbalancesheet" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href=""  data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
+            <li id="showprofitloss" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab">{% trans %}Profit & Loss{% endtrans %}</a></li>
+            <li id="showviewbudget" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab">{% trans %}Budget Report{% endtrans %}</a></li>
+            <li id="listofaccounts" class="submenuitem reportmenu godownhide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Accounts{% endtrans %}</a></li>
+            <li id="showdeletedvoucher"class="submenuitem reportmenu godownhide hideoperator hidemanager intauditor"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
+            <li id="listofusers" class="submenuitem reportmenu intauditor"><a class="submenu_item" href="" data-toggle="tab" >List of Users</a></li>
+            <li id="showviewregister" class="submenuitem reportmenu"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Registers{% endtrans %}</a></li>
+            <li id="showstockreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Product Report{% endtrans %}</a></li>
+            <li id="stockonhandreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Stock on Hand Report{% endtrans %}</a></li>
+            <li id="categorywisestockonhandreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
+            <li id="listofgodowns" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Godowns{% endtrans %}</a></li>
+            <li id="listofbranches" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Branches{% endtrans %}</a></li>
+            <li id="listofcategories" class="submenuitem reportmenu invsbill"><a class="submenu_item " href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></li>
+            <li  id="listofstockitems" class="submenuitem reportmenu invsbill"><a class="submenu_item " href="" data-toggle="tab">{% trans %}List of Products/Services{% endtrans %}</a></li>
                
-            <li class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
-            <li class="submenuitem reportmenu godownhide hideoperator hidemanager"><a class="submenu_item" href="" data-toggle="tab" id="showviewlog">Activity Log</a></li>
+            <li id="listofinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></li>
+            <li id="listofunpaidinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
+            <li id="listoftransfernotes" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}List of Transfer Notes{% endtrans %}</a></li>
+            <li id="show_unbilled_deliveries" class="submenuitem reportmenu inventory_hide"><a class="submenu_item" href="" data-toggle="tab" >{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
+            <li id="showviewlog" class="submenuitem reportmenu godownhide hideoperator hidemanager"><a class="submenu_item" href="" data-toggle="tab" >Activity Log</a></li>
           
              <li id="administrationdropdown" class="dropdown submenuli" data-menuname="administrationmenu">
             <a href="" id="administration" class="dropdown-toggle submenu" data-menuname="administrationmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Administration{% endtrans %}  <i class="fa fa-caret-down"></i></a>
              </li>
-            <li class="hideoperator godownhide closebooks hidemanager submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab" id="user" href="">{% trans %}User{% endtrans %}</a></li>
-            <li class="submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab" id="showedituser" href="">{% trans %}Change Password{% endtrans %}</a></li>
-            <li class="hideoperator godownhide hidemanager rollover submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab" id="showclosebooks" href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
+            <li id="user" class="hideoperator godownhide closebooks hidemanager submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}User{% endtrans %}</a></li>
+            <li id="showedituser" class="submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Change Password{% endtrans %}</a></li>
+            <li id="showclosebooks" class="hideoperator godownhide hidemanager rollover submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Close Books/Roll Over{% endtrans %}</a></li>
             
-            <li class="hideoperator hidemanager godownhide  submenuitem administrationmenu closebooks"><a class="submenu_item" data-toggle="tab" id="orgpref" href="">{% trans %}Company Preferences{% endtrans %}</a></li>
-            <li class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="modal" data-target="#exportdata" id="exportledger" href="">{% trans %}Export Data{% endtrans %}</a></li>
-            <li class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab" id="tallyimport" href="">{% trans %}Import Data{% endtrans %}</a></li>
-            <li class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab" id="deleteorg" href="">{% trans %}Delete Company{% endtrans %}</a></li>
+            <li id="orgpref" class="hideoperator hidemanager godownhide  submenuitem administrationmenu closebooks"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Company Preferences{% endtrans %}</a></li>
+            <li id="exportledger" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="modal" data-target="#exportdata"  href="">{% trans %}Export Data{% endtrans %}</a></li>
+            <li id="tallyimport" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Import Data{% endtrans %}</a></li>
+            <li id="deleteorg" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item" data-toggle="tab"  href="">{% trans %}Delete Company{% endtrans %}</a></li>
             
-            <li id="helpdropdown" class="dropdown submenuli">
-              <a href="" id="help" class="dropdown-toggle submenu" data-menuname="helpmenu" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Help{% endtrans %}  <i class="fa fa-caret-down"></i></a>
+            <li id="helpdropdown" class="dropdown submenuli" data-menuname="helpmenu">
+              <a href="" id="help" class="dropdown-toggle submenu"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Help{% endtrans %}  <i class="fa fa-caret-down"></i></a>
               </li>
     <li class="submenuitem helpmenu"><a class="submenu_item" id="support" href="http://support.gnukhata.in/">{% trans %}Support{% endtrans %}</a></li>
     <li class="submenuitem helpmenu"><a class="submenu_item" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
@@ -173,9 +173,9 @@
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
                   <ul class="nav navbar-nav brand" style="margin: auto;">
-                    <li style=""><a data-toggle="tab" style="display: block; color: #333; font-weight: bold;  padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
-                    <li style=""><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; font-weight: bold; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
-                    <li style=""><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
+                    <li><a data-toggle="tab" style="display: block; color: #333; font-weight: bold;  padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+                    <li><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; font-weight: bold; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
+                    <li><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
                        
                   </ul>
                   <ul class="nav navbar-nav navbar-right">
