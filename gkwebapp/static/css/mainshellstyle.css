@@ -105,7 +105,7 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 
 .submenuitem:hover{
 	background-color: #ff7f2a;
-	/* color: #0e0e87; */
+	color: #0e0e87;
 }
 .sidebar:hover{
 	position: fixed;
