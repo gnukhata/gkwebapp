@@ -51,6 +51,8 @@ $('.drawer').drawer({
 });
 $(".submenuitem").hide();
 $(".submenu_item").click(function(event){$('.drawer').drawer('close');});
+$("#showdashboard").click(function(event){$('.drawer').drawer('close');});
+
 
 
 $(".submenu").click(function(event){
@@ -94,12 +96,12 @@ $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
 
-$('#shortcutslink').click(function() { 
-  $('#keyshorcuts').modal('hide'); 
-});
-$('#secondmodal').click(function() { 
-  $('#keyshorcuts').modal('show'); 
-});
+// $('#shortcutslink').click(function() { 
+//   $('#keyshorcuts').modal('hide'); 
+// });
+// $('#secondmodal').click(function() { 
+//   $('#keyshorcuts').modal('show'); 
+// });
 
 $('.drawer').drawer({
   class: {
