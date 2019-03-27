@@ -34,6 +34,8 @@ $(document).ready(function() {
     $("#bdgt_list").show();
     $("#cash").select();
     $("#foot").hide();
+    $("#reportpage").hide();
+    $("#printreportpage").hide();
     var val;
     // ------------------   Keydown functions -------------
     $("#b_list").keydown(function(e){
@@ -121,6 +123,7 @@ $(document).ready(function() {
       
     var financialstart = sessionStorage.yyyymmddyear1;
     $("#submit").click(function(event) {
+        event.preventDefault();
         if ($.trim($("#b_list option:selected").val())=="") {
             $("#b_list-alert").alert();
             $("#b_list-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -140,7 +143,16 @@ $(document).ready(function() {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
         success: function(resp) {
-            $("#info").html(resp);
+            if($("#menuflag").val() == '2'){
+                $("#info").html(resp);
+            }
+            else{
+            $("#viewreportpage").hide();
+            $("#foot").hide();
+            $("#reportpage").html(resp).show();
+            $("#printreportpage").html("");
+            }
+            
         }
     }); 
 

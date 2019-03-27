@@ -66,8 +66,12 @@ def editbudgetpage(request):
 
 @view_config(route_name="budget",request_param="type=viewbudgetreportpage", renderer="gkwebapp:templates/viewbudgetreport.jinja2")
 def viewreportpage(request):
+    if "menuflag" in request.params:
+        menuflag = 1
+    else:
+        menuflag = 2
     header={"gktoken":request.headers["gktoken"]}
-    return {"status":True,"menuflag":request.params["menuflag"]}
+    return {"status":True,"menuflag":menuflag}
 
 @view_config(route_name="budget",request_param="type=bdg_list", renderer="json")
 def alllist(request):
