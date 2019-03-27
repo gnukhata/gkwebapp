@@ -1,3 +1,4 @@
+
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
@@ -198,45 +199,6 @@ $(document).ready(function(){
 
   $(document).keydown(function(event) {
     // Shortcuts
-    if(event.ctrlKey && event.keyCode == 83) {
-      $("#signout").click();
-      event.preventDefault();
-    }
-
-    if(event.ctrlKey && event.keyCode == 77) {
-      $("#master").click();
-      event.preventDefault();
-    }
-    if(event.ctrlKey && event.keyCode == 73) {
-      $("#inventory").click();
-      event.preventDefault();
-    }
-    if(event.ctrlKey && event.keyCode == 86) {
-      $("#transaction").click();
-      event.preventDefault();
-    }
-    if(event.ctrlKey && event.keyCode == 67) {
-      $("#business").click();
-      event.preventDefault();
-    }
-
-    if(event.ctrlKey && event.keyCode == 71) {
-      $("#gstmenu").click();
-      event.preventDefault();
-    }
-      
-    if(event.ctrlKey && event.keyCode == 82) {
-      $("#report").click();
-      event.preventDefault();
-    }
-    if(event.ctrlKey && event.keyCode == 68) {
-      $("#administration").click();
-      event.preventDefault();
-    }
-    if(event.ctrlKey && event.keyCode == 72) {
-      $("#help").click();
-      event.preventDefault();
-    }
     if(event.ctrlKey && event.keyCode == 76) {
       $("#logout").click();
       event.preventDefault();
@@ -273,14 +235,11 @@ $(document).ready(function(){
       $("#lang").click();
       event.preventDefault();
     }
-    if(event.keyCode == 112) {
-      $("#toolbar").click();
-      event.preventDefault();
-    }
-    if(event.keyCode == 113) {
-      $("#addaccounttb").click();
-      event.preventDefault();
-    }
+    // if(event.keyCode == 113) {
+    //   $("#addaccount").click();
+    //   event.preventDefault();
+    //   return false;
+    // }
     if(event.keyCode == 122) {
       $("#showviewledger").click();
       event.preventDefault();
@@ -318,12 +277,11 @@ $(document).ready(function(){
       event.preventDefault();
     }
     if(event.keyCode == 116) {
-      $("#showpayment").click();
       event.preventDefault();
-    }
+      $("#showpayment").click();    }
     if(event.keyCode == 115) {
-      $("#showreceipt").click();
       event.preventDefault();
+      $("#showreceipt").click();
     }
     if(event.keyCode == 120) {
       $("#showjournal").click();
@@ -501,9 +459,6 @@ $(document).ready(function(){
 
       $("#lang").click();
     }
-    if(event.which == 37){
-      $("#signout").click();
-    }
   });
   $(".langmenu").keydown(function(event){
     if(event.which == 39){
@@ -526,65 +481,6 @@ $(document).ready(function(){
     }
   });
 
-      //default focuses on first option of dropdowns.
-  $('#masterdropdown').on('shown.bs.dropdown', function () {
-    $("#addaccount").focus();
-  });
-  $('#inventorydropdown').on('shown.bs.dropdown', function () {
-    $("#product").focus();
-  });
-  $('#transactiondropdown').on('shown.bs.dropdown', function () {
-    $("#showreceipt").focus();
-  });
-  $('#businessdropdown').on('shown.bs.dropdown',function() {
-    $("#addcashmemo").focus();  
-  });  
-  $('#reportdropdown').on('shown.bs.dropdown', function () {
-    $("#addaccount").focus();
-  });
-  $('#inventorydropdown').on('shown.bs.dropdown', function () {
-    $("#product").focus();
-  });
-  $('#transactiondropdown').on('shown.bs.dropdown', function () {
-    $("#showreceipt").focus();
-  });
-
-  $("#gstdropdown").on("shown.bs.dropdown", function() {
-    $("#r1").focus();
-  });
-
-  $('#reportdropdown').on('shown.bs.dropdown', function () {
-    $("#showviewledger").focus();
-  });
-  $('#administrationdropdown').on('shown.bs.dropdown', function () {
-    $("#user").focus();
-  });
-    
-  $('#helpdropdown').on('shown.bs.dropdown', function () {
-    $("#support").focus();
-  });
-  $('#signoutdropdown').on('shown.bs.dropdown', function () {
-    $("#logout").focus();
-  });
-  $('#themesdropdown').on('shown.bs.dropdown', function () {
-    $("#Default").focus();
-  });
-  $('#langdropdown').on('shown.bs.dropdown', function () {
-    $("#eng").focus();
-  });
-  $('#toolbardropdown').on('shown.bs.dropdown', function () {
-    $("#addaccounttb").focus();
-  });
-
-  $("#toolbar").click(function(){
-    // Expands the toolbar on click to the height slightly less than the windowheight.
-    var windowheight = window.innerHeight;
-    var scrollerheight = windowheight - 40;
-    $(".scrollable").css("max-height", scrollerheight);
-    if (!window.screenTop && !window.screenY) {
-      $(".scrollable").css("max-height", windowheight);
-    }
-  });
   $("#themes").click(function(){
     // Same as toolbar.
     var windowheight = window.innerHeight;
@@ -1663,10 +1559,13 @@ $('#listofaccounts').click(function (e) {
 	},
 	success: function(resp)
 	{
-	  $("#info").html(resp);
+    $("#info").html(resp);
+    $("#msspinmodal").modal("hide");
+    
 	}
       }
     );
+    return false;
   });
 
   /*$('#createuser').click(function (e) {

@@ -119,6 +119,13 @@ overflow-y: auto;
     left: 50%;
     transform: translatex(-50%);
 }
+.namestyle{
+pointer-events: none;
+color:#ff7f2a;
+text-shadow: 0.3px 0.3px 0.6px gray;
+font-size: 20px; 
+margin-left: -15px;
+}
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;
