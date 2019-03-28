@@ -50,9 +50,6 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
     outline: 2px #1f0e5e solid !important;
     
 }
-.grow { transition: all .2s ease-in-out; 
-}
-.grow:hover {transform: scale(1.1); }
 .flowdiv{
 	width: 85%;
 	height: 150px;
