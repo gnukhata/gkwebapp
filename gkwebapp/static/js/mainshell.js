@@ -340,7 +340,6 @@ $(document).ready(function(){
         }
       else// else transaction menu is selected.
         {
-          console.log("22");
           $("#transaction").click();
         }
     }
@@ -348,7 +347,6 @@ $(document).ready(function(){
   $(".inventorymenu").keydown(function(event){
     // As mentioned above left right arrow navigation for menu items.
     if(event.which == 39){
-      console.log("11");
       $("#transaction").click();
     }
     if(event.which == 37){
@@ -407,7 +405,6 @@ $(document).ready(function(){
 	  if (sessionStorage.invsflag ==1){
 	      $("#gstmenu").click();
 	  }else{
-      console.log("33");
 	      $("#transaction").click();
 	  }
       }

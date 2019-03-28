@@ -30,8 +30,6 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 $(document).ready(function() {
   var element;
 
-$('.drawer').drawer();
-
 $('.drawer').drawer({
   class: {
     nav: 'drawer-nav',
