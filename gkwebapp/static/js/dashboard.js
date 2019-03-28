@@ -52,12 +52,30 @@ $('.drawer').drawer({
 $(".submenuitem").hide();
 $(".submenuitem").click(function(event){$('.drawer').drawer('close');});
 
-
-
 $(".submenuli").click(function(event){
   event.preventDefault();
  var tog = $(this).data("menuname");
   $('.'+tog).toggle();
+  console.log("voucher call");
+});
+
+$("#exportledger").click(function(){
+  $("#exportdata").modal("show");
+});
+$("#shortcuts").click(function(){
+  $("#gnukhatashortcuts").modal("show");
+});
+$("#authors").click(function(){
+  $("#gnukhataauthors").modal("show");
+});
+$("#license").click(function(){
+  $("#gnukhatalicense").modal("show");
+});
+$("#about").click(function(){
+  $("#aboutgnukhata").modal("show");
+});
+$("#shownews").click(function(){
+  $("#newsmodal").modal("show");
 });
 
   $('#make_payment').click(function(){
@@ -82,7 +100,7 @@ $(".submenuli").click(function(event){
     $('#showeditorg').click();
 });
 $(".add_prod").click(function() {
-  $("#productinmaster").click();
+  $("#product").click();
 });
 $("#profit_loss").click(function() {
   $("#showprofitloss").click();
@@ -112,12 +130,12 @@ $('.drawer').drawer({
   },
   showOverlay: true
 });
-$(".masterdata").hide();
-$(".submenu").click(function(){
-  $(this).data(data-menuname);
-  $(".masterdata").hide();
+// $(".masterdata").hide();
+// $(".submenu").click(function(){
+//   $(this).data(data-menuname);
+//   $(".masterdata").hide();
 
-});
+// });
 
 function calldata(dataset){
   $.ajax(

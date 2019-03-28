@@ -74,31 +74,34 @@ $(document).ready(function(){
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
       $(".productinmaster").remove();
       $(".categoryinmaster").remove();
-      $(".uominmaster").hide();
-      $('.inventorymenu').hide();
-      $('.invsbill').hide();
-      $("#showviewregister").hide();
-      $(".inventory_hide").hide();
-      $("#showbillwiseaccounting").hide();
-      $(".invoicemenu").hide();
-      $(".businessmenu").hide();	
+      $(".uominmaster").remove();
+      $('.inventorymenu').remove();
+      $('.invsbill').remove();
+      $("#showviewregister").remove();
+      $(".inventory_hide").remove();
+      $("#showbillwiseaccounting").remove();
+      $(".invoicemenu").remove();
+      $(".businessmenu").remove();	
       $("#Documents_id").remove();	
       $(".gstmenuitem").remove();
       $("#gstmenu_id").remove();
-      $("#gstmenu").hide();
-      $(".accountinghide").hide();
+      $("#gstmenu").remove();
+      $(".accountinghide").remove();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
         $('.invoicemenu').show();
         $(".productinmaster").show();
       	$(".categoryinmaster").show();
-        $(".uominmaster").show();
-        $(".inventorymenu").hide();
-        $('.inventory_hide').hide();
-	$("#showviewregister").show();
-        $("#showbillwiseaccounting").hide();
-	$(".businessmenu").show();
+        // $('.uominmaster').show();
+        $(".inventorymenu").remove();
+        $('.inventory_hide').remove();
+	      $("#showviewregister").show();
+        $("#showbillwiseaccounting").remove();
+         $(".businessmenu").show();
+        $(".hidemenu").remove();
+
+         
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -106,10 +109,12 @@ $(document).ready(function(){
       $(".categoryinmaster").show();
       $(".uominmaster").show();
       $("#showbillwiseaccounting").show();
-      $('.inventorymenu').hide();
-      $('.inventory_hide').hide();
+      $('.inventorymenu').remove();
+      $('.inventory_hide').remove();
       $("#showviewregister").show();
       $(".businessmenu").show();
+      $(".hidemenu").remove();
+
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -120,7 +125,7 @@ $(document).ready(function(){
       $("#showbillwiseaccounting").show();
       $(".productinmaster").remove();
       $(".categoryinmaster").remove();
-      $(".uominmaster").hide();
+      $(".uominmaster").remove();
       $(".businessmen").show();
     }
 
@@ -335,6 +340,7 @@ $(document).ready(function(){
         }
       else// else transaction menu is selected.
         {
+          console.log("22");
           $("#transaction").click();
         }
     }
@@ -342,6 +348,7 @@ $(document).ready(function(){
   $(".inventorymenu").keydown(function(event){
     // As mentioned above left right arrow navigation for menu items.
     if(event.which == 39){
+      console.log("11");
       $("#transaction").click();
     }
     if(event.which == 37){
@@ -400,6 +407,7 @@ $(document).ready(function(){
 	  if (sessionStorage.invsflag ==1){
 	      $("#gstmenu").click();
 	  }else{
+      console.log("33");
 	      $("#transaction").click();
 	  }
       }
@@ -543,14 +551,12 @@ $(document).ready(function(){
        $("#showviewlog").remove();
        $("#orgpref").remove();
        $("#gstmenu").remove();
-      //  $("#business").remove();	 
        $(".godownhide").remove();	 
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
        $(".adminhide").remove();
-       $(".uominmaster").remove();
-     }
+     }       
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
        $("#showviewlog").remove();
@@ -558,9 +564,6 @@ $(document).ready(function(){
        $("#showviewbudget").remove();
        $("#budget").remove();
        $(".operatorhide").remove();
-       $(".uominmaster").remove();
-
-       
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
@@ -1947,6 +1950,7 @@ $('#listofaccounts').click(function (e) {
 
   $("#showclosebooks").click(function(event){// calls close books and rollover page.
     $("#msspinmodal").modal("show");
+    console.log("kkakakakakak")
     $("#info").load("/showclosebooks");
   });
 
