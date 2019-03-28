@@ -64,19 +64,24 @@
           </div>
 	</div>
 	<div class="col-xs-9 nopaddng">
-	  
+
           <h3>{{org["orgname"]}}</h3>
-          {% if org["orgaddr"]!='' %}
-            {{org["orgaddr"]}}
-          {% endif %}
-          {% if org["orgcity"]!='' %}
-            , {{org["orgcity"]}}
-	  {% endif %}
-	  {% if org["orgpincode"] %}
-	    - {{org["orgpincode"]}},
-          {% endif %}
+					{% if org["orgcity"]!='' %}
+          	{% if org["orgaddr"]!='' %}
+            	{{org["orgaddr"]}} ,
+          	{% endif %}
+						 {{org["orgcity"]}}
+						{% if org["orgpincode"] %}
+	    				- {{org["orgpincode"]}}
+						{% endif %}
+					{% endif %}
+          
           {% if org["orgstate"]!='null' %}
-             {{org["orgstate"]}}.
+						{% if org["orgcity"]!='' %}
+            , {{org["orgstate"]}}.
+						{% else %}
+							{{org["orgstate"]}}.
+						{% endif %}
           {% endif %}
 	  <br>
           {% if org["orgtelno"]!='' %}
