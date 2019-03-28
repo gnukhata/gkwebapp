@@ -130,12 +130,6 @@ $('.drawer').drawer({
   },
   showOverlay: true
 });
-// $(".masterdata").hide();
-// $(".submenu").click(function(){
-//   $(this).data(data-menuname);
-//   $(".masterdata").hide();
-
-// });
 
 function calldata(dataset){
   $.ajax(
