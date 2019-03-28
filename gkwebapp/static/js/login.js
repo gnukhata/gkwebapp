@@ -34,7 +34,7 @@ $(document).ready(function()
   var enyear = sessionStorage.getItem('year2');
   var orgdata = orname + " (" + ortype + ")";
   var pathname = window.location.pathname;
-  var yeardata = "Financial Year : " + styear + " to " + enyear;
+  var yeardata = styear + " to " + enyear;
   var len;
   $("#branchdiv").hide();
   if(orgdata!=""||yeardata!="")
