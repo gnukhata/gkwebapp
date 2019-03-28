@@ -155,7 +155,7 @@ function calldata(dataset){
     var list = resp["gkresult"];
     tablediv.html("");
     for (let index in list ){
-      tablediv.append('<tr> <td  style="font-weight:normal;" class="col-xs-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;" class="col-xs-4">'+ list[index].balanceamount+' </td> </tr>');                  
+      tablediv.append('<tr style="table-layout:fixed;"> <td  style="font-weight:normal;" class="col-xs-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;" class="col-xs-4">'+ list[index].balanceamount+' </td> </tr>');                  
     }
   }
   });
