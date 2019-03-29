@@ -159,6 +159,7 @@ $(document).ready(function()
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
+	  $("#roundoffdiv").hide();
       }
 
   });
