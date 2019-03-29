@@ -493,7 +493,7 @@ $("#openingbal").keydown(function(event) {
 
 $("#reset").click(function()
 {
-  $('#editaccount').click();
+  $('#edit_account').click();
 }
 );
 
@@ -644,14 +644,14 @@ $("#editaccountform").submit(function(e)
           $("#reset").click();
           $("#success-alert").alert();
           $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#success-alert").hide();
+            $("#success-alert").modal("hide");
           });
         }
         else if(resp["gkstatus"]==1)
         {
           $("#duplicate-alert").alert();
           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#duplicate-alert").hide();
+            $("#duplicate-alert").modal("hide");
           });
 	    $("#msspinmodal").hide();
           $("#accountname").focus().select();
