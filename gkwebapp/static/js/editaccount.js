@@ -185,25 +185,7 @@ $(document).ready(function()
 		$("#saleac").prop("checked", false);
 		$("#saleac").prop("disabled", true);
 	    }
-    }else if($('#groupname').text() == "Indirect Expense"){
-        $("#purdiv").hide();
-	    $("#bnkdiv").hide();
-	    $("#chsdiv").hide();
-	    $("#alertpur").hide();
-	    $("#alertbnk").hide();  
-	    $("#alertchs").hide();
-            if(accdetails["defaultflag"] == 18){
-		$("#roundoffdiv").hide();
-		$("#alertroundoff").alert();
-		$("#alertroundoff").show();
-	    }else{
-		$("#alertroundoff").hide();
-		$("#roundoffdiv").show();
-		$("#roundoffac").prop("checked", false);
-		$("#roundoffac").prop("disabled", true);
-	    }
-    }
-    else{
+	}else{
 	    $("#bnkdiv").hide();
 	    $("#chsdiv").hide();
 	    $("#salediv").hide();
@@ -571,7 +553,7 @@ $("#openingbal").keydown(function(event) {
 
 $("#reset").click(function()
 {
-  $('#edit_account').click();
+  $('#editaccount').click();
 }
 );
 
