@@ -106,12 +106,12 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	padding: 7px
 }
 .dashboardmenu:hover{
-	background-color: #ff7f2a; 
+	background-color: #e8e8e8;
 	 color: rgb(51, 122, 183);
 }
 
 .submenuitem:hover{
-	background-color: #ff7f2a;
+	background-color: #e8e8e8;
 	color: rgb(51, 122, 183);
 }
 .sidebar:hover{
