@@ -107,6 +107,22 @@ $("#balance_sheet").click(function(){
 $("#showbalancesheet").click();
 });
 
+$("#add_receipt").click(function(){
+  $('#showreceipt').click();
+});
+
+$("#add_payment").click(function(){
+  $('#showpayment').click();
+});
+
+$("#add_journal").click(function(){
+  $('#showjournal').click();
+});
+
+$("#add_contra").click(function(){
+  $('#showcontra').click();
+});
+
 $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
