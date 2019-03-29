@@ -553,7 +553,7 @@ $("#openingbal").keydown(function(event) {
 
 $("#reset").click(function()
 {
-  $('#editaccount').click();
+  $('#edit_account').click();
 }
 );
 
