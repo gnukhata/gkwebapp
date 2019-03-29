@@ -89,15 +89,15 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	border: none;
 	}
 	.submenu_item:hover, .submenu:hover{
-		color: #0e0e87;
+	color: rgb(51, 122, 183);
 	}
 
 .submenuli, .submenuitem{
 	padding: 5px;
 }
 .submenuli:hover{
-	background-color: #ff7f2a;
-	color: #0e0e87;
+	background-color: #e8e8e8;
+	color: rgb(51, 122, 183);
 }
 .dashboardmenu{
 	color:#696969;
@@ -106,13 +106,13 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	padding: 7px
 }
 .dashboardmenu:hover{
-	background-color: #ff7f2a;
-	color: #0e0e87;
+	background-color: #ff7f2a; 
+	 color: rgb(51, 122, 183);
 }
 
 .submenuitem:hover{
 	background-color: #ff7f2a;
-	color: #0e0e87;
+	color: rgb(51, 122, 183);
 }
 .sidebar:hover{
 	position: fixed;
