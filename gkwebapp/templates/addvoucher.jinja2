@@ -260,7 +260,7 @@
 	<div class="row " style="margin:0 !important;" >
 	  <center>
             <input id="vouchertype" type="text" value="{{vtype}}" hidden>
-            <div class="form-group col-sm-12 " style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
+            <div class="row form-group col-sm-12 " style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
               {% if vtype=="contra" %}
 		<label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
               {% elif vtype == "payment" %}
@@ -369,9 +369,9 @@
 		</tr>
               </thead>
               {% if invoicedata!= 0 %}  
-		<tbody style="height: 20%;">
+		<tbody style="min-height:35%;">
               {% else %}
-		  <tbody style="height: 20%;">
+		  <tbody style="min-height:35%;">
               {% endif %}
               <tr>
                 <td class="col-xs-1">
