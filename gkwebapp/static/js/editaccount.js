@@ -73,7 +73,24 @@ $(document).ready(function()
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
-	$("groupname").change();  
+    $("groupname").change();  
+    if ($("#groupname option:selected").text() == 'Indirect Expense'){
+        if(accdetails["defaultflag"] == 18){
+        $("#alertroundoff").alert();
+        $("#alertroundoff").show();
+        $("#roundoffdiv").hide();
+        }
+        else{
+            $("#alertroundoff").hide();
+            $("#roundoffdiv").show();
+            $("#roundoffac").prop("checked", false);
+		    $("#roundoffac").prop("disabled", true);
+        }
+    }
+    else{
+        $("#roundoffdiv").hide();
+        $("#alertroundoff").hide();
+    }
 	if($('#subgroupname').text() == "Bank"){
 	    $("#chsdiv").hide();
 	    $("#salediv").hide();
@@ -85,7 +102,6 @@ $(document).ready(function()
 	    if(accdetails["defaultflag"] == 2){
 		$("#alertbnk").alert();
         $("#alertbnk").show();
-        $('#roundoffsale').hide();
 		$("#bnkdiv").hide();
 	    }else{
 		$("#bnkdiv").show();
@@ -146,25 +162,7 @@ $(document).ready(function()
 		$("#saleac").prop("checked", false);
 		$("#saleac").prop("disabled", true);
 	    }
-    }else if($('#groupname').text() == "Indirect Expense"){
-        $("#purdiv").hide();
-	    $("#bnkdiv").hide();
-	    $("#chsdiv").hide();
-	    $("#alertpur").hide();
-	    $("#alertbnk").hide();  
-	    $("#alertchs").hide();
-            if(accdetails["defaultflag"] == 18){
-		$("#roundoffdiv").hide();
-		$("#alertroundoff").alert();
-		$("#alertroundoff").show();
-	    }else{
-		$("#alertroundoff").hide();
-		$("#roundoffdiv").show();
-		$("#roundoffac").prop("checked", false);
-		$("#roundoffac").prop("disabled", true);
-	    }
-    }
-    else{
+	}else{
 	    $("#bnkdiv").hide();
 	    $("#chsdiv").hide();
 	    $("#salediv").hide();
@@ -230,7 +228,6 @@ $(document).ready(function()
     });
     }
   });
-
   $("#edit").click(function(event)
   {
     event.preventDefault();
@@ -257,12 +254,13 @@ $(document).ready(function()
         $("#openingbal").prop("disabled", false);
       }
       $("#bnkac").prop("disabled",false);
+      $("#roundoffac").prop("disabled",false);
       $("#chsac").prop("disabled",false);
       $("#purac").prop("disabled",false);
       $("#saleac").prop("disabled",false);
       $("#accountname").prop("disabled",false);
       $("#groupname").focus().select();
-	if(deflag == 2 || deflag == 3 || deflag == 16 || deflag == 19){
+	if(deflag == 2 || deflag == 3 || deflag == 16 || deflag == 19 || deflag == 18){
 	    $("#groupname").prop('disabled',true);
 	    $("#subgroupname").prop("disabled", true);
 	    $("#accountname").focus().select();
@@ -388,6 +386,12 @@ $(document).ready(function()
       }
 	
     });
+    if($.trim($("#groupname option:selected").text()) == 'Indirect Expense'){
+        $("#roundoffdiv").show();
+    }
+    else{
+        $("#roundoffdiv").hide();
+    }
 
     /** Keydown for 'bnkac' and 'chsac' checkbox **/
     $(".defbx").keydown(function(event){
@@ -489,7 +493,7 @@ $("#openingbal").keydown(function(event) {
 
 $("#reset").click(function()
 {
-  $('#edit_account').click();
+  $('#editaccount').click();
 }
 );
 
@@ -594,6 +598,9 @@ $("#editaccountform").submit(function(e)
 	defaultflag = 16;
     }else if($("#saleac").is(':checked')){
 	defaultflag = 19;
+    }
+    else if($("#roundoffac").is(':checked')){
+    defaultflag = 18;
     }else if(deflag == 2){
 	defaultflag = 2;
     }else if(deflag == 3){
@@ -602,7 +609,10 @@ $("#editaccountform").submit(function(e)
 	defaultflag = 16;
     }else if(deflag == 19){
 	defaultflag = 19;
-    }else{
+    }else if(deflag == 18){
+    defaultflag = 18;
+    }
+    else{
 	defaultflag = 0;
     }
     
@@ -643,8 +653,7 @@ $("#editaccountform").submit(function(e)
           $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#duplicate-alert").hide();
           });
-        $('.modal-backdrop').remove();        
-	    $("#msspinmodal").modal("hide");
+	    $("#msspinmodal").hide();
           $("#accountname").focus().select();
         }
         else
@@ -653,7 +662,7 @@ $("#editaccountform").submit(function(e)
           $("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#failure-alert").hide();
           });
-	    $("#msspinmodal").modal("hide");
+	    $("#msspinmodal").hide();
           $("#accountname").focus().select();
         }
       }
