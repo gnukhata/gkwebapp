@@ -73,6 +73,7 @@ $(document).ready(function(){
     // For Inventory with Invoicing and Billwise Accounting invflag=1, invsflag=1 and billflag=1. It includes Inventory, Billwise Accounting, Invoicing and extra sub-menus(viz., 'Category', 'Product/Service' and 'Unit of Measurement') will be removed from Master menu.
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
       $(".productinmaster").remove();
+      $(".custsuninmaster").remove();
       $(".categoryinmaster").remove();
       $(".uominmaster").remove();
       $('.inventorymenu').remove();
@@ -87,6 +88,7 @@ $(document).ready(function(){
       $("#gstmenu_id").remove();
       $("#gstmenu").remove();
       $(".accountinghide").remove();
+      $(".delchalhide").remove();
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -100,6 +102,9 @@ $(document).ready(function(){
         $("#showbillwiseaccounting").remove();
          $(".businessmenu").show();
         $(".hidemenu").remove();
+      $(".delchalhide").remove();
+      $(".hidevoucher").remove();
+
 
          
     }
@@ -114,6 +119,8 @@ $(document).ready(function(){
       $("#showviewregister").show();
       $(".businessmenu").show();
       $(".hidemenu").remove();
+      $(".delchalhide").remove();
+      $(".hidevoucher").remove();
 
     }
 
@@ -127,6 +134,7 @@ $(document).ready(function(){
       $(".categoryinmaster").remove();
       $(".uominmaster").remove();
       $(".businessmen").show();
+      $(".hidevoucher").remove();
     }
 
   if (sessionStorage.reload == 1)// The mainshell when loads for the first time its reloaded so that the javascript file can be fully loaded.
@@ -549,10 +557,14 @@ $(document).ready(function(){
        $("#orgpref").remove();
        $("#gstmenu").remove();
        $(".godownhide").remove();	 
+      $(".hidevoucher").remove();
+
      }
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
        $(".adminhide").remove();
+      $(".hidevoucher").remove();
+
      }       
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
@@ -566,6 +578,8 @@ $(document).ready(function(){
        $(".hidemanager").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
+      $(".hidevoucher").remove();
+
      }
      if(resp["gkresult"]["userrole"]==2) {
 	 $("#showviewlog").remove();
@@ -581,6 +595,7 @@ $(document).ready(function(){
    $("#budget").remove();
    $(".internalaud").remove();
    $("#Documents_id").remove();
+   $(".hidevoucher").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
