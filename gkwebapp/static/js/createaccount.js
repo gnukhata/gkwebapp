@@ -121,26 +121,32 @@ $(document).ready(function()
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
+	  $("#roundoffdiv").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
 	  $("#chsdiv").show();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
+	  $("#roundoffdiv").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").show();
 	  $("#salediv").hide();
+	  $("#roundoffdiv").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
 	  $("#purdiv").hide();
 	  $("#salediv").show();
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
-      }else{
+	  $("#roundoffdiv").hide();
+	  }
+	  else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
+	  $("#roundoffdiv").hide();
       }
 
   });
@@ -150,6 +156,14 @@ $(document).ready(function()
     $('#addaccount').click();
   }
 );
+$("#groupname ").change(function(e){
+	if($.trim($("#groupname option:selected").text()) == 'Indirect Expense'){
+		$("#roundoffdiv").show();
+	  }
+	  else{
+		$("#roundoffdiv").hide();
+	  }
+});
   // Keydown event for Opening Balance.
 $("#openbal").keydown(function(event){
 	if (event.which == 13) {
@@ -513,10 +527,12 @@ $("#openbal").keydown(function(event){
 	defaultflag = 16;
     }else if($("#saleac").is(':checked')){
 	defaultflag = 19;
-    }else{
+	}else if($("#roundoffac").is(':checked')){
+	defaultflag = 18;
+	}
+	else{
 	defaultflag = 0;
     }
-
   $("#msspinmodal").modal("show");
   $.ajax(
     {

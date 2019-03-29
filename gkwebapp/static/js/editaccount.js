@@ -80,14 +80,17 @@ $(document).ready(function()
 	    $("#purdiv").hide();
 	    $("#alertchs").hide();
 	    $('#alertpur').hide();
-	    $('#alertsale').hide();
+        $('#alertsale').hide();
+        $('#roundoffsale').hide();
 	    if(accdetails["defaultflag"] == 2){
 		$("#alertbnk").alert();
-		$("#alertbnk").show();
+        $("#alertbnk").show();
+        $('#roundoffsale').hide();
 		$("#bnkdiv").hide();
 	    }else{
 		$("#bnkdiv").show();
-		$("#alertbnk").hide();
+        $("#alertbnk").hide();
+        $('#roundoffsale').hide();
 		$("#bnkac").prop("checked", false);
 		$("#bnkac").prop("disabled", true);
 	    }
@@ -95,7 +98,8 @@ $(document).ready(function()
 	    $("#bnkdiv").hide();
 	    $("#salediv").hide();
 	    $("#purdiv").hide();
-	    $("#alertbnk").hide();
+        $("#alertbnk").hide();
+        $('#roundoffsale').hide();
 	    $('#alertpur').hide();
 	    $('#alertsale').hide();
             if(accdetails["defaultflag"] == 3){
@@ -142,13 +146,32 @@ $(document).ready(function()
 		$("#saleac").prop("checked", false);
 		$("#saleac").prop("disabled", true);
 	    }
-	}else{
+    }else if($('#groupname').text() == "Indirect Expense"){
+        $("#purdiv").hide();
+	    $("#bnkdiv").hide();
+	    $("#chsdiv").hide();
+	    $("#alertpur").hide();
+	    $("#alertbnk").hide();  
+	    $("#alertchs").hide();
+            if(accdetails["defaultflag"] == 18){
+		$("#roundoffdiv").hide();
+		$("#alertroundoff").alert();
+		$("#alertroundoff").show();
+	    }else{
+		$("#alertroundoff").hide();
+		$("#roundoffdiv").show();
+		$("#roundoffac").prop("checked", false);
+		$("#roundoffac").prop("disabled", true);
+	    }
+    }
+    else{
 	    $("#bnkdiv").hide();
 	    $("#chsdiv").hide();
 	    $("#salediv").hide();
 	    $("#purdiv").hide();
 	    $("#alertbnk").hide();  
-	    $("#alertchs").hide();
+        $("#alertchs").hide();
+        $('#roundoffsale').hide();
 	    $("#alertpur").hide();
 	    $("#alertsale").hide();
 	}
