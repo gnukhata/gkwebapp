@@ -68,7 +68,8 @@ $(document).ready(function() {
 
     //Initialising some variables.
     var taxtype;
-    var issuername = "";
+	var issuername = "";
+	let roundoffvalue;
     var designation = "";
     var numbertowords = "";
     var address = "";
@@ -88,8 +89,8 @@ $(document).ready(function() {
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
     var tottaxable;
-    var tottax;
-
+	var tottax;
+	
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
@@ -139,7 +140,15 @@ $(document).ready(function() {
 	    totaligst = totaligst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(14) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-	    var res = totalamount.toString();
+	    if ($("#roundvalue").is(":checked")){
+			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
+		}
+		else{
+			var res = totalamount.toString();
+			
+			roundoffvalue = 0;
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -156,7 +165,8 @@ $(document).ready(function() {
 		}
 	    }else{
 		numbertowords = "Zero"+" "+ "Rupees";
-	    }}
+	    }
+	}
 
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
@@ -173,7 +183,16 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-	$("#totalValueInWord").text(numbertowords);
+	$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
+		$("#totalValueInWord").text(numbertowords);
+		if ($("#roundvalue").is(":checked")){
+			$("#roundvaluediv").show();
+			$("#totalValueInWord").text(numbertowords);
+		}
+		else{
+			$("#roundvaluediv").hide();
+			
+		}
     }
 
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
@@ -204,7 +223,15 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-	    var res = totalamount.toString();
+		if ($("#roundvalue").is(":checked")){
+			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
+		}
+		else{
+			var res = totalamount.toString();
+			
+			roundoffvalue = 0;
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -221,7 +248,8 @@ $(document).ready(function() {
 		}
 	    }else{
 		numbertowords = "Zero"+" "+ "Rupees";
-	    }}
+	    }
+	}
 	//Total of various columns are displayed on the footer.
 	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
@@ -232,9 +260,19 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
-	$("#totalValueInWord").text(numbertowords);
+	$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
+		$("#totalValueInWord").text(numbertowords);
+		if ($("#roundvalue").is(":checked")){
+			$("#roundvaluediv").show();
+			$("#totalValueInWord").text(numbertowords);
+		}
+		else{
+			$("#roundvaluediv").hide();
+			
+		}
 
 }
+
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
     if(sessionStorage.vatorgstflag == '22' ){
@@ -1252,7 +1290,7 @@ $(document).ready(function() {
   });
 
     $(document).off('change', '.invoice_product_quantity_vat').on('change', '.invoice_product_quantity_vat', function(event) {
-        event.preventDefault();
+		event.preventDefault();
         /* Act on the event */
         var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
         if ($('.invoice_product_quantity_vat:eq(' + curindex + ')').val() == "") {
@@ -1913,6 +1951,16 @@ $(document).ready(function() {
 	}
       calculategstaxamt(curindex);
   });
+
+  $("#roundvaluediv").hide();
+	$("#roundvalue").change(function(e){
+		if($("#taxapplicabletext").text() == "GST"){
+			$('.invoice_product_quantity_gst').change();
+		}
+		else{
+			$('.invoice_product_quantity_vat').change();
+		}
+	});
 
   $(document).off("keydown", ".invoice_product_quantity_gst").on("keydown", ".invoice_product_quantity_gst", function(event) {
     var curindex = $(this).closest('tr').index();
@@ -2708,7 +2756,16 @@ if (event.which == 13) {
 			    }
 			    $("#invoicestate").change();
 			    // Loading bank details and other information.
-			    $("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
+				$("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
+				if (resp.invoicedata.roundoff == 1){
+					$("#roundvalue").prop("checked",true);
+					$("#roundvaluediv").show();
+					$("#totalinvoicevaluerounded").text(parseFloat(resp.invoicedata.roundoffvalue).toFixed(2))
+				}
+				else{
+					$("#roundvalue").prop("checked",false);
+					$("#roundvaluediv").hide();
+				}
 			    $("#taxableamount").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 			    $("#totalinvdiscount").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 			    if( resp.invoicedata.invoicetotalword != "" && resp.invoicedata.invoicetotalword != null ){
@@ -2830,7 +2887,9 @@ if (event.which == 13) {
 	    $(".consigneefield").prop("disabled", false);
 	}
 	$(".firstfield:visible").first().focus();
-    });
+	});
+	
+	
 
     $("#invselect").keydown(function(event){
 	if(event.which == 13){
@@ -3308,7 +3367,8 @@ if (event.which == 13) {
 	  address = $("#originaddress").val();
       }
       var form_data = new FormData();
-      form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
+	  form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
+	  form_data.append("roundoff",roundoffvalue);
       form_data.append("custid", $("#invoice_customer option:selected").val());
       form_data.append("invoiceno", $("#invoice_challanno").val());
       form_data.append("invid", $("#invselect option:selected").val());
