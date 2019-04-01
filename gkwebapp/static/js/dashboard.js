@@ -54,7 +54,44 @@ $(".submenuli").click(function(event){
   event.preventDefault();
  var tog = $(this).data("menuname");
   $('.'+tog).toggle();
-  console.log("voucher call");
+});
+
+$("#sidebar").click(function(e){
+  $("#master").focus();
+  $('.kmd:first').closest('li').addClass('liclass');
+});
+
+/*$(document).off('focus' ,'.kmd').on('focus' ,'.kmd',function() {
+  $(this).closest('li').addClass('liclass');
+});
+
+$(document).off('blur' ,'.kmd').on('blur' ,'.kmd',function() {
+  $(this).closest('li').removeClass('liclass');
+});*/
+var curindex;
+var nextindex;
+var previndex;
+
+
+$(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
+  event.preventDefault();
+  currentrow = $(this).closest("li:visible");
+  nextindex = $(currentrow).nextAll("li:visible:first").index();
+  previndex = $(currentrow).prevAll("li:visible:first").index();
+  if (event.which == 13){
+    $(this).closest("li:visible").click();
+  }
+  if (event.which == 40) {
+    $(currentrow).removeClass("liclass");
+    $("#ulsidebar li:eq(" + nextindex + ") a").focus(); 
+    $("#ulsidebar li:eq(" + nextindex + ")").addClass("liclass");
+  }
+  if (event.which == 38) {
+    $(currentrow).removeClass("liclass");
+    $("#ulsidebar li:eq(" + previndex + ") a").focus(); 
+    $("#ulsidebar li:eq(" + previndex + ")").addClass("liclass");
+  }
+  console.log(currentrow, nextindex, previndex, $("#ulsidebar li:eq(" + nextindex + ")").html());
 });
 
 $("#exportledger").click(function(){
@@ -127,23 +164,6 @@ $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
 
-$('.drawer').drawer({
-  class: {
-    nav: 'drawer-nav',
-    toggle: 'drawer-toggle',
-    overlay: 'drawer-overlay',
-    open: 'drawer-open',
-    close: 'drawer-close',
-    dropdown: 'drawer-dropdown'
-  },
-  iscroll: {
-    // Configuring the iScroll
-    // https://github.com/cubiq/iscroll#configuring-the-iscroll
-    mouseWheel: true,
-    preventDefault: false
-  },
-  showOverlay: true
-});
 
 function calldata(dataset){
   $.ajax(

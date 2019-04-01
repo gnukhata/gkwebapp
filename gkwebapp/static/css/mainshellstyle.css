@@ -46,10 +46,6 @@ a:focus,
 input[type="radio"]:focus {outline: 2px #1f0e5e solid !important;}
 input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 
-.dropdown-toggle:focus{
-    outline: 2px #1f0e5e solid !important;
-    
-}
 .flowdiv{
 	width: 85%;
 	height: 150px;
@@ -110,7 +106,7 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	 color: rgb(51, 122, 183);
 }
 
-.submenuitem:hover{
+.submenuitem:hover, .liclass{
 	background-color: #e8e8e8;
 	color: rgb(51, 122, 183);
 }
