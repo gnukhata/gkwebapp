@@ -90,7 +90,8 @@ $(document).ready(function() {
       });
     
     //Initialising some variables.
-    var taxtype;
+	var taxtype;
+	let roundoffvalue;
     var issuername = "";
     var designation = "";
     var address = "";
@@ -160,9 +161,12 @@ $(document).ready(function() {
 		totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 		if ($("#roundvalue").is(":checked")){
 			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
 		}
 		else{
 			var res = totalamount.toString();
+
+			roundoffvalue = 0;
 		}
 	    var str = res.split(".");
 	    var len = str[1];
@@ -251,9 +255,11 @@ $(document).ready(function() {
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
 	    if ($("#roundvalue").is(":checked")){
 			var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
 		}
 		else{
 			var res = totalamount.toString();
+			roundoffvalue = 0;
 		}
 	    var str = res.split(".");
 	    var len = str[1];
@@ -2782,7 +2788,7 @@ if (event.which == 13) {
       });
       $('#invoice_date').focus();
       return false;
-    }
+	}
       if ($.trim($('#invoice_month').val()) == "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
       $("#date-blank-alert").alert();
@@ -3126,8 +3132,10 @@ if (event.which == 13) {
       //For sales invoice store address.
       if($("#status").val() == 15){
 	  address = $("#originaddress").val();
-      }
-      var form_data = new FormData();
+	  }
+	
+	  var form_data = new FormData();
+	  form_data.append("roundoff",roundoffvalue);
       form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
       form_data.append("custid", $("#invoice_customer option:selected").val());
       form_data.append("invoiceno", $("#invoice_challanno").val());

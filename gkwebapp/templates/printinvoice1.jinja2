@@ -590,7 +590,8 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div class="row hborderdiv" style="border-bottom-style:solid;">
+		{% if gkresult["roundoff"] == 1 %}
+	  <div class="row hborderdiv" >
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
 		<label for="totalinvoicevalue" style="font-size:110% !important;font-weight:normal !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
@@ -600,6 +601,28 @@
 	      </div>
 	    </div>
 	   </div>
+		 <div class="row hborderdiv" style="border-bottom-style:solid;">
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+			<label for="totalinvoicevalueroundoff"  style="font-size:110% !important;font-weight:normal !important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
+		      </div>
+		      <div class="col-sm-6 text-right">
+			<label style="font-size:110% !important; font-weight:normal !important">{{ gkresult["roundoffvalue"] }}</label>
+		      </div>
+	    </div>
+	   </div>
+		 {% else %}
+		 <div class="row hborderdiv" >
+	    <div class="form-group form-inline">
+	      <div class="col-sm-6">
+		<label for="totalinvoicevalue" style="font-size:110% !important;font-weight:normal !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+	      </div>
+	      <div class="col-sm-6 text-right">
+		<label id="totalinvoicevalue" style="font-size:110% !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
+	      </div>
+	    </div>
+	   </div>
+		 {% endif %}
 		 <br>
 			</td>
 			</tr>
