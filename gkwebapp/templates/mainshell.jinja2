@@ -233,7 +233,7 @@
              <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
              </ul>
              </li>-->
-                    <li id="userdropdown" class="dropdown"><a class="usermenu" role="button" aria-haspopup="true" aria-expanded="false" style="margin-right:12px; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a>
+                    <li id="userdropdown" class="dropdown"><a class="usermenu dropdown-toggle" class=""  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-right:12px; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a>
                     <ul class="dropdown-menu">
                     <li><a class="usermenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
                     <li><a class="usermenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
@@ -363,7 +363,7 @@
       <div class="dashboarddiv shadow">
         <div> 
           <div class="pull-left" style="margin-top:-15px">
-         <h5 style="color:#333">Make Payment</h5>
+         <h5 style="color:#333; font-weight: bold;">Make Payment</h5>
         </div>
          <div class="pull-right">
           <a class="dropdown-toggle" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -374,7 +374,7 @@
         </div> 
         </div>
         <div>
-        <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+        <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable" style="height:235px !important" >
           <thead>
             <tr>
               <td class="col-xs-8" style="font-weight:150;">Invoice</td>
@@ -397,7 +397,7 @@
       <div class="dashboarddiv shadow">
           <div> 
               <div class="pull-left" style="margin-top:-15px">
-             <h5 style="color:#333">Receive Payment</h5>
+             <h5 style="color:#333;font-weight: bold;">Receive Payment</h5>
             </div>
              <div class="pull-right">
               <a class="" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
@@ -408,7 +408,7 @@
             </div> 
             </div>
         <div>
-        <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="">
+        <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="height:235px !important ">
           <thead>
             <tr>
               <td class="col-xs-8" style="font-weight:150; width:200px">Invoice</td>
@@ -434,7 +434,7 @@
         <div style="position:relative;">
       <div class="dashboarddiv shadow">
         <div class="pull-left"style="margin-top:-10px"> 
-          <h5 style="color:#333">Assets and Liabilities</h5>
+          <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
         </div>
         <br>
         <div style="margin-top:-30px">
@@ -450,7 +450,7 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow">
             <div class="pull-left"style="margin-top:-10px"> 
-              <h5 style="color:#333">Income and Expence</h5>
+              <h5 style="color:#333;font-weight: bold; ">Income and Expence</h5>
             </div>
             <br>
             <div style="margin-top:-30px">
@@ -468,7 +468,7 @@
       <div class="col-sm-6 dashboardouterdiv">
       <div style="position:relative;">
       <div class="dashboarddiv shadow">
-          <h5 style="color:#333">Purchase Invoice</h5 >
+          <h5 style="color:#333;font-weight: bold; ">Purchase Invoice</h5 >
           <canvas id="chart_content_purchase" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
       </div>
       </div>
@@ -477,7 +477,7 @@
         <div style="position:relative;">
         <div class="dashboarddiv shadow">
           <div>
-          <h5 style="color:#333">Sale Invoice</h5 >
+          <h5 style="color:#333;font-weight: bold;">Sale Invoice</h5 >
           <canvas id="chart_content_sale" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
       </div>
     </div>
@@ -489,7 +489,7 @@
       <div class="col-sm-6 dashboardouterdiv">
       <div style="position:relative;">
       <div class="dashboarddiv shadow">
-          <h5 style="color:#333">Delivery In</h5 >
+          <h5 style="color:#333;font-weight: bold;">Delivery In</h5 >
           <canvas id="delivery_in" style="height:280px !important; width:100%;"></canvas>
       </div>
       </div>
@@ -497,7 +497,7 @@
       <div class="col-sm-6 dashboardouterdiv">
         <div style="position:relative;">
         <div class="dashboarddiv shadow">
-            <h5 style="color:#333">Delivery Out</h5 >
+            <h5 style="color:#333;font-weight: bold;">Delivery Out</h5 >
             <canvas id="delivery_out" style="height:280px !important; width:100%;"></canvas>
         </div>
         </div>
@@ -509,7 +509,7 @@
         <div class="dashboarddiv shadow">
           <div>
           <div class="pull-left">
-            <h5 >Transfer Note</h5 >
+            <h5 style="color:#333;font-weight: bold;">Transfer Note</h5 >
             </div>
               <div class="pull-rigth" style="float:right">
                 <select id="godownwise"></select> 
@@ -525,14 +525,14 @@
           <div class="dashboarddiv shadow">
             <div>
               <div class="pull-left">
-                <h5 >Stock on Hand</h5 >
+                <h5 style="color:#333;font-weight: bold;">Stock on Hand</h5 >
                 </div>
                   <div class="pull-right" >
                     <select id="godownwisestock"></select> 
                   </div>
                 </div>
             <div id="showstock">
-              <table class="table table-bordered table-striped invoiceslist dashtable">
+              <table class="table table-bordered table-striped invoiceslist dashtable" style="height:230px !important" >
                   <thead >
                       <tr>
                         <td class="col-xs-8" style="font-weight:150; width:200px">Product and Service</td>
@@ -556,10 +556,10 @@
         <div style="position:relative;">
       <div class="dashboarddiv shadow">
         <div class="pull-left"> 
-          <h5 style="color:#333">Most Valued Customer</h5>
+          <h5 style="color:#333;font-weight: bold;">Most Valued Customer</h5>
         </div>
         <div>
-          <table id="" class="table table-bordered table-striped invoiceslist dashtable">
+          <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="height:230px !important">
               <thead>
                   <tr>
                     <td class="col-xs-8" style="font-weight:150; width:200px">Customer Name</td>
@@ -581,10 +581,10 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow">
             <div class="pull-left"> 
-              <h5 style="color:#333">Most Valued Supplier</h5>
+              <h5 style="color:#333;font-weight: bold;">Most Valued Supplier</h5>
             </div>
             <div>
-              <table id="" class="table table-bordered table-striped invoiceslist dashtable">
+              <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="height:230px !important">
                   <thead>
                       <tr>
                         <td class="col-xs-8" style="font-weight:150; width:200px">Supplier Name</td>
@@ -609,10 +609,10 @@
         <div style="position:relative;">
       <div class="dashboarddiv shadow">
         <div class="pull-left"> 
-          <h5 style="color:#333">Most Sold Product and Service</h5>
+          <h5 style="color:#333;font-weight: bold;">Most Sold Product and Service</h5>
         </div>
         <div>
-          <table id="" class="table table-bordered table-striped invoiceslist dashtable">
+          <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="height:230px !important">
               <thead>
                   <tr>
                     <td class="col-xs-8" style="font-weight:150; width:210px">Product and Service</td>
@@ -635,10 +635,10 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow">
             <div class="pull-left"> 
-              <h5 style="color:#333">Most Bought Product and Service</h5>
+              <h5 style="color:#333;font-weight: bold;">Most Bought Product and Service</h5>
             </div>
             <div>
-              <table id="" class="table table-bordered table-striped invoiceslist dashtable">
+              <table id="" class="table table-bordered table-striped invoiceslist dashtable" style="height:230px !important">
                   <thead>
                       <tr>
                         <td class="col-xs-8" style="font-weight:150; width:200px">Product and Service</td>
@@ -663,7 +663,7 @@
         <div style="position:relative;">
       <div class="dashboarddiv shadow">
         <div class="pull-left"style="margin-top:-10px"> 
-          <h5 style="color:#333">Assets and Liabilities</h5>
+          <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
         </div>
         <br>
         <div style="margin-top:-30px">
@@ -679,7 +679,7 @@
         <div style="position:relative;">
           <div class="dashboarddiv shadow">
             <div class="pull-left"style="margin-top:-10px"> 
-              <h5 style="color:#333;">Income and Expence</h5>
+              <h5 style="color:#333;font-weight: bold;">Income and Expence</h5>
             </div>
             <br>
             <div style="margin-top:-30px">
