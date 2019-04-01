@@ -29,7 +29,7 @@ border-radius: 4px;
           <label for="c_bname" >{% trans %}List of Accounts{% endtrans %} :</label>
         </div>
   {% if btype == 3 %}
-      <table id="latable" style="width:80%;border:1px solid grey" class="table shadow table-bordered">
+      {# <table id="latable" style="width:80%;border:1px solid grey" class="table shadow table-bordered">
         <thead>
           <tr>
             <th class="lalign">
@@ -65,7 +65,84 @@ border-radius: 4px;
         {% endfor %}
         </tbody>
         <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
+      </table> #}
+      <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
+        <thead>
+          <tr>
+            <th class="lalign">
+            {% trans %}Accounts Name{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Accounts Balance{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Budget Amount{% endtrans %}
+            </th>
+            <th class="lalign" >
+            {% trans %}Budgeted Balance{% endtrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody  style="height:50%; overflow: auto;">
+        <tr><td colspan="2">
+        <b>Inflow Accounts </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["DirectExpense"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
+        </tr>
+        {% endfor %}
+        <tr><td colspan="2">
+        <b>Outflow Accounts </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["IndirectExpense"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <tbody style="height:inherit;">
+        <tr style="border-top: 1.5pt solid grey;">
+          <td >Total</td>
+          <td style="text-align:right;">{{gkresult["totalbal"]}}
+          </td>
+          <td style="text-align:right;" id="budgetamount">0.00
+          </td>
+          <td style="text-align:right;" id="budgetedbalance">0.00
+          </td>
+        </tr>
+        </tbody>
       </table>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
   {% elif btype == 5 %}
       <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
