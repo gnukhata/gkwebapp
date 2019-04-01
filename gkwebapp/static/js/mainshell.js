@@ -251,6 +251,10 @@ $(document).ready(function(){
       $("#addaccount").click();
       event.preventDefault();
     }
+    if(event.keyCode == 114) {
+      $("#sidebar").click();
+      event.preventDefault();
+    }
     if(event.keyCode == 122) {
       $("#showviewledger").click();
       event.preventDefault();
@@ -337,155 +341,6 @@ $(document).ready(function(){
     }
     if (event.ctrlKey && event.shiftKey && event.keyCode == 192) {
       $(".search").children(".form-control:last").focus();
-    }
-  });
-  $(".mastermenu").keydown(function(event){
-    // Navigation between menu items.
-    if(event.which == 39){
-      if (sessionStorage.invflag ==1)// if inventory is activated then on right arrow key inventory menu is selected.
-        {
-          $("#inventory").click();
-        }
-      else// else transaction menu is selected.
-        {
-          $("#transaction").click();
-        }
-    }
-  });
-  $(".inventorymenu").keydown(function(event){
-    // As mentioned above left right arrow navigation for menu items.
-    if(event.which == 39){
-      $("#transaction").click();
-    }
-    if(event.which == 37){
-      $("#master").click();
-    }
-  });
-  $(".transactionmenu").keydown(function(event){
-      if(event.which == 39){
-	  if (sessionStorage.invsflag ==1){
-	      $("#business").click();
-	  }else{
-	      $("#report").click();
-	  }
-      }
-    if(event.which == 37){
-      if (sessionStorage.invflag ==1)
-        {
-          $("#inventory").click();
-        }
-      else
-        {
-          $("#master").click();
-        }
-    }
-  });
-
-  $(".businessmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#gstmenu").click();
-    }
-    if(event.which == 37){
-      $("#transaction").click();
-    }
-  });
-
-  $(".gstmenuitem").keydown(function(event) {
-    if(event.which == 39) {
-      $("#report").click();
-    }
-    if(event.which == 37) {
-      if (sessionStorage.invsflag == 1) {
-        $("#business").click();
-      }
-      else {
-        $("#transaction").click();
-      }
-    }
-  });
- 
-    
-  $(".reportmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#administration").click();
-    }
-      if(event.which == 37){
-	  if (sessionStorage.invsflag ==1){
-	      $("#gstmenu").click();
-	  }else{
-	      $("#transaction").click();
-	  }
-      }
-  });
-  $(".administrationmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#help").click();
-    }
-    if(event.which == 37){
-      $("#report").click();
-    }
-  });
-  $(".helpmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#newt").focus();
-    }
-    if(event.which == 37){
-      $("#administration").click();
-    }
-  });
-  $(".newtabmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#signout").click();
-    }
-    if(event.which == 13){
-      $("#newt").click();
-    }
-    if(event.which == 37){
-      $("#help").click();
-    }
-  });
-  $(".signoutmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#themes").click();
-    }
-    if(event.which == 37){
-      $("#newt").focus();
-    }
-  });
-  $(".themesmenu").keydown(function(event){
-    if(event.which == 39){
-
-      $("#lang").click();
-    }
-    if(event.which == 37){
-
-      $("#signout").click();
-    }
-  });
-  $("#themes").keydown(function(event){
-    if(event.which == 39){
-
-      $("#lang").click();
-    }
-  });
-  $(".langmenu").keydown(function(event){
-    if(event.which == 39){
-
-      $("#toolbar").click();
-    }
-    if(event.which == 37){
-
-      $("#themes").click();
-    }
-  });
-
-
-  $(".toolbarmenu").keydown(function(event){
-    if(event.which == 39){
-      $("#master").click();
-    }
-    if(event.which == 37){
-      $("#lang").click();
     }
   });
 
