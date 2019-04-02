@@ -58,8 +58,8 @@ border-radius: 5px;
                 <label for="c_btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
                 <select name="btype" style="border-radius: 4px" id="c_btype" type="text" class="form-control input-sm" accesskey="t">
                   <option value="" disabled selected hidden>{% trans %}Select budget type{% endtrans %}</option>
-                  <option value="5">{% trans %}Expense{% endtrans %}</option>
-                  <option value="19">{% trans %}Sales{% endtrans %}</option>
+                  <option value="5">{% trans %}Net Profit Budget{% endtrans %}</option>
+                  <option value="19">{% trans %}Gross Profit Budget{% endtrans %}</option>
                   <option value="3">{% trans %}Cash{% endtrans %}</option> 
                 </select>
               </div>
@@ -98,14 +98,15 @@ border-radius: 5px;
                   </div>
                   <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
               </div>
+              
               <div id="c_sales" class="col-md-12">
                 <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
-                  <label for="c_expense" >{% trans %}Purchases{% endtrans %} :</label>
-                  <input style="border-radius: 4px" id="c_expense" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
+                  <label for="c_expense" >{% trans %}Purchases{% endtrans %} :</label> <label id="c_expense" > </label>
+                  {# <input style="border-radius: 4px" id="c_expense" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input> #}
                 </div>
                   <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                    <label for="c_income" >{% trans %}Sales{% endtrans %} :</label>
-                    <input style="border-radius: 4px" id="c_income" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
+                    <label for="c_income" >{% trans %}Sales{% endtrans %} :</label> <label id="c_income" > </label>
+                    {# <input style="border-radius: 4px" id="c_income" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input> #}
                   </div>
                   <label  >{% trans %}<i>Budget Profit</i>{% endtrans %} :</label> <b id = "c_profit" > </b><br>
               </div>

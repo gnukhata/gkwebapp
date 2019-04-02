@@ -42,6 +42,9 @@ $(document).ready(function(){
     $("#c_balance").text("0.00");
     $("#c_cashavailable").text("0.00");
     $("#c_budgetbalance").text("0.00");
+    $("#c_income").text((0.00).toFixed(2));
+    $("#c_expense").text((0.00).toFixed(2));
+    $("#c_profit").text((0.00).toFixed(2));
     var dataset = {};
     // for reset Button
     $("#c_reset_button").click(function()
@@ -280,52 +283,6 @@ $(document).ready(function(){
           $("#c_inflow").focus();
           }
     });
-    $("#c_expense").change(function(e){
-        var exp = parseFloat($("#c_expense").val());
-        var incm = parseFloat($("#c_income").val());
-        $("#c_profit").text((incm-exp).toFixed(2));
-    });
-    $("#c_income").change(function(e){
-        var exp = parseFloat($("#c_expense").val());
-        var incm = parseFloat($("#c_income").val());
-        $("#c_profit").text((incm-exp).toFixed(2));
-    });
-    $("#c_expense").keydown(function(e){
-        if (e.which==13){e.preventDefault();
-            if ($.trim($("#c_expense").val())=="" ) {
-                $("#c_expense-alert").alert();
-                $("#c_expense-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_expense-alert").hide();
-                });
-                $("#c_expense").focus();
-                return false;
-            }
-            else{
-                $("#c_income").focus();
-            }
-        }
-        if(e.which==38){e.preventDefault();
-                $("#c_budget_toyear").focus();
-            }
-    });
-    $("#c_income").keydown(function(e){
-        if (e.which==13){e.preventDefault();
-            if ($.trim($("#c_income").val())=="") {
-                $("#c_income-alert").alert();
-                $("#c_income-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_income-alert").hide();
-                });
-                $("#c_income").focus();
-                return false;
-            }
-            else{
-                $("#c_add_button").focus();
-            }
-        }
-        if(e.which==38){e.preventDefault();
-            $("#c_expense").focus();
-        }
-    });
     $("#c_add_button").keydown(function(e){
         if (e.which==39)
         {
@@ -391,19 +348,46 @@ $(document).ready(function(){
             $("#latable tbody tr:eq(1) input").focus();
           }
     });
-    $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody:eq(1) tr input", function(e){
+    $(document).off("change","#sales_latable tbody tr input").on("change", "#sales_latable tbody tr input", function(e){
+        var i = $("#sales_latable tbody tr input").index(this);
+        var inputValue = parseFloat($("#sales_latable tbody tr:eq("+i+") input").val());
+        var accBalance = parseFloat($("#sales_latable tbody tr:eq("+i+") td:eq(1)").text());
+        $("#sales_latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
+        let purchase_total = 0;
+        let sales_total =0;
+        if (i > $("#purchase_account").val()){
+
+            let a = parseInt($("#purchase_account").val())+2;
+            let b = parseInt($("#purchase_account").val())+1+parseInt($("#sales_account").val());
+            
+            for (let j=a ;j<=b ; j++ ){
+                sales_total = sales_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+            }
+            $("#c_income").text(sales_total.toFixed(2));
+        }
+        else{
+            for(let j=1 ; j <= $("#purchase_account").val(); j++){
+                purchase_total = purchase_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+            }
+            $("#c_expense").text(purchase_total.toFixed(2));
+        }
+        $("#c_profit").text((parseFloat($("#c_income").text()) - parseFloat($("#c_expense").text())).toFixed(2));
+        
+    });
+    $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody tr input", function(e){
         
         if(e.which == 27){
-            $("#c_expense").focus();
+            $("#c_add_button").focus();
         }
         if(e.which == 40){e.preventDefault();
-            var i = $("#sales_latable tbody:eq(1) tr input").index(this)+1;
-            $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+            var i = $("#sales_latable tbody tr input").index(this)+1;
+            $("#sales_latable tbody tr:eq("+i+") input").focus().select();
         }
         if(e.which == 38){e.preventDefault();
-            var i = $("#sales_latable tbody:eq(1) tr input").index(this)-1;;
-            $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+            var i = $("#sales_latable tbody tr input").index(this)-1;
+            $("#sales_latable tbody tr:eq("+i+") input").focus().select();
         }
+
     });
     $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
         
@@ -728,67 +712,45 @@ $(document).ready(function(){
         var gaflag = 1;
         }
         if($("#c_btype option:selected").val() == 19){
-            var s1 = [];
-            var s2 = [];
-            $('#sales_latable tbody:eq(1) tr').each(function(){
-                if ($(".user_role",this).is(":checked")) {
-                s1.push($(this).attr("value"));
-                }
-            });
-                if(s1.length < 1){
-                    $("#account-alert").alert();
-                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#account-alert").hide();
-                    });
-                    $("#sales_latable tbody:eq(1) tr:eq(0) input").focus();
-                    return false;
-                }
-            $('#sales_latable tbody:eq(3) tr').each(function(){
-                if ($(".user_role",this).is(":checked")) {
-                s2.push($(this).attr("value"));
-                }
-            });
-                if(s2.length < 1){
-                    $("#account-alert").alert();
-                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#account-alert").hide();
-                    });
-                    $("#sales_latable tbody:eq(3) tr:eq(0) input").focus();
-                    return false;
-                }
-            if ($.trim($("#c_income").val())=="") {
-                $("#c_income-alert").alert();
-                $("#c_income-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_income-alert").hide();
-                });
-                $("#c_income").focus();
-                return false;
-            }
-            if ($.trim($("#c_expense").val())=="" ) {
-                $("#c_expense-alert").alert();
-                $("#c_expense-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_expense-alert").hide();
-                });
-                $("#c_expense").focus();
-                return false;
-            }
-            var selectedaccounts = [];
+            //gets table data
+            var oTable = document.getElementById('sales_latable');
+            //gets rows of table
+            var rowLength = oTable.rows.length;
             vd=[];
-            $('#sales_latable tbody tr').each(function(){
-            if ($(".user_role",this).is(":checked")) {
-            selectedaccounts.push($(this).attr("value"));
+            var content= {};
+            //loops through rows    
+            for (i = 0; i < (rowLength); i++){
+                //gets cells of current row  
+                var oCells = oTable.rows.item(i).cells;
+                //gets amount of cells of current row
+                var cellLength = oCells.length;
+                //loops through each cell in current row
+                for(var j = 0; j < cellLength; j++){
+                    // get your cell info here
+                    var cellId = oCells.item(j).id;
+                    var id = cellId.slice(0,cellId.indexOf('_'));
+                    var id_value = id+"_value";
+                    if(cellId != '') {
+                        if(id_value.indexOf('value') > 0) {
+                            var contentValue = document.getElementById(id_value).value;
+                            var amount = (parseFloat(contentValue));
+                            if (amount != 0){
+                                content[id]=amount;
+                            }
+                        }
+                    }                
+                }
             }
-            });
-            if (selectedaccounts.length < 1) {
-                $("#account-alert").alert();
-                $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#account-alert").hide();
+            vd.push(content);
+            if(Object.keys(content).length == 0){
+                $("#c_content-alert").alert();
+                $("#c_content-alert").fadeTo(2250, 400).slideUp(500, function(){
+                $("#c_content-alert").hide();
                 });
-                $("#sales_latable tbody:eq(1) tr:eq(0) input").focus().select();
+                $("#latable tbody tr:eq(0) input").focus();
                 return false;
-              }
-            vd.push({"expense":$("#c_expense").val(),"income":$("#c_income").val(),"accounts":selectedaccounts});
-            gaflag=1;
+        }
+        var gaflag = 1;
         }
         if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;

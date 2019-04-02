@@ -200,11 +200,35 @@ $(document).ready(function() {
                 }
                 else{
                     $("#sales_latable tbody tr td input").prop("disabled", true);
+                    
                 }
-                keys =(goddetails["contents"]["accounts"]);
-                for (var i = 0;i<keys.length;i++){
-                    $('#'+keys[i]+'_in').prop("checked", true);
+                var keys=[];
+                    var budgetAmount=0;
+                    budgetedBalance=0;
+                    keys = Object.keys(goddetails["contents"]);   //all acountcode 
+                    for (i = 0; i < (keys.length); i++){
+                        $("#"+keys[i]+"_value").val((goddetails["contents"][keys[i]]).toFixed(2));
+                        $("#"+keys[i]+"_bal").text((goddetails["contents"][keys[i]] + parseFloat($("#"+keys[i]+"_id").text())).toFixed(2));
+                        budgetAmount = budgetAmount + goddetails["contents"][keys[i]] ;
+                        $("#budgetamount").text((budgetAmount).toFixed(2));
+                        budgetedBalance = budgetedBalance + parseFloat($("#"+keys[i]+"_bal").text());
+                        $("#budgetedbalance").text((budgetedBalance).toFixed(2));
                 }
+
+                let a = parseInt($("#purchase_account").val())+2;
+                let b = parseInt($("#purchase_account").val())+1+parseInt($("#sales_account").val());
+                sales_total = 0;
+                for (let j=a ;j<=b ; j++ ){
+                    sales_total = sales_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+                }
+                $("#income").text(sales_total.toFixed(2));
+
+                purchase_total = 0;
+                for(let j=1 ; j <= $("#purchase_account").val(); j++){
+                    purchase_total = purchase_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+                }
+                $("#expenseedit").text(purchase_total.toFixed(2));
+                $("#profit").text((parseFloat($("#income").text()) - parseFloat($("#expenseedit").text())).toFixed(2));
             });
         }
         if($("#btype").val() == 5){  //expense budget
@@ -344,10 +368,11 @@ $(document).ready(function() {
                 if(goddetails["btype"] == 19){
                     $("#flow").hide();
                     $("#salesdiv").show();
-                    $("#expenseedit").val(parseFloat(goddetails["contents"]["expense"]).toFixed(2));
-                    $("#expenseedit").prop("disabled", true);
-                    $("#income").val(parseFloat(goddetails["contents"]["income"]).toFixed(2));
-                    $("#income").prop("disabled", true);
+                    // $("#expenseedit").text(parseFloat(goddetails["contents"]["expense"]).toFixed(2));
+                    // $("#expenseedit").prop("disabled", true);
+                    // $("#income").text(parseFloat(goddetails["contents"]["income"]).toFixed(2));
+                    // $("#income").prop("disabled", true);
+                    // $("#profit").text((parseFloat($("#income").text()) - parseFloat($("#expenseedit").text())).toFixed(2));
                     tablecall();
                     hideshowflag = 0;
                 }
@@ -552,46 +577,6 @@ $(document).ready(function() {
                 $("#add").focus();
                 }
             });
-            $("#expenseedit").keydown(function(e){
-                if (e.which==13)
-                {
-                e.preventDefault();
-                if ($.trim($("#expenseedit").val())=="" ) {
-                    $("#expenseedit-alert").alert();
-                    $("#expenseedit-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#expenseedit-alert").hide();
-                    });
-                    $("#expenseedit").focus();
-                    return false;
-                }
-                $("#income").focus();
-                }
-                if (e.which==38)
-                {
-                e.preventDefault();
-                $("#budget_toyear").focus();
-                }
-            });
-            $("#income").keydown(function(e){
-                if (e.which==13)
-                {
-                e.preventDefault();
-                if ($.trim($("#income").val())=="" ) {
-                    $("#income-alert").alert();
-                    $("#income-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#income-alert").hide();
-                    });
-                    $("#income").focus();
-                    return false;
-                }
-                $("#add").focus();
-                }
-                if (e.which==38)
-                {
-                e.preventDefault();
-                $("#expenseedit").focus();
-                }
-            });
             $(document).off("keydown","#budget_toyear").on("keydown", '#budget_toyear', function(e){
                 if (e.which == 13) {
                     if($("#btype").val() == 5){
@@ -625,32 +610,44 @@ $(document).ready(function() {
                     $("#latable tbody tr:eq("+i+") input").focus().select();
                 }
             });
-            $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody:eq(1) tr input", function(e){
+            $(document).off("change","#sales_latable tbody tr input").on("change", "#sales_latable tbody tr input", function(e){
+                var i = $("#sales_latable tbody tr input").index(this);
+                var inputValue = parseFloat($("#sales_latable tbody tr:eq("+i+") input").val());
+                var accBalance = parseFloat($("#sales_latable tbody tr:eq("+i+") td:eq(1)").text());
+                $("#sales_latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
+                let purchase_total = 0;
+                let sales_total =0;
+                if (i > $("#purchase_account").val()){
         
-                if(e.which == 27){
-                    $("#expenseedit").focus();
+                    let a = parseInt($("#purchase_account").val())+2;
+                    let b = parseInt($("#purchase_account").val())+1+parseInt($("#sales_account").val());
+                    
+                    for (let j=a ;j<=b ; j++ ){
+                        sales_total = sales_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+                    }
+                    $("#income").text(sales_total.toFixed(2));
                 }
-                if(e.which == 40){e.preventDefault();
-                    var i = $("#sales_latable tbody:eq(1) tr input").index(this)+1;
-                    $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
+                else{
+                    for(let j=1 ; j <= $("#purchase_account").val(); j++){
+                        purchase_total = purchase_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
+                    }
+                    $("#expenseedit").text(purchase_total.toFixed(2));
                 }
-                if(e.which == 38){e.preventDefault();
-                    var i = $("#sales_latable tbody:eq(1) tr input").index(this)-1;;
-                    $("#sales_latable tbody:eq(1) tr:eq("+i+") input").focus().select();
-                }
+                $("#profit").text((parseFloat($("#income").text()) - parseFloat($("#expenseedit").text())).toFixed(2));
+                
             });
-            $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
+            $(document).off("keydown","#sales_latable tbody tr input").on("keydown", "#sales_latable tbody tr input", function(e){
                 
                 if(e.which == 27){
-                    $("#expenseedit").focus();
+                    $("#add").focus();
                 }
                 if(e.which == 40){e.preventDefault();
-                    var i = $("#sales_latable tbody:eq(3) tr input").index(this)+1;
-                    $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+                    var i = $("#sales_latable tbody tr input").index(this)+1;
+                    $("#sales_latable tbody tr:eq("+i+") input").focus().select();
                 }
                 if(e.which == 38){e.preventDefault();
-                    var i = $("#sales_latable tbody:eq(3) tr input").index(this)-1;
-                    $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
+                    var i = $("#sales_latable tbody tr input").index(this)-1;;
+                    $("#sales_latable tbody tr:eq("+i+") input").focus().select();
                 }
             });
             $(document).off("keydown","#add").on("keydown", '#add', function(e){
@@ -659,7 +656,7 @@ $(document).ready(function() {
                         $("#latable tbody tr:eq(1) input").focus();
                     }
                     else{
-                        $("#income").focus();
+                        $("#budget_toyear").focus();
                     }
                 }
             });
@@ -820,7 +817,7 @@ $(document).ready(function() {
             vd = [{"inflow":$("#inflow").val(),"outflow":$("#outflow").val()}]
             dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag": 19};
         }
-        if($("#btype").val() == 5){   // when sale or wxpense budget
+        if($("#btype").val() == 5){   // when expense budget
             //gets table data
         var oTable = document.getElementById('latable');
         //gets rows of table
@@ -862,69 +859,45 @@ $(document).ready(function() {
         dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
         }
         if($("#btype option:selected").val() == 19){
-            var s1 = [];
-            var s2 = [];
-            $('#sales_latable tbody:eq(1) tr').each(function(){
-                if ($(".user_role",this).is(":checked")) {
-                s1.push($(this).attr("value"));
-                }
-            });
-                if(s1.length < 1){
-                    $("#account-alert").alert();
-                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#account-alert").hide();
-                    });
-                    $("#sales_latable tbody:eq(1) tr:eq(0) input").focus();
-                    return false;
-                }
-            $('#sales_latable tbody:eq(3) tr').each(function(){
-                if ($(".user_role",this).is(":checked")) {
-                s2.push($(this).attr("value"));
-                }
-            });
-                if(s2.length < 1){
-                    $("#account-alert").alert();
-                    $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                    $("#account-alert").hide();
-                    });
-                    $("#sales_latable tbody:eq(3) tr:eq(0) input").focus();
-                    return false;
-                }
-            if ($.trim($("#income").val())=="") {
-                $("#income-alert").alert();
-                $("#income-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#income-alert").hide();
-                });
-                $("#income").focus();
-                return false;
+            //gets table data
+        var oTable = document.getElementById('sales_latable');
+        //gets rows of table
+        var rowLength = oTable.rows.length;
+        vd=[];
+        var content= {};
+        //loops through rows    
+        for (i = 0; i < (rowLength); i++){
+            //gets cells of current row  
+            var oCells = oTable.rows.item(i).cells;
+            //gets amount of cells of current row
+            var cellLength = oCells.length;
+            //loops through each cell in current row
+            for(var j = 0; j < cellLength; j++){
+                // get your cell info here
+                var cellId = oCells.item(j).id;
+                var id = cellId.slice(0,cellId.indexOf('_'));
+                var id_value = id+"_value";
+                if(cellId != '') {
+                    if(id_value.indexOf('value') > 0) {
+                        var contentValue = document.getElementById(id_value).value;
+                        var amount = (parseFloat(contentValue));
+                        if (amount != 0){
+                            content[id]=amount;
+                        }
+                    }
+                }                
             }
-            if ($.trim($("#expenseedit").val())=="" ) {
-                $("#expenseedit-alert").alert();
-                $("#expenseedit-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#expenseedit-alert").hide();
-                });
-                $("#expenseedit").focus();
-                return false;
-            }
-            var selectedaccounts = [];
-            vd=[];
-            $('#sales_latable tbody tr').each(function(){
-            if ($(".user_role",this).is(":checked")) {
-            selectedaccounts.push($(this).attr("value"));
-            }
+        }
+        vd.push(content);
+        if(Object.keys(content).length == 0){
+            $("#content-alert").alert();
+            $("#content-alert").fadeTo(2250, 400).slideUp(500, function(){
+            $("#content-alert").hide();
             });
-            if (selectedaccounts.length < 1) {
-                $("#account-alert").alert();
-                $("#account-alert").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#account-alert").hide();
-                });
-                $("#sales_latable tbody:eq(1) tr:eq(0) input").focus().select();
-                return false;
-              }
-            vd.push({"expense":$("#expenseedit").val(),"income":$("#income").val(),"accounts":selectedaccounts});
-        
-            dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
-         
+            $("#latable tbody tr:eq(0) input").focus();
+            return false;
+        }
+        dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(vd),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
         }
         $("#msspinmodal").modal("show");
         $.ajax(

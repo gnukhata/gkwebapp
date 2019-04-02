@@ -75,9 +75,9 @@ th {
     {% if btype == '3' %}
     <h4> <b>Cash Budget Report </b> </h4></center>
     {% elif btype == '5' %}
-    <h4> <b>Expense Budget Report </b> </h4></center>
+    <h4> <b>Net Profit Budget Report </b> </h4></center>
     {% else %}
-    <h4> <b>Sales Budget Report </b> </h4></center>
+    <h4> <b>Gross Profit Budget Report </b> </h4></center>
     {% endif %}
 
     <div class = "panel">
@@ -170,7 +170,6 @@ th {
                       {{record["accountname"]}} <br>
                       {% endfor %}
                       </div>
-                      
                     </td>
                     <td style="text-align:right">
                     {% for record in gkresult["accountdata"] %}
@@ -224,6 +223,23 @@ th {
             </div>
             {% else %}
             <div>
+                  <h><b>Total Opening Balance: </b></h>{{gkresult["openingbal"]}}
+            </div>
+            <div class="table-responsive">
+                <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
+                      <thead class="bg-primary">
+                    <tr>
+                      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+                      <th colspan = "2" class="taxwrap text-center sgstfield">{% trans %}Budgeted{% endtrans %}</th>
+                      <th colspan = "2" class="taxwrap text-center sgstfield">{% trans %}Actual{% endtrans %}</th>
+                      <th  class="taxwrap text-center igstfield">{% trans %}Varance{% endtrans %}</th>
+                    </tr>
+                      </thead>
+                      <body >
+                      </body>
+                </table>
+            </div>
+            {# <div>
                   <h><b>Total Opening Balance: </b></h>{{gkresult["openingbal"]}}
             </div>
             <div class="table-responsive">
@@ -284,7 +300,7 @@ th {
                   </tbody>
                 </table>
                 <h><b>Total Closing Balance: </b></h>{{gkresult["closingbal"]}}
-            </div>
+            </div> #}
             {%endif%}
         </div>
         </div>
