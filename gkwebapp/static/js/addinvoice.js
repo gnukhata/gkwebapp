@@ -794,16 +794,27 @@ $(document).ready(function() {
 	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
     });
-	//Shortcut Adding Supplier or Customer
-	$("#add_shortcut").click(function()
-	{
-		$(this).prop("disabled", true);
-		$("#invoice_addcust").click();
-	});
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
 	if($("#invoice_customer option:selected").val() != ""){
+	//Add Supplier or Customer Option
+	if($("#invoice_customer option:selected").val() == "-1"){
+		$(this).prop("disabled", true);
+		    $("#invoice_customerstate option:first").prop("selected", true);
+		    $("#invoice_customerstate").change();
+		    $("#accountno").val("");
+		    $("#branchname").val("");
+		    $("#ifsc").val("");
+		    $("#bankname").val("");
+		    $("#invoice_customeraddr").text("");
+		    $("#tin").text("");
+		    $("#gstin").text("");
+		//Calling Modal
+		$("#invoice_addcust").click();
+	}
+	else
+	{
 	    //AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
@@ -852,6 +863,7 @@ $(document).ready(function() {
 	    .always(function() {
 		console.log("complete");
 	    });
+	}
 	}
     });
 
@@ -2670,21 +2682,26 @@ if (event.which == 13) {
 
             $('#add_cussup_name').focus();
           });
-        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
+        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
 			      {
 				  modalpresent = 0;
 				  $("#invoice_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
-              $('#invoice_customer').focus();
+              $('#invoice_customer').val("");
+              $('#invoice_customer option[value=""]').prop("selected", true);
+              $('#invoice_customer').focus().change();
               return false;
             }
             var urlcustsup = "/customersuppliers?action=getallsups";
+            var addoption=null;
             if ($("#status").val() == '15') {
 		urlcustsup = "/customersuppliers?action=getallcusts";
+		addoption="Add Customer";
             }
 	      else {
 		  urlcustsup = "/customersuppliers?action=getallsups";
+		  addoption="Add Supplier";
 	      }
             $.ajax({
               type: "POST",
@@ -2699,7 +2716,7 @@ if (event.which == 13) {
              .done(function(resp) {
                var custs = resp["customers"];
                $("#invoice_customer").empty();
-
+               $("#invoice_customer").append('<option value="-1">' +addoption+ '</option>');
                for (i in custs) {
                  $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
