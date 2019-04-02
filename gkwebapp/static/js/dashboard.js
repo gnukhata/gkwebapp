@@ -75,26 +75,25 @@ var previndex;
 
 $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
   event.preventDefault();
-  currentrow = $(this).closest("li:visible");
-  nextindex = $(currentrow).nextAll("li:visible:first").index();
-  previndex = $(currentrow).prevAll("li:visible:first").index();
+  currentrow = $(this).closest("li");
   if (event.which == 13){
-    $(this).closest("li:visible").click();
+    $(this).closest("li").click();
   }
   if (event.which == 40) {
     $(currentrow).removeClass("liclass");
-    $("#ulsidebar li:eq(" + nextindex + ") a").focus(); 
-    $("#ulsidebar li:eq(" + nextindex + ")").addClass("liclass");
+    var tog = $(this).data("menuname");
+    $('.'+tog).show();
+    $(currentrow).next().find("a").focus(); 
+    $(currentrow).next().addClass("liclass");
   }
   if (event.which == 38) {
     $(currentrow).removeClass("liclass");
-    $("#ulsidebar li:eq(" + previndex + ") a").focus(); 
-    $("#ulsidebar li:eq(" + previndex + ")").addClass("liclass");
+    $(currentrow).prev().find("a").focus(); 
+    $(currentrow).prev().addClass("liclass");
   }
-  console.log(currentrow, nextindex, previndex, $("#ulsidebar li:eq(" + nextindex + ")").html());
 });
 
-$("#exportledger").click(function(){
+  $("#exportledger").click(function(){
   $("#exportdata").modal("show");
 });
 $("#shortcuts").click(function(){
