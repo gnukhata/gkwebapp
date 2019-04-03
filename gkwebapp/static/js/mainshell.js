@@ -2065,5 +2065,9 @@ $('#drcrnote').click(function (e) {// calls base drcrnote page.
 	$("#reportclearsearchspan").hide();
 	$("tbody tr:visible").first().find('a').focus();
     });
+    $(window).load(function(){
+        $("#logodiv").fadeOut(1000);
+        $("#info").fadeIn();
+    });
 });   
      
