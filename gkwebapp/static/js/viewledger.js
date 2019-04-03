@@ -30,6 +30,7 @@ This script is for the view page of Ledger report.
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
+  $("#viewledger_accname").searchify();
   $("#viewledger_accname").focus();
   $('.viewledger_date').autotab('number');
 $("#viewledger_monthly").attr('checked', true);
