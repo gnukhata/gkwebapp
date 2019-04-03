@@ -45,6 +45,8 @@ $(document).ready(function(){
     $("#c_income").text((0.00).toFixed(2));
     $("#c_expense").text((0.00).toFixed(2));
     $("#c_profit").text((0.00).toFixed(2));
+    $("#c_gross").hide();
+    $("#c_grossprofit").text((0.00).toFixed(2));
     var dataset = {};
     // for reset Button
     $("#c_reset_button").click(function()
@@ -201,12 +203,15 @@ $(document).ready(function(){
         if($("#c_btype option:selected").val() == 3){
             $("#c_flow").show();
             $("#c_sales").hide();
+            $("#c_gross").hide();
         }
         if($("#c_btype option:selected").val() == 5){
             $("#c_flow").hide();
             $("#c_sales").hide();
+            $("#c_gross").show();
         }
         if($("#c_btype option:selected").val() == 19){
+            $("#c_gross").hide();
             $("#c_flow").hide();
             $("#c_sales").show();
         }
@@ -541,6 +546,7 @@ $(document).ready(function(){
             .done(function(resp) {    
                 $("#c_accounttable").html("");      
                 $("#c_accounttable").html(resp);
+                $("#c_grossprofit").text(($("#GP").val()));
             });
         }
         if ($("#c_btype option:selected").val() == 19){   // Sales budget

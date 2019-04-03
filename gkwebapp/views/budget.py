@@ -276,7 +276,7 @@ def expensespreadsheet(request):
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = budgetwb.active
         # Title of the sheet and width of columns are set.
-        sheet.title = "Expense Budget Report"
+        sheet.title = "Net Profit Budget Report"
 
         sheet.column_dimensions['A'].width = 36
         sheet.column_dimensions['B'].width = 25
@@ -383,16 +383,14 @@ def salesspreadsheet(request):
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = budgetwb.active
         # Title of the sheet and width of columns are set.
-        sheet.title = "Sales Budget Report"
+        sheet.title = "Gross Profit Budget Report"
 
-        sheet.column_dimensions['A'].width = 15
-        sheet.column_dimensions['B'].width = 30
-        sheet.column_dimensions['C'].width = 15
-        sheet.column_dimensions['D'].width = 30
-        sheet.column_dimensions['E'].width = 15
-        sheet.column_dimensions['F'].width = 20
+        sheet.column_dimensions['A'].width = 35
+        sheet.column_dimensions['B'].width = 25
+        sheet.column_dimensions['C'].width = 25
+        sheet.column_dimensions['D'].width = 25
         # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:F2')
+        sheet.merge_cells('A1:D2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -400,92 +398,92 @@ def salesspreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Sales Budget Report :'+ str(budgetdetails)
-        sheet.merge_cells('A3:F3')
+        sheet['A3'] = 'Gross Profit Budget Report :'+ str(budgetdetails)
+        sheet.merge_cells('A3:D3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'left', vertical='center')
         sheet['A4'] = 'Total Opening Balance : '+ result["openingbal"]
-        sheet.merge_cells('A4:F4')
+        sheet.merge_cells('A4:D4')
 
         sheet['A5'] = 'Particulars'
-        sheet['B5'] = 'Purchases'
-        sheet.merge_cells('B5:C5')
-        sheet['D5'] = 'Sales'
-        sheet.merge_cells('D5:E5')
-        sheet['F5'] = 'Profit'
+        sheet['B5'] = 'Budgeted'
+        sheet['C5'] = 'Actual'
+        sheet['D5'] = 'Variance'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
         titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
 
-        sheet['A6'] = 'Budget'
+        sheet['A6'] = 'Purchses'
         sheet['A6'].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['B6'] = result["budgetexpense"]
-        sheet.merge_cells('B6:C6')
-        sheet['B6'].font = Font(name='Liberation Serif' )
-        sheet['B6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D6'] = result["budgetincome"]
-        sheet.merge_cells('D6:E6')
-        sheet['D6'].font = Font(name='Liberation Serif' )
-        sheet['D6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['F6'] = result["budgetprofit"]
-        sheet['F6'].font = Font(name='Liberation Serif' )
-        sheet['F6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['A7'] = 'Actuals'
-        sheet['A7'].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A6'].alignment = Alignment(horizontal = 'center', vertical='center')
         row=7
         for expense in result["expensedata"]:
-            sheet['B'+str(row)] = expense["accountname"]
-            sheet['B'+str(row)].font = Font(italic=True,size='12' )
+            sheet['A'+str(row)] = expense["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)] = expense["budget"]
+            sheet['B'+str(row)].font = Font(name='Liberation Serif' )
             sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['C'+str(row)] = expense["actual"]
             sheet['C'+str(row)].font = Font(name='Liberation Serif' )
             sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            row=row+1
-        row=7
-        for income in result["incomedata"]:
-            sheet['D'+str(row)] = income["accountname"]
-            sheet['D'+str(row)].font = Font(italic=True,size='12' )
+            sheet['D'+str(row)] = expense["var"]
+            sheet['D'+str(row)].font = Font(name='Liberation Serif' )
             sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['E'+str(row)] = income["actual"]
-            sheet['E'+str(row)].font = Font(name='Liberation Serif' )
-
-            sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             row=row+1
-        if(len(result["incomedata"]) > len(result["expensedata"]) ):
-            row = 7+len(result["incomedata"])
-        else:
-            row = 7+len(result["expensedata"])
         sheet['A'+str(row)] = 'Total'
+        sheet['B'+str(row)] = result["budgetexpense"]
+        sheet['C'+str(row)] = result["actualexpense"]
+        sheet['D'+str(row)] = result["varexpense"]
+        titlerow = sheet.row_dimensions[row]
+        titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
+        titlerow.alignment = Alignment(horizontal = 'right', vertical='center')
+        titlerow.alignment = Alignment(horizontal = 'right', vertical='center')
+
+        row = row +1
+        sheet['A'+str(row)] = 'Sales'
         sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['B'+str(row)] = result["actualexpense"]
-        sheet.merge_cells('B'+str(row)+':C'+str(row))
-        sheet['B'+str(row)].font = Font(name='Liberation Serif' )
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'center', vertical='center')
+        row=row+1
+        for income in result["incomedata"]:
+            sheet['A'+str(row)] = expense["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)] = expense["budget"]
+            sheet['B'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['C'+str(row)] = expense["actual"]
+            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['C'+str(row)] = expense["var"]
+            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
+            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            row=row+1
+        sheet['A'+str(row)] = 'Total'
+        sheet['B'+str(row)] = result["budgetincome"]
+        sheet['C'+str(row)] = result["actualincome"]
+        sheet['D'+str(row)] = result["varincome"]
+        titlerow = sheet.row_dimensions[row]
+        titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
+        titlerow.alignment = Alignment(horizontal = 'right', vertical='center')
+
+        row = row +1
+        sheet['A'+str(row)] = 'Profit'
+        sheet['A'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['B'+str(row)] = result["budgetprofit"]
+        sheet['B'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D'+str(row)] = result["actualincome"]
-        sheet.merge_cells('D'+str(row)+':E'+str(row))
-        sheet['D'+str(row)].font = Font(name='Liberation Serif' )
+        sheet['C'+str(row)] = result["actualprofit"]
+        sheet['C'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
+        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['D'+str(row)] = result["varprofit"]
+        sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['F'+str(row)] = result["actualprofit"]
-        sheet['F'+str(row)].font = Font(name='Liberation Serif' )
-        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-
-        sheet['A'+str(row+1)] = 'Variance'
-        sheet['A'+str(row+1)].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['B'+str(row+1)] = result["varexpense"]
-        sheet.merge_cells('B'+str(row+1)+':C'+str(row+1))
-        sheet['B'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
-        sheet['B'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D'+str(row+1)] = result["varincome"]
-        sheet.merge_cells('D'+str(row+1)+':E'+str(row+1))
-        sheet['D'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
-        sheet['D'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['F'+str(row+1)] = result["varprofit"]
-        sheet['F'+str(row+1)].font = Font(name='Liberation Serif',bold=True )
-        sheet['F'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-
+        
         sheet['A'+str(row+2)] = 'Total Closing Balance : '+ result["closingbal"]
-        sheet.merge_cells('A'+str(row+2)+':F'+str(row+2))
+        sheet.merge_cells('A'+str(row+2)+':D'+str(row+2))
         sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
 

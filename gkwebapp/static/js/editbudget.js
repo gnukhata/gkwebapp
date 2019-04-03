@@ -256,6 +256,7 @@ $(document).ready(function() {
                 var keys=[];
                     var budgetAmount=0;
                     budgetedBalance=0;
+                    $("#grossprofit").text(($("#GP").val()));
                     keys = Object.keys(goddetails["contents"]);   //all acountcode 
                     for (i = 0; i < (keys.length); i++){
                         $("#"+keys[i]+"_value").val((goddetails["contents"][keys[i]]).toFixed(2));
@@ -352,6 +353,7 @@ $(document).ready(function() {
                 $("#btype").prop("disabled", true);
                 if(goddetails["btype"] == 3){
                     $("#salesdiv").hide();
+                    $("#gross").hide();
                     $("#flow").show();
                     $("#outflow").val(parseFloat(goddetails["contents"]["outflow"]).toFixed(2));
                     $("#outflow").prop("disabled", true);
@@ -362,12 +364,14 @@ $(document).ready(function() {
                 if(goddetails["btype"] == 5){
                     $("#flow").hide();
                     $("#salesdiv").hide();
+                    $("#gross").show();
                     tablecall();
                     hideshowflag = 0;
                 }
                 if(goddetails["btype"] == 19){
                     $("#flow").hide();
                     $("#salesdiv").show();
+                    $("#gross").hide();
                     // $("#expenseedit").text(parseFloat(goddetails["contents"]["expense"]).toFixed(2));
                     // $("#expenseedit").prop("disabled", true);
                     // $("#income").text(parseFloat(goddetails["contents"]["income"]).toFixed(2));
