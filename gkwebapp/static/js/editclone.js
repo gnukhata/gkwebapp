@@ -370,7 +370,7 @@ $(document).ready(function()
   });
 
   $("#edit").click(function(event)
-  {
+    {
       $("#printvoucher").hide();
     ecflag="edit";
     $(".lblec").prepend('<i>Edit </i>');
@@ -476,10 +476,9 @@ $(document).ready(function()
                     var caldata = d.getFullYear() + '-' + (month<10 ? '0' : '') + month + '-' + (day<10 ? '0' : '') + day;
                   $("td:eq(2) input",this).val(getBalance(curacccode,caldata));
 
-              });
-
-
-  });
+                });
+      $(".accs").searchify();
+    });
 
 
     $("#clone").click(function(event){
@@ -585,7 +584,8 @@ $(document).ready(function()
       }else{
 	  $("#vno").focus().select();
       }
-  });
+      $(".accs").searchify();
+    });
   $("#vouchercancel").click(function(event)
   {
     $("#myModal").modal('hide');
@@ -1307,13 +1307,13 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
+              $('#vctable tbody tr:last td:eq(1) select').searchify();
               $('#vctable tbody tr:last td:eq(1) select').focus();
-
               $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
 
-                var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-                var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-                $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
               crsum=0;
               $(".cramt").each(function(){
@@ -1328,161 +1328,162 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
 
       }
       else if(drsum < crsum)
-      {
-        diff=crsum-drsum;
-        if(curindex<lastindex)
         {
-            var nxtindex = curindex+1;
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
-            var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-            var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-            $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-            drsum=0;
-            $(".dramt").each(function(){
-              drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
-            });
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
-          }
-        }
-        else {
-          $.ajax({
-            url: '/getcjaccounts',
-            type: 'POST',
-            dataType: 'json',
-            data: {"type": $('#m_vtype').val(),"side":"Dr"},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(jsonObj) {
-              var accs = jsonObj["accounts"];
-              $('#vctable').append('<tr>'+
-              '<td class="col-xs-1">'+
-              '<select class="form-control input-sm crdr">'+
-              '<option value="Cr">Cr</option>'+
-              '<option value="Dr" selected>Dr</option>'+
-              '</select>'+
-              '</td>'+
-              '<td class="col-xs-4">'+
-              '<select class="form-control input-sm accs">'+
-              '</select>'+
-              '<td class="col-xs-2">'+
-                '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
-              '</td>'+
-              '</td>'+
-              '<td class="col-xs-2">'+
-              '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
-              '</td>'+
-              '<td class="col-xs-2">'+
-              '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
-              '</td>'+
-              '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
-              '</tr>');
-              for (i in accs ) {
-                $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
-              }
-              $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
-              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-              drsum=0;
-              $(".dramt").each(function(){
-                drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
-              });
-            }
-          });
+          diff=crsum-drsum;
+          if(curindex<lastindex)
+                       {
+                         var nxtindex = curindex+1;
+                         if($('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="NaN"){
+                           $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+                           var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+                           var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+                           $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+                           drsum=0;
+                           $(".dramt").each(function(){
+                             drsum += +$(this).val();
+                             $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                           });
+                           $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+                         }
+                         else{
+                           $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+                         }
+                       }
+                       else {
+                         $.ajax({
+                           url: '/getcjaccounts',
+                           type: 'POST',
+                           dataType: 'json',
+                           data: {"type": $('#m_vtype').val(),"side":"Dr"},
+                           beforeSend: function(xhr)
+                           {
+                             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                           },
+                           success: function(jsonObj) {
+                             var accs = jsonObj["accounts"];
+                             $('#vctable').append('<tr>'+
+                                                  '<td class="col-xs-1">'+
+                                                  '<select class="form-control input-sm crdr">'+
+                                                  '<option value="Cr">Cr</option>'+
+                                                  '<option value="Dr" selected>Dr</option>'+
+                                                  '</select>'+
+                                                  '</td>'+
+                                                  '<td class="col-xs-4">'+
+                                                  '<select class="form-control input-sm accs">'+
+                                                  '</select>'+
+                                                  '<td class="col-xs-2">'+
+                                                  '<input class="form-control input-sm clbal rightJustified" type="text" value="0.00" disabled>'+
+                                                  '</td>'+
+                                                  '</td>'+
+                                                  '<td class="col-xs-2">'+
+                                                  '<input class="form-control input-sm dramt rightJustified" type="text" value="0.00">'+
+                                                  '</td>'+
+                                                  '<td class="col-xs-2">'+
+                                                  '<input class="form-control input-sm cramt rightJustified" type="text" value="" disabled>'+
+                                                  '</td>'+
+                                                  '<td class="col-xs-1"><a href="#" class="del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></td>'+
+                                                  '</tr>');
+                             for (i in accs ) {
+                               $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
+                             }
+                             $('#vctable tbody tr:last td:eq(1) select').searchify();
+                             $('#vctable tbody tr:last td:eq(1) select').focus();
+                             $('#vctable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
+                             var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+                             var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+                             $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+                             drsum=0;
+                             $(".dramt").each(function(){
+                               drsum += +$(this).val();
+                               $('tfoot tr:last td:eq(1) input').val(parseFloat(drsum).toFixed(2));
+                             });
+                           }
+                         });
 
-        }
+                            }
+
+  }
+  else {
+    if (curindex<lastindex)
+      {
+        var nxtindex = curindex+1;
+        $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
 
       }
-      else {
-        if (curindex<lastindex)
-        {
-          var nxtindex = curindex+1;
-          $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
-
-        }
-        else
-        {
-          if (  $('#project').val()== undefined) {
+    else
+      {
+        if (  $('#project').val()== undefined) {
           $('#narr').focus();
           return false;
-          }
-          else {
-            $('#project').focus();
-            return false;
-          }
-        }
-      }
-
-      curindex=null;
-      lastindex=null;
-    }
-
-  });
-  $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
-  {
-
-    if(event.which==13)
-    {
-
-      var curindex = $(this).closest('tr').index();
-      if($('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-        return false;
-      }
-      var lastindex = $('#vctable tbody tr:last').index();
-      if(drsum > crsum)
-      {
-        diff=drsum-crsum;
-        if(curindex<lastindex)
-        {
-            var nxtindex = curindex+1;
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
-            var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-            var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-            $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-            crsum=0;
-            $(".cramt").each(function(){
-              crsum += +$(this).val();
-              $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
-            });
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
-          }
         }
         else {
-          if((diff).toFixed(2)==0){
-            if (  $('#project').val()== undefined) {
-            $('#narr').focus();
-            return false;
-            }
-            else {
-              $('#project').focus();
-              return false;
-            }
-          }
-          $.ajax({
-            url: '/getcjaccounts',
-            type: 'POST',
-            dataType: 'json',
-            data: {"type": $('#m_vtype').val(),"side":"Cr"},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(jsonObj) {
-              var accs = jsonObj["accounts"];
-              $('#vctable').append('<tr>'+
+          $('#project').focus();
+          return false;
+        }
+      }
+       }
+
+                       curindex=null;
+                       lastindex=null;
+                       }
+
+                       });
+                       $(document).off("keyup",".cramt").on("keyup",".cramt",function(event)
+                       {
+
+                       if(event.which==13)
+                       {
+
+                       var curindex = $(this).closest('tr').index();
+                       if($('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()=="" || $('#vctable tbody tr:eq('+curindex+') td:eq(3) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+                       return false;
+                       }
+                       var lastindex = $('#vctable tbody tr:last').index();
+                       if(drsum > crsum)
+  {
+  diff=drsum-crsum;
+  if(curindex<lastindex)
+               {
+               var nxtindex = curindex+1;
+               if($('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val()==0){
+               $('#vctable tbody tr:eq('+nxtindex+') td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+               var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+               var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+               $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+               crsum=0;
+               $(".cramt").each(function(){
+               crsum += +$(this).val();
+               $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+               });
+               $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+               }
+               else{
+               $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+               }
+               }
+               else {
+               if((diff).toFixed(2)==0){
+               if (  $('#project').val()== undefined) {
+               $('#narr').focus();
+               return false;
+               }
+               else {
+               $('#project').focus();
+               return false;
+               }
+               }
+               $.ajax({
+               url: '/getcjaccounts',
+               type: 'POST',
+               dataType: 'json',
+               data: {"type": $('#m_vtype').val(),"side":"Cr"},
+               beforeSend: function(xhr)
+               {
+               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+               },
+               success: function(jsonObj) {
+               var accs = jsonObj["accounts"];
+               $('#vctable').append('<tr>'+
               '<td  class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr" selected>Cr</option>'+
@@ -1508,59 +1509,60 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
+              $('#vctable tbody tr:last td:eq(1) select').searchify();
               $('#vctable tbody tr:last td:eq(1) select').focus();
-              $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
-              var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-              var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-              $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-              crsum=0;
-              $(".cramt").each(function(){
-                crsum += +$(this).val();
-                $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
-              });
-              drsum=0;
-              $(".dramt").each(function(){
-                drsum += +$(this).val();
-                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
-              });
-            }
-          });
+                 $('#vctable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
+                 var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
+                 var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+                 $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
+                 crsum=0;
+                 $(".cramt").each(function(){
+                   crsum += +$(this).val();
+                   $('tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
+                 });
+                 drsum=0;
+                 $(".dramt").each(function(){
+                   drsum += +$(this).val();
+                   $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                 });
+               }
+               });
 
-        }
+               }
 
-      }
-      else if(drsum < crsum)
-      {
-        diff=crsum-drsum;
-        if(curindex<lastindex)
-        {
-            var nxtindex = curindex+1;
-          if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
-            drsum=0;
-            $(".dramt").each(function(){
-              drsum += +$(this).val();
-              $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
-            });
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
-          }
-          else{
-            $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
-          }
-        }
-        else {
-          $.ajax({
-            url: '/getcjaccounts',
-            type: 'POST',
-            dataType: 'json',
-            data: {"type": $('#m_vtype').val(),"side":"Dr"},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(jsonObj) {
-              var accs = jsonObj["accounts"];
-              $('#vctable').append('<tr>'+
+  }
+                         else if(drsum < crsum)
+                           {
+                             diff=crsum-drsum;
+                             if(curindex<lastindex)
+                                          {
+                                            var nxtindex = curindex+1;
+                                            if($('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()=="" || $('#vctable tbody tr:eq('+nxtindex+') td:eq(2) input:enabled').val()==0 || $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val()=="NaN"){
+                                              $('#vctable tbody tr:eq('+nxtindex+') td:eq(3) input:enabled').val(diff.toFixed(2));
+                                              drsum=0;
+                                              $(".dramt").each(function(){
+                                                drsum += +$(this).val();
+                                                $('tfoot tr:last td:eq(1) input').val(drsum.toFixed(2));
+                                              });
+                                              $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').focus();
+                                            }
+                                            else{
+                                              $('#vctable tbody tr:eq('+nxtindex+') td:eq(1) select').select().focus();
+                                            }
+                                          }
+                                          else {
+                                          $.ajax({
+                                          url: '/getcjaccounts',
+                                          type: 'POST',
+                                          dataType: 'json',
+                                          data: {"type": $('#m_vtype').val(),"side":"Dr"},
+                                          beforeSend: function(xhr)
+                                          {
+                                          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                                          },
+                                          success: function(jsonObj) {
+                                          var accs = jsonObj["accounts"];
+                                          $('#vctable').append('<tr>'+
               '<td class="col-xs-1">'+
               '<select class="form-control input-sm crdr">'+
               '<option value="Cr">Cr</option>'+
@@ -1585,6 +1587,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
               for (i in accs ) {
                 $('#vctable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
+              $('#vctable tbody tr:last td:eq(1) select').searchify();
               $('#vctable tbody tr:last td:eq(1) select').focus();
               $('#vctable tbody tr:last td:eq(3) input:enabled').val(diff.toFixed(2));
               var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
