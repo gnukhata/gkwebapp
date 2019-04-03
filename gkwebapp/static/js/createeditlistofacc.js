@@ -48,7 +48,6 @@ $(document).ready(function() {
       }
       }
     );
-    return false;
     });
     $("#edit_account").click(function() {
       $.ajax(
