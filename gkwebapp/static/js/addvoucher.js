@@ -46,6 +46,10 @@
    Document off is used to remove an already attached event to an element, so as to make sure that an event is fired only once.
  */
 $(document).ready(function() {
+    $(".accs").searchify();
+    if($("#invsel").length > 0){
+        $("#invsel").searchify();
+    }
     if(sessionStorage.avnoflag==1){
 	$("#voucherno").hide();
 	if ($("#invsel").length > 0)
@@ -1104,6 +1108,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       crsum += +$(this).val();
       $('#vtable tfoot tr:last td:eq(2) input').val(parseFloat(crsum).toFixed(2));
     });
+      $(".accs").searchify();
   });
 
     //Everytime an account is selected its balance is checked and displayed.
@@ -1503,7 +1508,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
       curindex=null;
       lastindex=null;
-       $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
+        $('#vtable tbody tr:eq('+nxtindex+') td:eq(0) select').focus();
+        $(".accs").searchify();
     }
     if (event.which==13 && outfocus) {
       outfocus=false;
@@ -1589,6 +1595,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
+                $(".accs").searchify();
               $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(4) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
@@ -1669,6 +1676,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
               for (i in accs ) {
                 $('#vtable tbody tr:last td:eq(1) select').append('<option value="' + accs[i].accountcode + '">' +accs[i].accountname+ '</option>');
               }
+                $(".accs").searchify();
               $('#vtable tbody tr:last td:eq(0) select').focus();
               $('#vtable tbody tr:last td:eq(3) input:enabled').val(parseFloat(diff).toFixed(2));
               var curacccode = $('#vtable tbody tr:last td:eq(1) select option:selected').val();
