@@ -61,13 +61,6 @@ $("#sidebar").click(function(e){
   $('.kmd:first').closest('li').addClass('liclass');
 });
 
-/*$(document).off('focus' ,'.kmd').on('focus' ,'.kmd',function() {
-  $(this).closest('li').addClass('liclass');
-});
-
-$(document).off('blur' ,'.kmd').on('blur' ,'.kmd',function() {
-  $(this).closest('li').removeClass('liclass');
-});*/
 var curindex;
 var nextindex;
 var previndex;

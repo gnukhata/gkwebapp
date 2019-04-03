@@ -1423,7 +1423,7 @@ $('#listofaccounts').click(function (e) {
 	datatype: "text/html",
 	beforeSend: function(xhr)
 	{
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
 	},
 	success: function(resp)
 	{
