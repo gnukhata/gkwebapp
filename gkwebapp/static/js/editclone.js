@@ -1039,17 +1039,27 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
       $('#vctable tbody tr:eq('+curindex+') td:eq(1) select').focus();
     }
   });
+    $(document).off("change",".accs").on("change",".accs",function(event){
+        var curindex = $(this).closest('tr').index();
+        var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+        var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+        if (curacccode!=null && curacccode!="") {
+            $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
+          }
+      });
 
       $(document).off("keyup",".accs").on("keyup",".accs",function(event){
         var curindex = $(this).closest('tr').index();
         var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
         var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-        $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
         if(event.which==13 )
         {
           event.preventDefault();
-          if ($(this).val()==null) {
+          if ($(this).val()==null || $(this).val()=="") {
             return false;
+          }
+            if (curacccode!=null && curacccode!="") {
+            $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
           }
           var curindex = $(this).closest('tr').index();
           $('#vctable tbody tr:eq('+curindex+') input:enabled').select().focus(); // focus shifts to the enabled amount box when one hits enter on the accounts select box.
@@ -1059,10 +1069,9 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     var curindex = $(this).closest('tr').index();
     var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
     var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-    $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     curindex = $(this).closest('tr').index();
-    nextindex = curindex+1;
-    previndex = curindex-1;
+    let nextindex = curindex+1;
+    let previndex = curindex-1;
     if (event.which==32 || event.which==13) {
       event.preventDefault();
     }
