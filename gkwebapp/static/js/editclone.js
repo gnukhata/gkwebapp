@@ -1826,7 +1826,7 @@ $('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
     for (var i = 0; i < files.length; i++) {
       form_data.append("file"+i,files[i])
     }
-    if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1)
+    if (($('#m_vtype').val()=="sales" || $('#m_vtype').val()=="purchase") && sessionStorage.invflag==1 && $("#invsel").length > 0)
     {
       details.invid = $("#invsel option:selected").val();
       var invoicetotal= $("#invtotal").val();
