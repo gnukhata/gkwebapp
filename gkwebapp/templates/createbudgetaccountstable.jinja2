@@ -66,6 +66,7 @@ border-radius: 4px;
         </tbody>
         <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
       </table>
+      
   {% elif btype == 5 %}
       <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
@@ -142,6 +143,7 @@ border-radius: 4px;
         </tr>
         </tbody>
       </table>
+      <input hidden id="GP" value="{{gkresult["grossprofit"]}}">
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
   {% else %}
