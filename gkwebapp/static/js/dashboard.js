@@ -393,7 +393,7 @@ function topfivecustsup(inoutflag){
     var list = resp["gkresult"];
     tablediv.html("");
     for (let index in list ){
-      tablediv.append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ list[index].data+' </td> </tr>');                  
+      tablediv.append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ list[index].data+' </td> </tr>');                  
     }
  }
   });
@@ -420,7 +420,7 @@ function topfiveprod(inoutflag){
   {
     element=resp["gkresult"]
     for (let index in element ){
-      $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+element[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+ element[index].count+' </td> </tr>');                  
+      $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+element[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ element[index].count+' </td> </tr>');                  
   
  }
  }
@@ -444,12 +444,12 @@ $.ajax({
     for (let item in resp["gkresult"]){
       list =resp["gkresult"][item].gkstatus
       if (list == 3){
-      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">--</td> </tr>');                  
+      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
       }
       else{
            list =resp["gkresult"][item].gkresult
             for (let index in list) {
-            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
+            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
         }}
       }
 }
@@ -549,7 +549,7 @@ $.ajax(
         { 
           $('#stock_on_hand').html("");      
           for (let i=0; i<5; i++){      
-            $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;width:200px" class="col-sm-8">'+resp["proddesc"][i]["proddesc"]+'</td> <td  style="font-weight:normal;text-align:right;width:113px" class="col-sm-4">'+resp["gkresult"][i]["balance"]+'</td> </tr>');                  
+            $('#stock_on_hand').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["proddesc"][i]["proddesc"]+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+resp["gkresult"][i]["balance"]+'</td> </tr>');                  
             
           }
       }
