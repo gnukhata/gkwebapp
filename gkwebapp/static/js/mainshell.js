@@ -526,7 +526,10 @@ $(document).ready(function(){
   $("#printorgname").append(orname);
   // shown branchname when logged in to branch
   if (branchname != ''){
-    $("#branch").append('('+branchname+')');
+    $("#branch, #branch_sm").html(branchname);
+  }
+  else{
+    $("#branch, #branch_sm").hide();
   }
   $("#printyears").append(styear + " to " + enyear);
   $("#showedituser").click(function(e){
@@ -1403,8 +1406,8 @@ $('#listofaccounts').click(function (e) {
 
   if(orgdata!=""||yeardata!=""||userdata!="")// sets the organisation name & type, User name & role and year in the status bar below navbar.
     {
-      $("#orgdata").html(orgdata);
-      $("#yeardata").html(yeardata);
+      $("#orgdata, #orgdata_sm").html(orgdata);
+      $("#yeardata, #yeardata_sm").html(yeardata);
       $("#userdata").html(userdata); 
     }
   $('#addaccount').click(function (e) {

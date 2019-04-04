@@ -194,9 +194,9 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav brand" style="margin: auto;">
-            <li><a data-toggle="tab" style="display: block; color: #333; font-weight: bold;  padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
-            <li><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; font-weight: bold; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
-            <li><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
+            <li><a class="hidden-sm hidden-xs" data-toggle="tab" style="display: block; color: #333; font-weight: bold;  padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+            <li><a class="hidden-sm hidden-xs" data-toggle="tab" style="margin-left: 10px; display: block; color: #333; font-weight: bold; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
+            <li><a class="hidden-sm hidden-xs" style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
             
           </ul>
           <ul class="nav navbar-nav navbar-right">
@@ -239,6 +239,11 @@
                 <li><a class="usermenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>
                 <li><a class="usermenu" data-toggle="tab" id="changecompany" href="">{% trans %}Change Password{% endtrans %}</a></li>
               </ul></li>
+
+              <li><a class="hidden-md hidden-lg" data-toggle="tab" style="font-weight: bold; text-decoration: none;" id="orgdata_sm" href=""></a></li>
+            <li><a class="hidden-md hidden-lg" data-toggle="tab" style="font-weight: bold; text-decoration: none;" id="branch_sm" href=""></a></li>
+            <li><a class="hidden-md hidden-lg" style="font-weight: bold; text-decoration: none;" id="yeardata_sm" href=""></a></li>
+            
           </ul>
         </div><!-- /.navbar-collapse -->
       </div><!-- /.container-fluid -->
