@@ -77,11 +77,8 @@ $(document).ready(function(){
       $(".categoryinmaster").remove();
       $(".uominmaster").remove();
       $('.inventorymenu').remove();
-      $('.invsbill').remove();
-      $("#showviewregister").remove();
       $(".inventory_hide").remove();
       $("#showbillwiseaccounting").remove();
-      $(".invoicemenu").remove();
       $(".businessmenu").remove();	
       $("#Documents_id").remove();	
       $(".gstmenuitem").remove();
