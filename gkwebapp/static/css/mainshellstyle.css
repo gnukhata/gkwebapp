@@ -129,6 +129,11 @@ text-shadow: 0.3px 0.3px 0.6px gray;
 font-size: 20px; 
 margin-left: -15px;
 }
+.icon-bar {
+	color: black;
+	border-color: white;
+	background-color: black;
+  }
 option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;
@@ -151,5 +156,8 @@ option {
 	margin-top: 37px;
 	margin-bottom:1px;
     }
+}
+@media (max-width: 767px) {
+	
 }
 
