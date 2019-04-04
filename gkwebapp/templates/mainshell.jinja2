@@ -59,11 +59,11 @@
         </button>
         <nav  id="sidebarnv" class="drawer-nav sidebar navbar navbar-light navbar-fixed-top" role="navigation" style="height:100vh !important;">
           <ul id="ulsidebar" class="drawer-menu">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-              <span class="sr-only">{% trans %}Toggle navigation{% endtrans %}</span>
-            </button>
-            <a style="text-decoration: none;color:#696969; font-size: 16px" class=""  href=""><li class="dashboardmenu">Dashboard </li></a>
             
+            <li id="dashboard_li" class="submenuli" data-menuname="">
+              <a href="" id="dashboard_a" class="submenu kmd" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Dashboard{% endtrans %}</a>
+            </li>
+
             <li id="masterdr" class="internalaud godownhide closebooks submenuli" data-menuname="mastermenu">
               <a href="" id="master" class="submenu kmd" data-menuname="mastermenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Master{% endtrans %}  <i class="fa fa-caret-down"></i></a>
             </li>
@@ -145,11 +145,11 @@
             <li id="categorywisestockonhandreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
             <li id="listofgodowns" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Godowns{% endtrans %}</a></li>
             <li id="listofbranches" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Branches{% endtrans %}</a></li>
-            <li id="listofcategories" class="submenuitem reportmenu invsbill"><a class="submenu_item kmd " href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></li>
-            <li  id="listofstockitems" class="submenuitem reportmenu invsbill"><a class="submenu_item kmd " href="" data-toggle="tab">{% trans %}List of Products/Services{% endtrans %}</a></li>
+            <li id="listofcategories" class="submenuitem reportmenu"><a class="submenu_item kmd " href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></li>
+            <li  id="listofstockitems" class="submenuitem reportmenu"><a class="submenu_item kmd " href="" data-toggle="tab">{% trans %}List of Products/Services{% endtrans %}</a></li>
             
-            <li id="listofinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></li>
-            <li id="listofunpaidinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
+            <li id="listofinvoices" class="submenuitem reportmenu invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></li>
+            <li id="listofunpaidinvoices" class="submenuitem reportmenu invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
             <li id="listoftransfernotes" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Transfer Notes{% endtrans %}</a></li>
             <li id="show_unbilled_deliveries" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
             <li id="showviewlog" class="submenuitem reportmenu godownhide hideoperator hidemanager"><a class="submenu_item kmd" href="" data-toggle="tab" >Activity Log</a></li>

@@ -47,6 +47,11 @@ $('.drawer').drawer({
   },
   showOverlay: true
 });
+
+$("#dashboard_li").click(function(e){
+  location.reload();
+});
+
 $(".submenuitem").hide();
 $(".submenuitem").click(function(event){$('.drawer').drawer('close');});
 
@@ -57,14 +62,9 @@ $(".submenuli").click(function(event){
 });
 
 $("#sidebar").click(function(e){
-  $("#master").focus();
+  $("#dashboard_a").focus();
   $('.kmd:first').closest('li').addClass('liclass');
 });
-
-var curindex;
-var nextindex;
-var previndex;
-
 
 $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
   event.preventDefault();
@@ -78,13 +78,28 @@ $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
     $('.'+tog).show();
     $(currentrow).next().find("a").focus(); 
     $(currentrow).next().addClass("liclass");
-  }
+  
+}
   if (event.which == 38) {
     $(currentrow).removeClass("liclass");
     $(currentrow).prev().find("a").focus(); 
     $(currentrow).prev().addClass("liclass");
-  }
+}
 });
+
+// $("#master").keydown(function(event) {
+//   if (event.which == 38) {
+//     event.preventDefault();
+//     $("#dashboard_li").addClass("liclass");
+//   }
+// });
+// $("#dashboard_a").keydown(function(event) {
+//   if (event.which == 40) {
+//     console.log("classremoved");
+//     event.preventDefault();
+//     $("#dashboard_li").removeClass("liclass");
+//   }
+// });
 
   $("#exportledger").click(function(){
   $("#exportdata").modal("show");
