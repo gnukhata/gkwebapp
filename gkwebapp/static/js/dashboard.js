@@ -87,20 +87,6 @@ $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
 }
 });
 
-// $("#master").keydown(function(event) {
-//   if (event.which == 38) {
-//     event.preventDefault();
-//     $("#dashboard_li").addClass("liclass");
-//   }
-// });
-// $("#dashboard_a").keydown(function(event) {
-//   if (event.which == 40) {
-//     console.log("classremoved");
-//     event.preventDefault();
-//     $("#dashboard_li").removeClass("liclass");
-//   }
-// });
-
   $("#exportledger").click(function(){
   $("#exportdata").modal("show");
 });
