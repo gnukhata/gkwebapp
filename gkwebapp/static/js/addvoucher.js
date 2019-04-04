@@ -1052,14 +1052,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $(document).off("change",".crdr").on("change",".crdr",function(event)
   {
     var curindex = $(this).closest('tr').index(); // gets the current index of the row
-
-    var crdrchgamt = $('#vtable tbody tr:eq('+curindex+') input:enabled').val();
-    $('#vtable tbody tr:eq('+curindex+') input:enabled').val(""); // blanks out the text box which is enabled in the current row.
-    $('#vtable tbody tr:eq('+curindex+') input.cramt:disabled, #vtable tbody tr:eq('+curindex+') input.dramt:disabled').val(crdrchgamt); // sets the text of the text box to 0.00 which is disabled in the current row.
-    $('#vtable tbody tr:eq('+curindex+') input.cramt, #vtable tbody tr:eq('+curindex+') input.dramt').prop('disabled', function(i, v) { return !v; }); // toggles the property of the input boxes, i.e if the the box is enabled, it will be changed to disabled and vice versa.
-
     // the following lines will get the accounts depending on the type of the voucher and the current value of the crdr select box.
     if($(this).val()=="Cr"){
+      $('#vtable tbody tr:eq('+curindex+') td:eq(4) input').val($('#vtable tbody tr:eq('+curindex+') td:eq(3) input').val()).prop("disabled", false);
+      $('#vtable tbody tr:eq('+curindex+') td:eq(3) input').val("").prop("disabled", true);
       $.ajax({
         url: '/getcjaccounts',
         type: 'POST',
@@ -1079,6 +1075,8 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       });
     }
     if($(this).val()=="Dr"){
+      $('#vtable tbody tr:eq('+curindex+') td:eq(3) input').val($('#vtable tbody tr:eq('+curindex+') td:eq(4) input').val()).prop("disabled", false);
+      $('#vtable tbody tr:eq('+curindex+') td:eq(4) input').val("").prop("disabled", true);
       $.ajax({
         url: '/getcjaccounts',
         type: 'POST',
