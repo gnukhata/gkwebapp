@@ -122,3 +122,8 @@ def transfernotecountmonthly(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=transfernotecountbymonth&goid=%d"%(int(request.params["goid"])),headers=header)
     return {"gkstatus":result.json()["gkstatus"],"innotecount":result.json()["innotecount"],"outnotecount":result.json()["outnotecount"]}
+
+@view_config(route_name="showreport",renderer="gkwebapp:templates/showreport.jinja2")
+def showreport(request):
+    return {"status":True}
+ 

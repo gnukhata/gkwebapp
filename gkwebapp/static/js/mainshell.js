@@ -1435,6 +1435,33 @@ $('#listofaccounts').click(function (e) {
     return false;
   });
 
+  $('#report_li').click(function (e) {
+    // calls add account page.
+    $("#msspinmodal").modal("show");
+    $.ajax(
+      {
+
+	type: "POST",
+	url: "/showreport",
+	global: false,
+	async: false,
+	datatype: "text/html",
+	beforeSend: function(xhr)
+	{
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+	},
+	success: function(resp)
+	{
+    $("#info").html(resp);
+    $("#msspinmodal").modal("hide");
+    
+	}
+      }
+    );
+    return false;
+  });
+
+
   /*$('#createuser').click(function (e) {
     // calls create user page.
     $("#msspinmodal").modal("show");
