@@ -47,6 +47,9 @@ $(document).ready(function(){
     $("#c_profit").text((0.00).toFixed(2));
     $("#c_gross").hide();
     $("#c_grossprofit").text((0.00).toFixed(2));
+    $("#c_opening").text((0.00).toFixed(2));
+    $("#c_outflow").text((0.00).toFixed(2));
+    $("#c_inflow").text((0.00).toFixed(2));
     var dataset = {};
     // for reset Button
     $("#c_reset_button").click(function()
@@ -216,78 +219,7 @@ $(document).ready(function(){
             $("#c_sales").show();
         }
     });
-    $("#c_inflow").change(function(e){
-        var b = parseFloat($("#c_balance").text());
-        if(b != 0){
-            $("#c_cashavailable").text((b+parseFloat($("#c_inflow").val())).toFixed(2))
-        }
-        else{
-            $("#c_cashavailable").text((parseFloat($("#c_inflow").val())).toFixed(2))
-        }
-        var ca = parseFloat($("#c_cashavailable").text());
-        if(ca != 0){
-            $("#c_budgetbalance").text((ca-parseFloat($("#c_outflow").val())).toFixed(2))
-        }
-        else{
-            $("#c_budgetbalance").text(("-"+parseFloat($("#c_outflow").val())).toFixed(2))
-        }
-    });
-    $("#c_outflow").change(function(e){
-        var b = parseFloat($("#c_balance").text());
-        if(b != 0){
-            $("#c_cashavailable").text((b+parseFloat($("#c_inflow").val())).toFixed(2))
-        }
-        else{
-            $("#c_cashavailable").text((parseFloat($("#c_inflow").val())).toFixed(2))
-        }
-        var ca = parseFloat($("#c_cashavailable").text());
-        if(ca != 0){
-            $("#c_budgetbalance").text((ca-parseFloat($("#c_outflow").val())).toFixed(2))
-        }
-        else{
-            $("#c_budgetbalance").text(("-"+parseFloat($("#c_outflow").val())).toFixed(2))
-        }
-    });
-    $("#c_inflow").keydown(function(e){
-        if (e.which==13 )
-        {e.preventDefault();
-            if ($.trim($("#c_inflow").val())=="") {
-                $("#c_inflow-alert").alert();
-                $("#c_inflow-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_inflow-alert").hide();
-                });
-                $("#c_inflow").focus();
-                return false;
-            }
-            else{
-                $("#c_outflow").focus();
-            }
-        }
-        if (e.which==38)
-          {e.preventDefault();
-          $("#c_budget_toyear").focus();
-          }
-    });
-    $("#c_outflow").keydown(function(e){
-        if (e.which==13 )
-        {e.preventDefault();
-            if ($.trim($("#c_outflow").val())=="") {
-                $("#c_outflow-alert").alert();
-                $("#c_outflow-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_outflow-alert").hide();
-                });
-                $("#c_outflow").focus();
-                return false;
-            }
-            else{
-                $("#c_add_button").focus();
-            }
-        }
-        if ( e.which==38)
-          {e.preventDefault();
-          $("#c_inflow").focus();
-          }
-    });
+    
     $("#c_add_button").keydown(function(e){
         if (e.which==39)
         {
@@ -318,8 +250,11 @@ $(document).ready(function(){
             if($("#c_btype").val() == 5){
                 $("#latable tbody tr:eq(1) input").focus();
             }
-            else{
+            if($("#c_btype").val() == 19){
                 $("#sales_latable tbody tr:eq(1) input").focus();
+            }
+            if($("#c_btype").val() == 3){
+                $("#cash_latable tbody tr:eq(1) input").focus();
             }
           }
     });
@@ -381,7 +316,7 @@ $(document).ready(function(){
     });
     $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody tr input", function(e){
         
-        if(e.which == 27){
+        if(e.which == 13){
             $("#c_add_button").focus();
         }
         if(e.which == 40){e.preventDefault();
@@ -394,6 +329,7 @@ $(document).ready(function(){
         }
 
     });
+    
     $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
         
         if(e.which == 27){
@@ -407,6 +343,48 @@ $(document).ready(function(){
             var i = $("#sales_latable tbody:eq(3) tr input").index(this)-1;
             $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
         }
+    });
+
+    $(document).off("keydown","#cash_latable tbody:eq(1) tr input").on("keydown", "#cash_latable tbody tr input", function(e){
+        
+        if(e.which == 13){
+            $("#c_add_button").focus();
+        }
+        if(e.which == 40){e.preventDefault();
+            var i = $("#cash_latable tbody tr input").index(this)+1;
+            $("#cash_latable tbody tr:eq("+i+") input").focus().select();
+        }
+        if(e.which == 38){e.preventDefault();
+            var i = $("#cash_latable tbody tr input").index(this)-1;
+            $("#cash_latable tbody tr:eq("+i+") input").focus().select();
+        }
+
+    });
+    $(document).off("change","#cash_latable tbody tr input").on("change", "#cash_latable tbody tr input", function(e){
+        var i = $("#cash_latable tbody tr input").index(this);
+        var inputValue = parseFloat($("#cash_latable tbody tr:eq("+i+") input").val());
+        var accBalance = parseFloat($("#cash_latable tbody tr:eq("+i+") td:eq(1)").text());
+        $("#cash_latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
+        let inflowtotal = 0;
+        let outflowtotal =0;
+        if (i > $("#inflowaccount").val()){
+
+            let a = parseInt($("#inflowaccount").val())+2;
+            let b = parseInt($("#inflowaccount").val())+1+parseInt($("#outflowaccount").val());
+            
+            for (let j=a ;j<=b ; j++ ){
+                outflowtotal = outflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+            }
+            $("#c_outflow").text(outflowtotal.toFixed(2));
+        }
+        else{
+            for(let j=1 ; j <= $("#inflowaccount").val(); j++){
+                inflowtotal = inflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+            }
+            $("#c_inflow").text(inflowtotal.toFixed(2));
+        }
+        // $("#c_profit").text((parseFloat($("#c_income").text()) - parseFloat($("#c_expense").text())).toFixed(2));
+        
     });
     // ------------------Expense table row total -------------
     function total () {
@@ -526,6 +504,7 @@ $(document).ready(function(){
             .done(function(resp) { 
                 $("#c_accounttable").html("");      
                 $("#c_accounttable").html(resp);
+                $("#c_opening").text(($("#op").val()));
                 $("#c_balance").text(parseFloat($("#openingbal").val()).toFixed(2));
                 $("#c_cashavailable").text((parseFloat($("#c_inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) 
                 $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").val())).toFixed(2)) 

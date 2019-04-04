@@ -86,7 +86,107 @@ th {
         </div>
         <div class="panel-body">
         {%if btype == '3'%}
-        <div >
+        <div class="table-responsive">
+          <table id="mthltable" class="shadow table table-bordered table-condensed ">
+            <thead class="bg-primary">
+			    <tr>
+			      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Budgeted{% endtrans %}</th>
+			      <th  class="taxwrap text-center sgstfield">{% trans %}Actuals{% endtrans %}</th>
+			      <th  class="taxwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
+                  <th  class="taxwrap text-center igstfield">{% trans %}Variance(%){% endtrans %}</th>
+			    </tr>
+			  </thead>
+            <tbody>
+                <tr>
+                    <td> Opening
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td> -
+                    </td>
+                    <td> -
+                    </td>
+                </tr>
+                <tr>
+                    <td> Total
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Inflow
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+
+                </tr>
+                <tr>
+                    <td> Total
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Outflow
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Total
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                </tr>
+                <tr>
+                    <td> Closing
+                    </td>
+                    <td>
+                    </td>
+                    <td>
+                    </td>
+                    <td> -
+                    </td>
+                    <td> -
+                    </td>
+                </tr>
+            </tbody>
+          </table>
+        </div>    
+        {# <div >
             <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
         </div>
         <div class="table-responsive">
@@ -145,11 +245,14 @@ th {
             </tbody>
             </table>
             <div >
-            <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}}
+            <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}} #}
             {%elif btype== '5'%}
             <div>
-                  <h><b>Total Previous Expense: </b></h>{{gkresult["totalpreviousbal"]}}
+                <h><b>Total Gross Profit: </b></h>{{gkresult["grossprofit"]}}
             </div>
+            {# <div>
+                  <h><b>Total Previous Expense: </b></h>{{gkresult["totalpreviousbal"]}}
+            </div> #}
             <div class="table-responsive">
                 <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
                   <thead class="bg-primary">
@@ -158,8 +261,8 @@ th {
                   <th  class="taxwrap text-center sgstfield">{% trans %}Budgeted Expense{% endtrans %}</th>
                   <th  class="taxwrap text-center sgstfield">{% trans %}Actual Expense{% endtrans %}</th>
                   <th  class="taxwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
-                  <th  class="taxwrap text-center igstfield">{% trans %}Budgeted Balance{% endtrans %}</th>
-                  <th  class="taxwrap text-center igstfield">{% trans %}Actual Balance{% endtrans %}</th>
+                  {# <th  class="taxwrap text-center igstfield">{% trans %}Budgeted Balance{% endtrans %}</th>
+                  <th  class="taxwrap text-center igstfield">{% trans %}Actual Balance{% endtrans %}</th> #}
                 </tr>
                   </thead>
                   <tbody>
@@ -186,7 +289,7 @@ th {
                       {{record["accvariance"]}}<br>
                       {% endfor %}
                     </td>
-                    <td style="text-align:right">
+                    {# <td style="text-align:right">
                     {% for record in gkresult["accountdata"] %}
                       {{record["budgetedbal"]}}<br>
                       {% endfor %}
@@ -195,11 +298,11 @@ th {
                     {% for record in gkresult["accountdata"] %}
                       {{record["actualbal"]}}<br> 
                       {% endfor %}
-                    </td>
+                    </td> #}
                 </tr>
                 <tr>
                     <td >
-                    Total
+                    Total Expenses
                     </td>
                     <td style="text-align:right">
                         {{gkresult["totalbudget"]}}
@@ -210,16 +313,30 @@ th {
                     <td style="text-align:right">
                         {{gkresult["totalvariance"]}}
                     </td>
-                    <td style="text-align:right">
+                    {# <td style="text-align:right">
                         {{gkresult["totalbudgetedbal"]}}
                     </td>
                     <td style="text-align:right">
                         {{gkresult["totalactualbal"]}}
-                    </td>
+                    </td> #}
+                </tr>
+                <tr >
+                        <td>
+                            Net Profit
+                        </td>
+                        <td style="text-align:right">
+                            {{gkresult["budgetnet"]}}
+                        </td>
+                        <td style="text-align:right">
+                            {{gkresult["actualnet"]}}
+                        </td>
+                        <td style="text-align:right">
+                            {{gkresult["varnet"]}}
+                        </td>
                 </tr>
                   </tbody>
                 </table>
-                <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}}
+                <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}} <br>
             </div>
             {% else %}
             <div>

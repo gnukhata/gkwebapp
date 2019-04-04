@@ -16,6 +16,37 @@ border-radius: 4px;
   text-align:center;
 }
 
+ #sales_latable td {
+    font-size: 75%;
+    padding: 4 !important;
+    margin: 4 !important;
+  }
+
+  #sales_latable th {
+    font-size: 85%;
+  }
+
+  .card-view .title {
+      font-weight: bold;
+      display: inline-block;
+      min-width: 30%;
+      text-align: left !important;
+  }
+
+  #sales_latable tbody {
+      display:block;
+      height: calc(100vh - 18em);
+      overflow-y:scroll;
+  }
+  #sales_latable thead,#sales_latable tbody tr {
+      display:table;
+      width:100%;
+      table-layout:fixed;
+  }
+  #sales_latable thead {
+      width: calc( 100% - 0.65em );
+  }
+
 </style>
 
 <div class="panel-body nopadding">
@@ -29,43 +60,108 @@ border-radius: 4px;
           <label for="c_bname" >{% trans %}List of Accounts{% endtrans %} :</label>
         </div>
   {% if btype == 3 %}
-      <table id="latable" style="width:80%;border:1px solid grey" class="table shadow table-bordered">
+      <table id="cash_latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
           <tr>
             <th class="lalign">
-            {% trans %}Accounts Name {% endtrans %}
+            {% trans %}Accounts Name{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Accounts Balance{% endtrans %}
+            </th>
+            <th class="lalign">
+            {% trans %}Budget Amount{% endtrans %}
             </th>
             <th class="lalign" >
-            {% trans %}Balance{% endtrans %}
+            {% trans %}Budgeted Balance{% endtrans %}
             </th>
           </tr>
         </thead>
-        <tbody style="height:50%;">
-        <tr>
-          <td colspan="2" style="font-size:15">
-            Cash
-          </td>
+        <tbody  style="height:50%; overflow: auto;">
+        <tr><td colspan="2">
+        <b>Accounts for InFlow </b> <input hidden></td>
         </tr>
-        {% for acc in gkresult["cashaccountdata"]%}
-        <tr>
-              <td class="text-muted"> <i>{{acc["accountname"]}}</i></td>
-              <td style="text-align:right">  {{acc["accountbal"]}}</td>
+        {% for record in gkresult["inflow"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
         </tr>
         {% endfor %}
-        <tr>
-          <td colspan="2" style="font-size:15">
-              Bank
+        <tr><td colspan="2">
+        <b>Accounts for OutFlow </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["outflow"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
           </td>
         </tr>
-        {% for acc in gkresult["bankaccountdata"]%}
-        <tr>
-              <td class="text-muted" ><i>{{acc["accountname"]}}</i></td>
-              <td style="text-align:right">{{acc["accountbal"]}}</td>
+        {% endfor %}
+        <tr><td colspan="2">
+        <b>Accounts for Closing </b> <input hidden></td>
+        </tr>
+        {% for record in gkresult["cashbank"] %}
+        
+        <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
+          <td class="form-text text-muted">
+              <i>{{record["accountname"]}}</i>
+          </td>
+          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+              {{record["accountbal"]}}
+          </td>
+          <td>
+              <input id="{{record["accountcode"]}}_value" type="text" 
+                  class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
+                  value="0.00" size="8" placeholder="0.00" />
+          </td>
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+                0.00
+          </td>
         </tr>
         {% endfor %}
         </tbody>
-        <input type="hidden" id="openingbal" value="{{gkresult["balatbegin"] }}">
+        {# <tbody style="height:inherit;">
+        <tr style="border-top: 1.5pt solid grey;">
+          <td >Total</td>
+          <td style="text-align:right;">{{gkresult["totalbal"]}}
+          </td>
+          <td style="text-align:right;" id="budgetamount">0.00
+          </td>
+          <td style="text-align:right;" id="budgetedbalance">0.00
+          </td>
+        </tr>
+        </tbody> #}
       </table>
+      <input hidden id="inflowaccount" value="{{ gkresult["inflow"]|length }}">
+      <input hidden id="outflowaccount" value="{{ gkresult["outflow"]|length }}">
+      <input hidden id="op" value="{{gkresult["openingbal"]}}">
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
       
   {% elif btype == 5 %}
       <table id="latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
