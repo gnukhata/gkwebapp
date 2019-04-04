@@ -972,11 +972,10 @@ $(document).ready(function()
 
   $(document).off("change",".crdr").on("change",".crdr",function(event)
   {
-    var curindex = $(this).closest('tr').index();
-    $('#vctable tbody tr:eq('+curindex+') input:disabled').val($('#vctable tbody tr:eq('+curindex+') input:enabled').val());
-    $('#vctable tbody tr:eq('+curindex+') input:enabled').val("");
-    $('#vctable tbody tr:eq('+curindex+') input').prop('disabled', function(i, v) { return !v; });
-    if($(this).val()=="Cr"){
+      var curindex = $(this).closest('tr').index();
+      if($(this).val()=="Cr"){
+          $('#vctable tbody tr:eq('+curindex+') td:eq(4) input').val($('#vctable tbody tr:eq('+curindex+') td:eq(3) input').val()).prop("disabled", false);
+          $('#vctable tbody tr:eq('+curindex+') td:eq(3) input').val("").prop("disabled", true);
       $.ajax({
         url: '/getcjaccounts',
         type: 'POST',
@@ -995,7 +994,9 @@ $(document).ready(function()
         }
       });
     }
-    if($(this).val()=="Dr"){
+      if($(this).val()=="Dr"){
+          $('#vctable tbody tr:eq('+curindex+') td:eq(3) input').val($('#vctable tbody tr:eq('+curindex+') td:eq(4) input').val()).prop("disabled", false);
+          $('#vctable tbody tr:eq('+curindex+') td:eq(4) input').val("").prop("disabled", true);
       $.ajax({
         url: '/getcjaccounts',
         type: 'POST',
@@ -1014,11 +1015,9 @@ $(document).ready(function()
         }
       });
     }
-
-var curacccode = $('#vctable tbody tr:last td:eq(1) select option:selected').val();
-var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
-$('#vctable tbody tr:last td:eq(2) input').val(getBalance(curacccode, caldata));
-
+    var curacccode = $('#vctable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
+    var caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
+    $('#vctable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata));
     drsum=0;
     $(".dramt").each(function(){
       drsum += +$(this).val();
