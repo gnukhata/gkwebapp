@@ -91,15 +91,17 @@ border-radius: 5px;
                   </div>
                 </div>  
               <div id="c_flow" class="col-md-12">
+              <br>
+              <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "c_opening" > </b><br>
                 <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
-                  <label  >{% trans %}<i>Opening Balance</i>{% endtrans %} :</label> <b id = "c_balance" > </b><br>
-                  <label for="c_inflow" >{% trans %}Inflow{% endtrans %} :</label>
-                  <input style="border-radius: 4px" id="c_inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input>
+                  <label  >{% trans %}<i>Inflow</i>{% endtrans %} :</label> <b id = "c_inflow" > </b><br>
+                  {# <label for="c_inflow" >{% trans %}Inflow{% endtrans %} :</label> #}
+                  {# <input style="border-radius: 4px" id="c_inflow" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input> #}
                 </div>
-                  <label  >{% trans %}<i>Cash Available</i>{% endtrans %} :</label> <b id = "c_cashavailable" > </b><br>
+                  <label  >{% trans %}<i>Outflow</i>{% endtrans %} :</label> <b id = "c_outflow" > </b><br>
                   <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                    <label for="c_outflow" >{% trans %}Outflow{% endtrans %} :</label>
-                    <input style="border-radius: 4px" id="c_outflow" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input>
+                    {# <label for="c_outflow" >{% trans %}Outflow{% endtrans %} :</label>
+                    <input style="border-radius: 4px" id="c_outflow" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input> #}
                   </div>
                   <label  >{% trans %}<i>Budgeted Balance</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
               </div>
