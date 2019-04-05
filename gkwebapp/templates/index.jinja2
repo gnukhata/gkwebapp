@@ -129,9 +129,9 @@
          pointer-events: all;
      }
      .icon-bar {
-         color: white;
-         border-color: black;
-         background-color: white;
+         color: black;
+         border-color: white;
+         background-color: black;
      }
      .close {
          color: white;
@@ -193,12 +193,12 @@
             <a class="navbar-brand namestyle">{% trans %}GNUKhata{% endtrans %}</a>
             <a class="navbar-brand" style="margin-left:-20px">v6.0</a>
           </div>
-          <div id="ticker" hidden>
+          <!-- <div id="ticker" hidden>
             <ul class="nav navbar-nav brand" style="margin: auto">
               <li><a data-toggle="tab" style="display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="orgdata" href=""></a></li>
               <li><a style=" display: block; color: #333; padding: 1px 1px;font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
             </ul>
-          </div>
+          </div> -->
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="gknavcollapse">
             <ul class="nav navbar-nav navbar-right">
@@ -256,6 +256,12 @@
         </div>
       </div>
 
+      <div class="container-fluid" id="ticker" hidden style="margin-top:30px;box-shadow: 0 1px 2px 0 rgba(0, 0, 0,0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19); margin-left: 10px; margin-right: 10px">
+        <ul style="list-style-type: none;  padding: 0;  margin-bottom:0px;overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 5px;">
+          <li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
+          <li style="float: right;"><a style="margin-right: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="yeardata" href=""></a></li>
+        </ul>
+      </div>
       <div id="containerdiv" class="container-fluid" style="margin-top:30px;">
         <div class="row">
           <div class="tab-content col-sm-12">
