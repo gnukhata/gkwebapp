@@ -1,6 +1,6 @@
 //This script for adddrcrnote.jinja2
 $(document).ready(function() {
-    $("#drcrnote_invoice_purchase").hide();
+	$("#drcrnote_invoice_purchase").hide();
     $("#discount").focus();
     $(".purchasediv").hide();
     $('.drcrnotedate').autotab('number');  //Focus shifts from fields among date fields.
@@ -11,7 +11,8 @@ $(document).ready(function() {
     $("#drcrnote_date_ref").numeric({ negative: false });
     $("#drcrnote_month_ref").numeric({ negative: false });
     $("#drcrnote_year_ref").numeric({ negative: false });
-    var usrid = "" ;
+	var usrid = "" ;
+	let lastdrcr = $("#drcrnote_no").val();
 
     if($("#sale").is(":checked"))  {
 	$("#drcrnote_invoice").searchify();
@@ -46,7 +47,8 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice").searchify();
 	    $("#drcrnote_invoice").removeClass("col-sm-8");
 	    $("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
-	    $("#drcrnote_invoice").next().addClass("invoiceselect");
+		$("#drcrnote_invoice").next().addClass("invoiceselect");
+		$("#drcrnote_no").val(lastdrcr);
        }
 	else{
 	    $("#drcrnote_invoice_purchase").show();
@@ -59,7 +61,8 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice_purchase").searchify();
 	    $("#drcrnote_invoice_purchase").removeClass("col-sm-8");
 	    $("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
-	    $("#drcrnote_invoice_purchase").next().addClass("invoiceselect");
+		$("#drcrnote_invoice_purchase").next().addClass("invoiceselect");
+		$("#drcrnote_no").val(lastdrcr);
 	}
     });
     //keydown events for drcrnote
@@ -78,6 +81,7 @@ $(document).ready(function() {
 	else {
 	    $("#drcrnote_invoice_purchase").change();
 	}
+	$("#drcrnote_no").val(lastdrcr);
     });
     $("#sale").keydown(function(event) {
 	if (event.which == 13) {
@@ -641,7 +645,7 @@ $(document).ready(function() {
 	$("label.col-sm-8, #taxapplicabletext, .input-group-addon, .summarylabel").text("");
 	$('input:not(#status, #taxapplicable), select:not(#drcrnote_invoice, #drcrnote_invoice_purchase, .invoiceselect)').val("");
 	if($(this).val()!=""){
-	$.ajax({
+	$.ajax({ 
 		url: '/invoice?action=getinvdetails',
 		type: 'POST',
 		dataType: 'json',
@@ -653,6 +657,7 @@ $(document).ready(function() {
 		}
 	})
 	    .done(function(resp) {
+			console.log("AAAAAAAAAAAAAAAAAAA");
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
 		    //Load invoice data
@@ -694,6 +699,7 @@ $(document).ready(function() {
 			    }
 			})
 			.done(function(resp){
+				console.log("BBBBBBBBBBBBB");
 			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
 			  $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
 			   usrid = resp.unamerole["userid"];
@@ -706,6 +712,7 @@ $(document).ready(function() {
 			$('#drcrnote_product_table_total tbody').empty();
 			$.each(resp.invoicedata.invcontents, function(key, value) {
 			    if ($("#discount").is(":checked") || ($("#return").is(":checked") && value.gsflag == 7)) {
+					
 				$('#drcrnote_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				$('#drcrnote_product_table_gst tbody tr:last td:first label').text(value.proddesc);
 				$('#drcrnote_product_table_gst tbody tr:last td:first label').attr("data-productcode",key);
@@ -1088,6 +1095,7 @@ $(document).ready(function() {
 	  event.preventDefault();
 	  if ($("#taxapplicabletext").text() == "VAT") {
 	      if ($("#return").is(":checked")) {
+			  
 		  $(".drcrnote_product_quantity_vat").change();
 	      }
 	      else{
@@ -1471,6 +1479,7 @@ if (!curdate.between(financialstart, financialend)) {
             })
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
+						console.log("CCCCCCCCCCCCCCCCCCCc");
 			if($("#status").val()==3){
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			    if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 1) {
