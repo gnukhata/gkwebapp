@@ -66,24 +66,29 @@ $("#sidebar").click(function(e){
   $('.kmd:first').closest('li').addClass('liclass');
 });
 
+var currentindex;
+var rowcount;
+var currentrow;
 $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
   event.preventDefault();
   currentrow = $(this).closest("li");
+  currentindex = $(currentrow).index();
+  rowcount =$(".kmd").length-1;
+
   if (event.which == 13){
     $(this).closest("li").click();
   }
-  if (event.which == 40) {
+  if (event.which == 40 && currentindex != rowcount) {
     $(currentrow).removeClass("liclass");
     var tog = $(this).data("menuname");
     $('.'+tog).show();
     $(currentrow).next().find("a").focus(); 
     $(currentrow).next().addClass("liclass");
-  
-}
-  if (event.which == 38) {
-    $(currentrow).removeClass("liclass");
-    $(currentrow).prev().find("a").focus(); 
-    $(currentrow).prev().addClass("liclass");
+  }
+    if (event.which == 38 && currentindex != 0) {
+      $(currentrow).removeClass("liclass");
+      $(currentrow).prev().find("a").focus(); 
+      $(currentrow).prev().addClass("liclass");
 }
 });
 
