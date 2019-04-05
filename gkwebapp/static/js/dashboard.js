@@ -55,6 +55,8 @@ $("#dashboard_li").click(function(e){
 $(".submenuitem").hide();
 $(".submenuitem,#iconbar").click(function(event){$('.drawer').drawer('close');});
 
+$(".reportpage").click(function(event){$('.drawer').drawer('close');});
+
 $(".submenuli").click(function(event){
   event.preventDefault();
  var tog = $(this).data("menuname");
