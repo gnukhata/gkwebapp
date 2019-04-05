@@ -630,7 +630,7 @@ $(document).ready(function(){
 
   });
 
-  $('#showviewbudget').click(function (e) {
+  $(document).off("click", '#showviewbudget').on("click", '#showviewbudget', function(event) {
     // Loads list of all budget to view budget report.
     $.ajax({
       url: '/budget?type=viewbudgetreportpage',
@@ -1114,8 +1114,7 @@ $(document).ready(function(){
     }
   );
 
-
-$('#listofaccounts').click(function (e) {
+  $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1201,7 +1200,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#listofgodowns').click(function (e) {
+  $(document).off("click", '#listofgodowns').on("click", '#listofgodowns', function(event) {
     //calls list of godowns report.
     $.ajax(
       {
@@ -1224,7 +1223,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#listofbranches').click(function (e) {
+  $(document).off("click", '#listofbranches').on("click", '#listofbranches', function(event) {
     //calls list of godowns report.
     $.ajax(
       {
@@ -1247,7 +1246,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#listofcategories').click(function (e) {
+  $(document).off("click", '#listofcategories').on("click", '#listofcategories', function(event) {
     // calls list of categories report.
     $.ajax(
       {
@@ -1269,7 +1268,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#listofstockitems').click(function (e) {
+  $(document).off("click", '#listofstockitems').on("click", '#listofstockitems', function(event) {
     // calls list of stock items report.
     $.ajax(
       {
@@ -1291,7 +1290,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#showstockreport').click(function (e) {
+  $(document).off("click", '#showstockreport').on("click", '#showstockreport', function(event) {
     // calls view page for stock report.
     $.ajax(
       {
@@ -1313,7 +1312,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-    $('#stockonhandreport').click(function (e) {
+  $(document).off("click", '#stockonhandreport').on("click", '#stockonhandreport', function(event) {
     // calls view page for stock on hand report.
     $.ajax(
       {
@@ -1335,7 +1334,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
     
-  $('#consolidatedbalancesheet').click(function (e) {
+  $(document).off("click", '#consolidatedbalancesheet').on("click", '#consolidatedbalancesheet', function(event) {
     // calls view page for consolidate balance sheet report.
     $.ajax(
       {
@@ -1356,8 +1355,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-    
-  $('#categorywisestockonhandreport').click(function (e) {
+  $(document).off("click", '#categorywisestockonhandreport').on("click", '#categorywisestockonhandreport', function(event) {
       // calls view page for stock report.
         $.ajax(
           {
@@ -1494,7 +1492,7 @@ $('#listofaccounts').click(function (e) {
     });
     });
 
-  $("#showdeletedvoucher").click(function (e){
+    $(document).off("click", '#showdeletedvoucher').on("click", '#showdeletedvoucher', function(event) {
     // shows deleted vouchers report.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1514,7 +1512,7 @@ $('#listofaccounts').click(function (e) {
     });
   });
 
-  $("#listofusers").click(function (e){
+  $(document).off("click", '#listofusers').on("click", '#listofusers', function(event) {
     // shows deleted vouchers report.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1534,8 +1532,8 @@ $('#listofaccounts').click(function (e) {
     });
   });
 
-  $('#showviewledger').click(function (e) {
-    // calls view page for ledger report.
+  $(document).off("click", '#showviewledger').on("click", '#showviewledger', function(event) {
+     // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
       {
@@ -1557,7 +1555,8 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#showviewlog').click(function (e) {
+
+  $(document).off("click", '#showviewlog').on("click", '#showviewlog', function(event) {
     // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
@@ -1580,7 +1579,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#showviewregister').click(function (e) {
+  $(document).off("click", '#showviewregister').on("click", '#showviewregister', function(event) {
     // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
@@ -1623,7 +1622,7 @@ $('#listofaccounts').click(function (e) {
      });
   });
 
-  $('#showprjstate').click(function (e) {
+  $(document).off("click", '#showprjstate').on("click", '#showprjstate', function(event) {
     // calls view page for project statement report.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1689,7 +1688,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-    $('#listofinvoices').click(function (e) {
+  $(document).off("click", '#listofinvoices').on("click", '#listofinvoices', function(event) {
     // calls list of invoices report
     sessionStorage.onview=0;
     $.ajax(
@@ -1712,7 +1711,7 @@ $('#listofaccounts').click(function (e) {
     );
     });
 
-    $('#listofunpaidinvoices').click(function (e) {
+  $(document).off("click", '#listofunpaidinvoices').on("click", '#listofunpaidinvoices', function(event) {
     // calls list of invoices report
     sessionStorage.onview=0;
     $.ajax(
@@ -1735,7 +1734,7 @@ $('#listofaccounts').click(function (e) {
     );
   });
 
-  $('#listoftransfernotes').click(function (e) {
+  $(document).off("click", '#listoftransfernotes').on("click", '#listoftransfernotes', function(event) {
     // calls list of stock items report.
     $.ajax(
       {
@@ -1820,23 +1819,27 @@ $('#listofaccounts').click(function (e) {
       }
     );
   });
-
-  $("#showtrialbalance").click(function(event){// calls view page for trial balance report.
+  $(document).off("click", '#showtrialbalance').on("click", '#showtrialbalance', function(event) {
+// calls view page for trial balance report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showtrialbalance");
   });
 
-  $("#showcashflow").click(function(event){// calls cashflow report.
+  $(document).off("click", '#showcashflow').on("click", '#showcashflow', function(event) {
+  // calls cashflow report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
-  $("#showprofitloss").click(function(event){// calls profit and loss report.
+
+  $(document).off("click", '#showprofitloss').on("click", '#showprofitloss', function(event) {
+    // calls profit and loss report.
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
     $("#msspinmodal").modal("show");
     $("#info").load("/showprofitloss?orgtype="+orgtype);
   });
 
-  $("#showbalancesheet").click(function(event){// calls view page for balance sheet report.
+  $(document).off("click", '#showbalancesheet').on("click", '#showbalancesheet', function(event) {
+// calls view page for balance sheet report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showbalancesheet");
   });
@@ -1962,8 +1965,8 @@ $('#listofaccounts').click(function (e) {
   $('#tallyimport').click(function (e) {// calls tally import page.
     $("#info").load("/import?action=show");
   });
-    $('#show_unbilled_deliveries').click(function (e) {
-  //
+
+  $(document).off("click", '#show_unbilled_deliveries').on("click", '#show_unbilled_deliveries', function(event) {
   $.ajax(
     {
       type: "POST",
