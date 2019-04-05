@@ -19,64 +19,64 @@
   <body>
     <div class="row">
       <div class="col-sm-6">
-        <div class="reportouterdiv">
+        <div class="reportouterdiv" id="accountingrepdiv">
           <div class="reportdiv shadow">
-          <div>
+            <div>
               <h3 style="text-align:center">Accounting</h3>
+            </div>
+            <div>
+              <div><a class="" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></div>
+              <div><a class="" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></div>
+              <div><a class="" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></div>
+              <div><a class="" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></div>
+              <div><a class="hideoperator" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></div>
+              <div><a class="hideoperator" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></div>
+              <div><a class="hideoperator" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></div>
+              <div><a class="" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></div>
+              <div><a class="" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></div>
+              <div><a class="hideoperator hidemanager  intauditor" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></div>
+              
+            </div>
           </div>
-          <div>
-                <div><a class="" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></div>
-                <div><a class="" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></div>
-                <div><a class="" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></div>
-                <div><a class="" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></div>
-                <div><a class="hideoperator" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></div>
-                <div><a class="hideoperator" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></div>
-                <div><a class="hideoperator" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></div>
-                <div><a class="" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></div>
-                <div><a class="" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></div>
-                <div><a class="hideoperator hidemanager  intauditor" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></div>
- 
-          </div>
-        </div>
         </div>
         <br>
-        <div class="reportouterdiv">
-            <div class="reportdiv shadow">
-                <div>
-                    <h3 style="text-align:center">Inventory</h3>
-                </div>
-                <div>
-               
-          <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></div>
-          <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></div>
-          <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></div>
-          <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></div>
-          <div><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></div>
-          <div><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></div>
+        <div class="reportouterdiv" id="inventoryrepdiv">
+          <div class="reportdiv shadow">
+            <div>
+              <h3 style="text-align:center">Inventory</h3>
+            </div>
+            <div>
+              
+              <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></div>
+              <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></div>
+              <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></div>
+              <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></div>
+              <div><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></div>
+              <div><a class="reportmenu invsbill" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></div>
 
-                
-                </div>
-              </div>
+              
+            </div>
+          </div>
         </div>
       </div>
       <br class="hidden-md hidden-lg">
       <div class="col-sm-6">
-        <div class="reportouterdiv">
-            <div class="reportdiv shadow">
-                <div>
-                    <h3 style="text-align:center">Documents</h3>
-                </div>
-                <div>
+        <div class="reportouterdiv" id="documentsrepdiv">
+          <div class="reportdiv shadow">
+            <div>
+              <h3 style="text-align:center">Documents</h3>
+            </div>
+            <div>
               <div><a class="reportmenu" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></div>                
               <div><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></div>
               <div><a class="reportmenu invoicemenu invsbill" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></div>
               <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></div>
               <div><a class="reportmenu inventory_hide" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></div>
-                </div>
-              </div>
+            </div>
+          </div>
         </div>
         <br>
-          <div class="reportouterdiv">
+        <div class="reportouterdiv" id="adminisatrationrepdiv">
             <div class="reportdiv shadow">
             <div>
                 <h3 style="text-align:center">Adminisatration</h3>
