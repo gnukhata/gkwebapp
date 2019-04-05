@@ -4,11 +4,74 @@
     <meta charset="utf-8">
     <title>{% trans %}GNUKhata | User{% endtrans %}</title>
     <style>
+  .reportdiv{
+   background-color: rgb(248,248,248);
+	width: 85%;
+	padding: 10px;
+	border-radius: 5px;
+  }
+  .reportouterdiv{
+   background-color: rgba(255, 255, 255, 0,0);
+  }
+
     </style>
   </head>
   <body>
-      <h1>report</h1>
+        <div class="col-xs-6 reportouterdiv">
+          <div class="reportdiv shadow">
+          <div>
+              <h3 style="text-align:center">Accounting</h3>
+          </div>
+          <div>
+            <ul>
+                <li><a class="reportmenu" href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></li>
+<li><a class="reportmenu" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></li>
+<li><a class="reportmenu" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></li>
+<li><a class="reportmenu" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></li>
+<li class="hideoperator"><a class="reportmenu" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
+<li class="hideoperator"><a class="reportmenu" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
+<li class="hideoperator"><a class="reportmenu" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></li>
+<li><a class="reportmenu" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></li>
+<li><a class="reportmenu" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></li>
+<li><a class="hideoperator hidemanager reportmenu intauditor" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
+  </ul>
+          </div>
+        </div>
+        </div>
+        <div class="col-xs-6 reportouterdiv">
+            <div class="reportdiv shadow">
+                <div>
+                    <h3 style="text-align:center">Documents</h3>
+                </div>
+                <div>
+                <ul>
+                 
+                </ul>
+                </div>
+              </div>
+        </div>
+          <div class="col-xs-6 reportouterdiv">
+            <div class="reportdiv shadow">
+            <div>
+                <h3 style="text-align:center">Adminisatration</h3>
+            </div>
+            <div>
+                
+            </div>
+          </div>
+          </div>
+          <div class="col-xs-6 reportouterdiv">
+              <div class="reportdiv shadow">
+                  <div>
+                      <h3 style="text-align:center">Inventory</h3>
+                  </div>
+                  <div>
+                  <ul>
+                   
+                  </ul>
+                  </div>
+                </div>
+          </div>
     <!-- <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/mainshell.js')}}"></script> -->
   </body>
 </html>
-
