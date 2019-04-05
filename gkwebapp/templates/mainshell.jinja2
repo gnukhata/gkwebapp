@@ -139,17 +139,17 @@
             <li id="listofaccounts" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Accounts{% endtrans %}</a></li>
             <li id="showdeletedvoucher"class="submenuitem reportmenu godownhide hideoperator hidemanager intauditor"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Deleted Vouchers{% endtrans %}</a></li>
             <li id="listofusers" class="submenuitem reportmenu intauditor"><a class="submenu_item kmd" href="" data-toggle="tab" >List of Users</a></li>
-            <li id="showviewregister" class="submenuitem reportmenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Registers{% endtrans %}</a></li>
+            <li id="showviewregister" class="submenuitem reportmenu invsbill"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Registers{% endtrans %}</a></li>
             <li id="showstockreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Product Report{% endtrans %}</a></li>
             <li id="stockonhandreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Stock on Hand Report{% endtrans %}</a></li>
             <li id="categorywisestockonhandreport" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Category Wise Stock on Hand{% endtrans %}</a></li>
             <li id="listofgodowns" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Godowns{% endtrans %}</a></li>
             <li id="listofbranches" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Branches{% endtrans %}</a></li>
-            <li id="listofcategories" class="submenuitem reportmenu"><a class="submenu_item kmd " href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></li>
-            <li  id="listofstockitems" class="submenuitem reportmenu"><a class="submenu_item kmd " href="" data-toggle="tab">{% trans %}List of Products/Services{% endtrans %}</a></li>
+            <li id="listofcategories" class="submenuitem reportmenu invsbill"><a class="submenu_item kmd " href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></li>
+            <li  id="listofstockitems" class="submenuitem reportmenu invsbill"><a class="submenu_item kmd " href="" data-toggle="tab">{% trans %}List of Products/Services{% endtrans %}</a></li>
             
-            <li id="listofinvoices" class="submenuitem reportmenu invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></li>
-            <li id="listofunpaidinvoices" class="submenuitem reportmenu invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
+            <li id="listofinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></li>
+            <li id="listofunpaidinvoices" class="submenuitem reportmenu invsbill invoicemenu"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></li>
             <li id="listoftransfernotes" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}List of Transfer Notes{% endtrans %}</a></li>
             <li id="show_unbilled_deliveries" class="submenuitem reportmenu inventory_hide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Unbilled Deliveries{% endtrans %}</a></li>
             <li id="showviewlog" class="submenuitem reportmenu godownhide hideoperator hidemanager"><a class="submenu_item kmd" href="" data-toggle="tab" >Activity Log</a></li>
@@ -233,7 +233,8 @@
                  <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
                  </ul>
                  </li>-->
-            <li id="userdropdown" class="dropdown"><a class="usermenu dropdown-toggle" class=""  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-right:12px; padding: 1px 1px; text-decoration: none;" id="userdata" href=""></a>
+            <li id="userdropdown" class="dropdown">
+              <a class="usermenu dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="margin-right:12px; padding: 1px 1px; text-decoration: none;" href=""></a>
               <ul class="dropdown-menu">
                 <li><a class="usermenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
                 <li><a class="usermenu" data-toggle="tab" id="changeorg" href="">{% trans %}Change Company{% endtrans %}</a></li>

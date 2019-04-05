@@ -74,6 +74,7 @@ $(document).ready(function(){
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==0 && sessionStorage.billflag==0) {
       $(".productinmaster").remove();
       $(".custsuninmaster").remove();
+      $('.invsbill').remove();
       $(".categoryinmaster").remove();
       $(".uominmaster").remove();
       $('.inventorymenu').remove();
@@ -122,15 +123,9 @@ $(document).ready(function(){
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
-      $('.inventorymenu').show();
-      $('.invsbill').show();
-      $('.inventory_hide').show();
-      $("#showviewregister").show();
-      $("#showbillwiseaccounting").show();
       $(".productinmaster").remove();
       $(".categoryinmaster").remove();
       $(".uominmaster").remove();
-      $(".businessmen").show();
       $(".hidevoucher").remove();
     }
 
@@ -425,6 +420,8 @@ $(document).ready(function(){
        $("#showviewbudget").remove();
        $("#budget").remove();
        $(".operatorhide").remove();
+       $("#listofusers").remove();
+
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
