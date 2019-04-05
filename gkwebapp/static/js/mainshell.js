@@ -46,6 +46,8 @@ $(document).ready(function(){
     var userrole1;
     sessionStorage.editprint = 0;
     sessionStorage.onview=0;
+    sessionStorage.companyremovables = [];
+    sessionStorage.userremovables = [];
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
@@ -87,7 +89,9 @@ $(document).ready(function(){
       $("#gstmenu_id").remove();
       $("#gstmenu").remove();
       $(".accountinghide").remove();
-      $(".delchalhide").remove();
+        $(".delchalhide").remove();
+        let companyremovables = ["#inventoryrepdiv", "#documentsrepdiv"];
+        sessionStorage.companyremovables = companyremovables;
     }
 
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
@@ -1450,7 +1454,10 @@ $(document).ready(function(){
 	},
 	success: function(resp)
 	{
-    $("#info").html(resp);
+            $("#info").html(resp);
+            $.each(sessionStorage.companyremovables.split(","), function(index, value){
+                $(value).remove();
+            });
     $("#msspinmodal").modal("hide");
     
 	}
