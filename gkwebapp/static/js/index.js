@@ -97,7 +97,12 @@ $(document).ready(function(){
 
       event.preventDefault();
       }
-    });
+	});
+	
+	$(".navbarlink").click(function(){
+		$("#navbarlink").click();
+
+	});
 
     $("#createnav").click(function(event){
 	setTimeout( function() {

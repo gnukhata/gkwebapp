@@ -114,17 +114,16 @@
               {% endif %}
 
 						<div class=" row form-inline">
-							<div class="col-sm-3">
+							<div class="col-sm-3" >
 							 <label for="orgtype">{% trans %}Company Type{% endtrans %} : </label>
 							</div>
-							<div id="orgtype" class="orgfields" data-validation-required-message="Please select Company Type">
+							
+							<div id="orgtype" class="orgfields col-sm-6" data-validation-required-message="Please select Company Type">
 									<div class="radio">
 										<label><input type="radio"  name="selector" id="orgtypeprofit" value="Profit Making" checked> Profit Making</label>
-									</div>
-									<div class="radio" style="margin-left:15px" >
 										<label><input type="radio" name="selector" value="Not For Profit"> Not For Profit</label>
 									</div>
-							</div>
+						</div>
 						</div>	
 
 							<!-- <select name="orgtype" class="form-control orgfields" id="orgtype" data-validation-required-message="Please select Company Type">
@@ -133,32 +132,44 @@
               </select> -->
 
               <br/>
-
+	
               <label for="financialdate">{% trans %}Financial Year{% endtrans %} : </label>
 
-              <div class="form-inline">
-
+              <div class="row">
+								<div class="col-md-5 row">
+									<div class="col-xs-3">
                 <label class="sr-only" for="fromday">{% trans %}Enter From Day{% endtrans %}</label>
-                <input type="text" id="fromday" name="fromday" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="DD">
-
+								<input type="text" id="fromday" name="fromday" class="form-control vdate orgfields" size="2" maxlength="2" style="width:56px"  placeholder="DD">
+									</div>
+									<div class="col-xs-3">
                 <label class="sr-only" for="frommonth">{% trans %}Enter From Month{% endtrans %}</label>
-                <input type="text" id="frommonth" name="frommonth" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="MM" >
-
+								<input type="text" id="frommonth" name="frommonth" class="form-control vdate orgfields" size="2" maxlength="2" style="width:56px"  placeholder="MM" >
+									</div>
+								<div class="col-xs-6">
                 <label class="sr-only" for="fromyear">{% trans %}Enter From Year{% endtrans %}</label>
                 <input type="text" id="fromyear" name="fromyear" class="form-control vdate orgfields" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-
-                <label>--{% trans %}To{% endtrans %}--</label>
-
+							</div>
+						</div>
+						<br class="hidden-md hidden-lg"> 
+							<div class="col-md-2">
+								<label>--{% trans %}To{% endtrans %}--</label>
+							</div>
+							<br class="hidden-md hidden-lg">
+							<div class="col-md-5 row">
+								<div class="col-xs-3">
                 <label class="sr-only" for="today">{% trans %}Enter To Day{% endtrans %}</label>
-                <input type="text" id="today" name="day" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="DD" >
-
+								<input type="text" id="today" name="day" class="form-control vdate orgfields" size="2" maxlength="2" style="width:56px"  placeholder="DD" >
+								</div>
+							<div class="col-xs-3">
                 <label class="sr-only" for="tomonth">{% trans %}Enter To Month{% endtrans %}</label>
-                <input type="text" id="tomonth" name="tomonth" class="form-control vdate orgfields" size="2" maxlength="2" style="width:60px"  placeholder="MM"  >
-
+								<input type="text" id="tomonth" name="tomonth" class="form-control vdate orgfields" size="2" maxlength="2" style="width:56px"  placeholder="MM"  >
+							</div>
+						<div class="col-xs-6">
                 <label class="sr-only" for="toyear">{% trans %}Enter To Year{% endtrans %}</label>
                 <input type="text" id="toyear" name="toyear" class="form-control vdate orgfields" size="4" maxlength="4" style="width:65px"  placeholder="YYYY"  >
-
-              </div>
+							</div>
+							</div>
+						</div>
 	      <br>
 	    </div>
 	    <div class="col-sm-6 form-group">
@@ -179,13 +190,12 @@
 		<small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
 	      </div>
 		<div class="form-group">
-			<input type="checkbox" id="mode" checked>
-			<label for="mode">{% trans %}Use automatic mode for Receipt and Payment Vouchers {% endtrans %}</label>
+			<label for="mode"><input type="checkbox" style="margin-right:5px" id="mode" checked>{% trans %}Use automatic mode for Receipt and Payment Vouchers {% endtrans %}</label>
 		</div>
 	      <div id="ledgerdiv">
 		<div class="form-group">
-		  <input type="checkbox" id="sales" checked>
-		  <label for="sales">{%trans%}Generate Sales & Purchase Vouchers for Invoices{%endtrans%}</label>
+			
+			<label for="sales"><input type="checkbox"style="margin-right:5px" id="sales" checked>{%trans%}Generate Sales & Purchase Vouchers for Invoices{%endtrans%}</label>
 		</div>
 		<div class="form-inline">
 		  <div class="radio">
