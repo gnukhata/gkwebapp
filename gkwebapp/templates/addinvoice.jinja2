@@ -163,9 +163,9 @@
 			{% trans %}Customer{% endtrans %} :
 		      {% endif %}
 		    </label>
-		    <select class="form-control input-sm col-sm-8 fsize" id="invoice_customer" >
-			<option value="-1">
-				Add {% if gkstatus=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}
+		    <select class="form-control input-sm col-sm-8 fsize" id="invoice_customer" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+			<option value="-1" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+				&#xf067 Add {% if gkstatus=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}
 			</option>
 		      <option value="" disabled hidden selected>
 			{% if gkstatus=="in" %}
