@@ -266,12 +266,12 @@ $(document).ready(function(){
         total ();
     });
     $(document).off("keydown","#latable tbody tr input").on("keydown", "#latable tbody tr input", function(e){
-        if (e.which == 13) {
-            e.preventDefault();
-            $("#c_add_button").focus().select();
-          }
+        
         if(e.which == 27){
-            $("#c_budget_toyear").focus().select();
+            $("#c_budget_toyear").focus();
+        }
+        if(e.which == 13){
+            $("#c_add_button").focus();
         }
         if(e.which == 40){e.preventDefault();
             var i = $("#latable tbody tr input").index(this)+1;
@@ -285,8 +285,16 @@ $(document).ready(function(){
     $(document).off("keydown","#c_add_button").on("keydown", '#c_add_button', function(e){
         if (e.which == 38) {
             // e.preventDefault();
-            $("#latable tbody tr:eq(1) input").focus();
-          }
+            if($("#c_btype").val() == 3){
+                $("#cash_latable tbody tr:eq(1) input").focus();
+            }
+            if($("#c_btype").val() == 19){
+                $("#sales_latable tbody tr:eq(1) input").focus();
+            }
+            if($("#c_btype").val() == 5){
+                $("#latable tbody tr:eq(1) input").focus();
+            }
+        }
     });
     $(document).off("change","#sales_latable tbody tr input").on("change", "#sales_latable tbody tr input", function(e){
         var i = $("#sales_latable tbody tr input").index(this);
@@ -295,6 +303,7 @@ $(document).ready(function(){
         $("#sales_latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
         let purchase_total = 0;
         let sales_total =0;
+        console.log("lllll")
         if (i > $("#purchase_account").val()){
 
             let a = parseInt($("#purchase_account").val())+2;
@@ -314,8 +323,11 @@ $(document).ready(function(){
         $("#c_profit").text((parseFloat($("#c_income").text()) - parseFloat($("#c_expense").text())).toFixed(2));
         
     });
-    $(document).off("keydown","#sales_latable tbody:eq(1) tr input").on("keydown", "#sales_latable tbody tr input", function(e){
+    $(document).off("keydown","#sales_latable tbody tr input").on("keydown", "#sales_latable tbody tr input", function(e){
         
+        if(e.which == 27){
+            $("#c_budget_toyear").focus();
+        }
         if(e.which == 13){
             $("#c_add_button").focus();
         }
@@ -329,24 +341,12 @@ $(document).ready(function(){
         }
 
     });
-    
-    $(document).off("keydown","#sales_latable tbody:eq(3) tr input").on("keydown", "#sales_latable tbody:eq(3) tr input", function(e){
+
+    $(document).off("keydown","#cash_latable tbody tr input").on("keydown", "#cash_latable tbody tr input", function(e){
         
         if(e.which == 27){
-            $("#c_expense").focus();
+            $("#c_budget_toyear").focus();
         }
-        if(e.which == 40){e.preventDefault();
-            var i = $("#sales_latable tbody:eq(3) tr input").index(this)+1;
-            $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
-        }
-        if(e.which == 38){e.preventDefault();
-            var i = $("#sales_latable tbody:eq(3) tr input").index(this)-1;
-            $("#sales_latable tbody:eq(3) tr:eq("+i+") input").focus().select();
-        }
-    });
-
-    $(document).off("keydown","#cash_latable tbody:eq(1) tr input").on("keydown", "#cash_latable tbody tr input", function(e){
-        
         if(e.which == 13){
             $("#c_add_button").focus();
         }
@@ -383,7 +383,8 @@ $(document).ready(function(){
             }
             $("#c_inflow").text(inflowtotal.toFixed(2));
         }
-        // $("#c_profit").text((parseFloat($("#c_income").text()) - parseFloat($("#c_expense").text())).toFixed(2));
+        $("#c_cashavailable").text((parseFloat($("#c_inflow").text())+parseFloat($("#c_opening").text())).toFixed(2)) 
+        $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").text())).toFixed(2)) 
         
     });
     // ------------------Expense table row total -------------
@@ -505,9 +506,10 @@ $(document).ready(function(){
                 $("#c_accounttable").html("");      
                 $("#c_accounttable").html(resp);
                 $("#c_opening").text(($("#op").val()));
-                $("#c_balance").text(parseFloat($("#openingbal").val()).toFixed(2));
-                $("#c_cashavailable").text((parseFloat($("#c_inflow").val())+parseFloat($("#openingbal").val())).toFixed(2)) 
-                $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").val())).toFixed(2)) 
+                $("#c_inflow").text((0.00).toFixed(2));
+                $("#c_outflow").text((0.00).toFixed(2));
+                $("#c_cashavailable").text((parseFloat($("#c_inflow").text())+parseFloat($("#c_opening").text())).toFixed(2)) 
+                $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").text())).toFixed(2)) 
             });
         }
         if ($("#c_btype option:selected").val() == 5){   // Expense budget
@@ -565,14 +567,6 @@ $(document).ready(function(){
             $("#c_blank-name-alert").hide();
             });
             $("#c_bname").focus();
-            return false;
-        }
-        if ($("#c_budget_fromyear").val()==0 ||$("#c_budget_frommonth").val()==0 ||$("#c_budget_fromday").val()==0 ) {
-            $("#c_date-alert").alert();
-            $("#c_date-alert").fadeTo(2250, 400).slideUp(500, function(){
-            $("#c_date-alert").hide();
-            });
-            $('#c_budget_fromday').focus().select();
             return false;
         }
         if ($("#c_budget_toyear").val() ==0||$("#c_budget_tomonth").val()==0||$("#c_budget_today").val()==0) {
@@ -634,30 +628,26 @@ $(document).ready(function(){
             return false;
         }
 // ----------- end validation -----------
-        if($("#c_btype option:selected").val() == 3){  // if Cash budget 
-            if ($.trim($("#c_inflow").val())=="") {
-                $("#c_inflow-alert").alert();
-                $("#c_inflow-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_inflow-alert").hide();
-                });
-                $("#c_inflow").focus();
-                return false;
-            }
-            if ($.trim($("#c_outflow").val())=="") {
-                $("#c_outflow-alert").alert();
-                $("#c_outflow-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#c_outflow-alert").hide();
-                });
-                $("#c_outflow").focus();
-                return false;
-            }
-            vd=[]
-            vd = [{"inflow":$("#c_inflow").val(),"outflow":$("#c_outflow").val()}]
-            var gaflag = 19;
+        // if($("#c_btype option:selected").val() == 3){  // if Cash budget 
+            
+        //     vd=[]
+        //     vd = [{"inflow":$("#c_inflow").val(),"outflow":$("#c_outflow").val()}]
+        //     var gaflag = 19;
+        // }
+        // if($("#c_btype option:selected").val() == 5){  // Expense budget
+        var oTable ;
+        if($("#c_btype option:selected").val() == 3){ 
+            oTable = document.getElementById('cash_latable');
         }
-        if($("#c_btype option:selected").val() == 5){  // Expense budget
+        if($("#c_btype option:selected").val() == 19){ 
+            oTable = document.getElementById('sales_latable');
+        }
+        if($("#c_btype option:selected").val() == 5){ 
+            oTable = document.getElementById('latable');
+        }
+        $("#")
             //gets table data
-            var oTable = document.getElementById('latable');
+            // var oTable = document.getElementById('latable');
             //gets rows of table
             var rowLength = oTable.rows.length;
             vd=[];
@@ -695,48 +685,48 @@ $(document).ready(function(){
                 return false;
         }
         var gaflag = 1;
-        }
-        if($("#c_btype option:selected").val() == 19){
-            //gets table data
-            var oTable = document.getElementById('sales_latable');
-            //gets rows of table
-            var rowLength = oTable.rows.length;
-            vd=[];
-            var content= {};
-            //loops through rows    
-            for (i = 0; i < (rowLength); i++){
-                //gets cells of current row  
-                var oCells = oTable.rows.item(i).cells;
-                //gets amount of cells of current row
-                var cellLength = oCells.length;
-                //loops through each cell in current row
-                for(var j = 0; j < cellLength; j++){
-                    // get your cell info here
-                    var cellId = oCells.item(j).id;
-                    var id = cellId.slice(0,cellId.indexOf('_'));
-                    var id_value = id+"_value";
-                    if(cellId != '') {
-                        if(id_value.indexOf('value') > 0) {
-                            var contentValue = document.getElementById(id_value).value;
-                            var amount = (parseFloat(contentValue));
-                            if (amount != 0){
-                                content[id]=amount;
-                            }
-                        }
-                    }                
-                }
-            }
-            vd.push(content);
-            if(Object.keys(content).length == 0){
-                $("#c_content-alert").alert();
-                $("#c_content-alert").fadeTo(2250, 400).slideUp(500, function(){
-                $("#c_content-alert").hide();
-                });
-                $("#latable tbody tr:eq(0) input").focus();
-                return false;
-        }
-        var gaflag = 1;
-        }
+        // }
+        // if($("#c_btype option:selected").val() == 19){
+        //     //gets table data
+        //     var oTable = document.getElementById('sales_latable');
+        //     //gets rows of table
+        //     var rowLength = oTable.rows.length;
+        //     vd=[];
+        //     var content= {};
+        //     //loops through rows    
+        //     for (i = 0; i < (rowLength); i++){
+        //         //gets cells of current row  
+        //         var oCells = oTable.rows.item(i).cells;
+        //         //gets amount of cells of current row
+        //         var cellLength = oCells.length;
+        //         //loops through each cell in current row
+        //         for(var j = 0; j < cellLength; j++){
+        //             // get your cell info here
+        //             var cellId = oCells.item(j).id;
+        //             var id = cellId.slice(0,cellId.indexOf('_'));
+        //             var id_value = id+"_value";
+        //             if(cellId != '') {
+        //                 if(id_value.indexOf('value') > 0) {
+        //                     var contentValue = document.getElementById(id_value).value;
+        //                     var amount = (parseFloat(contentValue));
+        //                     if (amount != 0){
+        //                         content[id]=amount;
+        //                     }
+        //                 }
+        //             }                
+        //         }
+        //     }
+        //     vd.push(content);
+        //     if(Object.keys(content).length == 0){
+        //         $("#c_content-alert").alert();
+        //         $("#c_content-alert").fadeTo(2250, 400).slideUp(500, function(){
+        //         $("#c_content-alert").hide();
+        //         });
+        //         $("#latable tbody tr:eq(0) input").focus();
+        //         return false;
+        // }
+        // var gaflag = 1;
+        // }
         if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;
             dataset = {"goid":goid,"contents":JSON.stringify(vd),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};

@@ -101,16 +101,16 @@ th {
                 <tr>
                     <td> Opening
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["opening"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["opening"]}}
                     </td>
-                    <td> -
+                    <td style="text-align:right"> -
                     </td>
-                    <td> -
+                    <td style="text-align:right"> -
                     </td>
                 </tr>
-                <tr>
+                {# <tr>
                     <td> Total
                     </td>
                     <td>
@@ -121,66 +121,102 @@ th {
                     </td>
                     <td>
                     </td>
-                </tr>
+                </tr> #}
                 <tr>
-                    <td> Inflow
+                    <td> Inflow 
+                    <br><div style="text-align:right">
+                        {% for i in gkresult["inflow"]%}
+                            {{i["accountname"]}}<br>
+                        {% endfor %}
+                        </div>
                     </td>
-                    <td>
+                    
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["inflow"]%}
+                            {{i["budget"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["inflow"]%}
+                            {{i["actual"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["inflow"]%}
+                            {{i["var"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["inflow"]%}
+                            {{i["varinpercent"]}} %<br>   
+                        {% endfor %}
                     </td>
 
                 </tr>
                 <tr>
                     <td> Total
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["budgetin"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["actualin"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["varin"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["varpercentin"]}} %
                     </td>
                 </tr>
                 <tr>
                     <td> Outflow
+                    <br><div style="text-align:right">
+                        {% for i in gkresult["outflow"]%}
+                            {{i["accountname"]}}<br>
+                        {% endfor %}
+                        </div>
                     </td>
-                    <td>
+                    
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["outflow"]%}
+                            {{i["budget"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["outflow"]%}
+                            {{i["actual"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["outflow"]%}
+                            {{i["var"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["outflow"]%}
+                            {{i["varinpercent"]}} %<br>
+                        {% endfor %}
                     </td>
                 </tr>
-                <tr>
+                <tr >
                     <td> Total
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["budgetout"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["actualout"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["varout"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["varpercentout"]}} %
                     </td>
                 </tr>
                 <tr>
                     <td> Closing
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["budgetclosing"]}}
                     </td>
-                    <td>
+                    <td style="text-align:right"> {{gkresult["actualclosing"]}}
                     </td>
-                    <td> -
+                    <td style="text-align:right"> -
                     </td>
-                    <td> -
+                    <td style="text-align:right"> -
                     </td>
                 </tr>
             </tbody>
