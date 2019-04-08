@@ -79,7 +79,6 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
       return str
     }
   }
-
   $("#viewledger_fromdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });

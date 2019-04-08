@@ -61,7 +61,6 @@ $(document).ready(function() {
       return str
     }
   }
-
   $("#trialbal_todate").blur(function(event) { // padding 0's on blur
     $(this).val(pad($(this).val(),2));
   });
