@@ -72,7 +72,6 @@ $(document).ready(function() {
     $("#list_of_account").click(function() {
       $.ajax(
       {
-  
       type: "POST",
       url: "/showlistofaccounts",
       global: false,
@@ -86,6 +85,8 @@ $(document).ready(function() {
       {
         $("#createeditlistofacc_div").html(resp);
        $("#titlehide").hide();
+       $("#report_back").hide();
+       $("#backbutton").show();
       }
       }
     );
