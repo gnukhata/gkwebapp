@@ -52,7 +52,7 @@
   </head>
   <body class="drawer drawer--left" style="background-color: #fafafa;">
     <header role="banner">
-      <div id="divsidebar" class="container-fluid navbar-fixed-top" style="background-color: #fafafa; overflow:scrollTop; box-shadow: 0 1px 2px 0 rgba(0, 0, 0,0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19)" > 
+      <div id="divsidebar" class="container-fluid navbar-fixed-top" style="background-color: #F0F0F0; overflow:scrollTop; box-shadow: 0 1px 2px 0 rgba(0, 0, 0,0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19)" > 
         <button id="sidebar" type="button" class="drawer-toggle drawer-hamburger" style="margin-top:-10px;">
           <span class="sr-only">toggle navigation</span>
           <span class="drawer-hamburger-icon"></span>
@@ -194,10 +194,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li id="nt"><a class="newtabmenu" id="newt" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
+            <li id="nt"><a class="newtabmenu" id="newt" style="font-size:16px" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
 
             <li id="themesdropdown" class="dropdown">
-              <a href="" id="themes" class="dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
+              <a href="" id="themes" class="dropdown-toggle" style="font-size:16px" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
               <ul class="dropdown-menu scrollable">
                 <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Cerulean" href="">{% trans %}Cerulean{% endtrans %}<span id="Ceruleanspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
@@ -240,7 +240,7 @@
       </div><!-- /.container-fluid -->
     </header>
 
-    <div class="container-fluid hidden-print" style="box-shadow: 0 1px 2px 0 rgba(0, 0, 0,0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19); margin-left: 10px; margin-right: 10px">
+    <div class="container-fluid hidden-print" style="box-shadow: 0 0.2px 0.5px 0 rgba(0, 0, 0,0.2), 0 1px 2px 0 rgba(0, 0, 0, 0.19); margin-left: 10px; margin-right: 10px">
       <ul id="mainshellticker" style="list-style-type: none; padding: 0; overflow: hidden; background-color: rgb(248,248,248); height: 20px; border-radius: 2px;">
 	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="orgdata" href=""></a></li>
 	<li style="float: left;"><a data-toggle="tab" style="margin-left: 10px; display: block; color: #333; padding: 1px 1px; text-decoration: none;" id="branch" href=""></a></li>
@@ -264,7 +264,7 @@
           </div>
         </div>
       </div>
-      <div id="info" style="margin-top: 50px; margin-bottom: 10px;" class="container-fluid tab-pane" hidden>
+      <div id="info" style="margin-top: 5px; margin-bottom: 10px;" class="container-fluid tab-pane" hidden>
 
         <div class="row form-inline internalaud godownhide accountinghide">
           <div class="col-xs-3 flowouterdiv">
