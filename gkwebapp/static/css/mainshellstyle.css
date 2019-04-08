@@ -73,16 +73,16 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
   }
   .submenu{
 	color: #696969;
-	  text-decoration: none !important;
-		margin-left: 6px;
-		font-size: 16px;
+	text-decoration: none !important;
+	margin-left: 6px;
+	font-size: 16px;
 	border: none;		
   }
   .submenu_item{
 		color: #696969;
 		text-decoration: none !important;
-	margin-left: 20px;
-	border: none;
+		margin-left: 20px;
+		border: none;
 	}
 	.submenu_item:hover, .submenu:hover{
 	color: rgb(51, 122, 183);

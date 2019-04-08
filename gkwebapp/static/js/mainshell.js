@@ -437,7 +437,7 @@ $(document).ready(function(){
 	 $(".inventorymenu").remove();
 	 $(".administrationmenu").remove();
 	 $(".intauditor").remove();
-	 $("#fevoucher").text("Find Voucher");
+	 $("#findvoucher_a").text("Find Voucher");
    $("#business").remove();
    $("#help-message").hide();
    $("#showviewbudget").remove();
@@ -450,7 +450,7 @@ $(document).ready(function(){
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
 	 $(".closebooks").remove();
 	 $(".rollover").remove();
-       $("#fevoucher").text("Find Voucher");
+       $("#findvoucher_a").text("Find Voucher");
        $("#findvouchertb").text("Find Voucher - F10");
      }
      if (resp["gkresult"]["roflag"]==1 && resp["gkresult"]["booksclosedflag"]==0) {
@@ -461,7 +461,7 @@ $(document).ready(function(){
      if (resp["gkresult"]["roflag"]==0 && resp["gkresult"]["booksclosedflag"]== 1) {
        $("#showclosebooks").text("Roll Over");
        $("#showviewlog").remove();
-       $("#fevoucher").text("Find Voucher");
+       $("#findvoucher_a").text("Find Voucher");
        $("#findvouchertb").text("Find Voucher - F10");
      }
 
