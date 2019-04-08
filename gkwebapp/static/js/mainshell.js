@@ -347,14 +347,11 @@ $(document).ready(function(){
   });
   if (sessionStorage.orgt=="Not For Profit") {
     // If orgtype is Not for Profit than some heading and menu items text is changed.
-    $("#showprofitloss").text("Income & Expenditure");
-    $("#showbalancesheet").text("Statement of Affairs");
-    $("#showcashflow").text("Receipt & Payment");
-    $("#cashflowtb").text("Receipt & Payment - CTRL+6");
-    $("#showproject").text("Project");
-    $("#projecttb").text("Project - ALT+P");
-    $("#showprjstate").text("Project Statement");
-    $("#projectstatementtb").text("Project Statement - CTRL+5");
+    $("#showprofitloss_a").text("Income & Expenditure");
+    $("#showbalancesheet_a").text("Statement of Affairs");
+    $("#showcashflow_a").text("Receipt & Payment");
+    $("#showproject_a").text("Project");
+    $("#showprjstate_a").text("Project Statement");
   }
 
   // Following ajax will fetch organisation data and user data and make changes accordingly.
