@@ -68,28 +68,31 @@
               <a href="" id="master" class="submenu kmd" data-menuname="mastermenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Master{% endtrans %}  <i class="fa fa-caret-down"></i></a>
             </li>
             <li id="addaccount" class="submenuitem mastermenu"><a class=" submenu_item kmd" data-toggle="tab"  href="">{% trans %}Account{% endtrans %}</a></li>
-            <li id="showeditorg" class="submenuitem mastermenu"><a class=" submenu_item kmd" data-toggle="tab" href="" >{% trans %}Edit Profile{% endtrans %}</a></li>
-            
-            <li id="branchmenu" class="submenuitem mastermenu hideoperator hidemanager"><a  class="  submenu_item kmd" data-toggle="tab" href="">{% trans %}Branch{% endtrans %}</a></li> 
             <li id="customersupplier" class="submenuitem mastermenu custsuninmaster"><a class=" submenu_item kmd" data-toggle="tab"  href="">{% trans %}Customer and Supplier{% endtrans %}</a></li>
-            <li id="showproject" class="submenuitem mastermenu"><a class=" submenu_item kmd" data-toggle="tab" href="">{% trans %}Cost Center{% endtrans %}</a></li>
+            <li id="showproject" class="submenuitem mastermenu operatorhide"><a class=" submenu_item kmd" data-toggle="tab" href="">{% trans %}Cost Center{% endtrans %}</a></li>
             <li id="budget" class="submenuitem mastermenu"><a  class=" submenu_item kmd" data-toggle="tab"  href="">{% trans %}Budget{% endtrans %}</a></li>
-            
-            <li id="BRS" class="submenuitem mastermenu"><a class="submenu_item kmd" data-toggle="tab" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
             <li id="categoryinmaster" class="submenuitem mastermenu addcategory categoryinmaster"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Category{% endtrans %}</a></li>
             <li id="productinmaster" class="submenuitem mastermenu productinmaster"><a  class="submenu_item kmd" data-toggle="tab" href="" >Product/Service</a></li>
-            
             <li id="uominmaster" class="submenuitem mastermenu uominmaster"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
+            <li id="showeditorg" class="submenuitem mastermenu"><a class=" submenu_item kmd" data-toggle="tab" href="" >{% trans %}Edit Company Profile{% endtrans %}</a></li>
+            <li id="branchmenu" class="submenuitem mastermenu hideoperator hidemanager"><a  class="  submenu_item kmd" data-toggle="tab" href="">{% trans %}Branch{% endtrans %}</a></li> 
+            <li id="BRS" class="submenuitem mastermenu"><a class="submenu_item kmd" data-toggle="tab" href="">{% trans %}Bank Reconciliation Statement{% endtrans %}</a></li>
             <li id="shownews" class="submenuitem mastermenu"><a class="submenu_item kmd" data-toggle="modal" data-target="#newsmodal"  href="">{% trans %}Tax News{% endtrans %}</a></li>
             
             <li id="inventorydropdown" class=" internalaud closebooks inventory_hide submenuli" data-menuname="inventorymenu">
               <a href="" id="inventory" class="submenu kmd" data-menuname="inventorymenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Inventory{% endtrans %}  <i class="fa fa-caret-down"></i></a>
             </li>
             <li id="product" class="submenuitem inventorymenu"><a  class="submenu_item kmd" data-toggle="tab" href="">Product/Service</a></li>
-            <li id="godown" class="submenuitem inventorymenu godownhide"><a  class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Godown{% endtrans %}</a></li>
+            <li id="godown" class="submenuitem inventorymenu hideoperator godownhide"><a  class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Godown{% endtrans %}</a></li>
             <li id="addcategory" class="submenuitem inventorymenu addcategory"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Category{% endtrans %}</a></li>
             <li id="addunit" class="submenuitem inventorymenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
             
+
+
+
+
+
+
             <li id="transactiondropdown" class="godownhide submenuli" data-menuname="transactionmenu">
               <a href="" id="transaction" class="submenu kmd" data-menuname="transactionmenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Voucher{% endtrans %}  <i class="fa fa-caret-down"></i></a>
             </li>          
@@ -103,8 +106,8 @@
             <li id="showpurchasereturn" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Purchase Return{% endtrans %}</a></li>
             <li id="showcreditnote" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Credit Note{% endtrans %}</a></li>
             <li id="showdebitnote" class="submenuitem transactionmenu closebooks intauditor"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Debit Note{% endtrans %}</a></li>
-            <li id="fevoucher" class="submenuitem transactionmenu closebooks"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
-            <li id="showbillwiseaccounting" class="submenuitem transactionmenu intauditor closebooks"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Unadjusted Amounts{% endtrans %}</a></li>
+            <li id="fevoucher" class="submenuitem transactionmenu closebooks"><a id="findvoucher_a" class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Find/Edit Voucher{% endtrans %}</a></li>
+            <li id="showbillwiseaccounting" class="submenuitem transactionmenu intauditor closebooks"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Billwise Accounting{% endtrans %}</a></li>
 
             <li id="Documents_id"class="closebooks submenuli" data-menuname="businessmenu">
               <a href="" id="business" class="submenu kmd" data-menuname="businessmenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Documents{% endtrans %}  <i class="fa fa-caret-down"></i></a>
@@ -130,9 +133,9 @@
             
             <li id="showviewledger" class="submenuitem reportmenu godownhid"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Ledger{% endtrans %}</a></li>
             <li  id="showtrialbalance" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Trial Balance{% endtrans %}</a></li>
-            <li id="showprjstate" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Cost Center Statement{% endtrans %}</a></li>
+            <li id="showprjstate" class="submenuitem reportmenu godownhide operatorhide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Cost Center Statement{% endtrans %}</a></li>
             <li id="showcashflow" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab" >{% trans %}Cash Flow{% endtrans %}</a></li>
-            <li id="showbalancesheet" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item kmd" href=""  data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
+            <li id="showbalancesheet" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href=""  data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></li>
             <li id="consolidatedbalancesheet" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item kmd" href=""  data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></li>
             <li id="showprofitloss" class="hideoperator submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab">{% trans %}Profit & Loss{% endtrans %}</a></li>
             <li id="showviewbudget" class="submenuitem reportmenu godownhide"><a class="submenu_item kmd" href="" data-toggle="tab">{% trans %}Budget Report{% endtrans %}</a></li>
@@ -887,7 +890,7 @@
               <div class="row">
                 <div class="col-xs-6">
                     <p>
-                        {% trans %}Open Menubar{% endtrans %} - F3
+                        {% trans %}Side Menu{% endtrans %} - F3
                         </p>
                   <p>
                     {% trans %}Logout{% endtrans %} - CTRL - L
