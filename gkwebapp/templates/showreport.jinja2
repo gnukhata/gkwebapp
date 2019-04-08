@@ -25,6 +25,9 @@
   text-align:center;
   margin-top: 0px; 
 }
+.menuitemdiv:hover, .liclass{
+	background-color: #e8e8e8;
+}
     </style>
   </head>
   <body>
@@ -36,16 +39,16 @@
             <h4 class="headingtitle">Accounting</h4>
             </div>
             <div class="reportinnerdiv">
-              <div><a class="menuname"  href="" data-toggle="tab" id="showviewledger">{% trans %}Ledger{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showtrialbalance">{% trans %}Trial Balance{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showprjstate">{% trans %}Cost Center Statement{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showcashflow">{% trans %}Cash Flow{% endtrans %}</a></div>
-              <div><a class="menuname" href="" id="showbalancesheet" data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></div>
-              <div><a class="menuname" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showprofitloss">{% trans %}Profit & Loss{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showviewbudget">{% trans %}Budget Report{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listofaccounts">{% trans %}List of Accounts{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showdeletedvoucher">{% trans %}List of Deleted Vouchers{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showviewledger"><a class="menuname"  href="" data-toggle="tab">{% trans %}Ledger{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showtrialbalance"><a class="menuname" href="" data-toggle="tab" >{% trans %}Trial Balance{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showprjstate"><a class="menuname" href="" data-toggle="tab">{% trans %}Cost Center Statement{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showcashflow"><a class="menuname" href="" data-toggle="tab" >{% trans %}Cash Flow{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showbalancesheet"><a class="menuname" href=""  data-toggle="tab">{% trans %}Balance Sheet{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="consolidatedbalancesheet"><a class="menuname" href="" id="consolidatedbalancesheet" data-toggle="tab">{% trans %}Consolidated Final Accounts{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showprofitloss"><a class="menuname" href="" data-toggle="tab" >{% trans %}Profit & Loss{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showviewbudget"><a class="menuname" href="" data-toggle="tab" >{% trans %}Budget Report{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="listofaccounts"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Accounts{% endtrans %}</a></div>
+              <div class="menuitemdiv focuscls" id="showdeletedvoucher"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Deleted Vouchers{% endtrans %}</a></div>
               
             </div>
           </div>
@@ -58,12 +61,12 @@
             </div>
             <div>
               
-              <div><a class="menuname" href="" data-toggle="tab" id="showstockreport">{% trans %}Product Report{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="stockonhandreport">{% trans %}Stock on Hand Report{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="categorywisestockonhandreport">{% trans %}Category Wise Stock on Hand{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listofgodowns">{% trans %}List of Godowns{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listofcategories">{% trans %}List of Categories{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listofstockitems">{% trans %}List of Products/Services{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="showstockreport"><a class="menuname" href="" data-toggle="tab" >{% trans %}Product Report{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="stockonhandreport"><a class="menuname" href="" data-toggle="tab" >{% trans %}Stock on Hand Report{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="categorywisestockonhandreport"><a class="menuname" href="" data-toggle="tab" >{% trans %}Category Wise Stock on Hand{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="listofgodowns"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Godowns{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="listofcategories"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Categories{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="listofstockitems"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Products/Services{% endtrans %}</a></div>
 
               
             </div>
@@ -78,11 +81,11 @@
               <h4 class="headingtitle">Documents</h4>
             </div>
             <div>
-              <div><a class="menuname" href="" data-toggle="tab" id="showviewregister">{% trans %}Registers{% endtrans %}</a></div>                
-              <div><a class="menuname" href="" data-toggle="tab" id="listofinvoices">{% trans %}List of Invoices{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listofunpaidinvoices">{% trans %}List of Outstanding Invoices{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="listoftransfernotes">{% trans %}List of Transfer Notes{% endtrans %}</a></div>
-              <div><a class="menuname" href="" data-toggle="tab" id="show_unbilled_deliveries">{% trans %}Unbilled Deliveries{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="showviewregister"><a class="menuname" href="" data-toggle="tab" >{% trans %}Registers{% endtrans %}</a></div>                
+              <div class="menuitemdiv" id="listofinvoices"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Invoices{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="listofunpaidinvoices"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Outstanding Invoices{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="listoftransfernotes"><a class="menuname" href="" data-toggle="tab" >{% trans %}List of Transfer Notes{% endtrans %}</a></div>
+              <div class="menuitemdiv" id="show_unbilled_deliveries"><a class="menuname" href="" data-toggle="tab" >{% trans %}Unbilled Deliveries{% endtrans %}</a></div>
             </div>
           </div>
         </div>
@@ -93,15 +96,15 @@
                 <h4 class="headingtitle">administration</h4>
             </div>
             <div>
-            <div><a class="menuname " href="" data-toggle="tab" id="listofusers">List of Users</a></div>
-            <div><a class="menuname " href="" data-toggle="tab" id="listofbranches">{% trans %}List of Branches{% endtrans %}</a></div>
-            <div><a class="menuname " href="" data-toggle="tab" id="showviewlog">Activity Log</a></div>
+            <div class="menuitemdiv" id="listofusers"><a class="menuname " href="" data-toggle="tab" >List of Users</a></div>
+            <div class="menuitemdiv" id="listofbranches"><a class="menuname " href="" data-toggle="tab" >{% trans %}List of Branches{% endtrans %}</a></div>
+            <div class="menuitemdiv" id="showviewlog"><a class="menuname " href="" data-toggle="tab" >Activity Log</a></div>
               
             </div>
           </div>
           </div>
         </div>
           </div>
-    <!-- <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showreport.js')}}"></script> -->
+    <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/showreport.js')}}"></script>
   </body>
 </html>
