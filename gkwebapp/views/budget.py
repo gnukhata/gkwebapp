@@ -168,8 +168,9 @@ def cashspreadsheet(request):
         sheet.column_dimensions['B'].width = 20
         sheet.column_dimensions['C'].width = 20
         sheet.column_dimensions['D'].width = 20
+        sheet.column_dimensions['E'].width = 20
         # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:D2')
+        sheet.merge_cells('A1:E2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -178,78 +179,108 @@ def cashspreadsheet(request):
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
         sheet['A3'] = 'Cash Budget Report :'+ str(budgetdetails)
-        sheet.merge_cells('A3:D3')
+        sheet.merge_cells('A3:E3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['A4'] = 'Total Opening Balance : '+ result["totalopeningbal"]
-        sheet.merge_cells('A4:D4')
+        sheet['A4'] = ''
+        sheet.merge_cells('A4:E4')
 
         sheet['A5'] = 'Particulars'
-        sheet['B5'] = 'Cash Inflow'
-        sheet['C5'] = 'Cash Outflow'
-        sheet['D5'] = 'Balance'
-        sheet['A6'].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['A6'] = 'Budget Amount'
-        sheet['A7'] = 'Actuals'
-        sheet['A7'].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['B5'] = 'Budgeted'
+        sheet['C5'] = 'Actuals'
+        sheet['D5'] = 'Variance'
+        sheet['E5'] = 'Variance (%)'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
         titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['B6'] = result["budgetIn"]
-        sheet['B6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['B6'].font = Font(name='Liberation Serif' )
-        sheet['C6'] = result["budgetOut"]
-        sheet['C6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['C6'].font = Font(name='Liberation Serif' )
-        sheet['D6'] = result["budgetBal"]
-        sheet['D6'].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D6'].font = Font(name='Liberation Serif' )
-        row=8
-        for budget in result["accData"]:
-            sheet['A'+str(row)] = budget["accountname"]
-            sheet['A'+str(row)].font = Font(italic=True )
+
+        titlecolumn = sheet.column_dimensions['A']
+        titlecolumn.font = Font(name='Liberation Serif',size='12',bold=True)
+        titlecolumn.alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A6'] = 'Opening'
+        row = 7
+        for ob in result["openingacc"]:
+            accountsrow = sheet.row_dimensions[row]
+            accountsrow.font = Font(name='Liberation Serif' )
+            accountsrow.alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['A'+str(row)] = ob["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = budget["accDr"]
-            sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['C'+str(row)] = budget["accCr"]
-            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['D'+str(row)] = budget["accBal"]
-            sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['D'+str(row)].font = Font(name='Liberation Serif' )
-            row=row+1
+            sheet['B'+str(row)] = ob["balance"]
+            sheet['C'+str(row)] = ob["balance"]
+            sheet['D'+str(row)] = '-'
+            sheet['E'+str(row)] = '-'
+            row = row +1
+        totalrow = sheet.row_dimensions[row]
+        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total'
-        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row)] = result["totalDr"]
-        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['B'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['C'+str(row)] = result["totalCr"]
-        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['C'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['D'+str(row)] = result["budgetclosingbal"]
-        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-
-        sheet['A'+str(row+1)] = 'Variance'
-        sheet['A'+str(row+1)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row+1)] = result["varDr"]
-        sheet['B'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['B'+str(row+1)].font = Font(name='Liberation Serif' )
-        sheet['C'+str(row+1)] = result["varCr"]
-        sheet['C'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['C'+str(row+1)].font = Font(name='Liberation Serif' )
-        sheet['D'+str(row+1)] = result["varBal"]
-        sheet['D'+str(row+1)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['D'+str(row+1)].font = Font(name='Liberation Serif' )
-
-        sheet['A'+str(row+2)].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['A'+str(row+2)].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['A'+str(row+2)] = 'Budget Closing Balance : '+ result["budgetclosingbal"]
-        a = 'A'+str(row+2)
-        d = 'D'+str(row+2)
-        sheet.merge_cells('A'+str(row+2)+':D'+str(row+2))
+        sheet['B'+str(row)] = result["opening"]
+        sheet['C'+str(row)] = result["opening"]
+        sheet['D'+str(row)] = '-'
+        sheet['E'+str(row)] = '-'
+        row = row+1
+        sheet['A'+str(row)] = 'Inflow'
+        row = row+1
+        for ob in result["inflow"]:
+            accountsrow = sheet.row_dimensions[row]
+            accountsrow.font = Font(name='Liberation Serif' )
+            accountsrow.alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['A'+str(row)] = ob["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)] = ob["budget"]
+            sheet['C'+str(row)] = ob["actual"]
+            sheet['D'+str(row)] = ob["var"]
+            sheet['E'+str(row)] = ob["varinpercent"]
+            row = row +1
+        totalrow = sheet.row_dimensions[row]
+        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)] = 'Total'
+        sheet['B'+str(row)] = result["budgetin"]
+        sheet['C'+str(row)] = result["actualin"]
+        sheet['D'+str(row)] = result["varin"]
+        sheet['E'+str(row)] = result["varpercentin"]
+        row = row+1
+        sheet['A'+str(row)] = 'Outflow'
+        row = row+1
+        for ob in result["outflow"]:
+            accountsrow = sheet.row_dimensions[row]
+            accountsrow.font = Font(name='Liberation Serif' )
+            accountsrow.alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['A'+str(row)] = ob["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)] = ob["budget"]
+            sheet['C'+str(row)] = ob["actual"]
+            sheet['D'+str(row)] = ob["var"]
+            sheet['E'+str(row)] = ob["varinpercent"]
+            row = row +1
+        totalrow = sheet.row_dimensions[row]
+        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)] = 'Total'
+        sheet['B'+str(row)] = result["budgetout"]
+        sheet['C'+str(row)] = result["actualout"]
+        sheet['D'+str(row)] = result["varout"]
+        sheet['E'+str(row)] = result["varpercentout"]
+        row = row+1
+        sheet['A'+str(row)] = 'Closing'
+        row = row+1
+        for ob in result["closing"]:
+            accountsrow = sheet.row_dimensions[row]
+            accountsrow.font = Font(name='Liberation Serif' )
+            accountsrow.alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['A'+str(row)] = ob["accountname"]
+            sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+            sheet['B'+str(row)] = ob["budget"]
+            sheet['C'+str(row)] = ob["balance"]
+            sheet['D'+str(row)] = '-'
+            sheet['E'+str(row)] = '-'
+            row = row +1
 
         budgetwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
@@ -282,10 +313,8 @@ def expensespreadsheet(request):
         sheet.column_dimensions['B'].width = 25
         sheet.column_dimensions['C'].width = 25
         sheet.column_dimensions['D'].width = 25
-        sheet.column_dimensions['E'].width = 25
-        sheet.column_dimensions['F'].width = 25
         # Cells of first two rows are merged to display organisation details properly.
-        sheet.merge_cells('A1:F2')
+        sheet.merge_cells('A1:D2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -293,70 +322,55 @@ def expensespreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Expense Budget Report :'+ str(budgetdetails)
-        sheet.merge_cells('A3:F3')
+        sheet['A3'] = 'Net Profit Budget Report :'+ str(budgetdetails)
+        sheet.merge_cells('A3:D3')
 
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
         sheet['A4'].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['A4'] = 'Total Previous Expense : '+ result["totalpreviousbal"]
-        sheet.merge_cells('A4:F4')
+        sheet['A4'] = 'Total Gross Profit : ' + result["grossprofit"]
+        sheet.merge_cells('A4:D4')
 
         sheet['A5'] = 'Particulars'
-        sheet['B5'] = 'Budgeted Expense'
-        sheet['C5'] = 'Actual Expense'
+        sheet['B5'] = 'Budgeted'
+        sheet['C5'] = 'Actuals'
         sheet['D5'] = 'Variance'
-        sheet['E5'] = 'Budgeted Balance'
-        sheet['F5'] = 'Actual Balance'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size='12',bold=True)
         titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
-
-        row = 6
+        sheet['A6'] = 'Accounts'
+        sheet['A6'].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['A6'].alignment = Alignment(horizontal = 'left', vertical='center')
+        row = 7
         for budget in result["accountdata"]:
+            accountsrow = sheet.row_dimensions[row]
+            accountsrow.font = Font(name='Liberation Serif' )
+            accountsrow.alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['A'+str(row)] = budget["accountname"]
-            sheet['A'+str(row)].font = Font(italic=True )
-            sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
+            sheet['A'+str(row)].font = Font(italic=True,name='Liberation Serif' )
+            sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['B'+str(row)] = budget["budgetamount"]
-            sheet['B'+str(row)].font = Font(name='Liberation Serif')
-            sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['C'+str(row)] = budget["actualamount"]
-            sheet['C'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['D'+str(row)] = budget["accvariance"]
-            sheet['D'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['E'+str(row)] = budget["budgetedbal"]
-            sheet['E'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['F'+str(row)] = budget["actualbal"]
-            sheet['F'+str(row)].font = Font(name='Liberation Serif' )
-            sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             row=row+1
-        sheet['A'+str(row)] = 'Total'
+        totalrow = sheet.row_dimensions[row]
+        totalrow.font = Font(name='Liberation Serif' ,bold=True)
+        totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)] = 'Total Expenses'
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
         sheet['B'+str(row)] = result["totalbudget"]
-        sheet['B'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['C'+str(row)] = result["totalactual"]
-        sheet['C'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['C'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['D'+str(row)] = result["totalvariance"]
-        sheet['D'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['D'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['E'+str(row)] = result["totalbudgetedbal"]
-        sheet['E'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['E'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['F'+str(row)] = result["totalactualbal"]
-        sheet['F'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['F'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['A'+str(row+1)].font = Font(name='Liberation Serif',size='12',bold=True)
-        sheet['A'+str(row+1)].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['A'+str(row+1)] = 'Budget Closing Expense : '+ result["totalactual"]
-
-        a = 'A'+str(row+1)
-        d = 'D'+str(row+1)
-        sheet.merge_cells('A'+str(row+1)+':D'+str(row+1))
+        row = row+1
+        totalrow = sheet.row_dimensions[row]
+        totalrow.font = Font(name='Liberation Serif' ,bold=True)
+        totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)] = 'Net Profit'
+        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['B'+str(row)] = result["budgetnet"]
+        sheet['C'+str(row)] = result["actualnet"]
+        sheet['D'+str(row)] = result["varnet"]
 
         budgetwb.save('report.xlsx')
         xlsxfile = open("report.xlsx","r")
@@ -408,7 +422,7 @@ def salesspreadsheet(request):
 
         sheet['A5'] = 'Particulars'
         sheet['B5'] = 'Budgeted'
-        sheet['C5'] = 'Actual'
+        sheet['C5'] = 'Actuals'
         sheet['D5'] = 'Variance'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size='12',bold=True)

@@ -100,6 +100,36 @@ th {
             <tbody>
                 <tr>
                     <td> Opening
+                    <br><div style="text-align:right">
+                        {% for i in gkresult["openingacc"]%}
+                            <i>{{i["accountname"]}}</i><br>
+                        {% endfor %}
+                        </div>
+                    </td>
+                    
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["openingacc"]%}
+                            {{i["balance"]}}<br>
+                        {% endfor %}
+                    </td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["openingacc"]%}
+                            {{i["balance"]}}<br>
+                        {% endfor %}
+                    </td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["openingacc"]%}
+                            - <br>
+                        {% endfor %}
+                    </td>
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["openingacc"]%}
+                            - <br>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <td> Total
                     </td>
                     <td style="text-align:right"> {{gkresult["opening"]}}
                     </td>
@@ -110,23 +140,11 @@ th {
                     <td style="text-align:right"> -
                     </td>
                 </tr>
-                {# <tr>
-                    <td> Total
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                    <td>
-                    </td>
-                </tr> #}
                 <tr>
                     <td> Inflow 
                     <br><div style="text-align:right">
                         {% for i in gkresult["inflow"]%}
-                            {{i["accountname"]}}<br>
+                            <i>{{i["accountname"]}}</i><br>
                         {% endfor %}
                         </div>
                     </td>
@@ -169,7 +187,7 @@ th {
                     <td> Outflow
                     <br><div style="text-align:right">
                         {% for i in gkresult["outflow"]%}
-                            {{i["accountname"]}}<br>
+                            <i>{{i["accountname"]}}</i><br>
                         {% endfor %}
                         </div>
                     </td>
@@ -209,86 +227,41 @@ th {
                 </tr>
                 <tr>
                     <td> Closing
+                    <br><div style="text-align:right">
+                        {% for i in gkresult["closing"]%}
+                            <i>{{i["accountname"]}}</i><br>
+                        {% endfor %}
+                        </div>
                     </td>
-                    <td style="text-align:right"> {{gkresult["budgetclosing"]}}
+                    
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["closing"]%}
+                            {{i["budget"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td style="text-align:right"> {{gkresult["actualclosing"]}}
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["closing"]%}
+                            {{i["balance"]}}<br>
+                        {% endfor %}
                     </td>
-                    <td style="text-align:right"> -
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["closing"]%}
+                            - <br>
+                        {% endfor %}
                     </td>
-                    <td style="text-align:right"> -
+                    <td style="text-align:right"><br>
+                        {% for i in gkresult["closing"]%}
+                            - <br>
+                        {% endfor %}
                     </td>
                 </tr>
             </tbody>
           </table>
         </div>    
-        {# <div >
-            <h><b>Total Opening Balance : </b></h>{{gkresult["totalopeningbal"]}}
-        </div>
-        <div class="table-responsive">
-          <table id="mthltable" class="shadow table table-bordered table-condensed ">
-            <thead class="bg-primary">
-			    <tr>
-			      <th  class="smwrap text-center">{% trans %}Particulars {% endtrans %} </th>
-			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash InFlow{% endtrans %}</th>
-			      <th  class="taxwrap text-center sgstfield">{% trans %}Cash OutFlow{% endtrans %}</th>
-			      <th  class="taxwrap text-center igstfield">{% trans %}Balance{% endtrans %}</th>
-			    </tr>
-			  </thead>
-            <tbody>
-                <tr >
-                    <td> Budget Amount</td>
-                    <td style="text-align:right"> {{gkresult["budgetIn"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetOut"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetBal"]}} </td>   
-                </tr>
-                <tr >
-                    <td><h> Actuals </h> <br>
-                    <div style="text-align:right">
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accountname"]}} <br>
-                    {% endfor %}
-                    </div>
-                    </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accDr"]}} <br>
-                    {% endfor %}
-                     </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accCr"]}} <br>
-                    {% endfor %}
-                    </td>
-                    <td style="text-align:right"><br>
-                    {% for acc in gkresult["accData"] %}
-                        {{acc["accBal"]}} <br>
-                    {% endfor %}
-                    </td>
-                </tr>
-                <tr>
-                    <td style="text-align:left">Total</td>
-                    <td style="text-align:right"> {{gkresult["totalDr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["totalCr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["budgetclosingbal"]}} </td> 
-                </tr>
-                <tr>
-                    <td>Variance</td>
-                    <td style="text-align:right"> {{gkresult["varDr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["varCr"]}} </td>
-                    <td style="text-align:right"> {{gkresult["varBal"]}} </td> 
-                </tr>
-            </tbody>
-            </table>
-            <div >
-            <h><b>Budget Closing Balance : </b></h>{{gkresult["budgetclosingbal"]}} #}
             {%elif btype== '5'%}
             <div>
                 <h><b>Total Gross Profit: </b></h>{{gkresult["grossprofit"]}}
             </div>
-            {# <div>
-                  <h><b>Total Previous Expense: </b></h>{{gkresult["totalpreviousbal"]}}
-            </div> #}
             <div class="table-responsive">
                 <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign">
                   <thead class="bg-primary">
@@ -297,44 +270,36 @@ th {
                   <th  class="taxwrap text-center sgstfield">{% trans %}Budgeted Expense{% endtrans %}</th>
                   <th  class="taxwrap text-center sgstfield">{% trans %}Actual Expense{% endtrans %}</th>
                   <th  class="taxwrap text-center igstfield">{% trans %}Variance{% endtrans %}</th>
-                  {# <th  class="taxwrap text-center igstfield">{% trans %}Budgeted Balance{% endtrans %}</th>
-                  <th  class="taxwrap text-center igstfield">{% trans %}Actual Balance{% endtrans %}</th> #}
                 </tr>
                   </thead>
                   <tbody>
                 <tr>
                     <td>
-                    <div style="text-align:left">
+                    Accounts <br>
+                    <div style="text-align:right">
                     {% for record in gkresult["accountdata"] %}
-                      {{record["accountname"]}} <br>
+                      <i>{{record["accountname"]}}</i> <br>
                       {% endfor %}
                       </div>
                     </td>
                     <td style="text-align:right">
+                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["budgetamount"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right">
+                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["actualamount"]}}<br>
                       {% endfor %}
                     </td>
                     <td style="text-align:right"> 
+                    <br>
                     {% for record in gkresult["accountdata"] %}
                       {{record["accvariance"]}}<br>
                       {% endfor %}
                     </td>
-                    {# <td style="text-align:right">
-                    {% for record in gkresult["accountdata"] %}
-                      {{record["budgetedbal"]}}<br>
-                      {% endfor %}
-                    </td>
-                    <td style="text-align:right">
-                    {% for record in gkresult["accountdata"] %}
-                      {{record["actualbal"]}}<br> 
-                      {% endfor %}
-                    </td> #}
                 </tr>
                 <tr>
                     <td >
@@ -349,12 +314,6 @@ th {
                     <td style="text-align:right">
                         {{gkresult["totalvariance"]}}
                     </td>
-                    {# <td style="text-align:right">
-                        {{gkresult["totalbudgetedbal"]}}
-                    </td>
-                    <td style="text-align:right">
-                        {{gkresult["totalactualbal"]}}
-                    </td> #}
                 </tr>
                 <tr >
                         <td>
@@ -372,7 +331,7 @@ th {
                 </tr>
                   </tbody>
                 </table>
-                <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}} <br>
+                {# <h><b>Total Closing Expense: </b></h>{{gkresult["totalactual"]}} <br> #}
             </div>
             {% else %}
             <div>
@@ -393,7 +352,7 @@ th {
                             <td> Purchases <br>
                                 <div style="text-align:right">
                                     {% for record in gkresult["expensedata"] %}
-                                        {{record["accountname"]}} <br>
+                                        <i>{{record["accountname"]}}</i> <br>
                                     {% endfor %}
                                 </div>
                             </td>
@@ -438,7 +397,7 @@ th {
                             <td> Sales <br>
                                 <div style="text-align:right">
                                     {% for record in gkresult["incomedata"] %}
-                                        {{record["accountname"]}} <br>
+                                        <i>{{record["accountname"]}}</i> <br>
                                     {% endfor %}
                                 </div>
                             </td>
@@ -525,7 +484,7 @@ th {
                       <td> Actuals </td>
                       <td style="text-align:right">
                           {% for record in gkresult["expensedata"] %}
-                            {{record["accountname"]}} <br>
+                            <i>{{record["accountname"]}}</i> <br>
                           {% endfor %}
                       </td> 
                       <td style="text-align:right">
@@ -535,7 +494,7 @@ th {
                       </td>
                       <td style="text-align:right"> 
                           {% for record in gkresult["incomedata"] %}
-                            {{record["accountname"]}} <br>
+                            <i>{{record["accountname"]}}</i> <br>
                           {% endfor %}
                       </td >
                       <td style="text-align:right">
