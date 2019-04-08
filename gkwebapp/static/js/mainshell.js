@@ -98,7 +98,6 @@ $(document).ready(function(){
         $('.invoicemenu').show();
         $(".productinmaster").show();
       	$(".categoryinmaster").show();
-        // $('.uominmaster').show();
         $(".inventorymenu").remove();
         $('.inventory_hide').remove();
 	      $("#showviewregister").show();
@@ -107,7 +106,8 @@ $(document).ready(function(){
         $(".hidemenu").remove();
       $(".delchalhide").remove();
       $(".hidevoucher").remove();
-
+      let companyremovables = ["#listoftransfernotes", "#show_unbilled_deliveries","#showstockreport","#stockonhandreport","#categorywisestockonhandreport","#listofgodowns"];
+      sessionStorage.companyremovables = companyremovables;
 
          
     }
@@ -124,7 +124,8 @@ $(document).ready(function(){
       $(".hidemenu").remove();
       $(".delchalhide").remove();
       $(".hidevoucher").remove();
-
+      let companyremovables = ["#listoftransfernotes", "#show_unbilled_deliveries","#showstockreport","#stockonhandreport","#categorywisestockonhandreport","#listofgodowns"];
+      sessionStorage.companyremovables = companyremovables;
     }
 
     if(sessionStorage.invflag==1 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
@@ -410,6 +411,8 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
+      let userremovables = ["#showviewlog","#accountingrepdiv"];
+      sessionStorage.userremovables = userremovables;
      }
 
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
@@ -426,7 +429,8 @@ $(document).ready(function(){
        $("#budget").remove();
        $(".operatorhide").remove();
        $("#listofusers").remove();
-
+       let userremovables = ["#showbalancesheet","#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#showviewlog","#showdeletedvoucher"];
+       sessionStorage.userremovables = userremovables;
      }
      if(resp["gkresult"]["userrole"]==0){
        $(".hidemanager").remove();
@@ -451,6 +455,8 @@ $(document).ready(function(){
    $("#Documents_id").remove();
    $(".hidevoucher").remove();
    $(".businessmenu").remove();
+   let userremovables = ["#showviewbudget","#showdeletedvoucher","#listofusers","#showviewlog"];
+   sessionStorage.userremovables = userremovables;
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
@@ -1118,6 +1124,10 @@ $(document).ready(function(){
     }
   );
 
+  $(document).off("click", '#report_back').on("click", '#report_back', function(event) {
+    $("#report_li").click();
+  });
+
   $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
@@ -1458,6 +1468,9 @@ $(document).ready(function(){
             $.each(sessionStorage.companyremovables.split(","), function(index, value){
                 $(value).remove();
             });
+            $.each(sessionStorage.userremovables.split(","), function(index, value){
+              $(value).remove();
+          });
     $("#msspinmodal").modal("hide");
     
 	}

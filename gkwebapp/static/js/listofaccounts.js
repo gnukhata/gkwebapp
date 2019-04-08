@@ -31,7 +31,6 @@ $(document).ready(function() {
   $(".modal-backdrop").remove();
   $(".fixed-table-loading").remove();
 
-
   $('#latable tbody tr:first-child td:eq(1) a').focus();
   $('#latable tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
@@ -129,10 +128,8 @@ $(document).ready(function() {
 
   //For redirecting to the homepage
     $("#backbutton").click(function(event) {
-	location.reload();
-    });
-    
-    
+      $("#addaccount").click();
+    });    
   $("#print").click(function(event) {
     event.preventDefault();
     var xhr = new XMLHttpRequest();
