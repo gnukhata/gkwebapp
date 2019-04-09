@@ -1,7 +1,7 @@
 
 /*
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+Copyright (C) 2017, 2018, 2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
@@ -1480,13 +1480,10 @@ $(document).ready(function(){
   });
 
   $('#report_li').click(function(event) {
-    console.log("report click");
     $(document).ready(function(){ 
-    console.log("doc ready");
-
-      $("#showviewledger").focus();
+      $('.focuscls:first').closest('div').addClass('keyclass');
+      $('.focuscls:first').focus();
      });
-    // $("#showviewledger").focus();
   });
 
   /*$('#createuser').click(function (e) {
