@@ -171,7 +171,7 @@ def showMultiAccTaxes(request):
 def showeditaccount(request):
 
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
+    result = requests.get("http://127.0.0.1:6543/accounts?editaccount", headers=header)
     accdata=[]
     for record in result.json()["gkresult"]:
         adata= {"accountname":record["accountname"],"accountcode":record["accountcode"], "sysaccount":record["sysaccount"]}
