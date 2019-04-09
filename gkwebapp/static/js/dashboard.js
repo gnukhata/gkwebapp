@@ -48,13 +48,6 @@ $('.drawer').drawer({
   showOverlay: true
 });
 
-  
-$('.drawer').on('drawer.opened', function(){
-  $("#sidebar").hide();
-});
-$('.drawer').on('drawer.closed', function(){
-  $("#sidebar").show();
-});
 
 $("#dashboard_li").click(function(e){
   location.reload();
