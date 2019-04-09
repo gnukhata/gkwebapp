@@ -1481,8 +1481,8 @@ $(document).ready(function(){
 
   $('#report_li').click(function(event) {
     $(document).ready(function(){ 
-      $('.focuscls:first').closest('div').addClass('keyclass');
-      $('.focuscls:first').focus();
+      $('.accountingfocus:first').closest('div').addClass('keyclass');
+      $('.accountingfocus:first').focus();
      });
   });
 
