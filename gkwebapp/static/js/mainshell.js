@@ -44,6 +44,7 @@ Copyright (C) 2017, 2018, 2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd
 $(document).ready(function(){
     var username1;
     var userrole1;
+    var userrole2;
     sessionStorage.editprint = 0;
     sessionStorage.onview=0;
     sessionStorage.companyremovables = [];
@@ -378,6 +379,7 @@ $(document).ready(function(){
     }
   })
    .done(function(resp){
+     userrole2 = resp["gkresult"]["userrole"];
      if(resp["gkresult"]["userrole"]==3){
        $("#master").remove();
        $("#invoice").remove();
@@ -411,8 +413,9 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
-      let userremovables = ["#showviewlog","#accountingrepdiv"];
+      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers"];
       sessionStorage.userremovables = userremovables;
+
      }
 
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
@@ -429,7 +432,7 @@ $(document).ready(function(){
        $("#budget").remove();
        $(".operatorhide").remove();
        $("#listofusers").remove();
-       let userremovables = ["#showbalancesheet","#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#showviewlog","#showdeletedvoucher"];
+       let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate"];
        sessionStorage.userremovables = userremovables;
      }
      if(resp["gkresult"]["userrole"]==0){
@@ -1481,8 +1484,15 @@ $(document).ready(function(){
 
   $('#report_li').click(function(event) {
     $(document).ready(function(){ 
+      console.log(userrole2);
+      if(userrole2 == 3){
+        $('.inventoryfocus:first').closest('div').addClass('keyclass');
+        $('.inventoryfocus:first').focus();
+      }
+      else{
       $('.accountingfocus:first').closest('div').addClass('keyclass');
       $('.accountingfocus:first').focus();
+      }
      });
   });
 
