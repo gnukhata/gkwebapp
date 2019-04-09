@@ -1479,6 +1479,15 @@ $(document).ready(function(){
     return false;
   });
 
+  $('#report_li').click(function(event) {
+    console.log("report click");
+    $(document).ready(function(){ 
+    console.log("doc ready");
+
+      $("#showviewledger").focus();
+     });
+    // $("#showviewledger").focus();
+  });
 
   /*$('#createuser').click(function (e) {
     // calls create user page.
