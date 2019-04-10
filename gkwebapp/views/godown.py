@@ -134,12 +134,15 @@ def getgoddetails(request):
 @view_config(route_name="godown",request_param="type=delete", renderer="json")
 def deletegodown(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
-    goname = result.json()["gkresult"]["goname"]
+    goname = request.params["goname"]
     gkdata={"goid":request.params["goid"]}
     result = requests.delete("http://127.0.0.1:6543/godown",data =json.dumps(gkdata), headers=header)
+    
     if result.json()["gkstatus"] == 0:
-        gkdata = {"activity":goname + " godown deleted"}
+        if request.params["gbflag"] == '7':
+            gkdata = {"activity":goname + " godown deleted"}
+        else:
+            gkdata = {"activity":goname + " branch deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 

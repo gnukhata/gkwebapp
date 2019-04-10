@@ -198,7 +198,7 @@ $(document).ready(function() {
                 async: false,
                 datatype: "json",
                 data: {
-                    "goid": goid
+                    "goid": goid,"gbflag":$("#gbflag").val(),"goname":$("#goname").val()
                 },
                 
                 beforeSend: function(xhr) {
