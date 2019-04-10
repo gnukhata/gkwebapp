@@ -133,7 +133,12 @@ $("#shownews").click(function(){
     $('#showeditorg').click();
 });
 $(".add_prod").click(function() {
-  $("#product").click();
+  if (sessionStorage.invflag == 1){
+    $("#product").click();
+  }
+  else{
+    $("#productinmaster").click();
+  }
 });
 $("#profit_loss").click(function() {
   $("#showprofitloss").click();
