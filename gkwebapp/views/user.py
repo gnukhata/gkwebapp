@@ -92,6 +92,35 @@ def addedituser(request):
     if request.params.has_key("godowns"):
         gkdata["golist"]=json.loads(request.params["godowns"])
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
+    if result.json()["gkstatus"] == 0:
+        if request.params["userrole"] == "-1":
+            userrole = "Admin"
+        elif request.params["userrole"] == "0":
+            userrole = "Manager"
+        elif request.params["userrole"] == "1":
+            userrole = "Operator"
+        elif request.params["userrole"] == "2":
+            userrole = "Internal Auditor"
+        else:
+            userrole = "Godown In Charge"
+        if "godowns" in request.params and len(request.params["godowns"]) > 2:
+            godnames = ""
+            j = 1;
+            godlist = json.loads(request.params["godowns"])
+            for i in godlist:
+                resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+                godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
+                if j != len(godlist):
+                    godnames += ", "
+                j += 1
+
+            if (userrole == "Godown In Charge"):
+                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited for " + godnames + " godown"}
+            else:
+                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited for " + godnames + " branch"}
+        else:
+            gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited"}
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="showedituser", renderer="gkwebapp:templates/changepassword.jinja2")
@@ -127,7 +156,7 @@ def createuser(request):
             userrole = "Internal Auditor"
         else:
             userrole = "Godown In Charge"
-        if "godowns" in request.params:
+        if "godowns" in request.params and len(request.params["godowns"]) > 2:
             godnames = ""
             j = 1;
             godlist = json.loads(request.params["godowns"])
@@ -137,7 +166,7 @@ def createuser(request):
                 if j != len(godlist):
                     godnames += ", "
                 j += 1
-        if "godowns" in request.params:
+
             if (userrole == "Godown In Charge"):
                 gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user created for " + godnames + " godown"}
             else:
