@@ -1632,7 +1632,7 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
           $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function(){
               if (parseInt($("#extrabuttons").val()) == 1) {
               $('.modal-backdrop').remove();
-              if(sessionStorage.invflag==0){
+              if(sessionStorage.invflag==1){
 		  $("#product").click();
 	      }
 	      else{
