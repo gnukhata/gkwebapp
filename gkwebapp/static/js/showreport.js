@@ -1,5 +1,14 @@
 $(document).ready(function(){
 
+  if (sessionStorage.orgt=="Not For Profit") {
+    // If orgtype is Not for Profit than some heading and menu items text is changed.
+    $("#showprofitloss_a").text("Income & Expenditure");
+    $("#showbalancesheet_a").text("Statement of Affairs");
+    $("#showcashflow_a").text("Receipt & Payment");
+    $("#showproject_a").text("Project");
+    $("#showprjstate_a").text("Project Statement");
+  }
+  
 var currentindex;
 var rowcount;
 var currentrow;
