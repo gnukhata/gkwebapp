@@ -31,7 +31,24 @@ $(document).ready(function() {
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
   $("#anotherregister").click(function(event) {
-    $("#showviewregister").click();
+    $("#msspinmodal").modal();
+    $.ajax(
+      {
+        type: "POST",
+        url: "/invoice?action=showviewregister",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
 
   $('#rclearfields').click(function(){

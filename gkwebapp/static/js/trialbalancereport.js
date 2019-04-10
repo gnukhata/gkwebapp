@@ -207,7 +207,8 @@ $(document).ready(function() {
 		trialbalcall(3);
 	});
 	$("#tbback").click(function(event) {
-		$("#showtrialbalance").click();
+		$("#msspinmodal").modal("show");
+		$("#info").load("/showtrialbalance");
 	});
 
 	$('#gtbclearfields').click(function(){

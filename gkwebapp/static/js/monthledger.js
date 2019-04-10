@@ -151,7 +151,25 @@ $(document).ready(function() {
   });
 
   $("#mthlback").click(function(event) {
-    $("#showviewledger").click();
+    $("#msspinmodal").modal();
+    $.ajax(
+      {
+
+	type: "POST",
+	url: "/showviewledger",
+	global: false,
+	async: false,
+	datatype: "text/html",
+	beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+	success: function(resp)
+	{
+          $("#info").html(resp);
+	}
+      }
+    );
   });
 
 });

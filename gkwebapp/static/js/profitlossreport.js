@@ -429,7 +429,9 @@ $(document).ready(function() {
         });
     }
     else {
-    $("#showprofitloss").click();
+      var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+      $("#msspinmodal").modal("show");
+      $("#info").load("/showprofitloss?orgtype="+orgtype);
   }
   });
 

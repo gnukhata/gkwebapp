@@ -413,7 +413,7 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
-      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers"];
+      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#showviewledger","#showtrialbalance","#showprjstate","#showcashflow","#showbalancesheet","#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#listofaccounts","#showdeletedvoucher"];
       sessionStorage.userremovables = userremovables;
 
      }

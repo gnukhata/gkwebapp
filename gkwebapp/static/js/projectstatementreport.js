@@ -196,7 +196,25 @@ $(document).ready(function() {
       );
   });
   $("#prjstback").click(function(event) {
-    $("#showprjstate").click();
+    $("#msspinmodal").modal("show");
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/showviewprojectstatement",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
 
 

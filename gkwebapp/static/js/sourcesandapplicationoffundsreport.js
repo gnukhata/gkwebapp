@@ -219,7 +219,8 @@ $("#grpbtn").click(function(event){
       );
     }
     else {
-      $("#showbalancesheet").click();
+      $("#msspinmodal").modal("show");
+      $("#info").load("/showbalancesheet");
     }
   });
 

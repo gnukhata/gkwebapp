@@ -159,6 +159,22 @@ $(document).ready(function() {
 
   });
   $("#viewanotherstock").click(function(event){
-    $("#stockonhandreport").click();
+    $.ajax(
+      {
+        type: "POST",
+        url: "/product?type=viewstockonhandreport",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
   });
