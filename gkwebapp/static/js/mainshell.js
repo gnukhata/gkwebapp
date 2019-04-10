@@ -413,7 +413,7 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
-      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#showviewledger","#showtrialbalance","#showprjstate","#showcashflow","#showbalancesheet","#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#listofaccounts","#showdeletedvoucher"];
+      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers"];
       sessionStorage.userremovables = userremovables;
 
      }
@@ -1485,10 +1485,12 @@ $(document).ready(function(){
   $('#report_li').click(function(event) {
     $(document).ready(function(){ 
       if(userrole2 == 3){
+        event.preventDefault();
         $('.inventoryfocus:first').closest('div').addClass('keyclass');
         $('.inventoryfocus:first').focus();
       }
       else{
+        event.preventDefault();
       $('.accountingfocus:first').closest('div').addClass('keyclass');
       $('.accountingfocus:first').focus();
       }
