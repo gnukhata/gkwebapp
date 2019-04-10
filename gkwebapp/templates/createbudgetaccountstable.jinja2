@@ -66,13 +66,13 @@ border-radius: 4px;
             <th class="lalign">
             {% trans %}Accounts Name{% endtrans %}
             </th>
-            <th class="lalign">
+            <th class="lalign" hidden>
             {% trans %}Accounts Balance{% endtrans %}
             </th>
             <th class="lalign">
             {% trans %}Budget Amount{% endtrans %}
             </th>
-            <th class="lalign" >
+            <th class="lalign" hidden>
             {% trans %}Budgeted Balance{% endtrans %}
             </th>
           </tr>
@@ -84,10 +84,10 @@ border-radius: 4px;
         {% for record in gkresult["inflow"] %}
         
         <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
-          <td class="form-text text-muted">
+          <td class="form-text text-muted" >
               <i>{{record["accountname"]}}</i>
           </td>
-          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+          <td id="{{record["accountcode"]}}_id" style="text-align:right" hidden>
               {{record["accountbal"]}}
           </td>
           <td>
@@ -95,7 +95,7 @@ border-radius: 4px;
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
-          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal" hidden>
                 0.00
           </td>
         </tr>
@@ -106,18 +106,18 @@ border-radius: 4px;
         {% for record in gkresult["outflow"] %}
         
         <tr id="{{record["accountcode"]}}_name" value="{{record["accountcode"]}}">
-          <td class="form-text text-muted">
+          <td class="form-text text-muted" >
               <i>{{record["accountname"]}}</i>
           </td>
-          <td id="{{record["accountcode"]}}_id" style="text-align:right">
+          <td id="{{record["accountcode"]}}_id" style="text-align:right" hidden>
               {{record["accountbal"]}}
           </td>
-          <td>
+          <td >
               <input id="{{record["accountcode"]}}_value" type="text" 
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
-          <td style="text-align:right;" id="{{record["accountcode"]}}_bal">
+          <td style="text-align:right;" id="{{record["accountcode"]}}_bal" hidden>
                 0.00
           </td>
         </tr>
@@ -231,7 +231,7 @@ border-radius: 4px;
         </thead>
         <tbody  style="height:50%; overflow: auto;">
         <tr><td colspan="2">
-        <b>Choose accounts used for Purchase </b> <input hidden></td>
+        <b>Enter accounts budget used for Purchase </b> <input hidden></td>
         </tr>
         {% for record in gkresult["expense"] %}
         
@@ -253,7 +253,7 @@ border-radius: 4px;
         </tr>
         {% endfor %}
         <tr><td colspan="2">
-        <b>Choose accounts used for Sales </b> <input hidden></td>
+        <b>Enter accounts budget used for Sales </b> <input hidden></td>
         </tr>
         {% for record in gkresult["income"] %}
         

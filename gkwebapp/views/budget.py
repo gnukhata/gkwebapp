@@ -108,6 +108,9 @@ def editbudget(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"budid":request.params["budid"],"budname":request.params["budname"],"startdate":request.params["startdate"], "enddate":request.params["enddate"], "contents": json.loads(request.params["contents"])[0], "budtype":request.params["btype"],"gaflag":request.params["gaflag"]}
     result = requests.put("http://127.0.0.1:6543/budget", data =json.dumps(gkdata),headers=header)
+    if result.json()["gkstatus"] == 0:
+        gkdata = {"activity":request.params["budname"] + " budget edited"}   
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="budget",request_param="type=delete", renderer="json")
