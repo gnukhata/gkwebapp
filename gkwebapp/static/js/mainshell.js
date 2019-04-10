@@ -400,10 +400,13 @@ $(document).ready(function(){
        $("#showviewlog").remove();
        $("#orgpref").remove();
        $("#gstmenu").remove();
-       $(".godownhide").remove();	 
+       $(".godownhide").remove();	
+       $(".mastermenu").remove();	 
       $(".hidevoucher").remove();
-
+      $(".transactionmenu").remove();
+      $(".gstmenuitem").remove(); 
      }
+
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
        $(".adminhide").remove();
@@ -442,6 +445,7 @@ $(document).ready(function(){
    $(".internalaud").remove();
    $("#Documents_id").remove();
    $(".hidevoucher").remove();
+   $(".businessmenu").remove();
      }
      
      if (resp["gkresult"]["booksclosedflag"]==1 && resp["gkresult"]["roflag"] ==1) {
