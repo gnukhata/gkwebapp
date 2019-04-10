@@ -1484,7 +1484,6 @@ $(document).ready(function(){
 
   $('#report_li').click(function(event) {
     $(document).ready(function(){ 
-      console.log(userrole2);
       if(userrole2 == 3){
         $('.inventoryfocus:first').closest('div').addClass('keyclass');
         $('.inventoryfocus:first').focus();
