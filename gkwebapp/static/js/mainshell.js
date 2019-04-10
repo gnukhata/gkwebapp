@@ -428,7 +428,7 @@ $(document).ready(function(){
        $("#budget").remove();
        $(".operatorhide").remove();
        $("#listofusers").remove();
-       let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate"];
+       let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#listofusers","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate"];
        sessionStorage.userremovables = userremovables;
      }
      if(resp["gkresult"]["userrole"]==0){
