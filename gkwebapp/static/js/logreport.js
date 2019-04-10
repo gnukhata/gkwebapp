@@ -72,7 +72,25 @@ $(document).ready(function() {
     $(this).siblings(".bootstrap-table").find(".form-control").val("");
   });
   $("#anotherlog").click(function(event) {
-    $("#showviewlog").click();
+    $("#msspinmodal").modal();
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/log?action=showviewlog",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
   });
 
   $('#lclearfields').click(function(){

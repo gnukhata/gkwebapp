@@ -78,7 +78,25 @@ $(document).ready(function() {
     $('#viewanotherlist').click(function(e) {
         e.preventDefault();
         $("#msspinmodal").modal("show");
-        $("#listofunpaidinvoices").click();
+        sessionStorage.onview=0;
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/billwise?action=viewlistofunpaidinvoices",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
     });
 
     //View Printable Version button gives a view that does not have scrolling so that it can be printed or converted to PDF.

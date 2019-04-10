@@ -124,7 +124,24 @@ $(document).ready(function() {
     $('#viewanotherlist').click(function(e) {
 	e.preventDefault();
 	$("#msspinmodal").modal("show");
-	$("#listoftransfernotes").click();
+  $.ajax(
+    {
+
+      type: "POST",
+      url: "/transfernotes?action=viewlist",
+      global: false,
+      async: false,
+      datatype: "text/html",
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+      },
+      success: function(resp)
+      {
+        $("#info").html(resp);
+      }
+    }
+  );
     });
 
   $('#viewprintableversion').click(function (e) {

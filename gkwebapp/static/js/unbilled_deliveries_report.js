@@ -152,7 +152,24 @@ $(document).ready(function() {
 	});
 	});
 	$("#back").click(function(event){
-		$('#show_unbilled_deliveries').click();
+		$.ajax(
+			{
+			  type: "POST",
+			  url: "/del_unbilled?action=view",
+			  global: false,
+			  async: false,
+			  datatype: "json",
+			  beforeSend: function(xhr)
+			  {
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			  },
+			  success: function(resp)
+			  {
+			 $("#info").html(resp);
+			}
+			}
+		  );
+		
 	});
 
     $("#backbutton").click(function(event){
@@ -175,8 +192,24 @@ $(document).ready(function() {
  }
 
 	$("#tbback").click(function(event) {
-		$("#show_unbilled_deliveries").click();
-	});
+		$.ajax(
+			{
+			  type: "POST",
+			  url: "/del_unbilled?action=view",
+			  global: false,
+			  async: false,
+			  datatype: "json",
+			  beforeSend: function(xhr)
+			  {
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			  },
+			  success: function(resp)
+			  {
+			  $("#info").html(resp);
+			}
+			}
+		  );
+			});
 
 	$('#del_unbilled_clearfields').click(function(){
     $(".search").children(".form-control").val("");

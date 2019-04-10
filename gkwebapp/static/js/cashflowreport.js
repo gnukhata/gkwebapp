@@ -357,7 +357,8 @@ $(document).ready(function() {
 
 
 			$("#cfback").click(function(event) {
-				$("#showcashflow").click();
+			    $("#msspinmodal").modal("show");
+			    $("#info").load("/showcashflow");
 			});
 			$("#printbutton").click(function(event) {
 				var orgname = sessionStorage.getItem('orgn');

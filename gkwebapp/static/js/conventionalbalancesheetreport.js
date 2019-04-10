@@ -435,7 +435,8 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
         }
       }
       else {
-        $("#showbalancesheet").click();
+        $("#msspinmodal").modal("show");
+        $("#info").load("/showbalancesheet");
       }
 
     }

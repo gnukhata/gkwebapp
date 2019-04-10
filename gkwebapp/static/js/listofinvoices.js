@@ -111,7 +111,25 @@ $(document).ready(function() {
     $('#viewanotherlist').click(function(e) {
         e.preventDefault();
         $("#msspinmodal").modal("show");
-        $("#listofinvoices").click();
+        sessionStorage.onview=0;
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/invoice?action=viewlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
     });
 
     $('#viewprintableversion').click(function(e) {

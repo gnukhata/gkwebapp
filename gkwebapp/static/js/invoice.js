@@ -183,6 +183,7 @@ $(document).ready(function() {
     success: function(resp){
   $("#invoice_div").html(resp);
   $(".tab-content").show();
+  $("#viewanotherlist").hide();
   return false;
   }
     });
