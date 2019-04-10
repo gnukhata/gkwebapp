@@ -203,7 +203,7 @@ def deleteuser(request):
     gkdata={"userid":request.params["username"]}
     result = requests.delete("http://127.0.0.1:6543/users", data=json.dumps(gkdata), headers=headers)
     if result.json()["gkstatus"] == 0:
-        if "godowns" in gkresult:
+        if "godowns" in gkresult and len(gkresult["godowns"]) > 2:
             godnames = ""
             j = 1
             for godown in resultgodown:
