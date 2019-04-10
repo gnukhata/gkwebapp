@@ -50,12 +50,12 @@ $(document).ready(function(){
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
 	searchify : function(){
-	    var selectwidth = $(this).width(); //Width of original element
-	    var selectheight = $(this).height(); //Height of original element
-	    $(this).searchable();  // Function to convert original select element into a searcheable element
-	    //Setting triggerHandler()e dimensions of new element same as that of the original element.
-	    $(this).width(parseFloat(selectwidth));
-	    $(this).height(parseFloat(selectheight));
+	  var selectwidth = $(this).width(); //Width of original element
+	  var selectheight = $(this).height(); //Height of original element
+	  $(this).searchable({maxListSize: Infinity, maxMultiMatch: Infinity,});  // Function to convert original select element into a searcheable element
+	  //Setting triggerHandler()e dimensions of new element same as that of the original element.
+	  $(this).width(parseFloat(selectwidth));
+	  $(this).height(parseFloat(selectheight));
 	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
 	    $(this).find("option").each(function() {
 		if ($(this).html()=="") {
@@ -64,6 +64,7 @@ $(document).ready(function(){
 	    });
 	    $(this).next().next().css({"margin-top":"-7px"});
 	    $(this).next().width(parseFloat(selectwidth));
+            $(this).next().css({"margin-bottom":"20px", "max-height":"60vh"});
 	}
     });
     //Checking flags set according organisation preferences.
