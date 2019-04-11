@@ -246,12 +246,12 @@ th {
                     </td>
                     <td style="text-align:right"><br>
                         {% for i in gkresult["closing"]%}
-                            - <br>
+                            {{i["var"]}} <br>
                         {% endfor %}
                     </td>
                     <td style="text-align:right"><br>
                         {% for i in gkresult["closing"]%}
-                            - <br>
+                            {{i["varinpercent"]}} %<br>
                         {% endfor %}
                     </td>
                 </tr>

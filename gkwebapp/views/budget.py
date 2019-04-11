@@ -236,7 +236,7 @@ def cashspreadsheet(request):
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["actual"]
             sheet['D'+str(row)] = ob["var"]
-            sheet['E'+str(row)] = ob["varinpercent"]
+            sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
         totalrow.font = Font(name='Liberation Serif' )
@@ -245,7 +245,7 @@ def cashspreadsheet(request):
         sheet['B'+str(row)] = result["budgetin"]
         sheet['C'+str(row)] = result["actualin"]
         sheet['D'+str(row)] = result["varin"]
-        sheet['E'+str(row)] = result["varpercentin"]
+        sheet['E'+str(row)] = result["varpercentin"]+" %"
         row = row+1
         sheet['A'+str(row)] = 'Outflow'
         row = row+1
@@ -259,7 +259,7 @@ def cashspreadsheet(request):
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["actual"]
             sheet['D'+str(row)] = ob["var"]
-            sheet['E'+str(row)] = ob["varinpercent"]
+            sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
         totalrow.font = Font(name='Liberation Serif' )
@@ -268,7 +268,7 @@ def cashspreadsheet(request):
         sheet['B'+str(row)] = result["budgetout"]
         sheet['C'+str(row)] = result["actualout"]
         sheet['D'+str(row)] = result["varout"]
-        sheet['E'+str(row)] = result["varpercentout"]
+        sheet['E'+str(row)] = result["varpercentout"]+" %"
         row = row+1
         sheet['A'+str(row)] = 'Closing'
         row = row+1
@@ -281,8 +281,8 @@ def cashspreadsheet(request):
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["balance"]
-            sheet['D'+str(row)] = '-'
-            sheet['E'+str(row)] = '-'
+            sheet['D'+str(row)] = ob["var"]
+            sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
 
         budgetwb.save('report.xlsx')
