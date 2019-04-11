@@ -58,9 +58,8 @@ border-radius: 5px;
                 <label for="c_btype" id="pwdconfirm">{% trans %}Budge<u>t</u> Type{% endtrans %} :</label>
                 <select name="btype" style="border-radius: 4px" id="c_btype" type="text" class="form-control input-sm" accesskey="t">
                   <option value="" disabled selected hidden>{% trans %}Select budget type{% endtrans %}</option>
-                  <option value="5">{% trans %}Net Profit Budget{% endtrans %}</option>
-                  <option value="19">{% trans %}Gross Profit Budget{% endtrans %}</option>
-                  <option value="3">{% trans %}Cash{% endtrans %}</option> 
+                  <option value="16">{% trans %}Profit & Loss Budget{% endtrans %}</option>
+                  <option value="3">{% trans %}Cash Budget{% endtrans %}</option> 
                 </select>
               </div>
               <div class="col-md-12" style="margin-top:2%">
@@ -84,12 +83,6 @@ border-radius: 5px;
                   <input type="text" style="float:left;width:55px;margin-left:2%" id="c_budget_toyear" class="budget_date form-control input-sm dis common numtype" value="" size="4" maxlength="4" placeholder="YYYY">
                 </div>
               </div>
-              <br>
-              <div id="c_gross"class="col-md-12">
-                <div style="margin-bottom: 10px;margin-top: 12px;" class="input-group col-xs-12">
-                  <label  >{% trans %}Gross Profit{% endtrans %} :</label> <b id = "c_grossprofit" > </b><br>
-                  </div>
-                </div>  
               <div id="c_flow" class="col-md-12">
               <br>
                 <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
@@ -100,19 +93,10 @@ border-radius: 5px;
                   <label  >{% trans %}<i>Closing Balance</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
                   </div>
               </div>
-              
-              <div id="c_sales" class="col-md-12">
-                <div style="margin-bottom: 10px;margin-top: 10px;" class="input-group col-xs-12">
-                  <label for="c_expense" >{% trans %}Purchases{% endtrans %} :</label> <label id="c_expense" > </label>
-                  {# <input style="border-radius: 4px" id="c_expense" type="text" class="form-control input-sm text-right numtype"  value="0.00" placeholder="0.00"></input> #}
-                </div>
-                  <div style="margin-bottom: 10px" class="input-group col-xs-12">
-                    <label for="c_income" >{% trans %}Sales{% endtrans %} :</label> <label id="c_income" > </label>
-                    {# <input style="border-radius: 4px" id="c_income" type="text" class="form-control input-sm text-right common numtype"  value="0.00" placeholder="0.00"></input> #}
-                  </div>
-                  <label  >{% trans %}Budget Profit{% endtrans %} :</label> <b id = "c_profit" > </b><br>
+              <div id="c_pnl" class="col-md-12">
               </div>
-          </div> {# main body #}
+              
+          </div> {# main #}
 
           <div class="panel col-md-8" id="c_accounttable" style="float:right;padding-left:8%;">
               {# -----account table div-------- file:createbudgetaccounttable.jinja2 #}
