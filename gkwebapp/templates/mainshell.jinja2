@@ -757,9 +757,6 @@
 		  <label><input type="radio" class="iib" name="orgpref" id="onlyaccradio" aria-label="" checked>&nbsp {% trans %}Accounting only{% endtrans %}.</label>
                 </div>
 	        <div class="radio">
-		  <label><input type="radio" class="iib" name="orgpref" id="onlyinvsradio" aria-label="">&nbsp {% trans %}Accounting with Invoicing{% endtrans %}.</label>
-                </div>
-	        <div class="radio">
 		  <label><input type="radio" class="iib" name="orgpref" id="invsbillradio" aria-label="">&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
 	        </div>
                 <div class="radio">
@@ -767,7 +764,7 @@
                 </div>
 	        <div class="form-group">
 		  <input type="checkbox" id="mode">
-		  <label for="mode">{% trans %}Use Automatic Mode for Receipt and Payment Vouchers. {% endtrans %}</label>
+		  <label for="mode">{% trans %}Use Simple Mode for Receipt and Payment Vouchers. {% endtrans %}</label>
                 </div>
               </div>
 	      <div id="ledgerdiv">
@@ -776,10 +773,10 @@
 		  <label for="sales">{%trans%}Generate Accounting Entries for Documents.{%endtrans%}</label>
 	        </div>
 	        <div class="form-inline" style="margin-top:-10px">
-		  <div class="radio" style="margin-left:20px">
+		  <div class="radio" style="margin-left:15px">
         	    <label><input type="radio" class="ledger nopadding orgfields" name="ledger" id="singlesales" aria-label="">&nbsp {% trans %}Single Sales/Purchase Ledger Account{% endtrans %}.</label>
         	  </div>
-		  <div class="radio" style="margin-left:20px">
+		  <div class="radio" style="margin-left:15px">
         	    <label><input type="radio" class="ledger nopadding orgfields" name="ledger" id="multiplesales" aria-label="" checked>&nbsp {% trans %}Per Product Sale/Purchase Ledger Account{% endtrans %}.</label>
 		  </div>
 	        </div>

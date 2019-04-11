@@ -95,24 +95,6 @@ $(document).ready(function(){
         sessionStorage.companyremovables = companyremovables;
     }
 
-    if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==0) {
-        $('.invoicemenu').show();
-        $(".productinmaster").show();
-      	$(".categoryinmaster").show();
-        $(".inventorymenu").remove();
-        $('.inventory_hide').remove();
-	      $("#showviewregister").show();
-        $("#showbillwiseaccounting").remove();
-         $(".businessmenu").show();
-        $(".hidemenu").remove();
-      $(".delchalhide").remove();
-      $(".hidevoucher").remove();
-      let companyremovables = ["#listoftransfernotes", "#show_unbilled_deliveries","#showstockreport","#stockonhandreport","#categorywisestockonhandreport","#listofgodowns"];
-      sessionStorage.companyremovables = companyremovables;
-
-         
-    }
-
     if(sessionStorage.invflag==0 && sessionStorage.invsflag==1 && sessionStorage.billflag==1) {
       $(".productinmaster").show();
       $(".categoryinmaster").show();
