@@ -181,20 +181,20 @@
 		<div class="radio" style="margin-left:15px">
         	  <label><input type="radio" class="iib orgfields" name="iib" id="invsbillradio" aria-label="" checked>&nbsp {% trans %}Invoicing with Billwise Accounting{% endtrans %}.</label>
         	</div>
-        	<div class="radio" style="margin-left:15px">
+    <div class="radio" style="margin-left:15px;">
         	  <label><input type="radio" class="iib orgfields" name="iib" id="invinvsbillradio" aria-label="" >&nbsp {% trans %}Inventory with Invoicing and Billwise Accounting{% endtrans %}.</label>
         	</div>
 		<small id="txtareahelp" class="form-text text-muted">{% trans %}Use 'Up' & 'Down' arrow keys to navigate and press 'Enter' key to proceed .{% endtrans %}</small><br>
 	      </div>
 		<div class="form-group">
-			<label for="mode"><input type="checkbox" style="margin-right:5px" id="mode" checked>{% trans %}Use Simple Mode for Receipt and Payment Vouchers.{% endtrans %}</label>
+			<label for="mode"><input type="checkbox" style="margin-right:5px" id="mode" checked>{% trans %}Use Simple Mode for Receipt and Payment Vouchers. {% endtrans %}</label>
 		</div>
 	      <div id="ledgerdiv">
 		<div class="form-group">
 			
 			<label for="sales"><input type="checkbox"style="margin-right:5px" id="sales" checked>{%trans%}Generate Accounting Entries for Documents.{%endtrans%}</label>
 		</div>
-		<div class="form-inline" style="margin-left:15px">
+		<div class="form-inline" style="margin-left:15px; margin-top: -10px;">
 		  <div class="radio">
         	    <label><input type="radio" class="ledger nopadding orgfields" name="ledger" id="singlesales" aria-label="">&nbsp {% trans %}Single Sales/Purchase Ledger Account{% endtrans %}.</label>
         	  </div>
@@ -204,7 +204,7 @@
 		</div>
 	      </div>
 	      <br><br>
-	      <div class="voucherno">
+	      <div class="voucherno" style="margin-top: -10px;">
 		<div class="form-group">
 		  <input type="checkbox" id="avno">
 		  <label for="avno">{%trans%}Use System Generated Voucher Numbering.{%endtrans%}</label>
