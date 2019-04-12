@@ -1333,7 +1333,8 @@ $(document).ready(function() {
 	    $('#invoice_product_table_total tbody').empty();
 	    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-	    $(".product_name_gst, .product_name_vat, #invoicestate").change();
+		$(".product_name_gst, .product_name_vat, #invoicestate").change();
+		$("#Consignee").attr("disabled", false);
 	}
     });
 
