@@ -166,7 +166,11 @@ th {
                     </td>
                     <td style="text-align:right"><br>
                         {% for i in gkresult["inflow"]%}
-                            {{i["varinpercent"]}} %<br>   
+                            {% if i["varinpercent"] == '-' %}
+                            {{i["varinpercent"]}} <br>
+                            {% else %}
+                            {{i["varinpercent"]}} % <br>
+                            {%endif%} 
                         {% endfor %}
                     </td>
 
@@ -209,7 +213,11 @@ th {
                     </td>
                     <td style="text-align:right"><br>
                         {% for i in gkresult["outflow"]%}
-                            {{i["varinpercent"]}} %<br>
+                            {% if i["varinpercent"] == '-' %}
+                            {{i["varinpercent"]}} <br>
+                            {% else %}
+                            {{i["varinpercent"]}} % <br>
+                            {%endif%}
                         {% endfor %}
                     </td>
                 </tr>
@@ -251,7 +259,11 @@ th {
                     </td>
                     <td style="text-align:right"><br>
                         {% for i in gkresult["closing"]%}
-                            {{i["varinpercent"]}} %<br>
+                            {% if i["varinpercent"] == '-' %}
+                            {{i["varinpercent"]}} <br>
+                            {% else %}
+                            {{i["varinpercent"]}} % <br>
+                            {%endif%}
                         {% endfor %}
                     </td>
                 </tr>

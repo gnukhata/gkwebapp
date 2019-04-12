@@ -93,9 +93,9 @@ def getbuddetails(request):
 def addbudget(request):
     header={"gktoken":request.headers["gktoken"]}
     if "goid" in request.params:
-        gkdata = {"goid":int(request.params["goid"]),"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"])[0], "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
+        gkdata = {"goid":int(request.params["goid"]),"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"]), "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
     else:
-        gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"])[0], "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
+        gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"]), "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
 
     result = requests.post("http://127.0.0.1:6543/budget", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
@@ -236,7 +236,10 @@ def cashspreadsheet(request):
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["actual"]
             sheet['D'+str(row)] = ob["var"]
-            sheet['E'+str(row)] = ob["varinpercent"] +" %"
+            if ob["varinpercent"] == '-':
+                sheet['E'+str(row)] = ob["varinpercent"]
+            else:
+                sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
         totalrow.font = Font(name='Liberation Serif' )
@@ -259,7 +262,10 @@ def cashspreadsheet(request):
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["actual"]
             sheet['D'+str(row)] = ob["var"]
-            sheet['E'+str(row)] = ob["varinpercent"] +" %"
+            if ob["varinpercent"] == '-':
+                sheet['E'+str(row)] = ob["varinpercent"]
+            else:
+                sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
         totalrow.font = Font(name='Liberation Serif' )
@@ -282,7 +288,10 @@ def cashspreadsheet(request):
             sheet['B'+str(row)] = ob["budget"]
             sheet['C'+str(row)] = ob["balance"]
             sheet['D'+str(row)] = ob["var"]
-            sheet['E'+str(row)] = ob["varinpercent"] +" %"
+            if ob["varinpercent"] == '-':
+                sheet['E'+str(row)] = ob["varinpercent"]
+            else:
+                sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
 
         budgetwb.save('report.xlsx')

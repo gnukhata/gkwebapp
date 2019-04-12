@@ -225,102 +225,18 @@ $(document).ready(function(){
     $(document).off("keydown","#c_budget_toyear").on("keydown", '#c_budget_toyear', function(e){
         if (e.which == 13) {
             e.preventDefault();
-            if($("#c_btype").val() == 5){
-                $("#latable tbody tr:eq(1) input").focus();
-            }
-            if($("#c_btype").val() == 16){
-                $("#sales_latable tbody tr:eq(1) input").focus();
-            }
+                $("#cash_latable tbody:eq(1) tr:eq(0) input").focus();
           }
-    });
-    $(document).off("change","#latable tbody tr input").on("change", "#latable tbody tr input", function(e){
-        var i = $("#latable tbody tr input").index(this);
-        var inputValue = parseFloat($("#latable tbody tr:eq("+i+") input").val());
-        var accBalance = parseFloat($("#latable tbody tr:eq("+i+") td:eq(1)").text());
-        $("#latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
-        total ();
-    });
-    $(document).off("keydown","#sales_latable tbody tr input").on("keydown", "#sales_latable tbody tr input", function(e){
-        
-        if(e.which == 27){
-            $("#c_budget_toyear").focus();
-        }
-        if(e.which == 13){
-            $("#c_add_button").focus();
-        }
-        if(e.which == 40){e.preventDefault();
-            var i = $("#sales_latable tbody tr input").index(this)+1;
-            $("#sales_latable tbody tr:eq("+i+") input").focus().select();
-        }
-        if(e.which == 38){e.preventDefault();
-            var i = $("#sales_latable tbody tr input").index(this)-1;
-            $("#sales_latable tbody tr:eq("+i+") input").focus().select();
-        }
     });
     $(document).off("keydown","#c_add_button").on("keydown", '#c_add_button', function(e){
         if (e.which == 38) {
-            // e.preventDefault();
-            if($("#c_btype").val() == 3){
-                $("#cash_latable tbody tr:eq(1) input").focus();
-            }
-            if($("#c_btype").val() == 19){
-                $("#sales_latable tbody tr:eq(1) input").focus();
-            }
-            if($("#c_btype").val() == 5){
-                $("#latable tbody tr:eq(1) input").focus();
-            }
-        }
-    });
-    // $(document).off("change","#sales_latable tbody tr input").on("change", "#sales_latable tbody tr input", function(e){
-    //     var i = $("#sales_latable tbody tr input").index(this);
-    //     var inputValue = parseFloat($("#sales_latable tbody tr:eq("+i+") input").val());
-    //     var accBalance = parseFloat($("#sales_latable tbody tr:eq("+i+") td:eq(1)").text());
-    //     $("#sales_latable tbody tr:eq("+i+") td:eq(3)").text((inputValue+accBalance).toFixed(2));
-    //     let purchase_total = 0;
-    //     let sales_total =0;
-    //     if (i > $("#purchase_account").val()){
-
-    //         let a = parseInt($("#purchase_account").val())+2;
-    //         let b = parseInt($("#purchase_account").val())+1+parseInt($("#sales_account").val());
-            
-    //         for (let j=a ;j<=b ; j++ ){
-    //             sales_total = sales_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
-    //         }
-    //         $("#c_income").text(sales_total.toFixed(2));
-    //     }
-    //     else{
-    //         for(let j=1 ; j <= $("#purchase_account").val(); j++){
-    //             purchase_total = purchase_total + parseFloat($("#sales_latable tbody tr:eq("+j+") input").val());
-    //         }
-    //         $("#c_expense").text(purchase_total.toFixed(2));
-    //     }
-    //     $("#c_profit").text((parseFloat($("#c_income").text()) - parseFloat($("#c_expense").text())).toFixed(2));
-        
-    // });
-    $(document).off("keydown","#pnl_latable tbody tr input").on("keydown", "#pnl_latable tbody tr input", function(e){
-        
-        if(e.which == 27){
             $("#c_budget_toyear").focus();
-        }
-        if(e.which == 13){
-            $("#c_add_button").focus();
-        }
-        if(e.which == 40){e.preventDefault();
-            var i = $("#pnl_latable tbody tr input").index(this)+1;
-            $("#pnl_latable tbody tr:eq("+i+") input").focus().select();
-        }
-        if(e.which == 38){e.preventDefault();
-            var i = $("#pnl_latable tbody tr input").index(this)-1;
-            $("#pnl_latable tbody tr:eq("+i+") input").focus().select();
         }
     });
 
     $(document).off("keydown","#cash_latable tbody tr input").on("keydown", "#cash_latable tbody tr input", function(e){
         
-        if(e.which == 27){
-            $("#c_budget_toyear").focus();
-        }
-        if(e.which == 13){
+        if(e.which == 27 ){
             $("#c_add_button").focus();
         }
         if(e.which == 40){e.preventDefault();
@@ -331,7 +247,6 @@ $(document).ready(function(){
             var i = $("#cash_latable tbody tr input").index(this)-1;
             $("#cash_latable tbody tr:eq("+i+") input").focus().select();
         }
-
     });
     $(document).off("change","#cash_latable tbody tr input").on("change", "#cash_latable tbody tr input", function(e){
         var i = $("#cash_latable tbody tr input").index(this);
@@ -361,24 +276,24 @@ $(document).ready(function(){
         
     });
     // ------------------Expense table row total -------------
-    function total () {
-        var oTable = document.getElementById('latable');
-        //gets rows of table
-        var rowLength = oTable.rows.length;
-        vd=[];
-        var content= {};
-        //loops through rows 
-        var totalInput = 0.00;
-        var totalBalance = 0.00;
-        for (i = 1; i < (rowLength-2); i++){
-            if($("#latable tbody tr:eq("+i+") input").val() != ''){
-                totalInput = totalInput + parseFloat($("#latable tbody tr:eq("+i+") input").val());
-                totalBalance = totalBalance + parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").text());
-            }
-        }
-        $("#latable tbody tr:eq(-1) td:eq(2)").text((totalInput).toFixed(2));
-        $("#latable tbody tr:eq(-1) td:eq(3)").text((totalBalance).toFixed(2));
-    }
+    // function total () {
+    //     var oTable = document.getElementById('latable');
+    //     //gets rows of table
+    //     var rowLength = oTable.rows.length;
+    //     vd=[];
+    //     var content= {};
+    //     //loops through rows 
+    //     var totalInput = 0.00;
+    //     var totalBalance = 0.00;
+    //     for (i = 1; i < (rowLength-2); i++){
+    //         if($("#latable tbody tr:eq("+i+") input").val() != ''){
+    //             totalInput = totalInput + parseFloat($("#latable tbody tr:eq("+i+") input").val());
+    //             totalBalance = totalBalance + parseFloat($("#latable tbody tr:eq("+i+") td:eq(3)").text());
+    //         }
+    //     }
+    //     $("#latable tbody tr:eq(-1) td:eq(2)").text((totalInput).toFixed(2));
+    //     $("#latable tbody tr:eq(-1) td:eq(3)").text((totalBalance).toFixed(2));
+    // }
 // -----------------end table row total ------------
 // ------------------ date validations --------------
     var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
@@ -583,62 +498,68 @@ $(document).ready(function(){
             return false;
         }
 // ----------- end validation -----------
-        var oTable ;
-        if($("#c_btype option:selected").val() == 3){ 
-            oTable = document.getElementById('cash_latable');
-        }
-        if($("#c_btype option:selected").val() == 19){ 
-            oTable = document.getElementById('sales_latable');
-        }
-        if($("#c_btype option:selected").val() == 5){ 
-            oTable = document.getElementById('latable');
-        }
-        $("#")
-            //gets table data
-            // var oTable = document.getElementById('latable');
-            //gets rows of table
-            var rowLength = oTable.rows.length;
-            vd=[];
-            var content= {};
-            //loops through rows    
-            for (i = 0; i < (rowLength-1); i++){
-                //gets cells of current row  
-                var oCells = oTable.rows.item(i).cells;
-                //gets amount of cells of current row
-                var cellLength = oCells.length;
-                //loops through each cell in current row
-                for(var j = 0; j < cellLength; j++){
-                    // get your cell info here
-                    var cellId = oCells.item(j).id;
-                    var id = cellId.slice(0,cellId.indexOf('_'));
-                    var id_value = id+"_value";
-                    if(cellId != '') {
-                        if(id_value.indexOf('value') > 0) {
-                            var contentValue = document.getElementById(id_value).value;
-                            var amount = (parseFloat(contentValue));
-                            if (amount != 0){
-                                content[id]=amount;
-                            }
-                        }
-                    }                
-                }
+
+        let content={};
+        let rowcount = $("#inflowaccount").val();
+        let countinflowaccounts=0;
+        for(i=0;i<rowcount;i++){
+            let value = parseFloat($("#cash_latable tbody:eq(1) tr:eq("+i+") input").val());
+            if (value != 0){
+                let code = $("#cash_latable tbody:eq(1) tr:eq("+i+")").attr('data-value');
+                content[code]=value;
+                countinflowaccounts = countinflowaccounts +1;
             }
-            vd.push(content);
-            if(Object.keys(content).length == 0){
-                $("#c_content-alert").alert();
-                $("#c_content-alert").fadeTo(2250, 400).slideUp(500, function(){
-                $("#c_content-alert").hide();
-                });
-                $("#latable tbody tr:eq(0) input").focus();
-                return false;
+        }
+        if(countinflowaccounts == 0){
+            if ($("#c_btype").val()=='3'){
+                $("#inflow-account-alert").alert();
+            $("#inflow-account-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#inflow-account-alert").hide();
+            });
+            }
+            else{
+                $("#income-account-alert").alert();
+            $("#income-account-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#income-account-alert").hide();
+            });
+            }
+            $("#cash_latable tbody:eq(1) tr:eq(0) input").focus();
+            return false;
+        }
+       
+        rowcount = $("#outflowaccount").val();
+        let countoutflowaccounts=0;
+        for(i=0;i<rowcount;i++){
+            let value = parseFloat($("#cash_latable tbody:eq(3) tr:eq("+i+") input").val());
+            if (value != 0){
+                let code = $("#cash_latable tbody:eq(3) tr:eq("+i+")").attr('data-value');
+                content[code]=value;
+                countoutflowaccounts = countoutflowaccounts +1;
+            }
+        }
+        if(countoutflowaccounts == 0){
+            if ($("#c_btype").val()=='3'){
+                $("#outflow-account-alert").alert();
+            $("#outflow-account-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#outflow-account-alert").hide();
+            });
+            }
+            else{
+                $("#expense-account-alert").alert();
+            $("#expense-account-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#expense-account-alert").hide();
+            });
+            }
+            $("#cash_latable tbody:eq(3) tr:eq(0) input").focus();
+            return false;
         }
         var gaflag = 1;
         if (sessionStorage.goid != ''){ // if login branch wise then branch id.
             var goid = sessionStorage.goid;
-            dataset = {"goid":goid,"contents":JSON.stringify(vd),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
+            dataset = {"goid":goid,"contents":JSON.stringify(content),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
           }
         else{
-            dataset = {"contents":JSON.stringify(vd),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
+            dataset = {"contents":JSON.stringify(content),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
         }
         $("#msspinmodal").modal("show");
         $.ajax(
