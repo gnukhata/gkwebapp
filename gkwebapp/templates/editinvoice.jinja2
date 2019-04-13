@@ -182,7 +182,10 @@
 			  {% trans %}Customer{% endtrans %} :
 			{% endif %}
 		      </label>
-		      <select class="form-control custfield input-sm col-sm-8 fsize delreset" id="invoice_customer" accesskey="">
+		      <select class="form-control custfield input-sm col-sm-8 fsize delreset" id="invoice_customer" accesskey="" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+			<option value="-1" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+				&#xf067 Add {% if status=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}
+			</option>
 			<option value="" disabled hidden selected>
 			  {% if status=="in" %}
 			    {% trans %}Select Supplier{% endtrans %}
@@ -195,7 +198,7 @@
 			{% endfor %}
 		      </select>
 		    </div>
-		    <small class="form-text text-muted">Press 'Space' key to add a new {% if gkstatus=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}.</small>
+		    <small class="form-text text-muted">Press 'Space' key to add a new {% if status=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}.</small>
 		    <br>
 		    <br>
 		    <div class="form-group form-inline">
