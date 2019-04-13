@@ -798,24 +798,8 @@ $(document).ready(function() {
     $("#invoice_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
 	if($("#invoice_customer option:selected").val() != ""){
-	//Add Supplier or Customer Option
-	if($("#invoice_customer option:selected").val() == "-1"){
-		$(this).prop("disabled", true);
-		    $("#invoice_customerstate option:first").prop("selected", true);
-		    $("#invoice_customerstate").change();
-		    $("#accountno").val("");
-		    $("#branchname").val("");
-		    $("#ifsc").val("");
-		    $("#bankname").val("");
-		    $("#invoice_customeraddr").text("");
-		    $("#tin").text("");
-		    $("#gstin").text("");
-		//Calling Modal
-		$("#invoice_addcust").click();
-	}
-	else
-	{
-	    //AJAX to get details of customer.
+	if($("#invoice_customer option:selected").val() != "-1"){
+	//AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
 	    type: 'POST',
@@ -863,6 +847,22 @@ $(document).ready(function() {
 	    .always(function() {
 		console.log("complete");
 	    });
+	}
+	else
+	{
+	//Add Supplier or Customer Option
+		$(this).prop("disabled", true);
+		    $("#invoice_customerstate option:first").prop("selected", true);
+		    $("#invoice_customerstate").change();
+		    $("#accountno").val("");
+		    $("#branchname").val("");
+		    $("#ifsc").val("");
+		    $("#bankname").val("");
+		    $("#invoice_customeraddr").text("");
+		    $("#tin").text("");
+		    $("#gstin").text("");
+		//Calling Modal
+		$("#invoice_addcust").click();
 	}
 	}
     });
