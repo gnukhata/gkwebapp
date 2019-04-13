@@ -172,7 +172,10 @@
 		      {% trans %}Customer{% endtrans %} :
 		    {% endif %}
 		    <label for="salesorder_customer" style="color:red;font-size:120%;">*</label></label>
-		  <select class="form-control input-sm col-sm-8 fsize" id="salesorder_customer" accesskey="">
+		  <select class="form-control input-sm col-sm-8 fsize" id="salesorder_customer" accesskey="" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+			<option value="-1" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+				&#xf067 Add {% if status|int == 16 %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}
+			</option>
 		    <option value="" disabled hidden selected>
 		      {% if status|int == 16 %}
 			{% trans %}Select Supplier{% endtrans %} :

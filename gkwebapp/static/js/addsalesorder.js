@@ -604,6 +604,8 @@ $(document).ready(function() {
     //Change Event for Customer.
     $("#salesorder_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
+	if($("#salesorder_customer option:selected").val() != ""){
+	if($("#salesorder_customer option:selected").val() != "-1"){
 	//AJAX to get details of customer.
 	$.ajax({
 	    url: '/customersuppliers?action=get',
@@ -652,7 +654,24 @@ $(document).ready(function() {
 	    .always(function() {
 		console.log("complete");
 	    });
-    });
+    }
+	else
+	{
+	//Add Supplier or Customer Option
+		    $("#salesorder_customerstate option:first").prop("selected", true);
+		    $("#salesorder_customerstate").change();
+		    $("#accountno").val("");
+		    $("#branch").val("");
+		    $("#ifsc").val("");
+		    $("#bankname").val("");
+		    $("#salesorder_customeraddr").text("");
+		    $("#tin").text("");
+		    $("#gstin").text("");
+		//Calling Modal
+		$("#salesorder_addcust").click();
+	}
+	}
+	});
 
     //Change event for customer state.
     $("#salesorder_customerstate").change(function(event) {
@@ -2266,12 +2285,14 @@ if (event.which == 13) {
 
             $('#add_cussup_name').focus();
           });
-        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
+        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closed
 			      {
 				  modalpresent = 0;
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
-              $('#salesorder_customer').focus();
+              $('#salesorder_customer').val("");
+              $('#salesorder_customer option[value=""]').prop("selected", true);
+              $('#salesorder_customer').focus().change();
               return false;
             }
             var urlcustsup = "/customersuppliers?action=getallsups";
