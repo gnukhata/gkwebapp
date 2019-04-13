@@ -2957,13 +2957,15 @@ if (event.which == 13) {
 
             $('#add_cussup_name').focus();
           });
-        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is opened
+        $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closed
 			      {
 				  modalpresent = 0;
 				  $("#invoice_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
-              $('#invoice_customer').focus();
+              $('#invoice_customer').val("");
+              $('#invoice_customer option[value=""]').prop("selected", true);
+              $('#invoice_customer').focus().change();
               return false;
             }
             var urlcustsup = "/customersuppliers?action=getallsups";
