@@ -2697,11 +2697,11 @@ if (event.which == 13) {
             var addoption=null;
             if ($("#status").val() == '15') {
 		urlcustsup = "/customersuppliers?action=getallcusts";
-		addoption="Add Customer";
+		addoption="Customer";
             }
 	      else {
 		  urlcustsup = "/customersuppliers?action=getallsups";
-		  addoption="Add Supplier";
+		  addoption="Supplier";
 	      }
             $.ajax({
               type: "POST",
@@ -2716,7 +2716,8 @@ if (event.which == 13) {
              .done(function(resp) {
                var custs = resp["customers"];
                $("#invoice_customer").empty();
-               $("#invoice_customer").append('<option value="-1">' +addoption+ '</option>');
+               $("#invoice_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
+               $("#invoice_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
                for (i in custs) {
                  $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
