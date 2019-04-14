@@ -801,6 +801,8 @@ $(document).ready(function() {
     });
 
     $("#deliverychallan_customer").change(function(event) {
+    if($("#deliverychallan_customer option:selected").val() != ""){
+	if($("#deliverychallan_customer option:selected").val() != "-1"){
     $.ajax({
       url: '/customersuppliers?action=get',
       type: 'POST',
@@ -841,6 +843,20 @@ $(document).ready(function() {
     .always(function() {
       console.log("complete");
     });
+	}
+	else
+	{
+	//Add Supplier or Customer Option
+		$(this).prop("disabled", true);
+		$("#deliverychallan_customerstate option:first").prop("selected", true);
+		$("#deliverychallan_customerstate").change();
+		$("#deliverychallan_customeraddr").text("");
+		$("#tin").text("");
+		$("#gstin").text("");
+		//Calling Modal
+		$('#deliverychallan_addcust').click();
+	}
+	}
   });
 
     //Change Event for 'Supplier/customer' state.
@@ -2425,16 +2441,22 @@ else {
            $('#custsupmodal').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
 				 {
 				     modalpresent = 0;
+				  $("#deliverychallan_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
            if(text1==''){
-             $('#deliverychallan_customer').focus();
+              $('#deliverychallan_customer').val("");
+              $('#deliverychallan_customer option[value=""]').prop("selected", true);
+              $('#deliverychallan_customer').focus().change();
              return false;
            }
+            var addoption=null;
            if ($("#status").val()=='9') {
                var urlcustsup = "/customersuppliers?action=getallsups";
+            var addoption="Supplier";
            }
            if($("#status").val()=='15'){
                var urlcustsup = "/customersuppliers?action=getallcusts";
+		addoption="Customer";
            }
            $.ajax({
              type:"POST",
@@ -2448,7 +2470,9 @@ else {
            })
            .done(function(resp) {
              var custs = resp["customers"];
-             $("#deliverychallan_customer").empty();
+            $("#deliverychallan_customer").empty();
+            $("#deliverychallan_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
+            $("#deliverychallan_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
              for (i in custs){
                $("#deliverychallan_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
              }

@@ -2288,6 +2288,7 @@ if (event.which == 13) {
         $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closed
 			      {
 				  modalpresent = 0;
+				  $("#salesorder_customer").prop("disabled", false);
             var text1 = $('#selectedcustsup').val();
             if (text1 == '') {
               $('#salesorder_customer').val("");
@@ -2296,11 +2297,14 @@ if (event.which == 13) {
               return false;
             }
             var urlcustsup = "/customersuppliers?action=getallsups";
+            var addoption=null;
             if ($("#status").val() == '19') {
 		urlcustsup = "/customersuppliers?action=getallcusts";
+		addoption="Customer";
             }
 	      else {
 		  urlcustsup = "/customersuppliers?action=getallsups";
+		  addoption="Supplier";
 	      }
             $.ajax({
               type: "POST",
@@ -2315,7 +2319,8 @@ if (event.which == 13) {
              .done(function(resp) {
                var custs = resp["customers"];
                $("#salesorder_customer").empty();
-
+               $("#salesorder_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
+               $("#salesorder_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
                for (i in custs) {
                  $("#salesorder_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
