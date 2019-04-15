@@ -33,7 +33,21 @@ $(document).ready(function(){
     $('.modal-backdrop').remove();
     $("#back").click(function(e){
         if($("#menuflag").val() == 2){
-            $("#showviewbudget").click();
+            $.ajax({
+                url: '/budget?type=viewbudgetreportpage',
+                type: 'POST',
+                global: false,
+                async: false,
+                datatype: 'text/html',
+                data: {"menuflag":2},
+                beforeSend: function(xhr)
+                {
+                  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+              })
+               .done(function(resp) {
+                 $("#info").html(resp);
+               });
         }
         else{
             $("a[href ='#budget_report']").click();
@@ -69,11 +83,8 @@ $(document).ready(function(){
         if($("#btype").val() == 3){
             xhr.open('GET', '/budget?type=cashspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);
         }
-        if($("#btype").val() == 5){
-            xhr.open('GET', '/budget?type=expensespreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
-        }
-        if($("#btype").val() == 19){
-            xhr.open('GET', '/budget?type=salesspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
+        if($("#btype").val() == 16){
+            xhr.open('GET', '/budget?type=pnlspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
         }
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';

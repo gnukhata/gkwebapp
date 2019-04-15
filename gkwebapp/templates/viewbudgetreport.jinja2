@@ -32,7 +32,7 @@ border-radius: 5px;
 </head>
 <body>
 {% if menuflag == 2 %}
-  <div style="padding-top:5px" class="container-fluid mainbox col-md-4 col-md-offset-3">
+  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
     <div class="panel shadow">
       <div class="panel-heading">
         <h3 class="panel-title">{% trans %}View Budget Report{% endtrans %}
@@ -45,8 +45,7 @@ border-radius: 5px;
             <label for="budgettype" style="padding-top:2%">{% trans %}Type of Budget{% endtrans %} :
             </label><br>
               <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash</label>
-              <label><input style="margin-left:20px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Net Profit</label> 
-              <label><input style="margin-left:20px" type="radio"  name="budtypess" id="sales" aria-label=" Sales Budget" value="5" > Gross Profit</label>  
+              <label><input style="margin-left:20px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > Profit & Loss</label>  
             </div >
             <div class="col-xs-12 from-group">
               <div id="nobudget" class="bg-danger" style="text-align:center;margin-top:2%;padding:5px">
@@ -79,8 +78,7 @@ border-radius: 5px;
               <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
                 <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>
                     <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash </label>
-                    <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="expense" aria-label=" Expense Budget" value="5" > Net Profit </label>    
-                    <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="sales" aria-label=" Sales Budget" value=19 > Gross Profit </label> 
+                    <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > Profit & Loss </label>  
               </div>
 
               <div id="nobudget" class="bg-danger" style="text-align:center;margin-top:2%;padding:5px">

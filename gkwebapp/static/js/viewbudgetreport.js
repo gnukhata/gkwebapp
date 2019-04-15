@@ -61,13 +61,7 @@ $(document).ready(function() {
         $("#b_list").focus();
         }
     });
-    $("#expense").keydown(function(e){
-        if (e.which==13)
-        {e.preventDefault();
-        $("#b_list").focus();
-        }
-    });
-    $("#sales").keydown(function(e){
+    $("#pnl").keydown(function(e){
         if (e.which==13)
         {e.preventDefault();
         $("#b_list").focus();
@@ -78,11 +72,8 @@ $(document).ready(function() {
         if($("#cash").is(":checked")) {
             val = 3;
         }
-        if($("#expense").is(":checked")) {
-            val = 5;
-        }
-        if($("#sales").is(":checked")) {
-            val = 19;
+        if($("#pnl").is(":checked")) {
+            val = 16;
         }
             $.ajax(
               {
