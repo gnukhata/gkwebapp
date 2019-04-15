@@ -40,18 +40,6 @@ border-radius: 5px;
               <div class="alert alert-success" id="c_success-alert" aria-live="rude" role="alert" hidden>
                 <label for="btype">{% trans %}Budget added successfully!{% endtrans %}</label>
               </div>
-              <div class="alert alert-danger" id="c_inflow-alert" aria-live="rude" role="alert" hidden>
-                <label for="btype">{% trans %}Please enter budget inFlow!{% endtrans %}</label>
-              </div>
-              <div class="alert alert-danger" id="c_outflow-alert" aria-live="rude" role="alert" hidden>
-                <label for="btype">{% trans %}Please enter budget outFlow!{% endtrans %}</label>
-              </div>
-              <div class="alert alert-danger" id="c_expense-alert" aria-live="rude" role="alert" hidden>
-                <label for="btype">{% trans %}Please enter Expense amount!{% endtrans %}</label>
-              </div>
-              <div class="alert alert-danger" id="c_outflow-alert" aria-live="rude" role="alert" hidden>
-                <label for="btype">{% trans %}Please enter Sales amount!{% endtrans %}</label>
-              </div>
             {# ----------------------------- ALERTS ------------------------ #}
               <form id="c_addbudget" method="post"  class="form-horizontal">
               <div class="col-md-12" style="margin-top:2%">
@@ -93,7 +81,11 @@ border-radius: 5px;
                   <label  >{% trans %}<i>Closing Balance</i>{% endtrans %} :</label> <b id = "c_budgetbalance" > </b><br>
                   </div>
               </div>
-              <div id="c_pnl" class="col-md-12">
+              <div id="c_pnldiv" class="col-md-12">
+              <br>
+                <label  >{% trans %}<i>Total Income</i>{% endtrans %} :</label> <b id = "c_income" > </b><br>
+                <label  >{% trans %}<i>Total Expense</i>{% endtrans %} :</label> <b id = "c_expense" > </b><br>
+                <label  >{% trans %}<i>Net Profit</i>{% endtrans %} :</label> <b id = "c_netprofit" > </b><br>
               </div>
               
           </div> {# main #}

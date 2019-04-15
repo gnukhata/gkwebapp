@@ -120,7 +120,7 @@ border-radius: 4px;
       <input hidden id="inflowaccount" value="{{ gkresult["inflow"]|length }}">
       <input hidden id="outflowaccount" value="{{ gkresult["outflow"]|length }}">
       <input hidden id="op" value="{{gkresult["openingbal"]}}">
-        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
    
   {% else %}
@@ -179,7 +179,7 @@ border-radius: 4px;
       </table>
       <input hidden id="outflowaccount" value="{{ gkresult[0]|length }}">
       <input hidden id="inflowaccount" value="{{ gkresult[1]|length }}">
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Enter' Key from Accounts Lists to shift focus to Save Button.{% endtrans %}</small><br>
+    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Accounts Lists to shift focus to Save Button.{% endtrans %}</small><br>
     <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Tab' Key or 'UpArrow' Key in Accounts Lists to change focus on Account present in List.{% endtrans %}</small>
   {% endif %}
  </div>
