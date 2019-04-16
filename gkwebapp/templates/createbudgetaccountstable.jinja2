@@ -62,24 +62,21 @@ border-radius: 4px;
       <div class="alert alert-danger" id="income-account-alert" aria-live="rude" role="alert" hidden>
           <label for="viewledger_fromdate">{% trans %}Please enter atleast one budget amount for Incomes!{% endtrans %}</label>
         </div>
-        <div >
-          <label for="c_bname" >{% trans %}List of Accounts{% endtrans %} :</label>
-        </div>
   {% if btype == 3 %}
       <table id="cash_latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
         <thead>
           <tr>
             <th class="lalign">
-            {% trans %}Accounts Name{% endtrans %}
+            {% trans %}Accounts{% endtrans %}
             </th>
             <th class="lalign">
-            {% trans %}Budget Amount{% endtrans %}
+            {% trans %}Budgeted Amount{% endtrans %}
             </th>
           </tr>
         </thead>
         <tbody style="height:inherit; overflow: auto;">
         <tr><td colspan="2">
-        <b>Enter accounts budget used for Inflow </b> <input hidden></td>
+        <b>Inflow </b> <input hidden></td>
         </tr>
         </tbody>
         <tbody  style="height:30%; overflow: auto;">
@@ -98,7 +95,7 @@ border-radius: 4px;
         {% endfor %}
         <tbody style="height:inherit; overflow: auto;">
         <tr><td colspan="2">
-        <b>Enter accounts budget used for Outflow </b> <input hidden></td>
+        <b>Outflow </b> <input hidden></td>
         </tr>
         </tbody>
         <tbody  style="height:30%; overflow: auto;">
@@ -120,7 +117,7 @@ border-radius: 4px;
       <input hidden id="inflowaccount" value="{{ gkresult["inflow"]|length }}">
       <input hidden id="outflowaccount" value="{{ gkresult["outflow"]|length }}">
       <input hidden id="op" value="{{gkresult["openingbal"]}}">
-        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Budget amount to shift focus to Save Button.{% endtrans %}</small><br>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Budgeted amount to shift focus to Save Button.{% endtrans %}</small><br>
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
    
   {% else %}
@@ -128,10 +125,10 @@ border-radius: 4px;
         <thead>
           <tr>
             <th class="lalign">
-            {% trans %}Accounts Name{% endtrans %}
+            {% trans %}Accounts{% endtrans %}
             </th>
             <th class="lalign">
-            {% trans %}Budget Amount{% endtrans %}
+            {% trans %}Budgeted Amount{% endtrans %}
             </th>
           </tr>
         </thead>
