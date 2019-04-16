@@ -36,10 +36,11 @@ $(document).ready(function() {
      {
         $("a[href ='#budget_edit']").click();
      });
-    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
-    var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
-    var financial = sessionStorage.yyyymmddyear1;
-    var hideshowflag;
+    let financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
+    let financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+    let financial = sessionStorage.yyyymmddyear1;
+    let hideshowflag;
+    let btype = 3;
     $("#noeditbudget").hide();
     $("#flow").hide();
     $("#e_pnldiv").hide();
@@ -50,6 +51,7 @@ $(document).ready(function() {
     $("#e_expense").text((0.00).toFixed(2));
     $("#e_income").text((0.00).toFixed(2));
     $("#e_netprofit").text((0.00).toFixed(2));
+    
     $("#budgetlist").keydown(function(e){
         if (e.which==13 || e.which==39)
         {e.preventDefault();
@@ -158,13 +160,6 @@ $(document).ready(function() {
             return false;
         }
         var fromdate = $("#budget_fromyear").val()+"-"+$("#budget_frommonth").val()+"-"+$("#budget_fromday").val();
-        let btype;
-        if($("#btype").val() == 3){   // Cash budget
-             btype = 3;
-        }
-        if($("#btype").val() == 16){  // pnl budget
-             btype = 16
-        }
             $.ajax({
                 type: "POST",
                 url: "/budget?type=balance",
@@ -313,13 +308,17 @@ $(document).ready(function() {
                 $("#budget_tomonth").prop("disabled", true);
                 $("#budget_toyear").val(fromdatearray[2])
                 $("#budget_toyear").prop("disabled", true);
-                $("#btype").val(goddetails["btype"]);
+                
                 $("#btype").prop("disabled", true);
                 if(goddetails["btype"] == 3){
+                    $("#btype").text("Cash Budget");
+                    btype = 3;
                     $("#flow").show();
                     tablecall();
                 }
                 if(goddetails["btype"] == 16){
+                    $("#btype").text("Profit & Loss Budget");
+                    btype = 16;
                     $("#flow").hide();
                     tablecall();
                     hideshowflag = 0;
@@ -338,7 +337,7 @@ $(document).ready(function() {
         hideshowflag = 1;
         $("#bname").prop("disabled", false);
         $("#bname").focus();
-        $("#btype").prop("disabled", true);
+        
         $("#budget_fromday").prop("disabled", false);
         $("#budget_frommonth").prop("disabled", false);
         $("#budget_fromyear").prop("disabled", false);
@@ -511,7 +510,7 @@ $(document).ready(function() {
                     for (let j=a ;j<=b ; j++ ){
                         outflowtotal = outflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
                     }
-                    if ($("#btype").val() == '3'){
+                    if (btype == 3){
                         $("#outflow").text(outflowtotal.toFixed(2));
                     }
                     else{
@@ -522,14 +521,14 @@ $(document).ready(function() {
                     for(let j=1 ; j <= $("#inflowaccount").val(); j++){
                         inflowtotal = inflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
                     }
-                    if ($("#btype").val() == '3'){
+                    if (btype == 3){
                         $("#inflow").text(inflowtotal.toFixed(2));
                     }
                     else{
                         $("#e_income").text(inflowtotal.toFixed(2));
                     }
                 }
-                if ($("#btype").val() == '3'){
+                if (btype == 3){
                     $("#cashavailable").text((parseFloat($("#inflow").text())+parseFloat($("#balance").text())).toFixed(2)) 
                     $("#budgetbalance").text((parseFloat($("#cashavailable").text())-parseFloat($("#outflow").text())).toFixed(2))
                 }
@@ -540,21 +539,21 @@ $(document).ready(function() {
         // ----------------- end keydown ----------------
         
         $("#budget_fromday").change(function(event) { 
-            if($("#btype").val()==null){
+            if(btype==null){
                 return false;
             }
             $(this).val(pad($(this).val(),2));
             tablecall();
         });
         $("#budget_frommonth").change(function(event) {
-            if($("#btype").val()==null){
+            if(btype==null){
                 return false;
             }
             $(this).val(pad($(this).val(),2));
             tablecall();
         });
         $("#budget_fromyear").change(function(event) { 
-            if($("#btype").val()==null){
+            if(btype==null){
                 return false;
             }
             $(this).val(pad($(this).val(),4));
@@ -632,14 +631,6 @@ $(document).ready(function() {
             $('#budget_today').focus().select();
             return false;
         }
-        if ($.trim($("#btype option:selected").val())=="") {
-            $("#btype-alert").alert();
-            $("#btype-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#btype-alert").hide();
-            });
-            $("#btype").focus();
-            return false;
-        }
 // ----------- end validation -----------
 
         let content={};
@@ -654,7 +645,7 @@ $(document).ready(function() {
             }
         }
         if(countinflowaccounts == 0){
-            if ($("#btype").val()=='3'){
+            if (btype==3){
                 $("#inflow-account-alert").alert();
             $("#inflow-account-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#inflow-account-alert").hide();
@@ -681,7 +672,7 @@ $(document).ready(function() {
             }
         }
         if(countoutflowaccounts == 0){
-            if ($("#btype").val()=='3'){
+            if (btype==3){
                 $("#outflow-account-alert").alert();
             $("#outflow-account-alert").fadeTo(2250, 500).slideUp(500, function(){
             $("#outflow-account-alert").hide();
@@ -696,8 +687,8 @@ $(document).ready(function() {
             $("#cash_latable tbody:eq(3) tr:eq(0) input").focus();
             return false;
         }
-        dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(content),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#btype option:selected").val(),"gaflag":1};
-        // }
+        dataset = {"budid":$("#budgetlist option:selected").val(),"contents":JSON.stringify(content),"budname":$("#bname").val(),"startdate":fromdate,"enddate":todate,"btype":btype,"gaflag":1};
+        
         $("#msspinmodal").modal("show");
         $.ajax(
             {
