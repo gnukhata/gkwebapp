@@ -263,7 +263,13 @@ $(document).ready(function(){
             let b = parseInt($("#inflowaccount").val())+1+parseInt($("#outflowaccount").val());
             
             for (let j=a ;j<=b ; j++ ){
-                outflowtotal = outflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+                if ($("#cash_latable tbody tr:eq("+j+") input").val() == "" || isNaN($("#cash_latable tbody tr:eq("+j+") input").val())){
+                    $("#cash_latable tbody tr:eq("+j+") input").val(0.00)
+                }
+                else{
+                    outflowtotal = outflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+                }
+                
             }
             if($("#c_btype").val() == '3'){
                 $("#c_outflow").text(outflowtotal.toFixed(2));
@@ -274,7 +280,13 @@ $(document).ready(function(){
         }
         else{
             for(let j=1 ; j <= $("#inflowaccount").val(); j++){
-                inflowtotal = inflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+                if($("#cash_latable tbody tr:eq("+j+") input").val() == "" || isNaN($("#cash_latable tbody tr:eq("+j+") input").val())){
+                    $("#cash_latable tbody tr:eq("+j+") input").val(0.00)
+                }
+                else{
+                    inflowtotal = inflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
+                }
+                
             }
             if($("#c_btype").val() == '3'){
                 $("#c_inflow").text(inflowtotal.toFixed(2));
@@ -284,7 +296,6 @@ $(document).ready(function(){
             }
         }
         if ($("#c_btype").val() == '3'){
-            
             $("#c_cashavailable").text((parseFloat($("#c_inflow").text())+parseFloat($("#c_opening").text())).toFixed(2)); 
             $("#c_budgetbalance").text((parseFloat($("#c_cashavailable").text())-parseFloat($("#c_outflow").text())).toFixed(2)); 
         }
@@ -501,7 +512,7 @@ $(document).ready(function(){
         let countinflowaccounts=0;
         for(i=0;i<rowcount;i++){
             let value = parseFloat($("#cash_latable tbody:eq(1) tr:eq("+i+") input").val());
-            if (value != 0){
+            if (value != 0 ){
                 let code = $("#cash_latable tbody:eq(1) tr:eq("+i+")").attr('data-value');
                 content[code]=value;
                 countinflowaccounts = countinflowaccounts +1;
@@ -528,7 +539,7 @@ $(document).ready(function(){
         let countoutflowaccounts=0;
         for(i=0;i<rowcount;i++){
             let value = parseFloat($("#cash_latable tbody:eq(3) tr:eq("+i+") input").val());
-            if (value != 0){
+            if (value != 0 ){
                 let code = $("#cash_latable tbody:eq(3) tr:eq("+i+")").attr('data-value');
                 content[code]=value;
                 countoutflowaccounts = countoutflowaccounts +1;
