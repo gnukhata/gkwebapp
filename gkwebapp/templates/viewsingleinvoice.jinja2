@@ -2,13 +2,16 @@
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
   <div class="col-md-12">
+			{% if deleteflag == 0%}
 			<div class="form-inline form-group col-sm-12 nopadding" style="margin-top:1px important!">
 			{% if gkresult["vouchercount"] == 0 %}
 				<label class="alert alert-danger hidden-print pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
 			{% else %}
 			<button type="button" class="btn btn-lng btn-info hidden-print pull-right" id="vouchertransaction" accesskey="v"> <b><u>V</u>iew transactions </b></button>
-			{% endif %} 
+			{%endif%}
 	</div>
+	{% endif %} 
+
 	<br>
 		{# delete invoice alerts #}
 	<div class="alert alert-success" id="delsuccess-alert"  aria-live="rude" role="alert" hidden>

@@ -29,16 +29,31 @@ $(document).ready(function() {
     var currentrow = 0;
 
     if($("#invoiceviewlistdiv").length==0){
-        $('#latable tbody tr:first td:eq(1) a').focus();
+        if($("#latabledel").length > 0){
+            $('#latabledel tbody tr:first td:eq(1) a').focus();
+        $('#latabledel tbody tr:first').addClass('selected');
+        }
+        else{
+            $('#latable tbody tr:first td:eq(1) a').focus();
     $('#latable tbody tr:first').addClass('selected');
+        }
     }
 
     $(document).off('focus', '.libgname').on('focus', '.libgname', function() {
-        $('#latable tr').removeClass('selected');
-        $(this).closest('tr').addClass('selected');
+        if($("#latabledel").length){
+            $('#latabledel tr').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+        }
+        else{
+            $('#latable tr').removeClass('selected');
+            $(this).closest('tr').addClass('selected');
+        }
     });
 
     $(document).off('blur', '.libgname').on('blur', '.libgname', function() {
+        if($("#latabledel").length){
+        $('#latabledel tr').removeClass('selected');
+        }
         $('#latable tr').removeClass('selected');
 
     });
@@ -132,6 +147,104 @@ $(document).ready(function() {
     );
     });
 
+    $('#viewanotherdeletedlist').click(function(e) {
+        e.preventDefault();
+        $("#msspinmodal").modal("show");
+        sessionStorage.onview=0;
+    $.ajax(
+      {
+
+        type: "POST",
+        url: "/invoice?action=viewlistdeleted",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
+    });
+    var invoice_id = "";
+
+    $("#latable").off('click', '.cancel_inv').on('click', '.cancel_inv', function(e) {
+    e.preventDefault();
+    invoice_id = $(this).closest("tr").data("invid");
+    if (invoice_id == "") {
+        return false;
+    }
+	  $('#myModal').modal('hide');
+	  $('#confirm_del').modal('show');
+      $('#confirm_del').on('shown.bs.modal', function (e)
+              {
+                $("#m_cancel").focus();
+
+              });
+            });
+
+	  $('#invdel1').click(function(event){
+        $.ajax(
+            {
+            type: "POST",
+            url: "/invoice?type=cancelinvoice",
+            global: false,
+            async: false,
+            datatype: "json",
+            data: {"invid":invoice_id},
+            beforeSend: function(xhr)
+              {
+                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+              },
+            success: function(resp)
+            {
+                if(resp["gkstatus"]==0){
+		          $('#confirm_del').modal('hide');
+                    $('#confirm_del').on('hidden.bs.modal', function (e)
+		                  {
+		                    $("#success-alert1").alert();
+		  		          $("#success-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                              $("#success-alert1").hide();
+                              var dataset = {
+                                "flag": $("#invoicetypeselect").val(),
+                                "fromdate": $("#fromdate").data("fromdate"),
+                                "todate": $("#todate").data("todate")
+                            };
+                            $.ajax({
+                                type: "POST",
+                                url: "/invoice?action=showlist",
+                                global: false,
+                                async: false,
+                                datatype: "text/html",
+                                data: dataset,
+                                beforeSend: function(xhr) {
+                                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                },
+                            })
+                            .done(function(resp) {
+                                if ($("#invoice_view_list").length>0){
+                                $("#slectedlist").html(resp);    
+                                }
+                                else{$("#info").html(resp);}
+                            });
+		  		          });
+		  		          });
+                   
+            }
+            else {
+                    $("#notran-del-alert1").alert();
+                    $("#notran-del-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                      $("#notran-del-alert1").hide();
+                    });
+                  }
+            }
+            });
+    });
+
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
         var dataset = {
@@ -166,6 +279,7 @@ $(document).ready(function() {
         curindex = $(this).closest('tr').index();
         nextindex = curindex + 1;
         previndex = curindex - 1;
+        if($("#latable").length){
         if (event.which == 40) {
             event.preventDefault();
             $('#latable tbody tr:eq(' + nextindex + ') td:eq(1) a').focus();
@@ -177,6 +291,21 @@ $(document).ready(function() {
                 $(".search").children(".form-control").focus().select();
             }
         }
+    }
+    else{
+        if (event.which == 40) {
+            event.preventDefault();
+            $('#latabledel tbody tr:eq(' + nextindex + ') td:eq(1) a').focus();
+        } else if (event.which == 38) {
+            if (previndex > -1) {
+                event.preventDefault();
+                $('#latabledel tbody tr:eq(' + previndex + ') td:eq(1) a').focus();
+            } else {
+                $(".search").children(".form-control").focus().select();
+            }
+        }
+    }
+
 
     });
 
@@ -188,6 +317,16 @@ $(document).ready(function() {
         $('#latable tr').removeClass('selected');
         $(this).toggleClass('selected');
         $('#latable tbody tr:eq(' + currindex + ') a').focus();
+
+    });
+
+    $("#latabledel").off('click', 'tr').on('click', 'tr', function(e) {
+        e.preventDefault();
+        var id = $(this).attr('value');
+        var currindex = $(this).index();
+        $('#latabledel tr').removeClass('selected');
+        $(this).toggleClass('selected');
+        $('#latabledel tbody tr:eq(' + currindex + ') a').focus();
 
     });
 
@@ -205,6 +344,22 @@ $(document).ready(function() {
           }
         }
     });
+
+    $("#latabledel").off('keydown', 'tr').on('keydown', 'tr', function(e) {
+        var id = $(this).data("invid");
+        var currindex = $(this).index();
+        if (e.which == 13) {
+            e.preventDefault();
+            $('#latabledel tbody tr:eq(' + currindex + ')').dblclick();
+        }
+        if (e.which == 38) {
+            e.preventDefault();
+            if($("#invoiceviewlistdiv").length!=0){
+            $("#invoiceviewlist input:radio:checked").focus();          
+          }
+        }
+    });
+    
 
     var invoice_id = "";
 
@@ -260,6 +415,63 @@ $(document).ready(function() {
 		}
             });
     });
+
+  
+    $("#latabledel").off('dblclick', 'tr').on('dblclick', 'tr', function(e) {
+        // This function opens a modal of the selected voucher.
+        // It shows the complete details of the selected voucher along with option to edit, delete and clone.
+        currentrow = $(this).index();
+        e.preventDefault();
+	invoice_id = "";
+        invoice_id = $(this).data("invid");
+        if (invoice_id == "") {
+            return false;
+        }
+	var csflag = $("#latabledel tbody tr:eq(" + currentrow + ")").data("csflag");
+        $.ajax({
+
+                type: "POST",
+                url: "/invoice?action=showdeletedinv",
+                global: false,
+                async: false,
+                datatype: "text/html",
+                data: {
+                    "invid": invoice_id
+                },
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                $("#invload").html("");
+                $("#invload").html(resp).show();
+                $("#printload").hide();
+                $('#listdiv').hide();
+                $("#invoiceviewlistdiv").hide();
+
+
+
+		if (csflag == '19') {
+		    $("#printbutton").hide();
+		}
+        $("#viewinvdiv").show();
+        // delete button hide or show depends on deletable data
+        if($("#deletable").val() > 0){
+            $("#delete").hide();
+        }
+        else{
+            $("#delete").show(); 
+        }
+		if ($("#attachmentcount").val() > 0) {
+		    $("#viewattachment").show();
+		}
+		else {
+		    $("#viewattachment").hide();
+		}
+            });
+    });
+    
+    
     $("#viewattachment").click(function(event) {
         $.ajax({
             url: '/invoice?action=getattachment',
@@ -295,12 +507,19 @@ $(document).ready(function() {
 	$("#viewinvdiv").hide();
     $('#listdiv').show();
   $("#invoiceviewlistdiv").show();    
+  if($("#latable").length){
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
         $('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
+    }
+    else{
+        $('#latabledel tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
+        $('#latabledel tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
+    }
         if($('#invoiceviewlistdiv').length>0){
             $(".tab-content").show();
         }
     });
+
     $("#print").click(function(event) {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
