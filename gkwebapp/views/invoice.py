@@ -59,7 +59,13 @@ def showviewregister(request):
 def showlistofinv(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/invoice?inv=all", headers=header)
-    return {"status":True, "numberofinvoices": len(result.json()["gkresult"])}
+    return {"status":True, "numberofinvoices": len(result.json()["gkresult"]),"deleteflag":0}
+
+@view_config(route_name="invoice", request_param="action=viewlistdeleted", renderer="gkwebapp:templates/viewlistofinvoices.jinja2")
+def showlistofdeletedinv(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/invoice?inv=alldeleted", headers=header)
+    return {"status":True, "numberofinvoices": len(result.json()["gkresult"]),"deleteflag":1}
 
 @view_config(route_name="invoice",request_param="action=showadd",renderer="gkwebapp:templates/addinvoice.jinja2")
 def showaddinvoice(request):
@@ -268,7 +274,19 @@ def listofinv(request):
        result = requests.get("http://127.0.0.1:6543/invoice?type=list&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
        orderflag = "4"
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "resultgstvat":resultgstvat.json()["gkresult"],"orderflag":orderflag}
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "resultgstvat":resultgstvat.json()["gkresult"],"orderflag":orderflag,"deleteflag":0}
+
+@view_config(route_name="invoice", request_param="action=showdeletedlist", renderer="gkwebapp:templates/listofinvoices.jinja2")
+def listofdeletedinv(request):
+    header={"gktoken":request.headers["gktoken"]}
+    if "orderflag" in request.params:
+        result = requests.get("http://127.0.0.1:6543/invoice?type=listdeleted&flag=%s&fromdate=%s&todate=%s&orderflag=%d"%(request.params["flag"], request.params["fromdate"], request.params["todate"],int(request.params["orderflag"])), headers=header)
+        orderflag = "1"
+    else:
+       result = requests.get("http://127.0.0.1:6543/invoice?type=listdeleted&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+       orderflag = "4"
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "resultgstvat":resultgstvat.json()["gkresult"],"orderflag":orderflag,"deleteflag":1}
 
 @view_config(route_name="invoice", request_param="action=printlist", renderer="gkwebapp:templates/printlistofinvoices.jinja2")
 def printlistofinv(request):
@@ -281,7 +299,13 @@ def printlistofinv(request):
 def showsingleinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
+    return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"],"deleteflag":0}
+
+@view_config(route_name="invoice",request_param="action=showdeletedinv",renderer="gkwebapp:templates/viewsingleinvoice.jinja2")
+def showsingledeletedinvoice(request):
+    header={"gktoken":request.headers["gktoken"]}
+    invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=deletedsingle&invid=%d"%(int(request.params["invid"])), headers=header)
+    return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"],"deleteflag":1}
 
 @view_config(route_name="invoice",request_param="action=showvoucher",renderer="gkwebapp:templates/voucherininvoice.jinja2")
 def showvoucherininvoice(request):
@@ -334,6 +358,13 @@ def Invoicedelete(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"]}), headers=header)
     return {"gkstatus": invoicedata.json()["gkstatus"]}
+
+@view_config(route_name="invoice",request_param="type=cancelinvoice",renderer="json")
+def InvoiceCancel(request):
+    header={"gktoken":request.headers["gktoken"]}
+    invoicedata = requests.delete("http://127.0.0.1:6543/invoice?type=cancel",data =json.dumps({"invid":request.params["invid"]}), headers=header)
+    return {"gkstatus": invoicedata.json()["gkstatus"]}
+
 
 @view_config(route_name="invoice",request_param="action=print")
 def Invoiceprint(request):

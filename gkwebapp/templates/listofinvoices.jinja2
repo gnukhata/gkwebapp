@@ -6,12 +6,12 @@
      .shadow {
          box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
      }
-     #latable td {
+     #latable td, #latabledel td {
          font-size: 75%;
          padding: 4 !important;
          margin: 4 !important;
      }
-     #latable th {
+     #latable th, #latabledel th {
          font-size: 85%;
      }
      .card-view .title {
@@ -20,17 +20,17 @@
          min-width: 30%;
          text-align: left !important;
      }
-     #latable tbody {
+     #latable tbody, #latabledel tbody  {
          display:block;
          height: calc(69vh);
          overflow-y:scroll;
      }
-     #latable thead,#latable tbody tr {
+     #latable thead,#latable tbody tr, #latabledel thead,#latabledel tbody tr {
          display:table;
          width:100%;
          table-layout:fixed;
      }
-     #latable thead {
+     #latable thead, #latabledel thead {
          width: calc( 99.1% );
      }
      .biglwrap {
@@ -94,8 +94,15 @@
     </style>
    </head>
    <body>
+            <div class="alert alert-success" id="success-alert1" hidden>
+                  {% trans %}Invoice deleted successfully.{% endtrans %}
+               </div>
+               <div class="alert failure-alert" id="notran-del-alert1" aria-live="rude" role="alert" hidden>
+                     {% trans %}Invoice could not be deleted.{% endtrans %}
+                   </div>
+   
      <div id="listdiv">
-       <div class="col-xs-12 nopadding">
+       <div class="col-xs-10 nopadding">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
       {% if gkresult == [] %}
          <div class="bg-danger " style="margin-top:2%;padding-top:10px;padding-bottom:10px;text-align:center">
@@ -103,18 +110,26 @@
          </div>
       {% else %}
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
+      {% if deleteflag == 0 %}
       <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+            {% else %}
+      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All Deleted{%elif flag == "1" %}Deleted Sales{%elif flag == "2" %}Deleted Purchase{% endif %}</i> Invoices</strong></span>
+      {% endif %}
       <br>
        </div>
 
-       <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+       <div class="pull-right input-group input-group-sm col-xs-2" style="margin-bottom:2px;">
 	 <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
 	 </span>
 	 <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
 	 <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
 	 </span>	 
        </div>
+   {% if deleteflag == 0 %}
       <table id="latable" class="table shadow table-bordered" >
+   {% else %}
+      <table id="latabledel" class="table shadow table-bordered" >
+{% endif %}
          <thead class="bg-primary">
             <tr>
                <th class="srnowrap text-center" >
@@ -161,6 +176,10 @@
                <th class="mdlwrap text-center" >
                   {% trans %}Godown{% endtrans %}
                </th>
+               {% if deleteflag == 0 %}
+               <th class="srnowrap text-center">
+               </th>
+               {% endif %}
             </tr>
          </thead>
          <tbody>
@@ -177,6 +196,14 @@
             <td class="smlwrap text-right">{{invoice["netamt"]}}</td>
             <td class="smlwrap text-right">{{invoice["taxamt"]}}</td>
             <td class="mdlwrap text-center">{{invoice["godown"]}}</td>
+
+            {% if deleteflag == 0 %}               
+            <td class="srnowrap text-center">
+		      {% if invoice["cancelflag"] == 1 %}               
+                <a href="#" class="cancel_inv"><span class="glyphicon glyphicon-remove"></span></a>
+                {% endif %}
+               </td>
+               {% endif %}
             </tr>
             {% endfor %}
          </tbody>
@@ -184,7 +211,12 @@
       <span style="margin:auto; display:table;">
          <nbsp>
          <nbsp>
-         <button type="button" class="btn btn-sm btn-warning" id="viewanotherlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
+               {% if deleteflag == 0 %}
+         <button type="button" class="btn btn-sm btn-warning" id="viewanotherlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button> 
+         
+         {% else %}
+         <button type="button" class="btn btn-sm btn-warning" id="viewanotherdeletedlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
+            {% endif %}
          <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
          <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="n"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Pri<u>n</u>table Version{% endtrans %}</button>
       </span>
@@ -201,12 +233,36 @@
 	 </div>
        </div>
        <div class="col-sm-3 col-sm-offset-4" id="buttondiv">
+          {% if deleteflag == 0 %}
      <button type="button" id="delete" class="btn btn-sm btn-danger pull-right hidden-print" style="margin-left:10px;"><i class="fa fa-trash-o" aria-hidden="true" accesskey="d"></i> {% trans %}<u>D</u>elete{% endtrans %}</button> 
+     {% endif %}
 	 <button type="button" class="btn btn-sm btn-danger pull-right hidden-print" id="list_backbutton" accesskey="b" style="margin-left:10px;">{% trans %}<u>B</u>ack{% endtrans %}</button>
 	 <button type="button" class="btn btn-sm btn-primary pull-right hidden-print" id="printbutton" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
 	 <button type="button" class="btn btn-sm btn-info pull-right hidden-print" id="viewattachment" accesskey="e" style="display:none">{% trans %}Vi<u>e</u>w Attachment{% endtrans %}</button> 
        </div>
      </div>  
+
+     <div id="confirm_del" class="modal fade" tabindex="-1" role="dialog">
+         <div class="vertical-alignment-helper">
+           <div class="modal-dialog modal-sm vertical-align-center">
+             <div class="modal-content">
+               <div class="modal-header">
+   
+                 <h4 class="modal-title">{% trans %}Cancel this invoice ?{% endtrans %}</h4>
+               </div>
+               <div class="modal-body">
+                 <p>{% trans %}Are you sure?{% endtrans %}</p>
+               </div>
+               <div class="modal-footer">
+                 <button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+                 <button type="button" id="invdel1" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+               </div>
+             </div><!-- /.modal-content -->
+           </div><!-- /.modal-dialog -->
+         </div>
+       </div><!-- /.modal -->
+    
+         
      {% endif %}   
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
       <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofinvoices.js')}}"></script>

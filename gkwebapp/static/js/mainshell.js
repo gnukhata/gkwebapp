@@ -391,7 +391,7 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
-      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers"];
+      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#listofdeletedinvoices"];
       sessionStorage.userremovables = userremovables;
 
      }
@@ -1725,6 +1725,31 @@ $(document).ready(function(){
       }
     );
     });
+
+    $(document).off("click", '#listofdeletedinvoices').on("click", '#listofdeletedinvoices', function(event) {
+      // calls list of invoices report
+      sessionStorage.onview=0;
+      $.ajax(
+        {
+  
+          type: "POST",
+          url: "/invoice?action=viewlistdeleted",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            $("#info").html(resp);
+
+          }
+        }
+      );
+      });
+    
 
   $(document).off("click", '#listofunpaidinvoices').on("click", '#listofunpaidinvoices', function(event) {
     // calls list of invoices report
