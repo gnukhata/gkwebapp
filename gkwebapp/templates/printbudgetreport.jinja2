@@ -359,7 +359,11 @@
                         </td>
                         <td> {{gkresult["varprofit"]}}
                         </td>
-                        <td> {{gkresult["varinpercentprofit"]}} %
+                        <td> {%if gkresult["varinpercentprofit"] == '-' %}
+                                {{gkresult["varinpercentprofit"]}} 
+                            {% else %}
+                                {{gkresult["varinpercentprofit"]}} %
+                                {%  endif %}
                         </td>
                     </tr>
                 </tbody>

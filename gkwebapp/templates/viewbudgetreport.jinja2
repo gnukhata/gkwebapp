@@ -74,6 +74,9 @@ border-radius: 5px;
       <div class="panel shadow" style="border: 1px solid ;">
         <div class="panel panel-body">
           <div class="panel col-md-4" id="viewreportpage">
+          <div class="alert alert-danger" id="b_list-alert" aria-live="rude" role="alert" hidden>
+            <label for="b_list">{% trans %}Please select budget!{% endtrans %}</label>
+          </div>
             <div class="form-group col-xs-12" >
               <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
                 <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>

@@ -87,7 +87,7 @@ border-radius: 4px;
               <i>{{record["accountname"]}}</i>
           </td>
           <td>
-              <input id="{{record["accountcode"]}}_value" type="text" 
+              <input id="{{record["accountcode"]}}_value" type="text" pattern="[0-9]" 
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
@@ -106,7 +106,7 @@ border-radius: 4px;
               <i>{{record["accountname"]}}</i>
           </td>
           <td >
-              <input id="{{record["accountcode"]}}_value" type="text" 
+              <input id="{{record["accountcode"]}}_value" type="text" pattern="[0-9]" 
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
@@ -134,18 +134,18 @@ border-radius: 4px;
         </thead>
         <tbody  style="height:inherit; overflow: auto;">
         <tr><td colspan="2">
-        <b>Enter accounts budget used for Incomes </b> <input hidden></td>
+        <b>Income </b> <input hidden></td>
         </tr>
         </tbody>
         <tbody  style="height:25%; overflow: auto;">
-        {% for record in gkresult[1] %}
         
-        <tr id="{{record}}_name" data-value="{{record}}">
+        {% for record in gkresult["income"] %}
+        <tr id="{{record["code"]}}_name" data-value="{{record["code"]}}">
           <td class="form-text text-muted">
-              <i>{{gkresult[1][record]}}</i>
+              <i>{{record["name"]}}</i>
           </td>
           <td>
-              <input id="{{record}}_value" type="text" 
+              <input id="{{record["code"]}}_value" type="text" pattern="[0-9]" 
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
@@ -154,28 +154,28 @@ border-radius: 4px;
         </tbody>
         <tbody  style="height:inherit; overflow: auto;">
         <tr><td colspan="2">
-        <b>Enter accounts budget used for Expenses </b> <input hidden></td>
+        <b>Expense </b> <input hidden></td>
         </tr>
         </tbody>
         <tbody  style="height:25%; overflow: auto;">
-        {% for record in gkresult[0] %}
+        {% for record in gkresult["expense"] %}
         
-        <tr id="{{record}}_name" data-value="{{record}}">
+        <tr id="{{record["code"]}}_name" data-value="{{record["code"]}}">
           <td class="form-text text-muted">
-              <i>{{gkresult[0][record]}}</i>
+              <i>{{record["name"]}}</i>
           </td>
           <td>
-              <input id="{{record}}_value" type="text" 
+              <input id="{{record["code"]}}_value" type="text" pattern="[0-9]" 
                   class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" 
                   value="0.00" size="8" placeholder="0.00" />
           </td>
         </tr>
         {% endfor %}
         </tbody>
-        
       </table>
-      <input hidden id="outflowaccount" value="{{ gkresult[0]|length }}">
-      <input hidden id="inflowaccount" value="{{ gkresult[1]|length }}">
+      
+      <input hidden id="outflowaccount" value="{{ gkresult["expense"]|length }}">
+      <input hidden id="inflowaccount" value="{{ gkresult["income"]|length }}">
     <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Accounts Lists to shift focus to Save Button.{% endtrans %}</small><br>
     <small id="txtareahelp" class="form-text text-muted">{% trans %}Use arrow keys to navigate up & down between budgeted amounts.{% endtrans %}</small>
   {% endif %}
