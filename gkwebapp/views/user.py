@@ -103,23 +103,7 @@ def addedituser(request):
             userrole = "Internal Auditor"
         else:
             userrole = "Godown In Charge"
-        if "godowns" in request.params and len(request.params["godowns"]) > 2:
-            godnames = ""
-            j = 1;
-            godlist = json.loads(request.params["godowns"])
-            for i in godlist:
-                resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
-                godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
-                if j != len(godlist):
-                    godnames += ", "
-                j += 1
-
-            if (userrole == "Godown In Charge"):
-                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited for " + godnames + " godown"}
-            else:
-                gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited for " + godnames + " branch"}
-        else:
-            gkdata = {"activity":gkdata["username"] + "(" + userrole + ")" + " user edited"}
+        gkdata = {"activity":"Details of " + gkdata["username"] + "(" + userrole + ")" + " edited"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
