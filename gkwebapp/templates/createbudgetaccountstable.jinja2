@@ -118,7 +118,7 @@ border-radius: 4px;
       <input hidden id="outflowaccount" value="{{ gkresult["outflow"]|length }}">
       <input hidden id="op" value="{{gkresult["openingbal"]}}">
         <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Budgeted amount to shift focus to Save Button.{% endtrans %}</small><br>
-        <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Down Arrow' Key or 'Up Arrow' Key in Accounts Lists to navigate between Accounts present in List.{% endtrans %}</small>
+        <small id="txtareahelp" class="form-text text-muted">{% trans %}Use arrow keys to navigate up & down between budgeted amounts.{% endtrans %}</small>
    
   {% else %}
       <table id="cash_latable" style="width:100%;border:1px solid grey"   class="table shadow table-bordered">
@@ -177,6 +177,6 @@ border-radius: 4px;
       <input hidden id="outflowaccount" value="{{ gkresult[0]|length }}">
       <input hidden id="inflowaccount" value="{{ gkresult[1]|length }}">
     <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Esc' Key from Accounts Lists to shift focus to Save Button.{% endtrans %}</small><br>
-    <small id="txtareahelp" class="form-text text-muted">{% trans %}Press 'Tab' Key or 'UpArrow' Key in Accounts Lists to change focus on Account present in List.{% endtrans %}</small>
+    <small id="txtareahelp" class="form-text text-muted">{% trans %}Use arrow keys to navigate up & down between budgeted amounts.{% endtrans %}</small>
   {% endif %}
  </div>
