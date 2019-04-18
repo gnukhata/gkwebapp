@@ -279,7 +279,7 @@ $(document).ready(function() {
             });
     });
 
-    $('#viewprintableversiondel').click(function(e) {
+    $('#viewprintableversioncan').click(function(e) {
         $("#msspinmodal").modal("show");
         var dataset = {
             "flag": $("#invoicetypeselect").val(),
@@ -288,7 +288,7 @@ $(document).ready(function() {
         };
         $.ajax({
                 type: "POST",
-                url: "/invoice?action=printdeletelist",
+                url: "/invoice?action=printcanceled",
                 global: false,
                 async: false,
                 data: dataset,
@@ -571,6 +571,27 @@ $(document).ready(function() {
         };
         xhr.send();
     });
+
+
+    $("#printdelete").click(function(event) {
+        event.preventDefault();
+        var xhr = new XMLHttpRequest();
+        var linvurlstring = '&flag=' + $("#invoicetypeselect").val() + '&fromdate=' + $("#fromdate").data("fromdate") + '&todate=' + $("#todate").data("todate");
+        xhr.open('GET', '/invoice?action=listofcanceledinvspreadsheet&fystart=' + sessionStorage.getItem('year1') + '&orgname=' + sessionStorage.getItem('orgn') + '&fyend=' + sessionStorage.getItem('year2') + linvurlstring, true);
+        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        xhr.responseType = 'blob';
+
+        xhr.onload = function(e) {
+            if (this.status == 200) {
+                // get binary data as a response
+                var blob = this.response;
+                var url = window.URL.createObjectURL(blob);
+                window.location.assign(url);
+            }
+        };
+        xhr.send();
+    });
+
     $("#printbutton").click(function(event) {
 	var invid = $("#latable tbody tr:eq(" + currentrow + ")").data("invid");
         $.ajax({
