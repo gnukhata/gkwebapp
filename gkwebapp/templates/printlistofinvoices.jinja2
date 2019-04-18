@@ -45,7 +45,11 @@
     <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
     <div class="hidden-print">
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
-      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+		{% if deleteflag == 0%}
+			<span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+			{% else %}
+			<span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All Deleted{%elif flag == "1" %}Deleted Sales{%elif flag == "2" %}Deleted Purchase{% endif %}</i> Invoices</strong></span>
+			{% endif %}
     </div>
 
     <div class="table-responsive printorgdetails">
@@ -118,8 +122,12 @@
 	  {% endfor %}
 	</tbody>
       </table>
-      <span style="margin:auto; display:table;">
-  	<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+			<span style="margin:auto; display:table;">
+				{% if  deleteflag ==0 %}
+		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+		{% else %}
+		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loibackdelete" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+		{% endif %}
   	<button type="button" class="btn btn-sm btn-info hidden-print" id="loiprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
       </span>
     </div>
@@ -141,6 +149,29 @@
 	   {
 	     type: "POST",
 	     url: "/invoice?action=showlist",
+	     global: false,
+	     async: false,
+	     datatype: "text/html",
+	     data: dataset,
+	     beforeSend: function(xhr)
+	     {
+	       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	     },
+	   })
+	  .done(function(resp)
+	    {
+	      $("#info").html(resp);
+	    }
+	  );
+			 });
+			 
+			 $("#loibackdelete").click(function(event) {
+         $("#msspinmodal").modal("show");
+	 var dataset = {"flag":$("#invoicetypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
+	 $.ajax(
+	   {
+	     type: "POST",
+	     url: "/invoice?action=showdeletedlist",
 	     global: false,
 	     async: false,
 	     datatype: "text/html",
