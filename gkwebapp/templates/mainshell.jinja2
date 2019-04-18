@@ -224,19 +224,19 @@
             {% trans %}Loading Dashboard...{% endtrans %}
             <button type="button" class="close" id="closesplash" style="color: grey; opacity:2; box-shadow:3px 3px 3px 3px #fafafa">&times;</button>
           </div>
-          <div class="row" style="min-width:350px;">
+          <div class="row hidden-print" style="min-width:350px;">
             <div style="position:relative; padding:5%;">
-              <img class="img-responsive" src="{{request.static_url('gkwebapp:static/images/gnukhata_icon.png')}}" alt="GNUKhata Icon" style="max-width:150px;max-height:150px; display: block; margin-left: auto; margin-right: auto ">
+              <img class="img-responsive " src="{{request.static_url('gkwebapp:static/images/gnukhata_icon.png')}}" alt="GNUKhata Icon" style="max-width:150px;max-height:150px; display: block; margin-left: auto; margin-right: auto ">
             </div>
           </div>
         </div>
       </div>
-      <div id="info" style="margin-top: 5px; margin-bottom: 10px;" class="container-fluid tab-pane" hidden>
+      <div id="info" style="margin-top: 5px; margin-bottom: 10px;" class="container-fluid tab-pane " hidden>
 
         <div class="row form-inline internalaud godownhide accountinghide">
           <div class="col-xs-3 flowouterdiv">
             <div style="position:relative;">
-              <div id="my_profile" class="flowdiv  animationContainer enableCircleHoverAnimation ">
+              <div id="my_profile" class="flowdiv hidden-print  animationContainer enableCircleHoverAnimation ">
                 
                 <div class="text-center" style="font-size:7rem">
                   <i class="fa fa-user-circle fa-7x"></i>
