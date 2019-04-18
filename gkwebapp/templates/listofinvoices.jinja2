@@ -97,9 +97,12 @@
             <div class="alert alert-success" id="success-alert1" hidden>
                   {% trans %}Invoice deleted successfully.{% endtrans %}
                </div>
-               <div class="alert failure-alert" id="notran-del-alert1" aria-live="rude" role="alert" hidden>
-                     {% trans %}Invoice could not be deleted.{% endtrans %}
-                   </div>
+               <div class="alert alert-danger" id="notran-del-alert1" hidden>
+               {% trans %}Invoice could not be deleted.{% endtrans %}
+               </div>
+               <div class="alert alert-danger" id="failure-alert1"  hidden>
+               {% trans %}Something went wrong!{% endtrans %}
+            </div>
    
      <div id="listdiv">
        <div class="col-xs-10 nopadding">

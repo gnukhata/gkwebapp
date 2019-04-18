@@ -230,12 +230,17 @@ $(document).ready(function() {
                                 $("#slectedlist").html(resp);    
                                 }
                                 else{$("#info").html(resp);}
-                            });
+                            })
+                            .fail(function() {
+                                $("#failure-alert1").alert();
+                                $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                                  $("#failure-alert1").hide();
+                                });
+                              })
 		  		          });
-		  		          });
-                   
-            }
-            else {
+		  		          }); 
+                    }
+                else {
                     $("#notran-del-alert1").alert();
                     $("#notran-del-alert1").fadeTo(2250, 500).slideUp(500, function(){
                       $("#notran-del-alert1").hide();
