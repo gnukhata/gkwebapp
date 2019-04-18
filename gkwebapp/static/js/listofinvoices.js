@@ -279,6 +279,34 @@ $(document).ready(function() {
             });
     });
 
+    $('#viewprintableversiondel').click(function(e) {
+        $("#msspinmodal").modal("show");
+        var dataset = {
+            "flag": $("#invoicetypeselect").val(),
+            "fromdate": $("#fromdate").data("fromdate"),
+            "todate": $("#todate").data("todate")
+        };
+        $.ajax({
+                type: "POST",
+                url: "/invoice?action=printdeletelist",
+                global: false,
+                async: false,
+                data: dataset,
+                datatype: "text/html",
+                beforeSend: function(xhr) {
+                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                }
+            })
+            .done(function(resp) {
+                $("#info").html(resp);
+            })
+            .fail(function() {
+                console.log("error");
+            })
+            .always(function() {
+                console.log("complete");
+            });
+    });
 
     $(document).off('keydown', '.libgname').on('keydown', '.libgname', function(event) {
         curindex = $(this).closest('tr').index();

@@ -221,7 +221,11 @@
          <button type="button" class="btn btn-sm btn-warning" id="viewanotherdeletedlist" accesskey="w"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}Vie<u>w</u> Another List{% endtrans %}</button>
             {% endif %}
          <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+         {% if deleteflag == 0 %}
          <button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="n"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Pri<u>n</u>table Version{% endtrans %}</button>
+         {% else %}
+         <button type="button" class="btn btn-sm btn-info" id="viewprintableversiondel" accesskey="n"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Pri<u>n</u>table Version{% endtrans %}</button>
+         {% endif %}
       </span>
      </div>
      <div id="viewinvdiv" hidden>
