@@ -30,10 +30,17 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 // This js is use in createbudget.jinja2 file
 $(document).ready(function(){
     // Retrives organisation details from sessionstorage.
-    var orname = sessionStorage.getItem('orgn');
-    var ortype = sessionStorage.getItem('orgt');
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
+    if (sessionStorage.orgt=="Not For Profit") {
+        // If orgtype is Not for Profit than some heading and menu items text is changed.
+        $('#c_btype').append('<option value=16 >' + "Income and Expenditure budget" +' </option>');    
+        $('#c_btype').append('<option value=3 >' + "Cash budget" +' </option>'); 
+    }
+    else{
+        $('#c_btype').append('<option value=16 >' + "Profit and Loss budget" +' </option>');    
+        $('#c_btype').append('<option value=3 >' + "Cash budget" +' </option>'); 
+    }
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#c_flow").hide();

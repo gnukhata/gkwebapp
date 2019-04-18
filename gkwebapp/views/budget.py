@@ -132,7 +132,7 @@ def budgetreport(request):
     if (request.params["btype"] == '3'):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '16'):
-        result = requests.get("http://127.0.0.1:6543/budget?type=pnlReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]),"menuflag":request.params["menuflag"] }
 
@@ -143,7 +143,7 @@ def printbudgetreport(request):
     if (request.params["btype"] == '3'):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '16'):
-        result = requests.get("http://127.0.0.1:6543/budget?type=pnlReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
 
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"],"menuflag":request.params["menuflag"] }
 
@@ -213,9 +213,11 @@ def cashspreadsheet(request):
             sheet['E'+str(row)] = '-'
             row = row +1
         totalrow = sheet.row_dimensions[row]
-        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.font = Font(name='Liberation Serif' ,bold=True)
         totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total'
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row)] = result["opening"]
         sheet['C'+str(row)] = result["opening"]
         sheet['D'+str(row)] = '-'
@@ -239,9 +241,11 @@ def cashspreadsheet(request):
                 sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
-        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.font = Font(name='Liberation Serif' ,bold=True)
         totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total'
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row)] = result["budgetin"]
         sheet['C'+str(row)] = result["actualin"]
         sheet['D'+str(row)] = result["varin"]
@@ -265,9 +269,11 @@ def cashspreadsheet(request):
                 sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
         totalrow = sheet.row_dimensions[row]
-        totalrow.font = Font(name='Liberation Serif' )
+        totalrow.font = Font(name='Liberation Serif' ,bold=True)
         totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total'
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
+        sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['B'+str(row)] = result["budgetout"]
         sheet['C'+str(row)] = result["actualout"]
         sheet['D'+str(row)] = result["varout"]
@@ -308,15 +314,19 @@ def pnlpreadsheet(request):
         financialstart = request.params["financialstart"]
         fystart = str(request.params["fystart"])
         fyend = str(request.params["fyend"])
+        Otype = str(request.params["orgtype"])
         orgname = str(request.params["orgname"])
         budgetdetails = str(request.params["budgetdetails"])
-        result = requests.get("http://127.0.0.1:6543/budget?type=pnlReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
         result = result.json()["gkresult"]
         budgetwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = budgetwb.active
         # Title of the sheet and width of columns are set.
-        sheet.title = "Profit & Loss Budget Report"
+        if Otype == "Not For Profit":
+            sheet.title = "Income and Expenditure Budget Report"
+        else:
+            sheet.title = "Profit & Loss Budget Report"
 
         sheet.column_dimensions['A'].width = 36
         sheet.column_dimensions['B'].width = 20
@@ -332,7 +342,11 @@ def pnlpreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        sheet['A3'] = 'Profit & Loss Budget Report :'+ str(budgetdetails)
+        if Otype == "Not For Profit":
+            sheet['A3'] = 'Income and Expenditure Budget Report :'+ str(budgetdetails)
+        else:
+            sheet['A3'] = 'Profit & Loss Budget Report :'+ str(budgetdetails)
+        
         sheet.merge_cells('A3:E3')
         
         sheet['A4'].font = Font(name='Liberation Serif',size='12',bold=True)
@@ -371,7 +385,7 @@ def pnlpreadsheet(request):
         totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total '
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['B'+str(row)] = result["budgetincome"]
         sheet['C'+str(row)] = result["income"]
         sheet['D'+str(row)] = result["varincome"]
@@ -401,7 +415,7 @@ def pnlpreadsheet(request):
         totalrow.alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)] = 'Total '
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
+        sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['B'+str(row)] = result["budgetexpense"]
         sheet['C'+str(row)] = result["expense"]
         sheet['D'+str(row)] = result["varexpense"]

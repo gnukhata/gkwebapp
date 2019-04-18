@@ -44,8 +44,8 @@ border-radius: 5px;
             <div id="budgettype" class="col-xs-12 from-group">
             <label for="budgettype" style="padding-top:2%">{% trans %}Type of Budget{% endtrans %} :
             </label><br>
-              <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash</label>
-              <label><input style="margin-left:20px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > Profit & Loss</label>  
+              <input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> <label>Cash</label>
+              <input style="margin-left:20px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > <label id="prolos"></label>  
             </div >
             <div class="col-xs-12 from-group">
               <div id="nobudget" class="bg-danger" style="text-align:center;margin-top:2%;padding:5px">
@@ -80,8 +80,8 @@ border-radius: 5px;
             <div class="form-group col-xs-12" >
               <div id = "budgettype" style="margin-bottom: 1%; margin-top:2%" class="input-group col-xs-12">
                 <label for="BudgetType" name="budgettype">{% trans %}Budget Type :{% endtrans %}</label><br>
-                    <label><input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> Cash </label>
-                    <label><input  style="margin-left:25px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > Profit & Loss </label>  
+                    <input type="radio"  name="budtypess" id="cash" aria-label="Cash Budget" value="3" checked> <label>Cash </label>
+                    <input  style="margin-left:25px" type="radio"  name="budtypess" id="pnl" aria-label=" Expense Budget" value="16" > <label id="prolos"></label>  
               </div>
 
               <div id="nobudget" class="bg-danger" style="text-align:center;margin-top:2%;padding:5px">
