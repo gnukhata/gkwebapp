@@ -2635,8 +2635,13 @@ if (event.which == 13) {
 				$("#totalsgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalcgtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
-				$("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
-				$(".vatfied").hide();
+			      $("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
+		              $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
+		              $("#vathelp").hide();
+		              $(".tinfield").hide();
+		              $("#gstproducttable").show();  //Shows GST Product table.
+		              $(".gstinfield").show();
+			      $(".vatfied").hide();
 				$(".gstfield").show();
 			    }
 			    else if ($("#taxapplicable").val() ==  '22') {
@@ -2671,8 +2676,13 @@ if (event.which == 13) {
 				$("#taxablevaluetotal_product_vat").val(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totaltax").val(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#total_product_vat").val(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
-				$("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
-				$(".gstfield").hide();
+			      $("#totalinvtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
+                              $("#gstproducttable").hide();
+		              $(".gstinfield").hide();
+		              $("#invoice_product_table_vat").show();
+		              $(".tinfield").show();
+		              $("#vathelp").show();
+			      $(".gstfield").hide();
 				$(".vatfield").show();
 			    }
 			    // Loading consignee ddetails if any.
