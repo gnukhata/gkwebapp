@@ -132,7 +132,7 @@ def budgetreport(request):
     if (request.params["btype"] == '3'):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '16'):
-        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profitlossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetail":request.params["buddetails"], "btype":request.params["btype"],"budid":int(request.params["budid"]),"menuflag":request.params["menuflag"] }
 
@@ -143,7 +143,7 @@ def printbudgetreport(request):
     if (request.params["btype"] == '3'):
         result = requests.get("http://127.0.0.1:6543/budget?type=cashReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
     if (request.params["btype"] == '16'):
-        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profitlossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
 
     return {"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "budgetdetails":request.params["buddetails"], "budid":int(request.params["budid"]), "financialstart":financialstart,"btype":request.params["btype"],"menuflag":request.params["menuflag"] }
 
@@ -317,7 +317,7 @@ def pnlpreadsheet(request):
         Otype = str(request.params["orgtype"])
         orgname = str(request.params["orgname"])
         budgetdetails = str(request.params["budgetdetails"])
-        result = requests.get("http://127.0.0.1:6543/budget?type=profit&lossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
+        result = requests.get("http://127.0.0.1:6543/budget?type=profitlossReport&budid=%d&financialstart=%s"%(int(request.params["budid"]),str(financialstart)), headers=header)
         result = result.json()["gkresult"]
         budgetwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
