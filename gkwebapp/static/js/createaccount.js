@@ -100,11 +100,20 @@ $(document).ready(function()
     if (sgroups=="New")
     {
       $("#nsgp").show();
-
+	  $("#rodivpaid").hide();
+	  $("#rodivreceived").hide();
     }
     else
     {
-      $("#nsgp").hide();
+	  $("#nsgp").hide();
+	  if ($("#groupname option:selected").text() == "Indirect Expense"){
+		$("#rodivpaid").show();
+		$("#rodivreceived").hide();
+	  }
+	  if ($("#groupname option:selected").text() == "Indirect Income"){
+		$("#rodivpaid").hide();
+		$("#rodivreceived").show();
+	  }
     }
       if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
 	  $('#gstfielddiv').show();
@@ -121,32 +130,35 @@ $(document).ready(function()
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
-	  $("#roundoffdiv").hide();
+	  $("#rodivpaid").hide();
+		$("#rodivreceived").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
 	  $("#chsdiv").show();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
-	  $("#roundoffdiv").hide();
+	  $("#rodivpaid").hide();
+		$("#rodivreceived").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").show();
 	  $("#salediv").hide();
-	  $("#roundoffdiv").hide();
+	  $("#rodivpaid").hide();
+		$("#rodivreceived").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
 	  $("#purdiv").hide();
 	  $("#salediv").show();
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
-	  $("#roundoffdiv").hide();
+	  $("#rodivpaid").hide();
+		$("#rodivreceived").hide();
 	  }
 	  else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
-	  $("#roundoffdiv").hide();
       }
 
   });
@@ -157,11 +169,17 @@ $(document).ready(function()
   }
 );
 $("#groupname ").change(function(e){
-	if($.trim($("#groupname option:selected").text()) == 'Indirect Expense'){
-		$("#roundoffdiv").show();
+	if($.trim($("#groupname option:selected").text()) == 'Indirect Expense' ){
+		$("#rodivpaid").show();
+		$("#rodivreceived").hide();
+	  }
+	  else if($.trim($("#groupname option:selected").text()) == 'Indirect Income'){
+		$("#rodivpaid").hide();
+		$("#rodivreceived").show();
 	  }
 	  else{
-		$("#roundoffdiv").hide();
+		$("#rodivpaid").hide();
+		$("#rodivreceived").hide();
 	  }
 });
   // Keydown event for Opening Balance.
@@ -527,8 +545,10 @@ $("#openbal").keydown(function(event){
 	defaultflag = 16;
     }else if($("#saleac").is(':checked')){
 	defaultflag = 19;
-	}else if($("#roundoffac").is(':checked')){
-	defaultflag = 18;
+	}else if($("#roundoffpaid").is(':checked')){
+	defaultflag = 180;
+	}else if($("#roundoffreceived").is(':checked')){
+	defaultflag = 181;
 	}
 	else{
 	defaultflag = 0;
