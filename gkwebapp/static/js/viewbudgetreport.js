@@ -28,6 +28,15 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    "rohan khairnar" <rohankhairnar@gmail.com>
  */
 $(document).ready(function() {
+    if (sessionStorage.orgt=="Not For Profit") {
+        // If orgtype is Not for Profit than some heading and menu items text is changed.
+        $('#prolos').text("Income and Expenditure");
+        $('#proloss').text("Income and Expenditure");
+    }
+    else{
+        $('#prolos').text("Profit and Loss");
+        $('#proloss').text("Profit and Loss");
+    }
     $('.modal-backdrop').remove();
     $("#msspinmodal").modal("hide");
     $("#budgettype").focus();
@@ -36,13 +45,7 @@ $(document).ready(function() {
     $("#foot").hide();
     $("#reportpage").hide();
     $("#printreportpage").hide();
-    if (sessionStorage.orgt=="Not For Profit") {
-        // If orgtype is Not for Profit than some heading and menu items text is changed.
-        $('#prolos').text("Income and Expenditure");
-    }
-    else{
-        $('#prolos').text("Profit and Loss");
-    }
+    
     var val;
     // ------------------   Keydown functions -------------
     $("#b_list").keydown(function(e){
