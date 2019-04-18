@@ -96,8 +96,11 @@ th {
 					<div class="alert alert-warning nopadding defckbx" id="alertsale"  aria-live="rude" role="alert" hidden>
 					  <strong>{% trans %}This is a default account for sales transaction.{% endtrans %}</strong>
 					</div>
-					<div class="alert alert-warning nopadding defckbx" id="alertroundoff"  aria-live="rude" role="alert" hidden>
-					  <strong>{% trans %}This is a default account for Round Off.{% endtrans %}</strong>
+					<div class="alert alert-warning nopadding defckbx" id="alertroundoffpaid"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for Round Off Paid.{% endtrans %}</strong>
+					</div>
+					<div class="alert alert-warning nopadding defckbx" id="alertroundoffreceived"  aria-live="rude" role="alert" hidden>
+					  <strong>{% trans %}This is a default account for Round Off Received.{% endtrans %}</strong>
 					</div>
 					<br>
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
@@ -127,8 +130,11 @@ th {
 							<div id="salediv" style="margin-top:18px;" hidden>
 							  <label> <input class="defbx" type="checkbox" id="saleac"> {% trans %}Set default for Sales Transaction{% endtrans %}</label>
 							</div>
-							<div id="roundoffdiv" hidden>
-							  <label> <input class="defbx" type="checkbox" id="roundoffac"> {% trans %}Set default for Round Off{% endtrans %}</label>
+							<div id="roundoffdivpaid" hidden>
+							  <label> <input class="defbx" type="checkbox" id="roundoffpaid"> {% trans %}Set default for Round Off Paid{% endtrans %}</label>
+							</div>
+							<div id="roundoffdivreceived" hidden>
+							  <label> <input class="defbx" type="checkbox" id="roundoffreceived"> {% trans %}Set default for Round Off Received{% endtrans %}</label>
 							</div>
 							<br>
 							<div id="nsgp" style="margin-bottom:25px" class="input-group">
