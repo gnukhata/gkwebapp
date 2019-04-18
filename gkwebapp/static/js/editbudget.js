@@ -36,6 +36,13 @@ $(document).ready(function() {
      {
         $("a[href ='#budget_edit']").click();
      });
+    if (sessionStorage.orgt=="Not For Profit") {
+        // If orgtype is Not for Profit than some heading and menu items text is changed.
+        $('#prolos').text("Income and Expenditure");
+    }
+    else{
+        $('#prolos').text("Profit and Loss");
+    }
     let financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     let financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     let financial = sessionStorage.yyyymmddyear1;
@@ -317,7 +324,13 @@ $(document).ready(function() {
                     tablecall();
                 }
                 if(goddetails["btype"] == 16){
-                    $("#btype").text("Profit & Loss Budget");
+                    if (sessionStorage.orgt=="Not For Profit") {
+                        // If orgtype is Not for Profit than some heading and menu items text is changed.
+                        $('#btype').text("Income and Expenditure");
+                    }
+                    else{
+                        $('#btype').text("Profit and Loss");
+                    }
                     btype = 16;
                     $("#flow").hide();
                     tablecall();

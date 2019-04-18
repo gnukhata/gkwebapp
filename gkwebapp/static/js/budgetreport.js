@@ -31,6 +31,13 @@ Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 $(document).ready(function(){
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
+    if (sessionStorage.orgt=="Not For Profit") {
+        // If orgtype is Not for Profit than some heading and menu items text is changed.
+        $('#profitlossname').text("Income and Expenditure Budget Report");
+    }
+    else{
+        $('#profitlossname').text("Profit and Loss");
+    }
     $("#back").click(function(e){
         if($("#menuflag").val() == 2){
             $.ajax({
@@ -84,7 +91,7 @@ $(document).ready(function(){
             xhr.open('GET', '/budget?type=cashspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);
         }
         if($("#btype").val() == 16){
-            xhr.open('GET', '/budget?type=pnlspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
+            xhr.open('GET', '/budget?type=pnlspreadsheet&budgetdetails='+$("#budgetdetails").text()+'&orgtype='+sessionStorage.orgt+'&financialstart='+sessionStorage.yyyymmddyear1+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&budid=' + $("#budid").val(), true);            
         }
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';

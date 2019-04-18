@@ -51,7 +51,7 @@
     {% if btype == '3'%}
         <center> <h4>Cash Budget Report  </h4></center> 
     {% else %}
-        <center> <h4>Profit & Loss Budget Report  </h4></center>
+        <center> <h4 id="profitlossname"> </h4></center>
     {% endif %}
         <div class="panel-body">
         <div ><center>
@@ -71,7 +71,7 @@
 			  </thead>
             <tbody>
                 <tr>
-                    <td> Opening
+                    <td> <font size='2' >Opening </font>
                     <br><div style="text-align:right">
                         {% for i in gkresult["openingacc"]%}
                             <i>{{i["accountname"]}}</i><br>
@@ -101,7 +101,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td> Total
+                    <td style="text-align:right"> <font size='2' >Total</font>
                     </td>
                     <td style="text-align:right"> {{gkresult["opening"]}}
                     </td>
@@ -113,7 +113,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td> Inflow 
+                    <td> <font size='2' > Inflow </font>
                     <br><div style="text-align:right">
                         {% for i in gkresult["inflow"]%}
                             <i>{{i["accountname"]}}</i><br>
@@ -148,7 +148,7 @@
 
                 </tr>
                 <tr>
-                    <td> Total
+                    <td style="text-align:right"><font size='2' >Total</font>
                     </td>
                     <td style="text-align:right"> {{gkresult["budgetin"]}}
                     </td>
@@ -160,7 +160,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td> Outflow
+                    <td> <font size='2' >Outflow</font>
                     <br><div style="text-align:right">
                         {% for i in gkresult["outflow"]%}
                             <i>{{i["accountname"]}}</i><br>
@@ -194,7 +194,7 @@
                     </td>
                 </tr>
                 <tr >
-                    <td> Total
+                    <td style="text-align:right"> <font size='2' >Total</font>
                     </td>
                     <td style="text-align:right"> {{gkresult["budgetout"]}}
                     </td>
@@ -206,7 +206,7 @@
                     </td>
                 </tr>
                 <tr>
-                    <td> Closing
+                    <td> <font size='2' >Closing</font>
                     <br><div style="text-align:right">
                         {% for i in gkresult["closing"]%}
                             <i>{{i["accountname"]}}</i><br>
@@ -258,7 +258,7 @@
                    
                     <tr>
                         <td>
-                        Income <br>
+                        <font size='2' >Income </font> <br>
                         <div style="text-align:right">
                             {% for i in gkresult["incomeacc"] %}
                                 <i>{{i["name"]}}</i> <br>
@@ -291,8 +291,8 @@
                         </td>
                     </tr>
                     <tr style="text-align:right">
-                        <td>
-                        Total 
+                        <td >
+                        <font size='2' >Total</font>
                         </td>
                         <td> {{gkresult["budgetincome"] }}
                         </td>
@@ -305,7 +305,7 @@
                     </tr>
                      <tr>
                         <td>
-                        Expenses <br>
+                        <font size='2' >Expenses </font> <br>
                         <div style="text-align:right">
                             {% for i in gkresult["expenseacc"] %}
                                 <i>{{i["name"]}}</i> <br>
@@ -339,7 +339,7 @@
                     </tr>
                     <tr style="text-align:right">
                         <td>
-                        Total 
+                        <font size='2' >Total</font>
                         </td>
                         <td> {{gkresult["budgetexpense"] }}
                         </td>
@@ -351,7 +351,7 @@
                         </td>
                     </tr>
                     <tr style="text-align:right">
-                        <td style="text-align:left"> Net Profit
+                        <td style="text-align:left"> <font size='2' >Net Profit</font>
                         </td>
                         <td> {{gkresult["budgetprofit"]}}
                         </td>
