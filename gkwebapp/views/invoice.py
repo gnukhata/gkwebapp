@@ -295,8 +295,8 @@ def printlistofinv(request):
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "flag": request.params["flag"], "fromdate": request.params["fromdate"], "todate": request.params["todate"], "displayfromdate": datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "displaytodate": datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y'), "resultgstvat":resultgstvat.json()["gkresult"]}
 
-@view_config(route_name="invoice", request_param="action=printdeletelist", renderer="gkwebapp:templates/printlistofinvoices.jinja2")
-def printlistofdeletedinv(request):
+@view_config(route_name="invoice", request_param="action=printcanceled", renderer="gkwebapp:templates/printlistofinvoices.jinja2")
+def printlistofcanceledinv(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/invoice?type=listdeleted&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
@@ -469,6 +469,152 @@ def listofinvspreadsheet(request):
         elif invflag == 2:
             sheet.title = "List of Purchase Invoices"
             sheet['A3'] = "List of Purchase Invoices"
+        sheet.merge_cells('A4:K4')
+        sheet['A4'] = 'Period: ' + datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y') + ' to ' + datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y')
+        
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A5'] = 'Sr. No.'
+        sheet['B5'] = 'INV No.'
+        sheet['C5'] = 'INV Date'
+        sheet['D5'] = 'DC No. '
+        sheet['E5'] = 'DC Date'
+        if invflag == 0:
+            sheet['F5'] = 'Cust/Supp Name'
+        elif invflag == 1:
+            sheet['F5'] = 'Customer Name'
+        elif invflag == 2:
+            sheet['F5'] = 'Supplier Name'
+        if int(resultgstvat) == 22:
+            sheet['G5'] = 'TIN'
+        elif int(resultgstvat) == 7:
+            sheet['G5'] = 'GSTIN'
+        else:
+            sheet['G5'] = 'TIN/GSTIN'
+        sheet['H5'] = 'Gross Amt'
+        sheet['I5'] = 'Net Amt'
+        sheet['J5'] = 'Tax Amt'
+        sheet['K5'] = 'Godown'
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['A5'].alignment = Alignment(horizontal='center')
+        sheet['B5'].alignment = Alignment(horizontal='center')
+        sheet['C5'].alignment = Alignment(horizontal='center')
+        sheet['D5'].alignment = Alignment(horizontal='center')
+        sheet['E5'].alignment = Alignment(horizontal='center')
+        sheet['F5'].alignment = Alignment(horizontal='center')
+        sheet['G5'].alignment = Alignment(horizontal='center')
+        sheet['H5'].alignment = Alignment(horizontal='right')
+        sheet['I5'].alignment = Alignment(horizontal='right')
+        sheet['J5'].alignment = Alignment(horizontal='right')
+        sheet['K5'].alignment = Alignment(horizontal='center')
+        sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['C5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['D5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['E5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['G5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['H5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['I5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['J5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['K5'].font = Font(name='Liberation Serif',size=12,bold=True)
+        row = 6
+        # Looping each dictionaries in list result to store data in cells and apply styles.
+        for invoice in result:
+            sheet['A'+str(row)] = invoice['srno']
+            sheet['A'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = invoice['invoiceno']
+            sheet['B'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = invoice['invoicedate']
+            sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = invoice['dcno']
+            sheet['D'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = invoice['dcdate']
+            sheet['E'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['F'+str(row)] = invoice['custname']
+            sheet['F'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['G'+str(row)] = invoice['custtin']
+            sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['H'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['H'+str(row)].number_format="0.00"
+            sheet['H'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['I'+str(row)] = float("%.2f"%float(invoice['netamt']))
+            sheet['I'+str(row)].number_format="0.00"
+            sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['J'+str(row)] = float("%.2f"%float(invoice['taxamt']))
+            sheet['J'+str(row)].number_format="0.00"
+            sheet['J'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['K'+str(row)] = invoice['godown']
+            sheet['K'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['K'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            row = row + 1
+        invoicewb.save('report.xlsx')
+        xlsxfile = open("report.xlsx","r")
+        reportxslx = xlsxfile.read()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(reportxslx),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        xlsxfile.close()
+        os.remove("report.xlsx")
+        return Response(reportxslx, headerlist=headerList.items())
+    except:
+        print "file not found"
+        return {"gkstatus":3}
+    
+'''
+This function returns a spreadsheet form of List of Invoices Report.
+The spreadsheet in XLSX format is generated by the frontend.
+'''
+@view_config(route_name="invoice",request_param="action=listofcanceledinvspreadsheet", renderer="")
+def listofcanceledinvspreadsheet(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        result = requests.get("http://127.0.0.1:6543/invoice?type=listdeleted&flag=%s&fromdate=%s&todate=%s"%(request.params["flag"], request.params["fromdate"], request.params["todate"]), headers=header)
+        result = result.json()["gkresult"]
+        resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+        resultgstvat = resultgstvat.json()["gkresult"]
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        invflag = int(request.params["flag"])
+        invoicewb = openpyxl.Workbook()
+        sheet = invoicewb.active
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 12
+        sheet.column_dimensions['C'].width = 10
+        sheet.column_dimensions['D'].width = 12
+        sheet.column_dimensions['E'].width = 10
+        sheet.column_dimensions['F'].width = 16
+        sheet.column_dimensions['G'].width = 18
+        sheet.column_dimensions['H'].width = 16
+        sheet.column_dimensions['I'].width = 16
+        sheet.column_dimensions['J'].width = 10
+        sheet.column_dimensions['K'].width = 16
+        sheet.merge_cells('A1:K2')
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet.merge_cells('A3:K3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        if invflag == 0:
+            sheet.title = "List of All Cancelled Invoices"
+            sheet['A3'] = "List of All Cancelled Invoices"
+        elif invflag == 1:
+            sheet.title = "List of Cancelled Sales Invoices"
+            sheet['A3'] = "List of Cancelled Sales Invoices"
+        elif invflag == 2:
+            sheet.title = "List of Cancelled Purchase Invoices"
+            sheet['A3'] = "List of Cancelled Purchase Invoices"
         sheet.merge_cells('A4:K4')
         sheet['A4'] = 'Period: ' + datetime.strptime(request.params["fromdate"],'%Y-%m-%d').strftime('%d-%m-%Y') + ' to ' + datetime.strptime(request.params["todate"],'%Y-%m-%d').strftime('%d-%m-%Y')
         
