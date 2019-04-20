@@ -254,19 +254,19 @@
 		  <strong>{% trans %}Please edit 'GST' rate!{% endtrans %}</strong>
 		</div>
                 <div class="panel taxclass">
-		  <table id="product_tax_table" class="table table-condensed table-bordered fixed-table common">
+		  <table id="product_tax_table" class="table table-responsive table-condensed table-bordered fixed-table common">
                     <thead class="bg-primary input-sm">
                       <tr>
-			<th class="col-xs-4 text-center">{% trans %}Tax Name{% endtrans %}</th>
-			<th class="col-xs-4 text-center">{% trans %}State{% endtrans %}</th>
-			<th class="col-xs-2 text-center">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-4 text-center" style="width:30px">{% trans %}Tax Name{% endtrans %}</th>
+			<th class="col-xs-4 text-center"style="width:30px">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-2 text-center"style="width:30px">{% trans %}Rate %{% endtrans %}</th>
 			<th class="col-xs-1"></th>
 			<th class="col-xs-1"></th>
                       </tr>
                     </thead>
                     <tbody style="height:30%">
                       <tr>
-			<td class="col-xs-4">
+			<td class="col-xs-4"style="width:30px">
 			  <select class="form-control input-sm tax_name product_new_name">
 			    <option value="" hidden disabled selected>Select Tax</option>
 			    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
@@ -277,7 +277,7 @@
                               <option value="CVAT">CVAT</option>
 			  </select>
 			</td>
-			<td class="col-xs-4">
+			<td class="col-xs-4"style="width:30px">
 			  <select class="form-control input-sm tax_state product_new_state" >
 			    <option value="" hidden disabled selected>Select State</option>
                             {% for state in states %}
@@ -287,7 +287,7 @@
                             {% endfor %}
                           </select>
                         </td>
-                        <td class="col-xs-2">
+                        <td class="col-xs-2"style="width:30px">
 			  <input class="form-control input-sm tax_rate_all text-right product_new_rate numtype"  value="0.00">
 			  <select hidden class="form-control input-sm tax_rate_gst product_new_rate" >
 			    {#<option value="" hidden disabled selected>Select Rate</option>#}
