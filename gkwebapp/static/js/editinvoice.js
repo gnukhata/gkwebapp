@@ -2898,6 +2898,11 @@ if (event.which == 13) {
 		    $(".invoice_product_quantity_gst:eq(" + index + "), .invoice_product_freequantity_gst:eq(" + index + ")").prop("disabled", true);
 		}
 	    });
+
+    //Converting List of Customers/Suppliers into a searchable combo
+    $("#invoice_customer").searchify();
+    $("#invoice_customer").removeClass("col-sm-8");
+    $("#invoice_customer").parent().addClass("col-sm-8 nopadding");
 	}
 	
 	if(consigneeflag == true){

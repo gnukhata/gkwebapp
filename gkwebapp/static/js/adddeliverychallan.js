@@ -177,6 +177,12 @@ $(document).ready(function() {
   });
     $("#deliverychallan_year").blur();
 
+
+    //Converting List of Customers/Suppliers into a searchable combo
+    $("#deliverychallan_customer").searchify();
+    $("#deliverychallan_customer").removeClass("col-sm-8");
+    $("#deliverychallan_customer").parent().addClass("col-sm-8 nopadding");
+
     //Function to calculate gst tax amount
     function calculategstaxamt(curindex) {
 	//Initialising variables to zero and getting values from various input fileds.
