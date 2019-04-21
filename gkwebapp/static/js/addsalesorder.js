@@ -377,6 +377,11 @@ $(document).ready(function() {
 	}
     });
 
+    //Converting List of Customers/Suppliers into a searchable combo
+    $("#salesorder_customer").searchify();
+    $("#salesorder_customer").removeClass("col-sm-8");
+    $("#salesorder_customer").parent().addClass("col-sm-8 nopadding");
+
     //Change Event For State of Origin/Delivery.
     $("#salesorderstate").change(function(event) {
 	event.preventDefault();
