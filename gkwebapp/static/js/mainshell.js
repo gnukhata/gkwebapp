@@ -512,7 +512,6 @@ $(document).ready(function(){
   var ortype = sessionStorage.getItem('orgt');
   var styear = sessionStorage.getItem('year1');
   var enyear = sessionStorage.getItem('year2');
-  var branchname = sessionStorage.getItem('goname');
   var orgdata = orname + " (" + ortype + ")";	
   var userdata = "\xa0\xa0 <i>"+ username1 +"</i> <i>(</i>" + userrole1 + "<i>)</i>";
   var yeardata =styear + " to " + enyear;
@@ -520,13 +519,6 @@ $(document).ready(function(){
   // organisation details are stored in items that are only visible in print.
   $("title").append(orname);
   $("#printorgname").append(orname);
-  // shown branchname when logged in to branch
-  if (branchname != ''){
-    $("#branch, #branch_sm").html(branchname);
-  }
-  else{
-    $("#branch, #branch_sm").hide();
-  }
   $("#printyears").append(styear + " to " + enyear);
   $("#showedituser").click(function(e){
     // calls edit user form.
@@ -575,27 +567,6 @@ $(document).ready(function(){
       global: false,
       async: false,
       datatype: 'text/html',
-      data: {"gbflag":7},
-      beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-      }
-
-    })
-     .done(function(resp) {
-       $("#info").html(resp);
-     });
-  });
-
-  $('#branchmenu').click(function (e) {
-    // Loads godown page in the main div.
-    $.ajax({
-      url: '/godown',
-      type: 'POST',
-      global: false,
-      async: false,
-      datatype: 'text/html',
-      data: {"gbflag":2},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1212,29 +1183,6 @@ $(document).ready(function(){
         async: false,
         datatype: "text/html",
         data: {"gbflag": 7},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-        success: function(resp)
-        {
-          $("#info").html(resp);
-        }
-      }
-    );
-  });
-
-  $(document).off("click", '#listofbranches').on("click", '#listofbranches', function(event) {
-    //calls list of godowns report.
-    $.ajax(
-      {
-
-        type: "POST",
-        url: "/godown?type=list",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: {"gbflag": 2},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

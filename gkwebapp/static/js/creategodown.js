@@ -145,7 +145,6 @@ $(document).ready(function()
        global: false,
        async: false,
        datatype: "text/html",
-       data: {"gbflag":$("#gbflag").val()},
        beforeSend: function(xhr)
          {
            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -199,7 +198,7 @@ $(document).ready(function()
             global: false,
             async: false,
             datatype: "json",
-            data: {"gbflag":$("#gbflag").val(),"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowncontact":$("#godowncontact").val()},
+            data: {"godownname":$("#godownname").val(), "godownstate":$("#godownstate").val(), "godownaddress":$.trim($("#godownaddress").val()), "godowncontactname":$("#godowncontactname").val(), "godowncontact":$("#godowncontact").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -208,14 +207,7 @@ $(document).ready(function()
             {
               if(resp["gkstatus"]==0)
               {
-                if($("#gbflag").val() == 7)
-                {
-                  $("#godown").click();
-                }
-                else
-                {
-                  $("#branchmenu").click();
-                }
+                $("#godown").click();
                 $("#success-alert").alert();
                 $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
                 $("#success-alert").hide();

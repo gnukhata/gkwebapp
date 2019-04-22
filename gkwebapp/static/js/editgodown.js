@@ -198,7 +198,7 @@ $(document).ready(function() {
                 async: false,
                 datatype: "json",
                 data: {
-                    "goid": goid,"gbflag":$("#gbflag").val(),"goname":$("#goname").val()
+                    "goname":$("#goname").val()
                 },
                 
                 beforeSend: function(xhr) {
@@ -210,15 +210,7 @@ $(document).ready(function() {
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#delsuccess-alert").hide();
-                        if($("#gbflag").val() == 7)
-                        {
                           $("#godown").click();
-                        }
-                        else
-                        {
-                          $("#branchmenu").click();
-                        }
-                       
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();

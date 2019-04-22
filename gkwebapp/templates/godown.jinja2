@@ -92,19 +92,10 @@
     
     <ul class="nav nav-pills nav-tabs hidden-print" role="tablist">
         <li role="presentation" class="active"><a href="#godown_create" aria-controls="godown_create" role="tab" data-toggle="tab" accesskey="1">
-        {% if gbflag[0] == "7" %}
         {% trans %}Create Godown{% endtrans %}
-        {% else %}
-        {% trans %}Create Branch{% endtrans %}
-        {%endif%}
         </a></li>
-
         <li role="presentation"><a href="#godown_edit" aria-controls="godown_edit" role="tab" data-toggle="tab" accesskey="2">
-        {% if gbflag[0] == "7" %}
         {% trans %}Edit Godown{% endtrans %}
-        {% else %}
-        {% trans %}Edit Branch{% endtrans %}
-        {%endif%}
         </a></li>
     </ul>
 
@@ -116,7 +107,6 @@
   </div>
 </div>
 
-<input type="hidden" id="gbflag" value="{{ gbflag }}">
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/godown.js')}}"></script>
 </body>
 </html>

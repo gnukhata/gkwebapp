@@ -8,7 +8,6 @@ $(document).ready(function() {
     global: false,
     async: false,
     datatype: "text/html",
-    data: {"gbflag":$("#gbflag").val()}, 
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -30,7 +29,6 @@ $(document).ready(function() {
     global: false,
     async: false,
     datatype: "text/html",
-    data: {"gbflag":$("#gbflag").val()}, 
     beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
