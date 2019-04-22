@@ -672,11 +672,14 @@
               {% else %}
 		<button type="button" class="btn btn-warning btn-sm" id="lock" value="Lock" accesskey="k">{% trans %}Loc<u>k</u>{% endtrans %}</button>
               {% endif %}
-              {% if voucher['invid'] == None %}<button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" >{% trans %}Edit{% endtrans %}</button>{% endif %}
+              {% if voucher['invid'] == None %}
+							<button type="button" class="btn btn-primary btnfocus btn-sm" id="edit" >{% trans %}Edit{% endtrans %}</button>{% endif %}
               <button type="button" class="btn btn-primary btnfocus btn-sm" id="clone" accesskey="o">{% trans %}Cl<u>o</u>ne{% endtrans %}</button>
               <button type="submit" id="save" class="btn btn-success btn-sm" accesskey="a">{% trans %}S<u>a</u>ve{% endtrans %}</button>
-              <button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" >{% trans %}Delete{% endtrans %}</button>
-              <button type="button" class="btn btn-success btn-sm" id="printvoucher" accesskey="v">{% trans %}Print <u>V</u>oucher{% endtrans %}</button>
+              {%if vtype != "receipt" and vtype != "payment"%}
+							<button type="button" class="btn btn-danger btnfocus btn-sm" id="delete" >{% trans %}Delete{% endtrans %}</button>
+							{%endif%}
+							<button type="button" class="btn btn-success btn-sm" id="printvoucher" accesskey="v">{% trans %}Print <u>V</u>oucher{% endtrans %}</button>
 
 	      {%if vtype == "receipt" or vtype == "payment"%}
                 {% if voucher['instrumentno'] == None or voucher['instrumentno'] == ""  %}
