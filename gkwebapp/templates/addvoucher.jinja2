@@ -463,24 +463,24 @@
             <div class="row form-inline">
 	      <input  class="bankclass" id="bankdetails" type="checkbox">
               <label class="bankclass" for="bank" id="banklabel">{% trans %}Bank Details{% endtrans %}</label>
-              <button type="button" id="save" name="submit" class="btn btn-success" accesskey="s">
+              <button type="button" id="save" name="submit" class="btn btn-success btn-sm" accesskey="s">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}
               </button>
               <div class="form-group">
-		<button type="button" id="reset" class="btn btn-danger" accesskey="e">
+		<button type="button" id="reset" class="btn btn-danger btn-sm" accesskey="e">
                   <i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}
 		</button>
               </div>
               <div class="form-group">
-		<button type="button" id="popup" class="btn btn-primary" accesskey="o">
+		<button type="button" id="popup" class="btn btn-primary btn-sm" accesskey="o">
                   <i class="fa fa-plus" aria-hidden="true"></i> {% trans %}Add Acc<u>o</u>unt{% endtrans %}
 		</button>
               </div>
               <div class="form-group">
 		<!-- Calculator Popover -->
-      		<button type="button" class="btn calbtn-primary" data-toggle="popover"  data-placement="top" data-content='<div class="calbody"><div><input id="lcdu"type="text" value="" disabled=""/><input id="resultlcd"type="text" value="" disabled="" hidden/></div><input id="lcd" type="text" class="form-control input-sm common numtype" value="0" /><div id="calbutton"><button id="num1"class="key" value="1" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="decimal" class="key">.</button><button id="operationdivid" class="key">/</button><button id="clr" class="key">C</button><button id="equalto" class="key" >=</button>' accesskey="a">{% trans %}C<u>a</u>lculator{% endtrans %}</button> 
+      		<button type="button" class="btn cal btn-primary btn-sm" data-toggle="popover"  data-placement="top" data-content='<div class="calbody"><div><input id="lcdu"type="text" value="" disabled=""/><input id="resultlcd"type="text" value="" disabled="" hidden/></div><input id="lcd" type="text" class="form-control input-sm common numtype" value="0" /><div id="calbutton"><button id="num1"class="key" value="1" >1</button><button id="num2" class="key" >2</button><button id="num3" class="key" >3</button><button id="operationplus" class="key" >+</button><button id="num4" class="key" >4</button><button id="num5" class="key">5</button><button id="num6" class="key">6</button><button id="operationmult" class="key">*</button><button id="num7" class="key" >7</button><button id="num8" class="key">8</button><button id="num9" class="key">9</button><button id="operationminus" class="key" >-</button><button id="num0" class="key">0</button><button id="num00" class="key">00</button><button id="decimal" class="key">.</button><button id="operationdivid" class="key">/</button><button id="clr" class="key">C</button><button id="equalto" class="key" >=</button>' accesskey="a">{% trans %}C<u>a</u>lculator{% endtrans %}</button> 
 	      </div>
-              <label class="btn btn-primary" for="my-file-selector">
+              <label class="btn btn-primary btn-sm" for="my-file-selector">
                 <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                 <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
               </label>
@@ -589,7 +589,7 @@
 	      <small id="txtareahelp2" class="form-text text-muted">You can use left and right arrows to navigate along buttons.</small>
             </div>
             <div class="modal-footer">
-	      <button type="button" id ="btclose" class="btn footerbutton btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Done{% endtrans %}</button>
+	      <button type="button" id ="btclose" class="btn footerbutton btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Done{% endtrans %}</button>
 	      
 	    </div>
           </div><!-- /.modal-content -->
@@ -608,8 +608,8 @@
               <p>{% trans %}Do you want to do Bill Wise Accounting?{% endtrans %}</p>
             </div>
             <div class="modal-footer">
-              <button type="button" id ="bwno" class="btn btn-warning" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
-              <button type="button" id="bwyes" data-dismiss="modal" class="btn btn-success"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
+              <button type="button" id ="bwno" class="btn btn-warning btn-sm" data-dismiss="modal"><i class="fa fa-times" aria-hidden="true"></i>{% trans %}No{% endtrans %}</button>
+              <button type="button" id="bwyes" data-dismiss="modal" class="btn btn-success btn-sm"><i class="fa fa-check" aria-hidden="true"></i>{% trans %}Yes{% endtrans %}</button>
             </div>
           </div><!-- /.modal-content -->
 	</div><!-- /.modal-dialog -->

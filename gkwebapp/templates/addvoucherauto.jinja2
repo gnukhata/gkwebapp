@@ -193,15 +193,15 @@
               <br>
         
               <input type="hidden" value="{{ vtype }}" id="vtype" name="vtype"/>
-              <button type="submit" class="btn btn-success" id="submit" name="submit" accesskey="s">
+              <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s">
                 <i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}
               </button>
 
-              <button id="reset" class="btn btn-danger" accesskey="e">
+              <button id="reset" class="btn btn-danger btn-sm" accesskey="e">
                 <i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}
               </button>
 	      <button id="addcust" class="btn btn-info btn-sm" accesskey="d"><i class="fa fa-plus" aria-hidden="true"></i> {% if vtype == "receipt" %}{% trans %}A<u>d</u>d Customer{% endtrans %} {% else %} {% trans %}A<u>d</u>d Supplier{% endtrans %}{% endif %}</button>
-              <label class="btn btn-primary" for="my-file-selector">
+              <label class="btn btn-primary btn-sm" for="my-file-selector">
                 <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept=".jpg" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
                 <i class="fa fa-paperclip" aria-hidden="true"></i> {% trans %}Attac<u>h</u>{% endtrans %}
               </label>
