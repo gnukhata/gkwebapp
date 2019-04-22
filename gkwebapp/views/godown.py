@@ -43,19 +43,19 @@ import cStringIO
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
     header={"gktoken":request.headers["gktoken"]}
-    return {"status":True, "gbflag":request.params["gbflag"]}
+    return {"status":True}
 
 @view_config(route_name="godown",request_param="type=addtab", renderer="gkwebapp:templates/creategodown.jinja2")
 def showgodown(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown&gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown?type=lastfivegodown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"])}
         
         goddata.append(gdata)
 
-    return {"gbflag":(int(request.params["gbflag"])),"gkresult":goddata }
+    return {"gkresult":goddata }
 
 @view_config(route_name="godown",request_param="type=addpopup", renderer="gkwebapp:templates/creategodownpopup.jinja2")
 def showgodownpopup(request):
@@ -68,13 +68,10 @@ def showmultigodown(request):
 @view_config(route_name="godown",request_param="type=add", renderer="json")
 def addgodown(request):
     header={"gktoken":request.headers["gktoken"]}
-    gkdata = {"gbflag":(int(request.params["gbflag"])),"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
+    gkdata = {"goname":request.params["godownname"], "goaddr":request.params["godownaddress"], "state":request.params["godownstate"], "gocontact":request.params["godowncontact"], "contactname":request.params["godowncontactname"]}
     result = requests.post("http://127.0.0.1:6543/godown", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:
-        if (int(request.params["gbflag"])== 7):
-            gkdata = {"activity":request.params["godownname"] + " godown created"}
-        else:
-            gkdata = {"activity":request.params["godownname"] + " branch created"}    
+        gkdata = {"activity":request.params["godownname"] + " godown created"}   
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
@@ -96,18 +93,18 @@ def addmultigodowns(request):
 @view_config(route_name="godown",request_param="type=edittab", renderer="gkwebapp:templates/editgodown.jinja2")
 def showeditgodown(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
         goddata.append(gdata)
 
-    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"gbflag":(int(request.params["gbflag"])),"status":True}
+    return {"gkresult":goddata,"numberofgodown":len(result.json()["gkresult"]),"status":True}
 
 @view_config(route_name="godown",request_param="type=getallgodowns", renderer="json")
 def getallgodowns(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%int(request.params["gbflag"]), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"godownname":str(record["goname"]),"godownid":str(record["goid"]),"godownaddress": str(record["goaddr"])}
@@ -139,10 +136,7 @@ def deletegodown(request):
     result = requests.delete("http://127.0.0.1:6543/godown",data =json.dumps(gkdata), headers=header)
     
     if result.json()["gkstatus"] == 0:
-        if request.params["gbflag"] == '7':
-            gkdata = {"activity":goname + " godown deleted"}
-        else:
-            gkdata = {"activity":goname + " branch deleted"}
+        gkdata = {"activity":goname + " godown deleted"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
@@ -156,38 +150,30 @@ def editgodown(request):
 @view_config(route_name="godown",request_param="type=list", renderer="gkwebapp:templates/listofgodowns.jinja2")
 def listofgodowns(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
 
     for record in result.json()["gkresult"]:
-        if(int(request.params["gbflag"]) == 2):
-            gdata= {"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-            
-        else:
-            gdata= { "godownstatus":str(record["godownstatus"]),"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+        gdata= { "godownstatus":str(record["godownstatus"]),"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
         goddata.append(gdata)
 
-    return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
+    return {"gkresult":goddata}
 
 @view_config(route_name="godown",request_param="type=role_list", renderer="gkwebapp:templates/createusergodowntable.jinja2")
 def godownsusers(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
-        if(int(request.params["gbflag"]) == 7):
-            gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-        else:
-            gdata= { "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-
+        gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
         goddata.append(gdata)
         
-    return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
+    return {"gkresult":goddata}
 
 @view_config(route_name="godown",request_param="type=check", renderer="json")
 def checkgodownsusers(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=7", headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
         gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
@@ -197,29 +183,23 @@ def checkgodownsusers(request):
 @view_config(route_name="godown",request_param="type=lists", renderer="gkwebapp:templates/listofgodownspopup.jinja2")
 def listsofgodowns(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
-        if(int(request.params["gbflag"]) == 7):
-            gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
-        else:
-            gdata= {"srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
+        gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"]), "godowndesignation": str(record["designation"])}
         goddata.append(gdata)
-    return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
+    return {"gkresult":goddata}
 
 
 @view_config(route_name="godown",request_param="type=printable", renderer="gkwebapp:templates/printlistofgodowns.jinja2")
 def printlistofgodowns(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
     goddata=[]
     for record in result.json()["gkresult"]:
-        if(int(request.params["gbflag"]) == 7):
-            gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"])}
-        else:
-            gdata= { "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"])} 
+        gdata= {"godownstatus":str(record["godownstatus"]), "srno":int(record["srno"]), "godownid": str(record["goid"]), "godownname" : str(record["goname"]), "godownaddress": str(record["goaddr"]), "godownstate": str(record["state"]), "godowncontact": str(record["gocontact"]), "godowncontactname":str(record["contactname"])}
         goddata.append(gdata)
-    return {"gkresult":goddata,"gbflag":(int(request.params["gbflag"]))}
+    return {"gkresult":goddata}
 
 '''
 This function returns a spreadsheet form of List of Godowns Report.
@@ -231,7 +211,7 @@ def listofgodownssspreadsheet(request):
     
     try:
         header={"gktoken":request.headers["gktoken"]}
-        result = requests.get("http://127.0.0.1:6543/godown?gbflag=%d"%(int(request.params["gbflag"])), headers=header)
+        result = requests.get("http://127.0.0.1:6543/godown", headers=header)
         result = result.json()["gkresult"]
         fystart = str(request.params["fystart"])
         fyend = str(request.params["fyend"])
@@ -252,10 +232,8 @@ def listofgodownssspreadsheet(request):
  
             
         # Cells of first two rows are merged to display organisation details properly.
-        if((int(request.params["gbflag"])) == 7):
-            sheet.merge_cells('A1:F2')
-        else:
-            sheet.merge_cells('A1:E2')
+        
+        sheet.merge_cells('A1:F2')
         # Font and Alignment of cells are set. Each cell can be identified using the cell index - column name and row number.
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -263,22 +241,14 @@ def listofgodownssspreadsheet(request):
         sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
         sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
         sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
-        if((int(request.params["gbflag"])) == 7):
-            sheet['A3'] = 'List of Godowns'
-            sheet.merge_cells('A3:F3')
-        else:
-            sheet['A3'] = 'List of Branches'
-            sheet.merge_cells('A3:E3')
+        sheet['A3'] = 'List of Godowns'
+        sheet.merge_cells('A3:F3')
         sheet['A4'] = 'Sr. No.'
-        if((int(request.params["gbflag"])) == 7):
-            sheet['B4'] = 'Godown Name'
-        else:
-            sheet['B4'] = 'Branch Name' 
+        sheet['B4'] = 'Godown Name'
         sheet['C4'] = 'Address'
         sheet['D4'] = 'Contact Person'
         sheet['E4'] = 'Contact Number'
-        if((int(request.params["gbflag"])) == 7):
-            sheet['F4'] = 'Status'
+        sheet['F4'] = 'Status'
         titlerow = sheet.row_dimensions[4]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
         row=5
@@ -295,9 +265,8 @@ def listofgodownssspreadsheet(request):
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             sheet['E'+str(row)] = godown["gocontact"]
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            if((int(request.params["gbflag"])) == 7):
-                sheet['F'+str(row)] = godown["godownstatus"]
-                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['F'+str(row)] = godown["godownstatus"]
+            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
 
             row = row + 1
             srno += 1

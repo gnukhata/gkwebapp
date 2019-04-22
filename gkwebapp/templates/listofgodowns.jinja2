@@ -67,21 +67,13 @@
   {% if gkresult == [] %}
   <div class="panel shadow">
     <div class="panel-body" style="text-align:center;color:#a94442"><b>
-      {%if gbflag == 7%}
         {% trans %}No Godown found!{% endtrans %}
-        {%else%}
-        {% trans %}No Branch found!{% endtrans %}
-        {%endif%}
     </b></div>
   </div>
     {% else %}
     <div class="col-xs-10 nopadding">
       <span style="margin-left:50%; display:table; font-size:120%;"><strong>
-        {%if gbflag == 7%}
         {% trans %}List of Godowns{% endtrans %}
-        {%else%}
-        {% trans %}List of Branches{% endtrans %}
-        {%endif%}
         </strong></span>
     </div>
     <div class="pull-right input-group input-group-sm " style="margin-bottom:2px;">
@@ -98,11 +90,7 @@
             {% trans %}Sr.No.{% endtrans %}
           </th>
           <th class="mdwrap lalign">
-            {%if gbflag == 7%}
             {% trans %}Godown Name{% endtrans %}
-            {%else%}
-            {% trans %}Branch Name{% endtrans %}
-            {%endif%}
           </th>
           <th class="lngwrap lalign">
             {% trans %}Address{% endtrans %}
@@ -113,10 +101,8 @@
           <th class="dtwrap lalign">
             {% trans %}Contact Number{% endtrans %}
           </th>
-          {%if gbflag == 7%}
           <th class="smwrap lalign">
             {% trans %}Status{% endtrans %}
-          {%endif%}
             
           </th>
 	</tr>
@@ -140,16 +126,10 @@
             <td class="dtwrap lalign" >
               {{record["godowncontact"]}}
             </td>
-            {%if gbflag == 7%}
             {% if record["godownstatus"] == "Active" %}
               <td class="smwrap lalign text-success">
 		{{record["godownstatus"]}}
               </td>
-            {% else %}
-              <td class="smwrap lalign text-danger">
-		{{record["godownstatus"]}}
-              </td>
-            {% endif %}
             {%endif%}
 	  </tr>
 	{% endfor %}
@@ -165,6 +145,6 @@
     {% endif %}
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/listofgodowns.js')}}"></script>
-    <input type="hidden" id="gbflag" value="{{ gbflag }}">
+    
 </body>
 </html>

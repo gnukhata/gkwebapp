@@ -47,11 +47,7 @@
 </head>
 <body>
   <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>
-            {%if gbflag == 7%}
             {% trans %}List of Godowns{% endtrans %}
-            {%else%}
-            {% trans %}List of Branches{% endtrans %}
-            {%endif%}
     </strong></span>
 
   <div class="table-responsive printorgdetails">
@@ -59,11 +55,7 @@
       <thead class="bg-primary">
         <tr class="visible-print">
           <th colspan="7" style="text-align:center; font-size:80%;">
-            {%if gbflag == 7%}
             {% trans %}List of Godowns{% endtrans %}
-            {%else%}
-            {% trans %}List of Branches{% endtrans %}
-            {%endif%}
           </th>
         </tr>
         <tr>
@@ -71,11 +63,7 @@
             {% trans %}Sr.No.{% endtrans %}
           </th>
           <th class="mdwrap lalign">
-            {%if gbflag == 7%}
             {% trans %}Godown Name{% endtrans %}
-            {%else%}
-            {% trans %}Branch Name{% endtrans %}
-            {%endif%}
             
           </th>
           <th class="lngwrap lalign">
@@ -87,11 +75,9 @@
           <th class="dtwrap lalign">
             {% trans %}Contact Number{% endtrans %}
           </th>
-          {%if gbflag == 7%}
           <th class="smwrap lalign">
             {% trans %}Status{% endtrans %}
           </th>
-          {%endif%}
         </tr>
       </thead>
       <tbody>
@@ -113,11 +99,9 @@
           <td class="dtwrap lalign" >
             {{record["godowncontact"]}}
           </td>
-          {%if gbflag ==7%}
           <td class="smwrap lalign">
             {{record["godownstatus"]}}
           </td>
-          {%endif%}
         </tr>
         {% endfor %}
 
@@ -136,14 +120,9 @@
        window.print();
      });
      $("#loaback").click(function(event) {
-       {%if gbflag == 7%}
        $("#listofgodowns").click();
-       {%else%}
-       $("#listofbranches").click();
-       {%endif%}
      });
    });
   </script>
-<input type="hidden" id="gbflag" value="{{ gbflag }}">
 </body>
 </html>
