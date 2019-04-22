@@ -474,7 +474,7 @@ $(document).ready(function(){
        sessionStorage.setItem('vatorgstflag' , resp["vatorgstflag"] );
        if (resp["vatorgstflag"] == 22){
 	   $("#productinmaster_a").text("Product");
-	    $("#product").text("Product");
+	    $("#product_a").text("Product");
 	   $("#productinmaster_a").text("Product");
 	   $("#listofstockitems").text("List of Products");
        }

@@ -82,7 +82,7 @@
             <li id="inventorydropdown" class=" internalaud closebooks inventory_hide submenuli" data-menuname="inventorymenu">
               <a href="" id="inventory" class="submenu kmd" data-menuname="inventorymenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Inventory{% endtrans %}  <i class="fa fa-caret-down"></i></a>
             </li>
-            <li id="product" class="submenuitem inventorymenu"><a  class="submenu_item kmd" data-toggle="tab" href="">Product/Service</a></li>
+            <li id="product" class="submenuitem inventorymenu"><a id="product_a" class="submenu_item kmd" data-toggle="tab" href="">Product/Service</a></li>
             <li id="godown" class="submenuitem inventorymenu hideoperator godownhide"><a  class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Godown{% endtrans %}</a></li>
             <li id="addcategory" class="submenuitem inventorymenu addcategory"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Category{% endtrans %}</a></li>
             <li id="addunit" class="submenuitem inventorymenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Unit of Measurement{% endtrans %}</a></li>
@@ -159,33 +159,28 @@
             <span class="icon-bar"></span>
           </button>
           <a class="navbar-brand" style="margin-left:15px; margin-top:-5px;" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:30px;height:30px;"/></a>
-          <a class="navbar-brand namestyle">{% trans %}GNUKhata {% endtrans %}</a>
-          <a class="navbar-brand" style="margin-left:-20px">v6.0</a>
+          <a class="navbar-brand namestyle readable_design">{% trans %}GNUKhata {% endtrans %}</a>
+          <a class="navbar-brand readable_design" style="margin-left:-20px">v6.0</a>
         </div>
         
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav navbar-right">
-            <li id="nt"><a class="newtabmenu" id="newt" style="font-size:16px" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
+            <li id="nt" class="readable_design"><a class="newtabmenu" id="newt" style="font-size:16px" target="_blank" href="/" accesskey="b">{% trans %}New Ta<u>b</u>{% endtrans%}</a></li>
 
-            <li id="themesdropdown" class="dropdown">
-              <a href="" id="themes" class="dropdown-toggle" style="font-size:16px" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
+            <li id="themesdropdown" class="dropdown readable_design">
+              <a href="" id="themes" class="dropdown-toggle readable_design" style="font-size:16px" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Theme{% endtrans %}</a>
               <ul class="dropdown-menu scrollable">
                 <li><a class="themesmenu" id="Default" href="">{% trans %}Default{% endtrans %}<span id="Defaultspan"  class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Cerulean" href="">{% trans %}Cerulean{% endtrans %}<span id="Ceruleanspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Cosmo" href="">{% trans %}Cosmo{% endtrans %}<span id="Cosmospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-                <li><a class="themesmenu" id="Cyborg" href="">{% trans %}Cyborg{% endtrans %}<span id="Cyborgspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-                <li><a class="themesmenu" id="Darkly" href="">{% trans %}Darkly{% endtrans %}<span id="Darklyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Flatly" href="">{% trans %}Flatly{% endtrans %}<span id="Flatlyspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Journal" href="">{% trans %}Journal{% endtrans %}<span id="Journalspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Lumen" href="">{% trans %}Lumen{% endtrans %}<span id="Lumenspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-                <li><a class="themesmenu" id="Paper" href="">{% trans %}Paper{% endtrans %}<span id="Paperspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Readable" href="">{% trans %}Readable{% endtrans %}<span id="Readablespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Sandstone" href="">{% trans %}Sandstone{% endtrans %}<span id="Sandstonespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Simplex" href="">{% trans %}Simplex{% endtrans %}<span id="Simplexspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-                <li><a class="themesmenu" id="Slate" href="">{% trans %}Slate{% endtrans %}<span id="Slatespan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Spacelab" href="">{% trans %}Spacelab{% endtrans %}<span id="Spacelabspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
-                <li><a class="themesmenu" id="Superhero" href="">{% trans %}Superhero{% endtrans %}<span id="Superherospan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Ubuntu" href="">{% trans %}Ubuntu{% endtrans %}<span id="Ubuntuspan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
                 <li><a class="themesmenu" id="Yeti" href="">{% trans %}Yeti{% endtrans %}<span id="Yetispan" class="glyphicon glyphicon-ok" style="margin-left: 10px; display: none;" aria-hidden="true"></span><span class="sr-only">selected</span></a></li>
               </ul>
@@ -199,7 +194,7 @@
                  <li><a  class="langmenu" id="mal" href="/locale?language=ml">{% trans %}മലയാളം{% endtrans %}</a></li>
                  </ul>
                  </li>-->
-            <li id="userdropdown" class="dropdown">
+            <li id="userdropdown" class="dropdown readable_design">
               <a class="usermenu dropdown-toggle"  data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="font-size:2rem;color:black;margin-right:12px; text-decoration: none; " href=""><i id="loginicon" class="fa fa-user-circle"></i></a>
               <ul class="dropdown-menu">
                 <li><a class="usermenu" data-toggle="tab" id="logout" href="">{% trans %}Logout{% endtrans %}</a></li>
