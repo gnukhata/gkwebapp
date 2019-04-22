@@ -144,9 +144,9 @@
             <form id="date" class="form-inline" style="margin:0px">
               <label for="vdate">{% trans %}<u>D</u>ate{% endtrans %} :</label><label for="date" style="color:red;font-size: 120%;">*</label>
               <br/>
-              <input type="text" id="vdate" class="date form-control input-sm" size="2" maxlength="2" placeholder="DD" accesskey="d">
-              <input type="text" id="month" class="date form-control input-sm" size="2" maxlength="2" placeholder="MM">
-              <input type="text" id="year" class="date form-control input-sm" size="4" maxlength="4" placeholder="YYYY">
+              <input type="text" id="vdate" class="date form-control input-sm" size="2" maxlength="2" placeholder="DD" value="{{lastdetails['vdate'][0:2]}}"accesskey="d">
+              <input type="text" id="month" class="date form-control input-sm" size="2" maxlength="2" placeholder="MM" value="{{lastdetails['vdate'][3:5]}}">
+              <input type="text" id="year" class="date form-control input-sm" size="4" maxlength="4" placeholder="YYYY" value="{{lastdetails['vdate'][6:]}}">
             </form>
             <br/>
 

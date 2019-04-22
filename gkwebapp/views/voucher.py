@@ -60,14 +60,29 @@ def showvoucher(request):
         flags["invflag"] = request.params.get("invflag")
         flags["invsflag"] = request.params.get("invsflag")
         flags["billflag"] = request.params.get("billflag")
+    
+        resultauto = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
+        lastdetailsauto = resultauto.json()["gkresult"]
+        if(lastdetailsauto["narration"] != ""):
+            lastdetailsauto["narration"] = lastdetailsauto["narration"]
+        else:
+            lastdetailsauto["narration"]=""
+            vdate = str(request.params["financialstart"])
+            lastdetailsauto["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
+        if(lastdetailsauto["vno"] != ""):
+            lastdetailsauto["vno"] = lastdetailsauto["vno"]
+        else:
+            lastdetailsauto["vno"] = 1
+            vdate = str(request.params["financialstart"])
+            lastdetailsauto["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
 
         if cust_result["gkstatus"] == 0 and sup_result["gkstatus"] == 0:
             if int(flags["invflag"]) == 1:
                 invdata = requests.get("http://127.0.0.1:6543/billwise?type=all", headers=header)
                 if invdata.json()["gkstatus"]==0:
-                    return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"])},request=request)
+                    return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags,"invoicedata":invdata.json()["invoices"],"invoicecount":len(invdata.json()["invoices"]),"lastdetails":lastdetailsauto},request=request)
             else:
-                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags, "invoicedata":0,"invoicecount":0},request=request)
+                return render_to_response("gkwebapp:templates/addvoucherauto.jinja2",{"vtype":type,"accounts":accounts,"flags":flags, "invoicedata":0,"invoicecount":0,"lastdetails":lastdetailsauto},request=request)
 
     invflag= int(request.params["invflag"])
     result = requests.get("http://127.0.0.1:6543/transaction?details=last&type=%s"%(type), headers=header)
