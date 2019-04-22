@@ -43,6 +43,36 @@
      }
     </style>
   </head>
+		<script>
+	$.ajax({
+        url: '/editorganisation?action=getattachment',
+        type: 'POST',
+        datatype: 'json',
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        data: {},
+    })
+    .done(function(resp) {
+          var imagesrc = "data:image/png;base64,"+resp["logo"];
+
+
+         if(resp["logo"]){
+        $("#imgbox3").attr("src", imagesrc);   
+         }
+         else{
+           $("#logo_div").hide();
+         }
+
+        console.log("success");
+    })
+    .fail(function() {
+        console.log("error");
+    })
+    .always(function() {
+        console.log("complete");
+    });
+	</script>
   <body>
 	<input type="hidden" id="invid" value="{{ invid }}">
     <div class="container-fluid">
@@ -59,7 +89,7 @@
 	<div class="col-xs-9 nopaddng" style="width:100%;border-bottom: 0.3px solid lightgrey;padding-bottom: 1%;">
           <div class="img-thumbnail img-circle " style="float:left">
             <div style="position: relative; padding: 0; cursor: pointer;" type="file">
-	      <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox">
+	      <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox3">
             </div>
           </div>
 	
