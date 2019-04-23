@@ -67,8 +67,6 @@ def showvoucher(request):
             lastdetailsauto["narration"] = lastdetailsauto["narration"]
         else:
             lastdetailsauto["narration"]=""
-            vdate = str(request.params["financialstart"])
-            lastdetailsauto["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
         if(lastdetailsauto["vno"] != ""):
             lastdetailsauto["vno"] = lastdetailsauto["vno"]
         else:
@@ -91,8 +89,7 @@ def showvoucher(request):
         lastdetails["narration"] = lastdetails["narration"]
     else:
         lastdetails["narration"]=""
-        vdate = str(request.params["financialstart"])
-        lastdetails["vdate"] = vdate[8:] + "-" + vdate[5:7] + "-" + vdate[0:4]
+
     if(lastdetails["vno"] != ""):
         lastdetails["vno"] = lastdetails["vno"]
     else:
