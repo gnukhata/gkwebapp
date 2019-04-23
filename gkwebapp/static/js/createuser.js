@@ -77,23 +77,29 @@ $(document).ready(function(){
 
   $(document).off("change","#userrole").on("change","#userrole",function(e){
     /* Act on the event */
+    if ($("#userrole").val() == 3) {
       $.ajax(
-         {
+        {
 
-         type: "POST",
-         url: "/godown?type=role_list",
-         global: false,
-         async: false,
-         datatype: "text/html",
-         beforeSend: function(xhr)
-           {
-             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-           },
-         success: function(resp)
-         {
-           $("#usertable").html(resp);
-         }
-         });
+        type: "POST",
+        url: "/godown?type=role_list",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+          $("#usertable").html(resp);
+        }
+        });
+    }
+    else{
+      $("#usertable").html("");
+    }
+      
   });
 
   $(document).off("keydown",".user_role").on("keydown",".user_role",function(e){
