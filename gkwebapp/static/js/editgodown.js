@@ -198,7 +198,7 @@ $(document).ready(function() {
                 async: false,
                 datatype: "json",
                 data: {
-                    "goname":$("#goname").val()
+                    "goname":$("#goname").val(),"goid":goid
                 },
                 
                 beforeSend: function(xhr) {

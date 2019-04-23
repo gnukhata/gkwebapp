@@ -105,7 +105,6 @@ $(document).ready(function() {
       global: false,
       async: false,
       datatype: "text/html",
-      data: {"gbflag":$("#gbflag").val()},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -131,7 +130,7 @@ $(document).ready(function() {
         event.preventDefault();
         var xhr = new XMLHttpRequest();
 
-        xhr.open('GET', '/godown?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+'&gbflag=' + $("#gbflag").val(), true);
+        xhr.open('GET', '/godown?type=spreadsheet&fystart='+sessionStorage.getItem('year1')+'&orgname='+ sessionStorage.getItem('orgn')+'&fyend='+sessionStorage.getItem('year2')+ true);
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         xhr.responseType = 'blob';
 

@@ -1355,7 +1355,6 @@ $(document).ready(function() {
               url: 'godown?type=getallgodowns',
               type: 'POST',
 		dataType: 'json',
-		data: {"gbflag":7},
               beforeSend: function(xhr)
               {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);

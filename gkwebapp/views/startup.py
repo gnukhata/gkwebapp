@@ -79,16 +79,16 @@ def yearcode(request):
 
 @view_config(route_name="login", renderer="gkwebapp:templates/login.jinja2")
 def login(request):
-    return {"code":request.params["orgcode"], "flag": request.params["flag"], "len":0}
+    return {"code":request.params["orgcode"], "flag": request.params["flag"]}
 
-@view_config(route_name="editorganisation",request_param='type=userloginbranch', renderer="json")
-def loginbranch(request):
-    result = requests.get("http://127.0.0.1:6543/organisations?type=orgbranch&gbflag=2&orgcode=%d&username=%s"%(int(request.params["orgcode"]),request.params["username"]))
-    branch = []
-    for row in result.json()["gkdata"]:
-        branch.append({"bid":int(row["bid"]), "bname":row["bname"]})
-    blen = {'blen':len(branch)}
-    return {"code":request.params["orgcode"], "branches":branch, "len":blen}
+# @view_config(route_name="editorganisation",request_param='type=userloginbranch', renderer="json")
+# def loginbranch(request):
+#     result = requests.get("http://127.0.0.1:6543/organisations?type=orgbranch&orgcode=%d&username=%s"%(int(request.params["orgcode"]),request.params["username"]))
+#     branch = []
+#     for row in result.json()["gkdata"]:
+#         branch.append({"bid":int(row["bid"]), "bname":row["bname"]})
+#     blen = {'blen':len(branch)}
+#     return {"code":request.params["orgcode"], "branches":branch, "len":blen}
 
 
 @view_config(route_name="createorg", renderer="gkwebapp:templates/createorg.jinja2")
@@ -150,10 +150,7 @@ def orglogin(request):
 
 @view_config(route_name="userlogin",renderer="json")
 def selectorglogin(request):
-    if "goid" in request.params:
-        gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"],"goid":request.params["goid"]}
-    else:
-        gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
+    gkdata = {"username":request.params["username"], "userpassword":request.params["userpassword"],"orgcode":request.params["orgcode"]}
     
     result = requests.post("http://127.0.0.1:6543/login", data =json.dumps(gkdata))
     if result.json()["gkstatus"]==0:
