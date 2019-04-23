@@ -1645,9 +1645,9 @@ $(document).off("keyup").on("keyup", function(event) {
 		form_data.append("paymentmode",2);
             }
         // goid is branchid. use when branch wise logged in.
-        if (sessionStorage.goid != ''){
-            form_data.append("goid",sessionStorage.goid);
-        }
+        // if (sessionStorage.goid != ''){
+        //     form_data.append("goid",sessionStorage.goid);
+        // }
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
         $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {

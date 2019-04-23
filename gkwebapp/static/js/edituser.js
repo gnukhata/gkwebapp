@@ -190,13 +190,7 @@ $(document).ready(function() {
 
 	  
 	  //This ajax gives the assign list of godowns/branches for particular user. 
-    // gbflag =7 is for godown and 2 is branch
-    if (userdetails["userrole"] == 3){
-      var gbflag =7;
-    }
-    else if (userdetails["userrole"] == 0 || userdetails["userrole"] == 1 || userdetails["userrole"] == 2){
-      var gbflag =2;
-    }
+    
 	    $("#usertable").show();
 	    $.ajax(
 	      {
@@ -205,7 +199,6 @@ $(document).ready(function() {
 		global: false,
 		async: false,
     datatype: "text/html",
-    data: {'gbflag':gbflag},
 		beforeSend: function(xhr)
 		{
 		  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

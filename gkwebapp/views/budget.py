@@ -92,10 +92,7 @@ def getbuddetails(request):
 @view_config(route_name="budget",request_param="type=add", renderer="json")
 def addbudget(request):
     header={"gktoken":request.headers["gktoken"]}
-    if "goid" in request.params:
-        gkdata = {"goid":int(request.params["goid"]),"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"]), "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
-    else:
-        gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"]), "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
+    gkdata = {"budname":request.params["budname"],"startdate":request.params["startdate"],"enddate":request.params["enddate"], "contents":json.loads(request.params["contents"]), "budtype":int(request.params["btype"]), "gaflag":int(request.params["gaflag"])}
 
     result = requests.post("http://127.0.0.1:6543/budget", data =json.dumps(gkdata),headers=header)
     if result.json()["gkstatus"] == 0:

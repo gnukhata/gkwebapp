@@ -569,13 +569,13 @@ $(document).ready(function(){
             return false;
         }
         var gaflag = 1;
-        if (sessionStorage.goid != ''){ // if login branch wise then branch id.
-            var goid = sessionStorage.goid;
-            dataset = {"goid":goid,"contents":JSON.stringify(content),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
-          }
-        else{
+        // if (sessionStorage.goid != ''){ // if login branch wise then branch id.
+        //     var goid = sessionStorage.goid;
+        //     dataset = {"goid":goid,"contents":JSON.stringify(content),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
+        //   }
+        // else{
             dataset = {"contents":JSON.stringify(content),"budname":$("#c_bname").val(),"startdate":fromdate,"enddate":todate,"btype":$("#c_btype option:selected").val(),"gaflag": parseInt(gaflag)};
-        }
+        // }
         $("#msspinmodal").modal("show");
         $.ajax(
             {
