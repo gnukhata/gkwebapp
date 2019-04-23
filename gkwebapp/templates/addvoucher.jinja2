@@ -48,22 +48,9 @@
 	a scrollbar to be displayed anyway so that the usable width of the thead
 	will exactly match the tbody.
       */
-     table.table-fixedheader>thead {
-	 overflow-y: scroll;
-	 height: 26px;
-     }
      table.table-fixedheader>tfoot {
 
 	 height: 38px;
-     }
-     /*
-	For browsers that support it (webkit), we set the background color of
-	the unneeded scrollbar in the thead to make it invisible.  (Setting
-	visiblity: hidden defeats the purpose, as this alters the usable width
-	of the thead.)
-      */
-     table.table-fixedheader>thead::-webkit-scrollbar {
-	 background-color: inherit;
      }
 
 
@@ -260,7 +247,7 @@
 	<div class="row " style="margin:0 !important;" >
 	  <center>
             <input id="vouchertype" type="text" value="{{vtype}}" hidden>
-            <div class="row form-group col-sm-12 " style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
+            <div class="row form-group" style="margin-top:0; margin-bottom:0 !important; padding:0 !important;">
               {% if vtype=="contra" %}
 		<label style="font-size: 16;"><i>{% trans %}Contra{% endtrans %}</i></label>
               {% elif vtype == "payment" %}
@@ -287,9 +274,7 @@
           </center>
 	</div>
 
-	<div class="form-inline well well-sm ">
-          <div class="form-inline ">
-            <div class="form-inline">
+	<div class="form-inline well well-sm row">
               <div class="form-group" id="voucherno" style="width:15%;">
 		<label for="vno">{% trans %}<u>V</u>oucher No.{% endtrans %} :</label><label for="vno" style="color:red;font-size: 120%;">*</label>
 		<div><input type="text" class="form-control input-sm" value="{{lastdetails['vno']}}" name="vno" id="vno" size="10" accesskey="v"></div>
@@ -338,12 +323,9 @@
 		  <input type="text" id="vyear" class="vdate form-control input-sm" value="{{lastdetails['vdate'][6:]}}" style="width:56px" size="4" maxlength="4" placeholder="YYYY">
 		</div>
 	      </div>
-
-	    </div>
-	  </div>
 	</div>
 
-	<div class="panel flow shadow ">
+	<div class="panel flow shadow row">
           <div class="table-responsive">
             <table id="vtable" class="table table-condensed table-fixedheader">
               <thead class="bg-primary">
@@ -489,7 +471,7 @@
 	      <small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
             </div>
           </div>
-          <div class="form-group pull-left col-md-5">
+          <div class="form-group pull-left col-md-5" style="padding-left:0 !important">
             <label for="narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
             <textarea class="form-control" name="narration" id="narration" value="{{lastdetails['narration']}}"  rows="2" cols="70" accesskey="t"></textarea>
           </div>
