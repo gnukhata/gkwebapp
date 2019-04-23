@@ -30,8 +30,6 @@ def savedrcrnote(request):
         drcrdata["reference"]=json.loads(request.params["reference"])
     if request.params.has_key("usr"):
         drcrdata["userid"]=request.params["usr"]
-    if request.params.has_key("goid"):
-        drcrdata["goid"]=request.params["goid"]
 
     wholedataset = {}
     wholedataset["dataset"] = drcrdata

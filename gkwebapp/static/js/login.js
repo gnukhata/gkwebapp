@@ -22,6 +22,7 @@ Contributors:
 "Krishnakant Mane" <kk@gmail.com>
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
+"Rohan Khairnar" <rohankhairnar5@gmail.com>
 */
 // This script is for login page.
 $(document).ready(function()
@@ -35,8 +36,6 @@ $(document).ready(function()
   var orgdata = orname + " (" + ortype + ")";
   var pathname = window.location.pathname;
   var yeardata = styear + " to " + enyear;
-  // var len;
-  // $("#branchdiv").hide();
   if(orgdata!=""||yeardata!="")
   {
   // displays organisation details in the status bar.
@@ -60,14 +59,7 @@ $(document).ready(function()
     if (e.which == 13)
       {
         e.preventDefault();
-        // if there are branches only that time branch selection option is availale. so only that time 
-        // it will focus on branch selection otherwise focus on login
-        // if (len['blen']>0){
-        //   $("#orgbranch").focus();
-        // }
-        // else{
-          $("#login").focus();
-        // }   
+          $("#login").focus(); 
       }
       if(e.which == 38)
     {
@@ -75,46 +67,6 @@ $(document).ready(function()
       $("#login_username").focus();
     }
     });
-    // This ajax is for fetching number of branches of entered username.
-  // $("#login_username").change(function(){
-  //   userdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val()};
-  //       $.ajax(
-  //         {
-  //         type: "POST",
-  //         url: "/editorganisation?type=userloginbranch",
-  //         global: false,
-  //         async: false,
-  //         datatype: "json",
-  //         data: userdata,
-  //         success: function(jsonObj){
-          //   len = jsonObj["len"]
-          //   // if their are more than zero branches, only that time it will show branch selection option.
-          //   if (len['blen'] > 0){
-          //     $("#branchdiv").show();
-          //   }
-          //   else{
-          //     $("#branchdiv").hide();
-          //   }
-          //   var br = jsonObj["branches"];
-          //   for (let i in br ){
-		      // $('#orgbranch').append('<option value="' + br[i].bid + '">' + br[i].bname+' </option>');                  
-          //   }
-  //         }
-  //         });
-  // });
-
-//   $("#orgbranch").keydown(function(e) {
-//     if (e.which == 13)
-//     {
-//       e.preventDefault();
-//       $("#login").focus();
-//       }
-//     if(e.which == 38)
-//     {
-//       e.preventDefault();
-//       $("#userpassword").focus();
-//     }
-// });
 
 $("#login").keydown(function(e) {
   if (e.which == 38)
@@ -165,26 +117,8 @@ $("#login").keydown(function(e) {
         $("#userpassword").focus();
         return false;
     }
-    // Bellow:blen is number of branches of user enetered.Checking wheather user has branches. If they have then,
-    // goid(branchid) is selected, and if yes then send orgdata with goid and session store goid for complete session.
-    // if (len['blen'] > 0) {
-    //     if($("#orgbranch option:selected").val() == '') {
-    //       var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
-    //       // sessionStorage.goid = '';
-    //       sessionStorage.goname = '';
-    //     }
-    //     else {
-    //       var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val(),"goid": $("#orgbranch option:selected").val()}
-    //       sessionStorage.goid = $("#orgbranch option:selected").val();
-    //       sessionStorage.goname = $("#orgbranch option:selected").text();
-    //     }
-    // }
-    // if (len['blen'] == 0) {
-    //   var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
-    //   sessionStorage.goid = '';
-    //   sessionStorage.goname = '';
-    // }
     var orgdata = {"orgcode":$("#orgcode").val(), "username":$("#login_username").val(), "userpassword":$("#userpassword").val()}
+    
     $("#loginspinmodal").modal("show");
       $.ajax(
       {
@@ -198,6 +132,7 @@ $("#login").keydown(function(e) {
       {
       if(resp["gkstatus"]==0)
       {
+        console.log("response 0");
         var gt = resp['gktoken'];
         // on successfull login a token is received as response which is stored in sessionstorage.
         sessionStorage.gktoken = gt;
@@ -222,6 +157,7 @@ $("#login").keydown(function(e) {
           }
         })
         .done(function(resp){
+          console.log("in theme");
           sessionStorage.gktheme = resp["theme"];
         });
         sessionStorage.reload = 1;
@@ -239,22 +175,9 @@ $("#login").keydown(function(e) {
         $('.modal-backdrop').remove();
         return false;
       }
-      // else if(resp["gkstatus"]==4)
-      // {
-      //   $("#login-branch-alert").alert();
-      //   $("#login-branch-alert").fadeTo(2250, 500).slideUp(500, function(){
-      //     $("#login-branch-alert").hide();
-      //   });
-      //   $("#orgbranch").focus();
-      //   $("#loginspinmodal").modal("hide");
-      //   $('.modal-backdrop').remove();
-      //   return false;
-      // }
       }
-
       }
       );
-
       e.preventDefault();
   }
   );

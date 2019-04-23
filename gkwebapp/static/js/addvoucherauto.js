@@ -545,10 +545,6 @@ $(document).ready(function() {
 	  form_data.append("billdetails",JSON.stringify(billdetails));
 	  form_data.append("invoice", $("#invsel option:selected").text());
       }
-      // goid is branchid.
-    // if (sessionStorage.goid != ''){
-    //     form_data.append("goid",sessionStorage.goid);
-    //   }
     $.ajax({
       type: "POST",
       url: "/addvoucherauto",

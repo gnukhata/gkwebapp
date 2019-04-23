@@ -1451,9 +1451,6 @@ if (!curdate.between(financialstart, financialend)) {
 
       form_data.append("vdetails",JSON.stringify(voucherdetails));
 	
-	// if (sessionStorage.goid != ''){
-	// 	form_data.append("goid",sessionStorage.goid);	
-	// }
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
       $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
