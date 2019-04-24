@@ -37,7 +37,6 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
-	var optionwidth=$("td.mdwrap >  select > option").width();
     //Events that are triggered when the page for creating an invoice is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
@@ -65,7 +64,6 @@ $(document).ready(function() {
 	$(".product_name_vat").closest("select").width(vatproductwidth);
 	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
 	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
         $(".taxapplicable").val("22");
     } else {
 	$(".gstinfield").show();
@@ -474,9 +472,7 @@ $(document).ready(function() {
 		$(".product_name_vat").searchify();
 		let vatproductwidth = $(".product_name_vat").parents("td").first().width();
 		$(".product_name_vat").closest("select").width(vatproductwidth);
-		$(".product_name_vat").closest("select").parent().width(vatproductwidth);
 		$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-		$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	    }else{
 		$(".onlyvat").hide();
 		$(".gstvat").show();
@@ -519,19 +515,11 @@ $(document).ready(function() {
 		$(".sgstfield").hide();
 		$(".igstfield").show();
 	    }
-	    $(".product_name_gst").searchify(); //Converting to searcheable combo.
-	    $("td.mdwrap > div").find("select").each(function(i) {
-		$(this).width(optionwidth);
-		$(this).find("option").each(function(i){
-			$(this).width(optionwidth);
-		});
-	});
-	/*    let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
-	    $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
-	    $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
-	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
-	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
-	*/
+	  $(".product_name_gst").searchify();
+          //Converting to searcheable combo.
+          let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
+	  $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
+	  $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
 	}else if($("#vat").is(":checked")){  
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
@@ -543,17 +531,9 @@ $(document).ready(function() {
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	    $(".product_name_vat").searchify();
-	    $("td.mdvwrap > div").find("select").each(function(i) {
-		$(this).width(optionwidth);
-		$(this).find("option").each(function(i){
-			$(this).width(optionwidth);
-		});
-	});
-	    /*let vatproductwidth = $(".product_name_vat").parents("td").first().width();
+	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
 	    $(".product_name_vat").closest("select").width(vatproductwidth);
-	    $(".product_name_vat").closest("select").parent().width(vatproductwidth);
 	    $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-	    $(".product_name_vat").closest("select").find("option").width(vatproductwidth);*/
 	}
     });
 
