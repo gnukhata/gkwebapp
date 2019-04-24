@@ -122,6 +122,7 @@
 	  {% endfor %}
 	</tbody>
       </table>
+			<input hidden id="inv-type" value={{flag}}>
 			<span style="margin:auto; display:table;">
 				{% if  deleteflag ==0 %}
 		<button type="button" class="btn btn-sm btn-danger hidden-print" id="loiback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
@@ -133,10 +134,8 @@
     </div>
     <script type="text/javascript">
      $(document).ready(function() {
-
+			 $("#msspinmodal").modal("hide");
        oninvoice = 0;
-
-       $("#msspinmodal").modal("hide");
 
        $("title").html("GNUKhata")
        $("#loiprint").click(function(event) {
@@ -145,7 +144,8 @@
        $("#loiback").click(function(event) {
          $("#msspinmodal").modal("show");
 	 var dataset = {"flag":$("#invoicetypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
-	 $.ajax(
+	if(sessionStorage.rtflag == 1){
+		$.ajax(
 	   {
 	     type: "POST",
 	     url: "/invoice?action=showlist",
@@ -163,8 +163,12 @@
 	      $("#info").html(resp);
 	    }
 	  );
-			 });
-			 
+	}
+	 else{
+		 sessionStorage.salepurchase = 0;
+		 $("#invoice").click();
+	 }
+       });
 			 $("#loibackdelete").click(function(event) {
          $("#msspinmodal").modal("show");
 	 var dataset = {"flag":$("#invoicetypeselect").val(), "fromdate":$("#fromdate").data("fromdate"),"todate":$("#todate").data("todate")};
@@ -186,8 +190,10 @@
 	      $("#info").html(resp);
 	    }
 	  );
-       });
+	
      });
+
+			 });
     </script>
 
   </body>

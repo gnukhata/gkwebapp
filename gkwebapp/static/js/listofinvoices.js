@@ -255,7 +255,6 @@ $(document).ready(function() {
 
 
     $('#viewprintableversion').click(function(e) {
-        $("#msspinmodal").modal("show");
         var dataset = {
             "flag": $("#invoicetypeselect").val(),
             "fromdate": $("#fromdate").data("fromdate"),

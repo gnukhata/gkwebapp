@@ -1382,7 +1382,8 @@ $(document).ready(function(){
   });
 
   $('#report_li').click(function (e) {
-    // calls add account page.
+    sessionStorage.rtflag = 1;     // flag fot print invoice list back  button
+    sessionStorage.accMenuFlag = 1;   // flag for print account list back button
     $("#msspinmodal").modal("show");
     $.ajax(
       {
@@ -1750,8 +1751,10 @@ $(document).ready(function(){
   });
 
 
-
+  sessionStorage.salepurchase = 1;
+  sessionStorage.inv_type = 0;
   $('#invoice').click(function (e) {// calls base invoice page.
+    
       $("#info").load("/invoice");
       // return false;
   });
