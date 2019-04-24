@@ -55,18 +55,24 @@ $(document).ready(function(){
 	searchify : function(){
 	  var selectwidth = $(this).width(); //Width of original element
 	  var selectheight = $(this).height(); //Height of original element
-	  $(this).searchable({maxListSize: Infinity, maxMultiMatch: Infinity,});  // Function to convert original select element into a searcheable element
-	  //Setting triggerHandler()e dimensions of new element same as that of the original element.
+            var optionwidth = $(this).find("option").width();
+            var optiondivwidth = parseFloat(optionwidth) + 20;
+	    if(!$(this).hasClass("searchifiedselect")){
+                $(this).searchable({maxListSize: Infinity, maxMultiMatch: Infinity,});  // Function to convert original select element into a searcheable element
+                $(this).addClass("searchifiedselect");
+            }
+	    //Setting triggerHandler()e dimensions of new element same as that of the original element.
 	  $(this).width(parseFloat(selectwidth));
 	  $(this).height(parseFloat(selectheight));
-	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
-	    $(this).find("option").each(function() {
+	    $(this).find("option").height(parseFloat(selectheight));
+            var optionsdiv = $(this).closest("div");
+            optionsdiv.find('select[style*="display: none"]').width(optiondivwidth);
+	    optionsdiv.find("option").each(function(index) {
 		if ($(this).html()=="") {
 		    $(this).remove();
 		}
 	    });
 	    $(this).next().next().css({"margin-top":"-7px"});
-	    $(this).next().width(parseFloat(selectwidth));
             $(this).next().css({"margin-bottom":"20px", "max-height":"60vh"});
 	}
     });
