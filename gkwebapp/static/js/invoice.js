@@ -199,6 +199,9 @@ $(document).ready(function() {
 	$("#invoice_create").click();// loads record purchase invoice page by default.
 	return false;
     }
+    else if(sessionStorage.salepurchase == 0){  // load list of invoice in tab. Return from print list of invoice.
+      $("#invoice_view_list").click();
+    }
     else{
 	$("#invoice_record").click();// loads create sale invoice page by default.
 	return false;

@@ -44,6 +44,7 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
+        sessionStorage.accMenuFlag = 1;
         $("#createeditlistofacc_div").html(resp);
       }
       }
@@ -64,6 +65,7 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
+        sessionStorage.accMenuFlag = 1;
         $("#createeditlistofacc_div").html(resp);
       }
       }
@@ -87,10 +89,16 @@ $(document).ready(function() {
        $("#titlehide").hide();
        $("#report_back").hide();
        $("#backbutton").show();
+       sessionStorage.accMenuFlag = 0;   
       }
       }
     );
     });
-    $("#create_account").click();
+    if (sessionStorage.accMenuFlag == 0){
+      $("#list_of_account").click();
+    }
+    else{
+      $("#create_account").click();
+    }
   });
   

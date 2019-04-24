@@ -98,8 +98,9 @@
         window.print();
       });
       $("#loaback").click(function(event) {
-       
-    $.ajax(
+        console.log(sessionStorage.accMenuFlag);
+       if (sessionStorage.accMenuFlag == 1){
+         $.ajax(
       {
 
         type: "POST",
@@ -117,6 +118,12 @@
         }
       }
     );
+       }
+       else{
+         
+          $('#addaccount').click();
+       }
+    
       });
     });
   </script>

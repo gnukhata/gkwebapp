@@ -31,6 +31,7 @@ $(document).ready(function() {
     $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $('.viewlist_date').autotab('number');
+    sessionStorage.rtflag = 1;
 
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
 
