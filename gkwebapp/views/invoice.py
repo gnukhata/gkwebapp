@@ -360,12 +360,6 @@ def showvoucherininvoice(request):
     else:
     	return render_to_response("gkwebapp:templates/index.jinja2",{"status":"Please select an organisation and login again"},request=request)
 
-@view_config(route_name="invoice",request_param="type=delete",renderer="json")
-def Invoicedelete(request):
-    header={"gktoken":request.headers["gktoken"]}
-    invoicedata = requests.delete("http://127.0.0.1:6543/invoice",data =json.dumps({"invid":request.params["invid"]}), headers=header)
-    return {"gkstatus": invoicedata.json()["gkstatus"]}
-
 @view_config(route_name="invoice",request_param="type=cancelinvoice",renderer="json")
 def InvoiceCancel(request):
     header={"gktoken":request.headers["gktoken"]}
