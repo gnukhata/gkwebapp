@@ -170,14 +170,11 @@ $(document).ready(function() {
       }
     );
     });
-    var invoice_id = "";
 
     $("#latable").off('click', '.cancel_inv').on('click', '.cancel_inv', function(e) {
     e.preventDefault();
-    invoice_id = $(this).closest("tr").data("invid");
-    if (invoice_id == "") {
-        return false;
-    }
+    inv_id = $(this).closest("tr").data("invid");
+    if (inv_id != "") {
 	  $('#myModal').modal('hide');
 	  $('#confirm_del').modal('show');
       $('#confirm_del').on('shown.bs.modal', function (e)
@@ -185,70 +182,74 @@ $(document).ready(function() {
                 $("#m_cancel").focus();
 
               });
+                $(document).off('click', '#invdel1').on('click', '#invdel1', function(e) {
+              $.ajax(
+                  {
+                  type: "POST",
+                  url: "/invoice?type=cancelinvoice",
+                  global: false,
+                  async: false,
+                  datatype: "json",
+                  data: {"invid":inv_id},
+                  beforeSend: function(xhr)
+                    {
+                      xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+                    },
+                  success: function(resp)
+                  {
+                      if(resp["gkstatus"]==0){
+                        $('#confirm_del').modal('hide');
+                          $('#confirm_del').on('hidden.bs.modal', function (e)
+                                {
+                                  $("#success-alert1").alert();
+                                  $("#success-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                                    $("#success-alert1").hide();
+                                    var dataset = {
+                                      "flag": $("#invoicetypeselect").val(),
+                                      "fromdate": $("#fromdate").data("fromdate"),
+                                      "todate": $("#todate").data("todate")
+                                  };
+                                  $.ajax({
+                                      type: "POST",
+                                      url: "/invoice?action=showlist",
+                                      global: false,
+                                      async: false,
+                                      datatype: "text/html",
+                                      data: dataset,
+                                      beforeSend: function(xhr) {
+                                          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                                      },
+                                  })
+                                  .done(function(resp) {
+                                      if ($("#invoice_view_list").length>0){
+                                      $("#slectedlist").html(resp);    
+                                      }
+                                      else{$("#info").html(resp);}
+                                  })
+                                  .fail(function() {
+                                      $("#failure-alert1").alert();
+                                      $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                                        $("#failure-alert1").hide();
+                                      });
+                                    })
+                                  });
+                                  }); 
+                          }
+                      else {
+                          $("#notran-del-alert1").alert();
+                          $("#notran-del-alert1").fadeTo(2250, 500).slideUp(500, function(){
+                            $("#notran-del-alert1").hide();
+                          });
+                        }
+                  }
+                  });
+          });
+        }
+        else{
+            return false
+        }
             });
 
-	  $('#invdel1').click(function(event){
-        $.ajax(
-            {
-            type: "POST",
-            url: "/invoice?type=cancelinvoice",
-            global: false,
-            async: false,
-            datatype: "json",
-            data: {"invid":invoice_id},
-            beforeSend: function(xhr)
-              {
-                xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-              },
-            success: function(resp)
-            {
-                if(resp["gkstatus"]==0){
-		          $('#confirm_del').modal('hide');
-                    $('#confirm_del').on('hidden.bs.modal', function (e)
-		                  {
-		                    $("#success-alert1").alert();
-		  		          $("#success-alert1").fadeTo(2250, 500).slideUp(500, function(){
-                              $("#success-alert1").hide();
-                              var dataset = {
-                                "flag": $("#invoicetypeselect").val(),
-                                "fromdate": $("#fromdate").data("fromdate"),
-                                "todate": $("#todate").data("todate")
-                            };
-                            $.ajax({
-                                type: "POST",
-                                url: "/invoice?action=showlist",
-                                global: false,
-                                async: false,
-                                datatype: "text/html",
-                                data: dataset,
-                                beforeSend: function(xhr) {
-                                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                                },
-                            })
-                            .done(function(resp) {
-                                if ($("#invoice_view_list").length>0){
-                                $("#slectedlist").html(resp);    
-                                }
-                                else{$("#info").html(resp);}
-                            })
-                            .fail(function() {
-                                $("#failure-alert1").alert();
-                                $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
-                                  $("#failure-alert1").hide();
-                                });
-                              })
-		  		          });
-		  		          }); 
-                    }
-                else {
-                    $("#notran-del-alert1").alert();
-                    $("#notran-del-alert1").fadeTo(2250, 500).slideUp(500, function(){
-                      $("#notran-del-alert1").hide();
-                    });
-                  }
-            }
-            });
-    });
 
     $('#viewprintableversion').click(function(e) {
         $("#msspinmodal").modal("show");
