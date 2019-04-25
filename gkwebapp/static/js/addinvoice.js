@@ -49,7 +49,11 @@ $(document).ready(function() {
     $('#firstvatprice, #firstgstprice').tooltip({
 	title : tootltiptitle,
 	placement : "bottom"
-    });
+	});
+	$('#roundvalue').tooltip({
+		title : "Round Off Invoice Total",
+		placement : "top"
+	});
     if(sessionStorage.vatorgstflag == '22' ){
 	$(".gstinfield").hide();
 	$(".tinfield").show();
