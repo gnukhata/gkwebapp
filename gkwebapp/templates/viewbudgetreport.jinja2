@@ -36,6 +36,7 @@ border-radius: 5px;
     <div class="panel shadow">
       <div class="panel-heading">
         <h3 class="panel-title">{% trans %}View Budget Report{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#accModal"></i>
       </div>
       <div class="panel-body" style="padding-top:5px">
       <div class="alert alert-danger" id="b_list-alert" aria-live="rude" role="alert" hidden>
@@ -73,6 +74,7 @@ border-radius: 5px;
   <div class="container-fluid" style="padding:1 !important; margin:0 !important;">
       <div class="panel shadow" style="border: 1px solid ;">
         <div class="panel panel-body">
+        <i class="fa fa-question-circle pull-right" style="font-size:16px"data-toggle="modal" data-target="#accModal"></i>
           <div class="panel col-md-4" id="viewreportpage">
           <div class="alert alert-danger" id="b_list-alert" aria-live="rude" role="alert" hidden>
             <label for="b_list">{% trans %}Please select budget!{% endtrans %}</label>
@@ -108,6 +110,27 @@ border-radius: 5px;
     </div>
   {%endif %}
   <input hidden id="menuflag" value={{menuflag}}>
+
+  <div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " >
+        <div class="modal-content ">
+          <div class="modal-header">
+            {% trans %}<strong>Help!</strong>{% endtrans %}
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button> </div> 
+          <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+    
+            <p>   <font color=" #566573" style="font-weight:normal"> {%trans%}
+                This module lets you view budget reports.  Budget reports helps you to match actual figures at the end of budget period with the estimated figures of a budget.<br>
+                To view a budget report, first choose the type of budget. This changes the options displayed in the dropdown, List of Budgets. Choose the budget whose report you want to view and click View button.{% endtrans %} </font>
+    
+            </p>
+          </div>
+    
+        </div>
+      </div>
+          </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewbudgetreport.js')}}"></script>
 </body>
 </html>
