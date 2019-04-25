@@ -144,7 +144,7 @@
   </div>
 </div>
 <div class="col-sm-6" style="margin-top: -67;">
-  {% if userrole|int != 3 %}
+  {# {% if userrole|int != 3 %} #}
     <div class="row">
       <div class="form-group taxdiv">
 	<div class="alert alert-danger" id="tax-name-blank-alert"  aria-live="rude" role="alert" hidden>
@@ -223,7 +223,7 @@
 	<a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
       </div>
     </div>
-  {% endif %}
+  {# {% endif %} #}
   {% if proddesc["gsflag"]==7 %}
     <div class="row noinventory">
 

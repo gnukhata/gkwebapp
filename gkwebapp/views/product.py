@@ -283,6 +283,7 @@ def editproduct(request):
         for tax in taxids:
             taxdata["taxid"] = tax["taxid"]
             taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+
         for tax in taxes:
             if len(tax)!=0:
                 taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
