@@ -170,7 +170,10 @@ $(document).ready(function() {
       }
     );
     });
-
+    $('.cancel_inv').tooltip({
+        title : "Clicking this button will cancel this invoice.",
+        placement : "bottom"
+        });
     $("#latable").off('click', '.cancel_inv').on('click', '.cancel_inv', function(e) {
     e.preventDefault();
     inv_id = $(this).closest("tr").data("invid");
