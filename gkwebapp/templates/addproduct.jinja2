@@ -143,11 +143,9 @@
           </div>
         <form id="addprodform">
           <div class="col-sm-6" >
-	    {% if userrole|int != 3 %}
+	    
               <div class="row" id="serviceproductdiv">
-	    {% else %}
-		<div class="row" hidden id="serviceproductdiv">
-	    {% endif %}
+	   
 	    <div class="form-group form-inline  pd">
 				<div class="col-sm-3">
 	      <label for="additem">{% trans %}Item Type{% endtrans %} :</label><label for="additem" style="color:red;font-size: 120%;">*</label>
