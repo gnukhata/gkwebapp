@@ -65,16 +65,12 @@ $(document).ready(function() {
 	$(".onlyvat").show();
 	$(".gstvat").hide();
 	$(".product_name_vat").searchify();
-	let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-	$(".product_name_vat").closest("select").width(vatproductwidth);
-	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
-	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
 	$(".gstvat").show();
 	$(".onlyvat").hide();
+        $(".product_name_gst").searchify();
     }
 
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
@@ -176,11 +172,6 @@ $(document).ready(function() {
 	      $(".gstfield").hide();
 	      $(".vatfield").show();
 	      $(".product_name_vat").searchify();
-	      let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-	      $(".product_name_vat").closest("select").width(vatproductwidth);
-	      $(".product_name_vat").closest("select").parent().width(vatproductwidth);
-	      $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-	      $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	  }
       }
   });
@@ -921,11 +912,6 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	    $(".product_name_gst").searchify(); //Converting to searcheable combo.
-	    let gstproductwidth = parseFloat($(".product_name_gst").parents("td").first().width())*parseFloat(0.8); //Getting width of td with select field.
-	    $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
-	    $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
-	    $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
-	    $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
 	}else if($("#vat").is(":checked")){  
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
@@ -937,11 +923,6 @@ $(document).ready(function() {
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	    $(".product_name_vat").searchify();
-	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-	    $(".product_name_vat").closest("select").width(vatproductwidth);
-	    $(".product_name_vat").closest("select").parent().width(vatproductwidth);
-	    $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
-	    $(".product_name_vat").closest("select").find("option").width(vatproductwidth);
 	}
     });
      //Keydown event for 'VAT' and 'GST' radio button.
@@ -1598,22 +1579,17 @@ if (event.which == 13) {
     }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	    $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
-	    $(".product_name_gst").searchify(); //Converting to searcheable combo.
-	      let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
-	      $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
-	      $(".product_name_gst").closest("select").parent().width(gstproductwidth); //Setting width of div.
-	      $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
-	      $(".product_name_gst").closest("select").find("option").width(gstproductwidth); //Setting width of option.
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    for (let i = 0; i <= curindex1; i++) {
 		var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
 		$("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
 	    }
-	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
 	    $("#invoicestate").change();
-	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
+	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
+            $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
+            $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	}
 	else {
 	    $("#deliverychallan_noofpackages").focus().select();
@@ -2085,20 +2061,15 @@ if (event.which == 13) {
     }
 	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
-	      $(".product_name_vat").searchify(); //Converting to searcheable combo.
-	      let vatproductwidth = $(".product_name_vat").parents("td").first().width(); //Getting width of td with select field.
-	      $(".product_name_vat").closest("select").width(vatproductwidth); //Setting width of select field.
-	      $(".product_name_vat").closest("select").parent().width(vatproductwidth); //Setting width of div.
-	      $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth); //Setting width of input box.
-	      $(".product_name_vat").closest("select").find("option").width(vatproductwidth); //Setting width of option.
 	  $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	  for (let i = 0; i <= curindex1; i++) {
               var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
 	      $("#invoice_product_table_vat tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
           }
-	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
-	  $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
+	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
+              $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
+              $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus();
 	  }
       else {
           $("#deliverychallan_noofpackages").focus();
