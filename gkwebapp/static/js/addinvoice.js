@@ -41,6 +41,10 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
     $('.supplydate').autotab('number');
+    //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
+    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
+    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
+    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     var tootltiptitle ="Press 'T' to toggle between MRP, Last Selling Price and Selling Price.";
     if($("#status").val() == 9){
 	tootltiptitle = "Press 'T' to toggle between MRP and Last Purchase Price.";
@@ -60,16 +64,13 @@ $(document).ready(function() {
 	$(".onlyvat").show();
 	$(".gstvat").hide();
 	$(".product_name_vat").searchify();
-	let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-	$(".product_name_vat").closest("select").width(vatproductwidth);
-	$(".product_name_vat").closest("select").parent().width(vatproductwidth);
-	$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
         $(".taxapplicable").val("22");
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
 	$(".gstvat").show();
 	$(".onlyvat").hide();
+        $(".product_name_gst").searchify();
     }
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
@@ -103,10 +104,6 @@ $(document).ready(function() {
     var invoicedate = "";
     var numbertowords="";
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
-    //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
-    var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
-    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
-    var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
     var tottaxable;
@@ -470,9 +467,6 @@ $(document).ready(function() {
 		$(".gstfield").hide();
 		$(".vatfield").show();
 		$(".product_name_vat").searchify();
-		let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-		$(".product_name_vat").closest("select").width(vatproductwidth);
-		$(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
 	    }else{
 		$(".onlyvat").hide();
 		$(".gstvat").show();
@@ -516,10 +510,6 @@ $(document).ready(function() {
 		$(".igstfield").show();
 	    }
 	  $(".product_name_gst").searchify();
-          //Converting to searcheable combo.
-          let gstproductwidth = $(".product_name_gst").parents("td").first().width(); //Getting width of td with select field.
-	  $(".product_name_gst").closest("select").width(gstproductwidth); //Setting width of select field.
-	  $(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth); //Setting width of input box.
 	}else if($("#vat").is(":checked")){  
 	    $("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
@@ -531,9 +521,6 @@ $(document).ready(function() {
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	    $(".product_name_vat").searchify();
-	    let vatproductwidth = $(".product_name_vat").parents("td").first().width();
-	    $(".product_name_vat").closest("select").width(vatproductwidth);
-	    $(".product_name_vat").closest("select").parent().find("input").width(vatproductwidth);
 	}
     });
 
