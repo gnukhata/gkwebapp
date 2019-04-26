@@ -158,18 +158,18 @@
 	  <table id="product_edit_tax_table" class="table table-condensed table-bordered fixed-table">
 	    <thead class="bg-primary input-sm">
               <tr>
-		<th class="col-xs-4 text-center"style="width:30px">{% trans %}Tax Name{% endtrans %}</th>
-		<th class="col-xs-4 text-center"style="width:30px">{% trans %}State{% endtrans %}</th>
-		<th class="col-xs-2 text-center"style="width:30px">{% trans %}Rate %{% endtrans %}</th>
-		<th class="col-xs-1"></th>
-		<th class="col-xs-1"></th>
+		<th class="col-xs-4 text-center"style="width:175px">{% trans %}Tax Name{% endtrans %}</th>
+		<th class="col-xs-4 text-center"style="width:175px">{% trans %}State{% endtrans %}</th>
+		<th class="col-xs-2 text-center"style="width:175px">{% trans %}Rate %{% endtrans %}</th>
+		<th class="col-xs-1"style="width:52px"></th>
+		<th class="col-xs-1"style="width:52px"></th>
 		<th class=""></th>
               </tr>
 	    </thead>
 	    <input value="{{vatorgstflag}}" id="vatorgstflag" hidden>
 	    <tbody style="height:30%">
               <tr class="blank" value="new">
-		<td class="col-xs-4"style="width:30px">
+		<td class="col-xs-4"style="width:175px">
 		  <select class="form-control input-sm product_tax_disable tax_name product_new_name">
 		    <option value="" hidden disabled selected>Select Tax</option>
 		    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
@@ -180,7 +180,7 @@
 		    <option value="CVAT">CVAT</option>
 		  </select>
 		</td>
-		<td class="col-xs-4"style="width:30px">
+		<td class="col-xs-4"style="width:175px">
 		  <select class="form-control input-sm tax_state product_new_state product_tax_disable" >
 		    <option value="" hidden disabled selected>Select State</option>
 		    {% for state in states %}
@@ -191,12 +191,12 @@
 		    <option value="" stateid="">None</option>
 		  </select>
 		</td>
-		<td class="col-xs-2"style="width:30px">
+		<td class="col-xs-2"style="width:175px">
 		  <input class="form-control input-sm tax_rate text-right product_new_rate numtype product_tax_disable" placeholder="Rate" value="0.00">
 		</td>
-		<td class="col-xs-1 product_tax_disable">
+		<td class="col-xs-1 product_tax_disable" style="width:52px">
 		</td>
-		<td class="col-xs-1 product_tax_disable">
+		<td class="col-xs-1 product_tax_disable" style="width:52px">
 		  <div style="text-align: center;">
 		    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 		  </div>
