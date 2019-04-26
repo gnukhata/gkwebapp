@@ -602,8 +602,9 @@ $(document).ready(function() {
 	    }
 	}
 	if (event.which == 32) {
-	    event.preventDefault();
-	    $('#salesorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
+	  event.preventDefault();
+          $("#salesorder_customer").prop("disabled", true);
+	  $('#salesorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
     });
     //Change Event for Customer.
