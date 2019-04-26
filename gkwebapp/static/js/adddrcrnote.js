@@ -657,7 +657,6 @@ $(document).ready(function() {
 		}
 	})
 	    .done(function(resp) {
-			console.log("AAAAAAAAAAAAAAAAAAA");
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
 		    //Load invoice data
@@ -699,7 +698,6 @@ $(document).ready(function() {
 			    }
 			})
 			.done(function(resp){
-				console.log("BBBBBBBBBBBBB");
 			    $("#drcrnote_issuer_name_pur").text(resp.unamerole["username"]);
 			  $("#drcrnote_issuer_designation_pur").text(resp.unamerole["userroleName"]);
 			   usrid = resp.unamerole["userid"];
@@ -1479,7 +1477,6 @@ if (!curdate.between(financialstart, financialend)) {
             })
                 .done(function(resp) {
                     if (resp["gkstatus"] == 0) {
-						console.log("CCCCCCCCCCCCCCCCCCCc");
 			if($("#status").val()==3){
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			    if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 1) {
