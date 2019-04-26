@@ -42,7 +42,6 @@ $(document).ready(function() {
 	);
     });
     $("#creditnote_view").click(function() { // calls view credit note page.
-	console.log("Hello");
 	$.ajax(
 	    {
 		type: "POST",
@@ -63,7 +62,6 @@ $(document).ready(function() {
 	);
     });
     $("#debitnote_view").click(function() { // calls view debit note page.
-	console.log("bye bye");
 	$.ajax(
 	    {
 		type: "POST",

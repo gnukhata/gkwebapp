@@ -132,7 +132,6 @@ $("#login").keydown(function(e) {
       {
       if(resp["gkstatus"]==0)
       {
-        console.log("response 0");
         var gt = resp['gktoken'];
         // on successfull login a token is received as response which is stored in sessionstorage.
         sessionStorage.gktoken = gt;
@@ -157,7 +156,6 @@ $("#login").keydown(function(e) {
           }
         })
         .done(function(resp){
-          console.log("in theme");
           sessionStorage.gktheme = resp["theme"];
         });
         sessionStorage.reload = 1;
