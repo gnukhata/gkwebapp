@@ -54,7 +54,7 @@ $(document).ready(function() {
 	placement : "bottom"
 	});
 	$('#roundvalue').tooltip({
-		title : "Round Off Invoice Total",
+		title : "Round Off Total Invoice Value?",
 		placement : "top"
 	});
     if(sessionStorage.vatorgstflag == '22' ){
