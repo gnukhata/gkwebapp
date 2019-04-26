@@ -128,9 +128,15 @@ $(document).ready(function() {
 	$("#edit_branchname").prop("disabled", true);
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
-	
-	if(result["gstin"] != null){
-	    $('#gstintable tbody').empty(); 
+	if(jQuery.isEmptyObject(result["gstin"])){
+		$('#gstintable tbody').empty();
+		$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
+		$('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+		$('#gstintable tbody tr:last td:eq(1) input:eq(0)').val("");
+		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val("None");
+		$('#gstintable tbody tr:last td:eq(1) input:eq(2)').val("");
+	}else{
+		$('#gstintable tbody').empty(); 
 	    for(var gstin in result["gstin"]){
 		var gstinstr = result["gstin"][gstin];
 		$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
@@ -139,9 +145,6 @@ $(document).ready(function() {
 		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
 		$('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
 	    }
-	}else{
-	    $('#gstintable tbody').empty();
-	    $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
 	}
 	for(var i = 0; i < $("#gstintable tbody tr").length; i++) {
 	    if (i > 0) {
