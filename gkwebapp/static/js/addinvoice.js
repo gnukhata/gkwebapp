@@ -70,8 +70,30 @@ $(document).ready(function() {
 	$(".vatfield").hide();
 	$(".gstvat").show();
 	$(".onlyvat").hide();
+<<<<<<< HEAD
         $(".product_name_gst").searchify();
     }
+=======
+	}
+	
+	$("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+
+	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+>>>>>>> collapsable at invoice page
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
@@ -494,7 +516,10 @@ $(document).ready(function() {
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-	    $("#vathelp").hide();
+		$("#vathelp").hide();
+		$("#smalllink").show();	
+	    $("#smalllinkvat").hide();		
+			
 	    $(".tinfield").hide();
 	    $("#gstproducttable").show();  //Shows GST Product table.
 	    $(".gstinfield").show();
@@ -517,7 +542,9 @@ $(document).ready(function() {
 	    $(".gstinfield").hide();
 	    $("#invoice_product_table_vat").show();
 	    $(".tinfield").show();
-	    $("#vathelp").show();
+		$("#vathelp").show();
+		$("#smalllink").hide();
+	    $("#smalllinkvat").show();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	    $(".product_name_vat").searchify();
