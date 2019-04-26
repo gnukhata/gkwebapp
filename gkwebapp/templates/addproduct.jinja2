@@ -253,20 +253,20 @@
 		<div class="alert alert-warning nopadding" id="gstrateEdit"  aria-live="rude" role="alert" hidden>
 		  <strong>{% trans %}Please edit 'GST' rate!{% endtrans %}</strong>
 		</div>
-                <div class="panel taxclass">
+                <div class="panel taxclass table-responsive">
 		  <table id="product_tax_table" class="table table-responsive table-condensed table-bordered fixed-table common">
                     <thead class="bg-primary input-sm">
                       <tr>
-			<th class="col-xs-4 text-center" style="width:30px">{% trans %}Tax Name{% endtrans %}</th>
-			<th class="col-xs-4 text-center"style="width:30px">{% trans %}State{% endtrans %}</th>
-			<th class="col-xs-2 text-center"style="width:30px">{% trans %}Rate %{% endtrans %}</th>
-			<th class="col-xs-1"></th>
-			<th class="col-xs-1"></th>
+			<th class="col-xs-4 text-center" style="width:175px">{% trans %}Tax Name{% endtrans %}</th>
+			<th class="col-xs-4 text-center"style="width:175px">{% trans %}State{% endtrans %}</th>
+			<th class="col-xs-2 text-center"style="width:175px">{% trans %}Rate %{% endtrans %}</th>
+			<th class="col-xs-1"style="width:50px"></th>
+			<th class="col-xs-1" style="width:50px"></th>
                       </tr>
                     </thead>
                     <tbody style="height:30%">
                       <tr>
-			<td class="col-xs-4"style="width:30px">
+			<td class="col-xs-4"style="width:175px">
 			  <select class="form-control input-sm tax_name product_new_name">
 			    <option value="" hidden disabled selected>Select Tax</option>
 			    {%if vatorgstflag=='7' or vatorgstflag=='29' %}
@@ -277,7 +277,7 @@
                               <option value="CVAT">CVAT</option>
 			  </select>
 			</td>
-			<td class="col-xs-4"style="width:30px">
+			<td class="col-xs-4"style="width:175px">
 			  <select class="form-control input-sm tax_state product_new_state" >
 			    <option value="" hidden disabled selected>Select State</option>
                             {% for state in states %}
@@ -287,7 +287,7 @@
                             {% endfor %}
                           </select>
                         </td>
-                        <td class="col-xs-2"style="width:30px">
+                        <td class="col-xs-2"style="width:175px">
 			  <input class="form-control input-sm tax_rate_all text-right product_new_rate numtype"  value="0.00">
 			  <select hidden class="form-control input-sm tax_rate_gst product_new_rate" >
 			    {#<option value="" hidden disabled selected>Select Rate</option>#}
@@ -297,12 +297,12 @@
                             <option value="28" class="text-right">28</option>
                           </select>
 			</td>
-			<td class="col-xs-1">
+			<td class="col-xs-1"style="width:50px">
 			  <div style="text-align: center;">
 			    <span class="glyphicon glyphicon glyphicon-plus addbtn"></span>
 			  </div>
 			</td>
-			<td class="col-xs-1">
+			<td class="col-xs-1"style="width:50px">
 			  <div style="text-align:center;">
 			    <a href="#" class="tax_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 			  </div>
