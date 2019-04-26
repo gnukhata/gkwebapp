@@ -64,7 +64,11 @@ $(document).ready(function(){
   $("#orgname").focusout(function(){
     forname = $("#orgname").val();
   });
-
+//   show pop up
+  $('#sales').tooltip({
+    title : "Accounting entries will be generated automatically on creation of Invoice, Cash Memo and Debit & Credit Notes.",
+    placement : "bottom"
+});
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
     if (str.length==1) {
