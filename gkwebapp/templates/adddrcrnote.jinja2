@@ -289,7 +289,12 @@
 	       <div class="col-md-3">
 		 <label aria-describedby="taxapplicabletext" name="taxflag" >{% trans %}Tax Applicable{% endtrans %} : </label>
 		 <label id="taxapplicabletext" ></label>
-	       </div>
+				 </div>
+				 <div class="col-md-9">
+						<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+		
+						<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+				</div>
 	       {% if drcrflag=="3" %}
 	       <input type="hidden" id="status" value="3">
 	       {% else %}
@@ -315,10 +320,12 @@
 		   </div>
 		   <table id="drcrnote_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote">
 		 {% else %}
+		 <div class="collapse" id="moresmallvat" hidden>
 		     <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 		       <small class="row col-sm-12 form-text text-muted">Use 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		       <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Debit/Credit Note. Press 'Esc' key to exit from the table.</small>
-		     </div>
+				 </div>
+				</div>
 		     
 		     <table id="drcrnote_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablecrnote" hidden>
 		 {% endif %}
@@ -399,7 +406,7 @@
 	       {% endif %}
 	       {% if resultgstvat == '29' or resultgstvat == '7' %}
 		 <div class="row col-sm-12" id="gstproducttable">
-		   <div class="col-sm-12" style="border: solid black 1px; margin-bottom:10px; padding:10;">
+		   <div class="col-sm-12 collapse" id="moresmall" style="border: solid black 1px; margin-bottom:10px; padding:10;">
 		     <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		     <small class="row col-sm-12 form-text text-muted">Use 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		     <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Debit/Credit Note. Press 'Esc' key to exit from the table.</small>

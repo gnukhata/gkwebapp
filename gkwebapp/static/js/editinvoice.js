@@ -437,8 +437,6 @@ $(document).ready(function() {
 		$("#invoice_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
-		$("#smalllinkvat").show();
-		$("#smalllink").hide();
 		$(".gstfield").hide();
 		$(".vatfield").show();
 	    }
@@ -2727,8 +2725,6 @@ if (event.which == 13) {
 			      $("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
 		              $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 					  $("#vathelp").hide();
-					  $("#smalllinkvat").hide();
-						$("#smalllink").show();
 		              $(".tinfield").hide();
 		              $("#gstproducttable").show();  //Shows GST Product table.
 		              $(".gstinfield").show();
@@ -2773,8 +2769,6 @@ if (event.which == 13) {
 		              $("#invoice_product_table_vat").show();
 		              $(".tinfield").show();
 					  $("#vathelp").show();
-					  $("#smalllinkvat").show();
-						$("#smalllink").hide();
 			      $(".gstfield").hide();
 				$(".vatfield").show();
 			    }
@@ -2782,10 +2776,14 @@ if (event.which == 13) {
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
+					$("#smalllinkvat").show();
+					$("#smalllink").hide();
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
 				}
 				else if ($("#taxapplicable").val() ==  '7') {
-				    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+					$("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
+					$("#smalllinkvat").hide();
+					$("#smalllink").show();
 				}
 				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);

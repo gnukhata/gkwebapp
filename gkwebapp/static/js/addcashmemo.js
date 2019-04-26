@@ -63,6 +63,15 @@ $(document).ready(function() {
 	$(".product_name_gst").closest("select").parent().find("input").width(gstproductwidth);
 	$(".product_name_gst").closest("select").find("option").width(gstproductwidth);
     }
+
+    $("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	$("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
   //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
         if (str && str != "") {

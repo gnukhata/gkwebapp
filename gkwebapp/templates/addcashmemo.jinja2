@@ -310,9 +310,10 @@
           {% endif %}
 
           {% if resultgstvat == '29' or resultgstvat == '7' %}
-
+				<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+		
   	    <div class="col-sm-12 row" id="gstproducttable">
-	      <div class="col-sm-12" style=" border: solid black 1px; padding:10;">
+	      <div class="col-sm-12 collapse"  id="moresmall" style=" border: solid black 1px; padding:10;">
 		<div class="col-sm-9">
 		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		<div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
