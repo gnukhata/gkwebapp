@@ -782,7 +782,7 @@ $(document).ready(function() {
 		    $("#totaligst_product_gst").text(0.00);
 	    	    $("#taxapplicabletext").text("GST");
 	            $("#drcrnote_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		    $("#vathelp").hide();
+			$("#vathelp").hide();
 		    $(".tinfield").hide();
 		    $("#gstproducttable").show();  //Shows GST Product table.
 		    $(".gstinfield").show();
@@ -825,6 +825,8 @@ $(document).ready(function() {
 			$("#drcrnote_table_vat").show();
 			$(".tinfield").show();
 			$("#vathelp").show();
+			$("#smalllink").hide();	
+			$("#smalllinkvat").show();
 			$(".gstfield").hide();
 			$(".igstfield").css('border','');
 			$(".vatfield").show();

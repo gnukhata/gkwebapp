@@ -308,7 +308,12 @@
 		<label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :&nbsp </label>
 		<label id="taxapplicabletext" >VAT</label>
 		<input type="text" class="taxapplicable" id="vat" value="22"  hidden>
-	      </div>
+				</div>
+				<div class="col-md-9">
+						<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+		
+						<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+				</div>
 	      {% if gkstatus=="in" %}
 		<input type="hidden" id="status" value="9">
 	      {% else %}
@@ -364,12 +369,14 @@
 		  </div>
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
+		<div class="collapse" id="moresmallvat" hidden>
 		    <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;" id="vathelp" hidden>
 		      <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		      <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		      <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Delivery Note. Press 'Esc' key to exit from the table.</small>
 		      <small class="row col-sm-12 form-text text-muted">Press 'Tab' key after a product is selected.</small>
-		    </div>
+				</div>
+			</div>
 		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		{% endif %}
 		<thead class="bg-primary">
@@ -463,7 +470,7 @@
 	      {% endif %}
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
 		<div class="row col-sm-12" id="gstproducttable">
-		  <div class="col-sm-12" style="border: solid black 1px; margin-bottom:10px; padding:10;">
+		  <div class="col-sm-12 collapse" id="moresmall" style="border: solid black 1px; margin-bottom:10px; padding:10;">
 		    <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		    <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
