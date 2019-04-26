@@ -329,6 +329,7 @@ $(document).ready(function() {
     }
     if (event.which==32){
       event.preventDefault();
+      $("#deliverychallan_customer").prop("disabled", true);
       $('#deliverychallan_addcust').click();
     }
   });
