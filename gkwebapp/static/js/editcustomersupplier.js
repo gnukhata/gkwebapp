@@ -128,8 +128,8 @@ $(document).ready(function() {
 	$("#edit_branchname").prop("disabled", true);
 	$("#edit_ifsc").val(result["bankdetails"]["ifsc"]);
 	$("#edit_ifsc").prop("disabled", true);
-
-	if(resp["gstinlen"] != 0){
+	
+	if(result["gstin"] != null){
 	    $('#gstintable tbody').empty(); 
 	    for(var gstin in result["gstin"]){
 		var gstinstr = result["gstin"][gstin];
