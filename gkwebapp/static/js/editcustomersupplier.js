@@ -133,7 +133,7 @@ $(document).ready(function() {
 		$('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
 		$('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
 		$('#gstintable tbody tr:last td:eq(1) input:eq(0)').val("");
-		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val("None");
+		$('#gstintable tbody tr:last td:eq(1) input:eq(1)').val("NULL");
 		$('#gstintable tbody tr:last td:eq(1) input:eq(2)').val("");
 	}else{
 		$('#gstintable tbody').empty(); 
