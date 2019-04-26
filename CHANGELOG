@@ -1,3 +1,24 @@
+[26 April 2019 Release 6.0]
+* Facility to create,edit and view report of Profit & Loss Budget and cash Budget.
+* Added dynamic dashboard.
+* Facility to cancel invoices and report listing all cancelled invoices.
+* Details of transactions made can be viewed from the preview of invoice.
+* Menu has been shifted from navbar to a new sidebar.
+* Facility to Round off total value of invoice.
+* Deprecated Accounting with Invoicing option.
+* Removed themes that are not compatible.
+* Searchable dropdown for list of accounts in edit account and view ledger screens.
+* Added a new page for listing all reports.
+* Spreadsheets are no longer saved as files but as string buffers. Now they can be download from Windows machines also.
+* Minor bugs resolved. 
+* More obvious way to add customer or supplier from documents viz.Invoice, delivery note and purchase/sales order.
+* Prevented click jacking attack.
+* A bank account is created when bank details are entered in company setup/edit organisation.
+* Added '+' button in product table of transfer note.
+* Some screens have been made more responsive.
+* New tab for list of accounts in accounts module.
+* Enhanced existing help screen added new ones.
+
 [29 November 2018 Release 5.50]
 * Implemented GSTR1 Report and Spreadsheet.  
 * Presentation of Profit and Loss Report revised.  
