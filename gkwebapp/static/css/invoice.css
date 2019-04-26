@@ -134,3 +134,6 @@
  .noborder {
      border-style: none !important;
  }
+ .tooltip {
+     min-width: 150px !important;
+ }
