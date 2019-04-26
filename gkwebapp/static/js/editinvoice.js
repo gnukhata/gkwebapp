@@ -45,7 +45,25 @@ $(document).ready(function() {
     $('#firstvatprice, #firstgstprice').tooltip({
 	title : tootltiptitle,
 	placement : "bottom"
-    });
+	});
+	
+	$("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+
+	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
 
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
@@ -419,6 +437,8 @@ $(document).ready(function() {
 		$("#invoice_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
+		$("#smalllinkvat").show();
+		$("#smalllink").hide();
 		$(".gstfield").hide();
 		$(".vatfield").show();
 	    }
@@ -2706,7 +2726,9 @@ if (event.which == 13) {
 				$("#totaligtax").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 			      $("#totalinvcess").text(parseFloat(resp.invoicedata.totalcessamt).toFixed(2));
 		              $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		              $("#vathelp").hide();
+					  $("#vathelp").hide();
+					  $("#smalllinkvat").hide();
+						$("#smalllink").show();
 		              $(".tinfield").hide();
 		              $("#gstproducttable").show();  //Shows GST Product table.
 		              $(".gstinfield").show();
@@ -2750,7 +2772,9 @@ if (event.which == 13) {
 		              $(".gstinfield").hide();
 		              $("#invoice_product_table_vat").show();
 		              $(".tinfield").show();
-		              $("#vathelp").show();
+					  $("#vathelp").show();
+					  $("#smalllinkvat").show();
+						$("#smalllink").hide();
 			      $(".gstfield").hide();
 				$(".vatfield").show();
 			    }

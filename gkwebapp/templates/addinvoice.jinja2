@@ -277,6 +277,11 @@
 		  <label id="taxapplicabletext" >VAT</label>
 		  <input type="text" class="taxapplicable" id="vat" value="22"  hidden>
 		</div>
+		<div class="col-md-9">
+				<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+
+				<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+		</div>
 		{% if gkstatus=="in" %}
 		  <input type="hidden" id="status" value="9">
 		{% else %}
@@ -344,7 +349,8 @@
 		      </div>
 		    </div>
 		    <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
-		  {% else %}
+			{% else %}
+			<div class="collapse" id="moresmallvat" hidden>
 		      <div class="col-sm-12 bg-info" id="vathelp" style="padding:10;" hidden>
 			<div class="col-sm-9">
 			  <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
@@ -365,7 +371,7 @@
 			  {% endif %}
 			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
-		      </div>
+		      </div></div>
 		      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		  {% endif %}
 		  <thead class="bg-primary">
@@ -466,8 +472,8 @@
 		      </table>
 		{% endif %}
 		{% if resultgstvat == '29' or resultgstvat == '7' %}
-		  <div class="row col-sm-12" id="gstproducttable">
-		    <div class="col-sm-12" style=" border: solid black 1px; padding:10">
+		  <div class="row col-sm-12 " id="gstproducttable">
+		    <div class="col-sm-12 collapse" id="moresmall" style=" border: solid black 1px; padding:10">
 		      <div class="row col-sm-9">
 			<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 			<div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>

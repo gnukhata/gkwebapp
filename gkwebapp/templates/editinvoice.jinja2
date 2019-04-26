@@ -295,7 +295,15 @@
 		      <label id="taxapplicabletext" >VAT</label>
 		      <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
 		    {% endif %}
-		  </div>
+			</div>
+			<div class="col-md-9">
+					{% if resultgstvat == '29' or resultgstvat == '7' %}
+					<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+					{% else %}
+					<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+					{% endif %}
+
+			</div>
 		  {% if status=="in" %}
 		    <input type="hidden" id="status" value="9">
 		  {% else %}
@@ -362,7 +370,9 @@
 			</div>
 		      </div>
 		      <table id="invoice_product_table_vat" class="vatfield table table-condensed table-bordered fixed-table fixed-tablepurchase">
-		    {% else %}
+				{% else %}
+
+			<div class="collapse" id="moresmallvat" hidden>				
 			<div class="col-sm-12 bg-info" style="padding:10;" id="vathelp" hidden>
 			  <div class="col-sm-9">
 			    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
@@ -382,7 +392,7 @@
 			    {% endif %}
 			    <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			  </div>
-			</div>
+			</div></div>
 			<table id="invoice_product_table_vat" class="vatfield table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		    {% endif %}
 		    <thead class="bg-primary">
@@ -480,7 +490,8 @@
 		  {% endif %}
 		  {% if resultgstvat == '29' or resultgstvat == '7' %}
 		    <div class="row col-sm-12" id="gstproducttable">
-		      <div class="col-sm-12" style=" border: solid black 1px; padding:10;">
+
+		      <div class="col-sm-12 collapse" id="moresmall" style=" border: solid black 1px; padding:10;">
 			<div class="col-sm-9">
 			  <div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
@@ -500,7 +511,8 @@
 			  {% endif %}
 			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
-		      </div>
+					</div>
+					
 		      <div class="col-sm-10" style="overflow-x:scroll;">
 			<div class="row">
 			  <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
