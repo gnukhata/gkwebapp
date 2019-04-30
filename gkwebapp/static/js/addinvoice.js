@@ -70,11 +70,9 @@ $(document).ready(function() {
 	$(".vatfield").hide();
 	$(".gstvat").show();
 	$(".onlyvat").hide();
-<<<<<<< HEAD
-        $(".product_name_gst").searchify();
+    $(".product_name_gst").searchify();
     }
-=======
-	}
+	
 	
 	$("#moresmall").on('shown.bs.collapse', function(event) {
 		event.preventDefault();
@@ -93,7 +91,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
->>>>>>> collapsable at invoice page
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {

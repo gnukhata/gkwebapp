@@ -45,7 +45,27 @@ $(document).ready(function() {
 	$(".tinfield").hide();
 	$("#invoice_product_table_vat").hide();
 	$(".gsttable").show();
-    }
+	}
+	
+		
+	$("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+
+	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+
     var taxflag;
     var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
@@ -583,7 +603,9 @@ $(document).ready(function() {
 			    $('#invoice_product_table_gst tbody').empty();
 			    $('#invoice_product_table_total tbody').empty();
 			    $(".vatfield").hide();
-			    $(".gsttable").show();
+				$(".gsttable").show();
+				$("#smalllink").show();
+				$("#smalllinkvat").hide();
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
 				$('.product_name_gst:eq(' + curindex + ')').val(value.productdesc).attr("data-productcode",key);
@@ -656,7 +678,9 @@ $(document).ready(function() {
 			    $("#totaltax").val(parseFloat(resp.invDetails.totaltaxamt).toFixed(2));
 			    $("#total_product_vat").val(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
 			    $(".gstfield").hide();
-			    $(".vatfield").show();
+				$(".vatfield").show();
+				$("#smalllink").hide();
+				$("#smalllinkvat").show();
 			}    			    
 			if(resp["invDetails"]["taxflag"] == 7){
 			    $(".gstinfield").show();

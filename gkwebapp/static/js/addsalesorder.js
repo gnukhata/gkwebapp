@@ -48,7 +48,25 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
     }
+	
+	$("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
 
+	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+    
     //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -317,6 +335,8 @@ $(document).ready(function() {
 		$("#taxapplicable").val("7");
 		$("#salesorder_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 		$("#vathelp").hide();
+		$("#smalllink").show();	
+	    $("#smalllinkvat").hide();
 		$(".tinfield").hide();
 		$("#gstproducttable").show();  //Shows GST Product table.
 		$(".gstinfield").show();
@@ -334,6 +354,8 @@ $(document).ready(function() {
 		$("#salesorder_product_table_vat").show();
 		$(".tinfield").show();
 		$("#vathelp").show();
+		$("#smalllinkvat").show();	
+	    $("#smalllink").hide();
 		$(".gstfield").hide();
 		$(".vatfield").show();
 		$(".reversepurchase").hide();

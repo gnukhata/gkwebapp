@@ -254,6 +254,11 @@
 	    </div >
 	  </div>
 	</div>
+	<div>
+		<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+
+		<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Intruction<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+</div>
 	<a id="taxapplicablescroll"></a>
 	<!--     -----------------------Start Table-----------------------------------  -->
 	<div class="col-md-12" id="rejectionnote_product_div">
@@ -269,10 +274,11 @@
 	  <div class="panel">
 	    <!-- VAT Table start -->
 	    <div class="vatfield">
+				<div class="collapse" id="moresmallvat">
 	      <div class="col-sm-12" style="margin-bottom:10px; padding:5;" id="vathelp">
 		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Rejection Note. Press 'Esc' key to exit from the table.</small>
-	      </div>
+	      </div></div>
 	      <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
 		<thead class="bg-primary">
 		  <tr>
@@ -355,7 +361,7 @@
 	    </div>
 	    <!-- GST Table -->
 	    <div class="gsttable">
-	      <div class="col-sm-12" style="border: solid black 1px; margin-bottom:10px; padding:10;">
+	      <div class="col-sm-12 collapse" id="moresmall" style="border: solid black 1px; margin-bottom:10px; padding:10;">
 		<div class="row col-sm-12 text-primary">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</div>
 		<small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		<small class="row col-sm-12 form-text text-muted">Press 'Insert' key to Save Rejection Note.</small>
