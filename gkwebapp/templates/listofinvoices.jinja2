@@ -206,6 +206,13 @@
 		      {% if invoice["cancelflag"] == 1 %}               
                 <a href="#" class="cancel_inv" ><span class="glyphicon glyphicon-remove"></span></a>
                 {% endif %}
+                {% if invoice["billentryflag"] == 0 %}               
+                {% if invoice["inoutflag"] == 9 %}
+                <a href="#" class="inv_payment"><span>P</span></a>
+                {% else %}
+                <a href="#" class="inv_receipt"><span>R</span></a>
+                    {% endif %} 
+                {% endif %}
                </td>
                {% endif %}
             </tr>

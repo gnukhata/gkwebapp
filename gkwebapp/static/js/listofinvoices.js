@@ -28,6 +28,16 @@ $(document).ready(function() {
     $(".fixed-table-loading").remove();
     var currentrow = 0;
 
+    $(".inv_receipt").click(function(){
+        console.log("receipt");
+        $('#showreceipt').click();
+      });
+      
+      $(".inv_payment").click(function(){
+        console.log("payment");
+        $('#showpayment').click();
+      });
+
     if($("#invoiceviewlistdiv").length==0){
         if($("#latabledel").length > 0){
             $('#latabledel tbody tr:first td:eq(1) a').focus();
