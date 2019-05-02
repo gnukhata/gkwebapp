@@ -80,7 +80,7 @@ $(document).ready(function() {
 	  });
 	  $("#moresmall").on('hidden.bs.collapse', function(event) {
 		event.preventDefault();
-		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+		$("#smalllink").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
 
 	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
@@ -89,7 +89,7 @@ $(document).ready(function() {
 	  });
 	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
 		event.preventDefault();
-		$("#smalllinkvat").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
     
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.

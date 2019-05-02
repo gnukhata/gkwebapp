@@ -70,7 +70,7 @@ $(document).ready(function() {
 	  });
 	$("#moresmall").on('hidden.bs.collapse', function(event) {
 		event.preventDefault();
-		$("#smalllink").html('Intruction <span class="glyphicon glyphicon-triangle-bottom"></span>');
+		$("#smalllink").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
   //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date

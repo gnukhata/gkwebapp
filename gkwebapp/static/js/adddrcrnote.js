@@ -14,6 +14,24 @@ $(document).ready(function() {
 	var usrid = "" ;
 	let lastdrcr = $("#drcrnote_no").val();
 
+	$("#moresmall").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmall").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllink").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+
+	  $("#moresmallvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
+    
     if($("#sale").is(":checked"))  {
 	$("#drcrnote_invoice").searchify();
 	$("#drcrnote_invoice").removeClass("col-sm-8");
@@ -783,6 +801,8 @@ $(document).ready(function() {
 	    	    $("#taxapplicabletext").text("GST");
 	            $("#drcrnote_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 			$("#vathelp").hide();
+			$("#smalllink").show();	
+			$("#smalllinkvat").hide();
 		    $(".tinfield").hide();
 		    $("#gstproducttable").show();  //Shows GST Product table.
 		    $(".gstinfield").show();
