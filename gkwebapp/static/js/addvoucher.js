@@ -2109,6 +2109,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	  form_data.append("invoice", $("#invsel option:selected").text());
       }
       $("#msspinmodal").modal("show");
+      console.log(form_data);
     $.ajax({
       type: "POST",
       url: "/addvoucher",
@@ -2347,7 +2348,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   });
 
   $('#reset').click(function(event) {
-$("#show"+$("#vtype").val()).click();
+    if($("#voucher_modal").length==0){
+$("#show"+$("#vtype").val()).click();}
+else{
+  $('#voucher_modal').modal('hide');
+}
   });
   $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
   {

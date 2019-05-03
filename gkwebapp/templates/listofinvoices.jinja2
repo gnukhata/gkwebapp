@@ -188,7 +188,7 @@
          </thead>
          <tbody>
            {% for invoice in gkresult %}
-             <tr data-invid="{{invoice["invid"]}}" data-csflag="{{invoice["csflag"]}}">
+             <tr data-invid="{{invoice["invid"]}}" data-csflag="{{invoice["csflag"]}}" data-billentryflag="{{invoice["billentryflag"]}}" data-inoutflag="{{invoice["inoutflag"]}}">
             <td class="srnowrap text-center">{{invoice["srno"]}}</td>
             <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
             <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
@@ -252,9 +252,11 @@
 	 </div>
        </div>
        <div class="col-sm-3 col-sm-offset-4" id="buttondiv">
-	  <button type="button" class="btn btn-sm btn-danger pull-right hidden-print" id="list_backbutton" accesskey="b" style="margin-left:10px;">{% trans %}<u>B</u>ack{% endtrans %}</button>
+    <button type="button" class="btn btn-sm btn-danger pull-right hidden-print" id="list_backbutton" accesskey="b" style="margin-left:10px;">{% trans %}<u>B</u>ack{% endtrans %}</button>
       <button type="button" class="btn btn-sm btn-primary pull-right hidden-print" id="printbutton" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
-     <button type="button" class="btn btn-sm btn-info pull-right hidden-print" id="viewattachment" accesskey="e" style="display:none">{% trans %}Vi<u>e</u>w Attachment{% endtrans %}</button> 
+      <button type="button" class="btn btn-sm btn-primary pull-right hidden-print" id="inv_pay" accesskey="">{% trans %}Pay{% endtrans %}</button> 
+      <button type="button" class="btn btn-sm btn-primary pull-right hidden-print" id="inv_rec" style="margin-right:10px" accesskey="">{% trans %}Pay{% endtrans %}</button>     
+      <button type="button" class="btn btn-sm btn-info pull-right hidden-print" id="viewattachment" accesskey="e" style="display:none">{% trans %}Vi<u>e</u>w Attachment{% endtrans %}</button> 
        </div>
      </div>  
 
@@ -278,11 +280,10 @@
          </div>
        </div><!-- /.modal -->
        
-       <div id="voucher_modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" style="width:100% !important">
+
+          <div id="voucher_modal" class="modal fade"  tabindex="-1" role="dialog" data-keyboard="false">
           <div class="vertical-alignment-helper">
-
-    <div class="modal-dialog modal-lg vertical-align-center">
-
+    <div class="modal-dialog modal-lg vertical-align-center" style="width:90%;">
              <div class="modal-content">  
             <div class="modal-body" id="show_voucher"></div>
              </div><!-- /.modal-content -->
