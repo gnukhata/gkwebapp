@@ -28,15 +28,51 @@ $(document).ready(function() {
     $(".fixed-table-loading").remove();
     var currentrow = 0;
 
-    $(".inv_receipt").click(function(){
-        console.log("receipt");
-        $('#showreceipt').click();
-      });
-      
-      $(".inv_payment").click(function(){
-        console.log("payment");
-        $('#showpayment').click();
-      });
+function vouchercall(vtype,inv_id){
+    $.ajax(
+        {
+        type: "POST",
+        url: "/showvoucher",
+        global: false,
+        async: false,
+        datatype: "json",
+          data : {
+            "type":vtype,
+            "invflag":sessionStorage.invsflag,
+            "financialstart": sessionStorage.yyyymmddyear1,
+            "modeflag": sessionStorage.modeflag,
+            "invsflag": sessionStorage.invsflag,
+            "billflag": sessionStorage.billflag
+          },
+        beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+        success: function(resp)
+        {
+            $('#myModal').modal('hide');
+            $('#voucher_modal').modal('show');
+            $('#voucher_modal').on('shown.bs.modal', function (e)
+                    {
+                        console.log(inv_id);
+                      $("#show_voucher").html(resp);
+                      $("#invsel").val(inv_id).change();
+                      $('#invsel').prop('disabled', true);
+                    });
+        }   
+        }
+      );
+}
+$(document).off('click', '.inv_receipt').on('click', '.inv_receipt', function(e) {
+    inv_id = $(this).closest("tr").data("invid");
+    vouchercall("receipt",inv_id)
+  });
+
+$(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e) {
+    inv_id = $(this).closest("tr").data("invid");
+console.log(inv_id); 
+    vouchercall("payment",inv_id)
+  });     
 
     if($("#invoiceviewlistdiv").length==0){
         if($("#latabledel").length > 0){
@@ -416,6 +452,8 @@ $(document).ready(function() {
         e.preventDefault();
 	invoice_id = "";
         invoice_id = $(this).data("invid");
+        console.log(invoice_id);
+
         if (invoice_id == "") {
             return false;
         }
