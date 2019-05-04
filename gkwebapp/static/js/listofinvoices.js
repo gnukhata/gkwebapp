@@ -230,6 +230,14 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         title : "Clicking this button will cancel this invoice.",
         placement : "bottom"
         });
+        $('.inv_payment').tooltip({
+        title : "Make Payment",
+        placement : "bottom"
+        });
+        $('.inv_receipt').tooltip({
+        title : "Receive Payment",
+        placement : "bottom"
+        });  
     $("#latable").off('click', '.cancel_inv').on('click', '.cancel_inv', function(e) {
     e.preventDefault();
     inv_id = $(this).closest("tr").data("invid");
