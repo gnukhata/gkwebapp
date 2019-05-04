@@ -94,6 +94,14 @@
     </style>
    </head>
    <body>
+      <div class="alert alert-success" id="success-alert-voucher"  aria-live="rude" role="alert" hidden>
+          {% trans %}Voucher created successfully.{% endtrans %}
+        </div>
+        
+        <div class="alert alert-danger" id="failure-alert-voucher"  aria-live="rude" role="alert" hidden>
+          {% trans %}Voucher could not be created.{% endtrans %}
+        </div>
+
             <div class="alert alert-success" id="success-alert1" hidden>
                   {% trans %}Invoice cancelled successfully.{% endtrans %}
                </div>
@@ -281,11 +289,11 @@
        </div><!-- /.modal -->
        
 
-          <div id="voucher_modal" class="modal fade"  tabindex="-1" role="dialog" data-keyboard="false">
+          <div id="voucher_modal" class="modal fade"  tabindex="-1" role="dialog" data-keyboard="false" >
           <div class="vertical-alignment-helper">
-    <div class="modal-dialog modal-lg vertical-align-center" style="width:90%;">
+    <div class="modal-dialog modal-lg vertical-align-center" id="mod_dialog">
              <div class="modal-content">  
-            <div class="modal-body" id="show_voucher"></div>
+            <div class="modal-body"  id="show_voucher"></div>
              </div><!-- /.modal-content -->
            </div><!-- /.modal-dialog -->
          </div>

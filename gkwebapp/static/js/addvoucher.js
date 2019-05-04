@@ -64,9 +64,10 @@ $(document).ready(function() {
 	$("#voucherno").show();
 	$("#vno").focus().select();
     }
+    if($("#voucher_modal").length == 0){
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
-
+    }
     /*Calculator Popover*/
     $('[data-toggle="popover"]').popover({
         html: true,
@@ -2127,16 +2128,17 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       success: function(resp)
 	{
 	    if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-		$("#reset").click();
 		if(resp.paymentstatus == true){
 		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
 		}
 		$("#success-alert").alert();
 		if(sessionStorage.avnoflag==1){
 		    $("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
-		}
+    }
+
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
-		    $("#success-alert").hide();
+        $("#success-alert").hide();
+    $("#reset").click();        
             //Modal asking the user if he wants to do bill wise accounting or not?
               if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && resp.paymentstatus == false) {
               $("#confirm_yes_billwise").modal("show");
@@ -2351,6 +2353,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if($("#voucher_modal").length==0){
 $("#show"+$("#vtype").val()).click();}
 else{
+  $("#msspinmodal").modal("hide");
   $('#voucher_modal').modal('hide');
 }
   });

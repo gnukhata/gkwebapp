@@ -50,12 +50,24 @@ function vouchercall(vtype,inv_id){
           },
         success: function(resp)
         {
+            console.log(sessionStorage.modeflag);
+            if(sessionStorage.modeflag == 0){
+                $("#mod_dialog").css("width",'95%');
+            }
             $('#voucher_modal').modal('show');
             $('#voucher_modal').on('shown.bs.modal', function (e)
             {
                 $("#show_voucher").html(resp);
+                if(sessionStorage.modeflag != 0){
+                    $("#forinvoice").removeClass("col-md-6");
+                    $("#mod_dialog").removeClass("modal-lg");
+                    $("#mod_dialog").addClass("modal-md");
+                }
                 $("#invsel").val(inv_id).change();
                 $('#invsel').prop('disabled', true);
+                $("#addcust").hide();
+                $("#popup").hide();
+
 });
         }   
         }
@@ -299,7 +311,8 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         }
             });
 
-            $('#voucher_modal').on('hide.bs.modal', function (e){
+            $('#voucher_modal').on('hidden.bs.modal', function (e){
+               if( $("#custsupmodal").is(":hidden")){
                 var dataset = {
                     "flag": $("#invoicetypeselect").val(),
                     "fromdate": $("#fromdate").data("fromdate"),
@@ -325,7 +338,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                   $("#failure-alert1").hide();
                 });
               })
-            
+            }
             });
 
 

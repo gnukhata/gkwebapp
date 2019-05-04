@@ -27,9 +27,10 @@ Contributors:
 // This script is for user friendly voucher page for payment and receipt
 
 $(document).ready(function() {
+  if($("#voucher_modal").length==0){
   $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
   $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
-
+  }
   $("#amount").numeric({ negative: false });
   $("#b-amount").numeric({ negative: false });
   $("#c-amount").numeric({ negative: false });
@@ -104,7 +105,12 @@ $(document).ready(function() {
 
   $("#reset").click(function(event) {
     event.preventDefault();
+    if($("#voucher_modal").length==0){
     $("#show"+$("#vtype").val()).click();
+    }
+    else{
+  $('#voucher_modal').modal('hide');
+    }
   });
 
   var delta = 600;
@@ -321,7 +327,7 @@ $(document).ready(function() {
   });
 
     $("#addcust").click(function(event) {
-	event.preventDefault();
+  event.preventDefault();
 	var statusinout;
     if ($("#vtype").val() == 'payment') {
       statusinout = "in";
@@ -343,10 +349,13 @@ $(document).ready(function() {
       success: function(resp) {
 
         $("#viewcustsup").html("");
+
         $('.modal-backdrop').remove();
         $('.modal').modal('hide');
+
         $("#viewcustsup").html(resp);
           $('#custsupmodal').modal('show');
+
         $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
 			      {
             $('#add_cussup_name').focus();

@@ -530,7 +530,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 		    }
 		    else
 		    {
-			//If godownflag is hidden, i.e when user is godownkeeper focus shifts to godown name.
+			//If godownflag , i.e when user is godownkeeper focus shifts to godown name.
 			if ($("#godownflag").is(":hidden")) {
 			    $(".godown_name:first").focus();
 			}
