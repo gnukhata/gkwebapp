@@ -83,6 +83,7 @@ def showaddsalesorder(request):
 def savepurchaseorder(request):
     header={"gktoken":request.headers["gktoken"]}
     purchaseorderdata = {"orderno":request.params["orderno"],"orderdate":request.params["orderdate"],"creditperiod":request.params["creditperiod"],"payterms":request.params["payterms"], "modeoftransport":request.params["modeoftransport"],"schedule":json.loads(request.params["schedule"]),"taxstate":request.params["taxstate"],"psflag":request.params["psflag"],"csid":request.params["csid"], "tax":json.loads(request.params["tax"]),"cess":json.loads(request.params["cess"]), "sourcestate":request.params["sourcestate"], "taxflag":request.params["taxflag"], "orgstategstin":request.params["orgstategstin"], "consignee":json.loads(request.params["consignee"]), "freeqty":json.loads(request.params["freeqty"]), "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"], "discount":json.loads(request.params["discount"]), "paymentmode":request.params["paymentmode"], "purchaseordertotal":request.params["purchaseordertotal"], "pototalwords":request.params["pototalwords"]}
+    purchaseorderdata["roundoffflag"] = request.params["roundoffflag"]
     if "togodown" in request.params:
         purchaseorderdata["togodown"] = request.params["togodown"]
     if "bankdetails" in request.params:

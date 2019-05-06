@@ -606,15 +606,37 @@
 	      </div>
 	    </div>
 	  </div>
-	  <div class="row hborderdiv" style="border-bottom-style:solid;">
-	    <div class="form-group form-inline">
-	      <div class="col-sm-6">
-		<label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Total Purchase Order Value{% endtrans %} :</label>
-	      </div>
-	      <div class="col-sm-6 text-right">
-		<label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"> {{ gkresult["purchaseordertotal"] }} </label>
-	      </div>
-	    </div>
+	<div class="row hborderdiv">
+	  <div class="col-sm-6">
+	    <label for="totalinvoicevalue" style="font-size:130% !important;">
+			{% if gkresult["psflag"] == 16 %}
+			{% trans %}Total Purchase Order Value{% endtrans %} :
+			{% else %}
+			{% trans %}Total Sales Order Value{% endtrans %} :
+			{% endif %}
+			</label>
+	  </div>
+	  <div class="col-sm-6 text-right">
+	    <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["purchaseordertotal"] }}</label>
+	    
+	  </div>
+	</div>
+{% if gkresult["roundedoffflag"] == 1  %}
+	<div id="roundoff_div" class="row hborderdiv" style="border-bottom-style:solid;" >
+	  <div class="col-sm-6">
+	    <label for="totalinvoicevalue" style="font-size:130% !important;">
+			{% if gkresult["psflag"] == 16 %}
+			{% trans %}Total Purchase Order Value :<br>(<i> Rounded Off </i>){% endtrans %} 
+			{% else %}
+			{% trans %}Total Sales Order Value :<br>(<i> Rounded Off </i>){% endtrans %} 
+			{% endif %}
+			</label>
+	  </div>
+	  <div class="col-sm-6 text-right">
+	    <label id="totalinvoicevalueroundedoff" style="font-size:130% !important; font-weight:normal !important">{{ gkresult["roundedoffvalue"] }}</label>
+	  </div>
+	</div>
+	{% endif %}
 	  </div>
 	  
 	</div>

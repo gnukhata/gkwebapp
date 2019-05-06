@@ -44,7 +44,9 @@ $(document).ready(function() {
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var selectedproduct = "";
-    var gstins = {};
+	var gstins = {};
+	// for round of feature
+	let roundoffflag = 0;  
 
     //Initialising some variables.
     var issuername = "";
@@ -2480,7 +2482,24 @@ else {
     }
 
   });
-    
+$("#roundoff_checkbox").change(function(e){
+	if ($("#roundoff_checkbox").is(":checked")){
+		$("#roundoff_div").show();
+		if($("#totalinvoicevalue").text() != "" || $("#totalinvoicevalue").text() != 0){
+			$("#totalinvoicevalueroundedoff").text((Math.round(parseFloat($("#totalinvoicevalue").text()))).toFixed(2));
+		}
+		else{
+			$("#totalinvoicevalueroundedoff").text("");
+		}
+		roundoffflag = 1;
+	}
+	else{
+		$("#roundoff_div").hide();
+		roundoffflag = 0;
+	}
+});
+
+
 
 
     $(document).off("click", ".product_del").on("click", ".product_del", function(event){
@@ -3069,6 +3088,7 @@ else {
     });
     $('#dc_save_yes').click(function (e){
 	var form_data = new FormData();
+	form_data.append("roundoffflag", roundoffflag);
 	form_data.append("custid", $("#deliverychallan_customer option:selected").val());
 	form_data.append("dcno", $("#deliverychallan_challanno").val());
 	form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());

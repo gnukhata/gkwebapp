@@ -39,7 +39,8 @@ $(document).ready(function() {
     //Events that are triggered when the page for creating an salesorder is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.salesorderdate').autotab('number');  //Focus shifts from fields among date fields.
-    $('.supplydate').autotab('number');
+	$('.supplydate').autotab('number');
+	let roundoffflag = 0;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
 	$(".tinfield").show();
@@ -148,10 +149,28 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+
 	let numbertowords = "";
-	var res = totalamount.toString();
+	var res;
+	if ($("#roundoff_checkbox").is(":checked")){
+		$("#roundoff_div").show();
+		if($("#totalsalesordervalue").text() != "" || $("#totalsalesordervalue").text() != 0){
+			$("#totalsalesordervalueroundedoff").text((Math.round(parseFloat($("#totalsalesordervalue").text()))).toFixed(2));
+		}
+		else{
+			$("#totalsalesordervalueroundedoff").text("");
+		}
+		res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		roundoffflag = 1;
+	}
+	else{
+		$("#roundoff_div").hide();
+		res = totalamount.toString();
+		roundoffflag = 0;
+	}
 	var str = res.split(".");
 	var len = str[1];
+	
 	if(totalamount!=0){
 		if(str[1] != undefined){
 		    if(len.length == 1){
@@ -207,7 +226,23 @@ $(document).ready(function() {
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
 	let numbertowords = "";
-	var res = totalamount.toString();
+	var res;
+	if ($("#roundoff_checkbox").is(":checked")){
+		$("#roundoff_div").show();
+		if($("#totalsalesordervalue").text() != "" || $("#totalsalesordervalue").text() != 0){
+			$("#totalsalesordervalueroundedoff").text((Math.round(parseFloat($("#totalsalesordervalue").text()))).toFixed(2));
+		}
+		else{
+			$("#totalsalesordervalueroundedoff").text("");
+		}
+		res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		roundoffflag = 1;
+	}
+	else{
+		$("#roundoff_div").hide();
+		res = totalamount.toString();
+		roundoffflag = 0;
+	}
 	var str = res.split(".");
 	var len = str[1];
 	if(totalamount!=0){
@@ -226,7 +261,7 @@ $(document).ready(function() {
 		numbertowords = "Zero"+" "+ "Rupees";
 	    }
 	$("#totalValueInWord").text(numbertowords);
-    }
+	}
 
     //Delivery Note number select field is hidden when inventory is disabled.
     if(sessionStorage.invflag==0){
@@ -2268,7 +2303,15 @@ if (event.which == 13) {
 		}
 	    }
 	}
-    });
+	});
+	$("#roundoff_checkbox").change(function(e){
+		if($("#taxapplicable").val() == 7){
+			$('.salesorder_product_quantity_gst').change();
+		}
+		else{
+			$(".salesorder_product_quantity_vat").change();
+		}
+	});
 
     $("#rev2radio").keydown(function(event) {
 	if (event.which == 13) {
@@ -2736,7 +2779,8 @@ if (event.which == 13) {
     $('.modal').modal('hide');
     $('#confirm_yes').modal('show').one('click', '#tn_save_yes', function(e) {
 	if (allow == 1){
-	    var form_data = new FormData();
+		var form_data = new FormData();
+		form_data.append("roundoffflag", roundoffflag);
 	    form_data.append("csid", $("#salesorder_customer option:selected").val());
 	    if ($("#togodown option:selected").val() > 0) {
 		form_data.append("togodown", $("#togodown option:selected").val());

@@ -569,7 +569,7 @@
 		</div>
 	      </div>
 	    </div>
-	    <div class="row hborderdiv" style="border-bottom-style:solid;">
+	    <div class="row hborderdiv" >
 	      <div class="form-group form-inline">
 		<div class="col-sm-6">
 		  <label for="totalinvoicevalue" style="font-size:130% !important;">{% trans %}Grand Total{% endtrans %} :</label>
@@ -578,6 +578,18 @@
 		  <label id="totalinvoicevalue" style="font-size:130% !important; font-weight:normal !important"> {{ gkresult["delchaldata"]["delchaltotal"] }} </label>
 		</div>
 	      </div>
+	    </div>
+			{% if gkresult["delchaldata"]["roundoffflag"] == 1  %}
+			<div class="row hborderdiv" style="border-bottom-style:solid;">
+	      <div class="form-group form-inline">
+		<div class="col-sm-6">
+		  <label for="totalinvoicevalueroundoff" style="font-size:130% !important;">{% trans %}Grand Total :<br>(<i> Rounded Off </i>){% endtrans %} </label>
+		</div>
+		<div class="col-sm-6 text-right">
+		  <label id="totalinvoicevalueroundoff" style="font-size:130% !important; font-weight:normal !important"> {{ gkresult["delchaldata"]["roundedoffvalue"] }} </label>
+		</div>
+	      </div>
+				{% endif %}
 	    </div>
 	  </div>
 	</div>

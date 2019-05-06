@@ -322,7 +322,14 @@ $(document).ready(function() {
 	    $("#totalcess_product_gst").text(parseFloat(resp.delchaldata.totalcessamt).toFixed(2));
 	    $("#total_product_gst").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
 	    $("#taxableamount").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
-	    $("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
+		$("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
+		// if (resp.delchaldata.roundoffflag == 1){
+		// 	$("#roundoff_div").show();
+		// 	$("#totalinvoicevalueroundoff").text(parseFloat(resp.delchaldata.delchaldata.roundedoffvalue).toFixed(2));
+		// }
+		// else{
+		// 	$("#roundoff_div").hide();
+		// }
 	    $("#totalsgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totalcgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totaligtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));

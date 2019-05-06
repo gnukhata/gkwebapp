@@ -32,6 +32,7 @@ $(document).ready(function() {
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
     
+	let roundoffflag = 0;
     if($("#sale").is(":checked"))  {
 	$("#drcrnote_invoice").searchify();
 	$("#drcrnote_invoice").removeClass("col-sm-8");
@@ -44,7 +45,6 @@ $(document).ready(function() {
 	$("#drcrnote_invoice_purchase").parent().addClass("col-sm-8 nopadding");
 	$("#drcrnote_invoice_purchase").next().addClass("invoiceselect");
     }
-    
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
 	/* Act on the event */
@@ -657,7 +657,23 @@ $(document).ready(function() {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
     }
-
+	$("#roundoff_checkbox").change(function(e){
+		if ($("#roundoff_checkbox").is(":checked")){
+			$("#roundoff_div").show();
+			if($("#totaldrcrnotevalue").text() != "" || $("#totaldrcrnotevalue").text() != 0){
+				$("#totaldrcrnotevalueroundedoff").text((Math.round(parseFloat($("#totaldrcrnotevalue").text()))).toFixed(2));
+			}
+			else{
+				$("#totaldrcrnotevalueroundedoff").text("");
+			}
+			
+			roundoffflag = 1;
+		}
+		else{
+			$("#roundoff_div").hide();
+			roundoffflag = 0;
+		}
+	});
     //1 start
     $("#drcrnote_invoice, #drcrnote_invoice_purchase").change(function(event){
 	$("label.col-sm-8, #taxapplicabletext, .input-group-addon, .summarylabel").text("");
@@ -1450,7 +1466,7 @@ if (!curdate.between(financialstart, financialend)) {
       }else{
 	  form_data.append("drcrmode", 18);
       }
-	  
+	  form_data.append("roundoffflag", roundoffflag);
       form_data.append("drcrno", $("#drcrnote_no").val());
       form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
       if($("#reference").prop('checked') == true)
@@ -1478,9 +1494,9 @@ if (!curdate.between(financialstart, financialend)) {
       voucherdetails["cess"] = cess;
 
       form_data.append("vdetails",JSON.stringify(voucherdetails));
-	
     $('.modal-backdrop').remove();
-    $('.modal').modal('hide');
+	$('.modal').modal('hide');
+	
       $('#confirm_yes').modal('show').one('click', '#dc_save_yes', function(e) {
 	  if (allow == 1){
 	    $.ajax({

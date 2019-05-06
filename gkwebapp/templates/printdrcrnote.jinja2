@@ -534,7 +534,7 @@
 	      </div>
 	    </div>
 	  {% endif %}
-	  <div class="row hborderdiv" style="border-bottom-style:solid;">
+	  <div class="row hborderdiv" >
 	    <div class="col-sm-6">
 	      <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Total Payable Value{% endtrans %} :</label>
 	    </div>
@@ -542,6 +542,16 @@
 	      <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["totreduct"] }}</label>
 	    </div>
 	  </div>
+		{% if gkresult["roundedoffflag"] == 1 %}
+	<div class="row hborderdiv" style="border-bottom-style:solid;">
+	  <div class="col-sm-6">
+	    <label for="totalinvoicevalueroundoff" style="font-size:100% !important;">{% trans %}Total Payable Value :<br>(<i> Rounded Off </i>){% endtrans %} :</label>
+	  </div>
+	  <div class="col-sm-6 text-right">
+	    <label id="totalinvoicevalueroundoff" style="font-size:100% !important; font-weight:normal !important">{{ gkresult["roundedoffvalue"] }}</label>
+	  </div>
+	</div>
+	{% endif %}
 	</div>
       </div>
 

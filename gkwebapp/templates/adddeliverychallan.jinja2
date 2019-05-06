@@ -700,7 +700,9 @@
 	      <div class="col-sm-4" style="margin-top:0.7cm;">
 		<div class="row hborderdiv">
 		  <div class="form-group form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="taxableamount" style="font-size:100% !important;">{% trans %}Taxable Value{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -710,7 +712,9 @@
 		</div>
 		<div class="row hborderdiv gstfield sgstfield">
 		  <div class="form-group sgstfield form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalsgtax" style="font-size:100% !important;">{% trans %}Total SGST{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -720,7 +724,9 @@
 		</div>
 		<div class="row hborderdiv gstfield sgstfield">
 		  <div class="form-group sgstfield form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalcgtax" style="font-size:100% !important;">{% trans %}Total CGST{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -730,7 +736,9 @@
 		</div>
 		<div class="row hborderdiv gstfield igstfield">
 		  <div class="form-group igstfield form-inline">
-		    <div class="col-sm-6">
+		    <div class="col-sm-5">
+				<div class="col-sm-1">
+			</div>
 		      <label for="totaligtax" style="font-size:100% !important;">{% trans %}Total IGST{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -740,7 +748,9 @@
 		</div>
 		<div class="row hborderdiv gstfield">
 		  <div class="form-group form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalinvcess" style="font-size:100% !important;">{% trans %}Total CESS{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -750,7 +760,9 @@
 		</div>
 		<div class="row hborderdiv vatfield">
 		  <div class="form-group form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalinvtax" style="font-size:100% !important;">{% trans %}Total Tax{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -760,7 +772,9 @@
 		</div>
 		<div class="row hborderdiv">
 		  <div class="form-group form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalinvdiscount" style="font-size:100% !important;">{% trans %}Total Discount{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
@@ -768,13 +782,28 @@
 		    </div>
 		  </div>
 		</div>
-		<div class="row hborderdiv" style="border-bottom-style:solid;">
+		<div class="row hborderdiv" >
 		  <div class="form-group form-inline">
-		    <div class="col-sm-6">
+			<div class="col-sm-1">
+				<input type="checkbox" id="roundoff_checkbox" style="">
+			</div>
+		    <div class="col-sm-5">
 		      <label for="totalinvoicevalue" style="font-size:100% !important;">{% trans %}Grand Total{% endtrans %} :</label>
 		    </div>
 		    <div class="col-sm-6 text-right">
 		      <label id="totalinvoicevalue" style="font-size:100% !important; font-weight:normal !important"></label>
+		    </div>
+		  </div>
+		</div>
+		<div id= "roundoff_div" class="row hborderdiv" style="border-bottom-style:solid;" hidden>
+		  <div class="form-group form-inline">
+			<div class="col-sm-1">
+			</div>
+		    <div class="col-sm-5">
+		      <label for="totalinvoicevalueroundedoff" style="font-size:100% !important;">{% trans %}Grand Total :<br>(<i> Rounded Off </i>){% endtrans %} </label>
+		    </div>
+		    <div class="col-sm-6 text-right">
+		      <label id="totalinvoicevalueroundedoff" style="font-size:100% !important; font-weight:normal !important"></label>
 		    </div>
 		  </div>
 		</div>
