@@ -59,8 +59,15 @@ $(document).ready(function() {
   function raiseAlertById(id) {
     $(id).alert();
     $(id).fadeTo(2250, 500).slideUp(500, function() {
-	$(id).hide();
-	$("#msspinmodal").modal("hide");
+  $(id).hide();
+  $("#msspinmodal").modal("hide");
+  if(id=="#success-alert"){
+    $("#reset").click();
+  if($('#voucher_modal').length>0)  {
+  $('#voucher_modal').modal('hide');}
+
+  }
+  
     });
 
   }
@@ -109,7 +116,31 @@ $(document).ready(function() {
     $("#show"+$("#vtype").val()).click();
     }
     else{
-  $('#voucher_modal').modal('hide');
+      var inv = $("#invsel option:selected").attr("total"); //Total amount of invoices.
+      var invbalance = $("#invsel option:selected").attr("balance");  //Balance of invoices.
+    if ($.trim(inv)!="")
+    {
+        $("#invtotal").val(parseFloat(inv).toFixed(2));  //Total amount of invoice is displayed.
+        $("#invbalance").val(parseFloat(invbalance).toFixed(2));  //Balance of invoice is displayed.
+    }
+    else
+      {
+    //Total and balance displayed are set to zero when no invoice is selected.
+        $("#invtotal").val(parseFloat(0).toFixed(2));
+        $("#invbalance").val(parseFloat(0).toFixed(2));
+        inv = 0;
+        invbalance = 0;
+      }
+      //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
+      var value = $('#invsel option:selected').attr("customername");
+    $("#amount").val(invbalance);
+    if(value){
+        $('#pname option').each(function(index) {
+      if ($(this).text() == value) {
+          $(this).prop("selected", true);
+      }
+        });
+      }
     }
   });
 
@@ -569,7 +600,6 @@ $(document).ready(function() {
       },
       success: function(resp) {
         if(resp.gkstatus == true) { // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
-            $("#reset").click();
 	    if(resp.paymentstatus == true){
 		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
 	    }

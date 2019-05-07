@@ -2138,7 +2138,11 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
         $("#success-alert").hide();
-    $("#reset").click();        
+    $("#reset").click();  
+    if($("#voucher_modal").length>0){
+      $("#msspinmodal").modal("hide");
+      $('#voucher_modal').modal('hide');
+    }
             //Modal asking the user if he wants to do bill wise accounting or not?
               if (($("#vouchertype").val() == "receipt" || $("#vouchertype").val() == "payment") && sessionStorage.billflag == 1 && numberofcustomers == 1 && resp.paymentstatus == false) {
               $("#confirm_yes_billwise").modal("show");
@@ -2353,8 +2357,50 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if($("#voucher_modal").length==0){
 $("#show"+$("#vtype").val()).click();}
 else{
-  $("#msspinmodal").modal("hide");
-  $('#voucher_modal').modal('hide');
+  
+  var inv = $("#invsel option:selected").attr("total"); //Total amount of invoices.
+  var invbalance = $("#invsel option:selected").attr("balance");  //Balance of invoices.
+if ($.trim(inv)!="")
+{
+    $("#invtotal").val(parseFloat(inv).toFixed(2));  //Total amount of invoice is displayed.
+    $("#invbalance").val(parseFloat(invbalance).toFixed(2));  //Balance of invoice is displayed.
+}
+else
+  {
+//Total and balance displayed are set to zero when no invoice is selected.
+    $("#invtotal").val(parseFloat(0).toFixed(2));
+    $("#invbalance").val(parseFloat(0).toFixed(2));
+    inv = 0;
+    invbalance = 0;
+  }
+  //Customer/Supplier is picked up from invoice and corresponding account is selected automatically.
+  var value = $('#invsel option:selected').attr("customername");
+  if (($('#vtype').val()=="sales" || $('#vtype').val()=="purchase") && sessionStorage.invsflag ==1) {
+$(".dramt:first").val(parseFloat(inv).toFixed(2)).change();
+$(".cramt:eq(1)").val(parseFloat(inv).toFixed(2)).change();
+  }
+  if (($('#vtype').val()=="receipt" || $('#vtype').val()=="payment") && sessionStorage.billflag ==1) {
+$(".dramt:first").val(parseFloat(invbalance).toFixed(2)).change();
+$(".cramt:eq(1)").val(parseFloat(invbalance).toFixed(2)).change();
+  }
+  if(value){
+if ((($('#vtype').val()=="sales" && sessionStorage.invsflag ==1)  || ($('#vtype').val()=="payment") && sessionStorage.billflag == 1))
+{
+    $('.accs:first option').each(function(index) {
+  if ($(this).text() == value) {
+      $(this).prop("selected", true);
+  }
+    });
+}
+if (($('#vtype').val()=="purchase" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="receipt" && sessionStorage.billflag == 1))
+{
+    $('.accs:eq(1) option').each(function(index) {
+  if ($(this).text() == value) {
+      $(this).prop("selected", true);
+  }
+    });
+}
+  }
 }
   });
   $('#confirm_yes_billwise, #bwtable').on('hidden.bs.modal', function (e) // hidden.bs.modal is an event which fires when the modal is closed
