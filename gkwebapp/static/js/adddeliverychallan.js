@@ -59,6 +59,11 @@ $(document).ready(function() {
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();  //HTML for VAT Product Table row.
 
+	$('#roundoff_checkbox').tooltip({
+		title : "Round Off Grand Total Value?",
+		placement : "top"
+	});
+
     var vatorgstflag = sessionStorage.vatorgstflag;
     if(sessionStorage.vatorgstflag == '22' ){
 	$(".gstinfield").hide();

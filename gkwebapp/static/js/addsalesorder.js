@@ -68,6 +68,11 @@ $(document).ready(function() {
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
     
+	$('#roundoff_checkbox').tooltip({
+		title : "Round Off Total Value?",
+		placement : "top"
+	});
+
     //Initialising some variables.
     var issuername = "";
     var designation = "";
@@ -103,7 +108,7 @@ $(document).ready(function() {
 	var totalcess = 0.00;
 	var totaldiscount = 0.00;
 	var totaltaxable = 0.00;
-
+	
 	$('.salesorder_product_taxablevalue_gst:eq(' + curindex + ')').val(parseFloat(rowtaxableamount).toFixed(2)); //Taxable amount is displayed.
 
 	let sgstrate = $('.salesorder_product_sgstrate:eq(' + curindex + ')').val();

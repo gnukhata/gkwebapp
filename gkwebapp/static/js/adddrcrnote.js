@@ -33,6 +33,12 @@ $(document).ready(function() {
 	  });
     
 	let roundoffflag = 0;
+
+	$('#roundoff_checkbox').tooltip({
+		title : "Round Off Total Amount?",
+		placement : "top"
+	});
+
     if($("#sale").is(":checked"))  {
 	$("#drcrnote_invoice").searchify();
 	$("#drcrnote_invoice").removeClass("col-sm-8");
