@@ -614,7 +614,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 		  $("#add_cussup_address").focus();
 		  return false;
               }
-              $("#add_cussup_fax").focus();
+              $("#add_cussup_pin").focus();
               // optional - if we'd rather not detect a triple-press
               // as a second double-press, reset the timestamp
               thisKeypressTime = 0;
@@ -631,11 +631,39 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
               $("#add_cussup_address").focus();
               return false;
 	  }
-          $("#add_cussup_fax").focus();
+          $("#add_cussup_pin").focus();
       }
     if (event.which==38) {
       event.preventDefault();
       $("#add_state").focus();
+    }
+  });
+  $("#add_cussup_pin").keydown(function(event) {
+    if (event.which==13) {
+	  event.preventDefault();
+		var pincode_val=($("#add_cussup_pin").val());
+		var reg = /^[0-9]+$/;
+	  if (pincode_val == "") {
+		$("#pin-blank-alert").alert();
+		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert").hide();
+		});
+		$("#add_cussup_pin").focus();
+		return false;
+			}
+	else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$("#pinval-blank-alert").alert();
+			$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+			});
+			$("#add_cussup_pin").focus();
+			return false;
+			}
+			$("#add_cussup_fax").focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_address").focus().select();
     }
   });
   $("#add_cussup_fax").keydown(function(event) {
@@ -645,7 +673,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_address").focus().select();
+      $("#add_cussup_pin").focus().select();
     }
   });
   $("#add_cussup_pan").keydown(function(event) {
@@ -847,7 +875,28 @@ if($("#vatorgstflag").val() == '22'){
       });
       $("#add_cussup_address").focus();
       return false;
-    }
+	}
+
+	//Validation for pin code number
+	var pincode_val=($("#add_cussup_pin").val());
+	var reg = /^[0-9]+$/;
+	if (pincode_val == "") {
+		$("#pin-blank-alert").alert();
+		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#pin-blank-alert").hide();
+		});
+		$("#add_cussup_pin").focus();
+		return false;
+	  }
+	else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$("#pinval-blank-alert").alert();
+			$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+			});
+			$("#add_cussup_pin").focus();
+			return false;
+			}
+				
 	
     var gobj = {}; // Creating a dictionary for storing statecode with gstin.
       $("#gstintable tbody tr").each(function(){
@@ -901,10 +950,11 @@ if($("#vatorgstflag").val() == '22'){
       var custtan  = "";
       if ($("#add_cussup_tan").length > 0) {
 	  custtan = $("#add_cussup_tan").val();
-      } 
+	  } 
 	var form_data = new FormData();
 	form_data.append("custname", $("#add_cussup_name").val());
 	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
+	form_data.append("pincode", $("#add_cussup_pin").val());
 	form_data.append("custphone", $("#add_cussup_phone").val());
 	form_data.append("custemail", $("#add_cussup_email").val());
 	form_data.append("custfax", $("#add_cussup_fax").val());
@@ -928,7 +978,7 @@ if($("#vatorgstflag").val() == '22'){
 	}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
-	    var csflag = $("#add_cussup input:radio:checked").val();
+		var csflag = $("#add_cussup input:radio:checked").val();
 	  $.ajax({
 	      url: '/customersuppliers?action=save',
 	      type: 'POST',

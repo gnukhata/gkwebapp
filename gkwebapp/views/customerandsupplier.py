@@ -81,7 +81,8 @@ def getcustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=save",renderer="json")
 def savecustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
-    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"])}
+    print request.params
+    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"pincode":request.params["pincode"]}
     if request.params.has_key("bankdetails"): 
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
     if "gstin" in request.params:
@@ -99,7 +100,7 @@ def savecustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
-    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"])}
+    dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"]),"pincode":request.params["pincode"]}
     if request.params.has_key("bankdetails"):
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
     if request.params.has_key("gstin"):

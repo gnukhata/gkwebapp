@@ -71,7 +71,16 @@
       <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
 	{% trans %}Please enter address!{% endtrans %}
-      </div>
+			</div>
+			<div class="alert alert-danger" id="pin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+					{% trans %}Please enter PIN Code!{% endtrans %}
+							</div>
+				<div class="alert alert-danger" id="pinval-blank-alert"  aria-live="rude" role="alert" hidden>
+
+					{% trans %}Please enter proper PIN Code!{% endtrans %}
+						
+				</div>
       <div class="alert alert-danger" id="tin-blank-alert"  aria-live="rude" role="alert" hidden>
 
 	{% trans %}Please enter TIN!{% endtrans %}
@@ -185,29 +194,29 @@
 	  <div id="scrollbar" class="hidden-load" hidden>
             <div class="col-md-6">
 	      <div class="row">
-		<div class="form-group col-sm-6 hidden-load" hidden>
+		<div class="form-group hidden-load" hidden>
 		  <label id="edit_cussuplabel" for="edit_cussup">{% trans %}Role:{% endtrans %}</label><label for="edit_cussup" style="color:red;font-size: 120%;">*</label>
 		  <input class="form-control input-sm" type="text" id="edit_cussup" disabled >
-		</div>
+				</div>
+			</div>
+		<div class="row">
 		<div class="form-group col-sm-6 hidden-load" hidden>
 		  <label for="edit_cussup_name" class="custlbl">{% trans %}New Name of Customer :{% endtrans %}</label><label for="edit_cussup_name" class="custlbl" style="color:red;font-size: 120%;">*</label>
 		  <label for="edit_sup_name" class="suplbl">{% trans %}New Name of Supplier :{% endtrans %}</label><label for="edit_cussup_name" class="suplbl" style="color:red;font-size: 120%;">*</label>
 		  <input class="form-control input-sm" id="edit_cussup_name" placeholder="{% trans %}Enter Name{% endtrans %}" >
 		</div>
-	      </div>
-	      <div class="row">
 		<div class="form-group hidden-load col-sm-6" hidden>
-		  <label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
-		  <input class="form-control input-sm"type="email" id="edit_cussup_email">
+				<label for="edit_cussup_email">{% trans %}Email:{% endtrans %}</label>
+				<input class="form-control input-sm"type="email" id="edit_cussup_email">
+			</div>
 		</div>
+	      {% if vatorgstflag == '29' or vatorgstflag == '7' %}				
+	      <div class="row">
 		<div class="form-group hidden-load col-sm-6" hidden>
 		  <label for="edit_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
 		  <input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
 		</div>
-	      </div>
-	      {% if vatorgstflag == '29' or vatorgstflag == '7' %}
-		<div class="row">
-		  <div class="form-group hidden-load col-sm-6" hidden>
+		<div class="form-group hidden-load col-sm-6" hidden>
 		    <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_state" style="color:red;font-size: 120%;">*</label>
 		    <select class="form-control input-sm add-state" id="edit_state">
 		      <option value="">Select State</option>
@@ -219,11 +228,18 @@
 		    </select>
 		</select>
 		  </div>
+	      </div>
+		<div class="row">
+
 		  <div class="form-group hidden-load col-sm-6" hidden>
 		    <label for="edit_cussup_address">Address:</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
 		    <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
 		    <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
-		  </div>
+			</div>
+			<div class="form-group hidden-load col-sm-6" hidden>
+					<label for="edit_cussup_pin">{% trans %}PIN Code:{% endtrans %}</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
+					<input class="form-control input-sm" type="text" id="edit_cussup_pin"></input>
+				</div>
 		</div>
 		<div class="row">
 		  <div class="form-group hidden-load col-sm-6" hidden>

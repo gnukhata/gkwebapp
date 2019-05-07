@@ -115,6 +115,8 @@ $(document).ready(function() {
 	$("#edit_state").prop("disabled", true);
 	$("#edit_cussup_fax").val(result["custfax"]);
 	$("#edit_cussup_fax").prop("disabled", true);
+	$("#edit_cussup_pin").val(result["pincode"]);
+	$("#edit_cussup_pin").prop("disabled", true);
 	$("#edit_cussup_pan").val(result["custpan"]);
 	$("#edit_cussup_pan").prop("disabled", true);
 	$("#edit_cussup_tan").val(result["custtan"]);
@@ -319,7 +321,7 @@ $(document).ready(function() {
           $("#edit_cussup_address").focus();
           return false;
         }
-        $("#edit_cussup_fax").focus();
+        $("#edit_cussup_pin").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
         thisKeypressTime = 0;
@@ -336,11 +338,39 @@ $(document).ready(function() {
               $("#edit_cussup_address").focus();
               return false;
           }
-          $("#edit_cussup_fax").focus();
+          $("#edit_cussup_pin").focus();
       }
     if (event.which==38) {
       event.preventDefault();
       $("#edit_state").focus();
+    }
+  });
+  $("#edit_cussup_pin").keydown(function(event) {
+    if (event.which==13) {
+	  event.preventDefault();
+	  var pincode_val=$("#edit_cussup_pin").val();
+	  var reg = /^[0-9]+$/;
+	  if (pincode_val == "") {
+		$("#pin-blank-alert").alert();
+		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert").hide();
+		});
+		$("#edit_cussup_pin").focus();
+		return false;
+			}
+	else if (!reg.test(pincode_val) || pincode_val.length != 6) {	
+		$("#pinval-blank-alert").alert();
+		$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+		});
+		$("#edit_cussup_pin").focus();
+		return false;
+	}	
+			$("#edit_cussup_fax").focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#edit_cussup_address").focus().select();
     }
   });
   $("#edit_cussup_fax").keydown(function(event) {
@@ -350,7 +380,7 @@ $(document).ready(function() {
     }
     if (event.which==38){
       event.preventDefault();
-      $("#edit_cussup_address").focus().select();
+      $("#edit_cussup_pin").focus().select();
     }
   });
 
@@ -929,6 +959,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_email").prop("disabled", false);
     $("#edit_cussup_phone").prop("disabled", false);
     $("#edit_cussup_address").prop("disabled", false);
+    $("#edit_cussup_pin").prop("disabled", false);
     $("#edit_cussup_fax").prop("disabled", false);
     $("#edit_cussup_pan").prop("disabled", false);
 	$("#edit_cussup_tan").prop("disabled", false);
@@ -1018,7 +1049,27 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       });
       $("#edit_cussup_address").focus();
       return false;
-    }
+	}
+
+	//Validation for pin code number
+	var pincode_val=$("#edit_cussup_pin").val();
+	var reg = /^[0-9]+$/;
+	if (pincode_val == "") {
+		$("#pin-blank-alert").alert();
+		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#pin-blank-alert").hide();
+		});
+		$("#edit_cussup_pin").focus();
+		return false;
+	  }
+	  else if (!reg.test(pincode_val) || pincode_val.length != 6) {	
+		$("#pinval-blank-alert").alert();
+		$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+		});
+		$("#edit_cussup_pin").focus();
+		return false;
+	}
 
         // Validation for bank details
 	if (!($("#edit_accountno").val() == "" && $("#edit_bankname").val() == "" && $("#edit_branchname").val() == "" && $("#edit_ifsc").val() == "")){
@@ -1103,6 +1154,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	form_data.append("custaddr", $.trim($("#edit_cussup_address").val()));
 	form_data.append("custphone", $("#edit_cussup_phone").val());
 	form_data.append("custemail", $("#edit_cussup_email").val());
+	form_data.append("pincode", $("#edit_cussup_pin").val());
 	form_data.append("custfax", $("#edit_cussup_fax").val());
 	form_data.append("custpan", $("#edit_cussup_pan").val());
 	form_data.append("custtan", custtan);

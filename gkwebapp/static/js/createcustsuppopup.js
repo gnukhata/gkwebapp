@@ -587,7 +587,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
             $("#add_cussup_address").focus();
             return false;
           }
-        $("#add_cussup_fax").focus();
+        $("#add_cussup_pin").focus();
         // optional - if we'd rather not detect a triple-press
         // as a second double-press, reset the timestamp
         thisKeypressTime = 0;
@@ -605,13 +605,41 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
             $("#add_cussup_address").focus();
             return false;
         }
-        $("#add_cussup_fax").focus();
+        $("#add_cussup_pin").focus();
     }    
       
       if (event.which==38) {
 	  event.preventDefault();
 	  $("#add_state").focus();
       }
+  });
+  $("#add_cussup_pin").keydown(function(event) {
+    if (event.which==13) {
+	  event.preventDefault();		
+	  var pincode_val=($("#add_cussup_pin").val());
+	  var reg = /^[0-9]+$/;
+	if (pincode_val == "") {
+		$("#pin-blank-alert-popup").alert();
+		$("#pin-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert-popup").hide();
+		});
+		$("#add_cussup_pin").focus();
+		return false;
+			}
+		else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$("#pinval-blank-alert-popup").alert();
+			$("#pinval-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pinval-blank-alert-popup").hide();
+			});
+			$("#add_cussup_pin").focus();
+			return false;
+			}	
+			$("#add_cussup_fax").focus();
+    }
+    if (event.which==38) {
+      event.preventDefault();
+      $("#add_cussup_address").focus().select();
+    }
   });
   $("#add_cussup_fax").keydown(function(event) {
     if (event.which==13) {
@@ -620,7 +648,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
     if (event.which==38) {
       event.preventDefault();
-      $("#add_cussup_address").focus().select();
+      $("#add_cussup_pin").focus().select();
     }
   });
     
@@ -814,7 +842,27 @@ else{
       });
       $("#add_cussup_address").focus();
       return false;
-    }
+	}
+
+	//validation for pincode number
+	var pincode_val=($("#add_cussup_pin").val());
+	var reg = /^[0-9]+$/;
+	if (pincode_val == "") {
+		$("#pin-blank-alert-popup").alert();
+		$("#pin-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert-popup").hide();
+		});
+		$("#add_cussup_pin").focus();
+		return false;
+		  }
+	  else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+		  $("#pinval-blank-alert-popup").alert();
+		  $("#pinval-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#pinval-blank-alert-popup").hide();
+		  });
+		  $("#add_cussup_pin").focus();
+		  return false;
+		  }
 
       // Validation for bank details
 	if (!($("#cust_accountno").val() == "" && $("#cust_bankname").val() == "" && $("#cust_branchname").val() == "" && $("#cust_ifsc").val() == "")){
@@ -885,6 +933,7 @@ else{
       var form_data = new FormData();
 	form_data.append("custname", $("#add_cussup_name").val());
 	form_data.append("custaddr", $.trim($("#add_cussup_address").val()));
+	form_data.append("pincode", $("#add_cussup_pin").val());
 	form_data.append("custphone", $("#add_cussup_phone").val());
 	form_data.append("custemail", $("#add_cussup_email").val());
 	form_data.append("custfax", $("#add_cussup_fax").val());
