@@ -52,7 +52,7 @@ $(document).ready(function() {
 	$("#drcrnote_invoice").searchify();
 	$("#drcrnote_invoice").removeClass("col-sm-8");
 	$("#drcrnote_invoice").parent().addClass("col-sm-8 nopadding");
-	$("#drcrnote_invoice").next().addClass("invoiceselect");
+	$("#drcrnote_invoice").next().addClass("invoiceselect");	
     }
     else{
 	$("#drcrnote_invoice_purchase").searchify();
@@ -70,7 +70,8 @@ $(document).ready(function() {
     $("input[name='invoice']").click(function () {
 	//Checking which radio button is selected.
 	if($("#sale").is(":checked"))  {
-	    $(".salediv").show();
+		$(".salediv").show();
+		$(".goq").show();		
 	    $(".purchasediv").hide();
 	    $("#drcrnote_invoice").show();
 	    $("#drcrnote_invoice").val("");
@@ -88,7 +89,8 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice_purchase").val("");
 	    $("#drcrnote_invoice_purchase").change();
 	    $("#drcrnote_invoice").hide();
-	    $(".salediv").hide();
+		$(".salediv").hide();
+		$(".goq").hide();				
 	    $(".purchasediv").show();
 	    $("#drcrnote_invoice").val("");
 	    $("#drcrnote_invoice_purchase").searchify();
@@ -351,7 +353,8 @@ $(document).ready(function() {
 	    
 	}
 	}
-    });
+	});
+
     //reference filed validation
     //to hide and show refernce fields date and number of drcrnote.
       $("#reference").change(function() {
@@ -811,14 +814,14 @@ $(document).ready(function() {
 				if($("#return").is(":checked")){
 				    $('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').prop("disabled", true);
 				    $('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').prop("disabled", false);
-				    $(".creditedvalue").hide();
+					$(".creditedvalue").hide();
 				    $(".totalwrap").css("width", "42%");
 			    
 				}
 				else {
 				    $('#drcrnote_product_table_gst tbody tr:last td:eq(4) input').prop("disabled", false);
 				    $('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').prop("disabled", true);
-				    $(".creditedvalue").show();
+					$(".creditedvalue").show();
 				    $(".totalwrap").css("width", "49%");
 				}
 			    }
@@ -1114,9 +1117,9 @@ $(document).ready(function() {
     $(this).closest('tr').fadeOut(200, function() {
       $(this).closest('tr').remove(); //closest method gives the closest element productified
 	if($("#return").is(":checked")){
-	    $("#drcrnote_table_vat tbody tr:first td:eq(1) input").focus();
+		$("#drcrnote_table_vat tbody tr:first td:eq(1) input").focus();
 	}else if($("#discount").is(":checked")){
-	    $("#drcrnote_table_vat tbody tr:first td:eq(3) input").focus();
+		$("#drcrnote_table_vat tbody tr:first td:eq(3) input").focus();
 	}
 	calculatevataxamt(curindex);
     });
