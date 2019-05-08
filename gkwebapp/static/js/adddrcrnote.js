@@ -71,7 +71,9 @@ $(document).ready(function() {
 	//Checking which radio button is selected.
 	if($("#sale").is(":checked"))  {
 		$(".salediv").show();
-		$(".goq").show();		
+		if($("#return").is(":checked")){
+		$(".goq").show();}
+		else{$(".goq").hide();}
 	    $(".purchasediv").hide();
 	    $("#drcrnote_invoice").show();
 	    $("#drcrnote_invoice").val("");
@@ -90,7 +92,7 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice_purchase").change();
 	    $("#drcrnote_invoice").hide();
 		$(".salediv").hide();
-		$(".goq").hide();				
+		$(".goq").hide();
 	    $(".purchasediv").show();
 	    $("#drcrnote_invoice").val("");
 	    $("#drcrnote_invoice_purchase").searchify();
@@ -117,6 +119,13 @@ $(document).ready(function() {
 	    $("#drcrnote_invoice_purchase").change();
 	}
 	$("#drcrnote_no").val(lastdrcr);
+
+	if($("#return").is(":checked") && $("#sale").is(":checked")){
+		$(".goq").show();
+	}
+	else{
+		$(".goq").hide();
+	}
     });
     $("#sale").keydown(function(event) {
 	if (event.which == 13) {
@@ -340,7 +349,11 @@ $(document).ready(function() {
 		});
 		$('#drcrnote_date').focus().select();
 		return false;
-    }	   $('#reference').focus();
+	}	
+	if ($("#goodsquality").is(":visible"))
+	{$('#goodsquality').focus();}
+	else{ $('#reference').focus();}
+
        }
        else if($("#drcrnote_year").val()=="")
         {
@@ -354,6 +367,18 @@ $(document).ready(function() {
 	}
 	}
 	});
+
+		$("#goodsquality").keydown(function(event) {
+	if (event.which == 13) {
+		event.preventDefault();
+		$("#reference").focus();
+	}
+	else if (event.which == 38) {
+		event.preventDefault();
+		$("#drcrnote_year").focus();  //Focus shifts to Customer.
+	}
+		});
+
 
     //reference filed validation
     //to hide and show refernce fields date and number of drcrnote.
@@ -393,8 +418,13 @@ $(document).ready(function() {
 	}
 	      if (event.which == 38) {
 		  event.preventDefault();
+		if($("#goodsquality").is(":visible")){
+			$("#goodsquality").focus();
+		}
+		else{
 		  $("#drcrnote_month").focus().select();  
-	      }
+		  }
+		}
      });
     //keydown for reference number.
     $("#drcrnote_no_ref").keydown(function(event) {
@@ -889,14 +919,14 @@ $(document).ready(function() {
 			if($("#return").is(":checked")){
 			    $('#drcrnote_table_vat tbody tr:last td:eq(3) input').prop("disabled", true);
 			    $('.drcrnote_product_quantity_vat').prop("disabled", false);
-			    $(".creditedvalue").hide();
+				$(".creditedvalue").hide();
 			    $('#drcrnote_table_vat tfoot tr:first td:eq(0)').attr("colspan", 3);
 			    $(".smvwrap").css("width", "15.75%");
 			}
 			else {
 			    $('#drcrnote_table_vat tbody tr:last td:eq(3) input').prop("disabled", false);
 			    $('#drcrnote_table_vat tbody tr:last td:eq(1) input').prop("disabled", true);
-			    $(".creditedvalue").show();
+				$(".creditedvalue").show();
 			    $('#drcrnote_table_vat tfoot tr:first td:eq(0)').attr("colspan", 3);
 			    $(".smvwrap").css("width", "11.75%");
 			}
@@ -1485,6 +1515,14 @@ if (!curdate.between(financialstart, financialend)) {
 	  form_data.append("drcrmode", 18);
       }
 	  form_data.append("roundoffflag", roundoffflag);
+
+	  if($("#goodsquality").is(":checked")){
+		form_data.append("dcinvtnflag", 2);
+	  }
+	  else{
+		form_data.append("dcinvtnflag", 7);
+	  }
+	  
       form_data.append("drcrno", $("#drcrnote_no").val());
       form_data.append("drcrdate", $.trim($("#drcrnote_year").val() + '-' + $("#drcrnote_month").val() + '-' + $("#drcrnote_date").val()));
       if($("#reference").prop('checked') == true)

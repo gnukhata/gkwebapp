@@ -25,7 +25,7 @@ def showadddrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"]), "drcrmode":request.params["drcrmode"]}
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"]), "drcrmode":request.params["drcrmode"],"dcinvtnflag":request.params["dcinvtnflag"]}
     drcrdata["roundoffflag"] = int(request.params["roundoffflag"])
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
