@@ -2110,7 +2110,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	  form_data.append("invoice", $("#invsel option:selected").text());
       }
       $("#msspinmodal").modal("show");
-      console.log(form_data);
     $.ajax({
       type: "POST",
       url: "/addvoucher",
