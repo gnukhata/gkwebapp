@@ -863,6 +863,8 @@ $(document).ready(function() {
 			$("#consigneestate").val(resp["gkresult"]["state"]);
 			$("#statecodeofconsignee").text($("#consigneestate option:selected").attr("stateid"));
 		    }*/
+		    $("#Consignee").trigger("change");
+
 		}
 	    })
 	    .fail(function() {
