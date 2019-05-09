@@ -50,9 +50,11 @@ function vouchercall(vtype,inv_id){
           },
         success: function(resp)
         {
-            console.log(sessionStorage.modeflag);
             if(sessionStorage.modeflag == 0){
                 $("#mod_dialog").css("width",'95%');
+            }
+            else{
+                $(".classstyle").css("padding",'-15px');
             }
             $('#voucher_modal').modal('show');
             $('#voucher_modal').on('shown.bs.modal', function (e)
@@ -62,6 +64,8 @@ function vouchercall(vtype,inv_id){
                     $("#forinvoice").removeClass("col-md-6");
                     $("#mod_dialog").removeClass("modal-lg");
                     $("#mod_dialog").addClass("modal-md");
+                    $("#vdate").focus();
+
                 }
                 $("#invsel").val(inv_id).change();
                 $('#invsel').prop('disabled', true);
@@ -276,7 +280,6 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                                       "fromdate": $("#fromdate").data("fromdate"),
                                       "todate": $("#todate").data("todate")
                                   };
-                                    console.log(dataset);
 
                                   $.ajax({
                                       type: "POST",
@@ -319,36 +322,42 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         }
             });
 
-            $('#voucher_modal').on('hidden.bs.modal', function (e){
-               if( $("#custsupmodal").is(":hidden")){
-                var dataset = {
-                    "flag": $("#invoicetypeselect").val(),
-                    "fromdate": $("#fromdate").data("fromdate"),
-                    "todate": $("#todate").data("todate")
-                };
-            $.ajax({
-                type: "POST",
-                url: "/invoice?action=showlist",
-                global: false,
-                async: false,
-                datatype: "text/html",
-                data: dataset,
-                beforeSend: function(xhr) {
-                    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                },
-            })
-            .done(function(resp) {
-            $("#info").html(resp);
-            })
-            .fail(function() {
-                $("#failure-alert1").alert();
-                $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
-                  $("#failure-alert1").hide();
-                });
-              })
-            }
-            });
-
+    $('#voucher_modal').on('hidden.bs.modal', function (e){
+        var allow = 1;
+        if(allow == 1){
+        if (!$("#viewinvdiv").is(":visible")){
+        var dataset = {
+            "flag": $("#invoicetypeselect").val(),
+            "fromdate": $("#fromdate").data("fromdate"),
+            "todate": $("#todate").data("todate")
+        };
+    $.ajax({
+        type: "POST",
+        url: "/invoice?action=showlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: dataset,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+    })
+    .done(function(resp) {
+    $("#info").html(resp);
+    })
+    .fail(function() {
+        $("#failure-alert1").alert();
+        $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
+          $("#failure-alert1").hide();
+        });
+      })
+    }
+    else{
+        $("#latable tbody tr:eq(" + sessionStorage.currentrow + ")").dblclick();
+    }
+    } allow =0;
+    });
+        
 
     $('#viewprintableversion').click(function(e) {
         var dataset = {
@@ -499,10 +508,10 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         // This function opens a modal of the selected voucher.
         // It shows the complete details of the selected voucher along with option to edit, delete and clone.
         currentrow = $(this).index();
+        sessionStorage.currentrow = currentrow
         e.preventDefault();
     	invoice_id = "";
         invoice_id = $(this).data("invid");
-        console.log(invoice_id);
 
         if (invoice_id == "") {
             return false;
@@ -510,7 +519,6 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
     var csflag = $("#latable tbody tr:eq(" + currentrow + ")").data("csflag");
 	var billentryflag = $("#latable tbody tr:eq(" + currentrow + ")").data("billentryflag");
 	var inoutflag = $("#latable tbody tr:eq(" + currentrow + ")").data("inoutflag");
-    
         $.ajax({
 
                 type: "POST",
@@ -519,7 +527,8 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 async: false,
                 datatype: "text/html",
                 data: {
-                    "invid": invoice_id
+                    "invid": invoice_id,
+                    "billentryflag":billentryflag
                 },
                 beforeSend: function(xhr) {
                     xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -544,7 +553,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 		else {
 		    $("#viewattachment").hide();
         }
-        if (billentryflag !=  0) {
+        if ($("#billentrysingleflag").val() !=  0) {
             $("#inv_pay").hide();
             $("#inv_rec").hide();
         }

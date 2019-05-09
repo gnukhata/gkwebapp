@@ -710,7 +710,13 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   $('#vno').keydown(function(event) {
     if(event.which==13 && $('#vno').val()!=""){
 	navflag =1;
-	event.preventDefault();
+  event.preventDefault();
+    if($("#voucher_modal").length>0){
+      {
+        $('#vdate').focus().select();
+      }
+    }
+    else{
       if ($("#invsel").length > 0)
       {
         $("#invsel").focus();
@@ -721,6 +727,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       }
 
     }
+  }
       else if(event.which==13 && $('#vno').val()==""){
 	  $("#voucherno-alert").alert();
       $("#voucherno-alert").fadeTo(2250, 500).slideUp(500, function(){
