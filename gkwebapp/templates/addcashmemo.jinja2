@@ -55,7 +55,6 @@
     <div class="alert alert-danger" id="gstin-blank-alert"  aria-live="rude" role="alert" hidden>
       {% trans %}Please Enter GSTIN.{% endtrans %}	
     </div>
-    
     <div class="panel invoice_panel shadow">
       <div class="panel-body">
         <div class="row">
@@ -144,13 +143,13 @@
           </div>
           <div class="col-md-2">
             <div class="form-group">
-	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
+	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label><br>
 	      {% if resultgstvat == '29' or resultgstvat == '7' %}
-  		<label class="form-control" id="taxapplicabletext">GST</label>
-  		<input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+		  <label><input type="radio" class="taxapplicable" name="cashmemo" id="gst" aria-label="gst" value="7" checked> GST</label>&nbsp
+		  <label><input type="radio" class="taxapplicable" name="cashmemo" id="vat" aria-label="vat" value="22"> VAT</label>
   	      {% else %}
   		<label class="form-control" id="taxapplicabletext">VAT</label>
-  		<input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+  		<input type="text"  class="taxapplicable" id="vat" value="22" accesskey="" hidden>
 	      {% endif %}
 	    </div>
           </div>
@@ -171,10 +170,16 @@
             <input type="hidden" id="status" value="15">
           {% endif %}
         </div>
-
+				
 
         <div class="col-md-12 row" id="invoice_product_div">
-          {% if resultgstvat == '29' or resultgstvat == '22' %}
+				<div class="col-md-9 pull-right" >
+				<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+
+				<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none;margin-right: -25px" href="#moresmallvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+			</div>
+          {% if resultgstvat == '29' or resultgstvat == '22' or resultgstvat == '7'%}
+					
   	    {% if resultgstvat == '22' %}
 	      <div class="col-sm-12 bg-info" style="padding:10;">
 		<div class="col-sm-9">
@@ -190,8 +195,10 @@
 		  {% endif %}		  
 		</div>
 	      </div>
+				</div>
   		<table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
   	    {% else %}
+				<div class="collapse" id="moresmallvat" hidden>
 		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:5;" id="vathelp" hidden>
 		    <div class="col-sm-9">
 		    <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
@@ -206,6 +213,7 @@
 		      {% endif %}
 		    </div>
 		  </div>
+			</div>
   		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" hidden>
   	    {% endif %}
   	    <thead class="bg-primary">
@@ -308,9 +316,8 @@
 
   		  </table>
           {% endif %}
-
+					
           {% if resultgstvat == '29' or resultgstvat == '7' %}
-				<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none; margin-right: 35px" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 		
   	    <div class="col-sm-12 row" id="gstproducttable">
 	      <div class="col-sm-12 collapse"  id="moresmall" style=" border: solid black 1px; padding:10;">
@@ -330,7 +337,7 @@
 	      </div>
 	      <div class="col-sm-10" style="overflow-x:scroll;">
 		<div class="row">
-		  <table id="invoice_product_table_gst_heading" class="table table-condensed table-bordered" style="width:140%; max-width:140%; padding:0 !important; margin:0 !important;"">
+		  <table id="invoice_product_table_gst_heading" class="table table-condensed table-bordered" style="width:140%; max-width:140%; padding:0 !important; margin:0 !important;">
 		    <thead class="bg-primary">
 		      <tr>
 			<th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
