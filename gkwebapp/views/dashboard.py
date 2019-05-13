@@ -127,4 +127,10 @@ def transfernotecountmonthly(request):
 @view_config(route_name="showreport",renderer="gkwebapp:templates/showreport.jinja2")
 def showreport(request):
     return {"status":True}
- 
+
+@view_config(route_name="dashboard",request_param="action=dashboarddata",renderer="json")
+def dashboarddata(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=dashboarddata",headers=header)
+    result.json()
+    return{"gkstatus":result.json()["gkstatus"],"amtwisepurinv":result.json()["amtwisepurinv"],"datewisepurinv":result.json()["datewisepurinv"],"puchaseinvcount":result.json()["puchaseinvcount"],"saleinvcount":result.json()["saleinvcount"],"topfivesuplist":result.json()["topfivesuplist"],"topfivecustlist":result.json()["topfivecustlist"],"mostboughtprodsev":result.json()["mostboughtprodsev"],"amtwisesaleinv":result.json()["amtwisesaleinv"],"datewisesaleinv":result.json()["datewisesaleinv"]}
