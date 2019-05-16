@@ -170,6 +170,7 @@ $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
 
+<<<<<<< HEAD
 $.ajax({
   type: "POST",
   url: "/dashboard?action=stockonhandfordashboard",
@@ -197,6 +198,8 @@ $.ajax({
 }
 
 });
+=======
+>>>>>>> create function for stock on hand report
 $.ajax(
   {
     type: "POST",
@@ -473,7 +476,6 @@ function topfivecustsup(inoutflag, custsupdata){
         }
 
   function paymentdata(inoutflag,dataset){
-    console.log(dataset);
     var tablediv="";
     if (inoutflag == 9){
       tablediv=$('#fivepurchaseinvoicelist');
@@ -542,6 +544,20 @@ function monthlydelchal(inoutflag,delchaldata){
 });
 }
 
+function stockonhand(dataset){
+    for (let item in dataset["stockresultlist"]){
+      list =dataset["stockresultlist"][item].gkstatus
+      if (list == 3){
+      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+dataset["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
+      }
+      else{
+           list =dataset["stockresultlist"][item].gkresult
+            for (let index in list) {
+            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+dataset["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
+        }}
+      }
+}
+
 function dashboard(){
     $.ajax({
       type: "POST",
@@ -555,20 +571,20 @@ function dashboard(){
       },
       success: function(resp)
       {
-        respdata=resp["gkresult"]
+      respdata=resp["gkresult"]
     if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1 || resp["userrole"] == 2){
      monthlyinvoice(9,respdata["puchaseinvcount"]);
      monthlyinvoice(15,respdata["saleinvcount"]);
     }
+    if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
+      monthlydelchal(9,respdata["delchalout"]);
+      monthlydelchal(15,respdata["delchalin"]);
+     }
      topfivecustsup(9,respdata["topfivesuplist"]);
      topfivecustsup(15,respdata["topfivecustlist"]);
      mostboughtprodsev(respdata["mostboughtprodsev"]);
-    
-     if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
-     monthlydelchal(9,respdata["delchalout"]);
-     monthlydelchal(15,respdata["delchalin"]);
-    }
-    
+     stockonhand(respdata["stockonhanddata"]);
+
     $("#pur_amount_wise").click(function(){
       $("#pur_date_wise").removeClass("active");
       $("#pur_amount_wise").addClass("active");
