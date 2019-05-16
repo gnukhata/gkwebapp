@@ -96,7 +96,6 @@ $(document).ready(function(){
       $("#gstmenu_id").remove();
       $("#gstmenu").remove();
       $(".accountinghide").remove();
-        $(".delchalhide").remove();
         let companyremovables = ["#inventoryrepdiv", "#documentsrepdiv"];
         sessionStorage.companyremovables = companyremovables;
     }

@@ -170,279 +170,6 @@ $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
 
-
-// function calldata(dataset){
-//   $.ajax(
-//   {
-
-//   type: "POST",
-//   url: "/dashboard?action=showlist",
-//   global: false,
-//   async: false,
-//   datatype: "json",
-//   data: dataset,
-//   beforeSend: function(xhr)
-//     {
-//       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//     },
-//   success: function(resp)
-//   {
-//     var tablediv="";
-//     if (dataset["inoutflag"] == 9){
-//       tablediv=$('#fivepurchaseinvoicelist');
-//     }
-//     else{
-//       tablediv=$('#fivesaleinvoicelist');
-//     }
-//     var list = resp["gkresult"];
-//     tablediv.html("");
-//     for (let index in list ){
-//       tablediv.append('<tr style="table-layout:fixed;"> <td  style="font-weight:normal;" class="col-xs-8">'+list[index].invoiceno+','+ list[index].invoicedate+','+ list[index].custname+' </td> <td  style="font-weight:normal;text-align:right;" class="col-xs-4">'+ list[index].balanceamount+' </td> </tr>');                  
-//     }
-//   }
-//   });
-// }   
-//     $("#pur_amount_wise").click(function(){
-//       dataset={
-//         "inoutflag": 9,
-//         "typeflag": 1
-//         };
-//     $("#pur_date_wise").removeClass("active");
-//     $("#pur_amount_wise").addClass("active");
-//     calldata(dataset);
-//   });
-
-//   $("#pur_date_wise").click(function(){
-//     dataset={
-//       "inoutflag": 9,
-//       "typeflag": 4
-//       };
-//     $("#pur_amount_wise").removeClass("active");
-//     $("#pur_date_wise").addClass("active");
-//     calldata(dataset);
-//   });
-//     $("#pur_amount_wise").click();
-
-//   $("#sale_amount_wise").click(function(){
-//    dataset={
-//       "inoutflag": 15,
-//       "typeflag": 1
-//       };
-//   $("#sale_date_wise").removeClass("active");
-//   $("#sale_amount_wise").addClass("active");
-//   calldata(dataset);
-// });
-
-// $("#sale_date_wise").click(function(){
-//  dataset={
-//     "inoutflag": 15,
-//     "typeflag": 4
-//     };
-//   $("#sale_amount_wise").removeClass("active");
-//   $("#sale_date_wise").addClass("active");
-//   calldata(dataset);
-// });
-// $("#sale_amount_wise").click();
-
-// function monthlyinvoice(inoutflag){
-// $.ajax(
-//   {
-
-//   type: "POST",
-//   url: "/dashboard?action=countinvoice",
-//   global: false,
-//   async: false,
-//   datatype: "json",
-//   data: {"inoutflag":inoutflag},
-//   beforeSend: function(xhr)
-//     {
-//       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//     },
-//   success: function(resp)
-//   {
-//   if (inoutflag==9){
-//   var ctx = document.getElementById("chart_content_purchase").getContext('2d');
-//   }
-//   else{
-//   var ctx = document.getElementById("chart_content_sale").getContext('2d');
-//   }
-//   var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-//         datasets: [{
-//             label: 'Total Amount',
-//             data: resp["invcount"],
-//             backgroundColor: [
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)', 
-//                 'rgba(51, 51, 51)', 
-//             ],
-        
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero:true,
-//                     // stepSize: 1,
-//                     // suggestedMin: 1,
-//                     // suggestedMax: 5,
-//                 }
-//             }]
-//         },
-//         responsive: true,
-//         maintainAspectRatio: true,
-//     }
-// });
-// }
-// });
-// }
-// monthlyinvoice(9);
-// monthlyinvoice(15);
-
-
-function monthlydelchal(inoutflag){
-  $.ajax(
-    {
-  
-    type: "POST",
-    url: "/dashboard?action=countdelchal",
-    global: false,
-    async: false,
-    datatype: "json",
-    data: {"inoutflag":inoutflag},
-    beforeSend: function(xhr)
-      {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-    {
-      console.log(resp);
-    if (inoutflag==9){
-    var ctx = document.getElementById("delivery_in").getContext('2d');
-    }
-    else{
-    var ctx = document.getElementById("delivery_out").getContext('2d');
-    }
-    var myChart = new Chart(ctx, {
-      type: 'bar',
-      data: {
-          labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-          datasets: [{
-              label: 'Product Quantity',
-              data: resp["delchalcount"],
-              backgroundColor: [
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)',
-                  'rgba(51, 51, 51)', 
-                  'rgba(51, 51, 51)', 
-              ],
-          
-          }]
-      },
-      options: {
-          scales: {
-              yAxes: [{
-                  ticks: {
-                      beginAtZero:true,
-                      // stepSize: 50,
-                      // suggestedMin: 1,
-                      // suggestedMax: 100,
-
-                  }
-              }]
-          },
-          responsive: true,
-          maintainAspectRatio: true,
-      }
-  });
-  }
-  
-  });
-  }
-  monthlydelchal(9);
-  monthlydelchal(15);
-
-// function topfivecustsup(inoutflag){
-//   $.ajax(
-//   {
-
-//   type: "POST",
-//   url: "/dashboard?action=topcustlist",
-//   global: false,
-//   async: false,
-//   datatype: "json",
-//   data: {"inoutflag":inoutflag},
-//   beforeSend: function(xhr)
-//     {
-//       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//     },
-//   success: function(resp)
-//   {
-//     var tablediv="";
-//     if (inoutflag == 9){
-//       tablediv=$('#topfivesup');
-//     }
-//     else{
-//       tablediv=$('#topfivecust');
-//     }
-//     var list = resp["gkresult"];
-//     tablediv.html("");
-//     for (let index in list ){
-//       tablediv.append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+list[index].custname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ list[index].data+' </td> </tr>');                  
-//     }
-//  }
-//   });
-// }
-// topfivecustsup(15);
-// topfivecustsup(9);
-
-
-// function topfiveprod(inoutflag){
-//   $.ajax(
-//   {
-
-//   type: "POST",
-//   url: "/dashboard?action=topfiveproduct",
-//   global: false,
-//   async: false,
-//   datatype: "json",
-//   data: {"inoutflag":inoutflag},
-//   beforeSend: function(xhr)
-//     {
-//       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-//     },
-//   success: function(resp)
-//   {
-//     element=resp["gkresult"]
-//     for (let index in element ){
-//       $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+element[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ element[index].count+' </td> </tr>');                  
-  
-//  }
-//  }
-//  });
-// }
-// topfiveprod(9);
-
 $.ajax({
   type: "POST",
   url: "/dashboard?action=stockonhandfordashboard",
@@ -680,24 +407,7 @@ $.ajax(
       $("#godownwisestock").change();
       
     }
-      });   
-
-
-
-      
-
-
-
-
-
-
-
-
-
-
-
-
-
+      });
 
 function monthlyinvoice(inoutflag,invoicedata){
   if (inoutflag==9){
@@ -763,7 +473,7 @@ function topfivecustsup(inoutflag, custsupdata){
         }
 
   function paymentdata(inoutflag,dataset){
-    console.log(dataset)
+    console.log(dataset);
     var tablediv="";
     if (inoutflag == 9){
       tablediv=$('#fivepurchaseinvoicelist');
@@ -779,62 +489,60 @@ function topfivecustsup(inoutflag, custsupdata){
   }
  
 function mostboughtprodsev(dataset){
-  // element=respdata["mostboughtprodsev"]
   for (let index in dataset ){
     $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+dataset[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ dataset[index].count+' </td> </tr>');  
-
 }
 }
-// function monthlydelchal(inoutflag,delchaldata){
-//   if (inoutflag==9){
-//   var ctx = document.getElementById("delivery_in").getContext('2d');
-//   }
-//   else{
-//   var ctx = document.getElementById("delivery_out").getContext('2d');
-//   }
-//   var myChart = new Chart(ctx, {
-//     type: 'bar',
-//     data: {
-//         labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-//         datasets: [{
-//             label: 'Product Quantity',
-//             data: delchaldata,
-//             backgroundColor: [
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)',
-//                 'rgba(51, 51, 51)', 
-//                 'rgba(51, 51, 51)', 
-//             ],
+function monthlydelchal(inoutflag,delchaldata){
+  if (inoutflag==9){
+  var ctx = document.getElementById("deliveryin_id").getContext('2d');
+  }
+  else{
+  var ctx = document.getElementById("deliveryout_id").getContext('2d');
+  }
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
+        datasets: [{
+            label: 'Product Quantity',
+            data: delchaldata,
+            backgroundColor: [
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)',
+                'rgba(51, 51, 51)', 
+                'rgba(51, 51, 51)', 
+            ],
         
-//         }]
-//     },
-//     options: {
-//         scales: {
-//             yAxes: [{
-//                 ticks: {
-//                     beginAtZero:true,
-//                     // stepSize: 50,
-//                     // suggestedMin: 1,
-//                     // suggestedMax: 100,
+        }]
+    },
+    options: {
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true,
+                    // stepSize: 50,
+                    // suggestedMin: 1,
+                    // suggestedMax: 100,
 
-//                 }
-//             }]
-//         },
-//         responsive: true,
-//         maintainAspectRatio: true,
-//     }
-// });
-// }
+                }
+            }]
+        },
+        responsive: true,
+        maintainAspectRatio: true,
+    }
+});
+}
 
-  function dashboard(){
+function dashboard(){
     $.ajax({
       type: "POST",
       url: "/dashboard?action=dashboarddata",
@@ -847,17 +555,20 @@ function mostboughtprodsev(dataset){
       },
       success: function(resp)
       {
-        console.log(resp);
         respdata=resp["gkresult"]
-        // console.log(respdata["amtwisepurinv"]);
+    if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1 || resp["userrole"] == 2){
      monthlyinvoice(9,respdata["puchaseinvcount"]);
      monthlyinvoice(15,respdata["saleinvcount"]);
+    }
      topfivecustsup(9,respdata["topfivesuplist"]);
      topfivecustsup(15,respdata["topfivecustlist"]);
      mostboughtprodsev(respdata["mostboughtprodsev"]);
-    //  monthlydelchal(9,respdata["delchalout"]);
-    //  monthlydelchal(15,respdata["delchalin"]);
- 
+    
+     if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
+     monthlydelchal(9,respdata["delchalout"]);
+     monthlydelchal(15,respdata["delchalin"]);
+    }
+    
     $("#pur_amount_wise").click(function(){
       $("#pur_date_wise").removeClass("active");
       $("#pur_amount_wise").addClass("active");
@@ -883,9 +594,8 @@ function mostboughtprodsev(dataset){
       paymentdata(15,respdata["datewisesaleinv"]);
     });
     $("#sale_amount_wise").click();
- 
-     
     }
+    
     }); 
   }
   dashboard();
