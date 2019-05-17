@@ -206,7 +206,7 @@
 		      {% if invoice["cancelflag"] == 1 %}               
                 <a href="#" class="cancel_inv" ><span class="glyphicon glyphicon-remove"></span></a>
                 {% endif %}
-                {% if invoice["billentryflag"] == 0 %}               
+               {% if invoice["billentryflag"] == 0 %}     
                 {% if invoice["inoutflag"] == 9 %}
                 <a href="#" class="inv_payment"><span>P</span></a>
                 {% else %}
@@ -286,7 +286,7 @@
     <div class="modal-dialog modal-lg vertical-align-center" id="mod_dialog">
              <div class="modal-content">  
                 <div class="row">
-                   <button type="button" class="close" style="color: black; margin-right:25px" data-dismiss="modal" aria-label="Close">
+                   <button id="close_button" type="button" class="close" style="color: black; margin-right:25px" data-dismiss="modal" aria-label="Close">
                      <span aria-hidden="true">&times;</span>
                    </button>  </div>
             <div class="modal-body classstyle"  id="show_voucher"></div>

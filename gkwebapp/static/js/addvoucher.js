@@ -2206,8 +2206,10 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   });
   // to close alerts
   $('.close').click(function() {
-
+    if($("#voucher_modal").length==0){
+    
     $(this).parent().hide();
+    }
 
   })
 
