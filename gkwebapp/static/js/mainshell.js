@@ -76,6 +76,10 @@ $(document).ready(function(){
             $(this).next().css({"margin-bottom":"20px", "max-height":"60vh"});
 	}
     });
+    //   show pop up
+  $('#sales').tooltip({
+    title : "Accounting entries will be generated automatically on creation of Invoice, Cash Memo and Debit & Credit Notes.",
+    placement : "bottom"});
     //Checking flags set according organisation preferences.
     // For Accounting Only invflag=0, invsflag=0 and billflag=0. Inventory Menu, Invoice, Cash Memo and related Reports are hidden.
     // For Invoicing Only invflag=0, invsflag=1 and billflag=0. Inventory Menu is hidden and  sub-menus which are 'Category', 'Product/Service' and 'Unit of Measurement' under 'Master' menu.
