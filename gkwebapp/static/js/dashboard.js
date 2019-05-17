@@ -544,16 +544,16 @@ function monthlydelchal(inoutflag,delchaldata){
 });
 }
 
-function stockonhand(dataset){
-    for (let item in dataset["stockresultlist"]){
-      list =dataset["stockresultlist"][item].gkstatus
+function stockonhand(stockonhanddata){
+    for (let item in stockonhanddata["stockresultlist"]){
+      list =stockonhanddata["stockresultlist"][item].gkstatus
       if (list == 3){
-      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+dataset["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
+      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+stockonhanddata["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
       }
       else{
-           list =dataset["stockresultlist"][item].gkresult
+           list =stockonhanddata["stockresultlist"][item].gkresult
             for (let index in list) {
-            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+dataset["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
+            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+stockonhanddata["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
         }}
       }
 }
@@ -580,6 +580,9 @@ function dashboard(){
       monthlydelchal(9,respdata["delchalout"]);
       monthlydelchal(15,respdata["delchalin"]);
      }
+
+    if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1){
+
      topfivecustsup(9,respdata["topfivesuplist"]);
      topfivecustsup(15,respdata["topfivecustlist"]);
      mostboughtprodsev(respdata["mostboughtprodsev"]);
@@ -611,6 +614,7 @@ function dashboard(){
     });
     $("#sale_amount_wise").click();
     }
+  }
     
     }); 
   }
