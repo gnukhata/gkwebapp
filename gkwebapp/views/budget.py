@@ -204,8 +204,10 @@ def cashspreadsheet(request):
             sheet['A'+str(row)] = ob["accountname"]
             sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = ob["balance"]
-            sheet['C'+str(row)] = ob["balance"]
+            sheet['B'+str(row)] = float(ob["balance"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(ob["balance"])
+            sheet['C'+str(row)].number_format='0.00'
             sheet['D'+str(row)] = '-'
             sheet['E'+str(row)] = '-'
             row = row +1
@@ -215,8 +217,10 @@ def cashspreadsheet(request):
         sheet['A'+str(row)] = 'Total'
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row)] = result["opening"]
-        sheet['C'+str(row)] = result["opening"]
+        sheet['B'+str(row)] = float(result["opening"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["opening"])
+        sheet['C'+str(row)].number_format='0.00'
         sheet['D'+str(row)] = '-'
         sheet['E'+str(row)] = '-'
         row = row+1
@@ -229,9 +233,15 @@ def cashspreadsheet(request):
             sheet['A'+str(row)] = ob["accountname"]
             sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = ob["budget"]
-            sheet['C'+str(row)] = ob["actual"]
-            sheet['D'+str(row)] = ob["var"]
+            sheet['B'+str(row)] = float(ob["budget"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(ob["actual"])
+            sheet['C'+str(row)].number_format='0.00'
+            if ob["var"] != '-':
+                sheet['D'+str(row)] = float(ob["var"])
+                sheet['D'+str(row)].number_format='0.00'
+            else:
+                sheet['D'+str(row)] = ob["var"]
             if ob["varinpercent"] == '-':
                 sheet['E'+str(row)] = ob["varinpercent"]
             else:
@@ -243,9 +253,12 @@ def cashspreadsheet(request):
         sheet['A'+str(row)] = 'Total'
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row)] = result["budgetin"]
-        sheet['C'+str(row)] = result["actualin"]
-        sheet['D'+str(row)] = result["varin"]
+        sheet['B'+str(row)] = float(result["budgetin"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["actualin"])
+        sheet['C'+str(row)].number_format='0.00'
+        sheet['D'+str(row)] = float(result["varin"])
+        sheet['D'+str(row)].number_format='0.00'
         sheet['E'+str(row)] = result["varpercentin"]+" %"
         row = row+1
         sheet['A'+str(row)] = 'Outflow'
@@ -257,9 +270,15 @@ def cashspreadsheet(request):
             sheet['A'+str(row)] = ob["accountname"]
             sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = ob["budget"]
-            sheet['C'+str(row)] = ob["actual"]
-            sheet['D'+str(row)] = ob["var"]
+            sheet['B'+str(row)] = float(ob["budget"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(ob["actual"])
+            sheet['C'+str(row)].number_format='0.00'
+            if ob["var"] != '-':
+                sheet['D'+str(row)] = float(ob["var"])
+                sheet['D'+str(row)].number_format='0.00'
+            else:
+                sheet['D'+str(row)] = ob["var"]
             if ob["varinpercent"] == '-':
                 sheet['E'+str(row)] = ob["varinpercent"]
             else:
@@ -271,9 +290,12 @@ def cashspreadsheet(request):
         sheet['A'+str(row)] = 'Total'
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
-        sheet['B'+str(row)] = result["budgetout"]
-        sheet['C'+str(row)] = result["actualout"]
-        sheet['D'+str(row)] = result["varout"]
+        sheet['B'+str(row)] = float(result["budgetout"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["actualout"])
+        sheet['C'+str(row)].number_format='0.00'
+        sheet['D'+str(row)] = float(result["varout"])
+        sheet['D'+str(row)].number_format='0.00'
         sheet['E'+str(row)] = result["varpercentout"]+" %"
         row = row+1
         sheet['A'+str(row)] = 'Closing'
@@ -285,9 +307,15 @@ def cashspreadsheet(request):
             sheet['A'+str(row)] = ob["accountname"]
             sheet['A'+str(row)].font = Font(name='Liberation Serif',italic=True )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = ob["budget"]
-            sheet['C'+str(row)] = ob["balance"]
-            sheet['D'+str(row)] = ob["var"]
+            sheet['B'+str(row)] = float(ob["budget"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(ob["balance"])
+            sheet['C'+str(row)].number_format='0.00'
+            if ob["var"] != '-':
+                sheet['D'+str(row)] = float(ob["var"])
+                sheet['D'+str(row)].number_format='0.00'
+            else:
+                sheet['D'+str(row)] = ob["var"]
             if ob["varinpercent"] == '-':
                 sheet['E'+str(row)] = ob["varinpercent"]
             else:
@@ -368,9 +396,15 @@ def pnlpreadsheet(request):
             sheet['A'+str(row)] = budget["name"]
             sheet['A'+str(row)].font = Font(italic=True,name='Liberation Serif' )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = budget["budget"]
-            sheet['C'+str(row)] = budget["actual"]
-            sheet['D'+str(row)] = budget["var"]
+            sheet['B'+str(row)] = float(budget["budget"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(budget["actual"])
+            sheet['C'+str(row)].number_format='0.00'
+            if budget["var"] !='-':
+                sheet['D'+str(row)] = float(budget["var"])
+                sheet['D'+str(row)].number_format='0.00'
+            else:
+                sheet['D'+str(row)] = budget["var"]
             if budget["varinpercent"] == '-':
                 sheet['E'+str(row)] = budget["varinpercent"]
             else:
@@ -382,9 +416,12 @@ def pnlpreadsheet(request):
         sheet['A'+str(row)] = 'Total '
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['B'+str(row)] = result["budgetincome"]
-        sheet['C'+str(row)] = result["income"]
-        sheet['D'+str(row)] = result["varincome"]
+        sheet['B'+str(row)] = float(result["budgetincome"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["income"])
+        sheet['C'+str(row)].number_format='0.00'
+        sheet['D'+str(row)] = float(result["varincome"])
+        sheet['D'+str(row)].number_format='0.00'
         sheet['E'+str(row)] = result["varinpercentincome"] + " %"
         row=row+1
         sheet['A'+str(row)] = 'Expenses'
@@ -398,9 +435,15 @@ def pnlpreadsheet(request):
             sheet['A'+str(row)] = budget["name"]
             sheet['A'+str(row)].font = Font(italic=True,name='Liberation Serif' )
             sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-            sheet['B'+str(row)] = budget["budget"]
-            sheet['C'+str(row)] = budget["actual"]
-            sheet['D'+str(row)] = budget["var"]
+            sheet['B'+str(row)] = float(budget["budget"])
+            sheet['B'+str(row)].number_format='0.00'
+            sheet['C'+str(row)] = float(budget["actual"])
+            sheet['C'+str(row)].number_format='0.00'
+            if budget["var"] != '-':
+                sheet['D'+str(row)] = float(budget["var"])
+                sheet['D'+str(row)].number_format='0.00'
+            else:
+                sheet['D'+str(row)] = budget["var"]
             if budget["varinpercent"] == '-':
                 sheet['E'+str(row)] = budget["varinpercent"]
             else:
@@ -412,9 +455,12 @@ def pnlpreadsheet(request):
         sheet['A'+str(row)] = 'Total '
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'right', vertical='center')
-        sheet['B'+str(row)] = result["budgetexpense"]
-        sheet['C'+str(row)] = result["expense"]
-        sheet['D'+str(row)] = result["varexpense"]
+        sheet['B'+str(row)] = float(result["budgetexpense"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["expense"])
+        sheet['C'+str(row)].number_format='0.00'
+        sheet['D'+str(row)] = float(result["varexpense"])
+        sheet['D'+str(row)].number_format='0.00'
         sheet['E'+str(row)] = result["varinpercentexp"] + " %"
         row = row+1
         totalrow = sheet.row_dimensions[row]
@@ -423,10 +469,16 @@ def pnlpreadsheet(request):
         sheet['A'+str(row)] = 'Net Profit'
         sheet['A'+str(row)].font = Font(name='Liberation Serif' ,bold=True)
         sheet['A'+str(row)].alignment = Alignment(horizontal = 'left', vertical='center')
-        sheet['B'+str(row)] = result["budgetprofit"]
-        sheet['C'+str(row)] = result["profit"]
-        sheet['D'+str(row)] = result["varprofit"]
-        sheet['E'+str(row)] = result["varinpercentprofit"] + " %"
+        sheet['B'+str(row)] = float(result["budgetprofit"])
+        sheet['B'+str(row)].number_format='0.00'
+        sheet['C'+str(row)] = float(result["profit"])
+        sheet['C'+str(row)].number_format='0.00'
+        if result["varprofit"] != '-':
+            sheet['D'+str(row)] = float(result["varprofit"])
+            sheet['D'+str(row)].number_format='0.00'
+        else:
+            sheet['D'+str(row)] = result["varprofit"]
+        sheet['E'+str(row)] = result["varinpercentprofit"]+ " %"
 
         output = cStringIO.StringIO()
         budgetwb.save(output)
