@@ -170,36 +170,6 @@ $(document.body).on('hide.bs.modal,hidden.bs.modal', function () {
   $('body').css('padding-right','0');
 });
 
-<<<<<<< HEAD
-$.ajax({
-  type: "POST",
-  url: "/dashboard?action=stockonhandfordashboard",
-  global: false,
-  async: false,
-  data:{"calculateto":enddate=sessionStorage.yyyymmddyear2},
-  datatype: "json",
-  beforeSend: function(xhr)
-  {
-    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-  },
-  success: function(resp)
-  {
-    for (let item in resp["gkresult"]){
-        list =resp["gkresult"][item].gkstatus;
-      if (list == 3){
-      $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
-      }
-      else{
-          list =resp["gkresult"][item].gkresult;
-            for (let index in list) {
-            $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
-        }}
-      }
-}
-
-});
-=======
->>>>>>> create function for stock on hand report
 $.ajax(
   {
     type: "POST",
@@ -411,6 +381,25 @@ $.ajax(
       
     }
       });
+
+$("#accountsbal").click(function(e){
+  $.ajax({
+    url: "/dashboard?action=cashbankaccbal",
+    type: 'POST',
+    global: false,
+    async: false,
+    datatype: 'text/html',
+    beforeSend: function(xhr)
+    {
+xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    },
+    success: function(resp)
+    {
+$('#info').html(resp);
+    }
+  });
+});
+
 
 function monthlyinvoice(inoutflag,invoicedata){
   if (inoutflag==9){

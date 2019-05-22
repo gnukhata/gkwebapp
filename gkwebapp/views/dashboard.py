@@ -132,5 +132,10 @@ def showreport(request):
 def dashboarddata(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=dashboarddata",headers=header)
-    result.json()
-    return{"gkstatus":result.json()["gkstatus"],"amtwisepurinv":result.json()["amtwisepurinv"],"datewisepurinv":result.json()["datewisepurinv"],"puchaseinvcount":result.json()["puchaseinvcount"],"saleinvcount":result.json()["saleinvcount"],"topfivesuplist":result.json()["topfivesuplist"],"topfivecustlist":result.json()["topfivecustlist"],"mostboughtprodsev":result.json()["mostboughtprodsev"],"amtwisesaleinv":result.json()["amtwisesaleinv"],"datewisesaleinv":result.json()["datewisesaleinv"]}
+    return{"gkstatus":result.json()["gkstatus"],"userrole":result.json()["userrole"],"gkresult":result.json()["gkresult"]}
+
+@view_config(route_name="dashboard",request_param="action=cashbankaccbal",renderer="gkwebapp:templates/viewcashbankbalance.jinja2")
+def cashbankaccbal(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/dashboard?type=cashbankaccountdata",headers=header)
+    return{"gkstatus":result.json()["gkstatus"],"bankaccdata":result.json()["bankaccdata"],"cashaccdata":result.json()["cashaccdata"]}

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Cash Bank account Balance{% endtrans %}</title>
+   
+  <style type="text/css">
+    .shadow {
+	 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+     }
+     .acctable td {
+	 font-size: 75%;
+	 padding: 4 !important;
+	 margin: 4 !important;
+     }
+
+     .acctable th {
+	 font-size: 85%;
+     }
+
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 30%;
+	 text-align: left !important;
+     }
+
+     .acctable tbody {
+	 display:block;
+	 height: calc(69vh);
+	 overflow-y:scroll;
+     }
+     .acctable thead,.acctable tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     .acctable thead {
+	 width: calc( 99.1% );
+     }
+
+     .calign{
+	 text-align:center;
+     }
+     .lalign{
+	 text-align:left;
+     }
+     .ralign{
+	 text-align:right;
+     }
+     .dtwrap{
+	 width :6%
+     }
+     .smwrap{
+	 width:3%
+     }
+     .smwrap1{
+	 width:2.4%
+     }
+
+     .lngwrap{
+	 width:16%
+     }
+     .mdwrap{
+	 width:8%
+     }
+   </style>
+</head>
+<body>
+        <div class="col-xs-10 nopadding">
+                <span style="margin-left:52%; display:table; font-size:120%;"><strong>{% trans %}List of Bank and Cash Accouts{% endtrans %}</strong></span>
+              <button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="luclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
+              </div>
+              <div class=" pull-right input-group input-group-sm" style="">
+                <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+                </span>
+                <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+                <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+                </span>
+              </div>
+              <div class="row" style="margin-top:35px">
+                  <div class="col-md-6">
+                        <table id="" class="acctable table shadow table-bordered">
+                                <thead class="bg-primary">
+                              <tr>
+                                    <th class="dtwrap calign" >
+                                      {% trans %}Bank Account{% endtrans %}
+                                    </th>
+                                    <th class="dtwrap calign">
+                                      {% trans %}Balance{% endtrans %}
+                                    </th>
+                                    <th class="smwrap1 lalign">
+                                            {% trans %}Bal Type{% endtrans %}
+                                          </th>
+                              </tr>
+                                </thead>
+                                <tbody>
+                          
+                              {% for record in bankaccdata %}
+                                <tr>
+                                      <td class="dtwrap calign" >
+                                        {{record["bankaccname"]}}
+                                      </td>
+                                      <td class="dtwrap ralign">
+                                        {{record["bankbalance"]}}
+                                      </td>
+                                      <td class="smwrap1 calign">
+                                            {{record["baltype"]}}
+                                          </td>
+                                </tr>
+                              {% endfor %}
+                          
+                                </tbody>
+                              </table>
+                  </div>
+                  <div class="col-md-6">
+                        <table id="" class="acctable table shadow table-bordered">
+                                <thead class="bg-primary">
+                              <tr>
+                                    <th class="dtwrap  calign" >
+                                      {% trans %}Cash Account{% endtrans %}
+                                    </th>
+                                    <th class="dtwrap calign">
+                                      {% trans %}Balance{% endtrans %}
+                                    </th>
+                                    <th class="smwrap1 calign" >
+                                            {% trans %}Bal Type{% endtrans %}
+                                          </th>
+                              </tr>
+                                </thead>
+                                <tbody>
+                          
+                              {% for record in cashaccdata %}
+                                <tr>
+                                      <td class="dtwrap calign" >
+                                        {{record["cashaccname"]}}
+                                      </td>
+                                      <td class="dtwrap ralign">
+                                        {{record["cashbalance"]}}
+                                      </td>
+                                      <td class="smwrap1 calign" >
+                                        {{record["baltype"]}}
+                                                                
+                                          </td>
+                                </tr>
+                              {% endfor %}
+                          
+                                </tbody>
+                              </table>
+                  </div>
+              </div>
+
+</body>
+</html>
