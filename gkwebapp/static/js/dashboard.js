@@ -558,6 +558,35 @@ function stockonhand(stockonhanddata){
       }
 }
 
+function accbalance(balancedataset){
+
+
+  var ctx = document.getElementById('linechart').getContext('2d');
+var chart = new Chart(ctx, {
+    // The type of chart we want to create
+    type: 'line',
+
+    // The data for our dataset
+    data: {
+        labels: balancedataset["monthname"],
+        datasets: [{
+            label: 'Bank Balance',
+            borderColor: '#3e95cd',
+            data: balancedataset["bankbalancedata"]
+        },
+        {
+          label: 'Cash Balance',
+          borderColor: '#8e5ea2',
+          data: balancedataset["cashbalancedata"]
+      }]
+    },
+
+    // Configuration options go here
+    options: {}
+});
+
+}
+
 function dashboard(){
     $.ajax({
       type: "POST",
@@ -576,17 +605,10 @@ function dashboard(){
      monthlyinvoice(9,respdata["puchaseinvcount"]);
      monthlyinvoice(15,respdata["saleinvcount"]);
     }
-    if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
-      monthlydelchal(9,respdata["delchalout"]);
-      monthlydelchal(15,respdata["delchalin"]);
-     }
+
 
     if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1){
 
-     topfivecustsup(9,respdata["topfivesuplist"]);
-     topfivecustsup(15,respdata["topfivecustlist"]);
-     mostboughtprodsev(respdata["mostboughtprodsev"]);
-     stockonhand(respdata["stockonhanddata"]);
 
     $("#pur_amount_wise").click(function(){
       $("#pur_date_wise").removeClass("active");
@@ -614,6 +636,16 @@ function dashboard(){
     });
     $("#sale_amount_wise").click();
     }
+    topfivecustsup(9,respdata["topfivesuplist"]);
+    topfivecustsup(15,respdata["topfivecustlist"]);
+    mostboughtprodsev(respdata["mostboughtprodsev"]);
+    stockonhand(respdata["stockonhanddata"]);
+    accbalance(respdata["balancedata"]);
+
+    if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
+      monthlydelchal(9,respdata["delchalout"]);
+      monthlydelchal(15,respdata["delchalin"]);
+     }
   }
     
     }); 
