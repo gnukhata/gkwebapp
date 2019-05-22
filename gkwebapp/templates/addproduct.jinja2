@@ -192,17 +192,17 @@
               </div>
 	      </div>
 	      <div class="row">
-		{%if vatorgstflag=='7' or vatorgstflag=='29'%}
-		  <div class="col-md-5">
+		{# {%if vatorgstflag=='7' or vatorgstflag=='29'%} #}
+		  {# <div class="col-md-5">
 		    <div class="form-group pd ">
                       <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}HSN code{% endtrans %} :</label><label for="gscode" class="common" ></label>
-		      <label for="hsnno" style="color:red;font-size:120%;">*</label>                  <input type='text' class="form-control input-sm common numtype hsn" name="gscode"  id="hsnno" placeholder="Non-zero">
+		                       <input type='text' class="form-control input-sm common numtype hsn" name="gscode"  id="hsnno" placeholder="e.g. 0101 21 00">
 		    </div>
-		  </div>
-		  <div class="col-md-offset-1 col-md-5 productclass">
-		{% else %}
+		  </div> #}
+		  {# <div class="col-md-offset-1 col-md-5 productclass"> #}
+		{# {% else %} #}
 		    <div class="col-md-11 productclass">
-	      {% endif %}
+	      {# {% endif %} #}
               <div class="form-group pds olduom">
                 <label for="uom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="uom" style="color:red;font-size: 120%;">*</label>
                 <select class = "form-control input-sm sel productclass"  name = "uom" id="adduom" aria-describedby="txtareahelp">
@@ -221,6 +221,7 @@
               </div>
             </div>
 		  </div>
+      
 		  <div class="row">
 		    <div class="form-group col-sm-5">
                       <label for="maxprice" class="common" id="maximumprice">{% trans %}MRP{% endtrans %}:</label>
@@ -353,6 +354,16 @@
             </div>
 	    {# {% endif %} #}
             <div class="row noinventory ">
+            {%if vatorgstflag=='7' or vatorgstflag=='29'%}
+            <div class="row">
+            <div class="col-md-6">
+		    <div class="form-group pd ">
+                      <label for="addproddesc" class="common" id="gscodelabel" >{% trans %}HSN code{% endtrans %} :</label><label for="gscode" class="common" ></label>
+		                       <input type='text' class="form-control input-sm common numtype hsn" name="gscode"  id="hsnno" placeholder="e.g. 0101 21 00">
+		    </div>
+		  </div>
+      </div>
+      {%endif%}
               <div class="row productclass">
 		{% if not godown %}
 		  <div id="newgodownadded" hidden>

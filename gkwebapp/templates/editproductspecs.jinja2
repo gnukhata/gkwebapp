@@ -51,16 +51,16 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-sm-5 pd ">
+      {# <div class="form-group col-sm-5 pd ">
 	{% if proddesc["gsflag"]==7 %}
-	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
+	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label>
 	{%else%}
 	  <label for="gscode" class="" id="hsnorservnolabel" style="font-size: 96%;">New Services Accounting Code :</label><label for="addproddesc" style="color:red;font-size: 120%;">*</label>
 	{%endif%}
-	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="Non-zero">
-      </div>
+	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="e.g. 0101 21 00">
+      </div> #}
     {% if proddesc["gsflag"]==7 %}
-	<div class="form-group col-sm-offset-1 col-sm-5 pds olduom">
+	<div class="form-group  col-md-11 pds olduom">
 	  <label for="edituom" class="">{% trans %}Unit of Measurement{% endtrans %} :</label><label for="edituom" style="color:red;font-size: 120%;">*</label>
 	  <select class = "form-control input-sm "  name = "uom" id="edituom" >
 	    {% for uom in uom %}
@@ -223,9 +223,20 @@
 	<a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
       </div>
     </div>
+		<div class="row noinventory">
+		<div class="row">
+		<div class="form-group col-sm-6 pd ">
+	{% if proddesc["gsflag"]==7 %}
+	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label>
+	{%else%}
+	  <label for="gscode" class="" id="hsnorservnolabel" style="font-size: 96%;">New Accounting Code for Service :</label>
+	{%endif%}
+	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="e.g. 0101 21 00">
+      </div> 
+			</div >
   {# {% endif %} #}
   {% if proddesc["gsflag"]==7 %}
-    <div class="row noinventory">
+    
 
       {% if not godown %}
 	<input type="text" name="godownflag" id="editgodownflag" value="0" hidden>

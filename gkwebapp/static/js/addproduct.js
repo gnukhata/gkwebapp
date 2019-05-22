@@ -253,10 +253,13 @@ $("#addproddesc").keydown(function(event) {
       return false;
     }
     else {
-
-          $("#hsnno").focus();
-
-
+      if($("#additem input:radio:checked").val() == '7'){
+        $("#adduom").focus();
+      }
+      else{
+        $("#maxprice").focus();
+      }
+          
     }
   }
   if (event.which==38) {
@@ -269,73 +272,79 @@ $("#addproddesc").keydown(function(event) {
       }
   }
 });
-    $("#hsnno").change(function(event){
-	if(parseInt($("#hsnno").val()) <= 0)
-	    {
-	       	$("#hsnno-must-be-positive").alert();
-		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#hsnno-must-be-positive").hide();
-		    $("#hsnno").focus().select();
-		});
-		return false;
-	    }
-    });
+  //   $("#hsnno").change(function(event){
+	// if(parseInt($("#hsnno").val()) <= 0)
+	//     {
+	//        	$("#hsnno-must-be-positive").alert();
+	// 	$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+	// 	    $("#hsnno-must-be-positive").hide();
+	// 	    $("#hsnno").focus().select();
+	// 	});
+	// 	return false;
+	//     }
+  //   });
 $("#hsnno").keydown(function(event) {
   if(event.which==13) {
     event.preventDefault();
-    if ($(this).val()=="") {
-      if($("#additem input:radio:checked").val() == '7') {
-      $("#hsnno-blank-alert").alert();
-      $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#hsnno-blank-alert").hide();
-      });
+    let gstselected = 0;
+    let rowcount = $("#product_tax_table tbody tr").length;
+    for (i=0;i<rowcount;i++){
+      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+        gstselected = 1;
+        break;
       }
-    else{
-
-      $("#serviceno-blank-alert").alert();
-      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#serviceno-blank-alert").hide();
+    }
+    if (gstselected == 1){
+      if ($(this).val()=="") {
+        if($("#additem input:radio:checked").val() == '7') {
+        $("#hsnno-blank-alert").alert();
+        $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#hsnno-blank-alert").hide();
+        });
+        }
+      else{
+  
+        $("#serviceno-blank-alert").alert();
+        $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#serviceno-blank-alert").hide();
+        });
+      }
+        return false;
+      }
+        if(parseInt($("#hsnno").val()) <= 0)
+        {
+             $("#hsnno-must-be-positive").alert();
+      $("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
+          $("#hsnno-must-be-positive").hide();
+          $("#hsnno").focus().select();
       });
-    }
       return false;
+        }
     }
-      if(parseInt($("#hsnno").val()) <= 0)
-	    {
-	       	$("#hsnno-must-be-positive").alert();
-		$("#hsnno-must-be-positive").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#hsnno-must-be-positive").hide();
-		    $("#hsnno").focus().select();
-		});
-		return false;
-	    }
-      if ($("#additem input:radio:checked").val()=='7'){
-    $("#adduom").focus();
+    
+     
+    if ($("#additem input:radio:checked").val()=='7'){
+
+      if ($("#godownpresence").val()==0) {
+        $("#openingstock").focus().select();
+      }
+      if ($("#godownpresence").val()==1)
+      {
+        $("#godownflag").focus().select();
+      }
+      if(sessionStorage.invflag==0){
+        $("#apsubmit").focus();
+      }
     }
-      else {
-	  $("#maxprice").focus();
+    else{
+      $("#apsubmit").focus();
     }
 
   }
     else if (event.which == 38){
-	$("#addproddesc").focus().select();
+      $("#product_tax_table tbody tr:last td:eq(2) input").focus();
     }
 });
-/*$("#serviceno").keydown(function(event) {
-  if(event.which==13) {
-    event.preventDefault();
-    if ($(this).val()=="") {
-      $("#serviceno-blank-alert").alert();
-      $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#serviceno-blank-alert").hide();
-    });
-      $("#serviceno").focus();
-      return false;
-  }
-    $("#product_tax_table tbody tr:first td:eq(0) select").focus();
-  }
-});*/
-
-
 
 $("#adduom").change(function(event) {
   if ($("#adduom option:selected").val()!='') {
@@ -444,7 +453,7 @@ $("#godownflag").keydown(function(event){
     $(".godown_name").first().focus().select();
   }
   if (event.which == 38) {
-    $("#product_tax_table tbody tr:last td:eq(2) input").focus();
+    $("#hsnno").focus();
   }
 });
 $(document).off('keydown', '#addcatselect').on('keydown', '#addcatselect',function(event) {
@@ -808,23 +817,7 @@ $(document).off("keydown",".tax_name").on("keydown",".tax_name",function(event)
   }
   else if (event.which==27) {
     event.preventDefault();
-    if ($("#additem input:radio:checked").val()=='7'){
-
-      if ($("#godownpresence").val()==0) {
-        $("#openingstock").focus().select();
-      }
-      if ($("#godownpresence").val()==1)
-      {
-        $("#godownflag").focus().select();
-      }
-      if(sessionStorage.invflag==0){
-        $("#apsubmit").focus();
-      }
-    }
-    else{
-      $("#apsubmit").focus();
-    }
-
+    $("#hsnno").focus().select();
   }
 });
     $(document).off("change",".tax_name").on("change",".tax_name",function(event){
@@ -1009,18 +1002,10 @@ $(document).off("keydown",".tax_state").on("keydown",".tax_state",function(event
 	else if (event.which==27) {
 	    event.preventDefault();
 	    if($("#additem input:radio:checked").val()=='19'){
-		$("#apsubmit").focus();
+		$("#hsnno").focus();
 	    }
 	    else{
-		if ($("#godownpresence").val()==0) {
-		    $("#openingstock").focus().select();
-		}
-		if ($("#godownpresence").val()==1) {
-		    $("#godownflag").focus().select();
-		}
-		if(sessionStorage.invflag==0){
-		    $("#apsubmit").focus();
-		}
+        $("#hsnno").focus();
 	    }
 	}
 
@@ -1101,20 +1086,10 @@ $(document).off("keydown",".tax_rate_all").on("keydown",".tax_rate_all",function
     event.preventDefault();
 
     if($("#additem input:radio:checked").val()=='19'){
-    $("#apsubmit").focus();
+    $("#hsnno").focus();
     }
     else{
-
-      if ($("#godownpresence").val()==0) {
-        $("#openingstock").focus().select();
-      }
-      if ($("#godownpresence").val()==1)
-      {
-        $("#godownflag").focus().select();
-      }
-      if(sessionStorage.invflag==0){
-        $("#apsubmit").focus();
-      }
+      $("#hsnno").focus();
     }
 
   }
@@ -1692,12 +1667,33 @@ if($("#additem input:radio:checked").val()=='7'){
     return false;
   }
   if ($("#hsnno").val()=="") {
-    $("#hsnno-blank-alert").alert();
-    $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-      $("#hsnno-blank-alert").hide();
-  });
-    $("#hsnno").focus();
-    return false;
+    let gstselected = 0;
+    let rowcount = $("#product_tax_table tbody tr").length;
+    for (i=0;i<rowcount;i++){
+      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+        gstselected = 1;
+        break;
+      }
+    }
+    if (gstselected == 1){
+      if ($(this).val()=="") {
+        if($("#additem input:radio:checked").val() == '7') {
+        $("#hsnno-blank-alert").alert();
+        $("#hsnno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#hsnno-blank-alert").hide();
+        });
+        }
+      else{
+  
+        $("#serviceno-blank-alert").alert();
+        $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#serviceno-blank-alert").hide();
+        });
+      }
+        $("#hsnno").focus();
+        return false;
+      }
+    }
   }
     if(parseInt($("#hsnno").val()) <= 0)
            {
@@ -1822,22 +1818,22 @@ else{
     }
 
   });
-    if(taxes.length == '0' && $("#product_tax_table").length > 0){
-	if($("#additem input:radio:checked").val() == 7){
-	    $("#tax-alert").alert();
-            $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#tax-alert").hide();
-            });
-            return false;
-	}
-	else {
-	    $("#tax-service-alert").alert();
-            $("#tax-service-alert").fadeTo(2250, 500).slideUp(500, function(){
-                $("#tax-service-alert").hide();
-            });
-            return false;
-	}
-    }
+  //   if(taxes.length == '0' && $("#product_tax_table").length > 0){
+	// if($("#additem input:radio:checked").val() == 7){
+	//     $("#tax-alert").alert();
+  //           $("#tax-alert").fadeTo(2250, 500).slideUp(500, function(){
+  //               $("#tax-alert").hide();
+  //           });
+  //           return false;
+	// }
+	// else {
+	//     $("#tax-service-alert").alert();
+  //           $("#tax-service-alert").fadeTo(2250, 500).slideUp(500, function(){
+  //               $("#tax-service-alert").hide();
+  //           });
+  //           return false;
+	// }
+  //   }
 
   var gobj = {}; // Creating a dictionary for storing godown wise opening stock
   $("#godown_ob_table tbody tr").each(function(){
