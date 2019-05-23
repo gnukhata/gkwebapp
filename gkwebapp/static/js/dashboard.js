@@ -548,8 +548,6 @@ function stockonhand(stockonhanddata){
 }
 
 function accbalance(balancedataset){
-
-
   var ctx = document.getElementById('linechart').getContext('2d');
 var chart = new Chart(ctx, {
     // The type of chart we want to create
@@ -590,10 +588,6 @@ function dashboard(){
       success: function(resp)
       {
       respdata=resp["gkresult"]
-    if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1 || resp["userrole"] == 2){
-     monthlyinvoice(9,respdata["puchaseinvcount"]);
-     monthlyinvoice(15,respdata["saleinvcount"]);
-    }
 
 
     if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1){
@@ -624,17 +618,22 @@ function dashboard(){
       paymentdata(15,respdata["datewisesaleinv"]);
     });
     $("#sale_amount_wise").click();
-    }
+    
     topfivecustsup(9,respdata["topfivesuplist"]);
     topfivecustsup(15,respdata["topfivecustlist"]);
     mostboughtprodsev(respdata["mostboughtprodsev"]);
     stockonhand(respdata["stockonhanddata"]);
     accbalance(respdata["balancedata"]);
-
+  }
+  if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1 || resp["userrole"] == 2){
+    monthlyinvoice(9,respdata["puchaseinvcount"]);
+    monthlyinvoice(15,respdata["saleinvcount"]);
+   }
     if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
       monthlydelchal(9,respdata["delchalout"]);
       monthlydelchal(15,respdata["delchalin"]);
      }
+
   }
     
     }); 
