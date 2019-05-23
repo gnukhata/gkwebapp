@@ -404,8 +404,6 @@ $(document).ready(function(){
      if(resp["gkresult"]["userrole"]==-1 || resp["gkresult"]["userrole"]==0){
        $("listofusers").remove();
        $(".adminhide").remove();
-      $(".hidevoucher").remove();
-
      }       
      if(resp["gkresult"]["userrole"]==1){
        $(".hideoperator").remove();
@@ -422,8 +420,6 @@ $(document).ready(function(){
        $(".hidemanager").remove();
        $("#showviewlog").remove();
        $("#orgpref").remove();
-      $(".hidevoucher").remove();
-
      }
      if(resp["gkresult"]["userrole"]==2) {
 	 $("#showviewlog").remove();

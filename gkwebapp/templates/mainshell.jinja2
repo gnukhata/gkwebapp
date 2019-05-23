@@ -231,114 +231,160 @@
       </div>
       <div id="info" style="margin-top: 5px; margin-bottom: 10px;" class="container-fluid tab-pane " hidden>
 
-        <div class="row form-inline internalaud godownhide accountinghide">
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="my_profile" class="flowdiv hidden-print  animationContainer enableCircleHoverAnimation ">
-                
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-user-circle fa-7x"></i>
+        <div class="row godownhide internalaud accountinghide">
+            <div class="col-sm-6 dashboardouterdiv">
+                <div style="position:relative;">
+                  <div class="dashboarddiv shadow">
+                    <div class="row">
+                        <div class=""style="margin-left:15px;margin-top:-10px"> 
+                            <h5 style="color:#333;font-weight: bold; ">Workflow</h5 >
+                          </div>
+                    </div>
+                      <div class="row">
+                      <div class="row">
+                        <div class="col-xs-6">
+                            <div class="add_custsup flowdiv animationContainer enableCircleHoverAnimation ">
+
+                                <div class="text-center" style="font-size:7rem">
+                                  <i class="fa fa-user-plus fa-7x"></i>
+                                </div>
+                                <br>
+                                <div class="text-center" style="width:100%">Customer and Supplier</div>
+                              </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class=" flowdiv add_prod">
+                                <div class="text-center" style="font-size:7rem">
+                                  <i class="fa fa-cart-plus fa-7x"></i>
+                                </div>
+                                <br>
+                                <div class="text-center">Product/ Service</div>
+                              </div>
+                        </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-xs-6">
+                              <div id="add_invoice" class="flowdiv text-center">
+                                  <div class="text-center" style="font-size:7rem">
+                                    <i class="fa fa-file fa-7x"></i>
+                                  </div>
+                                  <br>
+                                  <div class="text-center">
+                                    Invoice
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div id="report_page" class="flowdiv text-center">
+                                  <div class="text-center" style="font-size:7rem">
+                                    <i class="fa fa-file fa-7x"></i>
+                                  </div>
+                                  <br>
+                                  <div class="text-center">
+                                    Report
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                      </div>
+                  </div>
                 </div>
-                <br>
-                <div class="text-center" style="width:100%">Profile</div>
               </div>
-            </div>  
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+                <div class="dashboarddiv shadow">
+                    <div class="pull-left"style="margin-top:-15px"> 
+                    <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
+                  </div>
+                  <div>
+                  <canvas id="linechart" style="height:260px !important; width:100%;margin-top:-30px"></canvas>
+                  </div>
+                 <div> 
+                   <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;margin-top:-35px">View Account wise Balance</button>
+                </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div class="add_custsup flowdiv animationContainer enableCircleHoverAnimation ">
 
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-user-plus fa-7x"></i>
+          <div class="row godownhide internalaud hidevoucher">
+              <div class="col-sm-6 dashboardouterdiv">
+                  <div style="position:relative;">
+                    <div class="dashboarddiv shadow">
+                      <div class="row">
+                          <div class=""style="margin-left:15px;margin-top:-10px"> 
+                              <h5 style="color:#333;font-weight: bold; ">Voucher</h5 >
+                            </div>
+                      </div>
+                        <div class="row">
+                        <div class="row">
+                          <div class="col-xs-6">
+                              <div id="add_receipt" class="flowdiv text-center">
+                                  <div class="text-center" style="font-size:7rem">
+                                    <i class="fa fa-file fa-7x"></i>
+                                  </div>
+                                  <br>
+                                  <div class="text-center">
+                                    Receipt
+                                  </div>
+                                </div>
+                          </div>
+                          <div class="col-xs-6">
+                              <div id="add_payment" class="flowdiv text-center">
+                                  <div class="text-center" style="font-size:7rem">
+                                    <i class="fa fa-file fa-7x"></i>
+                                  </div>
+                                  <br>
+                                  <div class="text-center">
+                                    Payment
+                                  </div>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <div id="add_journal" class="flowdiv text-center">
+                                    <div class="text-center" style="font-size:7rem">
+                                      <i class="fa fa-file fa-7x"></i>
+                                    </div>
+                                    <br>
+                                    <div class="text-center">
+                                      Journal
+                                    </div>
+                                  </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <div id="add_contra" class="flowdiv text-center">
+                                    <div class="text-center" style="font-size:7rem">
+                                      <i class="fa fa-file fa-7x"></i>
+                                    </div>
+                                    <br>
+                                    <div class="text-center">
+                                      Contra
+                                    </div>
+                                  </div>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                  </div>
                 </div>
-                <br>
-                <div class="text-center" style="width:100%">Customer and Supplier</div>
-              </div>
-            </div>  
-          </div>
-
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div class=" flowdiv add_prod">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-cart-plus fa-7x"></i>
+              <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+                <div class="dashboarddiv shadow">
+                    <div class="pull-left"style="margin-top:-15px"> 
+                    <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
+                  </div>
+                  <div>
+                  <canvas id="linechart" style="height:260px !important; width:100%;margin-top:-30px"></canvas>
+                  </div>
+                 <div> 
+                   <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;margin-top:-35px">View Account wise Balance</button>
                 </div>
-                <br>
-                <div class="text-center">Product/ Service</div>
+                </div>
               </div>
+            </div>              
             </div>
-          </div>
-
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="add_invoice" class="flowdiv text-center">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-file fa-7x"></i>
-                </div>
-                <br>
-                <div class="text-center">
-                  Invoice
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-
-        <div class="row hidevoucher">
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="add_receipt" class="flowdiv text-center">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-file fa-7x"></i>
-                </div>
-                <br>
-                <div class="text-center">
-                  Receipt
-                </div>
-              </div>
-            </div>
-          </div>   
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="add_payment" class="flowdiv text-center">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-file fa-7x"></i>
-                </div>
-                <br>
-                <div class="text-center">
-                  Payment
-                </div>
-              </div>
-            </div>
-          </div>   
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="add_journal" class="flowdiv text-center">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-file fa-7x"></i>
-                </div>
-                <br>
-                <div class="text-center">
-                  Journal
-                </div>
-              </div>
-            </div>
-          </div>   
-          <div class="col-xs-3 flowouterdiv">
-            <div style="position:relative;">
-              <div id="add_contra" class="flowdiv text-center">
-                <div class="text-center" style="font-size:7rem">
-                  <i class="fa fa-file fa-7x"></i>
-                </div>
-                <br>
-                <div class="text-center">
-                  Contra
-                </div>
-              </div>
-            </div>
-          </div>      
-        </div>
 
         <div class="row internalaud accountinghide godownhide">
           <div class="col-sm-6 dashboardouterdiv">
@@ -670,24 +716,6 @@
                 <div>
                   <button class="btn btn-danger btn-sm" id="profit_loss" style="float:right;margin-top:-35px">View details</button>
                 </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row godownhide internalaud">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                  <div class="pull-left"style="margin-top:-15px"> 
-                  <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
-                </div>
-                <div>
-                <canvas id="linechart" style="height:260px !important; width:100%;margin-top:-30px"></canvas>
-                </div>
-               <div> 
-                 <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;margin-top:-35px">View Account wise Balance</button>
-              </div>
               </div>
             </div>
           </div>

@@ -123,8 +123,8 @@ $("#shownews").click(function(){
   $(".add_custsup").click(function() {
     $("#customersupplier").click();
   });
-  $("#add_invoice").click(function() {
-    $("#invoice").click();
+  $("#report_page").click(function() {
+    $("#report_li").click();
   });
   $("#Adjustable_purchase_bill").click(function() {
     $("#showbillwiseaccounting").click();
@@ -633,7 +633,6 @@ function dashboard(){
       monthlydelchal(9,respdata["delchalout"]);
       monthlydelchal(15,respdata["delchalin"]);
      }
-
   }
     
     }); 
