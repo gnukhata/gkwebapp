@@ -85,6 +85,10 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
+	$('#roundvalue').tooltip({
+		title : "Round Off Grand Total Value?",
+		placement : "top"
+	});
   //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
         if (str && str != "") {
@@ -140,6 +144,7 @@ $(document).ready(function() {
     var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     var tottaxable;
     var tottax;
+	var roundoffvalue;
 
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
@@ -190,7 +195,14 @@ $(document).ready(function() {
 	    totalsgst = totalsgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(10) input').val());
 	    totalcess = totalcess + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(12) input').val());
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
-	    var res = totalamount.toString();
+		if($("#roundvalue").is(":checked")){
+			var res = parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
+		}
+		else{
+			var res = totalamount.toString();
+			roundoffvalue = 0;
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -223,9 +235,25 @@ $(document).ready(function() {
 	$("#totalcgtax").text(parseFloat(totalcgst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
 	$("#totalValueInWord").text(numbertowords);
-    }
-
+	if ($("#roundvalue").is(":checked")){
+		$("#roundvaluediv").show();
+		$("#totalValueInWord").text(numbertowords);
+	}
+	else{
+		$("#roundvaluediv").hide();	
+	}
+	}
+	$("#roundvaluediv").hide();
+	$("#roundvalue").change(function(e){
+		if($("#taxapplicabletext").text()=="GST"){
+			$('.invoice_product_quantity_gst').change();
+		}
+		else{
+			$('.invoice_product_quantity_vat').change();
+		}
+	});
     //Function to calculate Tax Amount and Total of Discount, Taxable Amount, Tax Amounts and Total Amount.
     //This is similar to the function above.
     function calculatevataxamt(curindex) {
@@ -256,7 +284,14 @@ $(document).ready(function() {
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
 	    tottax=totaltax;
 	    totalamount = totalamount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(8) input').val());
-	    var res = totalamount.toString();
+		if($("#roundvalue").is(":checked")){
+			var res = parseFloat(Math.round(totalamount)).toFixed().toString();
+			roundoffvalue = 1;
+		}
+		else{
+			var res = totalamount.toString();
+			roundoffvalue = 0;
+		}
 	    var str = res.split(".");
 	    var len = str[1];
 	    if(totalamount!=0){
@@ -284,7 +319,15 @@ $(document).ready(function() {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalinvoicevaluerounded").text(parseFloat(Math.round(totalamount)).toFixed(2));
 	$("#totalValueInWord").text(numbertowords);
+	if($("#roundvalue").is(":checked")){
+		$("#roundvaluediv").show();
+		$("#totalValueInWord").text(numbertowords);
+	}
+	else{
+		$("#roundvaluediv").hide();
+	}
     }
 
     $(".invstate").show();
@@ -1690,6 +1733,7 @@ $(document).off("keyup").on("keyup", function(event) {
        }
 	
 	var form_data = new FormData();
+		form_data.append("roundoff",roundoffvalue);
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
         form_data.append("contents", JSON.stringify(contents));
