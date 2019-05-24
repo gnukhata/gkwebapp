@@ -477,7 +477,7 @@ $(document).ready(function() {
 
   $("#submit").click(function(event) {
     event.preventDefault();
-
+    var invoicedate= Date.parseExact($("#invsel option:selected").attr("invdate"), "dd-MM-yyyy");
     var date = $("#year").val()+"-"+$("#month").val()+"-"+$("#vdate").val();
     var party = $("#pname option:selected").val();
     var payment_mode = $("#payment-mode option:selected").val();
@@ -512,6 +512,19 @@ $(document).ready(function() {
       raiseAlertById("#year-blank");
       $("#year").focus();
       return false;
+    }
+
+    console.log(date);
+    console.log(invoicedate);
+    if( Date.parseExact(date, "dd-MM-yyyy")< invoicedate){
+      $('#vdate').focus().select();
+      $("#inv-date-alert").alert();
+        $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function() {
+          $("#inv-date-alert").hide();
+          $("#postdate-alert").hide();
+          $('#vdate').focus().select();
+        });
+        return false;
     }
 
     if (payment_mode == "both") {

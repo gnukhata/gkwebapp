@@ -51,7 +51,7 @@ function vouchercall(vtype,inv_id){
         success: function(resp)
         {
             if(sessionStorage.modeflag == 0){
-                $("#mod_dialog").css("width",'95%');
+                $("#mod_dialog").css({"width":'90%',"font-size":"90%"});
             }
             else{
                 $(".classstyle").css("padding",'-15px');
@@ -71,6 +71,7 @@ function vouchercall(vtype,inv_id){
                 $('#invsel').prop('disabled', true);
                 $("#addcust").hide();
                 $("#popup").hide();
+                $(".hideatinvoice").hide();
 
 });
         }   
