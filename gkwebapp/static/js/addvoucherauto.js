@@ -514,8 +514,6 @@ $(document).ready(function() {
       return false;
     }
 
-    console.log(date);
-    console.log(invoicedate);
     if( Date.parseExact(date, "dd-MM-yyyy")< invoicedate){
       $('#vdate').focus().select();
       $("#inv-date-alert").alert();
