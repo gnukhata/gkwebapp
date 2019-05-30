@@ -109,11 +109,11 @@
 			<option value="" dcno = "" selected>None</option>
 			{% for deliverynote in deliverynotes %}
 			  {% if status=="in" %}
-			    {% if deliverynote['csflag']==19 %}
+			    {% if deliverynote['inoutflag']==9 %}
 			      <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
 			    {% endif %}
 			  {% else %}
-			    {% if deliverynote['csflag']==3 %}
+			    {% if deliverynote['inoutflag']==15 %}
 			      <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
 			    {% endif %}
 			  {% endif %}
@@ -173,7 +173,17 @@
 		      <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
 		    {% else %}
 		      <h4>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h4>
-		    {% endif %}
+				{% endif %}
+				<div class="form-group form-inline">
+						<label class="col-sm-4 fsize" for="">
+								{% trans %}Select party lable{% endtrans %}:
+						</label>
+						<div class="radio col-sm-8" style="margin-left:-15px">
+							<label><input type="radio" class="custsupchange" name="csradio" id="custchange" aria-label="Customer"> Customer</label>
+				
+							<label><input type="radio" class="custsupchange" name="csradio" id="supchange" aria-label="Supplier"> Supplier</label>
+						</div>
+						</div>
 		    <div class="form-group form-inline">
 		      <label class="col-sm-4 fsize" for="invoice_customer">
 			{% if status=="in" %}

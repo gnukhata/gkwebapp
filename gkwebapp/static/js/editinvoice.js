@@ -605,7 +605,13 @@ $(document).ready(function() {
 		    }
 		}
 		else {
-		    $("#invoice_customer").focus();  //Focus shifts to Customer.
+			if($('#custchange.custsupchange').is(':checked')){
+				$("#custchange.custsupchange").focus();
+			}
+			else{
+				$("#supchange.custsupchange").focus();
+		
+			}
 		}
 	    }
 	}
@@ -676,7 +682,13 @@ $(document).ready(function() {
 		}
             }
 	    else {
-		$("#invoice_customer").focus();  //Focus shifts to Customer.
+			if($('#custchange.custsupchange').is(':checked')){
+				$("#custchange.custsupchange").focus();
+			}
+			else{
+				$("#supchange.custsupchange").focus();
+		
+			}
 	    }
 	}
 	else if (event.which == 38) {
@@ -700,12 +712,13 @@ $(document).ready(function() {
 	    $("#invoice_customerstate").focus();  //Focus shifts to Customer State.
 	}
 	if (event.which == 38) {
-	    if ($("#invoice_customer option:visible").first().is(":selected") || $("#invoice_customer option:first").is(":selected")) {
-		if ($("#status").val() == 15) {
-		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+	    if ($("#invoice_customer").val() =='-1' || $("#invoice_customer").val()=="") {
+		if($('#custchange.custsupchange').is(':checked')){
+			$("#custchange.custsupchange").focus();
 		}
-		else {
-		    $("#invoicestate").focus();  //Focus Shifts to Invoice State.
+		else{
+			$("#supchange.custsupchange").focus();
+	
 		}
 	    }
 	}
@@ -714,7 +727,80 @@ $(document).ready(function() {
 	    $("#invoice_customer").prop("disabled", true);
 	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
-    });
+	});
+	$('input:radio[name=csradio]').keydown(function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				$("#invoice_customer").focus().select();  //Focus shifts to Designation of Issuer.
+			}
+			else if (event.which == 38) {
+				if ($("#status").val() == 15) {
+					$("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+				}
+				else {
+					$("#invoicestate").focus();  //Focus Shifts to Invoice State.
+				}
+			}
+			});
+
+    function custSupData(urldata){
+		$.ajax({
+			type: "POST",
+			url: urldata,
+			global: false,
+			async: false,
+			datatype: "json",
+			beforeSend: function(xhr) {
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			},
+		success: function(resp) {
+			let custsupdata=resp["customers"]
+			var optionsdiv = $("#invoice_customer").closest("div");
+			$('#invoice_customer').empty();
+
+			optionsdiv.find('select[style*="display: none"]').empty();
+			if($("#status").val()==15){
+			$("#invoice_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+			$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+            optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+            optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+			}
+			else{
+				$("#invoice_customer").append('<option value="" disabled hidden selected"> Select Supplier</option>');
+				$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+			}
+			
+			for (let i in custsupdata ) {
+				$('#invoice_customer').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+
+			}
+		}
+		})
+		}
+
+		if($("#status").val() == 15){
+			$('#custchange.custsupchange').click();
+		}
+		else{
+			$("#supchange.custsupchange").click();
+	
+		}
+	$(document).off("change",".custsupchange").on("change",".custsupchange",function(event) {
+		//Checking which radio button is selected.
+			if ($("#custchange").is(":checked")) {
+				custSupData("/customersuppliers?action=getallcusts");
+			
+			} else {
+				custSupData("/customersuppliers?action=getallsups");
+
+				}
+			});
 
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
@@ -1161,6 +1247,15 @@ $(document).ready(function() {
 	    })
 		.done(function(resp) {
 		    if (resp["gkstatus"] == 0) {
+				$(".custsupchange").prop("disabled", false);
+			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
+				$("#custchange.custsupchange").click();
+				$(".custsupchange").prop("disabled", true);
+			}
+			if(resp["delchal"]["custSupDetails"]["csflag"]==19){
+				$("#supchange.custsupchange").click();
+				$(".custsupchange").prop("disabled", true);
+			}
 			$("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
@@ -2661,7 +2756,14 @@ if (event.which == 13) {
 			    }
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
-			    }
+				}
+				if(resp.invoicedata.custSupDetails.csflag == 3){
+
+					$('#custchange.custsupchange').prop('checked', true).change();
+				}
+				else{
+					$('#supchange.custsupchange').prop('checked', true).change();
+				}
 			    $('#invoice_customer option').each(function(index) {
 				if ($(this).text() == resp.invoicedata.custSupDetails.custname) {
 				    $(this).prop("selected", true);
@@ -2911,7 +3013,7 @@ if (event.which == 13) {
 	$(".uploadclass").show();
 	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
-	    $(".custfield, .delchalfield, .supplydate").prop("disabled", true);
+	    $(".custfield, .delchalfield, .supplydate, .custsupchange").prop("disabled", true);
 	}
 	$("#originaddress").prop("disabled",true);
 	if ($("#taxapplicable").val() == 7) {

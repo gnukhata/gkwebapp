@@ -184,6 +184,16 @@
 		  <h4>{% trans %}Details of Receiver | Billed to{% endtrans %} :</h4>
 		{% endif %}
 		<div class="form-group form-inline">
+				<label class="col-sm-4 fsize" for="">
+						{% trans %}Select party lable{% endtrans %}:
+				</label>
+				<div class="radio col-sm-8" style="margin-left:-15px">
+					<label><input type="radio" class="custsupchange" name="csradio" id="custchange" aria-label="Customer"> Customer</label>
+		
+					<label><input type="radio" class="custsupchange" name="csradio" id="supchange" aria-label="Supplier"> Supplier</label>
+				</div>
+				</div>
+		<div class="form-group form-inline">
 		  <label class="col-sm-4 fsize" for="deliverychallan_customer">
 		    {% if gkstatus=="in" %}
 		      {% trans %}Supplier{% endtrans %} :

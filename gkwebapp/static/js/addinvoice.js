@@ -315,7 +315,8 @@ $(document).ready(function() {
 		else{
 			$("#roundvaluediv").hide();
 		}
-    }
+	}
+	
 
     function saveInvoice(invid,inoutflag){
 	$.ajax({
@@ -708,7 +709,13 @@ $(document).ready(function() {
 		    }
 		}
 		else {
-		    $("#invoice_customer").focus();  //Focus shifts to Customer.
+			if($('#custchange.custsupchange').is(':checked')){
+				$("#custchange.custsupchange").focus();
+			}
+			else{
+				$("#supchange.custsupchange").focus();
+		
+			}
 		}
 	    }
 	}
@@ -717,8 +724,23 @@ $(document).ready(function() {
 		$("#invoice_year").focus();
 	    }
 	}
-    });
-
+	});
+	    //Key Event for Invoice Year field.
+		$('input:radio[name=csradio]').keydown(function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				$("#invoice_customer").focus();  //Focus shifts to State of Origin/Delivery.
+			}
+			if (event.which == 38) {
+				event.preventDefault();
+				if ($("#status").val() == 15) {
+					$("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+				}
+				else {
+					$("#invoicestate").focus();  //Focus Shifts to Invoice State.
+				}
+			}
+			});
     // Key Events for Address in sale invoice.
     $("#originaddress").keydown(function(event){
 	if(event.which ==13){
@@ -777,7 +799,14 @@ $(document).ready(function() {
 		}
             }
 	    else {
-		$("#invoice_customer").focus();  //Focus shifts to Customer.
+			if($('#custchange.custsupchange').is(':checked')){
+				$("#custchange.custsupchange").focus();
+			}
+			else{
+				$("#supchange.custsupchange").focus();
+		
+			}
+			
 	    }
 	}
 	else if (event.which == 38) {
@@ -804,12 +833,14 @@ $(document).ready(function() {
 	}
 	if (event.which == 38) {
 	    if ($("#invoice_customer option:visible").first().is(":selected") || $("#invoice_customer option:first").is(":selected")) {
-		if ($("#status").val() == 15) {
-		    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
-		}
-		else {
-		    $("#invoicestate").focus();  //Focus Shifts to Invoice State.
-		}
+			if($('#custchange.custsupchange').is(':checked')){
+				$("#custchange.custsupchange").focus();
+			}
+			else{
+				$("#supchange.custsupchange").focus();
+		
+			}
+
 	    }
 	}
 	if (event.which == 32) {
@@ -817,7 +848,61 @@ $(document).ready(function() {
 	    $("#invoice_customer").prop("disabled", true);
 	    $('#invoice_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
-    });
+	});
+	
+	function custSupData(urldata){
+		$.ajax({
+			type: "POST",
+			url: urldata,
+			global: false,
+			async: false,
+			datatype: "json",
+			beforeSend: function(xhr) {
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			},
+		success: function(resp) {
+			let custsupdata=resp["customers"]
+			var optionsdiv = $("#invoice_customer").closest("div");
+			$('#invoice_customer').empty();
+
+			optionsdiv.find('select[style*="display: none"]').empty();
+			if($("#status").val()==15){
+				$("#invoice_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+				$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+			}
+			else{
+				$("#invoice_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+				$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+			}
+			
+			for (let i in custsupdata ) {
+				$('#invoice_customer').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+
+			}
+		}
+		})
+		}
+
+
+	$(document).off("change",".custsupchange").on("change",".custsupchange",function(event) {
+		//Checking which radio button is selected.
+			if ($("#custchange").is(":checked")) {
+				custSupData("/customersuppliers?action=getallcusts");
+			
+			} else {
+				custSupData("/customersuppliers?action=getallsups");
+
+				}
+			});
+
     //Change Event for Customer.
     $("#invoice_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
@@ -846,15 +931,13 @@ $(document).ready(function() {
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
-		    gstins = resp["gkresult"]["gstin"];
-		    if ($("#invoice_customer option:selected").attr("custid") in gstins) {
+			let gstins = resp["gkresult"]["gstin"];
+		    if (gstins != null && $("#invoice_customer option:selected").attr("stateid") in gstins) {
       			$("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
       		    }
       		    else {
       			$("#gstin").text('');  //If GSTIN is not available it is set as blank.
       		    }
-		    //GSTIN of customer in default state is selected.
-		    $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);
 
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text(pad($("#invoice_customerstate option:selected").attr("stateid"), 2));
@@ -1266,6 +1349,16 @@ $(document).ready(function() {
 		}
 	    }).done(function(resp) {
 		if (resp["gkstatus"] == 0) {
+			$(".custsupchange").prop("disabled", false);
+			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
+				$("#custchange.custsupchange").click();
+				$(".custsupchange").prop("disabled", true);
+			}
+			if(resp["delchal"]["custSupDetails"]["csflag"]==19){
+				$("#supchange.custsupchange").click();
+				$(".custsupchange").prop("disabled", true);
+			}
+
 		    //details of customer and supplier
 		    $("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 		    $("#invoice_customer").prop("disabled", true);
@@ -1397,7 +1490,13 @@ $(document).ready(function() {
 	}
     });
 
+	if($("#status").val() == 15){
+		$('#custchange.custsupchange').click();
+	}
+	else{
+		$("#supchange.custsupchange").click();
 
+	}
     $('#invoice_product_table_total tbody').on('scroll', function () {
 	$('#invoice_product_table_gst tbody').scrollTop($(this).scrollTop());
     });

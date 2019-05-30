@@ -344,7 +344,14 @@ $(document).ready(function() {
     }
     if (event.which==38 && (document.getElementById('deliverychallan_customer').selectedIndex==1||document.getElementById('deliverychallan_customer').selectedIndex==0)) {
 	event.preventDefault();
-	$("#deliverychallan_consignment").focus().select();
+	if($('#custchange.custsupchange').is(':checked')){
+		$("#custchange.custsupchange").focus();
+	}
+	else{
+		$("#supchange.custsupchange").focus();
+
+	}
+
     }
     if (event.which==32){
       event.preventDefault();
@@ -547,7 +554,13 @@ $(document).ready(function() {
   $("#deliverychallan_consignment").keydown(function(event) {
     if (event.which==13) {
 	event.preventDefault();
-	$('#deliverychallan_customer').focus().select();
+	if($('#custchange.custsupchange').is(':checked')){
+		$("#custchange.custsupchange").focus();
+	}
+	else{
+		$("#supchange.custsupchange").focus();
+
+	}
     }
     if (event.which==38 && document.getElementById('deliverychallan_consignment').selectedIndex==0) {
 	event.preventDefault();
@@ -556,6 +569,20 @@ $(document).ready(function() {
 	    }else{
 		$("#invoicestate").focus();
 	    }
+    }
+  });
+
+  $('input:radio[name=csradio]').keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+
+	$('#deliverychallan_customer').focus().select();
+	}
+    if (event.which==38) {
+		event.preventDefault();
+
+		$("#deliverychallan_consignment").focus();
+	    
     }
   });
 
@@ -825,6 +852,69 @@ $(document).ready(function() {
             return false;
         }
     });
+
+
+    function custSupData(urldata){
+		$.ajax({
+			type: "POST",
+			url: urldata,
+			global: false,
+			async: false,
+			datatype: "json",
+			beforeSend: function(xhr) {
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			},
+		success: function(resp) {
+			let custsupdata=resp["customers"]
+			var optionsdiv = $("#deliverychallan_customer").closest("div");
+			$('#deliverychallan_customer').empty();
+
+			optionsdiv.find('select[style*="display: none"]').empty();
+			if($("#status").val()==15){
+			$("#deliverychallan_customer").append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+			$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+
+            optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+            optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+
+			}
+			else{
+
+				$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+				$('#deliverychallan_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+			}
+			
+			for (let i in custsupdata ) {
+
+				$('#deliverychallan_customer').append('<option value="' + custsupdata[i].custid + '" name="'+ custsupdata[i].custname +'">' + custsupdata[i].custname + '</option>');
+				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+
+			}
+		}
+		})
+		}
+
+		if($("#status").val() == 15){
+			$('#custchange.custsupchange').click();
+		}
+		else{
+			$("#supchange.custsupchange").click();
+	
+		}
+	$(document).off("change",".custsupchange").on("change",".custsupchange",function(event) {
+		//Checking which radio button is selected.
+			if ($("#custchange").is(":checked")) {
+				custSupData("/customersuppliers?action=getallcusts");
+			
+			} else {
+				custSupData("/customersuppliers?action=getallsups");
+
+				}
+			});
+
 
     $("#deliverychallan_customer").change(function(event) {
     if($("#deliverychallan_customer option:selected").val() != ""){

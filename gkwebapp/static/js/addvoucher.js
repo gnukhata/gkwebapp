@@ -1796,7 +1796,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
 	      //The block below checks if an account involved in a Credit entry is a customer and number of customers is incremented if yes.
-	      if (accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") {
+	      if ((accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors") || (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase")) {
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
@@ -1823,7 +1823,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	    success: function(jsonObj) {
 	      var accountdetails = jsonObj["gkresult"];
 	      //The block below checks if an account involved in a Debit entry is a supplier and number of suppliers is incremented if yes.
-	      if (accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") {
+	      if ((accountdetails["groupname"] == "Current Liabilities" && accountdetails["subgroupname"] == "Sundry Creditors for Purchase") ||(accountdetails["groupname"] == "Current Assets" && accountdetails["subgroupname"] == "Sundry Debtors")){
 		customername = accountdetails["accountname"];
 		customercode = accountdetails["accountcode"];
 		numberofcustomers = numberofcustomers + 1;
