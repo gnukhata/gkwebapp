@@ -1123,17 +1123,6 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 	let curacccode = $('#vtable tbody tr:eq('+curindex+') td:eq(1) select option:selected').val();
 	let caldata = $('#vyear').val()+"-"+$('#vmonth').val()+"-"+$('#vdate').val();
 	$('#vtable tbody tr:eq('+curindex+') td:eq(2) input').val(getBalance(curacccode, caldata)); // Function that returns balance is called.
-	//If cust/sup account selected is altered then invoice selected is reset.
-	if (($('#vtype').val()=="sales" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="payment" && sessionStorage.billflag == 1)){
-	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
-		$("#invsel").val("");
-	    }
-	}
-	if (($('#vtype').val()=="purchase" && sessionStorage.invsflag ==1) || ($('#vtype').val()=="receipt" && sessionStorage.billflag == 1)){
-	    if ($("#invsel option:selected").attr("customername") != $(".accs:first option:selected").text()) {
-		$("#invsel").val("");
-	    }
-	}
     });
     $(".accs").change(); //Change event is triggered so that balance is displayed when the page is loaded.
     
