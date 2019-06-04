@@ -73,22 +73,10 @@
               {% trans %}INV Date{% endtrans %}
 	    </th>
 	    <th class="smwrap text-center" >
-              {% trans %}DC No.{% endtrans %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% trans %}DC Date{% endtrans %}
+              {% trans %}Deli. Note{% endtrans %}
 	    </th>
 	    <th class="mdwrap text-center" >
               {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
-	    </th>
-	    <th class="mdwrap text-center" >
-              {% if resultgstvat == '7' %}
-		{% trans %}GSTIN{% endtrans %}
-	      {% elif resultgstvat == '22' %}
-                {% trans %}TIN{% endtrans %}
-	      {% else %}
-		{% trans %}TIN/GSTIN{% endtrans %}
-	      {% endif %}
 	    </th>
 	    <th class="mdwrap text-right" >
               {% trans %}Gross Amt{% endtrans %}
@@ -110,10 +98,11 @@
 	      <td class="srnowrap text-center">{{invoice["srno"]}}</td>
 	      <td class="smwrap text-center">{{invoice["invoiceno"]}}</td>
 	      <td class="mdwrap text-center">{{invoice["invoicedate"]}}</td>
-	      <td class="smwrap text-center">{{invoice["dcno"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["dcdate"]}}</td>
+	      <td class="smwrap text-center">
+					{% if invoice["dcno"] != "" and invoice["dcdate"] != "" %}
+						{{invoice["dcno"]}},{{invoice["dcdate"]}}
+					{% endif %}</td>
 	      <td class="mdwrap text-center">{{invoice["custname"]}}</td>
-	      <td class="mdwrap text-center">{{invoice["custtin"]}}</td>
 	      <td class="mdwrap text-right">{{invoice["grossamt"]}}</td>
 	      <td class="mdwrap text-right">{{invoice["netamt"]}}</td>
 	      <td class="mdwrap text-right">{{invoice["taxamt"]}}</td>

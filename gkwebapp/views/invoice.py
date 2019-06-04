@@ -439,14 +439,12 @@ def listofinvspreadsheet(request):
         sheet.column_dimensions['A'].width = 8
         sheet.column_dimensions['B'].width = 12
         sheet.column_dimensions['C'].width = 10
-        sheet.column_dimensions['D'].width = 12
-        sheet.column_dimensions['E'].width = 10
+        sheet.column_dimensions['D'].width = 16
+        sheet.column_dimensions['E'].width = 16
         sheet.column_dimensions['F'].width = 16
-        sheet.column_dimensions['G'].width = 18
-        sheet.column_dimensions['H'].width = 16
+        sheet.column_dimensions['G'].width = 16
+        sheet.column_dimensions['H'].width = 10
         sheet.column_dimensions['I'].width = 16
-        sheet.column_dimensions['J'].width = 10
-        sheet.column_dimensions['K'].width = 16
         sheet.merge_cells('A1:K2')
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -471,24 +469,17 @@ def listofinvspreadsheet(request):
         sheet['A5'] = 'Sr. No.'
         sheet['B5'] = 'INV No.'
         sheet['C5'] = 'INV Date'
-        sheet['D5'] = 'DC No. '
-        sheet['E5'] = 'DC Date'
+        sheet['D5'] = 'Deli. Note '
         if invflag == 0:
-            sheet['F5'] = 'Cust/Supp Name'
+            sheet['E5'] = 'Cust/Supp Name'
         elif invflag == 1:
-            sheet['F5'] = 'Customer Name'
+            sheet['E5'] = 'Customer Name'
         elif invflag == 2:
-            sheet['F5'] = 'Supplier Name'
-        if int(resultgstvat) == 22:
-            sheet['G5'] = 'TIN'
-        elif int(resultgstvat) == 7:
-            sheet['G5'] = 'GSTIN'
-        else:
-            sheet['G5'] = 'TIN/GSTIN'
-        sheet['H5'] = 'Gross Amt'
-        sheet['I5'] = 'Net Amt'
-        sheet['J5'] = 'Tax Amt'
-        sheet['K5'] = 'Godown'
+            sheet['E5'] = 'Supplier Name'
+        sheet['F5'] = 'Gross Amt'
+        sheet['G5'] = 'Net Amt'
+        sheet['H5'] = 'Tax Amt'
+        sheet['I5'] = 'Godown'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['A5'].alignment = Alignment(horizontal='center')
@@ -496,12 +487,10 @@ def listofinvspreadsheet(request):
         sheet['C5'].alignment = Alignment(horizontal='center')
         sheet['D5'].alignment = Alignment(horizontal='center')
         sheet['E5'].alignment = Alignment(horizontal='center')
-        sheet['F5'].alignment = Alignment(horizontal='center')
-        sheet['G5'].alignment = Alignment(horizontal='center')
+        sheet['F5'].alignment = Alignment(horizontal='right')
+        sheet['G5'].alignment = Alignment(horizontal='right')
         sheet['H5'].alignment = Alignment(horizontal='right')
-        sheet['I5'].alignment = Alignment(horizontal='right')
-        sheet['J5'].alignment = Alignment(horizontal='right')
-        sheet['K5'].alignment = Alignment(horizontal='center')
+        sheet['I5'].alignment = Alignment(horizontal='center')
         sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['C5'].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -511,8 +500,6 @@ def listofinvspreadsheet(request):
         sheet['G5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['H5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['I5'].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet['J5'].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet['K5'].font = Font(name='Liberation Serif',size=12,bold=True)
         row = 6
         # Looping each dictionaries in list result to store data in cells and apply styles.
         for invoice in result:
@@ -525,33 +512,28 @@ def listofinvspreadsheet(request):
             sheet['C'+str(row)] = invoice['invoicedate']
             sheet['C'+str(row)].alignment = Alignment(horizontal='center')
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['D'+str(row)] = invoice['dcno']
-            sheet['D'+str(row)].alignment = Alignment(horizontal='center')
-            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = invoice['dcdate']
+            if invoice['dcno'] != "" and invoice['dcdate'] != "":
+                sheet['D'+str(row)] = invoice['dcno'] +','+ invoice['dcdate']
+                sheet['D'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = invoice['custname']
             sheet['E'+str(row)].alignment = Alignment(horizontal='center')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['F'+str(row)] = invoice['custname']
-            sheet['F'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['F'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['F'+str(row)].number_format="0.00"
+            sheet['F'+str(row)].alignment = Alignment(horizontal='right')
             sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['G'+str(row)] = invoice['custtin']
-            sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['G'+str(row)] = float("%.2f"%float(invoice['netamt']))
+            sheet['G'+str(row)].number_format="0.00"
+            sheet['G'+str(row)].alignment = Alignment(horizontal='right')
             sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['H'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['H'+str(row)] = float("%.2f"%float(invoice['taxamt']))
             sheet['H'+str(row)].number_format="0.00"
             sheet['H'+str(row)].alignment = Alignment(horizontal='right')
             sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['I'+str(row)] = float("%.2f"%float(invoice['netamt']))
-            sheet['I'+str(row)].number_format="0.00"
-            sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['I'+str(row)] = invoice['godown']
+            sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['J'+str(row)] = float("%.2f"%float(invoice['taxamt']))
-            sheet['J'+str(row)].number_format="0.00"
-            sheet['J'+str(row)].alignment = Alignment(horizontal='right')
-            sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['K'+str(row)] = invoice['godown']
-            sheet['K'+str(row)].alignment = Alignment(horizontal='center')
-            sheet['K'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
         output = cStringIO.StringIO()
         invoicewb.save(output)
@@ -584,14 +566,12 @@ def listofcanceledinvspreadsheet(request):
         sheet.column_dimensions['A'].width = 8
         sheet.column_dimensions['B'].width = 12
         sheet.column_dimensions['C'].width = 10
-        sheet.column_dimensions['D'].width = 12
-        sheet.column_dimensions['E'].width = 10
+        sheet.column_dimensions['D'].width = 16
+        sheet.column_dimensions['E'].width = 16
         sheet.column_dimensions['F'].width = 16
-        sheet.column_dimensions['G'].width = 18
-        sheet.column_dimensions['H'].width = 16
+        sheet.column_dimensions['G'].width = 16
+        sheet.column_dimensions['H'].width = 10
         sheet.column_dimensions['I'].width = 16
-        sheet.column_dimensions['J'].width = 10
-        sheet.column_dimensions['K'].width = 16
         sheet.merge_cells('A1:K2')
         sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
         sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
@@ -616,24 +596,17 @@ def listofcanceledinvspreadsheet(request):
         sheet['A5'] = 'Sr. No.'
         sheet['B5'] = 'INV No.'
         sheet['C5'] = 'INV Date'
-        sheet['D5'] = 'DC No. '
-        sheet['E5'] = 'DC Date'
+        sheet['D5'] = 'Deli. Note '
         if invflag == 0:
-            sheet['F5'] = 'Cust/Supp Name'
+            sheet['E5'] = 'Cust/Supp Name'
         elif invflag == 1:
-            sheet['F5'] = 'Customer Name'
+            sheet['E5'] = 'Customer Name'
         elif invflag == 2:
-            sheet['F5'] = 'Supplier Name'
-        if int(resultgstvat) == 22:
-            sheet['G5'] = 'TIN'
-        elif int(resultgstvat) == 7:
-            sheet['G5'] = 'GSTIN'
-        else:
-            sheet['G5'] = 'TIN/GSTIN'
-        sheet['H5'] = 'Gross Amt'
-        sheet['I5'] = 'Net Amt'
-        sheet['J5'] = 'Tax Amt'
-        sheet['K5'] = 'Godown'
+            sheet['E5'] = 'Supplier Name'
+        sheet['F5'] = 'Gross Amt'
+        sheet['G5'] = 'Net Amt'
+        sheet['H5'] = 'Tax Amt'
+        sheet['I5'] = 'Godown'
         titlerow = sheet.row_dimensions[5]
         titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['A5'].alignment = Alignment(horizontal='center')
@@ -641,12 +614,10 @@ def listofcanceledinvspreadsheet(request):
         sheet['C5'].alignment = Alignment(horizontal='center')
         sheet['D5'].alignment = Alignment(horizontal='center')
         sheet['E5'].alignment = Alignment(horizontal='center')
-        sheet['F5'].alignment = Alignment(horizontal='center')
-        sheet['G5'].alignment = Alignment(horizontal='center')
+        sheet['F5'].alignment = Alignment(horizontal='right')
+        sheet['G5'].alignment = Alignment(horizontal='right')
         sheet['H5'].alignment = Alignment(horizontal='right')
-        sheet['I5'].alignment = Alignment(horizontal='right')
-        sheet['J5'].alignment = Alignment(horizontal='right')
-        sheet['K5'].alignment = Alignment(horizontal='center')
+        sheet['I5'].alignment = Alignment(horizontal='center')
         sheet['A5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['B5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['C5'].font = Font(name='Liberation Serif',size=12,bold=True)
@@ -656,8 +627,6 @@ def listofcanceledinvspreadsheet(request):
         sheet['G5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['H5'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['I5'].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet['J5'].font = Font(name='Liberation Serif',size=12,bold=True)
-        sheet['K5'].font = Font(name='Liberation Serif',size=12,bold=True)
         row = 6
         # Looping each dictionaries in list result to store data in cells and apply styles.
         for invoice in result:
@@ -670,33 +639,28 @@ def listofcanceledinvspreadsheet(request):
             sheet['C'+str(row)] = invoice['invoicedate']
             sheet['C'+str(row)].alignment = Alignment(horizontal='center')
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['D'+str(row)] = invoice['dcno']
-            sheet['D'+str(row)].alignment = Alignment(horizontal='center')
-            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = invoice['dcdate']
+            if invoice['dcno'] != "" and invoice['dcdate'] != "":
+                sheet['D'+str(row)] = invoice['dcno'] + ',' + invoice['dcdate']
+                sheet['D'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = invoice['custname']
             sheet['E'+str(row)].alignment = Alignment(horizontal='center')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['F'+str(row)] = invoice['custname']
-            sheet['F'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['F'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['F'+str(row)].number_format="0.00"
+            sheet['F'+str(row)].alignment = Alignment(horizontal='right')
             sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['G'+str(row)] = invoice['custtin']
-            sheet['G'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['G'+str(row)] = float("%.2f"%float(invoice['netamt']))
+            sheet['G'+str(row)].number_format="0.00"
+            sheet['G'+str(row)].alignment = Alignment(horizontal='right')
             sheet['G'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['H'+str(row)] =float("%.2f"%float(invoice['grossamt']))
+            sheet['H'+str(row)] = float("%.2f"%float(invoice['taxamt']))
             sheet['H'+str(row)].number_format="0.00"
             sheet['H'+str(row)].alignment = Alignment(horizontal='right')
             sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['I'+str(row)] = float("%.2f"%float(invoice['netamt']))
-            sheet['I'+str(row)].number_format="0.00"
-            sheet['I'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['I'+str(row)] = invoice['godown']
+            sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['J'+str(row)] = float("%.2f"%float(invoice['taxamt']))
-            sheet['J'+str(row)].number_format="0.00"
-            sheet['J'+str(row)].alignment = Alignment(horizontal='right')
-            sheet['J'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['K'+str(row)] = invoice['godown']
-            sheet['K'+str(row)].alignment = Alignment(horizontal='center')
-            sheet['K'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
         output = cStringIO.StringIO()
         invoicewb.save(output)

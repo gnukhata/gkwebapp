@@ -149,23 +149,11 @@
 		   <span  id="invoiceDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
 		 {% endif %}
                </th>
-               <th class="srnowrap text-center" >
-                  {% trans %}DC No.{% endtrans %}
-               </th>
                <th class="smlwrap text-center" >
-                  {% trans %}DC Date{% endtrans %}
+                  {% trans %}Deli. Note{% endtrans %}
                </th>
                <th class="mdlwrap text-center" >
                   {%if flag == "0" %}{% trans %}Cust/Supp Name{% endtrans %}{%elif flag == "1" %}{% trans %}Customer Name{% endtrans %}{%elif flag == "2" %}{% trans %}Supplier Name{% endtrans %}{% endif %}
-               </th>
-               <th class="mdlwrap text-center" >
-		 {% if resultgstvat == '7' %}
-		   {% trans %}GSTIN{% endtrans %}
-		 {% elif resultgstvat == '22' %}
-                   {% trans %}TIN{% endtrans %}
-		 {% else %}
-		   {% trans %}TIN/GSTIN{% endtrans %}
-		   {% endif %}
                </th>
                <th class="smlwrap text-right" >
                   {% trans %}Gross Amt{% endtrans %}
@@ -176,11 +164,11 @@
                <th class="smlwrap text-right" >
                   {% trans %}TAX Amt{% endtrans %}
                </th>
-               <th class="mdlwrap text-center" >
+               <th class="smlwrap text-center" >
                   {% trans %}Godown{% endtrans %}
                </th>
                {% if deleteflag == 0 %}
-               <th class="srnowrap text-center">
+               <th class="smlwrap text-center">
                      {% trans %}Action{% endtrans %}
                </th>
                {% endif %}
@@ -192,17 +180,19 @@
             <td class="srnowrap text-center">{{invoice["srno"]}}</td>
             <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
             <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
-            <td class="srnowrap text-center">{{invoice["dcno"]}}</td>
-            <td class="smlwrap text-center">{{invoice["dcdate"]}}</td>
+            <td class="smlwrap text-center">
+		      {% if invoice["dcno"] != "" and invoice["dcdate"] != "" %}
+               {{invoice["dcno"]}},{{invoice["dcdate"]}}
+            {% endif %}
+   </td>
             <td class="mdlwrap text-center">{{invoice["custname"]}}</td>
-            <td class="mdlwrap text-center">{{invoice["custtin"]}}</td>
             <td class="smlwrap text-right">{{invoice["grossamt"]}}</td>
             <td class="smlwrap text-right">{{invoice["netamt"]}}</td>
             <td class="smlwrap text-right">{{invoice["taxamt"]}}</td>
-            <td class="mdlwrap text-center">{{invoice["godown"]}}</td>
+            <td class=" smlwrap text-center">{{invoice["godown"]}}</td>
 
             {% if deleteflag == 0 %}               
-            <td class="srnowrap text-center">
+            <td class="smlwrap text-center">
 		      {% if invoice["cancelflag"] == 1 %}               
                 <a href="#" class="cancel_inv" ><span class="glyphicon glyphicon-remove"></span></a>
                 {% endif %}

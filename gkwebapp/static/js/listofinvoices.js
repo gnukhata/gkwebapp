@@ -170,7 +170,12 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 	    },
 	})
 	.done(function(resp) {
-	    $("#info").html(resp);
+        if ($("#invoice_view_list").length>0){
+            $("#slectedlist").html(resp);    
+            }
+            else{
+                $("#info").html(resp);
+            }
 	})
 	.fail(function() {
 	    console.log("error");
