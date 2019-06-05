@@ -27,6 +27,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+'Prajkta Patkar' <prajkta@gnukhata.in>
 """
 
 from pyramid.view import view_config
@@ -41,7 +42,6 @@ import calendar
 
 @view_config(route_name = "printprofitandloss", renderer = "")
 def printprofitandloss(request):
-    print (request.params)
     calculatefrom = request.params["calculatefrom"]
     calculateto = request.params["calculateto"]
     orgtype = request.params["orgtype"]
@@ -92,9 +92,9 @@ def printprofitandloss(request):
     sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
     # Setting heading of spreadsheet
     if orgtype == "Profit Making":
-        sheet['A3'] = 'Profit and Loss (' + fystart + ' to ' + calculateto + ')'
+        sheet['A3'] = 'Profit and Loss (' + calculatefrom + ' to ' + calculateto + ')'
     else:
-        sheet['A3'] = 'Income and Expenditure (' + fystart + ' to ' + calculateto + ')'
+        sheet['A3'] = 'Income and Expenditure (' + calculatefrom + ' to ' + calculateto + ')'
     # Setting title for columns.
     sheet['A4'] = 'Particulars'
     sheet['B4'] = 'Amount'
