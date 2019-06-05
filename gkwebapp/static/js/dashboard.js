@@ -29,7 +29,7 @@ Copyright (C) 2017, 2018, 2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd
  */
 $(document).ready(function() {
   var element;
-
+    
 $('.drawer').drawer({
   class: {
     nav: 'drawer-nav',
@@ -432,7 +432,7 @@ function topfiveprod(inoutflag){
     },
   success: function(resp)
   {
-    element=resp["gkresult"]
+      element=resp["gkresult"];
     for (let index in element ){
       $('#topfiveboughtprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+element[index].proddesc+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+ element[index].count+' </td> </tr>');                  
   
@@ -456,12 +456,12 @@ $.ajax({
   success: function(resp)
   {
     for (let item in resp["gkresult"]){
-      list =resp["gkresult"][item].gkstatus
+        list =resp["gkresult"][item].gkstatus;
       if (list == 3){
       $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
       }
       else{
-           list =resp["gkresult"][item].gkresult
+          list =resp["gkresult"][item].gkresult;
             for (let index in list) {
             $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+resp["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
         }}
@@ -476,7 +476,7 @@ $.ajax(
     global: false,
     async: false,
     datatype: "json",
-    data: {"calculateto":sessionStorage.yyyymmddyear2},
+      data: {"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":sessionStorage.yyyymmddyear2},
     beforeSend: function(xhr)
     {
       xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

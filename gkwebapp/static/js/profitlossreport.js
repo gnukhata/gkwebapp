@@ -1,6 +1,6 @@
 /*
    Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-   Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+   Copyright (C) 2017, 2018,2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
    This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
@@ -25,6 +25,7 @@
    "Navin Karkera" <navin@dff.org.in>
    "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
    "Abhijith Balan" <abhijithb21@openmailbox.com>
+   "Prajkta Patkar" <prajkta@gnukhata.in>
  */
 // This script is for the profit and loss report.
 $(document).ready(function() {
@@ -51,7 +52,9 @@ $(document).ready(function() {
   });
   var curindex ;
   var nextindex;
-  var date = $("#ledtodate").val().split("-");
+    var date = $("#ledtodate").val().split("-");
+    var date1 = $("#ledfromdate").val().split("-");
+    var fromdate = date1[2]+"-"+date1[1]+"-"+date1[0];
   var newtodate = date[2]+"-"+date[1]+"-"+date[0];
 
 // Navigation function for table rows for expensetbl
@@ -202,7 +205,10 @@ $(document).ready(function() {
   var nextindex;
   var previndex;
   var date = $("#ledtodate").val().split("-");
-  var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    var newtodate = date[2]+"-"+date[1]+"-"+date[0];
+    var date1 = $("#ledfromdate").val().split("-");
+    var fromdate = date1[2]+"-"+date1[1]+"-"+date1[0];
+    
 
 // Navigation function for table rows for incometbl
   $(document).off('keydown' ,'.pyaccname').on('keydown' ,'.pyaccname',function(event) {
@@ -342,7 +348,7 @@ $(document).ready(function() {
     		var orgtype = sessionStorage.getItem('orgt');
     		var xhr = new XMLHttpRequest();
 
-    		xhr.open('GET', '/printprofitandloss?fyend='+sessionStorage.getItem('year2')+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+orgname+'&calculateto='+newtodate+'&orgtype='+orgtype, true);
+    		xhr.open('GET', '/printprofitandloss?fyend='+sessionStorage.getItem('year2')+'&fystart='+sessionStorage.getItem('year1')+'&orgname='+orgname+'&calculatefrom='+fromdate+'&calculateto='+newtodate+'&orgtype='+orgtype, true);
     		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
     		xhr.responseType = 'blob';
 
@@ -351,7 +357,7 @@ $(document).ready(function() {
         // get binary data as a response
         	var blob = this.response;
     	 		var url = window.URL.createObjectURL(blob);
-    			window.location.assign(url)
+    	    window.location.assign(url);
       	}
     	};
 
@@ -371,11 +377,11 @@ $(document).ready(function() {
 	$.ajax(
 	    {
 		type: "POST",
-		url: "/showprofitlossreport?type=print",
+		url: "/showprofitlossreport?type=printprofitandlossprint",
 		global: false,
 		async: false,
 		datatype: "text/html",
-		data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+		data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculatefrom":fromdate,"calculateto":newtodate},
 		beforeSend: function(xhr)
 		{
 		    xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -383,6 +389,7 @@ $(document).ready(function() {
 	    })
 	    .done(function(resp) {
 		$("#msspinmodal").modal("hide");
+                
 		$('.modal-backdrop').remove();
 		$("#info").html(resp);
 		$('tr').show();
@@ -394,6 +401,7 @@ $(document).ready(function() {
 		console.log("complete");
 	    });
 	$("#printpnl").hide();
+        $("#print").hide();
 	$("#realprintpnl").show();
     });
     $("#realprintpnl").click(function(event) {
@@ -402,9 +410,13 @@ $(document).ready(function() {
 
   $("#pnlback").click(function(event) {
 // Function to return from printable version.
-    if ($("#realprintpnl").is(":visible")) {
-      var todatearray = $("#ledtodate").val().split("-");
-      var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+      if ($("#realprintpnl").is(":visible")) {
+          
+          var todatearray = $("#ledtodate").val().split("-");
+          var fromdatearray = $("#ledfromdate").val().split("-");
+          var newtodate = todatearray[2]+"-"+todatearray[1]+"-"+todatearray[0];
+          var newfromdate = fromdatearray[2]+"-"+fromdatearray[1]+"-"+fromdatearray[0];
+         
       $.ajax(
         {
           type: "POST",
@@ -412,7 +424,7 @@ $(document).ready(function() {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":newtodate},
+            data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculatefrom":newfromdate,"calculateto":newtodate},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

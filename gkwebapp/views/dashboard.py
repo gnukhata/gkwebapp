@@ -96,9 +96,10 @@ def balancesheetreport(request):
 
 @view_config(route_name="dashboard", request_param="action=profitlosschart", renderer="json")
 def profitlossreport(request):
+    calculatefrom = request.params["calculatefrom"]
     calculateto = request.params["calculateto"]
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculatefrom=%s&calculateto=%s"%(calculatefrom,calculateto), headers=header)
     DirectIncome = result.json()["gkresult"]["Direct Income"]["Sales"]["balance"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]["indirincmbal"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]["direxpbal"]

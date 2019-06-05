@@ -1,7 +1,7 @@
 
 """
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+Copyright (C) 2017, 2018,2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
@@ -41,13 +41,16 @@ import calendar
 
 @view_config(route_name = "printprofitandloss", renderer = "")
 def printprofitandloss(request):
+    print (request.params)
+    calculatefrom = request.params["calculatefrom"]
     calculateto = request.params["calculateto"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
     fystart = str(request.params["fystart"])
     fyend = str(request.params["fyend"])
     orgname = str(request.params["orgname"])
-    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculatefrom=%s&calculateto=%s"%(calculatefrom,calculateto), headers=header)
+    calculatefrom = calculatefrom[8:10]+calculatefrom[4:8]+calculatefrom[0:4]
     calculateto = calculateto[8:10]+calculateto[4:8]+calculateto[0:4]
     DirectIncome = result.json()["gkresult"]["Direct Income"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
@@ -386,11 +389,11 @@ def showprofitloss(request):
 @view_config(route_name="showprofitlossreport")
 def showprofitlossreport(request):
     calculateto = request.params["calculateto"]
-    financialstart = request.params["financialstart"]
+    calculatefrom = request.params["calculatefrom"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
 
-    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculatefrom=%s&calculateto=%s"%(calculatefrom,calculateto), headers=header)
     DirectIncome = result.json()["gkresult"]["Direct Income"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
@@ -407,16 +410,16 @@ def showprofitlossreport(request):
     except:
         net["netloss"] = result.json()["gkresult"]["netloss"]
     Total = result.json()["gkresult"]["Total"]    
-    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total},request=request)
+    return render_to_response("gkwebapp:templates/profitlossreport.jinja2",{"DirectIncome":DirectIncome,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(calculatefrom),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total},request=request)
 
 @view_config(route_name="showprofitlossreport", request_param="type=print", renderer="gkwebapp:templates/printprofitlossreport.jinja2")
 def printprofitloss(request):
     calculateto = request.params["calculateto"]
-    financialstart = request.params["financialstart"]
+    calculatefrom = request.params["calculatefrom"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
 
-    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculateto=%s"%(calculateto), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=profitloss&calculatefrom=%s&calculateto=%s"%(calculatefrom,calculateto), headers=header)
     DirectIncome = result.json()["gkresult"]["Direct Income"]
     InDirectIncome = result.json()["gkresult"]["Indirect Income"]
     DirectExpense = result.json()["gkresult"]["Direct Expense"]
@@ -432,4 +435,4 @@ def printprofitloss(request):
     except:
         net["netloss"] = result.json()["gkresult"]["netloss"]
     Total = result.json()["gkresult"]["Total"]
-    return {"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total}
+    return {"DirectIncome":DirectIncome,"InDirectIncome":InDirectIncome,"DirectExpense":DirectExpense,"ClosingStock":result.json()["gkresult"]["Closing Stock"],"InDirectExpense":InDirectExpense,"net":net,"gross":gross,"orgtype":orgtype,"from":datetime.strftime(datetime.strptime(str(calculatefrom),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y'),"Total":Total}
