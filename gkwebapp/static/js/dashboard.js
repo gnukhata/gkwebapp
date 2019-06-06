@@ -143,12 +143,50 @@ $(".add_prod").click(function() {
     $("#productinmaster").click();
   }
 });
-$("#profit_loss").click(function() {
-  $("#showprofitloss").click();
+
+$(document).off("click", '#profit_loss').on("click", '#profit_loss', function(event) {
+  // calls profit and loss report.
+  var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+  $("#msspinmodal").modal("show");
+      $.ajax({
+          url: "/showprofitloss?orgtype="+orgtype,
+          type: 'POST',
+          global: false,
+          async: false,
+          datatype: 'text/html',
+      beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+      success: function(resp)
+          {
+           $('#info').html(resp);
+           $("#report_back").remove();
+          }
+        }); 
 });
-$("#balance_sheet").click(function(){
-$("#showbalancesheet").click();
-});
+
+$(document).off("click", '#balance_sheet').on("click", '#balance_sheet', function(event) {
+  // calls view page for balance sheet report.
+      $("#msspinmodal").modal("show");
+        $.ajax({
+          url: "/showbalancesheet",
+          type: 'POST',
+          global: false,
+          async: false,
+          datatype: 'text/html',
+          beforeSend: function(xhr)
+          {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          },
+          success: function(resp)
+          {
+      $('#info').html(resp);
+      $("#report_back").remove();
+
+          }
+        });
+    });
 
 $("#add_receipt").click(function(){
   $('#showreceipt').click();
