@@ -308,7 +308,7 @@ $(document).ready(function() {
       }
       $("#pname").focus();
     }
-  });
+  }); 
 
 
   $("#year").blur(function(event) {
@@ -514,7 +514,7 @@ $(document).ready(function() {
       return false;
     }
 
-    if( Date.parseExact(date, "dd-MM-yyyy")< invoicedate){
+    if( Date.parseExact(date, "yyyy-MM-dd") < invoicedate){
       $('#vdate').focus().select();
       $("#inv-date-alert").alert();
         $("#inv-date-alert").fadeTo(2250, 500).slideUp(500, function() {
