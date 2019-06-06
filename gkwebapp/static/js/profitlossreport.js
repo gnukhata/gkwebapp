@@ -443,7 +443,22 @@ $(document).ready(function() {
     else {
       var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
       $("#msspinmodal").modal("show");
-      $("#info").load("/showprofitloss?orgtype="+orgtype);
+      $.ajax({
+        url: "/showprofitloss?orgtype="+orgtype,
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        data: {"backflag":1},
+    beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+    success: function(resp)
+        {
+         $('#info').html(resp);
+        }
+      });
   }
   });
 

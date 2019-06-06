@@ -384,7 +384,9 @@ def printprofitandloss(request):
 @view_config(route_name="showprofitloss", renderer="gkwebapp:templates/viewprofitloss.jinja2")
 def showprofitloss(request):
     orgtype = request.params["orgtype"]
-    return {"gkstatus":0,"orgtype":orgtype}
+    backflag = request.params["backflag"]
+    print backflag
+    return {"gkstatus":0,"orgtype":orgtype,"backflag":backflag}
 
 @view_config(route_name="showprofitlossreport")
 def showprofitlossreport(request):

@@ -199,6 +199,15 @@ $(document).ready(function() {
 
   });
   $("#pnl_reset").click(function(event) {
-    $("#showprofitloss").click();
+    // Setting default date to financialstart and end.
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#pnl_fromdate").val(fromdatearray[2]);
+    $("#pnl_frommonth").val(fromdatearray[1]);
+    $("#pnl_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#pnl_todate").val(todatearray[2]);
+    $("#pnl_tomonth").val(todatearray[1]);
+    $("#pnl_toyear").val(todatearray[0]);
+    $("#pnl_fromdate").select();
   });
 });

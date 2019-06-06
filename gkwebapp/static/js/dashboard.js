@@ -154,6 +154,7 @@ $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(ev
           global: false,
           async: false,
           datatype: 'text/html',
+          data: {"backflag":0},
       beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -161,7 +162,7 @@ $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(ev
       success: function(resp)
           {
            $('#info').html(resp);
-           $("#report_back").remove();
+           
           }
         }); 
 });
@@ -182,11 +183,11 @@ $(document).off("click", '#balance_sheet').on("click", '#balance_sheet', functio
           success: function(resp)
           {
       $('#info').html(resp);
-      $("#report_back").remove();
 
           }
         });
     });
+
 
 $("#add_receipt").click(function(){
   $('#showreceipt').click();
