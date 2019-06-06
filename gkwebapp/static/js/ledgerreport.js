@@ -655,7 +655,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculateto":$("#calculateto").val()},
+          data: {"financialstart":sessionStorage.yyyymmddyear1,"orgtype":sessionStorage.orgt,"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
