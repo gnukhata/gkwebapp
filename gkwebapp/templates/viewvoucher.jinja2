@@ -293,13 +293,13 @@
                       <select id="invsel" class="form-control input-sm invoice_no" hidden>
 			<option value="" total="">{% trans %}None{% endtrans %}</option>
 			{% for invoice in invoicedata %}
-			  {% if vtype == "purchase" or vtype == "payment" and invoice["csflag"]|int == 19 %}
+			  {% if vtype == "purchase" or vtype == "payment" and invoice["inoutflag"]|int == 9 %}
 			    {% if voucher["invid"]|int== invoice['invid']|int %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% else %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}">{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% endif %}
-			  {% elif vtype == "sales" or vtype == "receipt" and invoice["csflag"]|int == 3 %}
+			  {% elif vtype == "sales" or vtype == "receipt" and invoice["inoutflag"]|int == 15 %}
 			    {% if voucher["invid"]|int== invoice['invid']|int %}
 			      <option value="{{invoice['invid']}}" total="{{invoice['invoicetotal']}}" customername="{{invoice["custname"]}}" selected>{{invoice["invoiceno"]}}, {{invoice["invoicedate"]}}, {{invoice["custname"]}}</option>
 			    {% else %}
