@@ -51,16 +51,23 @@ $(document).ready(function() {
         $("#invsel").searchify();
     }
     if(sessionStorage.avnoflag==1){
-	$("#voucherno").hide();
-	if ($("#invsel").length > 0)
-	{
-	    $("#invsel").focus();
-	}
-	else
-	{
+	  $("#voucherno").hide();
+	  if ($("#invsel").length > 0)
+	  {
+      if($("#voucher_modal").length == 0){
+
+        $("#invsel").focus();
+      }
+      else{
+	      $('#vdate').focus().select();
+      }
+	  }
+	  else
+	  {
 	    $('#vdate').focus().select();
-	}
-    }else{
+	  }
+    }
+  else{
 	$("#voucherno").show();
 	$("#vno").focus().select();
     }
@@ -449,7 +456,14 @@ $(document).ready(function() {
 	$("#voucherno").hide();
        if ($("#invsel").length > 0)
        {
-	   $("#invsel").focus();
+        if($("#voucher_modal").length == 0){
+  
+          $("#invsel").focus();
+        }
+        else{
+  
+          $('#vdate').focus().select();
+        }
        }
        else
        {
