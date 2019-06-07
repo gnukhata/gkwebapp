@@ -220,7 +220,21 @@ $("#grpbtn").click(function(event){
     }
     else {
       $("#msspinmodal").modal("show");
-      $("#info").load("/showbalancesheet");
+      $.ajax({
+        url: "/showbalancesheet",
+        type: 'POST',
+        global: false,
+        async: false,
+        datatype: 'text/html',
+        beforeSend: function(xhr)
+        {
+    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        success: function(resp)
+        {
+    $('#info').html(resp);
+        }
+      });
     }
   });
 

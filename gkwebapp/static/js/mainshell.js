@@ -1082,11 +1082,26 @@ $(document).ready(function(){
   });
 
   $(document).off("click", '#pnlback').on("click", '#pnlback', function(event) {
-    if(sessionStorage.hideback==0){
+    if(sessionStorage.pnlbackflag==0){
       $("#report_back").hide();
     }
+    else{$("#report_back").show();}
   });
 
+  $(document).off("click", '#balback').on("click", '#balback', function(event) {
+    if(sessionStorage.balbackflag==0){
+      $("#report_back").hide();
+    }
+    else{$("#report_back").show();}
+  });
+
+  $(document).off("click", '#saback').on("click", '#saback', function(event) {
+    if(sessionStorage.balbackflag==0){
+      $("#report_back").hide();
+    }
+    else{
+      $("#report_back").show();}
+  });
   $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
@@ -1831,7 +1846,7 @@ $(document).ready(function(){
   $(document).off("click", '#showprofitloss').on("click", '#showprofitloss', function(event) {
     // calls profit and loss report.
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
-    sessionStorage.hideback = 1;
+    sessionStorage.pnlbackflag = 1;
     $("#msspinmodal").modal("show");
     $.ajax({
       url: "/showprofitloss?orgtype="+orgtype,
@@ -1853,8 +1868,23 @@ $(document).ready(function(){
 
   $(document).off("click", '#showbalancesheet').on("click", '#showbalancesheet', function(event) {
 // calls view page for balance sheet report.
+    sessionStorage.balbackflag = 1;
     $("#msspinmodal").modal("show");
-    $("#info").load("/showbalancesheet");
+    $.ajax({
+      url: "/showbalancesheet",
+      type: 'POST',
+      global: false,
+      async: false,
+      datatype: 'text/html',
+      beforeSend: function(xhr)
+      {
+  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      },
+      success: function(resp)
+      {
+  $('#info').html(resp);
+      }
+    });
   });
 
   $("#showclosebooks").click(function(event){// calls close books and rollover page.

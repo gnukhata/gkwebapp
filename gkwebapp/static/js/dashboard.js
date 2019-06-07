@@ -147,7 +147,7 @@ $(".add_prod").click(function() {
 $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(event) {
   // calls profit and loss report.
   var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
-  sessionStorage.hideback = 0;  
+  sessionStorage.pnlbackflag = 0;  
   $("#msspinmodal").modal("show");
       $.ajax({
           url: "/showprofitloss?orgtype="+orgtype,
@@ -170,6 +170,7 @@ $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(ev
 
 $(document).off("click", '#balance_sheet').on("click", '#balance_sheet', function(event) {
   // calls view page for balance sheet report.
+    sessionStorage.balbackflag=0;
       $("#msspinmodal").modal("show");
         $.ajax({
           url: "/showbalancesheet",
@@ -185,8 +186,6 @@ $(document).off("click", '#balance_sheet').on("click", '#balance_sheet', functio
           {
       $('#info').html(resp);
       $('#report_back').remove();
-
-
           }
         });
     });

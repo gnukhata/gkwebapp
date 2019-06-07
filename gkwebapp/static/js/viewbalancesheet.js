@@ -234,6 +234,14 @@ $(document).ready(function() {
   });
 
   $("#viewbalsht_reset").click(function(event) {
-    $("#showbalancesheet").click();
+    // Setting default date to financialstart and end.
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewbalsht_fromday").val(fromdatearray[2]);
+    $("#viewbalsht_frommonth").val(fromdatearray[1]);
+    $("#viewbalsht_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewbalsht_today").val(todatearray[2]);
+    $("#viewbalsht_tomonth").val(todatearray[1]);
+    $("#viewbalsht_toyear").val(todatearray[0]);
   });
 });
