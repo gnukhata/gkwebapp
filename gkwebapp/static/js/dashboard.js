@@ -147,6 +147,7 @@ $(".add_prod").click(function() {
 $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(event) {
   // calls profit and loss report.
   var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+  sessionStorage.hideback = 0;  
   $("#msspinmodal").modal("show");
       $.ajax({
           url: "/showprofitloss?orgtype="+orgtype,
@@ -154,7 +155,6 @@ $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(ev
           global: false,
           async: false,
           datatype: 'text/html',
-          data: {"backflag":0},
       beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -162,6 +162,7 @@ $(document).off("click", '#profit_loss').on("click", '#profit_loss', function(ev
       success: function(resp)
           {
            $('#info').html(resp);
+           $('#report_back').remove();
            
           }
         }); 
@@ -183,6 +184,8 @@ $(document).off("click", '#balance_sheet').on("click", '#balance_sheet', functio
           success: function(resp)
           {
       $('#info').html(resp);
+      $('#report_back').remove();
+
 
           }
         });

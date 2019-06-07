@@ -1081,6 +1081,12 @@ $(document).ready(function(){
     $("#report_li").click();
   });
 
+  $(document).off("click", '#pnlback').on("click", '#pnlback', function(event) {
+    if(sessionStorage.hideback==0){
+      $("#report_back").hide();
+    }
+  });
+
   $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
@@ -1825,6 +1831,7 @@ $(document).ready(function(){
   $(document).off("click", '#showprofitloss').on("click", '#showprofitloss', function(event) {
     // calls profit and loss report.
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
+    sessionStorage.hideback = 1;
     $("#msspinmodal").modal("show");
     $.ajax({
       url: "/showprofitloss?orgtype="+orgtype,
