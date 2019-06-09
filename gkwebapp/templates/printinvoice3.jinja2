@@ -97,12 +97,18 @@
 
 	  <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
           <h3>{{org["orgname"]}}</h3>
+<<<<<<< HEAD
 	  {% if gkresult["address"]!=""%}
 			{{ gkresult["address"] }}
 			{% if gkresult["pincode"]!='' %}
 			,{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
 			,
 			{% endif %}
+=======
+	  <span style="font-weight:bold !important ; font-size:small;">
+		{% if gkresult["address"]!=""%}
+	    {{ gkresult["address"] }}
+>>>>>>> font size of gstin adjusted
 	  {% else %}
             {% if org["orgaddr"]!='' %}
               {{org["orgaddr"]}}
@@ -117,22 +123,23 @@
               , {{org["orgstate"]}}.
             {% endif %}
 	  {% endif %}
+		</span>
 	  <br>
           {% if org["orgtelno"]!='' %}
-          <span style="font-weight:bold !important">  Contact No.:</span> {{org["orgtelno"]}}
+         <span style="font-weight:bold !important ; font-size:small;">  Contact No.:</span><span style=" font-size:small;"> {{org["orgtelno"]}} </span>
           {% endif %}
           {% if org["orgemail"]!='' %}
-          <span style="font-weight:bold !important">  Email :</span> {{org["orgemail"]}}
+            <span style="font-weight:bold !important ; font-size:small;">Email : </span><span style=" font-size:small;">{{org["orgemail"]}}</span>
           {% endif %}
           {% if org["orgfax"] %}
-          <span style="font-weight:bold !important">  Fax :</span> {{org["orgfax"]}}
+          <span style="font-weight:bold !important ; font-size:small;">  Fax :</span><span style=" font-size:small;"> {{org["orgfax"]}}</span>
           {% endif %}
           {% if org["orgwebsite"]!='' %}
-          <span style="font-weight:bold !important">  Website :</span> {{org["orgwebsite"]}}
+            <span style="font-weight:bold !important; font-size:small;"> Website :</span><span style=" font-size:small;">{{org["orgwebsite"]}}</span> 
           {% endif %}
 	  {% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
 	    <div class="form-group form-inline col-sm-12 nopadding">
-	      <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
+	      <label for="orgstategstin" style="font-weight:bold !important ; font-size:small !important;">{% trans %}GSTIN{% endtrans %} : </label>
 	      {% if org["orgstategstin"] %}{{ org["orgstategstin"] }}{% endif %}
 	    </div>
 	  {% endif %}
