@@ -910,6 +910,7 @@ if($("#vatorgstflag").val() == '22'){
 	gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
         var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
 
+	if (curindex1 != 0 && lastleg != ""){
 	//Validation for GSTIN on save button 
 	if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
 	    $("#gstin-improper-alert").alert();
@@ -946,6 +947,7 @@ if($("#vatorgstflag").val() == '22'){
 	    $(".gstin").focus();
 	    return false;
 	}
+}
 	if(gstinstring.length == 15){
             gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
 	}
@@ -976,10 +978,8 @@ if($("#vatorgstflag").val() == '22'){
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
 	}
-	var panno= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
-	if(panno!=""){
 	    form_data.append("gstin", JSON.stringify(gobj));
-	}
+	
     // ajax call for saving the customer/supplier
 	if (allow == 1){
 		var csflag = $("#add_cussup input:radio:checked").val();
