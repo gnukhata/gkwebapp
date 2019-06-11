@@ -123,6 +123,9 @@ $("#shownews").click(function(){
   $(".add_custsup").click(function() {
     $("#customersupplier").click();
   });
+  $("#add_invoice").click(function() {
+    $("#invoice").click();
+  });
   $("#report_page").click(function() {
     $("#report_li").click();
   });
@@ -228,7 +231,7 @@ $.ajax(
     // Global Options:
      Chart.defaults.global.defaultFontColor = 'black';
     var data = {
-        labels: ["Direct Income", "Indirect Income","Direct Expence", "Indirect Expence"],
+        labels: ["Direct Income", "Indirect Income","Direct Expense", "Indirect Expense"],
           datasets: [
             {
                 fill: true,

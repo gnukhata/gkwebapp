@@ -396,7 +396,7 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove(); 
-      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#listofdeletedinvoices"];
+      let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#listofdeletedinvoices","#administrationrepdiv"];
       sessionStorage.userremovables = userremovables;
 
      }
@@ -413,7 +413,7 @@ $(document).ready(function(){
        $("#budget").remove();
        $(".operatorhide").remove();
        $("#listofusers").remove();
-       let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#listofusers","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate"];
+       let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#listofusers","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate","#administrationrepdiv"];
        sessionStorage.userremovables = userremovables;
      }
      if(resp["gkresult"]["userrole"]==0){
@@ -437,7 +437,7 @@ $(document).ready(function(){
    $("#Documents_id").remove();
    $(".hidevoucher").remove();
    $(".businessmenu").remove();
-   let userremovables = ["#showviewbudget","#showdeletedvoucher","#listofusers","#showviewlog"];
+   let userremovables = ["#showviewbudget","#showdeletedvoucher","#listofusers","#showviewlog","#administrationrepdiv"];
    sessionStorage.userremovables = userremovables;
      }
      
