@@ -69,7 +69,12 @@
 
               {% trans %}Please enter Consignee Name if you want to save Details of Consignee!{% endtrans %}
 
-            </div>
+						</div>
+			      <div class="alert alert-danger" id="pinval-blank-alert"  aria-live="rude" role="alert" hidden>
+
+							{% trans %}Please enter proper PIN Code!{% endtrans %}
+				
+						</div>
 	    <div class="alert alert-danger" id="address-blank-alert"  aria-live="rude" role="alert" hidden>
 
               {% trans %}Please enter Address!{% endtrans %}
@@ -230,7 +235,12 @@
 		      {% endif %}
 		    </label>
 		    <label class="col-sm-8 nopadding" id="invoice_customeraddr" ></label>
+			</div>
+			<div class="form-group form-inline">
+		    <label for="invoice_customerpincode" class="col-sm-4 fsize" >{% trans %}PIN Code{% endtrans %} :</label>
+		    <input type="text" id="invoice_customerpincode" class="col-sm-8 form-control input-sm " name="customerpin" maxlength="6"></input>
 		  </div>
+		
 		<!-- <div class="col-md-4 borderdiv">
 				{% if gkstatus=="in" %}
 					<h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
@@ -344,7 +354,10 @@
 		    <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
 		    <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
 		  </div>
-
+		  <div class="form-group form-inline">
+		    <label for="consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
+		    <input type="text" id="consigneepincode" class="col-sm-8 form-control input-sm" name="consigneepincode"></input>
+		  </div>
 		</div>
 	      </div>
 	      <a id="taxapplicablescroll"></a>

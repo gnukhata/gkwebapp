@@ -100,14 +100,17 @@ $(document).ready(function() {
 	      $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
  	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
-	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
+		  $("#consigneeaddress").val($("#invoice_customeraddr").text());
+	      $("#consigneepincode").val($("#invoice_customerpincode").val());		  
 	  } else {
 	      $("#consigneename").val("");
 	      $("#consigneestate").val("");
 	      $("#statecodeofconsignee").text("");
 	      $("#gstinconsignee").val("");
 	      $("#tinconsignee").val("");
-	      $("#consigneeaddress").val("");
+		  $("#consigneeaddress").val("");
+	      $("#consigneepincode").val("");
+		  
 	  }
       });
     
@@ -922,18 +925,22 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
+			console.log(resp["gkresult"]);
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
 		    $("#invoice_customerstate").change();
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
 		    $("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
 		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
-		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+			$("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+		    $("#invoice_customerpincode").val(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.
+			
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
 			let gstins = resp["gkresult"]["gstin"];
-		    if (gstins != null && $("#invoice_customer option:selected").attr("stateid") in gstins) {
-      			$("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+		    if (gstins != null && $("#invoice_customerstate option:selected").attr("stateid") in gstins) {
+				  $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  
+			//GSTIN is loaded if available.
       		    }
       		    else {
       			$("#gstin").text('');  //If GSTIN is not available it is set as blank.
@@ -1357,12 +1364,13 @@ $(document).ready(function() {
 			if(resp["delchal"]["custSupDetails"]["csflag"]==19){
 				$("#supchange.custsupchange").click();
 				$(".custsupchange").prop("disabled", true);
-			}
+			} 
 
 		    //details of customer and supplier
 		    $("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 		    $("#invoice_customer").prop("disabled", true);
-		    $("#invoice_customerstate").prop("disabled", true);
+			$("#invoice_customerstate").prop("disabled", true);
+			$("#invoice_customerpincode").prop("disabled", true);
 		    if ("delchalContents" in resp["delchal"]) {
 			delchalContents = resp["delchal"]["delchalContents"];
 		    }
@@ -1372,12 +1380,16 @@ $(document).ready(function() {
 			$("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);
 			$("#gstinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["gstinconsignee"]).prop("disabled",true);
 			$("#tinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["tinconsignee"]).prop("disabled",true);
+			$("#consigneepincode").val(resp["delchal"]["delchaldata"]["consignee"]["consigneepincode"]).prop("disabled",true);
+
 		    } else {
 			$("#consigneename").val("").prop("disabled", false);
 			$("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
 			$("#consigneeaddress").val("").prop("disabled", false);
 			$("#gstinconsignee").val("").prop("disabled", false);
 			$("#tinconsignee").val("").prop("disabled", false);
+			$("#consigneepincode").val("").prop("disabled", false);
+
 		    }
 		    $("#consigneestate").change();
 		    $.ajax({
@@ -2968,7 +2980,7 @@ if (event.which == 13) {
       $('#invoice_customer').focus();
       return false;
     }
-      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "") {
+      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) != "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#consignee-blank-alert").alert();
           $("#consignee-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2976,8 +2988,22 @@ if (event.which == 13) {
           });
           $('#consigneename').focus();
           return false;
-      }
+	  }
+	  
+	  	var pincode_val=($("#consigneepincode").val());
+		var reg = /^[0-9]+$/;
+	  	if (pincode_val != "") {
 
+		 	if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				$("#pinval-blank-alert").alert();
+				$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pinval-blank-alert").hide();
+				});
+				$("#consigneepincode").focus();
+				return false;
+				}
+		}
       //validation for bankdetails on save button.
       if($("#chkpaymentmode option:selected").val()=="2"){
 	  if($("#accountno").val()=="" || $("#branchname").val()=="" || $("#bankname").val()=="" || $("#ifsc").val()=="" ) {
@@ -3033,7 +3059,9 @@ if (event.which == 13) {
           consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
           consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
           consignee["consigneestate"] = $.trim($("#consigneestate").val());
-          consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+		  consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+          consignee["consigneepincode"] = $.trim($("#consigneepincode").val());
+		  
       }
       bankdetails["accountno"] = $.trim($("#accountno").val());
       bankdetails["bankname"] = $.trim($("#bankname").val());

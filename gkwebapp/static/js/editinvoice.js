@@ -73,14 +73,18 @@ $(document).ready(function() {
 	      $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
 	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
-	      $("#consigneeaddress").val($("#invoice_customeraddr").text());
+		  $("#consigneeaddress").val($("#invoice_customeraddr").text());
+	      $("#consigneepincode").val($("#invoice_customerpincode").val());
+		  
 	  } else {
 	      $("#consigneename").val("");
 	      $("#consigneestate").val("");
 	      $("#statecodeofconsignee").text("");
 	      $("#gstinconsignee").val("");
 	      $("#tinconsignee").val("");
-	      $("#consigneeaddress").val("");
+		  $("#consigneeaddress").val("");
+	      $("#consigneepincode").val("");
+		  
 	  }
       });
 
@@ -2729,7 +2733,8 @@ if (event.which == 13) {
 			    $("#statecodeofconsignee").val(pad(resp.invoicedata.consignee.consigneestatecode, 2));
 			    $("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
 			    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
-			    $("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
+				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
+			    $("#consigneepincode").val(resp.invoicedata.consignee.consigneepincode);				
 			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
 			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
@@ -2768,9 +2773,10 @@ if (event.which == 13) {
 				if ($(this).text() == resp.invoicedata.custSupDetails.custname) {
 				    $(this).prop("selected", true);
 				}
-			    });
-
-			    $("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
+				});
+				$("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
+				$("#invoice_customerpincode").val(resp.invoicedata.custSupDetails.pincode);
+				
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
 			    // Loading tax and product data based on taxflag(VAT or GST)
 			    if ($("#taxapplicable").val() == '7') {
@@ -3310,7 +3316,9 @@ if (event.which == 13) {
           consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
           consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
           consignee["consigneestate"] = $.trim($("#consigneestate").val());
-          consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+		  consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+          consignee["consigneepincode"] = $.trim($("#consigneepincode").val());
+		  
       }
       bankdetails["accountno"] = $.trim($("#accountno").val());
       bankdetails["bankname"] = $.trim($("#bankname").val());
