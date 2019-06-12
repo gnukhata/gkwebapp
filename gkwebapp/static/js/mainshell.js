@@ -112,6 +112,7 @@ $(document).ready(function(){
       $(".hidemenu").remove();
       $(".delchalhide").remove();
       $(".hidevoucher").remove();
+      $(".hidebillwisecompany").remove();
       let companyremovables = ["#listoftransfernotes", "#show_unbilled_deliveries","#showstockreport","#stockonhandreport","#categorywisestockonhandreport","#listofgodowns"];
       sessionStorage.companyremovables = companyremovables;
     }
