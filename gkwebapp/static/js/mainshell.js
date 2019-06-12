@@ -49,6 +49,7 @@ $(document).ready(function(){
     sessionStorage.onview=0;
     sessionStorage.companyremovables = [];
     sessionStorage.userremovables = [];
+    sessionStorage.cussup=1;
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
@@ -134,6 +135,7 @@ $(document).ready(function(){
   });
 
   $("#create-cust").click(function() {
+    sessionStorage.cussup=1;
     $("#customersupplier").click();
   });
 

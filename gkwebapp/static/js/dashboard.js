@@ -121,6 +121,12 @@ $("#shownews").click(function(){
     $('#showreceipt').click();
   });
   $(".add_custsup").click(function() {
+    sessionStorage.cussup=1;
+    $("#customersupplier").click();
+  });
+
+  $(".add_sup").click(function() {
+    sessionStorage.cussup=0;
     $("#customersupplier").click();
   });
   $("#add_invoice").click(function() {

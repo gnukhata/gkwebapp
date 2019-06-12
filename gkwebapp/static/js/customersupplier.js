@@ -30,6 +30,7 @@
 $(document).ready(function() {
 
   $("#customersupplier_create").click(function() {
+	  console.log(sessionStorage.cussup,"333");
     $.ajax(
     {
 
@@ -70,5 +71,6 @@ $(document).ready(function() {
   );
   });
   $("#customersupplier_create").click();
+  console.log(sessionStorage.cussup,"444");
 
 });
