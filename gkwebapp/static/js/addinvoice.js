@@ -1158,10 +1158,25 @@ $(document).ready(function() {
 		    $("#consigneestate").focus().select();  //Focus shifts to GSTIN of Consignee.
 	    }
 	}
-    });
+	});
+	
+	    //Key Event for Consignee State
+		$("#consigneeaddress").keydown(function(event) {
+			if (event.which == 13) {
+				$("#consigneepincode").focus().select();  //Focus shifts to TIN of Consignee.
+			}
+			else if (event.which == 38) {
+				if ($("#tinconsignee").is(":visible")) {
+					$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+					}
+					else {
+					$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
+					}
+			}
+			});
 
     //Key Event for Consignee Address.
-    $("#consigneeaddress").keydown(function(event) {
+    $("#consigneepincode").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if(invoicedate < gstdate){
@@ -1181,12 +1196,10 @@ $(document).ready(function() {
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'fast');
 	}
 	else if (event.which == 38) {
-	    if ($("#tinconsignee").is(":visible")) {
-		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-	    }
-	    else {
-		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
-	    }
+
+		$("#consigneeaddress").focus().select();  //Focus shifts to TIN of Consignee.
+	    
+
 	}
     });
 
