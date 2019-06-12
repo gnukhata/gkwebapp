@@ -49,7 +49,6 @@ $(document).ready(function(){
     sessionStorage.onview=0;
     sessionStorage.companyremovables = [];
     sessionStorage.userremovables = [];
-    sessionStorage.cussup=1;
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({
@@ -1777,6 +1776,7 @@ $(document).ready(function(){
       // return false;
   });
   $('#customersupplier').click(function (e) {// calls base customersupplier page.
+    sessionStorage.cussup=1;
     $("#info").load("/customersuppliers");
   });
   $('#addunit').click(function (e) {// calls base unitofmeasurements page.

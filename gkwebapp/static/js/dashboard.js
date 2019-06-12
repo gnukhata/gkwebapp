@@ -124,10 +124,9 @@ $("#shownews").click(function(){
     sessionStorage.cussup=1;
     $("#customersupplier").click();
   });
-
   $(".add_sup").click(function() {
     sessionStorage.cussup=0;
-    $("#customersupplier").click();
+    $("#info").load("/customersuppliers");
   });
   $("#add_invoice").click(function() {
     $("#invoice").click();

@@ -33,7 +33,6 @@ Contributors:
 
 $(document).ready(function() {
     //All the navigation events where pressing enter shifts focus to the next element and pressing the up arrow key focuses the previous element
-	console.log(sessionStorage.cussup);
 	if(sessionStorage.cussup == 0){
 	$("#add_cussup input:radio[value=19]").click();
 	}
@@ -755,7 +754,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     }
     });
   $("#add_cussup_reset").click(function(event) {
-	  console.log(sessionStorage.cussup,"111");
 	  sessionStorage.cussup=1;
       // click the customer/supplier create tab to reload the current page in tab creating a reset effect
       $("#customersupplier_create").click();
@@ -1021,7 +1019,6 @@ if($("#vatorgstflag").val() == '22'){
 				  if(resp["gkstatus"]==0)
 				  {
 					  $("#customersupplier_create").click();
-					  console.log(sessionStorage.cussup,"222");
 				      $("#add_cussup input:radio:checked").val(csflag);
 				      if (custsupdata == '3') {
 					  $("#cus-success-alert").alert();
