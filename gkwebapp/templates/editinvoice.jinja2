@@ -249,10 +249,10 @@
 		      </label>
 		      <label class="col-sm-8 nopadding" id="invoice_customeraddr" ></label>
 				</div>
-				<div class="form-group form-inline">
-					<label for="invoice_customerpincode" class="col-sm-4 fsize" >{% trans %}PIN Code{% endtrans %} :</label>
-					<input type="text" id="invoice_customerpincode" class="col-sm-8 form-control input-sm " name="customerpin" maxlength="6"></input>
-				</div>
+		    <div class="form-group form-inline">
+		      <label for="invoice_customerpincode" class="col-sm-4 fsize">{% trans %}GSTIN{% endtrans %} :</label>
+		      <label type="text" id="invoice_customerpincode" class="col-sm-8 nopadding"></label>
+		    </div>
 		    <!-- checkbox to know whether billing and shipping address same or not -->
 		    {% if status == "out" %}
 		      <div class="form-group form-inline">

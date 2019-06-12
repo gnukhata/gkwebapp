@@ -74,7 +74,7 @@ $(document).ready(function() {
 	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
 		  $("#consigneeaddress").val($("#invoice_customeraddr").text());
-	      $("#consigneepincode").val($("#invoice_customerpincode").val());
+	      $("#consigneepincode").val($("#invoice_customerpincode").text());
 		  
 	  } else {
 	      $("#consigneename").val("");
@@ -2728,6 +2728,8 @@ if (event.which == 13) {
 			    // Loading other details of invoice.
 				//Loading consignee details when deliverynote selected
 				$("#invid").val(invid);
+				console.log(resp.invoicedata.consignee);
+				console.log("pincode");
 			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
 			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
 			    $("#statecodeofconsignee").val(pad(resp.invoicedata.consignee.consigneestatecode, 2));

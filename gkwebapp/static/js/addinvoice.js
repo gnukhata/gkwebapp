@@ -101,7 +101,7 @@ $(document).ready(function() {
  	      $("#gstinconsignee").val($("#gstin").text());
 	      $("#tinconsignee").val($("#tin").text());
 		  $("#consigneeaddress").val($("#invoice_customeraddr").text());
-	      $("#consigneepincode").val($("#invoice_customerpincode").val());		  
+	      $("#consigneepincode").val($("#invoice_customerpincode").text());		  
 	  } else {
 	      $("#consigneename").val("");
 	      $("#consigneestate").val("");
@@ -933,7 +933,7 @@ $(document).ready(function() {
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
 		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 			$("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
-		    $("#invoice_customerpincode").val(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.
+		    $("#invoice_customerpincode").text(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.
 			
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
