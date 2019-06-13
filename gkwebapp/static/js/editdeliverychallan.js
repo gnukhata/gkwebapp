@@ -238,6 +238,8 @@ $(document).ready(function() {
 	    $("#gstin").text(resp.delchaldata.custSupDetails.custgstin);
 	}
 	$("#deliverychallan_customeraddr").text(resp.delchaldata.custSupDetails.custaddr);
+	$("#deliverychallan_customerpincode").text(resp.delchaldata.custSupDetails.pincode);
+
 	if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 	    $("#taxapplicabletext").text("VAT");
 	}else{ $("#taxapplicabletext").text("GST"); }
@@ -247,10 +249,12 @@ $(document).ready(function() {
 	}
 	$('#deliverychallan_edit_consignment').text(typeoftrans);
 	if(resp.delchaldata.delchaldata.consignee) {
+		console.log(resp.delchaldata.delchaldata.consignee);
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
             $('#delchal_consigneestate').text(resp.delchaldata.delchaldata.consignee.consigneestate);
 	    $('#delchal_statecodeofconsignee').text(pad(resp.delchaldata.delchaldata.consignee.consigneestatecode, 2));
-            $('#delchal_consigneeaddr').text(resp.delchaldata.delchaldata.consignee.consigneeaddress);
+			$('#delchal_consigneeaddr').text(resp.delchaldata.delchaldata.consignee.consigneeaddress);
+            $('#delchal_consigneepincode').text(resp.delchaldata.delchaldata.consignee.consigneepincode);			
 	    if ((resp.delchaldata.delchaldata.taxflag) == '22') {
 		$("#delchal_tinconsignee").text(resp.delchaldata.delchaldata.consignee.tinconsignee);
 	    }

@@ -217,6 +217,12 @@
 		    {% endif %}
 				</label>
 				{{ gkresult["custSupDetails"]["custaddr"] }}
+				<br>
+				
+				<label>
+		      {% trans %}PIN Code{% endtrans %} :
+				</label>
+				{{ gkresult["custSupDetails"]["pincode"] }}
 				
 			</td>
 
@@ -237,6 +243,9 @@
 				<br>
 				<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
 		  	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
+				<br>
+				<label for="consigneepincode" class=" col-form-label col-form-label-sm" id="consigneepincide">{% trans %}PIN Code :{% endtrans %}</label>
+		  	{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% else %}N/A{% endif %}
 				<br>
 				<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
 		 		{% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}

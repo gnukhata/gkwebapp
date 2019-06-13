@@ -530,7 +530,9 @@ $("#invoice_date").keydown(function(event) {
 	    $("#consigneename").val($("#deliverychallan_customer option:selected").attr("name"));
 	    $("#consigneestate").val($("#deliverychallan_customerstate option:selected").val());
 	    $("#statecodeofconsignee").text(pad($("#statecodeofcustomer").text(), 2));
-	    $("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").text());
+		$("#deliverychallan_consigneeaddr").val($("#deliverychallan_customeraddr").text());
+	    $("#deliverychallan_consigneepincode").val($("#deliverychallan_customerpincode").text());
+		
 	    if(invoicedate >= gstdate){
 		$("#gstinconsignee").val($("#gstin").text());
 	    }else{
@@ -831,15 +833,10 @@ $("#invoice_date").keydown(function(event) {
 		return false;
 	    }
 	}
-	if($("#gst").is(":not(':visible')")){
-		$(".product_name_vat:first").focus().select();
-	}else{
-	    if($(".taxapplicable").val() == 22){
-		$("#vat").focus().select();
-	    }else{
-		$("#gst").focus().select();
-	    }
-	}
+
+		$("#deliverychallan_consigneepincode").focus();
+	    
+	
 	$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
     }
     if (event.which==38) {
@@ -849,6 +846,58 @@ $("#invoice_date").keydown(function(event) {
 	}else{$("#gstinconsignee").focus();}
     }
   });
+
+  $("#deliverychallan_consigneepincode").keydown(function(event) {
+    if (event.which==13) {
+	event.preventDefault();
+		if ($("#consigneename").val() == "" && $("#deliverychallan_consigneepincode").val() != ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+			$("#consigneename-blank-alert").alert();
+				$("#consigneename-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#consigneename-blank-alert").hide();
+				});
+			$("#consigneename").focus();
+			return false;
+		}
+		
+		if ($("#consigneename").val() != "" && $("#deliverychallan_consigneepincode").val() == ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+			$("#pin-blank-alert").alert();
+				$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert").hide();
+				});
+			$("#deliverychallan_consigneepincode").focus();
+			return false;
+		}
+		var pincode_val=($("#deliverychallan_consigneepincode").val());
+		var reg = /^[0-9]+$/;
+		  if (pincode_val != "") {
+	
+			 if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				$("#pinval-blank-alert").alert();
+				$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pinval-blank-alert").hide();
+				});
+				$("#deliverychallan_consigneepincode").focus();
+				return false;
+				}
+		}
+		if($("#gst").is(":not(':visible')")){
+			$(".product_name_vat:first").focus().select();
+		}else{
+			if($(".taxapplicable").val() == 22){
+			$("#vat").focus().select();
+			}else{
+			$("#gst").focus().select();
+			}
+		}
+	}
+	if (event.which==38) {
+		event.preventDefault();
+		$("#deliverychallan_consigneeaddr").focus();
+	}
+	});
     
     $("#deliverychallan_noofpackages").keydown(function(event){
 	if(event.which==13){
@@ -1075,7 +1124,8 @@ $("#invoice_date").keydown(function(event) {
 		$("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 	    $("#deliverychallan_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 	    $("#deliverychallan_customerstate").change();
-	    $("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+		$("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+	    $("#deliverychallan_customerpincode").text(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.		
 	    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
 	    //All GSTINs of this customer are
 	    gstins = resp["gkresult"]["gstin"];
@@ -3002,7 +3052,20 @@ $("#roundoff_checkbox").change(function(e){
 		return false;
 	    }
 	}
+	var pincode_val=($("#deliverychallan_consigneepincode").val());
+	var reg = /^[0-9]+$/;
+	  if (pincode_val != "") {
 
+		 if (!reg.test(pincode_val) || pincode_val.length != 6) {
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+			$("#pinval-blank-alert").alert();
+			$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+			});
+			$("#deliverychallan_consigneepincode").focus();
+			return false;
+			}
+	}
       
     if($("#consigneename").val() != ""){
 	consignee["consigneename"] = $.trim($("#consigneename").val());
@@ -3011,6 +3074,8 @@ $("#roundoff_checkbox").change(function(e){
 	consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
 	consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
 	consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
+	consignee["consigneepincode"] = $.trim($("#deliverychallan_consigneepincode").val());
+
     }
       
 	//------------VAT Product Values---------------//

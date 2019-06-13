@@ -65,7 +65,17 @@
           </div>
 	  <div class="alert alert-danger" id="consigneeaddr-blank-alert"  aria-live="rude" role="alert" hidden>
             {% trans %}Please enter Consignee Address!{% endtrans %}
-          </div>
+					</div>
+					<div class="alert alert-danger" id="pin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+						{% trans %}Please enter PIN Code!{% endtrans %}
+			
+					</div>
+					<div class="alert alert-danger" id="pinval-blank-alert"  aria-live="rude" role="alert" hidden>
+
+						{% trans %}Please enter proper PIN Code!{% endtrans %}
+			
+					</div>
 	  <div class="alert alert-danger" id="consigneename-blank-alert"  aria-live="rude" role="alert" hidden>
             {% trans %}Please enter Consignee Name!{% endtrans %}
           </div>
@@ -263,6 +273,12 @@
 		  </label>
 		  <label class="col-sm-8 nopadding" id="deliverychallan_customeraddr"></label>
 		</div>
+		<div class="form-group form-inline">
+		  <label class="col-sm-4 fsize" for="deliverychallan_customerpincode">
+		      {% trans %}PIN Code{% endtrans %} :
+		  </label>
+		  <label class="col-sm-8 nopadding" id="deliverychallan_customerpincode"></label>
+		</div>
 		{% if gkstatus == "out" %}
 		  <div class="form-group form-inline">
 		    <div class="col-sm-12">
@@ -306,6 +322,10 @@
 		<div class="form-group form-inline">
 		  <label for="deliverychallan_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
 		  <input type="text" id="deliverychallan_consigneeaddr" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
+		</div>
+		<div class="form-group form-inline">
+		  <label for="deliverychallan_consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
+		  <input type="text" id="deliverychallan_consigneepincode" class="col-sm-8 form-control input-sm" name="consigneepincode"></input>
 		</div>
 	      </div>
 	    </div>

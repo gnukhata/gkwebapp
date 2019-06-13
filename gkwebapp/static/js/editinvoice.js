@@ -1266,13 +1266,15 @@ $(document).ready(function() {
 			if(resp["delchal"]["delchaldata"]["consignee"]){
 			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
 			    $("#consigneestate").val(resp["delchal"]["delchaldata"]["consignee"]["consigneestate"]).prop("disabled", true);
+			    $("#consigneepincode").val(resp["delchal"]["delchaldata"]["consignee"]["consigneepincode"]).prop("disabled", true);
 			    $("#consigneeaddress").val(resp["delchal"]["delchaldata"]["consignee"]["consigneeaddress"]).prop("disabled", true);
 			    $("#gstinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["gstinconsignee"]).prop("disabled", true);
 			    $("#tinconsignee").val(resp["delchal"]["delchaldata"]["consignee"]["tinconsignee"]).prop("disabled", true);	
 			} else {
 			    $("#consigneename").val("").prop("disabled", false);
 			    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false);
-			    $("#consigneeaddress").val("").prop("disabled", false);
+				$("#consigneeaddress").val("").prop("disabled", false);
+			    $("#consigneepincode").val("").prop("disabled", false);				
 			    $("#gstinconsignee").val("").prop("disabled", false);
 			    $("#tinconsignee").val("").prop("disabled", false);
 			}
@@ -2777,7 +2779,7 @@ if (event.which == 13) {
 				}
 				});
 				$("#invoice_customeraddr").text(resp.invoicedata.custSupDetails.custaddr);
-				$("#invoice_customerpincode").val(resp.invoicedata.custSupDetails.pincode);
+				$("#invoice_customerpincode").text(resp.invoicedata.custSupDetails.pincode);
 				
 			    $("#taxapplicable").val(resp.invoicedata.taxflag);
 			    // Loading tax and product data based on taxflag(VAT or GST)
@@ -3046,7 +3048,7 @@ if (event.which == 13) {
 	}
 	$(".firstfield:visible").first().focus();
 	});
-	
+	 
 	
 
     $("#invselect").keydown(function(event){

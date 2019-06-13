@@ -1175,11 +1175,25 @@ $(document).ready(function() {
 			}
 			});
 
-    //Key Event for Consignee Address.
+    //Key Event for Consignee PIN code.
     $("#consigneepincode").keydown(function(event) {
 	if (event.which == 13) {
-	    event.preventDefault();
-	    if(invoicedate < gstdate){
+		event.preventDefault();
+		var pincode_val=($("#consigneepincode").val());
+		var reg = /^[0-9]+$/;
+	  	if (pincode_val != "") {
+
+		 	if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				$("#pinval-blank-alert").alert();
+				$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pinval-blank-alert").hide();
+				});
+				$("#consigneepincode").focus();
+				return false;
+				}
+		}
+	if(invoicedate < gstdate){
 		if ($("#invoice_deliverynote option:selected").val() != '') {
 		    $(".invoice_product_quantity_vat:first").focus().select();
 		}
