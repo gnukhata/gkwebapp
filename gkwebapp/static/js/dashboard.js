@@ -95,8 +95,8 @@ $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
 }
 });
 
-  $("#exportledger").click(function(){
-  $("#exportdata").modal("show");
+  $("#exportdata").click(function(){
+  $("#info").load("/export");
 });
 $("#shortcuts").click(function(){
   $("#gnukhatashortcuts").modal("show");

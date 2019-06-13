@@ -182,5 +182,6 @@ def main(global_config, **settings):
     config.add_route('viewgstreturns', '/viewgstreturns')
     config.add_route('gstreturns', '/gstreturns')
     config.add_route('dashboard', '/dashboard')
+    config.add_route('export', '/export')
     config.scan('gkwebapp')
     return config.make_wsgi_app()
