@@ -280,3 +280,23 @@ def listofgodownssspreadsheet(request):
     except:
         return {"gkstatus":3}
 
+@view_config(route_name='import',request_param='action=gdnimport',renderer='json')
+def godownImport(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        xlsxfile = request.POST['xlsxfile'].file
+        wb= load_workbook(xlsxfile)
+        wb._active_sheet_index = 0
+        godownSheet = wb.active
+        godownList = tuple(godownSheet.rows)
+        for godownrow in godownList:
+            if "state" != godownrow[2].value.lower():
+                godownDict= {"goname":godownrow[0].value,"goaddr":godownrow[1].value, "state":godownrow[2].value, "contactname":godownrow[3].value, "gocontact":godownrow[4].value}
+                result = requests.post("http://127.0.0.1:6543/godown",data = json.dumps(godownDict),headers=header)
+                result=result.json()
+                if result["gkstatus"]!=0:
+                    return {"gkstatus":result["gkstatus"]}  
+        return {"gkstatus":0}
+    except Exception as e:
+        return {"gkstatus":3}
+
