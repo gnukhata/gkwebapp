@@ -392,7 +392,7 @@ $(document).ready(function() {
 	 if(result!="" ){
 	     $("#resultlcd").show();
 	 }
-	 result= parseFloat(result.toFixed(2));
+   result= parseFloat(parseFloat(result).toFixed(2));
 	 var displays =document.getElementById("lcdu");
 	 var resultdisplay =document.getElementById("resultlcd");
 	 display.value ="" ;
@@ -2047,7 +2047,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
             return false;
           }
 
-	  if (vtotal>invoicetotal)
+    if (parseFloat(parseFloat(vtotal).toFixed(2))>parseFloat(parseFloat(invoicetotal).toFixed(2)))
 	    {
               $('#vtable tbody tr:first td:eq(1) input').focus();
               $('#vtable tbody tr:first td:eq(1) input').select();
