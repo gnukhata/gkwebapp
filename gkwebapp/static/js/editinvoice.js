@@ -1058,38 +1058,61 @@ $(document).ready(function() {
 	}
     });
 
-    //Key Event for Consignee Address.
-    $("#consigneeaddress").keydown(function(event) {
-	if (event.which == 13) {
-	    event.preventDefault();
-	    if ($("#taxapplicable").val() == 7) {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_gst:first").focus().select();
-		}
-		else {
-		    $(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
-		}
-	    }
-	    else {
-		if ($("#invoice_deliverynote option:selected").val() != '') {
-		    $(".invoice_product_quantity_vat:first").focus().select();
-		}
-		else {
-		    $(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
-		}
-	    }
-	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'fast');
-	}
-	else if (event.which == 38) {
-	    if ($("#tinconsignee").is(":visible")) {
-		$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
-	    }
-	    else {
-		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
-	    }
-	}
-    });
 
+	//Key Event for Consignee State
+	$("#consigneeaddress").keydown(function(event) {
+		if (event.which == 13) {
+			$("#consigneepincode").focus().select();  //Focus shifts to pincode of Consignee.
+		}
+		else if (event.which == 38) {
+			if ($("#tinconsignee").is(":visible")) {
+				$("#tinconsignee").focus().select();  //Focus shifts to TIN of Consignee.
+				}
+				else {
+				$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
+				}
+		}
+		});
+    //Key Event for Consignee pincode.
+    $("#consigneepincode").keydown(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+			var pincode_val=($("#consigneepincode").val());
+			var reg = /^[0-9]+$/;
+			  if (pincode_val != "") {
+	
+				 if (!reg.test(pincode_val) || pincode_val.length != 6) {
+				$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+					$("#pinval-blank-alert").alert();
+					$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#pinval-blank-alert").hide();
+					});
+					$("#consigneepincode").focus();
+					return false;
+					}
+			}
+			if ($("#taxapplicable").val() == 7) {
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+				$(".invoice_product_quantity_gst:first").focus().select();
+			}
+			else {
+				$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+			}
+			}
+			else {
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+				$(".invoice_product_quantity_vat:first").focus().select();
+			}
+			else {
+				$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field.
+			}
+			}
+			$('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'fast');
+		}
+		else if (event.which == 38) {
+			$("#consigneeaddress").focus();  //Focus shifts to address of Consignee.
+		}
+		});
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
@@ -2730,8 +2753,6 @@ if (event.which == 13) {
 			    // Loading other details of invoice.
 				//Loading consignee details when deliverynote selected
 				$("#invid").val(invid);
-				console.log(resp.invoicedata.consignee);
-				console.log("pincode");
 			    $("#consigneename").val(resp.invoicedata.consignee.consigneename);
 			    $("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
 			    $("#statecodeofconsignee").val(pad(resp.invoicedata.consignee.consigneestatecode, 2));
@@ -3257,7 +3278,7 @@ if (event.which == 13) {
       $('#invoice_customer').focus();
       return false;
     }
-      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "") {
+      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) != ""){
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#consignee-blank-alert").alert();
           $("#consignee-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -3265,7 +3286,21 @@ if (event.which == 13) {
           });
           $('#consigneename').focus();
           return false;
-      }
+	  }
+	  var pincode_val=($("#consigneepincode").val());
+	  var reg = /^[0-9]+$/;
+		if (pincode_val != "") {
+
+		   if (!reg.test(pincode_val) || pincode_val.length != 6) {
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+			  $("#pinval-blank-alert").alert();
+			  $("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#pinval-blank-alert").hide();
+			  });
+			  $("#consigneepincode").focus();
+			  return false;
+			  }
+	  }
 
       //validation for bankdetails on save button.  
        if ($("#chkpaymentmode option:selected").val()=="2") {

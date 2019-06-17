@@ -83,7 +83,12 @@
 
 		{% trans %}Improper GSTIN!{% endtrans %}
 
-	      </div>
+				</div>
+				<div class="alert alert-danger" id="pinval-blank-alert"  aria-live="rude" role="alert" hidden>
+
+					{% trans %}Please enter proper PIN Code!{% endtrans %}
+		
+				</div>
 	      <div class="alert alert-danger" id="consignee-blank-alert"  aria-live="rude" role="alert" hidden>
 
 		{% trans %}Please enter Consignee Name if you want to save Details of Consignee!{% endtrans %}

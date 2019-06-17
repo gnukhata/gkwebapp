@@ -249,7 +249,6 @@ $(document).ready(function() {
 	}
 	$('#deliverychallan_edit_consignment').text(typeoftrans);
 	if(resp.delchaldata.delchaldata.consignee) {
-		console.log(resp.delchaldata.delchaldata.consignee);
 	    $('#delchal_consigneename').text(resp.delchaldata.delchaldata.consignee.consigneename);
             $('#delchal_consigneestate').text(resp.delchaldata.delchaldata.consignee.consigneestate);
 	    $('#delchal_statecodeofconsignee').text(pad(resp.delchaldata.delchaldata.consignee.consigneestatecode, 2));
