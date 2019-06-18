@@ -1955,10 +1955,14 @@ $(document).ready(function(){
     $('#showeditorg').click();
   });
 
-  $('#changecompany').click(function(){// clicking on user name and role in status bar will call change password page.
+  $('#changecompany').click(function(){// clicking on user role in status bar will call change password page.
     $('#showedituser').click();
   });
-    
+  
+  $('#userdata').click(function(){// clicking on user name in status bar will call change password page.
+    $('#showedituser').click();
+  });
+
   $('#yeardata').click(function(){
     return false;
   });
