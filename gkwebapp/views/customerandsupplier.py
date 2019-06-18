@@ -32,6 +32,8 @@ Contributors:
 
 from pyramid.view import view_config
 import requests, json
+from openpyxl import load_workbook
+from openpyxl import Workbook
 
 @view_config(route_name="customersuppliers",renderer="gkwebapp:templates/customersupplier.jinja2")
 def showcustomersupplier(request):
@@ -149,3 +151,99 @@ def getallsups(request):
     header={"gktoken":request.headers["gktoken"]}
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
     return {"customers":suppliers.json()["gkresult"]}
+
+@view_config(route_name='import',request_param='action=cussupimport',renderer='json')
+def cussupimport(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        xlsxfile = request.POST['xlsxfile'].file
+        wb=load_workbook(xlsxfile)
+        ws=wb.sheetnames
+        if(ws[0]=="Customers"):
+            wb._active_sheet_index = 0
+            cusSheet = wb.active
+            cusList = tuple(cusSheet.rows)
+            status_check=addcusts(cusList,header)
+            if(status_check["gkstatus"]!=0):
+                return status_check
+            if(len(ws)==2):
+                if(ws[1]=="Suppliers"):
+                    wb._active_sheet_index = 1
+                    supSheet = wb.active
+                    supList = tuple(supSheet.rows)
+                    status_check=addsups(supList,header)
+            return status_check
+        if(ws[0]=="Suppliers"):
+            wb._active_sheet_index = 0
+            supSheet = wb.active
+            supList = tuple(supSheet.rows)
+            status_check=addsups(supList,header)
+            if(status_check["gkstatus"]!=0):
+                return status_check
+            if(len(ws)==2):
+                if(ws[0]=="Customers"):
+                    wb._active_sheet_index = 0
+                    cusSheet = wb.active
+                    cusList = tuple(cusSheet.rows)
+                    status_check=addcusts(cusList,header)
+            return status_check
+    except Exception as e:
+        print(e)
+        return {"gkstatus":3}
+
+def addcusts(cusList,header):
+    try:
+        row_no=0
+        if(cusList[0][5].value.lower()=="state"):
+            row_no=1
+        while row_no < len(cusList):
+            cusRow=cusList[row_no]
+            row_no,gstin_dict=getGSTs(row_no,cusList)
+            cusDict= {"custname":cusRow[0].value,"custphone":cusRow[1].value, "custemail":cusRow[2].value, "custaddr":cusRow[3].value, "pincode":cusRow[4].value, "state":cusRow[5].value, "custfax":cusRow[6].value, "custpan":cusRow[7].value, "gstin":gstin_dict, "csflag":3}
+            result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cusDict),headers=header)
+            result=result.json()
+            if result["gkstatus"]!=0:
+                return {"gkstatus":result["gkstatus"]}
+        return {"gkstatus":0}
+    except Exception as e:
+        print(e)
+        return {"gkstatus":3}
+
+def addsups(supList,header):
+    try:
+        row_no=0
+        if(supList[0][5].value.lower()=="state"):
+            row_no=1
+        while row_no < len(supList):
+            supRow=supList[row_no]
+            row_no,gstin_dict=getGSTs(row_no,supList)
+            supDict={}
+            if(supRow[9].value==None):
+                supDict= {"custname":supRow[0].value,"custphone":supRow[1].value, "custemail":supRow[2].value, "custaddr":supRow[3].value, "pincode":supRow[4].value, "state":supRow[5].value, "custfax":supRow[6].value, "custpan":supRow[7].value, "gstin":gstin_dict, "csflag":19}
+            else:
+                bank_dict={"ifsc":supRow[12].value,"bankname":supRow[10].value,"accountno":supRow[9].value,"branchname":supRow[11].value}
+                supDict= {"custname":supRow[0].value,"custphone":supRow[1].value, "custemail":supRow[2].value, "custaddr":supRow[3].value, "pincode":supRow[4].value, "state":supRow[5].value, "custfax":supRow[6].value, "custpan":supRow[7].value, "gstin":gstin_dict, "csflag":19, "bankdetails":bank_dict}
+            result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(supDict),headers=header)
+            result=result.json()
+            if result["gkstatus"]!=0:
+                return {"gkstatus":result["gkstatus"]}
+        return {"gkstatus":0}
+    except Exception as e:
+        print(e)
+        return {"gkstatus":3}
+
+def getGSTs(row_no,cussupList):
+    gstin_dict={}
+    if(cussupList[row_no][8].value!=None):
+        while(True):
+            gst_str=cussupList[row_no][8].value.encode('ascii','ignore')
+            state_str=gst_str[:2]
+            gstin_dict[state_str]=gst_str
+            row_no+=1
+            if(row_no==len(cussupList)):
+                break
+            if(cussupList[row_no][0].value!=None):
+                break
+    else:
+        row_no+=1
+    return row_no,gstin_dict

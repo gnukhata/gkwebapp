@@ -106,6 +106,15 @@
     <div class="alert alert-danger" id="allbank-blank-alert"  aria-live="rude" role="alert" hidden>
       {% trans %}Please fill all the fields of Bank Details!{% endtrans %}
     </div>
+		<div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
+			{% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
+		</div>
+		<div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
+			{% trans %}Something went wrong.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="import-duplicate-alert"  aria-live="rude" role="alert" hidden>
+			{% trans %}Duplicate Entry Exists.{% endtrans %}
+		</div>
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
     <div class="panel shadow customersupplier_panel">
@@ -420,10 +429,81 @@
 	  </div>
 	</div>
       </div>
-
+		<div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 50px; margin-left:300px;"  aria-hidden="true">
+			<div class="modal-dialog bgcolor " >
+    		<div class="modal-content ">
+    			<div class="modal-header">
+        		{% trans %}<strong>Import Instructions</strong>{% endtrans %}
+        		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          		<span aria-hidden="true">&times;</span>
+          	</button>
+          </div>
+          <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+            <p>
+              <font color="#566573">
+                {% trans %}
+                <b>Please read and follow the instructions carefully for smooth and flawless Customer Supplier Details data import.</b><br>
+                To import list of Customers & Suppliers in GNUKhata a certain format is necessary.<br>
+                A downloadedable sample spreadsheet is available below.<br>
+                The spreadsheet should contain 2 sheets, one for Customers and one for Suppliers.<br>
+                The sheets should be named as such too('Customers' & 'Suppliers').<br>
+                <b>Please maintain column names in following order:</b><br>
+                <b>For Customers:</b><br>
+                Name(A1), Contact Number(B1), Email(C1), Address(D1), PIN Code(E1), State(F1), Fax(G1), PAN(H1), GSTIN(I1)<br>
+                <b>For Suppliers:</b><br>
+                Name(A1), Contact Number(B1), Email(C1), Address(D1), PIN Code(E1), State(F1), Fax(G1), PAN(H1), GSTIN(I1), Account Number(J1), Bank Name(K1), Branch Name(L1), IFSC Code(M1)<br>
+                <b>Each GSTIN for a particular individual should be on a new line</b><br>
+                <b>States should be in following format:</b><br>
+                {%endtrans %}
+                {% for state in states %}
+                    {% for key, value in state.items() %}
+                      {{value}},
+                    {% endfor %}
+                {% endfor %}<br><br>
+                {% trans %}
+                <b>Sample Spreadsheet Format for Godown Import: </b><br>
+                {% endtrans %}
+                <font color="#008000">
+                  {% trans %}
+                  Godown_Import_Sample_Spreadsheet.xlsx
+                  {% endtrans %}
+                </font>
+                <a href="../static/spreadsheets/Customer_Supplier_Sample_Spreadsheet.xlsx" download="Customer_Supplier_Sample_Spreadsheet.xlsx">
+                  <i id="SampleSheet" class="fa fa-download btn btn-sm" aria-hidden="true" style="color:#008000"></i>
+                </a><br>
+              </font>
+            </p>
+          </div>
+				</div>
+			</div>
+		</div>
+    <div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+        <div class="modal-dialog modal-sm vertical-align-center">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4 class="modal-title">{% trans %}Import{% endtrans %}</h4>
+            </div>
+            <div class="modal-body">
+              <span id="upload-file-info"></span><br><br>
+                <p>{% trans %}Are you sure?{% endtrans %}</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+              <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
+            </div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+      </div>
+    </div>
       <div class="panel-footer">
         <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" accesskey="v">{% trans %}<i class="fa fa-floppy-o" aria-hidden="true"></i> Sa<u>v</u>e{% endtrans %}</button>
         <button id="add_cussup_reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Res<u>e</u>t{% endtrans %}</button>
+				<label class="btn btn-primary btn-sm" for="my-file-selector">
+          <input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
+            <i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
+        </label>
+	      <i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
       </div>
     </div>
 
