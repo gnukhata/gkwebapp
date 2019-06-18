@@ -508,6 +508,81 @@
             <button class="btn btn-success btn-sm common" id="apsubmit" name="submit" data-toggle="tooltip" data-placement="top" title="Press Insert key anywhere on the screen to save" title="Please enter aleast two digit positive number" ><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
             <button id="apreset" class="btn btn-warning btn-sm common"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}Reset{% endtrans %}</button>
             {% endif %}
+            
+
+            <label class="btn btn-primary btn-sm" for="my-file-selector">
+                    <input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
+                    <i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
+                  </label>
+              <i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
+        </div>
+      </div>
+      <div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog">
+            <div class="vertical-alignment-helper">
+              <div class="modal-dialog modal-sm vertical-align-center">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h4 class="modal-title">{% trans %}Import{% endtrans %}</h4>
+                  </div>
+                  <div class="modal-body">
+            <span id="upload-file-info"></span><br><br>
+                    <p>{% trans %}Are you sure?{% endtrans %}</p>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+                    <button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
+                  </div>
+                </div><!-- /.modal-content -->
+              </div><!-- /.modal-dialog -->
+            </div>
+          </div>
+          <div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:100%; margin-top: 50px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " style="width:100%;" >
+          <div class="modal-content ">
+            <div class="modal-header">
+                {% trans %}<strong>Import Instructions</strong>{% endtrans %}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+          </div>
+              <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+                <p>
+            <font color="#566573">{% trans %}
+            <b>Please read and follow the instructions carefully for smooth and flawless Product data import.</b><br>
+            To import list of godowns in GNUKhata a certain format is necessary.<br>
+            A downloadedable sample spreadsheet is available below.<br>
+            <b>Please maintain column names in following order:</b><br>
+            Product Name(A1), HSN Code(B1), Unit Of Measurement(C1), Mrp(D1), Sale Price(E1), Tax(F1), State(G1), Rate(H1), Godown(I1), Opening Stock(J1) <br>
+            <b>States should be in following format:</b><br>
+            {%endtrans %}
+            {% for state in states %}
+                {% for key, value in state.items() %}
+                {{value}},
+                {% endfor %}
+            {% endfor %}<br><br>
+            <b>List of Unit Of Measurements:</b><br>
+            {% for u in uom %}
+              {{u["description"]}},
+            {% endfor %}<br><br>
+            {% trans %}
+            <b>Sample Spreadsheet Format for Product Import: </b><br>
+            {% endtrans %}
+            <font color="#008000">{% trans %}
+            Product_Import_Sample_Spreadsheet.xlsx
+            {% endtrans %}
+            </font>
+            <a href="../static/spreadsheets/product.xlsx" download="product.xlsx">
+            <i id="SampleSheet" class="fa fa-download btn btn-sm" aria-hidden="true" style="color:#008000"></i>
+            </a><br>
+             </font>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+      </div>
+
+
 	  </div> 
 	  
         </div>

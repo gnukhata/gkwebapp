@@ -100,7 +100,17 @@
 
           {% trans %}Please Specify IGST tax.{% endtrans %}
         </div>
-	
+	<div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
+			        {% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
+		</div>
+		<div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
+
+			{% trans %}Something went wrong.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="import-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+			{% trans %}Duplicate Entry Exists.{% endtrans %}
+		</div>
         <!-- <div class="alert alert-info" id="nocategory-alert"  aria-live="rude" role="alert" hidden>
 
              {% trans %}You can create products under categories.{% endtrans %}

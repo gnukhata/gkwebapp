@@ -1803,6 +1803,7 @@ $(document).ready(function() {
         }
     });
     /*code for reseting the fields*/
+<<<<<<< HEAD
     $(document).on('click', '#stockreset', function(event) {
         event.preventDefault();
         $("#stocktable tbody").html("");
@@ -1810,3 +1811,81 @@ $(document).ready(function() {
         $("#godown_name").val("").focus();
     });
 });
+=======
+$(document).on('click', '#stockreset', function(event) {
+  event.preventDefault();
+    $("#stocktable tbody").html("");
+    $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+    $("#godown_name").val("").focus();
+});
+
+$("#my-file-selector").change(function(event) {
+    $('#upload-file-info').html($(this).val());
+    if ($("#my-file-selector").val()=='') {
+      $("#import-blank-alert").alert("");
+      $("#import-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#import-blank-alert").hide();
+      });
+      return false;
+    }
+    $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function (e)
+    {
+    var form_data = new FormData();
+    var file = $("#my-file-selector")[0].files[0];
+    form_data.append("xlsxfile",file);
+    $("#msspinmodal").modal("show");
+    $.ajax({
+      type: "POST",
+      url: "/product?type=productimport",
+      global: false,
+      contentType: false,
+      cache: false,
+      processData: false,
+      async: false,
+      datatype: "json",
+      data: form_data,
+      beforeSend: function(xhr)
+      {
+        xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+      },
+    })
+    .done(function(resp) {
+      if (resp["gkstatus"]==0) {
+        $("#filename").html($("#my-file-selector").val());
+        $("#my-file-selector").val("");
+        $("#upload-file-info").html("");
+        $("#msspinmodal").modal("hide");
+        $("#import-success-alert").alert();
+        $("#import-success-alert").fadeTo(2250, 400).slideUp(500, function(){
+          $("#import-success-alert").hide();
+        });
+        return false;
+      }
+      else if(resp["gkstatus"]==1){
+        $("#msspinmodal").modal("hide");
+        $("#import-duplicate-alert").alert();
+        $("#import-duplicate-alert").fadeTo(2250, 400).slideUp(500, function(){
+          $("#import-duplicate-alert").hide();
+        });
+        return false;
+      }
+      else {
+        $("#msspinmodal").modal("hide");
+        $("#import-failure-alert").alert();
+        $("#import-failure-alert").fadeTo(2250, 400).slideUp(500, function(){
+          $("#import-failure-alert").hide();
+        });
+        return false;
+      }
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
+    });
+    });
+});
+});
+
+>>>>>>> Import product and services done

@@ -40,6 +40,10 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import cStringIO
+from openpyxl import load_workbook
+from openpyxl import Workbook
+from openpyxl.styles import Font
+from openpyxl.drawing.graphic import GroupShape
 
 
 @view_config(route_name="product",request_param="type=tab", renderer="gkwebapp:templates/producttab.jinja2")
@@ -73,6 +77,7 @@ def addProductTabVat(request):
 @view_config(route_name="product",request_param="type=addtab", renderer="gkwebapp:templates/addproduct.jinja2")
 def addproducttab(request):
     header={"gktoken":request.headers["gktoken"]}
+    uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
     result = requests.get("http://127.0.0.1:6543/categories", headers=header)
     result1 = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header)
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
@@ -82,7 +87,7 @@ def addproducttab(request):
     extrabuttons = True
     if "extrabuttons" in request.params:
         extrabuttons = False
-    return{"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"], "extrabuttons":extrabuttons}
+    return{"uom":uom,"gkresult":{"category":result.json()["gkresult"],"uom":result1.json()["gkresult"]},"godown":result2.json()["gkresult"],"gkstatus":result.json()["gkstatus"],"vatorgstflag":resultgstvat.json()["gkresult"], "states": states.json()["gkresult"], "userrole": userrole.json()["gkresult"], "extrabuttons":extrabuttons}
 
 @view_config(route_name="product",request_param="type=hsnuom", renderer="json")
 def gethsnuom(request):
@@ -1059,3 +1064,140 @@ def printablestockonhandreport(request):
         result = requests.get("http://127.0.0.1:6543/report?godownwisestockonhand&type=pag&productcode=%d&enddate=%s"%(productcode, scalculateto),headers=header)
 
     return render_to_response("gkwebapp:templates/printstockonhandreport.jinja2",{"gkresult":result.json()["gkresult"],"stockrefresh":stockrefresh,"godown":goname},request=request)
+
+@view_config(route_name="product",request_param="type=productimport", renderer="json")
+def ProductImport(request):
+    #try:
+        header={"gktoken":request.headers["gktoken"]}
+        xlsxfile = request.POST['xlsxfile'].file
+        wb= load_workbook(xlsxfile)
+        wb._active_sheet_index = 0
+        productSheet = wb.active
+        productList = tuple(productSheet.rows)
+        uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
+        godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
+        proddetails={}
+        godowns={}
+        godownflag=False
+        taxes=[]
+        tax={}
+        gstrate=["5","8","12","28"]
+        for productrow in productList:
+            if productrow[0].value != None or (productrow[5].value==None and productrow[8].value==None and productrow[0].value==None):
+                if len(proddetails)!=0:
+                    if godownflag == True:
+                        godnames = ""
+                        j = 1;
+                        for i in godowns.keys():
+                            resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+                            godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
+                            if j != len(godowns):
+                                godnames += ", "
+                            j += 1
+                    productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
+                    result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
+                    if result.json()["gkstatus"] == 0:
+                        savedproductcode = result.json()["gkresult"]
+                        if godownflag == True:
+                            gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
+                        else:
+                            gkdata = {"activity":proddetails["productdesc"] + " product created"}
+                        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+                    for tax in taxes:
+                        if len(tax)!=0:
+                            taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                            if tax["state"]!='':
+                                taxdata["state"]=tax["state"]
+                            taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+
+                if productrow[0].value.lower() != "product name":                    
+                    proddetails={}        
+                    godowns={}
+                    godownflag=False
+                    taxes=[]
+                    tax={}
+                    proddetails["productdesc"] =  productrow[0].value           
+                    proddetails["gscode"]=productrow[1].value
+                    proddetails["prodmrp"] = productrow[3].value
+                    proddetails["prodsp"] = productrow[4].value                    
+                    proddetails["specs"] = {}
+                    if productrow[2].value !=None:   
+                        proddetails["gsflag"]=7
+                        for i in uom:
+                            if i["description"]==productrow[2].value:
+                                uomid=i["uomid"]
+                                break
+                        proddetails["uomid"] = uomid    
+                    else:        
+                        proddetails["gsflag"] = 19
+                    proddetails["openingstock"]=0.00
+                    if productrow[8].value==None:
+                        proddetails["openingstock"] =productrow[9].value
+                    tax["taxname"]=productrow[5].value
+                    tax["taxrate"]=productrow[7].value
+                    if productrow[6].value==None:
+                        tax["state"]=''
+                    if tax["taxname"]=="GST":
+                        tax["state"]=''
+                        if str(tax["taxrate"]) not in gstrate:
+                            return  {"gkstatus":3}
+                    else:
+                        tax["state"]=productrow[6].value
+                    taxes.append(tax)
+                    if productrow[8].value!=None:
+                        godownflag=True
+                        for g in godown:
+                            if g["goname"]==productrow[8].value:
+                                godowns[g["goid"]]=productrow[9].value
+                                break                   
+            elif productrow[5].value!=None or productrow[8].value!=None:
+                if productrow[5].value!=None:
+                    tax={}
+                    tax["taxname"]=productrow[5].value
+                    tax["taxrate"]=productrow[7].value
+                    if productrow[6].value==None:
+                        tax["state"]=''
+                    if tax["taxname"]=="GST":
+                        tax["state"]=''
+                        if str(tax["taxrate"]) not in gstrate:
+                            return  {"gkstatus":3}
+                    else:
+                        tax["state"]=productrow[6].value
+                    taxes.append(tax)                    
+                if productrow[8].value!=None:
+                    godownflag=True
+                    for g in godown:
+                        if g["goname"]==productrow[8].value:
+                            godowns[g["goid"]]=productrow[9].value
+                            break
+        if len(proddetails)!=0:
+            if godownflag == True:
+                godnames = ""
+                j = 1;
+                for i in godowns.keys():
+                    resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+                    godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
+                    if j != len(godowns):
+                        godnames += ", "
+                    j += 1
+            productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}            
+            result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)                    
+            if result.json()["gkstatus"] == 0:
+                savedproductcode = result.json()["gkresult"]
+                if godownflag == True:
+                    gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
+                else:
+                    gkdata = {"activity":proddetails["productdesc"] + " product created"}
+                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+            for tax in taxes:
+                if len(tax)!=0:
+                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                    if tax["state"]!='':
+                        taxdata["state"]=tax["state"]
+                    taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+
+                
+        return {"gkstatus":0}
+    #except Exception as e:
+        print(e)
+        #return {"gkstatus":result.json()["gkstatus"]}
