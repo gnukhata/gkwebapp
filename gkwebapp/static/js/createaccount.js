@@ -752,5 +752,65 @@ $("#openbal").keydown(function(event){
 	event.preventDefault();
 	    $("#submit").click();
       }
-     });
+	 });
+	 $("#my-file-selector").change(function(event) {
+		$('#upload-file-info').html($(this).val());
+		if ($("#my-file-selector").val()=='') {
+		  $("#import-blank-alert").alert("");
+		  $("#import-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#import-blank-alert").hide();
+		  });
+		  return false;
+		}
+		$('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function (e)
+		{
+		var form_data = new FormData();
+		var file = $("#my-file-selector")[0].files[0];
+		form_data.append("xlsxfile",file);
+		$("#msspinmodal").modal("show");
+		$.ajax({
+		  type: "POST",
+		  url: "/import?action=accountimport",
+		  global: false,
+		  contentType: false,
+		  cache: false,
+		  processData: false,
+		  async: false,
+		  datatype: "json",
+		  data: form_data,
+		  beforeSend: function(xhr)
+		  {
+			xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+		  },
+		})
+		.done(function(resp) {
+			console.log(resp)
+		  if (resp["gkstatus"]==0) {
+			$("#filename").html($("#my-file-selector").val());
+			$("#my-file-selector").val("");
+			$("#upload-file-info").html("");
+			$("#msspinmodal").modal("hide");
+			$("#import-success-alert").alert();
+			$("#import-success-alert").fadeTo(2250, 400).slideUp(500, function(){
+			  $("#import-success-alert").hide();
+			});
+			return false;
+		  }
+		  else {
+			$("#msspinmodal").modal("hide");
+			$("#import-failure-alert").alert();
+			$("#import-failure-alert").fadeTo(2250, 400).slideUp(500, function(){
+			  $("#import-failure-alert").hide();
+			});
+			return false;
+		  }
+		})
+		.fail(function() {
+		  console.log("error");
+		})
+		.always(function() {
+		  console.log("complete");
+		});
+		});
+	});	
 });

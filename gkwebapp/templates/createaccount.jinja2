@@ -113,6 +113,18 @@ outline: none;
 </head>
 <body >
 	<div>
+		<div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
+
+			{% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
+		</div>
+		<div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
+
+			{% trans %}Something went wrong.{% endtrans %}
+		</div>
+		<div class="alert alert-danger" id="import-duplicate-alert"  aria-live="rude" role="alert" hidden>
+
+			{% trans %}Duplicate Entry Exists.{% endtrans %}
+		</div>
 
 	  <div class="alert alert-success" id="success-alert"  aria-live="rude" role="alert" hidden>
 
@@ -290,11 +302,119 @@ outline: none;
 							<br/>
 							<button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
 							<button id="reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
-
+							<label class="btn btn-primary btn-sm" for="my-file-selector">
+							<input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
+                    		<i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
+                			</label>
+	      					<i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
 						</div>
 					</form>
+					<div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog" style="width:650px; margin-top: 150px; margin-left:300px">
+            			<div class="vertical-alignment-helper">
+              			<div class="modal-dialog modal-sm vertical-align-center">
+                			<div class="modal-content">
+                  			<div class="modal-header">
+                    			<h4 class="modal-title">{% trans %}Import{% endtrans %}</h4>
+                  			</div>
+                  			<div class="modal-body">
+				  				<span id="upload-file-info"></span><br><br>
+                    			<p>{% trans %}Are you sure?{% endtrans %}</p>
+                  			</div>
+                  			<div class="modal-footer">
+                    			<button type="button" id ="tn_save_noprint" class="btn btn-warning" data-dismiss="modal">{% trans %}<i class="fa fa-times" aria-hidden="true"></i> No{% endtrans %}</button>
+                    			<button type="button" id="tn_save_yesprint" data-dismiss="modal" class="btn btn-success">{% trans %}<i class="fa fa-check" aria-hidden="true"></i> Yes{% endtrans %}</button>
+                  			</div>
+                			</div><!-- /.modal-content -->
+              			</div><!-- /.modal-dialog -->
+            			</div>
+          		    </div>
+					<div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:100% ;"  aria-hidden="true">
+						<div class="modal-dialog bgcolor " style="width:100%;" >
+    						<div class="modal-content ">
+    							<div class="modal-header">
+        				{% trans %}<strong>Import Instructions</strong>{% endtrans %}
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          					<span aria-hidden="true">&times;</span>
+          				</button>
+								</div>
+      							<div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+				        			<p>
+									<font color="#566573">{% trans %}
+									<b>Please read and follow the instructions carefully for smooth and flawless Account data import.</b><br>
+									A downloadedable sample spreadsheet is available below.<br>
+									<b>To import list of accounts in GNUKhata follow the instructions given below:</b>
+									<ul>
+									<li>Account Name should be added in first column[column A].</li>
+									<li>Opening balances should be added in the columns next to the account name itself.</li>
+									<li>In case of a debit opening balance the amount goes in the second column[column B].</li>
+									<li>In case of a credit opening balance the amount goes in the third column[column C].</li>
+									<li>
+									Every group must be followed by it's subgroups if any.<br>
+									</li>
+									<li>
+									Every subgroup must be followed by it's list of accounts.<br>
+									</li>
+									<li>
+									Note the Sub Group Bank account under Current Assets must be 'Bank' and Cash in Hand must be 'Cash'.
+									</li>
+									<li>
+									New Sub Groups can optionally be added under any group.
+									</li>
+									<li>
+									If accounts are under a group directly, then the list must follow the group.<br>
+									</li>
+									<li>
+									All groups must be in bold, accounts in italics and subgroups normal font.<br>
+									</li>
+									<li>
+									This data must be in column A of the sheet.<br>
+									</li>
+									<li>
+									The following 2 columns B and C must have either Dr or Cr opening balance respectively for the account.<br>
+									</li>
+									<li>
+									The Profit & Loss A/c account should be rename to Profit & Loss.<br>
+									</li>
+									<li>The said account should be under the group Direct Income. <br>
+									</li>
+									<li>
+									All additional information must be removed such as Company name, address, fianancial year,etc.<br>
+									</li>
+									</ul>
+								<b>The main groups exported should be only amongst the 13 given below:</b>
+								<ul>
+                    				<li>Capital <i>[for Profit Making]</i> OR Corpus <i>[for Not for Profit]</i></li>
+                   					<li>Current Assets</li>
+		   							<li>Current Liabilities</li>
+		    						<li>Direct Expense</li>
+									<li>Direct Income</li>
+									<li>Fixed Assets</li>
+									<li>Indirect Expense</li>
+									<li>Indirect Income</li>
+									<li>Investments</li>
+									<li>Loans(Asset)</li>
+									<li>Loans(Liability)</li>
+									<li>Miscellaneous Expenses(Asset) <i>[Only for Profit Making]</i></li>
+              						<li>Reserves</li>
+								</ul>
+									<b>Sample Spreadsheet Format for Account Import: </b><br>
+									{% endtrans %}
+									<font color="#008000">{% trans %}
+									Account_Import_Sample_Spreadsheet.xlsx
+									{% endtrans %}
+									</font>
+									<a href="../static/spreadsheets/Account_Import_Spreadsheet.xlsx" download="Account_Import_Sample_Spreadsheet.xlsx">
+									<i id="SampleSheet" class="fa fa-download btn btn-sm" aria-hidden="true" style="color:#008000"></i>
+									</a><br>
+						 			</font>
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
+		</div>
 		</div>
   		<div style="padding-top:5px" class="col-md-6 shadow" id="baltbl" >
 			<table class="table table-condensed">

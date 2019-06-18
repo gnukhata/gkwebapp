@@ -5,7 +5,16 @@
   <title>{% trans %}GNUKhata | Import Ledgers{% endtrans %}</title>
 </head>
 <body>
-  <div class='container-fluid '>
+<div class='container-fluid '>
+  <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
+    {% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
+  </div>
+  <div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
+    {% trans %}Something went wrong.{% endtrans %}
+  </div>
+  <div class="alert alert-danger" id="import-blank-alert"  aria-live="rude" role="alert" hidden>
+    {% trans %}File not found.{% endtrans %}
+  </div>
     <div class="row">
       <div class="panel shadow">
         <div class="panel-heading">
@@ -102,18 +111,6 @@
                   	
                   	</p>
               </ul>
-                </div>
-                <div class="alert alert-success" id="import-success-alert"  aria-live="rude" role="alert" hidden>
-
-                  {% trans %}Data imported successfully{% endtrans %} <b id='filename'></b>.
-                </div>
-                <div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
-
-                  {% trans %}Something went wrong.{% endtrans %}
-                </div>
-                <div class="alert alert-danger" id="import-blank-alert"  aria-live="rude" role="alert" hidden>
-
-                  {% trans %}File not found.{% endtrans %}
                 </div>
               </div>
               <div  class="panel-footer ">

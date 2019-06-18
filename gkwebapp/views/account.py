@@ -36,6 +36,8 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
+from openpyxl import load_workbook
+from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
 import cStringIO
 
@@ -441,3 +443,63 @@ def subgroup(request):
         return{"gkstatus":result.json()["gkstatus"], "subgroupcode":result.json()["gkresult"]}
     else:
         return{"gkstatus":result.json()["gkstatus"]}
+
+@view_config(route_name='import',request_param='action =accountimport',renderer="json")
+def accImpotrt(request):
+    try:
+        header={"gktoken":request.headers["gktoken"]}
+        xlsxfile = request.POST['xlsxfile'].file
+        wbTally = load_workbook(xlsxfile)
+        wbTally._active_sheet_index = 0
+        accountSheet = wbTally.active
+        accountList = tuple(accountSheet.rows)
+        gsResult = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist",headers=header)
+        groups = gsResult.json()["gkresult"]
+        curgrpid = None
+        parentgroupid = None
+        parentgroup = ""
+        openingBl = 0.00
+        for accRow in accountList:
+            if accRow[0].value == None:
+                continue
+            if accRow[0].font.b:
+                curgrpid = groups[accRow[0].value.strip()]
+                parentgroupid = groups[accRow[0].value.strip()]
+                parentgroup = accRow[0].value.strip()
+                continue
+            if accRow[0].font.b == False and accRow[0].font.i == False:
+                if groups.has_key(accRow[0].value):
+                    curgrpid = groups[accRow[0].value.strip()]
+                else:
+                    newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)                   
+                    curgrpid = newsub.json()["gkresult"]
+            if accRow[0].font.i:
+                print(len(accRow))
+                if len(accRow)>2:
+                    if accRow[1].value==None and accRow[2].value==None:
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":0.00}),headers=header)
+                    # checking if opening Balance is not in Debit column. i.e. column no. 2 (B).
+                    #It means value is in credit column 
+                    if accRow[1].value==None and accRow[2].value!=None:
+                        openingBl = accRow[2].value
+                        #Check parent group so that opening balance type (cr/dr) can be determined.
+                        if parentgroup == 'Current Assets' or parentgroup == 'Fixed Assets' or parentgroup == 'Investments' or parentgroup == 'Loans(Asset)' or parentgroup == 'Miscellaneous Expenses(Asset)':
+                            openingBl = float(-openingBl)
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
+                        continue
+                    # checking if opening Balance is not in Credit column. i.e. column no. 2 (A).#if newacc.json()["gkstatus"]!=0:
+                            #return {"gkstatus":newacc["gkstatus"]}
+                        continue
+                    #It means value is in debit column 
+                    if accRow[2].value==None and accRow[1].value!=None:
+                        openingBl = accRow[1].value
+                        if parentgroup == 'Corpus' or parentgroup == 'Capital' or parentgroup == 'Current Liabilities' or parentgroup == 'Loans(Liabilities)' or parentgroup == "Reserves":
+                            openingBl = float(-openingBl)
+                        newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
+                        continue
+                if len(accRow)==2:
+                    newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header) 
+        return {"gkstatus":0} 
+    except:
+        print "file not found"
+        return {"gkstatus":3}       
