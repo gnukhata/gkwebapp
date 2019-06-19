@@ -739,7 +739,6 @@ $(document).ready(function() {
 	  $('#salesorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
 	});
-	console.log($("#status").val());
 	if($("#status").val() == 19){
 		$('#custchange.custsupchange').click();
 	}
