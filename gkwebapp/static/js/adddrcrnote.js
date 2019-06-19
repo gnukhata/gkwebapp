@@ -745,7 +745,9 @@ $(document).ready(function() {
 		    $("#drcrnote_custsupp").text(resp.invoicedata.custSupDetails["custname"]);
 		    $("#gstin").text(resp.invoicedata.custSupDetails["custgstin"]);
 		    $("#tin").text(resp.invoicedata.custSupDetails["custtin"]);
-		    $("#drcrnote_custsuppaddr").text(resp.invoicedata.custSupDetails["custaddr"]);
+			$("#drcrnote_custsuppaddr").text(resp.invoicedata.custSupDetails["custaddr"]);
+		    $("#drcrnote_custsuppincode").text(resp.invoicedata.custSupDetails["pincode"]);
+			
 		    taxflag = resp.invoicedata.taxflag;
 		    taxname = resp.invoicedata.taxname;
 		    inoutflag = resp.invoicedata.inoutflag;

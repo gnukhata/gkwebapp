@@ -633,7 +633,13 @@ $(document).ready(function() {
 		$("#purchaseorder_issuer_name").focus().select();
 	    }
 	    else {
-		$("#salesorder_customer").focus();
+		if($('#custchange.custsupchange').is(':checked')){
+			$("#custchange.custsupchange").focus();
+		}
+		else{
+			$("#supchange.custsupchange").focus();
+	
+		}
 	    }
 	}
 	else if(event.which ==38){
@@ -674,13 +680,34 @@ $(document).ready(function() {
 	      });
 	      return false;
 	    }
-	    $("#salesorder_customer").focus();  //Focus shifts to Customer.
+		if($('#custchange.custsupchange').is(':checked')){
+			$("#custchange.custsupchange").focus();
+		}
+		else{
+			$("#supchange.custsupchange").focus();
+	
+		}
 	}
 	else if (event.which == 38) {
 	    $("#salesorder_issuer_name").focus().select();  //Focus shifts to Issuer Name
 	}
     });
-
+    //Key Events for cust sup radio button.
+		$('input:radio[name=csradio]').keydown(function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				$("#salesorder_customer").focus();  //Focus shifts to State of Origin/Delivery.
+			}
+			if (event.which == 38) {
+				event.preventDefault();
+				if ($("#status").val() == 16) {
+					$("#purchaseorder_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
+				}
+				else {
+					$("#togodown").focus();  //Focus Shifts to dispatched from field.
+				}
+			}
+			});
     //Key Events for Customer fields.
     $("#salesorder_customer").keydown(function(event) {
 	if (event.which == 13) {
@@ -712,7 +739,14 @@ $(document).ready(function() {
 	  $('#salesorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
 	});
-	
+	console.log($("#status").val());
+	if($("#status").val() == 19){
+		$('#custchange.custsupchange').click();
+	}
+	else{
+		$("#supchange.custsupchange").click();
+
+	}
 	function custSupData(urldata){
 		$.ajax({
 			type: "POST",
@@ -727,9 +761,9 @@ $(document).ready(function() {
 			let custsupdata=resp["customers"]
 			var optionsdiv = $("#salesorder_customer").closest("div");
 			$('#salesorder_customer').empty();
-			
+
 			optionsdiv.find('select[style*="display: none"]').empty();
-			if($("#status").val()==16){
+			if($("#status").val()==19){
 				$("#salesorder_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
 				$('#salesorder_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
 
