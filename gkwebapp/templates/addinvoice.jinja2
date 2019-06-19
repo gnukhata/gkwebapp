@@ -122,6 +122,12 @@
 		    <label class="col-sm-4 fsize" for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
 		    <input class="form-control input-sm col-sm-8" size="15" id="invoice_challanno" maxlength="16" >
 		  </div>
+		  {% if gkstatus=="out" %}
+		  <div class="form-group form-inline">
+		    <label class="col-sm-4 fsize" for="ewayBill_no">{% trans %}Eway Bill No{% endtrans %} :</label>
+		    <input class="form-control input-sm col-sm-8" size="15" id="ewayBill_no" maxlength="16" >
+		  </div>
+		{% endif %}
 		  <div class="form-group form-inline">
 		    <label for="invoice_date" class="col-sm-4 fsize">{% trans %}Invoice Date{% endtrans %} :</label>
 		    <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" a>

@@ -160,6 +160,10 @@
 					<label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} : </label>
 		  		{{ gkresult["invoiceno"] }}
 					<br>
+				{% if gkresult["inoutflag"] == 15 %}
+					<label class="normal"for="ewaybill">{% trans %}Eway Bill No.{% endtrans %} : </label>
+		  		{{ gkresult["ewaybillno"] }}<br>
+				{% endif %}
 					<label for="instrument_date" class="normal">{% trans %}Invoice Date{% endtrans %} : </label>
 		  		{{ gkresult["invoicedate"] }}
 					<br>

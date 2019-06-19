@@ -142,6 +142,10 @@
 	{% endif %}
 			{% trans %}<b>Invoice No.</b>{% endtrans %} : 
 		  {{ gkresult["invoiceno"] }}<br>
+	{% if gkresult["inoutflag"] == 15 %}
+		{% trans %}<b>Eway Bill No.{% endtrans %} :
+		{{ gkresult["ewaybillno"] }}<br>
+	{% endif %}
 			{% trans %}<b>Invoice Date</b>{% endtrans %} : 
 		  {{ gkresult["invoicedate"] }}<br>
 	{% if gkresult["inoutflag"] == 9 %}
