@@ -37,6 +37,18 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
+	$.ajax({
+	    url: '/invoice?type=getstatess',
+                    type: 'POST',
+					async: false,
+					beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+	})
+	.done(function(resp){
+		$("#invoicestate").val(resp["gkresult"]).attr('selected',true);
+	});
+
     //Events that are triggered when the page for creating an invoice is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
@@ -622,8 +634,9 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    $("#invoice_month").focus().select();  //Focus shifts to month field.
 	}
-    });
-
+	});
+	
+	
     //Change Event For State of Origin/Delivery.
     $("#invoicestate").change(function(event) {
 	event.preventDefault();

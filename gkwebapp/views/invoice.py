@@ -230,7 +230,12 @@ def getproduct(request):
     else:
         return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata), "productdesc":data["productdesc"]}
 
-
+@view_config(route_name="invoice",request_param="type=getstatess",renderer="json")
+def showstate(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/organisation", headers=header)
+    print(result.json()["gkdata"])
+    return {"gkresult":result.json()["gkdata"]["orgstate"]}
 
 @view_config(route_name="invoice",request_param="action=showeditinv",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showeditableinvoices(request):
