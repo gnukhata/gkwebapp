@@ -1067,7 +1067,7 @@ def printablestockonhandreport(request):
 
 @view_config(route_name="product",request_param="type=productimport", renderer="json")
 def ProductImport(request):
-    #try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
@@ -1076,41 +1076,46 @@ def ProductImport(request):
         productList = tuple(productSheet.rows)
         uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
         godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
+        states = requests.get("http://127.0.0.1:6543/state", headers=header).json()["gkresult"]
+        s=[]
+        for state in states:
+            for value in state.values():
+                s.append(value)
         proddetails={}
         godowns={}
         godownflag=False
         taxes=[]
         tax={}
         gstrate=["5","8","12","28"]
+        gkdata=[]
+        errorlist=[]
+        duplicateFlag=False
+        rowcount=0
+        newrows=[]
         for productrow in productList:
-            if productrow[0].value != None or (productrow[5].value==None and productrow[8].value==None and productrow[0].value==None):
+            rowcount+=1
+            if productrow[0].value != None: #new entry in name column encountered
                 if len(proddetails)!=0:
-                    if godownflag == True:
-                        godnames = ""
-                        j = 1;
-                        for i in godowns.keys():
-                            resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
-                            godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
-                            if j != len(godowns):
-                                godnames += ", "
-                            j += 1
+                    
+                    temp={}
                     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
-                    result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
-                    if result.json()["gkstatus"] == 0:
-                        savedproductcode = result.json()["gkresult"]
-                        if godownflag == True:
-                            gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
-                        else:
-                            gkdata = {"activity":proddetails["productdesc"] + " product created"}
-                        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-                    for tax in taxes:
-                        if len(tax)!=0:
-                            taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-                            if tax["state"]!='':
-                                taxdata["state"]=tax["state"]
-                            taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+                    temp["productdetails"]=productdetails
+                    temp["taxes"]=taxes
+                    gkdata.append(temp)                    
 
-                if productrow[0].value.lower() != "product name":                    
+
+                if productrow[0].value != "product name":  
+                    newrows.append(rowcount)
+                    if productrow[0].value==None:
+                        errorlist.append(productrow[0].coordinate)
+                    if productrow[1].value==None:
+                        errorlist.append(productrow[1].coordinate)
+                    if productrow[5].value==None:
+                        errorlist.append(productrow[5].coordinate)
+                    if productrow[7].value==None:
+                        errorlist.append(productrow[5].coordinate)
+                    
+                                      
                     proddetails={}        
                     godowns={}
                     godownflag=False
@@ -1133,71 +1138,142 @@ def ProductImport(request):
                     proddetails["openingstock"]=0.00
                     if productrow[8].value==None:
                         proddetails["openingstock"] =productrow[9].value
+
+                    #tax dictionary generation
                     tax["taxname"]=productrow[5].value
                     tax["taxrate"]=productrow[7].value
-                    if productrow[6].value==None:
+                    if tax["taxname"]=="GST": #if GST then no state should be mentioned
                         tax["state"]=''
-                    if tax["taxname"]=="GST":
-                        tax["state"]=''
-                        if str(tax["taxrate"]) not in gstrate:
-                            return  {"gkstatus":3}
+                        if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
+                            errorlist.append(productrow[7].coordinate)
+                    elif productrow[6].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
+                        errorlist.append(productrow[6].coordinate)                    
+                    elif tax["taxname"]!="VAT" and productrow[6].value!=None: 
+                        errorlist.append(productrow[6].coordinate)
+                    elif tax["taxname"]=="VAT":                                            
+                        if productrow[6].value in s:
+                            tax["state"]=productrow[6].value                                
+                        else:
+                            errorlist.append(productrow[6].coordinate)
                     else:
-                        tax["state"]=productrow[6].value
+                        tax["state"]=''
                     taxes.append(tax)
+                    #godown dictionary generation
                     if productrow[8].value!=None:
-                        godownflag=True
+                        flag=0
                         for g in godown:
                             if g["goname"]==productrow[8].value:
+                                godownflag=True
+                                flag=1
                                 godowns[g["goid"]]=productrow[9].value
-                                break                   
-            elif productrow[5].value!=None or productrow[8].value!=None:
+                                break 
+                        if flag==0:
+                            errorlist.append(productrow[8].coordinate)                  
+
+
+            elif productrow[5].value!=None or productrow[8].value!=None: # if multiple tax or godowns exist
+                #tax dictionary generation
                 if productrow[5].value!=None:
                     tax={}
                     tax["taxname"]=productrow[5].value
                     tax["taxrate"]=productrow[7].value
-                    if productrow[6].value==None:
-                        tax["state"]=''
-                    if tax["taxname"]=="GST":
-                        tax["state"]=''
-                        if str(tax["taxrate"]) not in gstrate:
-                            return  {"gkstatus":3}
-                    else:
-                        tax["state"]=productrow[6].value
-                    taxes.append(tax)                    
-                if productrow[8].value!=None:
-                    godownflag=True
-                    for g in godown:
-                        if g["goname"]==productrow[8].value:
-                            godowns[g["goid"]]=productrow[9].value
-                            break
-        if len(proddetails)!=0:
-            if godownflag == True:
-                godnames = ""
-                j = 1;
-                for i in godowns.keys():
-                    resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
-                    godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
-                    if j != len(godowns):
-                        godnames += ", "
-                    j += 1
-            productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}            
-            result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)                    
-            if result.json()["gkstatus"] == 0:
-                savedproductcode = result.json()["gkresult"]
-                if godownflag == True:
-                    gkdata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
-                else:
-                    gkdata = {"activity":proddetails["productdesc"] + " product created"}
-                resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-            for tax in taxes:
-                if len(tax)!=0:
-                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-                    if tax["state"]!='':
-                        taxdata["state"]=tax["state"]
-                    taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+                    if productrow[7].value==None:
+                        errorlist.append(productrow[5].coordinate)
+                    
 
-                
-        return {"gkstatus":0}
-    #except Exception as e:
+                    if tax["taxname"]=="GST": #if tax=GST then no state should be mentioned
+                        tax["state"]=''
+                        if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
+                            errorlist.append(productrow[7].coordinate)
+                    elif productrow[6].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
+                        errorlist.append(productrow[6].coordinate)
+                    
+                    elif tax["taxname"]!="VAT" and productrow[6].value!=None: 
+                        errorlist.append(productrow[6].coordinate)
+                    elif tax["taxname"]=="VAT":
+                        if productrow[6].value in s:
+                            tax["state"]=productrow[6].value                                
+                        else:
+                            errorlist.append(productrow[6].coordinate)
+                    else:
+                        tax["state"]=''
+                    taxes.append(tax)     
+                #godown dictionary generation               
+                if productrow[8].value!=None:
+                    for g in godown:
+                            if g["goname"]==productrow[8].value:
+                                godownflag=True
+                                flag=1
+                                godowns[g["goid"]]=productrow[9].value
+                                break 
+                    if flag==0:
+                        errorlist.append(productrow[8].coordinate)       
+        
+        if len(proddetails)!=0 :
+            temp={}
+            productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
+            temp["productdetails"]=productdetails
+            temp["taxes"]=taxes
+            gkdata.append(temp) 
+            
+        if len(errorlist) ==0: #if no errors exist then import else send errors 
+            count=-1
+            for g in gkdata:                
+                try:
+                    count+=1
+                    godowns=g["productdetails"]["godetails"]
+                    productdetails=g["productdetails"]
+                    taxes=g["taxes"]
+                    godownflag=g["productdetails"]["godownflag"]
+                    if g["productdetails"]["godownflag"] == True:
+                        godnames = ""
+                        j = 1;
+                        for i in godowns.keys():
+                            resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
+                            godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
+                            if j != len(godowns):
+                                godnames += ", "
+                            j += 1
+
+                    result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)                    
+                    if result.json()["gkstatus"] == 0:
+                        savedproductcode = result.json()["gkresult"]
+                        if godownflag == True:
+                            godata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
+                        else:
+                            godata = {"activity":proddetails["productdesc"] + " product created"}
+                        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(godata),headers=header)
+                    for tax in taxes:
+                        if len(tax)!=0:
+                            taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                            if tax["state"]!='':
+                                taxdata["state"]=tax["state"]
+                            taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+                    
+                except Exception as e:  #if duplicate entries exist then an error is generated while entering tax          
+                    if result.json()["gkstatus"]==1:
+                        duplicateFlag=True                        
+                        errorlist.append("A"+str(newrows[count]))
+                        continue
+                    
+    
+                    
+            
+        if len(errorlist)!=0:            
+            errorlist1=[]
+            errorrows={}
+            for i in errorlist:
+                temp=[]
+                row=openpyxl.utils.cell.coordinate_from_string(i)[1]-1
+                errorlist1.append(openpyxl.utils.cell.coordinate_from_string(i))
+                if openpyxl.utils.cell.coordinate_from_string(i) not in errorrows.keys():
+                    temprow=productList[row]
+                    for cell in temprow:        
+                        temp.append(cell.value)
+                    errorrows[row+1]=(temp)                                  
+            return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
+        else:
+            return {"gkstatus":0}
+    except Exception as e:
         print(e)
-        #return {"gkstatus":result.json()["gkstatus"]}
+        return {"gkstatus":result.json()["gkstatus"]}

@@ -536,7 +536,42 @@
               </div><!-- /.modal-dialog -->
             </div>
           </div>
-          <div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:100%; margin-top: 50px;"  aria-hidden="true">
+          <div id="error_print_modal"  tabindex="-1" class="modal fade " role="dialog"style="width:70%; margin-top: 30px;"  aria-hidden="true">
+      <div class="modal-dialog bgcolor " style="width:100%;" >
+          <div class="modal-content ">
+            <div class="modal-header">
+                {% trans %}<strong>Error occured during product import</strong>{% endtrans %}
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button>
+          </div>
+              <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+                <strong id="errormsg"></strong>
+
+                <table class ="table table-bordered">
+                  <thead >
+                  <tr>
+                  <th>Row No.</th>
+                  <th>product name</th>
+                  <th>HSN Code</th>
+                  <th>Unit of Measurement</th>
+                  <th>Mrp</th>
+                  <th> Sale Price</th>
+                  <th>Tax</th> 
+                  <th>State</th>
+                  <th> Rate</th>
+                  <th>Godown</th>
+                  <th>Opening Stock</th>
+                  </tr>
+                </thead>
+              <tbody id="errors">
+            </tbody>
+                </table>
+          </div>
+        </div>
+      </div>
+    </div>
+          <div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:90%; margin-top: 30px;"  aria-hidden="true">
       <div class="modal-dialog bgcolor " style="width:100%;" >
           <div class="modal-content ">
             <div class="modal-header">
@@ -549,7 +584,7 @@
                 <p>
             <font color="#566573">{% trans %}
             <b>Please read and follow the instructions carefully for smooth and flawless Product data import.</b><br>
-            To import list of godowns in GNUKhata a certain format is necessary.<br>
+            To import products/services in GNUKhata a certain format is necessary.<br>
             A downloadedable sample spreadsheet is available below.<br>
             <b>Please maintain column names in following order:</b><br>
             Product Name(A1), HSN Code(B1), Unit Of Measurement(C1), Mrp(D1), Sale Price(E1), Tax(F1), State(G1), Rate(H1), Godown(I1), Opening Stock(J1) <br>

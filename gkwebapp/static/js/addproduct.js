@@ -1869,6 +1869,66 @@ $("#my-file-selector").change(function(event) {
         });
         return false;
       }
+      else if(resp["gkstatus"]==3)
+      {
+        $("#msspinmodal").modal("hide");        
+        $("#import-failure-alert").alert();
+        $("#import-failure-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#import-failure-alert").hide();
+      });
+        return false;
+      }
+      else if(resp["gkstatus"]==6){
+        $("#msspinmodal").modal("hide");
+        $("#error_print_modal").modal("show");
+        var table=document.querySelector("#errors");
+        while(table.firstChild)
+        {
+          table.removeChild(table.firstChild);
+        }
+        rowcount=0
+          for (var key in resp["rows"])
+        {
+          var tr = document.createElement("tr");  
+          rowcount=key;
+          tr.setAttribute("data-row",rowcount);
+          colcount=1                  
+          var td = document.createElement("td");
+          td.textContent=key;         
+          td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+          td.textContent=key;
+          tr.appendChild(td); 
+          for(cell in resp["rows"][key])
+          {
+
+          var td = document.createElement("td");
+          td.textContent=key;         
+          td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+          td.textContent=resp["rows"][key][cell];
+          tr.appendChild(td);         
+          }
+          table.appendChild(tr);
+        }
+          if(resp["duplicateFlag"]==false)
+          {
+            $("#errormsg").html("Please fix the following errors before import ");
+            for (var key in resp["errorlist"])
+        {
+          row=resp["errorlist"][key][1].toString();
+          column=(resp["errorlist"][key][0].charCodeAt(0)-65+2).toString();
+          element=row+column;
+          $("#errors").find("[column-id="+element+"]").attr("style","background-color:red;");
+        }
+          }
+        
+
+        else if(resp["duplicateFlag"]==true)
+        {
+          $("#errormsg").html("The following entries are duplicate");
+        }
+        
+        return false;
+      }
       else {
         $("#msspinmodal").modal("hide");
         $("#import-failure-alert").alert();
