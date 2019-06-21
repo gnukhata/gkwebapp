@@ -37,6 +37,8 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
+from openpyxl import load_workbook
+from openpyxl import Workbook 
 from openpyxl.styles import Font, Alignment
 import cStringIO
 
@@ -282,21 +284,50 @@ def listofgodownssspreadsheet(request):
 
 @view_config(route_name='import',request_param='action=gdnimport',renderer='json')
 def godownImport(request):
-    try:
+     try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
         wb._active_sheet_index = 0
         godownSheet = wb.active
         godownList = tuple(godownSheet.rows)
-        for godownrow in godownList:
-            if "state" != godownrow[2].value.lower():
-                godownDict= {"goname":godownrow[0].value,"goaddr":godownrow[1].value, "state":godownrow[2].value, "contactname":godownrow[3].value, "gocontact":godownrow[4].value}
-                result = requests.post("http://127.0.0.1:6543/godown",data = json.dumps(godownDict),headers=header)
-                result=result.json()
-                if result["gkstatus"]!=0:
-                    return {"gkstatus":result["gkstatus"]}  
-        return {"gkstatus":0}
-    except Exception as e:
+        errorList=[]
+        errorRows=[]
+        states = requests.get("http://127.0.0.1:6543/state", headers=header)
+        stateList=[]
+        duplicateFlag=False
+        for state in states.json()["gkresult"]:
+            for st in state.values():
+                stateList.append(st)
+        for godownrow in godownList[1 : ]:
+            if godownrow[2].value not in stateList or godownrow[2].value ==None:
+                errorList.append(godownrow[2].coordinate)
+            if godownrow[1].value ==None:
+                errorList.append(godownrow[1].coordinate)
+            if godownrow[0].value ==None:
+                errorList.append(godownrow[0].coordinate)
+        if len(errorList)==0:
+            for godownrow in godownList[1 : ]:
+                try:
+                    godownDict= {"goname":godownrow[0].value,"goaddr":godownrow[1].value, "state":godownrow[2].value, "contactname":godownrow[3].value, "gocontact":godownrow[4].value}
+                    result = requests.post("http://127.0.0.1:6543/godown",data = json.dumps(godownDict),headers=header)
+                    result=result.json()
+                    if result["gkstatus"]==1:
+                        duplicateFlag=True
+                        errorList.append(godownrow[0].coordinate)
+                        continue
+                except Exception as e:
+                    print (e)                
+        if len(errorList)!=0:
+            for error in errorList:
+                row=openpyxl.utils.cell.coordinate_from_string(error)[1]-1
+                errorRow=[row+1,godownList[row][0].value,godownList[row][1].value,godownList[row][2].value,godownList[row][3].value,godownList[row][4].value]
+                if errorRow not in errorRows:
+                    errorRows.append(errorRow)
+            return{"gkstatus":6,"errorRows":errorRows, "errorList":errorList, "duplicateFlag":duplicateFlag} 
+        else:
+            return {"gkstatus":0}
+     except Exception as e:
+        print "file not found"
         return {"gkstatus":3}
 

@@ -182,10 +182,9 @@ height:35px;
 				{% for record in gkresult %}
 				<tr	value="{{record["godownid"]}}">
 					<td class="smwrap lalign">
-						{{record["godownname"]}}
-						
+						{{record["godownname"]}}	
 					</td>
-					<td class="smwrap lalign" >
+				<td class="smwrap lalign" >
 						{{record["godownstate"]}}
 						
 					</td>
@@ -198,7 +197,8 @@ height:35px;
 		</table>
 				</div>
 		</div>
-		</div>
+		</div>			
+		
 		{%endif%}
 		</div>
 			<div class="panel-footer">
@@ -274,9 +274,54 @@ height:35px;
 				</div>
 			</div>
 		</div>
+		<div id="errorDisplay" tabindex="-1" class="modal fade " role="dialog" style="width:1000px; margin-top: 50px; margin-left:100px;"  aria-hidden="true">
+			<div class="modal-dialog bgcolor" >
+				<div class="modal-content ">
+					<div class="modal-header">
+						{% trans %}<strong>Error occured during godwon import</strong>{% endtrans %}
+        				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          					<span aria-hidden="true">&times;</span>
+          				</button>
+					</div>
+					<div id="errorbody" class="modal-body">
+						<strong id=errormsg></strong>
+							<table id="errortable" class="table shadow table-bordered">
+								<thead>
+									<tr>
+									<th class="lalign " >
+									{% trans %}Row No{% endtrans %}
+									</th>
+									<th class="lalign">
+									{% trans %}Godown Name{% endtrans %}
+									</th>
+									<th class="lalign">
+									{% trans %}Godwon Address{% endtrans %}
+									</th>
+									<th class="lalign">
+									{% trans %}State{% endtrans %}
+									</th>
+									<th class="lalign" >
+									{% trans %}Contact Person{% endtrans %}
+									</th>
+									<th class="lalign" >
+									{% trans %}Contact Number{% endtrans %}
+									</th>
+									</tr>
+								</thead>
+								<tbody id="errortablebody" style="height: auto;">
+								{# {% for record in gkresult %}
+								<tr	value="{{record["godownid"]}}">
+									<td class="smwrap lalign">
+									{{record["godownname"]}}
+									</td> #}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
-			<div id="listofgodownspopup">
-			</div>
+		<div id="listofgodownspopup">
+		</div>
 	</div>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/creategodown.js')}}"></script>
 </body>

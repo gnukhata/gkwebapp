@@ -98,7 +98,7 @@ $(document).ready(function() {
         });
         return false;
       }
-      else if(resp["gkstatus"]==1){
+       else if(resp["gkstatus"]==1){
         $("#msspinmodal").modal("hide");
         $("#import-duplicate-alert").alert();
         $("#import-duplicate-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -106,7 +106,50 @@ $(document).ready(function() {
         });
         return false;
       }
-      else {
+      else if(resp["gkstatus"]==6){
+        $("#msspinmodal").modal("hide");
+        console.log(resp["errorRows"]);
+        var table = document.querySelector("#errortablebody");   
+        while(table.firstChild)
+        {
+          table.removeChild(table.firstChild);
+        }
+        for (var row in resp["errorRows"])
+        {
+          var tableRow = document.createElement("TR");
+          rowCount=resp["errorRows"][row][0];
+          tableRow.setAttribute("row_id", rowCount);
+          columnCount=1;
+          for (var key in resp["errorRows"][row])
+          {
+            var tableData = document.createElement("TD");
+            tableData.setAttribute("column_id", (rowCount).toString()+(columnCount++).toString());
+            var data = document.createTextNode(resp["errorRows"][row][key]);
+            tableData.appendChild(data);
+            tableRow.append(tableData);
+          }
+          table.append(tableRow);
+        }
+        if(resp["duplicateFlag"]==false)
+        { 
+          $("#errormsg").html("Please correct the following errors before proceeding:");
+          for(var key in resp["errorList"])
+          {
+            console.log(key);
+            row=resp["errorList"][key][1].toString();
+            column=(resp["errorList"][key][0].charCodeAt(0)-63).toString();
+            element=row+column;
+            console.log(element);
+            console.log( $("#errortablebody").find("[column_id="+element+"]"));
+            $("#errortablebody").find("[column_id="+element+"]").attr("style","background-color:red;");
+          }
+        }
+        else if(resp["duplicateFlag"]==true){
+          $("#errormsg").html("Following are the duplicate entries:");
+        }
+        $('#errorDisplay').modal('show');    
+        }
+        else{
         $("#msspinmodal").modal("hide");
         $("#import-failure-alert").alert();
         $("#import-failure-alert").fadeTo(2250, 400).slideUp(500, function(){
@@ -120,7 +163,7 @@ $(document).ready(function() {
     })
     .always(function() {
       console.log("complete");
-    });
-    });
+    })
+  });
 });
 });
