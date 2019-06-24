@@ -833,6 +833,7 @@
         {% else %}
 	  <button id="deliverychallan_addcust" class="btn btn-info btn-sm"><i class="fa fa-plus" aria-hidden="true" accesskey="d"></i> {% trans %}A<u>d</u>d Supplier{% endtrans %}</button>
         {% endif %}
+		<button id="invoice_save_deliverynote" class="btn btn-success btn-sm"><i class="fa fa-floppy-o" aria-hidden="true" accesskey="d"></i> {% trans %}Save Invoice{% endtrans %}</button>
 	<label class="btn btn-primary btn-sm" for="my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#upload-file-info').html(this.files.length+' selected');">
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
@@ -862,6 +863,25 @@
       </div>
     </div>
   </div>
+<div id="confirm_yes2" class="modal" tabindex="-1" role="dialog">
+    <div class="vertical-alignment-helper">
+      <div class="modal-dialog modal-sm vertical-align-center">
+        <div class="modal-content">
+          <div class="modal-header">
+
+            <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
+          </div>
+          <div class="modal-body">
+            <p>{% trans %}Are you sure?{% endtrans %}</p>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id ="dc_save_no" class="btn btn-warning btn-sm" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+            <button type="button" id="dc_save_yes2" data-dismiss="modal" class="btn btn-success btn-sm">{% trans %}Yes{% endtrans %}</button>
+          </div>
+	</div>
+      </div>
+    </div>
+  </div>
 
   <div id="confirm_yes_dc" class="modal" tabindex="-1" role="dialog">
     <div class="vertical-alignment-helper">
@@ -885,6 +905,8 @@
 
   <div id="viewcustsup"></div>
   <input type="hidden" id="selectedcustsup" value="">
+  <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/adddeliverychallan.js')}}"></script>
+
 </body>
 	</html>
