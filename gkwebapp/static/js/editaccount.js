@@ -218,7 +218,6 @@ $(document).ready(function()
 
       $("#accnamenoedit").alert();
       $("#accnamenoedit").show();
-
       $("#alertmsg").hide();
       $("#delete").hide();
       $("#edit").show();
@@ -231,7 +230,7 @@ $(document).ready(function()
       $("#edit").show();
     }
 
-    if(accdetails["defaultflag"] == 2 || accdetails["defaultflag"] == 3 || accdetails["defaultflag"] == 19 || accdetails["defaultflag"] == 16){
+    if(accdetails["defaultflag"] == 2 || accdetails["defaultflag"] == 3 || accdetails["defaultflag"] == 19 || accdetails["defaultflag"] == 16 || sysaccount == 1){
 	$("#delete").hide();
     }else{
 	$("#delete").show();
