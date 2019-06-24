@@ -35,7 +35,7 @@ $(document).ready(function(){
   var invsflag;
   var billflag;
   var modeflag;
-  var avnoflag,maflag,avflag;
+  var avnoflag,ainvnoflag,maflag,avflag;
   var vatorgstflag;  
   $("#orgname").focus();
   var sel1 = 0;
@@ -1979,6 +1979,12 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	avnoflag=0;
     }
     form_data.append("avnoflag", avnoflag);
+    if($("#ainvno").is(":checked")){
+      ainvnoflag=1;
+        }else{
+      ainvnoflag=0;
+        }
+        form_data.append("ainvnoflag", ainvnoflag);
     $.ajax(
     {
     //alert("starting ajax");
@@ -1999,7 +2005,12 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
 	      sessionStorage.avnoflag = 1;
 	  }else{
 	      sessionStorage.avnoflag = 0;
-	  }
+    }
+    if(ainvnoflag==1){
+      sessionStorage.ainvnoflag = 1;
+  }else{
+      sessionStorage.ainvnoflag = 0;
+  }
 	  if(avflag==1) {
 	      sessionStorage.avflag=1;
 	  }else{

@@ -89,7 +89,7 @@ $(document).ready(function() {
 	$(".onlyvat").hide();
     $(".product_name_gst").searchify();
     }
-	
+
 	
 	$("#moresmall").on('shown.bs.collapse', function(event) {
 		event.preventDefault();
@@ -3929,4 +3929,36 @@ if (event.which == 13) {
             $(".modal-backdrop").remove();
         });
   });
+  if(sessionStorage.ainvnoflag==1){
+  $.ajax({
+	url: '/invoice?action=getinvoiceno',
+	type: 'POST',
+	dataType: 'json',
+	async: false,
+	data:{"inoutflag":$("#status").val()},
+	beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	}
+})
+.done(function(resp) {
+if (resp["gkstatus"] == 0) {
+console.log("success");
+var inout
+if ($("#status").val()==15)
+{
+	inout="SL";
+	$("#invoice_challanno").val(resp["invoiceno"].toString()+"/"+inout+"-"+(sessionStorage.year2).substring(6,10))
+}
+else
+{inout="PU";}
+}
+})
+.fail(function() {
+	console.log("error");
+})
+.always(function() {
+	console.log("complete");
+});
+
+}
 });

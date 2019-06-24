@@ -139,7 +139,8 @@ $("#login").keydown(function(e) {
         sessionStorage.invsflag = resp["invsflag"];
         sessionStorage.modeflag = resp["modeflag"];
           sessionStorage.billflag = resp["billflag"];
-	  sessionStorage.avnoflag =resp["avnoflag"];
+    sessionStorage.avnoflag =resp["avnoflag"];
+    sessionStorage.ainvnoflag =resp["ainvnoflag"];
 	  sessionStorage.maflag =resp["maflag"];
 	  sessionStorage.avflag =resp["avflag"];
         

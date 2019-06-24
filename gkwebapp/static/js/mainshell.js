@@ -694,7 +694,12 @@ $(document).ready(function(){
 	      $('#avno').prop('checked', true);
 	  }else{
 	      $('#avno').prop('checked', false);
-	  }
+    }
+    if(sessionStorage.ainvnoflag==1){
+      $('#ainvno').prop('checked', true);
+  }else{
+      $('#ainvno').prop('checked', false);
+  }
 	  
 
         $(".iib").keydown(function(event) {
@@ -771,7 +776,7 @@ $(document).ready(function(){
 	  });
 	  
        $("#orgprefsave").click(function(event){
-	   var invflag,billflag,invsflag,avnoflag,avflag,maflag,modeflag;
+	   var invflag,billflag,invsflag,avnoflag,ainvnoflag,avflag,maflag,modeflag;
 	   if ($("#invinvsbillradio").is(":checked"))
            {
                invflag=1;
@@ -809,6 +814,12 @@ $(document).ready(function(){
 	       avnoflag=1;
 	   }else{
 	       avnoflag=0;
+     }
+     if ($("#ainvno").is(":checked"))
+	   {
+	       ainvnoflag=1;
+	   }else{
+	       ainvnoflag=0;
 	   }
 	   if ($("#sales").is(":checked")) {
 	       avflag=1;
@@ -828,7 +839,7 @@ $(document).ready(function(){
                        datatype: 'json',
                        global: false,
                        async: false,
-                    data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"avnoflag":avnoflag,"maflag":maflag,"avflag":avflag,"modeflag":modeflag},
+                    data: {"invflag":invflag,"invsflag":invsflag,"billflag":billflag,"avnoflag":avnoflag,"ainvnoflag":ainvnoflag,"maflag":maflag,"avflag":avflag,"modeflag":modeflag},
                        beforeSend: function(xhr)
                        {
                          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -859,7 +870,12 @@ $(document).ready(function(){
 			      sessionStorage.avnoflag=0;
 			  }else{
 			      sessionStorage.avnoflag=1;
-			  }
+        }
+        if(ainvnoflag==0){
+          sessionStorage.ainvnoflag=0;
+      }else{
+          sessionStorage.ainvnoflag=1;
+      }
 			  if(maflag==0){
 			      sessionStorage.maflag=0;
 			  }else{
