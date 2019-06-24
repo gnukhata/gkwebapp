@@ -478,7 +478,10 @@ def pnlpreadsheet(request):
             sheet['D'+str(row)].number_format='0.00'
         else:
             sheet['D'+str(row)] = result["varprofit"]
-        sheet['E'+str(row)] = result["varinpercentprofit"]+ " %"
+            if result["varinpercentprofit"]!='-':
+                sheet['E'+str(row)] = result["varinpercentprofit"]+ " %"
+            else:
+                sheet['E'+str(row)]='-'
 
         output = cStringIO.StringIO()
         budgetwb.save(output)
