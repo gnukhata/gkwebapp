@@ -146,7 +146,6 @@
          background-color:#1b2631;
      }
     .namestyle{
-      pointer-events: none;
       color:#ff7f2a;
       text-shadow: 0.3px 0.3px 0.6px gray;
       font-size: 20px; 
@@ -202,7 +201,7 @@
               <span class="icon-bar"></span>
             </button>
             <a class="navbar-brand" style="margin-top:-5px;" href=""><img src="{{request.static_url('gkwebapp:static/images/icon.svg')}}" alt="GNUKhata Icon" style="width:30px;height:30px;" /></a>
-            <a class="navbar-brand namestyle">{% trans %}GNUKhata{% endtrans %}</a>
+            <a class="navbar-brand namestyle readable_design" href="">{% trans %}GNUKhata{% endtrans %}</a>
             <a class="navbar-brand" style="margin-left:-20px">v6.0</a>
           </div>
           <!-- <div id="ticker" hidden>
