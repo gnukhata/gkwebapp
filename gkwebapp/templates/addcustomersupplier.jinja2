@@ -6,6 +6,15 @@
    .state_del{
        color:#000000;
    }
+   .error-table th{
+     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+     font-size: 14px;
+   }
+   .error-table td{
+     font-weight:normal;
+     font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+     font-size: 14px;
+   }
   </style>
 </head>
 <body>
@@ -111,9 +120,6 @@
 		</div>
 		<div class="alert alert-danger" id="import-failure-alert"  aria-live="rude" role="alert" hidden>
 			{% trans %}Something went wrong.{% endtrans %}
-		</div>
-		<div class="alert alert-danger" id="import-duplicate-alert"  aria-live="rude" role="alert" hidden>
-			{% trans %}Duplicate Entry Exists.{% endtrans %}
 		</div>
     <input type="hidden" id="debtgroupcode" value="{{debtgroupcode}}">
     <input type="hidden" id="credgroupcode" value="{{credgroupcode}}">
@@ -429,31 +435,33 @@
 	  </div>
 	</div>
       </div>
-		<div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:650px; margin-top: 50px; margin-left:300px;"  aria-hidden="true">
-			<div class="modal-dialog bgcolor " >
-    		<div class="modal-content ">
+		<div id="import-help-modal" tabindex="-1" class="modal fade" role="dialog" style="width:800px; height:550px; margin-top: 50px; margin-left:250px;" aria-hidden="true">
+			<div class="modal-dialog bgcolor" style="width:100%; height:100%; margin:0;">
+    		<div class="modal-content" style="width:100%; height:100%;">
     			<div class="modal-header">
         		{% trans %}<strong>Import Instructions</strong>{% endtrans %}
         		<button type="button" class="close" data-dismiss="modal" aria-label="Close">
           		<span aria-hidden="true">&times;</span>
           	</button>
           </div>
-          <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+          <div class="modal-body" style="height:90%; width:100%; text-align:justify; text-justify:inter-word; overflow:auto">
             <p>
               <font color="#566573">
                 {% trans %}
                 <b>Please read and follow the instructions carefully for smooth and flawless Customer Supplier Details data import.</b><br>
                 To import list of Customers & Suppliers in GNUKhata a certain format is necessary.<br>
-                A downloadedable sample spreadsheet is available below.<br>
-                The spreadsheet should contain 2 sheets, one for Customers and one for Suppliers.<br>
+                A downloadedable sample temmplate spreadsheet is available below.<br>
+                Only xlsx files are supported by GNUKhata Import.
+                The spreadsheet must contain 2 sheets, one for Customers and one for Suppliers.<br>
                 The sheets should be named as such too('Customers' & 'Suppliers').<br>
                 <b>Please maintain column names in following order:</b><br>
                 <b>For Customers:</b><br>
                 Name(A1), Contact Number(B1), Email(C1), Address(D1), PIN Code(E1), State(F1), Fax(G1), PAN(H1), GSTIN(I1)<br>
                 <b>For Suppliers:</b><br>
                 Name(A1), Contact Number(B1), Email(C1), Address(D1), PIN Code(E1), State(F1), Fax(G1), PAN(H1), GSTIN(I1), Account Number(J1), Bank Name(K1), Branch Name(L1), IFSC Code(M1)<br>
+                <b>IMPORTANT:</b> Do not change the column headings, sheet names or order of sheets provided in the template<br>
                 <b>Each GSTIN for a particular individual should be on a new line</b><br>
-                <b>States should be in following format:</b><br>
+                <b>State names should be in following format:</b><br>
                 {%endtrans %}
                 {% for state in states %}
                     {% for key, value in state.items() %}
@@ -477,6 +485,67 @@
 				</div>
 			</div>
 		</div>
+    <div id="import-error-modal" tabindex="-1" class="modal fade" role="dialog" style="width:1200px; height:500px; margin-top: 50px; margin-left:50px;" aria-hidden="true">
+      <div class="modal-dialog bgcolor" style="width:100%; height:100%; margin:0;">
+        <div class="modal-content" style="width:100%; height:100%;">
+          <div class="modal-header">
+            {% trans %}<strong>Error Occured During Import of Customer/Supplier</strong>{% endtrans %}
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div id="import-error-modal-body" class="modal-body" style="height:90%; width:100%; text-align:justify; text-justify:inter-word; overflow:auto">
+            <u><strong id="errormsg"></strong></u>
+            <div id="customer-section">
+              <label>Customers Sheet</label>
+              <table id="customer-error-table" class ="table table-bordered error-table">
+                <thead>
+                  <tr>
+                    <th>Row No.</th>
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>PIN Code</th>
+                    <th>State</th>
+                    <th>Fax</th>
+                    <th>PAN</th>
+                    <th>GSTIN</th>
+                  </tr>
+                </thead>
+                <tbody id="cus-errors">
+                </tbody>
+              </table>
+            </div>
+            <div id="supplier-section">
+              <label>Suppliers Sheet</label>
+              <table id="supplier-error-table" class ="table table-bordered error-table">
+                <thead>
+                  <tr>
+                    <th>Row No.</th>
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Email</th>
+                    <th>Address</th>
+                    <th>PIN Code</th>
+                    <th>State</th>
+                    <th>Fax</th>
+                    <th>PAN</th>
+                    <th>GSTIN</th>
+                    <th>Account No.</th>
+                    <th>Bank Name</th>
+                    <th>Branch Name</th>
+                    <th>IFSC Code</th>
+                  </tr>
+                </thead>
+                <tbody id="sup-errors">
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog">
       <div class="vertical-alignment-helper">
         <div class="modal-dialog modal-sm vertical-align-center">
@@ -503,7 +572,7 @@
           <input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
             <i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
         </label>
-	      <i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
+	      <i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#import-help-modal"></i>
       </div>
     </div>
 

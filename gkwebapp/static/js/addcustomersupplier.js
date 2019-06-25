@@ -1135,6 +1135,10 @@ if($("#vatorgstflag").val() == '22'){
 		});
 		return false;
 	  }
+	  $("#import-error-modal").on('shown.bs.modal', function(event) {
+		$('#import-error-modal .modal-body').scrollTop(0);
+		$('#import-error-modal .modal-body').scrollLeft(0);
+	  });
 	  $('#confirm_yes_print').modal('show').one('click', '#tn_save_yesprint', function (e)
 	  {
 	  var form_data = new FormData();
@@ -1168,13 +1172,102 @@ if($("#vatorgstflag").val() == '22'){
 		  });
 		  return false;
 		}
-		else if(resp["gkstatus"]==1){
-		  $("#msspinmodal").modal("hide");
-		  $("#import-duplicate-alert").alert();
-		  $("#import-duplicate-alert").fadeTo(2250, 400).slideUp(500, function(){
-			$("#import-duplicate-alert").hide();
-		  });
-		  return false;
+		else if(resp["gkstatus"]==6){
+			$("#msspinmodal").modal("hide");
+			$("#import-error-modal").modal("show");
+			var custable=document.querySelector("#cus-errors");
+			while(custable.firstChild)
+			{
+				custable.removeChild(custable.firstChild);
+			}
+			rowcount=0
+			for (var key in resp["errorRows"]["Customers"])
+			{
+				var tr = document.createElement("tr");  
+				rowcount=key;
+				tr.setAttribute("data-row",rowcount);
+				colcount=1                  
+				var td = document.createElement("td");
+				td.textContent=key;         
+				td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+				td.textContent=key;
+				tr.appendChild(td); 
+				for(cell in resp["errorRows"]["Customers"][key])
+				{
+					var td = document.createElement("td");
+					td.textContent=key;         
+					td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+					td.textContent=resp["errorRows"]["Customers"][key][cell];
+					tr.appendChild(td);         
+				}
+				custable.appendChild(tr);
+			}
+			var suptable=document.querySelector("#sup-errors");
+			while(suptable.firstChild)
+			{
+				suptable.removeChild(suptable.firstChild);
+			}
+			rowcount=0
+			for (var key in resp["errorRows"]["Suppliers"])
+			{
+				var tr = document.createElement("tr");  
+				rowcount=key;
+				tr.setAttribute("data-row",rowcount);
+				colcount=1                  
+				var td = document.createElement("td");
+				td.textContent=key;         
+				td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+				td.textContent=key;
+				tr.appendChild(td); 
+				for(cell in resp["errorRows"]["Suppliers"][key])
+				{
+					var td = document.createElement("td");
+					td.textContent=key;         
+					td.setAttribute("column-id",(rowcount).toString()+(colcount++).toString()); 
+					td.textContent=resp["errorRows"]["Suppliers"][key][cell];
+					tr.appendChild(td);         
+				}
+				suptable.appendChild(tr);
+			}
+			if(resp["dupFlag"]==false)
+			{
+				$("#errormsg").html("Please fix the following errors before import");
+				for (var key in resp["errorTuples"]["Customers"])
+				{
+					row=resp["errorTuples"]["Customers"][key][1].toString();
+					column=(resp["errorTuples"]["Customers"][key][0].charCodeAt(0)-65+2).toString();
+					element=row+column;
+					$("#cus-errors").find("[column-id="+element+"]").attr("style","background-color:red;");
+				}
+				for (var key in resp["errorTuples"]["Suppliers"])
+				{
+					row=resp["errorTuples"]["Suppliers"][key][1].toString();
+					column=(resp["errorTuples"]["Suppliers"][key][0].charCodeAt(0)-65+2).toString();
+					element=row+column;
+					$("#sup-errors").find("[column-id="+element+"]").attr("style","background-color:red;");
+				}
+			}
+			else if(resp["dupFlag"]==true)
+			{
+				$("#errormsg").html("The following entries are duplicate");
+			}
+			if(resp["errorTuples"]["Customers"].length==0)
+			{
+				$("#customer-section").hide();
+			}
+			else
+			{
+				$("#customer-section").show();
+			}
+			if(resp["errorTuples"]["Suppliers"].length==0)
+			{
+				$("#supplier-section").hide();
+			}
+			else
+			{
+				$("#supplier-section").show();
+			}
+			return false;
 		}
 		else {
 		  $("#msspinmodal").modal("hide");

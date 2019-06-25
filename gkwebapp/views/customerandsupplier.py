@@ -34,6 +34,8 @@ from pyramid.view import view_config
 import requests, json
 from openpyxl import load_workbook
 from openpyxl import Workbook
+import openpyxl
+import re
 
 @view_config(route_name="customersuppliers",renderer="gkwebapp:templates/customersupplier.jinja2")
 def showcustomersupplier(request):
@@ -159,91 +161,154 @@ def cussupimport(request):
         xlsxfile = request.POST['xlsxfile'].file
         wb=load_workbook(xlsxfile)
         ws=wb.sheetnames
-        if(ws[0]=="Customers"):
-            wb._active_sheet_index = 0
-            cusSheet = wb.active
-            cusList = tuple(cusSheet.rows)
-            status_check=addcusts(cusList,header)
-            if(status_check["gkstatus"]!=0):
-                return status_check
-            if(len(ws)==2):
-                if(ws[1]=="Suppliers"):
-                    wb._active_sheet_index = 1
-                    supSheet = wb.active
-                    supList = tuple(supSheet.rows)
-                    status_check=addsups(supList,header)
-            return status_check
-        if(ws[0]=="Suppliers"):
-            wb._active_sheet_index = 0
-            supSheet = wb.active
-            supList = tuple(supSheet.rows)
-            status_check=addsups(supList,header)
-            if(status_check["gkstatus"]!=0):
-                return status_check
-            if(len(ws)==2):
-                if(ws[0]=="Customers"):
-                    wb._active_sheet_index = 0
-                    cusSheet = wb.active
-                    cusList = tuple(cusSheet.rows)
-                    status_check=addcusts(cusList,header)
-            return status_check
-    except Exception as e:
-        print(e)
-        return {"gkstatus":3}
-
-def addcusts(cusList,header):
-    try:
-        row_no=0
-        if(cusList[0][5].value.lower()=="state"):
+        if len(ws)!=2:
+            return {"gkstatus":6}
+        elif ws[0]!="Customers" or ws[1]!="Suppliers":
+            return {"gkstatus":6}
+        states = requests.get("http://127.0.0.1:6543/state",headers=header)
+        stateList,statecodeList=[],[]
+        for state in states.json()["gkresult"]:
+            for cd in state.keys():
+                statecodeList.append(str(cd))
+            for st in state.values():
+                stateList.append(st)
+        # check errors in file contents
+        errorTuples={"Customers":[],"Suppliers":[]}
+        errorRows={"Customers":{},"Suppliers":{}}
+        dupFlag=False
+        for sheet_no in range(len(ws)):
+            wb._active_sheet_index=sheet_no
+            activeSheet=wb.active
+            sheetList = tuple(activeSheet.rows)
+            # empty sheet
+            if len(sheetList)==1:
+                continue
+            sheetErrors=[]
+            for sheetRow in sheetList[1:]:
+                # if only GSTIN is present
+                if sheet_no==0 and sheetRow[0].value==None and sheetRow[1].value==None and sheetRow[2].value==None and sheetRow[3].value==None and sheetRow[4].value==None and sheetRow[5].value==None and sheetRow[6].value==None and sheetRow[7].value==None and sheetRow[8].value!=None:
+                        if int(str(sheetRow[8].value)[:2]) not in statecodeList and not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                            sheetErrors.append(sheetRow[8].coordinate)
+                elif sheet_no==1 and sheetRow[0].value==None and sheetRow[1].value==None and sheetRow[2].value==None and sheetRow[3].value==None and sheetRow[4].value==None and sheetRow[5].value==None and sheetRow[6].value==None and sheetRow[7].value==None and sheetRow[8].value!=None and sheetRow[9].value==None and sheetRow[10].value==None and sheetRow[11].value==None and sheetRow[12].value==None:
+                        if int(str(sheetRow[8].value)[:2]) not in statecodeList and not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                            sheetErrors.append(sheetRow[8].coordinate)
+                else:
+                    # name
+                    if sheetRow[0].value==None:
+                        sheetErrors.append(sheetRow[0].coordinate)
+                    # email
+                    if sheetRow[2].value!=None:
+                        if not re.match(r"^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$",str(sheetRow[2].value)):
+                            sheetErrors.append(sheetRow[2].coordinate)
+                    # address
+                    if sheetRow[3].value==None:
+                        sheetErrors.append(sheetRow[3].coordinate)
+                    # pincode
+                    if sheetRow[4].value==None:
+                        sheetErrors.append(sheetRow[4].coordinate)
+                    else:
+                        if not re.match(r"^[0-9]{6}$",str(sheetRow[4].value)):
+                            sheetErrors.append(sheetRow[4].coordinate)
+                    # state
+                    if sheetRow[5].value==None or sheetRow[5].value not in stateList:
+                        sheetErrors.append(sheetRow[5].coordinate)
+                    # PAN
+                    if sheetRow[7].value!=None:
+                        if not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}$",str(sheetRow[7].value)):
+                            sheetErrors.append(sheetRow[7].coordinate)
+                    # GST
+                    if sheetRow[8].value!=None:
+                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                            sheetErrors.append(sheetRow[8].coordinate)
+                    # for suppliers
+                    if sheet_no==1:
+                        # Bank Details
+                        if sheetRow[9].value==None and sheetRow[10].value==None and sheetRow[11].value==None and sheetRow[12].value==None:
+                            continue
+                        elif sheetRow[9].value!=None and sheetRow[10].value!=None and sheetRow[11].value!=None and sheetRow[12].value!=None:
+                            if not re.match(r"^[0-9]+$",str(sheetRow[9].value)):
+                                sheetErrors.append(sheetRow[9].coordinate)
+                        else:
+                            if sheetRow[9].value==None:
+                                sheetErrors.append(sheetRow[9].coordinate)
+                            if sheetRow[10].value==None:
+                                sheetErrors.append(sheetRow[10].coordinate)
+                            if sheetRow[11].value==None:
+                                sheetErrors.append(sheetRow[11].coordinate)
+                            if sheetRow[12].value==None:
+                                sheetErrors.append(sheetRow[12].coordinate)
+            errorRowKey=str(ws[sheet_no])
+            for errorCell in sheetErrors:
+                cellTuple=openpyxl.utils.cell.coordinate_from_string(errorCell)
+                errorRowNo=openpyxl.utils.cell.coordinate_from_string(errorCell)[1]
+                errorTuples[errorRowKey].append(cellTuple)
+                if errorRowNo not in errorRows[errorRowKey].keys():
+                    errorRows[errorRowKey][errorRowNo]=[]
+                    tempRow=sheetList[errorRowNo-1]
+                    for tempCell in tempRow:
+                        errorRows[errorRowKey][errorRowNo].append(tempCell.value)
+        if len(errorTuples["Customers"])!=0 or len(errorTuples["Suppliers"])!=0:
+            return {"gkstatus":6,"errorTuples":errorTuples,"errorRows":errorRows,"dupFlag":dupFlag}
+        # import if no errors
+        for sheet_no in range(len(ws)):
+            wb._active_sheet_index=sheet_no
+            activeSheet=wb.active
+            sheetList = tuple(activeSheet.rows)
+            # empty sheet
+            if len(sheetList)==1:
+                continue
+            if ws[sheet_no]=="Customers":
+                csflag=3
+            if ws[sheet_no]=="Suppliers":
+                csflag=19
+            dupList=[]
             row_no=1
-        while row_no < len(cusList):
-            cusRow=cusList[row_no]
-            row_no,gstin_dict=getGSTs(row_no,cusList)
-            cusDict= {"custname":cusRow[0].value,"custphone":cusRow[1].value, "custemail":cusRow[2].value, "custaddr":cusRow[3].value, "pincode":cusRow[4].value, "state":cusRow[5].value, "custfax":cusRow[6].value, "custpan":cusRow[7].value, "gstin":gstin_dict, "csflag":3}
-            result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cusDict),headers=header)
-            result=result.json()
-            if result["gkstatus"]!=0:
-                return {"gkstatus":result["gkstatus"]}
+            while row_no < len(sheetList):
+                sheetRow=sheetList[row_no]
+                gstin_dict={}
+                if sheetList[row_no][8].value!=None:
+                    while(True):
+                        gst_str=sheetList[row_no][8].value.encode('ascii','ignore')
+                        state_str=gst_str[:2]
+                        gstin_dict[state_str]=gst_str
+                        row_no+=1
+                        if row_no==len(sheetList):
+                            break
+                        if sheetList[row_no][0].value!=None:
+                            break
+                else:
+                    row_no+=1
+                cussupDict={}
+                # customers
+                if len(sheetRow)==9:
+                    cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag}
+                # suppliers without bank details
+                elif sheetRow[9].value==None:
+                    cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag}
+                # suppliers with bank details
+                else:
+                    bank_dict={"ifsc":sheetRow[12].value,"bankname":sheetRow[10].value,"accountno":sheetRow[9].value,"branchname":sheetRow[11].value}
+                    cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag, "bankdetails":bank_dict}
+                result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cussupDict),headers=header)
+                result=result.json()
+                if result["gkstatus"]==1:
+                    dupFlag=True
+                    dupList.append(sheetRow[0].coordinate)
+                elif result["gkstatus"]!=0:
+                    return {"gkstatus":result["gkstatus"]}
+            if dupFlag==True:
+                errorRowKey=str(ws[sheet_no])
+                for errorCell in dupList:
+                    cellTuple=openpyxl.utils.cell.coordinate_from_string(errorCell)
+                    errorRowNo=openpyxl.utils.cell.coordinate_from_string(errorCell)[1]
+                    errorTuples[errorRowKey].append(cellTuple)
+                    if errorRowNo not in errorRows[errorRowKey].keys():
+                        errorRows[errorRowKey][errorRowNo]=[]
+                        tempRow=sheetList[errorRowNo-1]
+                        for tempCell in tempRow:
+                            errorRows[errorRowKey][errorRowNo].append(tempCell.value)
+        if dupFlag==True:
+            return {"gkstatus":6,"errorTuples":errorTuples,"errorRows":errorRows,"dupFlag":dupFlag}
         return {"gkstatus":0}
-    except Exception as e:
-        print(e)
+    except:
         return {"gkstatus":3}
-
-def addsups(supList,header):
-    try:
-        row_no=0
-        if(supList[0][5].value.lower()=="state"):
-            row_no=1
-        while row_no < len(supList):
-            supRow=supList[row_no]
-            row_no,gstin_dict=getGSTs(row_no,supList)
-            supDict={}
-            if(supRow[9].value==None):
-                supDict= {"custname":supRow[0].value,"custphone":supRow[1].value, "custemail":supRow[2].value, "custaddr":supRow[3].value, "pincode":supRow[4].value, "state":supRow[5].value, "custfax":supRow[6].value, "custpan":supRow[7].value, "gstin":gstin_dict, "csflag":19}
-            else:
-                bank_dict={"ifsc":supRow[12].value,"bankname":supRow[10].value,"accountno":supRow[9].value,"branchname":supRow[11].value}
-                supDict= {"custname":supRow[0].value,"custphone":supRow[1].value, "custemail":supRow[2].value, "custaddr":supRow[3].value, "pincode":supRow[4].value, "state":supRow[5].value, "custfax":supRow[6].value, "custpan":supRow[7].value, "gstin":gstin_dict, "csflag":19, "bankdetails":bank_dict}
-            result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(supDict),headers=header)
-            result=result.json()
-            if result["gkstatus"]!=0:
-                return {"gkstatus":result["gkstatus"]}
-        return {"gkstatus":0}
-    except Exception as e:
-        print(e)
-        return {"gkstatus":3}
-
-def getGSTs(row_no,cussupList):
-    gstin_dict={}
-    if(cussupList[row_no][8].value!=None):
-        while(True):
-            gst_str=cussupList[row_no][8].value.encode('ascii','ignore')
-            state_str=gst_str[:2]
-            gstin_dict[state_str]=gst_str
-            row_no+=1
-            if(row_no==len(cussupList)):
-                break
-            if(cussupList[row_no][0].value!=None):
-                break
-    else:
-        row_no+=1
-    return row_no,gstin_dict
