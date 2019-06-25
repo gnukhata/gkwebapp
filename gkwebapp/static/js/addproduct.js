@@ -1924,7 +1924,7 @@ $("#my-file-selector").change(function(event) {
 
         else if(resp["duplicateFlag"]==true)
         {
-          $("#errormsg").html("The following entries are duplicate");
+          $("#errormsg").html("The following entries are duplicate,remaining entries are successfully saved");
         }
         
         return false;

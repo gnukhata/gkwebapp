@@ -1144,6 +1144,7 @@ def ProductImport(request):
                     tax["taxrate"]=productrow[7].value
                     if tax["taxname"]=="GST": #if GST then no state should be mentioned
                         tax["state"]=''
+                        tax["taxname"]="IGST"
                         if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
                             errorlist.append(productrow[7].coordinate)
                     elif productrow[6].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
@@ -1179,9 +1180,8 @@ def ProductImport(request):
                     tax["taxrate"]=productrow[7].value
                     if productrow[7].value==None:
                         errorlist.append(productrow[5].coordinate)
-                    
-
                     if tax["taxname"]=="GST": #if tax=GST then no state should be mentioned
+                        tax["taxname"]="IGST"
                         tax["state"]=''
                         if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
                             errorlist.append(productrow[7].coordinate)
@@ -1266,7 +1266,7 @@ def ProductImport(request):
                 temp=[]
                 row=openpyxl.utils.cell.coordinate_from_string(i)[1]-1
                 errorlist1.append(openpyxl.utils.cell.coordinate_from_string(i))
-                if openpyxl.utils.cell.coordinate_from_string(i) not in errorrows.keys():
+                if openpyxl.utils.cell.coordinate_from_string(i)[1] not in errorrows.keys():
                     temprow=productList[row]
                     for cell in temprow:        
                         temp.append(cell.value)
