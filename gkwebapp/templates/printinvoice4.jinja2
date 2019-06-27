@@ -97,7 +97,10 @@
 	  
           <h3>{{org["orgname"]}}</h3>
 	  {% if gkresult["address"]!=""%}
-	    {{ gkresult["address"] }}
+			{{ gkresult["address"] }}
+			{% if gkresult["pincode"]!='' %}
+			, {{gkresult["pincode"]}}
+			{% endif %}
 	  {% else %}
             {% if org["orgaddr"]!='' %}
               {{org["orgaddr"]}}

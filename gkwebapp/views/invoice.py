@@ -96,15 +96,15 @@ def getproducts(request):
 @view_config(route_name="invoice",request_param="action=save",renderer="json")
 def saveinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
-    print json.loads(request.params["consignee"])
     invoicedata = {"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],"invoicetotalword":request.params["invtotalword"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]), "taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"], "paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"],"av":json.loads(request.params["av"]) ,"roundoffflag":int(request.params["roundoff"])}
-    
     if request.params["dateofsupply"] != "":
         invoicedata["dateofsupply"] = request.params["dateofsupply"]
     if request.params.has_key("bankdetails"):
         invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
     if request.params.has_key("address"):
         invoicedata["address"] = request.params["address"]
+    if request.params.has_key("pincode"):
+        invoicedata["pincode"] = request.params["pincode"]
     if request.params.has_key("pricedetails"):
         invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
     try:
@@ -373,7 +373,6 @@ def Invoiceprint(request):
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
     statecode = invoicedata.json()["gkresult"]["sourcestatecode"]
     org = requests.get("http://127.0.0.1:6543/organisations?billingdetails&statecode=%d"%(int(statecode)), headers=header)
- 
     if(request.params["pflag"] == '2'):
      
         return render_to_response("gkwebapp:templates/printinvoice2.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)

@@ -95,7 +95,10 @@
 	  <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
           <h3>{{org["orgname"]}}</h3>
 	  {% if gkresult["address"]!=""%}
-	    {{ gkresult["address"] }}
+			{{ gkresult["address"] }}
+			{% if gkresult["pincode"]!='' %}
+			, {{gkresult["pincode"]}}
+			{% endif %}
 	  {% else %}
             {% if org["orgaddr"]!='' %}
               {{org["orgaddr"]}}

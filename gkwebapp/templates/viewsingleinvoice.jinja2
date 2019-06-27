@@ -59,6 +59,9 @@
 	<div class="form-group form-inline col-sm-12 nopadding">
 	  <label for="originaddress">{% trans %}Address{% endtrans %} : </label>{{ gkresult["address"] }}
 	</div>
+	<div class="form-group form-inline col-sm-12 nopadding">
+	  <label for="originpincode">{% trans %}PIN Code{% endtrans %} : </label>{{ gkresult["pincode"] }}
+	</div>
       {% endif%}
       {% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
 	<div class="form-group form-inline col-sm-12 nopadding">

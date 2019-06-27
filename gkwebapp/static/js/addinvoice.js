@@ -648,9 +648,13 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    console.log("success");
 		    if(invstate == resp["orgdetails"]["orgstate"]){
-			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
+			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]);
+			$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
 			$("#originaddress").prop("disabled", true);
-		    }else{$("#originaddress").prop("disabled", false);}
+			$("#originpincode").prop("disabled", true);
+
+			}else{$("#originaddress").prop("disabled", false);
+				$("#originpincode").prop("disabled", false);}
          	}
             })
             .fail(function() {
@@ -755,14 +759,50 @@ $(document).ready(function() {
 		$("#originaddress").focus();
 		return false;
 	    }
-	    $("#invoice_issuer_name").focus().select();
+	    $("#originpincode").focus().select();
 	}
 	else if(event.which ==38){
 	    $("#invoicestate").focus();
 	}
     });
     
-    
+        //Key Event for origin PIN code.
+		$("#originpincode").keydown(function(event) {
+			if (event.which == 13) {
+				event.preventDefault();
+				var pincode_val=($("#originpincode").val());
+				var reg = /^[0-9]+$/;
+				if(pincode_val == ""){
+					console.log(pincode_val);				
+					$("#pin-blank-alert").alert();
+					$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#pin-blank-alert").hide();
+					});
+					$("#originpincode").focus();
+					return false;
+				  }
+
+				else if (pincode_val != "") {
+		
+					 if (!reg.test(pincode_val) || pincode_val.length != 6) {
+						$("#pinval-blank-alert").alert();
+						$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+						$("#pinval-blank-alert").hide();
+						});
+						$("#originpincode").focus();
+						return false;
+						}
+				}
+					$("#invoice_issuer_name").focus();
+			}
+			
+			else if (event.which == 38) {
+		
+				$("#originaddress").focus().select();  //Focus shifts to TIN of Consignee.
+				
+		
+			}
+			});
     //Key Events for Issuer Name.
     $("#invoice_issuer_name").keydown(function(event) {
 	if (event.which == 13) {
@@ -770,10 +810,10 @@ $(document).ready(function() {
 	    $("#invoice_issuer_designation").focus().select();  //Focus shifts to Designation of Issuer.
 	}
 	else if (event.which == 38) {
-	    if($("#originaddress").is(":disabled")){
+	    if($("#originpincode").is(":disabled")){
 		$("#invoicestate").focus();
 	    }
-	    $("#originaddress").focus();  //Focus shifts to Address of Origin.
+	    $("#originpincode").focus();  //Focus shifts to Address of Origin.
 	}
     });
 
@@ -3307,6 +3347,7 @@ if (event.which == 13) {
       //For sales invoice store address.
       if($("#status").val() == 15){
 	  address = $("#originaddress").val();
+	  pincode = $("#originpincode").val();
 	  }
 	
       var form_data = new FormData();
@@ -3345,6 +3386,7 @@ if (event.which == 13) {
 	      }*/
 	  //appending address to the form_data.
 	  form_data.append("address", address);
+	  form_data.append("pincode", pincode);
 	  form_data.append("taxstate", $("#invoice_customerstate option:selected").val());
 	  form_data.append("sourcestate", $("#invoicestate option:selected").val());
     }
