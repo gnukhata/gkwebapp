@@ -275,6 +275,14 @@ $("#add_state").keydown(function(event) {
 		return false;
 	    }
 	}
+	else if (event.which==27) {
+		event.preventDefault();
+		if($("#add_cussup input:radio:checked").val() == '19'){
+		$("#checkbnk").focus();
+		} else {
+		$("#cussup_save").focus();
+		}
+	}
     });
 
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
@@ -978,8 +986,9 @@ if($("#vatorgstflag").val() == '22'){
 	    form_data.append("bankdetails", JSON.stringify(bankdetails));
 	}
 	}
-	    form_data.append("gstin", JSON.stringify(gobj));
-	
+		if(!($.isEmptyObject( gobj ))){
+			form_data.append("gstin", JSON.stringify(gobj));
+		}
     // ajax call for saving the customer/supplier
 	if (allow == 1){
 		var csflag = $("#add_cussup input:radio:checked").val();
