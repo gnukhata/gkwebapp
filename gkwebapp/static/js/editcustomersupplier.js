@@ -573,6 +573,19 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
 		return false;
 	    }
 	}
+	else if (event.which==27) {
+		event.preventDefault();
+		if ($("#edit_cussup").val() == "Supplier") {
+		if ($("#checkbnk").is(":visible")) {
+			$("#checkbnk").focus();
+		}
+		else{
+			$("#edit_accountno").focus();
+		}
+		} else {
+		$("#cussup_edit_save").focus();
+		}
+	}
     });
     
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
