@@ -1429,6 +1429,7 @@ $(document).ready(function() {
 		});
 	}
 	else {
+		$(".custsupchange").prop("disabled", false);
 	    $('#invoice_product_table_vat tbody').empty();
 	    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	    $('#invoice_product_table_gst tbody').empty();

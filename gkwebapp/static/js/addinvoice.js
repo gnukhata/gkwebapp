@@ -1456,6 +1456,8 @@ $(document).ready(function() {
 			$("#gstinconsignee").val("").prop("disabled", false);
 			$("#tinconsignee").val("").prop("disabled", false);
 			$("#consigneepincode").val("").prop("disabled", false);
+			$(".custsupchange").prop("disabled", false);
+
 
 		    }
 		    $("#consigneestate").change();
@@ -1551,7 +1553,9 @@ $(document).ready(function() {
 	    $("#invoice_customer").val("").prop("disabled", false).change();
 	    $("#invoice_customerstate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
 	    $("#invoice_customeraddr").text("");
-	    $("#consigneename").val("").prop("disabled", false);
+		$("#consigneename").val("").prop("disabled", false);
+		$("#consigneepincode").val("").prop("disabled", false);	
+		$(".custsupchange").prop("disabled", false);
 	    $("#consigneestate").val("Andaman and Nicobar Islands").prop("disabled", false).change();
 	    $("#gstinconsignee").val("").prop("disabled",false);
 	    $("#consigneeaddress").val("").prop("disabled", false);

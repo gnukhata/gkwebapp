@@ -522,7 +522,6 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         if (invoice_id == "") {
             return false;
         }
-    var csflag = $("#latable tbody tr:eq(" + currentrow + ")").data("csflag");
 	var billentryflag = $("#latable tbody tr:eq(" + currentrow + ")").data("billentryflag");
 	var inoutflag = $("#latable tbody tr:eq(" + currentrow + ")").data("inoutflag");
         $.ajax({
@@ -548,7 +547,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 $("#invoiceviewlistdiv").hide();
 
 
-		if (csflag == '19') {
+		if (inoutflag == '9') {
 		    $("#printbutton").hide();
         }
         $("#viewinvdiv").show();
@@ -597,7 +596,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         if (invoice_id == "") {
             return false;
         }
-	var csflag = $("#latabledel tbody tr:eq(" + currentrow + ")").data("csflag");
+	var inoutflag = $("#latable tbody tr:eq(" + currentrow + ")").data("inoutflag");
         $.ajax({
 
                 type: "POST",
@@ -621,7 +620,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 
 
 
-		if (csflag == '19') {
+		if (inoutflag == '9') {
 		    $("#printbutton").hide();
 		}
         $("#viewinvdiv").show();
