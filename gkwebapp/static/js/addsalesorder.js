@@ -2982,7 +2982,8 @@ if (event.which == 13) {
 	      $("#accountno").focus();
 	      return false;
 	  }
-      }
+	  }
+	  var ps_narration=$("#ps_narration").val();
       
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -3052,6 +3053,7 @@ if (event.which == 13) {
 		}
 		form_data.append("file" + i, files[i]);
 		}
+		form_data.append("ps_narration",ps_narration);
 
 	$.ajax({
                 url: '/purchaseorder?action=save',

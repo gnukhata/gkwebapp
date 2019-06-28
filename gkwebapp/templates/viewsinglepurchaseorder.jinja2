@@ -574,6 +574,11 @@
       </div>
       
     {% endif %}
+	<div class="col-sm-4">
+	      <label for="ps_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label>
+		  <label id="ps_narration" style="font-size:100% !important; font-weight: normal !important;">{{gkresult["ps_narration"]}}</label>  
+	</div>
+
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>
 <script> 
