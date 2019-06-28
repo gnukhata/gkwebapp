@@ -345,6 +345,10 @@
 	     
 	      {% if vatorgstflag == '22' %}
 		<div class="row">
+				<div class="form-group col-sm-6">
+						<label for="edit_cussup_phone">{% trans %}Contact Number:{% endtrans %}</label>
+						<input class="form-control input-sm" type="text" id="edit_cussup_phone"></input>
+											</div>
 		  <div class="form-group col-sm-6 hidden-load" hidden>
 		    <label for="edit_state">{% trans %}State:{% endtrans %}</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
 		    <select class="form-control input-sm add-state" id="edit_state">
@@ -386,27 +390,35 @@
                       <option value="Uttarakhand" stateid="39">Uttarakhand</option>
                       <option value="West Bengal" stateid="41">West Bengal</option>
 		    </select>
-		  </div>
+			</div></div>
+			<div class="row">
 		  <div class="form-group hidden-load col-sm-6" hidden>
 		    <label for="edit_cussup_address">Address:</label><label for="edit_cussup_address" style="color:red;font-size: 120%;">*</label>
 		    <textarea class="form-control" rows="2" cols="40" id="edit_cussup_address" aria-describedby="textareahelp"></textarea>
-		    <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to Fax</small>
-		  </div>
+		    <small id="textareahelp" class="form-text text-muted">Press Enter key twice to shift focus to PIN Code</small>
+			</div>
+			<div class="form-group col-sm-6 hidden-load" hidden>
+					<label for="eidt_cussup_pin">{% trans %}PIN Code:{% endtrans %}</label><label for="edit_cussup_pin" style="color:red;font-size: 120%;">*</label>
+					<input class="form-control input-sm" type="text" id="edit_cussup_pin"></input>
+										</div>
 		</div>
-		<div class="form-group hidden-load" hidden>
+
+            </div>
+      <div class="col-md-6">
+			<div class="row">
+			<div class="form-group col-sm-6 hidden-load" hidden>
 		  <label for="edit_cussup_fax">{% trans %}Fax:{% endtrans %}</label>
 		  <input class="form-control input-sm" type="text" id="edit_cussup_fax"></input>
 		</div>
-            </div>
-            <div class="col-md-6">
-	      <div class="form-group hidden-load " hidden>
+	      <div class="form-group col-sm-6 hidden-load " hidden>
 		<label for="edit_cussup_pan">{% trans %}PAN:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="edit_cussup_pan" maxlength="10"></input>
-              </div>
-              <div class="form-group hidden-load " hidden>
+		</div>
+			</div>
+    <div class="form-group hidden-load " hidden>
 		<label for="edit_cussup_tan">{% trans %}TIN:{% endtrans %}</label>
 		<input class="form-control input-sm" type="text" id="edit_cussup_tan"></input>
-              </div>
+    </div>
 	      <div id="edit_bankdetails" class="hidden-load" hidden>
 		<label><h4>Bank Details :</h4></label>
 		<div class="row">
