@@ -663,7 +663,7 @@
 		 <div class="row hborderdiv" >
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
-		<label for="totalinvoicevalue" style="font-size:110% !important;font-weight:normal !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+		<label for="totalinvoicevalue" style="font-size:110% !important;font-weight:bold !important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
 	      </div>
 	      <div class="col-sm-6 text-right">
 		<label id="totalinvoicevalue" style="font-size:110% !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
@@ -680,7 +680,7 @@
 	<div class="text-center">
 			{% if gkresult["invoicetotalword"]!= None %}
 	      <label for="totalValueInWord" style="font-size:150% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-	      <i><label id="totalValueInWord"  style="font-size:150% !important;">{{gkresult["invoicetotalword"]}}</label></i>
+	      <i><label id="totalValueInWord"  style="font-size:150% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
 	{% endif %}
 	</div>
 	<br>
