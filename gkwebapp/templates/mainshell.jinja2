@@ -50,6 +50,15 @@
     }
     </style>
 
+    <style id="antiClickjack">body{display:none !important;}</style>
+      <script type="text/javascript">
+        if (self === top) {
+          var antiClickjack = document.getElementById("antiClickjack");
+          antiClickjack.parentNode.removeChild(antiClickjack);
+        } else {
+          top.location = self.location;
+        }
+    </script>
   </head>
   <body class="drawer drawer--left" style="background-color: #fafafa;">
     <header role="banner">
@@ -230,6 +239,7 @@
           </div>
         </div>
       </div>
+
       <div id="info" style="margin-top: 5px; margin-bottom: 10px;" class="container-fluid tab-pane " hidden>
 
         <div class="row godownhide internalaud accountinghide">

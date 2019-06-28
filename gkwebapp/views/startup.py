@@ -40,7 +40,9 @@ import cStringIO
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
 def index(request):
+    request.response.headerlist = [('Content-Type','text/html'),('X-Content-Type-Options','nosniff'),('X-Frame-Options','DENY')]
     return {"a":1}
+
 
 @view_config(route_name="existingorg", renderer="gkwebapp:templates/existingorg.jinja2")
 def existingorg(request):
@@ -162,6 +164,7 @@ def orgdata(request):
 
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
 def mainshell(request):
+    request.response.headerlist = [('Content-Type','text/html'),('X-Content-Type-Options','nosniff'),('X-Frame-Options','DENY')]
     return {"status":"ok"}
 
 @view_config(route_name="theme",renderer="json")

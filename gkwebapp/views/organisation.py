@@ -50,7 +50,7 @@ def set_locale_cookie(request):
         response = Response()
         response.set_cookie('_LOCALE_',
                             value=language,
-                            max_age=31536000)  # max_age = year
+                            max_age=31536000, httponly=True)  # max_age = year
     return HTTPFound(location=request.environ['HTTP_REFERER'],
                      headers=response.headers)
 
