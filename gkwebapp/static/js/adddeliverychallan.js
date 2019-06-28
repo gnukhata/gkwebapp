@@ -211,7 +211,12 @@ $(document).ready(function() {
     $("#deliverychallan_customer").removeClass("col-sm-8");
     $("#deliverychallan_customer").parent().addClass("col-sm-8 nopadding");
 
-
+	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+    //Preventing characters in numeric fields.
+    $("#invoice_date").numeric({ negative: false });
+    $("#invoice_month").numeric({ negative: false });
+    $("#invoice_year").numeric({ negative: false });
+	$('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
 $("#invoice_date").blur(function(event) {
 	$(this).val(pad($(this).val(), 2));
     });
@@ -235,6 +240,28 @@ $("#invoice_date").blur(function(event) {
 		$("#inv_invoicestate").focus();
 	}
 });
+$("#invoice_date").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_month").focus().select();  //Focus shifts to Month field
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_number").focus().select();  //Focus shifts to Invoice Number.
+	}
+    });
+
+    //Key Event for Invoice Month field.
+    $("#invoice_month").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#invoice_year").focus().select();  //Focus Shifts to Year field.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_date").focus().select();  //Focus Shifts to Date field.
+	}
+    });
 //Initialising some variables.
 	var taxtype;
 	let roundoffvalue;
@@ -3431,12 +3458,21 @@ $("#roundoff_checkbox").change(function(e){
     
     if(sessionStorage.invoicesave==1)
 		{
-			$("#invoice_number").focus();
-			$("#invoice_number_input").show();				
+			$("#invoice_number_input").show();			
+			$("#invoice_number").val($("#deliverychallan_challanno").val());
+			$("#invoice_number").focus().select();
+			$("#invoice_date").val($("#deliverychallan_date").val());
+			$("#invoice_month").val($("#deliverychallan_month").val());
+			$("#invoice_year").val($("#deliverychallan_year").val());				
 		$("#inv_invoicestate option:first").prop("selected", true);
 		$("#inv_invoicestate").change();
+		$("#confirm_yes .modal-content").attr("style","width:500px"); 
+		$("#confirm_yes .modal-body").attr("style","height:400px;overflow-y:auto;"); 
+		$("#confirm_yes .modal-body").animate({scrollTop: 0},'fast');
 			if($("#status").val()==15)
 			{
+				$("#confirm_yes .modal-body").attr("style","height:500px;overflow-y:auto;"); 
+				$("reverse_charge").prop("selected",false);
 				$("#inv_issuer").val($("#invoice_issuer_name").val());
 				$("#inv_designation").val($("#invoice_issuer_designation").val());
 				$("#delivery_out").show();	
@@ -3457,6 +3493,9 @@ $("#roundoff_checkbox").change(function(e){
 	$("#deliverychallan_challanno").focus();
 	sessionStorage.setItem("invoicesave",0);
 		$("#invoice_number_input").hide();
+
+		$("#confirm_yes .modal-content").attr("style",""); 
+		$("#confirm_yes .modal-body").attr("style",""); 
   });
 
     function viewdelchal(dcid,inoutflag){
@@ -3949,7 +3988,14 @@ $("#roundoff_checkbox").change(function(e){
 	  else {
 	  form_data.append("dateofsupply", $.trim($("#supply_year").val() + '-' + $("#supply_month").val() + '-' + $("#supply_date").val()));
 	  }
-			form_data.append("reversecharge", 0);
+	  if ($("#rev1radio").is(":checked")) {
+	  
+		form_data.append("reversecharge", 1);
+	  }
+	else if ($("#rev2radio").is(":checked")) {
+	
+		form_data.append("reversecharge", 0);
+	  }
   
 	  var files = $("#my-file-selector")[0].files;
 	  var filelist = [];

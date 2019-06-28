@@ -847,15 +847,15 @@
       </div>
     </div>
   </div>
-  <div id="confirm_yes" class="modal" tabindex="-1" role="dialog">
+  <div id="confirm_yes" class="modal" style="overflow:none; tabindex="-1" role="dialog">
     <div class="vertical-alignment-helper">
       <div class="modal-dialog modal-sm vertical-align-center">
-        <div class="modal-content" style="width: 500px;">
+        <div class="modal-content" >
           <div class="modal-header">
 
             <h4 class="modal-title">{% trans %}Save?{% endtrans %}</h4>
           </div>
-          <div class="modal-body">
+          <div class="modal-body" >
 		  <div class="alert alert-danger" id="invoice-number-alert"  aria-live="rude" role="alert" hidden>
 
       {% trans %}Invoice no. should not be empty{% endtrans %}
@@ -882,7 +882,7 @@
             		</div>
             		<div class="form-group form-inline">
             			<label for="invoice_date" class="col-sm-4 fsize">{% trans %}Invoice Date{% endtrans %} :<label style="color:red; font-size:120%;">*</label></label>
-            			<input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" a>
+            			<input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" >
             			<input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" >
             			<input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year">
             		</div>
@@ -941,7 +941,17 @@
 		      <input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-8" name="ifsc" >
 		  </div>
 		</div>
-            		
+		<div class="form-group form-inline reversepurchase" id="reverse_charge">
+		      <label for="inv" class="col-sm-4">{% trans %}Reverse Charge{% endtrans %}:</label>	
+		      <div class="form-group col-sm-8 nopadding">
+			<div class="radio">
+        		  <label><input type="radio" class="iib lastfield form-control input-sm nopadding" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
+        		</div>
+			<div class="radio">
+        		  <label><input type="radio" class="iib form-control input-sm nopadding" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
+        		</div>
+		      </div>
+			  </div>
             		<div id="delivery_out" hidden>
 					<div class="form-group form-inline invoice_issuer">
             			<label for="originaddress" class="col-sm-4 fsize">{% trans %}Address :{% endtrans %}<label style="color:red; font-size:120%;">*</label></label>
