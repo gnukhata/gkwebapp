@@ -1362,8 +1362,7 @@ if (!curdate.between(financialstart, financialend)) {
       var productqtys = [];
       var ppu;
       var voucherdetails = {};
-      var quantities = {};
- 
+      var quantities = {};	
 
     if ($("#taxapplicabletext").text() == "VAT") {
 
@@ -1502,7 +1501,9 @@ if (!curdate.between(financialstart, financialend)) {
 	  idrate["quantities"] = quantities;
       }
       
-      var dctypeflag = $("#status").val();
+	  var dctypeflag = $("#status").val();
+	  var drcr_narration =$("#drcr_narration").val();
+	  console.log(drcr_narration);
 
 //send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
       var form_data = new FormData();
@@ -1539,7 +1540,8 @@ if (!curdate.between(financialstart, financialend)) {
       form_data.append("dctypeflag",dctypeflag);  
       //sending hardcode values until caseflag not set
       form_data.append("totreduct",totreduct);
-      form_data.append("reductionval",JSON.stringify(idrate));
+	  form_data.append("reductionval",JSON.stringify(idrate));
+	  form_data.append("drcr_narration",drcr_narration);
 
       voucherdetails["custname"] = $.trim($("#drcrnote_custsupp").text());
       voucherdetails["taxflag"] = taxflag;
