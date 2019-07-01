@@ -979,7 +979,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	if($(".gstinstate:first option:selected").val()==""){
 		$(".gstinstate, .panno, .gstin, .state_del, .addbtn").prop("disabled", false);
 	}
-	$(".state_del").hide();
 	$(".addbtn").prop("disabled",false);
     $("#edit_state").prop("disabled", false);
     $("#edit_accountno").prop("disabled", false);
