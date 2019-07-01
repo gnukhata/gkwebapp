@@ -127,7 +127,7 @@ def saveinvoice(request):
     except:
         print "no attachment found"
     stock = json.loads(request.params["stock"])
-    if request.params["dcid"]!="":        
+    if request.params["dcid"]!="":
         invoicedata["dcid"] = request.params["dcid"]
     
     invoicewholedata = {"invoice":invoicedata,"stock":stock}
