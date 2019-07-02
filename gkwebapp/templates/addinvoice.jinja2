@@ -100,12 +100,20 @@
                       {% for deliverynote in deliverynotes %}
 			{% if gkstatus=="out" %}
                           {% if deliverynote['inoutflag']==15 %}
-                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                          {% endif %}
+						  	{% if deliverynote['dateofsupply']!= None %}
+                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote["dcdate"]}}" dateofsupply="{{deliverynote["dateofsupply"]}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+							{% else %}
+							<option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote["dcdate"]}}" dateofsupply="{{deliverynote["dcdate"]}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+						  	{% endif %}
+						  {% endif %}
 			{% else %}
                           {% if deliverynote['inoutflag']==9 %}
-                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
-                          {% endif %}
+                            {% if deliverynote['dateofsupply']!= None %}
+                            <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}"  dcdate="{{deliverynote["dcdate"]}}" dateofsupply="{{deliverynote["dateofsupply"]}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+							{% else %}
+							<option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote["dcdate"]}}" dateofsupply="{{deliverynote["dcdate"]}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
+						  	{% endif %}
+						  {% endif %}
 			{% endif %}
                       {% endfor %}
                     </select>
