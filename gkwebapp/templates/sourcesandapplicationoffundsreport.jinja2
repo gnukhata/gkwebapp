@@ -56,13 +56,14 @@
 </head>
 <body>
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
+  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{from}}"></input>
 <div class="row">
   <div class="table-responsive">
     <table id="satable" class="shadow table table-condensed fixed-table cbalsheettable">
       <thead class="bg-primary">
         <tr>
           <th colspan="4" class="text-center col-xs-12" >
-            {% trans %}Statement of Sources and Applications of Funds{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+            {% trans %}Statement of Sources and Applications of Funds{% endtrans %} </strong>{% trans %}from{% endtrans %} <strong>{{from[8:10]+to[4:8]+to[0:4]}}</strong>{% trans %} to {% endtrans %}<strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
           </th>
         </tr>
       </thead>
@@ -173,6 +174,7 @@
 
     <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
     <input type="hidden" name="cto" id="cto" value="{{to}}">
+    <input type="hidden" id="cfrom" name="cfrom" value="{{from}}"></input>
   </div>
 </div>
 

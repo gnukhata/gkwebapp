@@ -679,7 +679,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#calculateto").val(),"orgtype":sessionStorage.orgt,"flag":$("#backflag").val()},
+          data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#calculateto").val(),"calculatefrom":$("#calculatefrom").val(),"orgtype":sessionStorage.orgt,"flag":$("#backflag").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -699,7 +699,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#calculateto").val(),"orgtype":sessionStorage.orgt,"flag":$("#backflag").val()},
+          data: {"balancesheettype":"conventionalbalancesheet","calculateto":$("#calculateto").val(),"calculatefrom":$("#calculatefrom").val(),"orgtype":sessionStorage.orgt,"flag":$("#backflag").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

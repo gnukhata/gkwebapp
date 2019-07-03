@@ -54,13 +54,14 @@
 </head>
 <body>
   {% if orgtype=="Profit Making" and flag=="0" %}
-  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Balance Sheet{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Balance Sheet{% endtrans %} </strong>{% trans %}from{% endtrans %} <strong>{{from[8:10]+to[4:8]+to[0:4]}}</strong>{% trans %} to {% endtrans %}<strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% elif orgtype=="Non For Profit" and flag=="0" %}
-  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
+  <span style="margin:auto; display:table;"><strong>{% trans %}Conventional Statement of Affairs{% endtrans %} </strong>{% trans %}from{% endtrans %} <strong>{{from[8:10]+to[4:8]+to[0:4]}}</strong>{% trans %} to {% endtrans %}<strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% elif flag=="1" %}
   <span style="margin:auto; display:table;"><strong>Consolidated Balance Sheet of Holding Company <i>{{horgname}}</i> and its {% if slen == 1 %} Subsidiary {% else %}Subsidiaries {% endif %}{% for sorgs in sorgname %} <i>{{sorgs}}</i> {%if loop.index == slen-1 %} & {% elif slen > 2 and loop.index != slen%} , {% endif %}{% endfor %} </strong>{% trans %}as on{% endtrans %} <strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
   {% endif %}
   <input type="text" id="calculateto" value="{{to}}" hidden>
+  <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{from}}"></input>
   <div class="row">
     <div class="table-responsive col-xs-6 nopadding" >
       <table id="liabtable" class="shadow table fixed-table table-condensed cbalsheettable">
@@ -205,6 +206,7 @@
       </table>
       <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
       <input type="hidden" name="cto" id="cto" value="{{to}}">
+      <input type="hidden" name="cfrom" id="cfrom" value="{{from}}">
 
     </div>
   </div>

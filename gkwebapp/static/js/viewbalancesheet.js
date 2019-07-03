@@ -220,7 +220,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"balancesheettype":btyp,"calculateto":$("#viewbalsht_toyear").val()+"-"+$("#viewbalsht_tomonth").val()+"-"+$("#viewbalsht_today").val(),"orgtype":sessionStorage.orgt, "flag":0},
+        data: {"balancesheettype":btyp,"calculateto":$("#viewbalsht_toyear").val()+"-"+$("#viewbalsht_tomonth").val()+"-"+$("#viewbalsht_today").val(),"orgtype":sessionStorage.orgt, "flag":0,"calculatefrom":$("#viewbalsht_fromyear").val()+"-"+$("#viewbalsht_frommonth").val()+"-"+$("#viewbalsht_fromday").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

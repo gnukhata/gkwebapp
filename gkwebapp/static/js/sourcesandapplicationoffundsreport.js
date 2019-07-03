@@ -206,7 +206,7 @@ $("#grpbtn").click(function(event){
           global: false,
           async: false,
           datatype: "text/html",
-            data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":0},
+            data: {"balancesheettype":"verticalbalancesheet","calculateto":$("#cto").val(),"calculatefrom":$("#cfrom").val(),"orgtype":sessionStorage.orgt,"flag":0},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -247,7 +247,7 @@ $("#cbalbutn").click(function(event) {
       global: false,
       async: false,
       datatype: "text/html",
-	data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"orgtype":sessionStorage.orgt,"flag":0},
+	data: {"balancesheettype":$("#balancesheettype").val(),"calculateto":$("#cto").val(),"calculatefrom":$("#cfrom").val(),"orgtype":sessionStorage.orgt,"flag":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -268,7 +268,7 @@ $("#print").click(function(event) {
   var orgtype = sessionStorage.getItem('orgt');
   var xhr = new XMLHttpRequest();
 
-  xhr.open('GET', '/printsourcesandappfundreport?orgname='+ orgname+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val(), true);
+  xhr.open('GET', '/printsourcesandappfundreport?orgname='+ orgname+'&fystart='+sessionStorage.getItem('year1')+'&fyend='+sessionStorage.getItem('year2')+'&calculateto='+$("#cto").val()+'&calculatefrom='+$("#cfrom").val(), true);
   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
   xhr.responseType = 'blob';
 
