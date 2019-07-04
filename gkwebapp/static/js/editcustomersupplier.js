@@ -161,7 +161,9 @@ $(document).ready(function() {
       $(".panel-footer").show();
       $("#cus_innerdiv").show();
       $("#cussup_edit_save").hide();
-      $("#edit_cussup_btn").show();
+	  $("#edit_cussup_btn").show();
+      $(".state_del").hide();
+	  
     })
     .fail(function() {
       console.log("error");
@@ -965,7 +967,8 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#edit_cussup_btn").hide();
     $("#cussup_edit_save").show();
     $("#edit_cussup_reset").show();  
-    $("#textareahelp1").show();
+	$("#textareahelp1").show();
+	$(".state_del").hide();
     $("#edit_cussup").prop("disabled", true);
     $("#edit_cussup_list").focus().select();
     $("#edit_cussup_name").prop("disabled", false);
