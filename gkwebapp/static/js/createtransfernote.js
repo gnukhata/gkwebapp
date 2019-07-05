@@ -666,7 +666,7 @@ $(document).ready(function() {
 				'</div>'+
 				'</td>'+
 				'<td class="col-xs-1">'+
-                  '<div style="text-align: center;"><a href="#" class="product_add" style="color:black; margin-right:10px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'+
+                  '<div style="text-align: center; margin-left:-10px"><a href="#" class="product_add" style="color:black; margin-right:5px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a><a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>'+
 				'</td>'+
 				'</tr>');
 		      for (product of resp["products"]) {

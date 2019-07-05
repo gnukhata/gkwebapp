@@ -14,6 +14,8 @@
        display:block;
        height: calc(115vh - 38em);
        overflow-y:scroll;
+       overflow-x:scroll;
+
    }
 
    .fixed-table thead ,.fixed-table tbody tr {
@@ -136,13 +138,13 @@
 	              <label for="transfernote_date">{% trans %}Date :{% endtrans %}</label><label style="color:red;font-size: 120%;">*</label>
         </div>
 	      <div class="col-xs-3"style="margin-left:-25px">
-                <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
+                <input type="text" class="form-control input-sm tndate" size="2" style="width:43px" maxlength="2" placeholder="DD" id="tn_date" accesskey="v">
 	      </div>
 	      <div class="col-xs-3"style="margin-left:-25px">
-                <input type="text" class="form-control input-sm tndate" size="2" maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
+                <input type="text" class="form-control input-sm tndate" size="2" style="width:43px"  maxlength="2" placeholder="MM" id="tn_month" accesskey="v">
 	      </div>
 	      <div class="col-xs-3"style="margin-left:-25px">
-                <input type="text" class="form-control input-sm tndate" size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
+                <input type="text" class="form-control input-sm tndate" style="width:60px"  size="4" maxlength="4" placeholder="YYYY" id="tn_year" accesskey="v">
 	      </div>
       </div>
 	  </div>
