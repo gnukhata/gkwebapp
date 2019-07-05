@@ -3464,7 +3464,7 @@ $("#roundoff_checkbox").change(function(e){
 			$("#invoice_date").val($("#deliverychallan_date").val());
 			$("#invoice_month").val($("#deliverychallan_month").val());
 			$("#invoice_year").val($("#deliverychallan_year").val());				
-		$("#inv_invoicestate option:first").prop("selected", true);
+		$("#inv_invoicestate option[value='"+$("#invoicestate option:selected").val()+"']").prop("selected", true);
 		$("#inv_invoicestate").change();
 		$("#confirm_yes .modal-content").attr("style","width:500px"); 
 		$("#confirm_yes .modal-body").attr("style","height:400px;overflow-y:auto;"); 
