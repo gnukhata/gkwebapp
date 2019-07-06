@@ -1946,6 +1946,9 @@ $("#my-file-selector").change(function(event) {
     });
     });
 });
+$("#error_print_modal").on('shown.bs.modal', function(event) {  
+  $('#error_print_modal .modal-body').animate({scrollTop: 0},'slow');
+  });
 });
 
 >>>>>>> Import product and services done

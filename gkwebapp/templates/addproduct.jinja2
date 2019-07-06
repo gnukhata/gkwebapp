@@ -6,6 +6,10 @@
    .tax_del, .godown_del{
        color:#000000;
    }
+   #errors.td
+   {
+    font-weight: normal !important;
+   }
   </style>
 </head>
 <body>
@@ -536,7 +540,7 @@
               </div><!-- /.modal-dialog -->
             </div>
           </div>
-          <div id="error_print_modal"  tabindex="-1" class="modal fade " role="dialog"style="width:70%; margin-top: 30px;"  aria-hidden="true">
+          <div id="error_print_modal"  tabindex="-1" class="modal fade " role="dialog"style="width:95%; margin-top: 10px;"  aria-hidden="true">
       <div class="modal-dialog bgcolor " style="width:100%;" >
           <div class="modal-content ">
             <div class="modal-header">
@@ -545,7 +549,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
           </div>
-              <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+              <div class="modal-body" style="text-align: justify; text-justify: inter-word;height: 500px;overflow: auto;">
                 <strong id="errormsg"></strong>
 
                 <table class ="table table-bordered">
