@@ -269,7 +269,7 @@ $.ajax(
       global: false,
       async: false,
       datatype: "json",
-      data: {"calculateto":sessionStorage.yyyymmddyear2},
+      data: {"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":sessionStorage.yyyymmddyear2},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

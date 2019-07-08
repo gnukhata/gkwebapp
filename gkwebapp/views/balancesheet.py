@@ -563,21 +563,13 @@ def showbalancesheetreport(request):
     balancesheettype = request.params["balancesheettype"]
     orgtype = request.params["orgtype"]
     header={"gktoken":request.headers["gktoken"]}
-    flag = request.params["flag"]
-    if calculatefrom=='':
-        if balancesheettype == "conventionalbalancesheet":
-            result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
-            return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"verticalbalancesheet","to":calculateto,"orgtype":orgtype,"flag":flag},request=request)
-        if balancesheettype == "verticalbalancesheet":
-            result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2"%(calculateto), headers=header)
-            return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"orgtype":orgtype},request=request)
-    else:    
-        if balancesheettype == "conventionalbalancesheet":
-            result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
-            return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"verticalbalancesheet","to":calculateto,"from":calculatefrom,"orgtype":orgtype,"flag":flag},request=request)
-        if balancesheettype == "verticalbalancesheet":
-            result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
-            return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"from":calculatefrom,"orgtype":orgtype},request=request)
+    flag = request.params["flag"]    
+    if balancesheettype == "conventionalbalancesheet":
+        result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
+        return render_to_response("gkwebapp:templates/conventionalbalancesheetreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"verticalbalancesheet","to":calculateto,"from":calculatefrom,"orgtype":orgtype,"flag":flag},request=request)
+    if balancesheettype == "verticalbalancesheet":
+        result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
+        return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"from":calculatefrom,"orgtype":orgtype},request=request)
 
 
 @view_config(route_name="allorgcode",request_param="type=orgcodelist", renderer="json")

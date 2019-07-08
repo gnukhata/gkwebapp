@@ -76,8 +76,9 @@ def stockonhandfordashboard(request):
 @view_config(route_name="dashboard", request_param="action=balancesheetchart", renderer="json")
 def balancesheetreport(request):
     calculateto = request.params["calculateto"]
+    calculatefrom = request.params["calculatefrom"]
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1"%(calculateto), headers=header)
+    result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=1&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
     data1=[]
     data2=[]
     for content in result.json()["gkresult"]["rightlist"]:
