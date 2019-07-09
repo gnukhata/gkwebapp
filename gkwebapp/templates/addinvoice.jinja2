@@ -88,7 +88,7 @@
 		    <select class="form-control input-sm col-sm-8"  id="invoice_deliverynote">
                       <option value="" dcno = "" selected>None</option>
                       {% for deliverynote in deliverynotes %}
-			{% if gkstatus=="in" %}
+			{% if gkstatus=="out" %}
                           {% if deliverynote['inoutflag']==15 %}
                             <option value="{{deliverynote['dcid']}}" dcno = "{{deliverynote["dcno"]}}" dcdate="{{deliverynote['dcdate']}}">{{deliverynote["dcno"]}}, {{deliverynote['dcdate']}}, {{deliverynote["custname"]}}</option>
                           {% endif %}
