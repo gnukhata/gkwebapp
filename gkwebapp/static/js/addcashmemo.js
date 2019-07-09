@@ -423,7 +423,12 @@ $(document).ready(function() {
                 $(".product_name_vat:first").focus().select();
             }
             else{
-                $("#gst").focus()
+                if($("#vat").is(":checked")){
+                    $("#vat").focus().select();
+                }   
+                else{
+                    $("#gst").focus().select();
+                }
             }
         }
         if (event.which == 37) {
@@ -433,17 +438,20 @@ $(document).ready(function() {
     });
     $(document).off("keydown", '.taxapplicable').on("keydown", '.taxapplicable ', function(event) {
         if (event.which == 13){
-            if ($(".taxapplicable").val() == 7){
                 if (!$("#gstin_panno").is(":disabled")) {
                     $("#gstin_panno").focus();
                 }
                 else {
-                    $(".product_name_gst:first").focus().select();
+                    if($("#vat").is(":checked")){
+                        $(".product_name_vat:first").focus().select();
+                    }   
+                    else{
+                        $(".product_name_gst:first").focus().select();
+                    }
                 }
-            }
-            else{
-                $(".product_name_vat:first").focus().select();
-            }
+        }
+        if (event.which == 38){
+                $("#invoice_state").focus().select();
         }
     });
     //Change event for 'GST' and 'VAT' radio button.
@@ -490,8 +498,8 @@ $(document).ready(function() {
     var regExp = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
     var panno="";
     $("#gstin_panno").keydown(function(event) {
-	panno = $(this).val();
-        if (event.which == 13 && ($(".taxapplicable").val() == 7)) {
+    panno = $(this).val();
+        if (event.which == 13 ) {
 	    event.preventDefault();
 	    if ((panno.length != 10 || !panno.match(regExp)) && panno != ""){
 		$("#gstin-improper-modal").alert();
@@ -506,6 +514,15 @@ $(document).ready(function() {
 	if (event.which == 39) {
 	    event.preventDefault();
 	    $("#gstin").focus().select();
+    }
+    if (event.which == 38 ) {
+        event.preventDefault();
+        if($("#vat").is(":checked")){
+            $("#vat").focus().select();
+        }   
+        else{
+            $("#gst").focus().select();
+        }
 	}
     });
     $("#gstin").keydown(function(event) {
@@ -580,7 +597,6 @@ $(document).ready(function() {
             if (resp["gkstatus"] == 0) {
 		console.log("success");
 		var gstincode=resp["gkresult"];
-		console.log(gstincode);
 		if (gstincode.length > 0) {
 		    $("#gstin_panno").val(gstincode.substring(2, 12)).prop("disabled", true);
 		    $("#gstin").val(gstincode.substring(12,15)).prop("disabled", true);
