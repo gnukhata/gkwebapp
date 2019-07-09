@@ -61,6 +61,8 @@ $(document).ready(function() {
 	$(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
+	$("#smalllink").hide();
+	$("#smalllinkonlyvat").show();
 	$(".onlyvat").show();
 	$(".gstvat").hide();
 	$(".product_name_vat").searchify();
@@ -91,7 +93,15 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
-    
+
+	  $("#moresmallonlyvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkonlyvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallonlyvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkonlyvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
           if($(this).prop('checked') == true) {
@@ -519,7 +529,9 @@ $(document).ready(function() {
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 		$("#vathelp").hide();
 		$("#smalllink").show();	
-	    $("#smalllinkvat").hide();		
+		$("#smalllinkvat").hide();
+		$("#smalllinkonlyvat").hide();
+				
 			
 	    $(".tinfield").hide();
 	    $("#gstproducttable").show();  //Shows GST Product table.
@@ -537,7 +549,7 @@ $(document).ready(function() {
 	    }
 	  $(".product_name_gst").searchify();
 	}else if($("#vat").is(":checked")){  
-	    $("#taxapplicabletext").text("VAT");
+		$("#taxapplicabletext").text("VAT");
 	    $(".taxapplicable").val("22");
 	    $("#gstproducttable").hide();
 	    $(".gstinfield").hide();
@@ -545,7 +557,8 @@ $(document).ready(function() {
 	    $(".tinfield").show();
 		$("#vathelp").show();
 		$("#smalllink").hide();
-	    $("#smalllinkvat").show();
+		$("#smalllinkvat").show();
+		$("#smalllinkonlyvat").hide();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
 	    $(".product_name_vat").searchify();

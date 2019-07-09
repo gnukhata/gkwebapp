@@ -328,7 +328,7 @@
 					<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none;margin-right: 20px" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 					<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 					{% else %}
-					<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+					<a data-toggle="collapse" class="pull-right" id="smalllinkonlyvat" style="text-decoration: none" href="#moresmallonlyvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 					{% endif %}
 
 			</div>
@@ -376,7 +376,8 @@
 		    <label >{% trans %}Rate cannot be empty or zero!{% endtrans %}</label>
 		  </div>
 		  {% if resultgstvat == '29' or resultgstvat == '22'  or resultgstvat=='7' %}
-		    {% if resultgstvat == '22' %}
+				{% if resultgstvat == '22' %}
+			<div class="collapse" id="moresmallonlyvat">							
 		      <div class="col-sm-12 bg-info" style="padding:10;">
 			<div class="col-sm-9">
 			  <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
@@ -396,7 +397,7 @@
 			  {% endif %}
 			  <small class="row col-sm-12 form-text text-muted">L = Last {% if gkstatus=="out" %}Selling{% else %}Purchase{% endif %} Price</small>
 			</div>
-		      </div>
+		      </div></div>
 		      <table id="invoice_product_table_vat" class="vatfield table table-condensed table-bordered fixed-table fixed-tablepurchase">
 				{% else %}
 

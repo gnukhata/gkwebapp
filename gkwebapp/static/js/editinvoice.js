@@ -64,6 +64,14 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
+	  $("#moresmallonlyvat").on('shown.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkonlyvat").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
+	  });
+	  $("#moresmallonlyvat").on('hidden.bs.collapse', function(event) {
+		event.preventDefault();
+		$("#smalllinkonlyvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	  });
 
     //to autopopulate the details of consignee same as the details of reciver when checkbox is checked.
       $("#Consignee").change(function() {
@@ -2956,6 +2964,7 @@ if (event.which == 13) {
 				if ($("#taxapplicable").val() == '22') {
 					$("#smalllinkvat").show();
 					$("#smalllink").hide();
+					$("#smalllinkonlyvat").show();
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
 				}
 				else if ($("#taxapplicable").val() ==  '7') {
