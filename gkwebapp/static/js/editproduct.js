@@ -273,7 +273,7 @@ $(document).ready(function() {
   let gstselected = 0;
     let rowcount = $("#product_edit_tax_table tbody tr").length;
     for (i=0;i<rowcount;i++){
-      if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+      if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'|| $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == 'CESS'){
         gstselected = 1;
         break;
       }
@@ -1484,7 +1484,7 @@ $(document).ready(function() {
         let gstselected = 0;
         let rowcount = $("#product_edit_tax_table tbody tr").length;
         for (i=0;i<rowcount;i++){
-          if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+          if ($("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST' || $("#product_edit_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == 'CESS'){
             gstselected = 1;
             break;
           }

@@ -289,7 +289,7 @@ $("#hsnno").keydown(function(event) {
     let gstselected = 0;
     let rowcount = $("#product_tax_table tbody tr").length;
     for (i=0;i<rowcount;i++){
-      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'|| $("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == 'CESS'){
         gstselected = 1;
         break;
       }
@@ -1670,7 +1670,7 @@ if($("#additem input:radio:checked").val()=='7'){
     let gstselected = 0;
     let rowcount = $("#product_tax_table tbody tr").length;
     for (i=0;i<rowcount;i++){
-      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+      if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST' || $("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == 'CESS'){
         gstselected = 1;
         break;
       }
@@ -1730,8 +1730,9 @@ else{
   }
   let vatselected = 0;
   let vatrowcount = $("#product_tax_table tbody tr").length;
+  
   for (i=0;i<vatrowcount;i++){
-    if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+    if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST' || $("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val() == 'CESS'){
       vatselected = 1;
       break;
     }
