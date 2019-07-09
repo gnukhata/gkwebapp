@@ -1650,12 +1650,11 @@ $(document).off("click","#apsubmit").on("click", '#apsubmit', function(event) {
     else if (resp["gkstatus"] ==1)
     {
       $('.modal-backdrop').remove();
-      $("#duplicate-alert").alert();
-      $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
-        $("#duplicate-alert").hide();
+      $("#duplicateproducterror-alert").alert();
+      $("#duplicateproducterror-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#duplicateproducterror-alert").hide();
       });
       $("#addproddesc").focus();
-      $("#addproddesc").select();
       return false;
     }
     console.log("success");
