@@ -1728,8 +1728,16 @@ else{
     $("#addproddesc").select();
     return false;
   }
-  if($("#hsnno").val()==""){
-
+  let vatselected = 0;
+  let vatrowcount = $("#product_tax_table tbody tr").length;
+  for (i=0;i<vatrowcount;i++){
+    if ($("#product_tax_table tbody tr:eq("+i+") td:eq(0) select").val()=='IGST'){
+      vatselected = 1;
+      break;
+    }
+  }
+  if (vatselected == 1){
+    if($("#hsnno").val()==""){
       $("#serviceno-blank-alert").alert();
       $("#serviceno-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#serviceno-blank-alert").hide();
@@ -1737,6 +1745,8 @@ else{
       $("#hsnno").focus();
       return false;
   }
+  }
+  
 }
 
     if ($("#openingstock").val()=="")
