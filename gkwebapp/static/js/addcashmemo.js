@@ -475,7 +475,7 @@ $(document).ready(function() {
             $(".taxapplicabletext").text("VAT");
             $(".taxapplicable").val("22");
             $("#gstproducttable").hide();
-            $(".gstinfield").hide();
+            // $(".gstinfield").hide();
             $("#invoice_product_table_vat").show();
             $(".tinfield").show();
             $("#vathelp").show();

@@ -38,12 +38,12 @@
       {% endif %}
     </div>
   </div>
-  {% if gkresult["taxflag"] == 7 and gkresult["orgstategstin"] %}
+  {# {% if gkresult["taxflag"] == 7 and gkresult["orgstategstin"] %} #}
     <div class="form-group form-inline col-sm-12">
       <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
       {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}
     </div>
-  {% endif %}
+  {# {% endif %} #}
   {% if gkresult["taxflag"] == 22 %}
     <div class="col-md-12">
       <br>
