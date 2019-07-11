@@ -1925,7 +1925,7 @@ else{
     }
     else if (resp["gkstatus"] ==1)
     {   
-	if ($("#additem input:radio:checked").val() == 7){
+	// if ($("#additem input:radio:checked").val() == 7){
             if (parseInt($("#extrabuttons").val()) == 1) {
                 $('.modal-backdrop').remove();
                 $("#duplicateproducterror-alert").alert();
@@ -1942,7 +1942,7 @@ else{
             $("#addproddesc").focus();
 	    $("#addproddesc").select();
             return false;
-        }
+        // }
     }
     console.log("success");
   })
