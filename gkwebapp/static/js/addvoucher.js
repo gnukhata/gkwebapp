@@ -2136,20 +2136,21 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
       },
       success: function(resp)
 	{
-	    if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
+      if(resp.gkstatus == true){ // if the voucher is saved show an alert and then reset the voucher form and clear all variables.
+        $("#msspinmodal").modal("hide");
 		if(resp.paymentstatus == true){
-		    $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
+        $("#success-alert").html("Voucher saved successfully. Amount of <b class='text-danger'>" + parseFloat(resp.billdetails.amount).toFixed(2) + "</b> adjusted to invoice <b class='text-primary'>" + resp.billdetails.invoice + "</b>.");
+        setTimeout(function(){$("success-alert").alert();},1000);
 		}
-		$("#success-alert").alert();
 		if(sessionStorage.avnoflag==1){
-		    $("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
+        $("#success-alert").html("Voucher No."+" "+resp["vouchernumber"]+" "+"Saved Successfully.");
+        setTimeout(function(){$("success-alert").alert();},1000);
     }
 
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
         $("#success-alert").hide();
     $("#reset").click();  
     if($("#voucher_modal").length>0){
-      $("#msspinmodal").modal("hide");
       $('#voucher_modal').modal('hide');
     }
             //Modal asking the user if he wants to do bill wise accounting or not?
