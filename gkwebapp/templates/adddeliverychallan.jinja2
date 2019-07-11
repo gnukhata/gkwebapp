@@ -345,7 +345,10 @@
 				<div class="col-md-9">
 						<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 		
-						<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+						<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none" href="#moresmallvat" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+	
+						<!-- <a data-toggle="collapse" class="pull-right" id="smalllinkonlyvat" style="text-decoration: none;margin-right: -25px" href="#moresmallonlyvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+	 -->
 				</div>
 	      {% if gkstatus=="in" %}
 		<input type="hidden" id="status" value="9">
@@ -394,12 +397,14 @@
 	      </div>
 	      {% if resultgstvat == '29' or resultgstvat == '22'  or resultgstvat == '7'%}
 		{% if resultgstvat == '22' %}
-		  <div class="col-sm-12 bg-info" style="margin-bottom:10px; padding:10;">
+		<div class="collapse" id="moresmallvat">			
+		  <div class="col-sm-12 bg-info" style="padding:10;">
 		    <div class="row col-sm-12 text-primary">{% trans %}Press 'Tab' key after selecting a product using arrow keys.{% endtrans %}</div>
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Delivery Note. Press 'Esc' key to exit from the table.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Tab' key after a product is selected.</small>
-		  </div>
+			</div>
+		</div>
 		  <table id="invoice_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
 		<div class="collapse" id="moresmallvat" hidden>

@@ -274,7 +274,7 @@
 		{% if resultgstvat == '29' or resultgstvat == '7' %}
 		<a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none; margin-right: 35px" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 {% else %}
-<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none;margin-right: 35px;" href="#moresmallvat" hidden>Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+<a data-toggle="collapse" class="pull-right" id="smalllinkvat" style="text-decoration: none;margin-right: 35px;" href="#moresmallvat">Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
 {% endif %}
 
 				</div>
@@ -320,10 +320,12 @@
 	      </div>
 	      {% if resultgstvat == '29' or resultgstvat == '22' %}
 		{% if resultgstvat == '22' %}
-		  <div class="col-sm-12" style="margin-bottom:10px; padding:5;">
+		<div class="collapse" id="moresmallvat">
+		  <div class="col-sm-12 bg-info" style="padding:5;">
 		    <small class="row col-sm-12 form-text text-muted">Use 'Ctrl + <' or 'Ctr + >' to navigate horizontally and 'Shift + <' or 'Shift + >' to navigate vertically.</small>
 		    <small class="row col-sm-12 form-text text-muted">Press 'Insert' key to save Sales Order. Press 'Esc' key to exit from the table.</small>
 		  </div>
+		</div>
 		  <table id="salesorder_product_table_vat" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase">
 		{% else %}
 		<div class="collapse" id="moresmallvat">

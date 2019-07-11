@@ -47,7 +47,9 @@ $(document).ready(function() {
       $(".gstinfield").hide();
       $("#invoice_product_table_vat").show();
 	$(".tinfield").show();
-	$(".gstfield").hide();
+    $(".gstfield").hide();
+    $("#smalllink").hide();	
+    $("#smalllinkvat").show();	
 	$(".product_name_vat").searchify();
 	let vatproductwidth = $(".product_name_vat").parents("td").first().width();
 	$(".product_name_vat").closest("select").width(vatproductwidth);
@@ -56,7 +58,9 @@ $(document).ready(function() {
 	$(".product_name_vat").closest("select").find("option").width(vatproductwidth);
     } else {
 	$(".gstinfield").show();
-	$(".vatfield").hide();
+    $(".vatfield").hide();
+    $("#smalllink").show();	
+    $("#smalllinkvat").hide();	
 	$(".product_name_gst").searchify();
 	let gstproductwidth = $(".product_name_gst").parents("td").first().width();
 	$(".product_name_gst").closest("select").width(gstproductwidth);

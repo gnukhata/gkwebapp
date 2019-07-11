@@ -71,6 +71,7 @@ $(document).ready(function() {
 	$(".gstinfield").hide();
 	$(".tinfield").show();
 	$(".gstfield").hide();
+	$("#smalllink").hide();
 	$(".onlyvat").show();
 	$(".gstvat").hide();
 	$(".product_name_vat").searchify();
@@ -78,6 +79,7 @@ $(document).ready(function() {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
 	$(".gstvat").show();
+	$("#smalllinkvat").hide();
 	$(".onlyvat").hide();
         $(".product_name_gst").searchify();
     }
@@ -100,7 +102,7 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
-    
+
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();

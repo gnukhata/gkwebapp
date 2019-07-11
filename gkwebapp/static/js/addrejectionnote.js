@@ -650,7 +650,9 @@ $(document).ready(function() {
 			    $(".vatfied").hide();
 			    $(".gstfield").show();
 			}else if(resp.invDetails.taxflag == 22){
-			    $("#invoice_product_table_vat").show();
+				$("#invoice_product_table_vat").show();
+				$("#smalllink").hide();
+				$("#smalllinkvat").show();
 			    let curindex = 0;
 			    $(".gsttable").hide();
 			    $('#invoice_product_table_vat tbody').empty();
@@ -679,8 +681,6 @@ $(document).ready(function() {
 			    $("#total_product_vat").val(parseFloat(resp.invDetails.invoicetotal).toFixed(2));
 			    $(".gstfield").hide();
 				$(".vatfield").show();
-				$("#smalllink").hide();
-				$("#smalllinkvat").show();
 			}    			    
 			if(resp["invDetails"]["taxflag"] == 7){
 			    $(".gstinfield").show();
