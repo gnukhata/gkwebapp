@@ -1513,7 +1513,6 @@ $(document).ready(function() {
       }
       else if (resp["gkstatus"] ==1)
       {
-
         $('.modal-backdrop').remove();
         $("#duplicate-alert").alert();
         $("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){

@@ -223,7 +223,7 @@
 	<a data-toggle="collapse" id="smalllink" href="#moresmall">See more.<span class="glyphicon glyphicon-triangle-bottom"></span></a>
       </div>
     </div>
-		<div class="row noinventory">
+		<div class="row">
 		<div class="row">
 		<div class="form-group col-sm-6 pd ">
 	{% if proddesc["gsflag"]==7 %}
@@ -236,7 +236,7 @@
 			</div >
   {# {% endif %} #}
   {% if proddesc["gsflag"]==7 %}
-    
+    <div class="row noinventory">
 
       {% if not godown %}
 	<input type="text" name="godownflag" id="editgodownflag" value="0" hidden>
@@ -390,6 +390,7 @@
 			</table>
     </div>
   </div>
+	</div>
   {% endif %}
     {% endif %}
 </div>
