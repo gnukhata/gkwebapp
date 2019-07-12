@@ -14,6 +14,14 @@ $(document).ready(function() {
 	var usrid = "" ;
 	let lastdrcr = $("#drcrnote_no").val();
 
+	if (sessionStorage.vatorgstflag== '22'){
+		$("#smalllink").hide();	
+		$("#smalllinkvat").show();
+	}
+	else{
+		$("#smalllink").show();	
+		$("#smalllinkvat").hide();
+	}
 	$("#moresmall").on('shown.bs.collapse', function(event) {
 		event.preventDefault();
 		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
