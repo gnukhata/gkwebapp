@@ -96,7 +96,7 @@ $(".serviceclass").hide();
       $(".productclass").hide();
       $(".serviceclass").show();
       $("#proservlabel").text("Service Name :");
-        $("#gscodelabel").text("Accounting Code for Service :");
+        $("#gscodelabel").text("Services Accounting Code :");
 	$("#maximumprice").text("Maximum Rate :");
 	$("#defaultprice").text("Default Rate :");
       $(".common").show();
