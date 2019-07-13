@@ -908,8 +908,9 @@
 		      <label class="col-sm-4 fsize gstinfield" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
 		      <label class="col-sm-8 nopadding fsize gstinfield" id="inv_orggstin"></label>
 		    </div>
-					<div class="form-group form-inline" style="padding-left:3%;">
-		    <select class="form-control input-sm col-sm-6" id="chkpaymentmode" style="width:100px;">
+					<div class="form-group form-inline" >
+						<label class="col-sm-4 fsize">{% trans %}Payment Details{% endtrans %} :</label>
+		    <select class="form-control nopadding input-sm col-sm-8" id="chkpaymentmode" style="width:100px;">
 		      <option value="3">
 			{% trans %}Cash{% endtrans %}
 		      </option>
@@ -968,6 +969,13 @@
             		</div>
             	</form>
             </div>
+			<label class="btn btn-primary btn-sm" for="inv_my-file-selector">
+	  <input name="img" accesskey="h" class="input-sm" id="inv_my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#inv_upload-file-info').html(this.files.length+' selected');">
+	  <i class="fa fa-paperclip" aria-hidden="true"></i>
+	  {% trans %}Attac<u>h</u>{% endtrans %}
+	</label>
+	<span class='label label-info' id="inv_upload-file-info"></span>
+	<small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
         </div>
           <div class="modal-footer">
             <button type="button" id ="dc_save_no" class="btn btn-warning btn-sm" data-dismiss="modal">{% trans %}No{% endtrans %}</button>

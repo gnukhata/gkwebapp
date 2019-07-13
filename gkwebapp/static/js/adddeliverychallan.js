@@ -1069,6 +1069,10 @@ $("#invoice_date").keydown(function(event) {
     .done(function(resp) {
 	console.log("success");
 	if (resp["gkstatus"]==0) {
+		$("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+		$("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
+		$("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
+		$("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
 	    $("#deliverychallan_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 	    $("#deliverychallan_customerstate").change();
 	    $("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
@@ -3247,7 +3251,21 @@ $("#roundoff_checkbox").change(function(e){
 	
     $('#dc_save_yes').click(function (e){
     	if (sessionStorage.invoicesave==1)
-    	{		
+    	{
+			var files = $("#inv_my-file-selector")[0].files;
+			var filelist = [];
+			  for (var i = 0; i < files.length; i++) {
+			  if (files[i].type != 'image/jpeg') {
+				$("#invoice-number-alert").html("Please upload image in JPG/JPEG format!");
+    			$("#invoice-number-alert").alert();
+    			$("#invoice-number-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#invoice-number-alert").hide();
+					$("#invoice-number-alert").html("Invoice no. should not be empty");
+				});
+				  $('#inv_my-file-selector').focus();
+				return false;
+				}
+			}
     		if($("#invoice_number").val()=='')
     		{
     			$("#invoice-number-alert").alert();
@@ -3472,7 +3490,7 @@ $("#roundoff_checkbox").change(function(e){
 			if($("#status").val()==15)
 			{
 				$("#confirm_yes .modal-body").attr("style","height:500px;overflow-y:auto;"); 
-				$("reverse_charge").prop("selected",false);
+				$("#reverse_charge").hide();
 				$("#inv_issuer").val($("#invoice_issuer_name").val());
 				$("#inv_designation").val($("#invoice_issuer_designation").val());
 				$("#delivery_out").show();	
@@ -3997,9 +4015,9 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("reversecharge", 0);
 	  }
   
-	  var files = $("#my-file-selector")[0].files;
+	  var files = $("#inv_my-file-selector")[0].files;
 	  var filelist = [];
-		for (var i = 0; i < files.length; i++) {
+	  for (var i = 0; i < files.length; i++) {
 		if (files[i].type != 'image/jpeg') {
 		  $("#image-alert").alert();
 		  $("#image-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -4120,9 +4138,6 @@ $("#roundoff_checkbox").change(function(e){
   
 
 		return false;
-	}
-	else{
-
 	}
 	});
 });
