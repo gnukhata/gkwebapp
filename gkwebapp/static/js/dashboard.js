@@ -679,8 +679,8 @@ function dashboard(){
     monthlyinvoice(15,respdata["saleinvcount"]);
    }
     if(resp["userrole"] == 1 || resp["userrole"] == 2 || resp["userrole"] == 3){
-      monthlydelchal(9,respdata["delchalout"]);
-      monthlydelchal(15,respdata["delchalin"]);
+      monthlydelchal(9,respdata["delchalin"]);
+      monthlydelchal(15,respdata["delchalout"]);
      }
   }
     
