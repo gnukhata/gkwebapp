@@ -330,7 +330,7 @@ $.ajax(
         data: {
             labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
             datasets: [{
-                label: 'No. of Quantity In',
+                label: 'Quantity In',
                 data: indata,
                 backgroundColor: [
                     'rgba(51, 51, 51)',
@@ -351,7 +351,7 @@ $.ajax(
             },
             {
             labels:["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sept","Oct","Nov","Dec"],
-            label: 'No. of Quantity Out',
+            label: 'Quantity Out',
             data: outdata,
             backgroundColor: [
               'rgba(100, 100, 100)',
