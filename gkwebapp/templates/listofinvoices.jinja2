@@ -180,7 +180,7 @@
             <td class="srnowrap text-center">{{invoice["srno"]}}</td>
             <td class="srnowrap text-center"><a class="libgname" href="">{{invoice["invoiceno"]}}</a></td>
             <td class="smlwrap text-center">{{invoice["invoicedate"]}}</td>
-            <td class="smlwrap text-center">
+            <td class="smlwrap text-left">
 		      {% if invoice["dcno"] != "" and invoice["dcdate"] != "" %}
                {{invoice["dcno"]}},{{invoice["dcdate"]}}
             {% endif %}
