@@ -324,6 +324,10 @@ $(document).ready(function(){
   if (sessionStorage.orgt=="Not For Profit") {
     // If orgtype is Not for Profit than some heading and menu items text is changed.
     $("#showproject_a").text("Project");
+    $(".hidefornof").hide();
+  }
+  else{
+    $(".hideforfm").hide();
   }
 
   // Following ajax will fetch organisation data and user data and make changes accordingly.
