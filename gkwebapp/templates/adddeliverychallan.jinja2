@@ -968,14 +968,15 @@
             			</div>
             		</div>
             	</form>
-            </div>
-			<label class="btn btn-primary btn-sm" for="inv_my-file-selector">
+							<label class="btn btn-primary btn-sm" for="inv_my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="inv_my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#inv_upload-file-info').html(this.files.length+' selected');">
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
 	  {% trans %}Attac<u>h</u>{% endtrans %}
 	</label>
 	<span class='label label-info' id="inv_upload-file-info"></span>
 	<small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
+            </div>
+			
         </div>
           <div class="modal-footer">
             <button type="button" id ="dc_save_no" class="btn btn-warning btn-sm" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
