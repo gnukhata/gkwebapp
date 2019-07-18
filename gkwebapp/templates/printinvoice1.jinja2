@@ -99,7 +99,8 @@
 	  {% if gkresult["address"]!=""%}
 			{{ gkresult["address"] }}
 			{% if gkresult["pincode"]!='' %}
-			, {{gkresult["pincode"]}}
+			{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
+			,
 			{% endif %}
 	  {% else %}
             {% if org["orgaddr"]!='' %}
@@ -109,7 +110,8 @@
               , {{org["orgcity"]}}
 	    {% endif %}
 	    {% if org["orgpincode"] %}
-	      - {{org["orgpincode"]}},
+			{% if org["pincode"] %}{{ org["pincode"] }}{% endif %}
+			- ,
             {% endif %}
             {% if org["orgstate"]!='' %}
               , {{org["orgstate"]}}.
@@ -226,7 +228,7 @@
 				<label>
 						{% trans %}PIN Code{% endtrans %} :
 					</label>
-					{{ gkresult["custSupDetails"]["pincode"] }}
+					{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
 				
 			</td>
 
@@ -249,7 +251,7 @@
 		  	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
 				<br>
 				<label for="consigneepincode" class=" col-form-label col-form-label-sm" id="consigneepincode">{% trans %}PIN Code :{% endtrans %}</label>
-		  	{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% else %}N/A{% endif %}
+		  	{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% else %} {% endif %}
 				<br>
 				<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
 		 		{% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}

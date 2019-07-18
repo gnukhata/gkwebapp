@@ -99,7 +99,8 @@
 	  {% if gkresult["address"]!=""%}
 			{{ gkresult["address"] }}
 			{% if gkresult["pincode"]!='' %}
-			, {{gkresult["pincode"]}}
+			,{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
+			,
 			{% endif %}
 	  {% else %}
             {% if org["orgaddr"]!='' %}
@@ -109,7 +110,7 @@
               , {{org["orgcity"]}}
 	    {% endif %}
 	    {% if org["orgpincode"] %}
-	      - {{org["orgpincode"]}},
+				-{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %},
             {% endif %}
             {% if org["orgstate"]!='' %}
               , {{org["orgstate"]}}.
@@ -189,7 +190,7 @@
 		  {{ gkresult["custSupDetails"]["custaddr"] }}
 			<br>
 			{% trans %}<b>PIN Code</b>{% endtrans %} :
-		  {{ gkresult["custSupDetails"]["pincode"] }}
+			{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
 
 			<br>
 					    {% if gkresult["inoutflag"] == 9 %}
@@ -225,7 +226,7 @@
 			{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}<br>
 			
 			{% trans %}<b>PIN Code</b> :{% endtrans %}
-			{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% else %}N/A{% endif %}<br>
+			{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% endif %}<br>
 			
 		  {% trans %}<b>State</b>{% endtrans %} :
 		  {% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}<br>

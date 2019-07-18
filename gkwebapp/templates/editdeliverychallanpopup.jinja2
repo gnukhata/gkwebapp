@@ -131,7 +131,9 @@
 	</div>
 	<div class="form-group form-inline">
 	    <label class="col-sm-4 fsize outfield" for="deliverychallan_customerpincode">PIN Code :</label>
-	  <label class="col-sm-8" id="deliverychallan_customerpincode">{{ delchaldata["custSupDetails"]["pincode"] }}</label>
+	  <label class="col-sm-8" id="deliverychallan_customerpincode">
+				{% ifdelchaldata["custSupDetails"]["pincode"] %}{{ delchaldata["custSupDetails"]["pincode"] }}{% endif %}
+					</label>
 	</div>
       </div>
       
@@ -148,7 +150,7 @@
 	</div>
 	<div class="form-group form-inline">
 	  <label for="delchal_statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-	  <label id="delchal_statecodeofconsignee" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneestatecode"] }}{% else %}N/A{% endif %}</label>
+	  <label id="delchal_statecodeofconsignee" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneestatecode"] }}{% endif %}</label>
 	</div>
 	<!-- For VAT -->
 	{% if delchaldata["delchaldata"]["taxflag"] == 22 %}
