@@ -16,6 +16,14 @@
 <form class="form-inline cashborder">
   <br>
   <div class="col-sm-12">
+			<div class="form-inline form-group col-sm-12 nopadding" style="margin-top:1px important!">
+					{% if gkresult["vouchercount"] == 0 %}
+						<label class="alert alert-danger hidden-print pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
+					{% else %}
+					<button type="button" class="btn btn-lng btn-info hidden-print pull-right" id="vouchertransaction" accesskey="v"> <b><u>V</u>iew transactions </b></button>
+					{%endif%}
+			</div>
+			<br>
     <div class="form-group form-inline col-sm-3 nopadding">
       <label class="normal"for="bankname">{% trans %}Cash Memo No{% endtrans %} : </label>
       {{ gkresult["invoiceno"] }}
@@ -366,6 +374,8 @@
 	   </div> -->
       
 
-    </div>
+		</div>
+		<div id="viewvcc">
+			</div>
 </form>
 </body>

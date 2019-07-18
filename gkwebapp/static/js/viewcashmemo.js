@@ -143,4 +143,47 @@ $(document).ready(function() {
                 console.log("complete");
             });
     });
+
+    $("#vouchertransaction").click(function(e){
+        e.preventDefault();
+        
+    });
+
+    $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
+        var invid = $("#record_all_no option:selected").val();
+        event.preventDefault();
+        $.ajax({
+            type: "POST",
+            url: "/invoice?action=showvoucher",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"invid":invid},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp)
+        {
+          $("#viewvcc").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
+          $("#viewvcc").html(resp);
+          $('#myModal').modal('show');
+          $('#myModal').on('shown.bs.modal', function (e)
+          {
+            $(".btnfocus:enabled:first").focus();
+          });
+          $('#myModal').on('hidden.bs.modal', function (e)
+          {
+        	  if($("#hideinp").val()==0)
+        	  {
+            $('.modal-backdrop').remove();
+            $("#viewvcc").html("");
+            $("#submit").click();
+        	  }
+          });
+
+        }
+        });
+});
 });
