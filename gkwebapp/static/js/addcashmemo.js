@@ -102,7 +102,7 @@ $(document).ready(function() {
 			   data: {"invid": invid},
 			   datatype: "text/html",
 			   beforeSend: function(xhr) {
-                               xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 			   }
                        })
 			   .done(function(resp) {
@@ -114,7 +114,8 @@ $(document).ready(function() {
 			       if(inoutflag==9){
 				   $("#printbutton").hide();
 			       }
-			       $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
+                   $("#printbutton").attr("invid",invid); //Sending invid with printbutton; 
+                   
 			       $("#cashmemo_div").html("");
 			   })
 			   .fail(function() {

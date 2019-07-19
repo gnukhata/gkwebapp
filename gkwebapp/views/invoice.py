@@ -331,7 +331,6 @@ def showvoucherininvoice(request):
         vc["totalcr"] = "%.2f"%totalcr
 
         type = vc["vouchertype"]
-        print (vc["vouchertype"])
         projects = requests.get("http://127.0.0.1:6543/projects", headers=header)
         if type=="contra" or type=="journal":
             result1 = requests.get("http://127.0.0.1:6543/accountsbyrule?type=%s"%(type), headers=header)

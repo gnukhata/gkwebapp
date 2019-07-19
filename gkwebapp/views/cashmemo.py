@@ -59,7 +59,6 @@ def showeditcashmemo(request):
 def showsinglecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    print invoicedata.json()["gkresult"]["vouchercount"]
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"]}
 
 
