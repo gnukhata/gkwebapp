@@ -306,8 +306,6 @@ def printlistofcanceledinv(request):
 def showsingleinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    print invoicedata.json()["gkresult"]["pincode"]
-    print invoicedata.json()["gkresult"]["address"]
     return {"gkstatus": invoicedata.json()["gkstatus"],"gkresult": invoicedata.json()["gkresult"],"deleteflag":0}
 
 @view_config(route_name="invoice",request_param="action=showdeletedinv",renderer="gkwebapp:templates/viewsingleinvoice.jinja2")
