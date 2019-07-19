@@ -77,7 +77,7 @@ $(document).ready(function(){
 	}
     });
     //   show pop up
-  $('#sales').tooltip({
+  $('#salesprefdiv').tooltip({
     title : "Accounting entries will be generated automatically on creation of Invoice, Cash Memo and Debit & Credit Notes.",
     placement : "bottom"});
     //Checking flags set according organisation preferences.
