@@ -218,7 +218,8 @@
 		    <label>
 			<label>{% trans %}PIN Code{% endtrans %} :</label>
 		    </label>
-		    {{ gkresult["custSupDetails"]["pincode"] }}
+				{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
+				
 		  </div>
 		</td>
 		<td>
@@ -244,7 +245,7 @@
 			</div>
 			<div class="form-inline form-group  col-xs-12 nopadding">
 		    <label for="consigneepincode" class=" col-form-label col-form-label-sm" id="consigneepincode">{% trans %}PIN Code :{% endtrans %}</label>
-		    {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneepincode"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["delchaldata"]["consignee"] %}{{ gkresult["delchaldata"]["consignee"]["consigneepincode"] }}{% endif %}
 		  </div>
 		  <div class="form-inline form-group col-xs-12 nopadding">
 		    <label for="orgstate">{% trans %}State{% endtrans %} :</label>
