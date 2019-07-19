@@ -132,7 +132,7 @@
 	<div class="form-group form-inline">
 	    <label class="col-sm-4 fsize outfield" for="deliverychallan_customerpincode">PIN Code :</label>
 	  <label class="col-sm-8" id="deliverychallan_customerpincode">
-				{% ifdelchaldata["custSupDetails"]["pincode"] %}{{ delchaldata["custSupDetails"]["pincode"] }}{% endif %}
+				{% if delchaldata["custSupDetails"]["pincode"] %}{{ delchaldata["custSupDetails"]["pincode"] }}{% endif %}
 					</label>
 	</div>
       </div>
