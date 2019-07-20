@@ -3323,6 +3323,7 @@ $("#roundoff_checkbox").change(function(e){
 			var filelist = [];
 			  for (var i = 0; i < files.length; i++) {
 			  if (files[i].type != 'image/jpeg') {
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
 				$("#invoice-number-alert").html("Please upload image in JPG/JPEG format!");
     			$("#invoice-number-alert").alert();
     			$("#invoice-number-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -3335,25 +3336,30 @@ $("#roundoff_checkbox").change(function(e){
 			}
     		if($("#invoice_number").val()=='')
     		{
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
     			$("#invoice-number-alert").alert();
     			$("#invoice-number-alert").fadeTo(2250, 500).slideUp(500, function(){
     				$("#invoice-number-alert").hide();
-    			});
+				});
+				$("#invoice_number").focus();
     			return false;
 			}
 			if($("#chkpaymentmode option:selected").val()=="2")
     		{
 				if(($("#accountno").val()==0) ||($("#bankname").val()=='') ||($("#ifsc").val()=='') ||($("#branchname").val()==''))
-				$("#invoice-number-alert").html("bank details cannot be blank")
+				{
+				$("#invoice-number-alert").html("bank details cannot be blank");
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
 				$("#invoice-number-alert").alert();
     			$("#invoice-number-alert").fadeTo(2250, 500).slideUp(500, function(){
 					$("#invoice-number-alert").hide();
 					$("#invoice-number-alert").html("Invoice no. should not be empty");
     			});
-    			return false;
+				return false;
+				}
     		}		 	
     		if (!Date.parseExact($("#invoice_date").val() + $("#invoice_month").val() + $("#invoice_year").val(), "ddMMyyyy")) {
-				
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
     			$("#invoice-date-alert").alert();
     			$("#invoice-date-alert").fadeTo(2250, 500).slideUp(500, function() {
     				$("#invoice-date-alert").hide();
@@ -3362,7 +3368,8 @@ $("#roundoff_checkbox").change(function(e){
     			return false;
     		}
     		var inv_curdate = Date.parseExact($("#invoice_year").val() + $("#invoice_month").val() + $("#invoice_date").val(), "yyyyMMdd");
-    		if (!inv_curdate.between(financialstart, financialend)) {    			
+    		if (!inv_curdate.between(financialstart, financialend)) {    
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');			
     			$("#invoice-between-date-alert").alert();
     			$("#invoice-between-date-alert").fadeTo(2250, 500).slideUp(500, function() {
     				$("#invoice-between-date-alert").hide();
@@ -3371,6 +3378,7 @@ $("#roundoff_checkbox").change(function(e){
     			return false;
 			}
 			if (curdate.compareTo(inv_curdate) == 1) {
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
 				$("#invdc-date-alert").alert();
 				$("#invdc-date-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#invdc-date-alert").hide();
@@ -3380,13 +3388,14 @@ $("#roundoff_checkbox").change(function(e){
 			}
 			if(($("#originaddress").val()=='') && $("delivery_out").is(":visible")==true)
     		{
+				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
 				$("#invoice-number-alert").html("Address should not be empty!");
     			$("#invoice-number-alert").alert();
     			$("#invoice-number-alert").fadeTo(2250, 500).slideUp(500, function(){
 					$("#invoice-number-alert").hide();
 					$("#invoice-number-alert").html("Invoice no. should not be empty");
 				});
-				
+				$("#originaddress").focus();
     			return false;
     		}
     	}		
