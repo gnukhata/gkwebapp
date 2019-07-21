@@ -1853,6 +1853,12 @@ $(document).ready(function() {
 		$("#Consignee").attr("disabled", false);
 		$("#invoicestate").prop("disabled", false);
 	}
+	if ($("#discountpercent").val() == 1){
+	    $(".discaddon").hide();
+	}
+	else {
+	    $(".discaddon").show();
+	}
     });
 
 	if($("#status").val() == 15){
@@ -2362,11 +2368,9 @@ $(document).ready(function() {
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
 	      if ($("#discountpercent").val() == 1){
 		  $(".discaddon").hide();
-		  $(".discaddon").siblings().width("100%");
 	      }
 	      else {
 		  $(".discaddon").show();
-		  $(".discaddon").siblings().width("80%");
 	      }
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
@@ -3020,6 +3024,12 @@ if (event.which == 13) {
     }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	    $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+	    if ($("#discountpercent").val() == 1){
+		$(".discaddon").hide();
+	    }
+	    else {
+		$(".discaddon").show();
+	    }
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    for (let i = 0; i <= curindex1; i++) {
