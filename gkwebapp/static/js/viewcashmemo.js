@@ -144,7 +144,9 @@ $(document).ready(function() {
             });
     });
 
-    $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
+    // $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
+    $("#vouchertransaction").click(function(event) {
+
         event.preventDefault();
         console.log("ssdsadsadd");
         console.log($("#printbutton").attr("invid"));

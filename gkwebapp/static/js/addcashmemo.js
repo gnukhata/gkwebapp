@@ -1742,17 +1742,72 @@ $(document).off("keyup").on("keyup", function(event) {
 			saveCashMemo(invid,inoutflag);
 		    });
 		    return false;
-		}
-		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
-		    $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
-		    $("#cm-vch-success-alert").alert();
-		    $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
-			$("#cm-vch-success-alert").hide();
-			let invid = resp["gkresult"];
-			saveCashMemo(invid,inoutflag);
-		    });
-		    return false;
-		}
+        }
+        else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+			$("#cm-vch-success-alert").append("Cash Memo saved with corresponding entry no. <a id='link'><u>"+ resp["gkvch"]["vchno"]+"<u></a>");
+			$("#cm-vch-success-alert").alert();
+			let D = 1;
+            let invid = resp["gkresult"];
+            console.log(invid);
+			$("#link").click(function(e){
+				D = 0;
+				e.preventDefault();
+				var id = resp["gkvch"]["vchid"];
+				$("#vouchernumberinput").val(id);
+				$.ajax({
+					type: "POST",
+					url: "/invoice?action=showvoucher",
+					global: false,
+					async: false,
+					datatype: "text/html",
+					data: {"invid":invid},
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					},
+					success: function(resp)
+				{
+                    console.log(resp);
+				  $("#viewvc").html("");
+				  $('.modal-backdrop').remove();
+				  $('.modal').modal('hide');
+				  $("#viewvc").html(resp);
+				  $('#myModal').modal('show');
+				  $('#myModal').on('shown.bs.modal', function (e)
+				  {
+					$(".btnfocus:enabled:first").focus();
+				  });
+				  $('#myModal').on('hidden.bs.modal', function (e)
+				  {
+					  if($("#hideinp").val()==0)
+					  {
+					$('.modal-backdrop').remove();
+					$("#viewvc").html("");
+					$("#submit").click();
+					  }
+					  saveCashMemo(invid,inoutflag);
+				  });
+		
+				}
+				});
+			});
+			$("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+			    $("#cm-vch-success-alert").hide();
+				if (D == 1){
+					saveCashMemo(invid,inoutflag);
+				}
+			});
+			return false;
+		    }
+		// else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
+		//     $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
+		//     $("#cm-vch-success-alert").alert();
+		//     $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+		// 	$("#cm-vch-success-alert").hide();
+		// 	let invid = resp["gkresult"];
+		// 	saveCashMemo(invid,inoutflag);
+		//     });
+		//     return false;
+		// }
 		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		      
 		    $("#cm-vch-failed-alert").alert();
 		    $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
