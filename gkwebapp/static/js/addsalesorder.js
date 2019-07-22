@@ -485,9 +485,15 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    console.log("success");
 		    if(invstate == resp["orgdetails"]["orgstate"]){
-			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]+","+resp["orgdetails"]["orgpincode"]);
+			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]);
 			$("#originaddress").prop("disabled", true);
-		    }else{$("#originaddress").prop("disabled", false);}
+
+			if(resp["orgdetails"]["orgpincode"]){
+				$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
+				$("#originpincode").prop("disabled", true);
+				}else{$("#originpincode").prop("disabled", false);}
+			}else{$("#originaddress").prop("disabled", false);
+			$("#originpincode").prop("disabled", false);}
          	}
             })
             .fail(function() {
@@ -532,8 +538,11 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#status").val()  == 16) {
 		if($("#originaddress").is(":disabled")){
-		    $("#payterms").focus().select();
+			if($("#originpincode").is(":disabled")){
+			$("#payterms").focus().select();}
+			else{$("#originpincode").focus().select();}
 		}
+		else
 		$("#originaddress").focus().select();
 	    }
 	    else {
@@ -1090,16 +1099,7 @@ $(document).ready(function() {
     $("#consigneepincode").keydown(function(event) {
 		if (event.which == 13) {
 			event.preventDefault();
-		if($("#consigneename").val() == "" && $("#consigneepincode").val() != ""){
-		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-		$("#consignee-name-blank-alert").alert();
-		$("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
-		    $("#consignee-name-blank-alert").hide();
-		});
-		$("#consigneename").focus().select();
-		return false;
-		}
-		else if($("#consigneeaddress").val() == "" && $("#consigneepincode").val() != ""){
+			if($("#consigneeaddress").val() == "" && $("#consigneepincode").val() != ""){
 			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 			$("#consignee-add-blank-alert").alert();
 			$("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1108,6 +1108,7 @@ $(document).ready(function() {
 			$("#consigneeaddress").focus().select();
 			return false;
 			}
+			else if($("#consigneeaddress").val() != ""){
 		var pincode_val=($("#consigneepincode").val());
 		var reg = /^[0-9]+$/;
 		if (pincode_val == "") {
@@ -1128,6 +1129,7 @@ $(document).ready(function() {
 			$("#consigneepincode").focus();
 			return false;
 			}
+		}
 
 		if ($("#taxapplicable").val() == 7) {
 			$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
@@ -2738,7 +2740,7 @@ if (event.which == 13) {
           return false;
 	  }
 	
-	if($.trim($('#consigneename').val()) != "" && $.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) == ""){
+	if($.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) == ""){
 		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 		$("#pin-blank-alert").alert();
 		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -2747,6 +2749,7 @@ if (event.which == 13) {
 		$("#consigneepincode").focus();
 		return false;
 	}
+	if($.trim($("#consigneeaddress").val()) != ""){
 	  var pincode_val=($("#consigneepincode").val());
 	  var reg = /^[0-9]+$/;
 		if (!reg.test(pincode_val) || pincode_val.length != 6) {
@@ -2771,7 +2774,9 @@ if (event.which == 13) {
 	      });
 	      $("#gstinconsignee").focus();
   	      return false;
-	  }else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
+	  }
+	}
+	  else if(gstinstring.substring(0, 2) != $("#statecodeofconsignee").text() || !gstinstring.substring(2, 12).match(regExp)  || !gstinstring.substring(12, 15).match(alfhanum)){
 	      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 	      $("#gstin-improper-alert").alert();
 	      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
