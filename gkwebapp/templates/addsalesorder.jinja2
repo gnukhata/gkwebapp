@@ -74,7 +74,17 @@
 
             {% trans %}Please enter Address!{% endtrans %}
 
-          </div>
+					</div>
+					<div class="alert alert-danger" id="pin-blank-alert"  aria-live="rude" role="alert" hidden>
+
+							{% trans %}Please enter PIN Code!{% endtrans %}
+				
+						</div>
+						<div class="alert alert-danger" id="pinval-blank-alert"  aria-live="rude" role="alert" hidden>
+			
+								{% trans %}Please enter proper PIN Code!{% endtrans %}
+					
+							</div>
 	  <div class="alert alert-danger" id="packages-more-alert"  aria-live="rude" role="alert" hidden>
             {% trans %}Number of Packages in schedule must be less than Total Number of Packages!{% endtrans %}
           </div>
@@ -118,7 +128,11 @@
 		  <div class="form-group form-inline">
 		    <label for="originaddress" class="fsize col-md-4">{% trans %}Address :{% endtrans %} <label for="originaddress" style="color:red;font-size:120%;">*</label></label>
 		    <input type="text" id="originaddress" class="form-control input-sm col-sm-8" name="originaddress" size="30"></input>
-		  </div>
+			</div>
+			<div class="form-group form-inline">
+					<label for="originpincode" class="fsize col-md-4">{% trans %}PIN Code :{% endtrans %} <label for="originpincode" style="color:red;font-size:120%;">*</label></label>
+					<input type="text" id="originpincode" class="form-control input-sm col-sm-8" name="originpincode"></input>
+				</div>
 		{% endif %}
 	      </div>
 	      <div class="col-md-6 borderdiv">
@@ -165,6 +179,17 @@
 	      <div class="col-md-6 nopadding">
 		<h4>{% trans %}Details of Receiver | Bill to{% endtrans %} :</h4>
 		<div class="form-group form-inline">
+				<label class="col-sm-4 fsize" for="salesorder_customer">
+						{% trans %}Select party{% endtrans %}:
+				</label>
+				<div class="radio col-sm-8" style="margin-left:-15px; margin-top:-7px ">
+						<label><input type="radio" class="custsupchange" name="csradio" id="custchange" aria-label="Customer"> Customer</label>
+			
+						<label><input type="radio" class="custsupchange" name="csradio" id="supchange" aria-label="Supplier"> Supplier</label>
+					</div>
+				</div>
+		<div class="form-group form-inline">
+
 		  <label class="col-sm-4 fsize" for="salesorder_customer">
 		    {% if status|int == 16 %}
 		      {% trans %}Supplier{% endtrans %} :
@@ -222,6 +247,12 @@
 		  </label>
 		  <label class="col-sm-8 nopadding" id="salesorder_customeraddr" ></label>
 		</div>
+		<div class="form-group form-inline">
+				<label class="col-sm-4 fsize" for="salesorder_customerpincode">
+					{% trans %}PIN Code {% endtrans %} :
+				</label>
+				<label class="col-sm-8 nopadding" id="salesorder_customerpincode" ></label>
+			</div>
 	      </div>
 	      <div class="col-md-6 borderdiv">
 		<h4>Details of Consignee | Ship to: </h4>
@@ -255,7 +286,10 @@
 		  <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
 		  <input type="text" id="consigneeaddress" class="col-sm-8 form-control input-sm" name="consigneeaddress"></input>
 		</div>
-
+		<div class="form-group form-inline">
+				<label for="consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
+				<input type="text" id="consigneepincode" class="col-sm-8 form-control input-sm" name="consigneepincode"></input>
+			</div>
 	      </div>
 	    </div>
 	    <a id="taxapplicablescroll"></a>

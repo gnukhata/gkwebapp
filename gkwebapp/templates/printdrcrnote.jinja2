@@ -72,7 +72,7 @@
           	{% endif %}
 						 {{org["orgcity"]}}
 						{% if org["orgpincode"] %}
-	    				- {{org["orgpincode"]}}
+	- {% if org["orgpincode"] %}{{ org["orgpincode"] }}{% endif %}
 						{% endif %}
 					{% endif %}
           
@@ -267,6 +267,12 @@
 		  </label>
 		  {{ gkresult["custSupDetails"]["custaddr"] }}
 		</div>
+		<div class="form-inline form-group col-sm-12 nopadding">
+		  <label>
+		      {% trans %}PIN code{% endtrans %} :
+			</label>
+	{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
+					</div>
 	      </td>
 	      <tr>
 	  </tbody>

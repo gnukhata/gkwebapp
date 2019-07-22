@@ -92,6 +92,8 @@ def savepurchaseorder(request):
         purchaseorderdata["dateofsupply"] = request.params["dateofsupply"]
     if "address" in request.params:
         purchaseorderdata["address"] = request.params["address"]
+    if "pincode" in request.params:
+        purchaseorderdata["pincode"] = request.params["pincode"]
     if "issuername" in request.params:
         purchaseorderdata["issuername"] = request.params["issuername"]
         purchaseorderdata["designation"] = request.params["designation"]

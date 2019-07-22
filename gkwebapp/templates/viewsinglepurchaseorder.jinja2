@@ -37,6 +37,10 @@
 	  <label for="originaddress">{% trans %}Address{% endtrans %} : </label>
 	  {{ gkresult["address"] }}
 	</div>
+	<div class="form-group form-inline col-sm-12 nopadding">
+			<label for="originaddress">{% trans %}PIN code{% endtrans %} : </label>
+			{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
+		</div>
       {% endif%}
       {% if gkresult["psflag"] == 16 and gkresult["taxflag"] == 7 %}
 	<div class="form-group form-inline col-sm-12 nopadding">
@@ -135,7 +139,13 @@
 	  {% endif %}
 	</label>
 	{{ gkresult["custSupDetails"]["custaddr"] }}
-      </div>
+			</div>
+			<div class="form-inline form-group col-sm-12 nopadding">
+					<label>
+							{% trans %}PIN Code{% endtrans %} :
+					</label>
+			{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
+							</div>
     </div>
     <div class="col-md-6 borderdiv">
       <h4>Details of Consignee | Ship to: </h4>
@@ -166,7 +176,11 @@
       <div class="form-inline form-group  col-sm-12 nopadding">
 	<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Consignee Address{% endtrans %} : </label>
 	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}
-      </div>
+			</div>
+			<div class="form-inline form-group  col-sm-12 nopadding">
+					<label for="consigneepincode" class=" col-form-label col-form-label-sm" id="consigneepincode">{% trans %}PIN Code{% endtrans %} : </label>
+					{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% endif %}
+							</div>
     </div>
   </div>
   {% if gkresult["taxflag"] == 22 %}

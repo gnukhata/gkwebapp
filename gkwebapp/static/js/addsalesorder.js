@@ -52,8 +52,8 @@ $(document).ready(function() {
     } else {
 	$(".gstinfield").show();
 	$(".vatfield").hide();
-    }
-	
+	}
+		
 	$("#moresmall").on('shown.bs.collapse', function(event) {
 		event.preventDefault();
 		$("#smalllink").html('Close <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -558,12 +558,51 @@ $(document).ready(function() {
 		$("#originaddress").focus();
 		return false;
 	    }
-	    $("#payterms").focus().select();
+	    $("#originpincode").focus().select();
 	}
 	else if(event.which ==38){
 	    $("#salesorderstate").focus();
 	}
-    });
+	});
+	    // Key Events for Address in sale salesorder.
+		$("#originpincode").keydown(function(event){
+			if(event.which ==13){
+				if($("#originpincode").val() == ""){
+				$("#address-blank-alert").alert();
+				$("#address-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+					$("#address-blank-alert").hide();
+				});
+				$("#originpincode").focus();
+				return false;
+				}
+				var pincode_val=($("#originpincode").val());
+				var reg = /^[0-9]+$/;
+				if (pincode_val == "") {
+					$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+					$("#pin-blank-alert").alert();
+					$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+						$("#pin-blank-alert").hide();
+					});
+					$("#originpincode").focus();
+					return false;
+						}
+				if (!reg.test(pincode_val) || pincode_val.length != 6) {
+					$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+					$("#pinval-blank-alert").alert();
+					$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#pinval-blank-alert").hide();
+					});
+					$("#originpincode").focus();
+					return false;
+					}
+				$("#payterms").focus().select();
+				
+			}
+			else if(event.which ==38){
+				$("#originaddress").focus();
+			}
+			});
+
     $("#payterms").keydown(function(event){
 	if(event.which ==13){
 	    event.preventDefault();
@@ -571,7 +610,7 @@ $(document).ready(function() {
 	}
 	else if(event.which ==38){
 	    if ($("#status").val() == 16) {
-		$("#originaddress").focus().select();
+		$("#originpincode").focus().select();
 	    }
 	    else{
 		$("#salesorderstate").focus().select();
@@ -672,7 +711,59 @@ $(document).ready(function() {
           $("#salesorder_customer").prop("disabled", true);
 	  $('#salesorder_addcust').click();  //Hitting space from Customer field opens a popup to add customer.
 	}
-    });
+	});
+	
+	function custSupData(urldata){
+		$.ajax({
+			type: "POST",
+			url: urldata,
+			global: false,
+			async: false,
+			datatype: "json",
+			beforeSend: function(xhr) {
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			},
+		success: function(resp) {
+			let custsupdata=resp["customers"]
+			var optionsdiv = $("#salesorder_customer").closest("div");
+			$('#salesorder_customer').empty();
+			
+			optionsdiv.find('select[style*="display: none"]').empty();
+			if($("#status").val()==16){
+				$("#salesorder_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+				$('#salesorder_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+
+			}
+			else{
+				$("#salesorder_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+				$('#salesorder_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+			}
+			
+			for (let i in custsupdata ) {
+				$('#salesorder_customer').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+
+			}
+		}
+	});
+	}
+	$(document).off("change",".custsupchange").on("change",".custsupchange",function(event) {
+		//Checking which radio button is selected.
+			if ($("#custchange").is(":checked")) {
+				custSupData("/customersuppliers?action=getallcusts");
+			
+			} else {
+				custSupData("/customersuppliers?action=getallsups");
+
+				}
+			});
+
     //Change Event for Customer.
     $("#salesorder_customer").change(function(event) {
 	$(".product_name_vat, .product_name_gst").change();
@@ -698,7 +789,8 @@ $(document).ready(function() {
 		    $("#branch").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
 		    $("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
-		    $("#salesorder_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+			$("#salesorder_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
+		    $("#salesorder_customerpincode").text(resp["gkresult"]["pincode"]);  //Pincode of Customer is loaded.			
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
 		    gstins = resp["gkresult"]["gstin"];
@@ -736,7 +828,9 @@ $(document).ready(function() {
 		    $("#branch").val("");
 		    $("#ifsc").val("");
 		    $("#bankname").val("");
-		    $("#salesorder_customeraddr").text("");
+			$("#salesorder_customeraddr").text("");
+		    $("#salesorder_customerpincode").text("");
+			
 		    $("#tin").text("");
 		    $("#gstin").text("");
 		//Calling Modal
@@ -947,13 +1041,7 @@ $(document).ready(function() {
 		$("#consigneeaddress").focus().select();
 		return false;
 	    }
-	    
-	    if ($("#taxapplicable").val() == 7) {
-		$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
-	    }
-	    else {
-		$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field. 
-	    }
+		$("#consigneepincode").focus();
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'slow');
 	}
 	else if (event.which == 38) {
@@ -964,8 +1052,62 @@ $(document).ready(function() {
 		$("#gstinconsignee").focus().select();  //Focus shifts to GSTIN of Consignee.
 	    }
 	}
-    });
+	});
+	
+    $("#consigneepincode").keydown(function(event) {
+		if (event.which == 13) {
+			event.preventDefault();
+		if($("#consigneename").val() == "" && $("#consigneepincode").val() != ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#consignee-name-blank-alert").alert();
+		$("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+		    $("#consignee-name-blank-alert").hide();
+		});
+		$("#consigneename").focus().select();
+		return false;
+		}
+		else if($("#consigneeaddress").val() == "" && $("#consigneepincode").val() != ""){
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#consignee-add-blank-alert").alert();
+			$("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
+				$("#consignee-add-blank-alert").hide();
+			});
+			$("#consigneeaddress").focus().select();
+			return false;
+			}
+		var pincode_val=($("#consigneepincode").val());
+		var reg = /^[0-9]+$/;
+		if (pincode_val == "") {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#pin-blank-alert").alert();
+			$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pin-blank-alert").hide();
+			});
+			$("#consigneepincode").focus();
+			return false;
+				}
+		if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+			$("#pinval-blank-alert").alert();
+			$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pinval-blank-alert").hide();
+			});
+			$("#consigneepincode").focus();
+			return false;
+			}
 
+		if ($("#taxapplicable").val() == 7) {
+			$(".product_name_gst:first").focus().select();  //Focus Shift to Tax Applicable field.
+		}
+		else {
+			$(".product_name_vat:first").focus().select();  //Focus Shift to Tax Applicable field. 
+			}
+		}
+	else if (event.which == 38) {
+		$("#consigneeaddress").focus().select();  //Focus Shift to Tax Applicable field. 
+
+	}
+	});
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
@@ -2545,7 +2687,7 @@ if (event.which == 13) {
 	  return false;
       }
       
-      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "") {
+      if ($.trim($('#consigneename').val()) == "" && ($.trim($("#tinconsignee").val()) != "" || $.trim($("#gstinconsignee").val() != ""))  && $.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) != "") {
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#consignee-name-blank-alert").alert();
           $("#consignee-name-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2553,7 +2695,7 @@ if (event.which == 13) {
           });
           $('#consigneename').focus();
           return false;
-      }else if($.trim($('#consigneename').val()) != "" && $.trim($("#consigneeaddress").val()) == ""){
+      }else if($.trim($('#consigneename').val()) != "" && $.trim($("#consigneeaddress").val()) == "" ){
 	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
           $("#consignee-add-blank-alert").alert();
           $("#consignee-add-blank-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2561,7 +2703,28 @@ if (event.which == 13) {
           });
           $('#consigneeaddress').focus();
           return false;
-      }
+	  }
+	
+	if($.trim($('#consigneename').val()) != "" && $.trim($("#consigneeaddress").val()) != "" && $.trim($("#consigneepincode").val()) == ""){
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		$("#pin-blank-alert").alert();
+		$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#pin-blank-alert").hide();
+		});
+		$("#consigneepincode").focus();
+		return false;
+	}
+	  var pincode_val=($("#consigneepincode").val());
+	  var reg = /^[0-9]+$/;
+		if (!reg.test(pincode_val) || pincode_val.length != 6) {
+		  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+		  $("#pinval-blank-alert").alert();
+		  $("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#pinval-blank-alert").hide();
+		  });
+		  $("#consigneepincode").focus();
+		  return false;
+		  }
 
       var gstinstring = $("#gstinconsignee").val();
       if(gstinstring != ""){
@@ -2591,7 +2754,9 @@ if (event.which == 13) {
 	  consignee["consigneename"] = $.trim($("#consigneename").val());
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
           consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
-          consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
+		  consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
+          consignee["consigneepincode"] = $.trim($("#consigneepincode").val());
+		  
           consignee["consigneestate"] = $.trim($("#consigneestate").val());
           consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
       }
@@ -2790,7 +2955,7 @@ if (event.which == 13) {
 	if (allow == 1){
 		var form_data = new FormData();
 		form_data.append("roundoffflag", roundoffflag);
-	    form_data.append("csid", $("#salesorder_customer option:selected").val());
+		form_data.append("csid", $("#salesorder_customer option:selected").val());
 	    if ($("#togodown option:selected").val() > 0) {
 		form_data.append("togodown", $("#togodown option:selected").val());
 	    }
@@ -2805,6 +2970,8 @@ if (event.which == 13) {
 	    form_data.append("purchaseordertotal", salesordertotal);
 	    if ($("#status").val() == 16) {
 		form_data.append("address", $("#originaddress").val());
+		form_data.append("pincode", $("#originpincode").val());
+
 		form_data.append("issuername", $("#purchaseorder_issuer_name").val());
 		form_data.append("designation", $("#purchaseorder_issuer_designation").val());
 	    }
@@ -2877,7 +3044,7 @@ if (event.which == 13) {
 			    }
 			    else{
 				$("#salesorder_create").click();
-			    }
+				}
                         });
                         return false;
                     } else if (resp["gkstatus"] == 1) {
