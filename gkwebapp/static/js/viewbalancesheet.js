@@ -110,7 +110,7 @@ $(document).ready(function() {
     $("#viewbalsht_today").val(todatearray[2]);
     $("#viewbalsht_tomonth").val(todatearray[1]);
     $("#viewbalsht_toyear").val(todatearray[0]);
-  $("#viewbalsht_today").select();
+  $("#viewbalsht_fromday").select();
   $('input:text:enabled,select:visible').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,select:visible").length;
     var f = $('input:text:enabled,select:visible');
@@ -154,6 +154,39 @@ $(document).ready(function() {
 
   $("#viewbalsht_submit").click(function(event) {
     // --------------------starting validations------------------
+    if ($("#viewbalsht_fromyear").val() ==0||$("#viewbalsht_frommonth").val()==0||$("#viewbalsht_fromday").val()==0) {
+      $("#improperdate-alert").alert();
+      $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#improperdate-alert").hide();
+      });
+      $('#viewbalsht_fromday').focus().select();
+      return false;
+    }
+    var fromdate = $("#viewbalsht_fromyear").val()+$("#viewbalsht_frommonth").val()+$("#viewbalsht_fromday").val();
+    var fstart = Date.parseExact(sessionStorage.yyyymmddyear1,"yyyy-MM-dd");
+    var fend = Date.parseExact(sessionStorage.yyyymmddyear2,"yyyy-MM-dd");
+    if (!Date.parseExact(fromdate,"yyyyMMdd"))
+      {
+        $("#improperdate-alert").alert();
+        $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
+          $("#improperdate-alert").hide();
+        });
+        $("#viewbalsht_fromday").focus();
+        $("#viewbalsht_fromday").select();
+        return false;
+      };
+    if (!Date.parseExact(fromdate,"yyyyMMdd").between(fstart,fend))
+      {
+        $("#betweendate-alert").alert();
+        $("#betweendate-alert").fadeTo(2250, 400).slideUp(500, function(){
+          $("#betweendate-alert").hide();
+        });
+
+        $("#viewbalsht_fromday").focus();
+        $("#viewbalsht_fromday").select();
+        return false;
+
+      }
     if ($("#viewbalsht_toyear").val() ==0||$("#viewbalsht_tomonth").val()==0||$("#viewbalsht_today").val()==0) {
       $("#improperdate-alert").alert();
       $("#improperdate-alert").fadeTo(2250, 400).slideUp(500, function(){
