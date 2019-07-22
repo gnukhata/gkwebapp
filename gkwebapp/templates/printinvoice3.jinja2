@@ -210,29 +210,29 @@
 	<div style="word-wrap: break-word;min-width: 50%;max-width: 50%;float:left;font-size:135%;padding-left: 7%;display: block;">
 	<h5><b>DETAILS OF CONSIGNEE | SHIPPED TO</b></h5>
 					{% trans %}<b>Name</b>{% endtrans %} : 
-			{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% else %}N/A{% endif %}<br>
+			{% if gkresult["consignee"]["consigneename"] %}{{ gkresult["consignee"]["consigneename"] }}{% endif %}<br>
 
 			{% if gkresult["taxflag"] == 22 %}
 				{% trans %}<b>TIN</b>{% endtrans %} :
-		    {% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}<br>
+		    {% if gkresult["consignee"]["tinconsignee"] %}{{ gkresult["consignee"]["tinconsignee"] }}{% endif %}<br>
 		  
 			{% endif %}
 			{% if gkresult["taxflag"] == 7 %}
 				{% trans %}<b>GSTIN</b>{% endtrans %} :
-		    {% if gkresult["consignee"]["gstinconsignee"] %}{{ gkresult["consignee"]["gstinconsignee"] }}{% else %}N/A{% endif %}<br>
+		    {% if gkresult["consignee"]["gstinconsignee"] %}{{ gkresult["consignee"]["gstinconsignee"] }}{% endif %}<br>
 			{% endif %}
 
 			{% trans %}<b>Address</b> :{% endtrans %}
-			{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}<br>
+			{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% endif %}<br>
 			
 			{% trans %}<b>PIN Code</b> :{% endtrans %}
 			{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% endif %}<br>
 			
 		  {% trans %}<b>State</b>{% endtrans %} :
-		  {% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}<br>
+		  {% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% endif %}<br>
 		
 		  {% trans %}<b>State Code</b>{% endtrans %} :
-		  {% if gkresult["consignee"]["consigneestatecode"] %}{{ '%02d' | format(gkresult["consignee"]["consigneestatecode"] | int) }}{% else %}N/A{% endif %}
+		  {% if gkresult["consignee"]["consigneestatecode"] %}{{ '%02d' | format(gkresult["consignee"]["consigneestatecode"] | int) }}{% endif %}
 	</div>
 	</div>
 	</div>
@@ -425,7 +425,7 @@
 		    <label for="transportationmode" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
 		  </td>
 		  <td>
-		    {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["transportationmode"] %}{{ gkresult["transportationmode"] }}{% endif %}
 		  </td>
 		  {% if gkresult["vehicleno"] %}
 		    <td>
@@ -441,7 +441,7 @@
 		    <label for="supply_date">{% trans %}Date of Supply{% endtrans %}:</label>
 		  </td>
 		  <td>
-		    {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% else %}N/A{% endif %}
+		    {% if gkresult["dateofsupply"] %}{{ gkresult["dateofsupply"] }}{% endif %}
 		  </td>
 		</tr>
 	      </tbody>
@@ -464,13 +464,13 @@
 		      <label for="accountno">{% trans %}Account No.{% endtrans %} </label>
 		    </td>
 		    <td>
-		      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% else %}N/A{% endif %}
+		      {% if gkresult["bankdetails"]["accountno"] %}{{ gkresult["bankdetails"]["accountno"] }}{% endif %}
 		    </td>
 		    <td>
 		      <label for="bankname">{% trans %}Bank Name{% endtrans %} </label>
 		    </td>
 		    <td>
-		      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% else %}N/A{% endif %}
+		      {% if gkresult["bankdetails"]["bankname"] %}{{ gkresult["bankdetails"]["bankname"] }}{% endif %}
 		    </td>
 		  </tr>
 		  <tr>
@@ -478,13 +478,13 @@
 		      <label for="branch">{% trans %}Branch Name{% endtrans %} </label>
 		    </td>
 		    <td>
-		      {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% else %}N/A{% endif %}
+		      {% if gkresult["bankdetails"]["branch"] %}{{ gkresult["bankdetails"]["branch"] }}{% endif %}
 		    </td>
 		    <td>
 		      <label for="ifsc">{% trans %}IFSC code{% endtrans %} </label>
 		    </td>
 		    <td>
-		      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% else %}N/A{% endif %}
+		      {% if gkresult["bankdetails"]["ifsc"] %}{{ gkresult["bankdetails"]["ifsc"] }}{% endif %}
 		    </td>
 		  </tr>
 		</tbody>
