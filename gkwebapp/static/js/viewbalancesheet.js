@@ -96,7 +96,7 @@ $(document).ready(function() {
   }
 
 
-  $("#viewbalsht_today").focus(); // set focus on to date on load.
+  $("#viewbalsht_fromday").focus(); // set focus on to date on load.
   $('.viewbalsht_date').autotab('number');
 
 
