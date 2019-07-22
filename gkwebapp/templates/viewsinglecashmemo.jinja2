@@ -18,9 +18,9 @@
   <div class="col-sm-12">
 			<div class="form-inline form-group col-sm-12 nopadding" style="margin-top:1px important!">
 					{% if gkresult["vouchercount"] == 0 %}
-						<label class="alert alert-danger hidden-print pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
+						<label class="alert alert-danger pull-right" >{% trans %}No transaction done yet!{% endtrans %}</label>
 					{% else %}
-					<button type="button" class="btn btn-lng btn-info hidden-print pull-right" id="vouchertransaction" accesskey="v"> <b><u>V</u>iew transactions </b></button>
+					<button type="button" class="btn btn-lng btn-info pull-right" id="vouchertransaction" accesskey="v"> <b><u>V</u>iew transactions </b></button>
 					{%endif%}
 			</div>
 			<br>
@@ -373,10 +373,10 @@
 	   </div>
 	   </div> -->
       
-
+		 <div id="viewvcc">
 		</div>
-		<div id="viewvcc">
-			</div>
+		</div>
+		
 </form>
 <input type="text" id="invid" value="{{ gkresult["invid"] }}" hidden>
 </body>

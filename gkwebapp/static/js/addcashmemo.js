@@ -1748,7 +1748,6 @@ $(document).off("keyup").on("keyup", function(event) {
 			$("#cm-vch-success-alert").alert();
 			let D = 1;
             let invid = resp["gkresult"];
-            console.log(invid);
 			$("#link").click(function(e){
 				D = 0;
 				e.preventDefault();
@@ -1766,7 +1765,6 @@ $(document).off("keyup").on("keyup", function(event) {
 					},
 					success: function(resp)
 				{
-                    console.log(resp);
 				  $("#viewvc").html("");
 				  $('.modal-backdrop').remove();
 				  $('.modal').modal('hide');
@@ -1798,16 +1796,6 @@ $(document).off("keyup").on("keyup", function(event) {
 			});
 			return false;
 		    }
-		// else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 0) {
-		//     $("#cm-vch-success-alert").text("Cash Memo saved with corresponding entry no. "+ resp["gkvch"]["vchno"]);
-		//     $("#cm-vch-success-alert").alert();
-		//     $("#cm-vch-success-alert").fadeTo(2250, 500).slideUp(500, function() {
-		// 	$("#cm-vch-success-alert").hide();
-		// 	let invid = resp["gkresult"];
-		// 	saveCashMemo(invid,inoutflag);
-		//     });
-		//     return false;
-		// }
 		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {		      
 		    $("#cm-vch-failed-alert").alert();
 		    $("#cm-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -1858,6 +1846,55 @@ $(document).off("keyup").on("keyup", function(event) {
         $("#invoice_challanno").focus();
     });
 
+
+    $(document).off("click", "#vouchertransaction").on("click", "#vouchertransaction", function(event) {
+        event.preventDefault();
+        let  invoiceid;
+        if($("#printbutton").attr("invid")){
+            invoiceid = $("#printbutton").attr("invid");
+         }
+        else{
+	    if($("#recordradio").is(":checked")){
+            invoiceid = $("#record_all_no option:selected").val();
+        }
+        else if($("#createradio").is(":checked")){
+            invoiceid = $("#invoice_all_no option:selected").val();
+        }
+    }
+            $.ajax({
+            type: "POST",
+            url: "/invoice?action=showvoucher",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            data: {"invid":invoiceid},
+            beforeSend: function(xhr) {
+                xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+            },
+            success: function(resp)
+        {
+          $("#viewvcc").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
+          $("#viewvcc").html(resp);
+          $('#myModal').modal('show');
+          $('#myModal').on('shown.bs.modal', function (e)
+          {
+            $(".btnfocus:enabled:first").focus();
+          });
+          $('#myModal').on('hidden.bs.modal', function (e)
+          {
+        	  if($("#hideinp").val()==0)
+        	  {
+            $('.modal-backdrop').remove();
+            $("#viewvcc").html("");
+            $("#submit").click();
+        	  }
+          });
+
+        }
+        });
+});
     $(document).off('change', '.invoice_product_freequantity_gst').on('change', '.invoice_product_freequantity_gst', function(event) {
       event.preventDefault();
       /* Act on the event */
