@@ -1740,11 +1740,7 @@ $(document).ready(function() {
                             $("#addproduct-success-alert").fadeTo(2250, 500).slideUp(500, function() {
                                 if (parseInt($("#extrabuttons").val()) == 1) {
                                     $('.modal-backdrop').remove();
-                                    if (sessionStorage.invflag == 1) {
-                                        $("#product").click();
-                                    } else {
-                                        $("#productinmaster").click();
-                                    }
+                                    $("#addProduct").click();
                                 } else {
                                     $("#selectedproductid").val(resp.gkresult);
                                     $("#addproductmodal").modal("hide");
@@ -1757,11 +1753,7 @@ $(document).ready(function() {
                             $("#addservice-success-alert").fadeTo(2250, 500).slideUp(500, function() {
                                 if (parseInt($("#extrabuttons").val()) == 1) {
                                     $('.modal-backdrop').remove();
-                                    if (sessionStorage.invflag == 0) {
-                                        $("#product").click();
-                                    } else {
-                                        $("#productinmaster").click();
-                                    }
+                                    $("#addProduct").click();
                                 } else {
                                     $("#selectedproductid").val(resp.gkresult);
                                     $("#addproductmodal").modal("hide");
