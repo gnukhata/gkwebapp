@@ -1,7 +1,8 @@
-<link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">
+<link href="{{request.static_url('gkwebapp:static/css/drcrnote.css')}}" rel="stylesheet" type="text/css">	
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
    <div class="col-md-12">
+		 <div  class="row col-md-12" id="maindiv">
     <div class="col-md-4">
       {% if gkresult["dctypeflag"] == 3 %}
 	<h4>Credit Note Details: </h4>
@@ -149,7 +150,7 @@
 	</label>
 	{{ gkresult["custSupDetails"]["custaddr"] }}
       </div>
-    </div>
+    </div></div>
     <!-- used end -->
     {% if gkresult["invdata"]["taxflag"] == 22 %}
       <div class="row col-md-12 ">
@@ -474,3 +475,4 @@
    </div>
    </div>
 </form>
+<script>$(".borderdiv").height($("#maindiv").height());</script>

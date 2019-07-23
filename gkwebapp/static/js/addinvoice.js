@@ -40,7 +40,8 @@ $(document).ready(function() {
     //Events that are triggered when the page for creating an invoice is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
-    $('.supplydate').autotab('number');
+	$('.supplydate').autotab('number');
+	$(".borderdiv").height($("#maindivinv").height());	
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.

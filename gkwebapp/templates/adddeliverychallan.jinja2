@@ -85,7 +85,7 @@
 	  
           <form class="form-horizontal" >
 	    <!-- Upper Three Column  -->
-	    <div class="col-md-12 row">
+	    <div class="col-md-12 row" >
 	      <!-- Details Of Delivery in/out -->
 	      <div class="col-sm-12">
 		{% if gkstatus=="in" %}
@@ -189,7 +189,8 @@
 		</div>
               </div>
 
-	      <!-- Details Supplier/Customer -->
+				<!-- Details Supplier/Customer -->
+				<div class="row col-sm-12" id="maindivdc">
 	      <div class="col-md-6 hborderdiv">
 		{% if gkstatus=="in" %}
 		  <h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
@@ -327,7 +328,8 @@
 		  <label for="deliverychallan_consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
 		  <input type="text" id="deliverychallan_consigneepincode" class="col-sm-8 form-control input-sm" name="consigneepincode"></input>
 		</div>
-	      </div>
+				</div>
+				</div>
 	    </div>
 	    <!-- For Page adjust -->
 	    <a id="taxapplicablescroll"></a>

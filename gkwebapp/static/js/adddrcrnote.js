@@ -10,7 +10,8 @@ $(document).ready(function() {
     $("#drcrnote_year").numeric({ negative: false });
     $("#drcrnote_date_ref").numeric({ negative: false });
     $("#drcrnote_month_ref").numeric({ negative: false });
-    $("#drcrnote_year_ref").numeric({ negative: false });
+	$("#drcrnote_year_ref").numeric({ negative: false });
+	$(".borderdiv").height($("#maindiv").height());
 	var usrid = "" ;
 	let lastdrcr = $("#drcrnote_no").val();
 
