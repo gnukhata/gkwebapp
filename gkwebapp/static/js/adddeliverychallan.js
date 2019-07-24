@@ -103,7 +103,6 @@ $(document).ready(function() {
 		event.preventDefault();
 		$("#smalllinkvat").html('Instructions <span class="glyphicon glyphicon-triangle-bottom"></span>');
 	  });
-
     //When focus is on an element which has numtype class entering characters and negative integers is disabled.
     $(document).off('focus', '.numtype').on('focus', '.numtype', function(event) {
 	event.preventDefault();
