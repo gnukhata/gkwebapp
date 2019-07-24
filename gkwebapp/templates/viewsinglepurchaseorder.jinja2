@@ -8,7 +8,7 @@
       <h4>Details of Sales Order: </h4>
     {% endif %}
   </div>
-  <div class="col-sm-12">
+  <div class="col-sm-12" id="maindivviewfirst">
     <div class="col-sm-6 nopadding">
       <div class="form-group form-inline col-sm-12 nopadding">
 	<label class="normal"for="bankname">{% trans %}Order No.{% endtrans %} : </label>
@@ -75,7 +75,7 @@
       {% endif %}
     </div>
   </div>
-  <div class="col-sm-12 hborderdiv" style="margin-top:10px;">
+  <div class="col-sm-12 hborderdiv" style="margin-top:10px;" id="maindivviewsecond">
     <div class="col-md-6 nopadding">
       {% if gkresult["psflag"] == 16 %}
 	<h4>{% trans %}Details of Supplier{% endtrans %} :</h4>
@@ -170,7 +170,7 @@
     </div>
   </div>
   {% if gkresult["taxflag"] == 22 %}
-    <div class="col-md-12" style="margin-top:10px;">
+    <div class="row col-md-12" style="margin-top:10px;">
       <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
       VAT
     </div>
@@ -252,7 +252,7 @@
       </table>
     </div>
   {% else %}
-    <div class="col-md-12">
+    <div class="row col-md-12">
       <div class="col-md-3">
 	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
 	GST
@@ -562,3 +562,7 @@
     {% endif %}
 </form>
 <input type="text" id="attachmentcount" value="{{ gkresult["attachmentcount"] }}" hidden>
+<script> 
+	$(".borderdiv").height($("#maindivviewfirst").height());	
+	$(".borderdiv").height($("#maindivviewsecond").height());	
+	</script>

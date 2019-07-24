@@ -40,6 +40,10 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.salesorderdate').autotab('number');  //Focus shifts from fields among date fields.
 	$('.supplydate').autotab('number');
+	$(".borderdiv").height($("#maindivfirst").height());	
+	$(".borderdiv").height($("#maindivsecond").height());	
+
+
 	let roundoffflag = 0;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
