@@ -21,7 +21,7 @@
 	<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
 			{% trans %}invoice cannot be deleted!{% endtrans %}
 	</div>
-	<div class="col-sm-12" id="maindivinvview">
+	<div class="row col-sm-12" id="maindivviewinv">
     <div class="col-md-4" style="word-wrap: break-word;min-width: 160px;max-width: 30%;">
       {% if gkresult["inoutflag"] == 9 %}
 	<h4>Details of Purchase Invoice: </h4>
@@ -603,7 +603,6 @@
 <input type="text" id="billentrysingleflag" value="{{ gkresult["billentrysingleflag"] }}" hidden>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/numberToWords.js')}}"></script>
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewlistofinvoices.js')}}"></script>
-<!-- <script>$(".borderdiv").height($("#maindivinvview").height());</script> -->
 
 
 

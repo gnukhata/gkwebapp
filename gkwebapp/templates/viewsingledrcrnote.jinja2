@@ -2,7 +2,7 @@
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
    <div class="col-md-12">
-		 <div  class="row col-md-12" id="maindiv">
+		 <div  class="row col-md-12" id="maindrcrdiv">
     <div class="col-md-4">
       {% if gkresult["dctypeflag"] == 3 %}
 	<h4>Credit Note Details: </h4>
@@ -475,4 +475,4 @@
    </div>
    </div>
 </form>
-<script>$(".borderdiv").height($("#maindiv").height());</script>
+<script>$(".borderdiv").height($("#maindrcrdiv").height());</script>

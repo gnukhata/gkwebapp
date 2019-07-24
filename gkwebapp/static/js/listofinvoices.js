@@ -551,6 +551,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 		    $("#printbutton").hide();
         }
         $("#viewinvdiv").show();
+        $(".borderdiv").height($("#maindivviewinv").height());	
 
 		if ($("#attachmentcount").val() > 0) {
 		    $("#viewattachment").show();

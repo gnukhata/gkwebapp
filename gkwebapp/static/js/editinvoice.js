@@ -37,7 +37,7 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');
     $("select:first").focus();
     $("#invoice_editprint, #invoice_addproduct").hide();
-    $(".uploadclass").hide();
+	$(".uploadclass").hide();	
     var tootltiptitle ="Press 'T' to toggle between Original Price, MRP, Last Selling Price and Selling Price.";
     if($("#status").val() == 9){
 	tootltiptitle = "Press 'T' to toggle between Original Price, MRP and Last Purchase Price.";
@@ -2742,7 +2742,8 @@ if (event.which == 13) {
 			    $("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
 			    $('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
-			    $('input, select:not(#invselect)').prop("disabled", true);
+				$('input, select:not(#invselect)').prop("disabled", true);
+				$(".borderdiv").height($("#maindiveditinv").height());	
 			    // Div with buttons is shown.
 			    $("#buttonsdiv").show();
 			    // Checks if there are any attachments and enables/disables viewattachment function.
