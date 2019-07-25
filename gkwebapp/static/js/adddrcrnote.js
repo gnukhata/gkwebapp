@@ -765,7 +765,8 @@ $(document).ready(function() {
 			$("#drcrnote_custsupp_pur").text(resp.invoicedata.custSupDetails["custname"]);
 		    $("#gstin1_pur").text(resp.invoicedata.custSupDetails["custgstin"]);
 		    $("#tin_pur").text(resp.invoicedata.custSupDetails["custtin"]);
-		    $("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
+			$("#drcrnote_custsuppaddr_pur").text(resp.invoicedata.custSupDetails["custaddr"]);
+		    $("#drcrnote_custsuppincode_pur").text(resp.invoicedata.custSupDetails["pincode"]);			
 			$("#drcrnote_state_pur").text(resp.invoicedata.destinationstate);
 			destinationstate = resp.invoicedata.destinationstate;
 			$("#statecodefordrcrnote_pur").text(pad(resp.invoicedata.taxstatecode, 2));
