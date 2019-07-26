@@ -361,11 +361,7 @@ $(document).ready(function() {
             $("#newuom").focus();
         } else if (event.which == 38 && (document.getElementById('adduom').selectedIndex == 1 || document.getElementById('adduom').selectedIndex == 0)) {
             event.preventDefault();
-            if ($("#hsnno").is(":visible")) {
-                $("#hsnno").focus().select();
-            } else {
-                $("#addproddesc").focus().select();
-            }
+            $("#addproddesc").focus().select();
         }
 
         /* Act on the event */
@@ -380,6 +376,24 @@ $(document).ready(function() {
         }
     });
     $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+        // Event for 'Enter' key.
+        if (event.which == 13) {
+            $("#amountdiscount").focus();
+        } else if (event.which == 38) {
+            event.preventDefault();
+            $("#maxprice").focus();
+        }
+    });
+    $(document).off('keydown', '#amountdiscount').on('keydown', '#amountdiscount', function(event) {
+        // Event for 'Enter' key.
+        if (event.which == 13) {
+            $("#percentdiscount").focus();
+        } else if (event.which == 38) {
+            event.preventDefault();
+            $("#saleprice").focus();
+        }
+    });
+    $(document).off('keydown', '#percentdiscount').on('keydown', '#percentdiscount', function(event) {
         // Event for 'Enter' key.
         if (event.which == 13) {
             event.preventDefault();
@@ -410,7 +424,7 @@ $(document).ready(function() {
             }
         } else if (event.which == 38) {
             event.preventDefault();
-            $("#maxprice").focus();
+            $("#amountdiscount").focus();
         }
     });
     $("#godownflag").keydown(function(event) {
@@ -715,7 +729,7 @@ $(document).ready(function() {
         var previndex = curindex - 1;
         if (event.which == 188 && event.shiftKey) {
             if (curindex == 0 && specspresent == 0) {
-                $("#adduom").focus();
+                $("#percentdiscount").focus();
             }
             if (curindex == 0 && specspresent == 1) {
                 $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
