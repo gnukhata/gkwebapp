@@ -188,6 +188,10 @@ def saveproduct(request):
             proddetails["uomid"] = request.params[prd]
         elif prd == "openingstock":
             proddetails["openingstock"] = request.params[prd]
+        elif prd == "amountdiscount":
+            proddetails["amountdiscount"] = request.params[prd]
+        elif prd == "percentdiscount":
+            proddetails["percentdiscount"] = request.params[prd]
         elif prd == "taxes":
             taxes = json.loads(request.params["taxes"])
         elif prd == "godowns":
