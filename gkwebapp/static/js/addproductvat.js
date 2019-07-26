@@ -276,6 +276,26 @@ $("#openingstock").focus(function(event) {
     $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
 	// Event for 'Enter' key.
 	if (event.which == 13) {
+	    $("#amountdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
+    $(document).off('keydown', '#amountdiscount').on('keydown', '#amountdiscount', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    $("#percentdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#saleprice").focus();
+	}
+    });
+    $(document).off('keydown', '#percentdiscount').on('keydown', '#percentdiscount', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
 	    event.preventDefault();
 	    // When specs are present focus shifts to specs table.
 	    if (!$("#specdiv").is(":hidden")) {
@@ -294,7 +314,7 @@ $("#openingstock").focus(function(event) {
 	}
 	else if (event.which==38) {
 	    event.preventDefault();
-	    $("#maxprice").focus();
+	    $("#amountdiscount").focus();
 	}
     });
 $("#godownflag").keydown(function(event){
@@ -936,7 +956,7 @@ $(document).off("keyup",".tax_name").on("keyup",".tax_name",function(event)
   if (event.which==188 && event.shiftKey)
   {
     if (curindex==0 && specspresent==0) {
-      $("#adduom").focus();
+      $("#percentdiscount").focus();
     }
     if (curindex==0 && specspresent==1) {
       $('#spec_table tbody tr:last td:eq(1) input:first').focus().select();
