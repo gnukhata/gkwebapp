@@ -86,7 +86,7 @@ $(document).ready(function()
     {
 	if ($("#viewinvsel").length > 0){
             $(".invhide").show();
-            $("#delete").hide().prop("disabled", true);
+            // $("#delete").hide().prop("disabled", true);
     }
     else {
         $(".invhide").hide();
