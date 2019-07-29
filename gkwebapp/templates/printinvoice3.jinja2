@@ -86,7 +86,7 @@
 	  
 	</div>
   
-
+	<div class="row">
 	<div class="col-xs-9 nopaddng" style="width:100%;border-bottom: 0.3px solid lightgrey;padding-bottom: 1%;">
           <div class="img-thumbnail img-circle " style="float:left">
             <div style="position: relative; padding: 0; cursor: pointer;" type="file">
@@ -97,18 +97,13 @@
 
 	  <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
           <h3>{{org["orgname"]}}</h3>
-<<<<<<< HEAD
+		  <span style="font-weight:bold !important ; font-size:small;">
 	  {% if gkresult["address"]!=""%}
 			{{ gkresult["address"] }}
 			{% if gkresult["pincode"]!='' %}
 			,{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
 			,
 			{% endif %}
-=======
-	  <span style="font-weight:bold !important ; font-size:small;">
-		{% if gkresult["address"]!=""%}
-	    {{ gkresult["address"] }}
->>>>>>> font size of gstin adjusted
 	  {% else %}
             {% if org["orgaddr"]!='' %}
               {{org["orgaddr"]}}
@@ -171,7 +166,7 @@
 
 	<div class="row">
 	<div class="col-xs-9 nopaddng" style="width:100%;width:100%;border-bottom: 0.3px solid lightgrey;padding-bottom: 1%;">
-	<div style="word-wrap: break-word;min-width: 50%;max-width: 50%;float:left;font-size:135%;padding-left: 2%;display: block;">
+	<div style="word-wrap: break-word;min-width: 50%;max-width: 50%;float:left;font-size:135%;display: block;">
 	<h5><b>DETAILS OF RECEIVER | BILLED TO</b></h5>  
 		    {% if gkresult["inoutflag"] == 9 %}
 		      {% trans %}<b>Supplier</b>{% endtrans %} :
@@ -637,7 +632,7 @@
 	  <table style="width:100%">
             <tr>
 	      <td class="text-left">
-	        <div class="col-xs-6">
+	        <div class="col-xs-6"  style="padding-left:0px !important;">
 	          <label for="notes" class="hidden-print">Notes :</label>
                   <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
                   <p class="visible-print" id = "notespara">

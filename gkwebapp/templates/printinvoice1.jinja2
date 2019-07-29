@@ -96,7 +96,14 @@
 	</div>
 	<div class="col-xs-9 nopaddng"style="word-wrap: break-word;min-width: 50%;max-width: 50%; font-size:120%">
 	  
-
+	<h3>{{org["orgname"]}}</h3>
+	<span style="font-weight:bold !important ; font-size:small;">
+	  {% if gkresult["address"]!=""%}
+			{{ gkresult["address"] }}
+			{% if gkresult["pincode"]!='' %}
+			{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
+			,
+			{% endif %}
 	  {% else %}
             {% if org["orgaddr"]!='' %}
               {{org["orgaddr"]}}
@@ -650,7 +657,7 @@
 	  <table style="width:100%">
             <tr>
 	      <td class="text-left">
-	        <div class="col-xs-6">
+	        <div class="col-xs-6" style="padding-left:0px !important;">
 	          <label for="notes" class="hidden-print">Notes :</label>
                   <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
                   <p class="visible-print" id = "notespara">
