@@ -1803,15 +1803,6 @@ $(document).ready(function() {
         }
     });
     /*code for reseting the fields*/
-<<<<<<< HEAD
-    $(document).on('click', '#stockreset', function(event) {
-        event.preventDefault();
-        $("#stocktable tbody").html("");
-        $('#stocktable tbody').append('<tr>' + stkhtml + '</tr>');
-        $("#godown_name").val("").focus();
-    });
-});
-=======
 $(document).on('click', '#stockreset', function(event) {
   event.preventDefault();
     $("#stocktable tbody").html("");
@@ -1951,4 +1942,3 @@ $("#error_print_modal").on('shown.bs.modal', function(event) {
   });
 });
 
->>>>>>> Import product and services done
