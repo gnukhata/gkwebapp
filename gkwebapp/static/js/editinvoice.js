@@ -2963,15 +2963,10 @@ if (event.which == 13) {
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);
 				if ($("#taxapplicable").val() == '22') {
-					$("#smalllinkvat").show();
-					$("#smalllink").hide();
-					$("#smalllinkonlyvat").show();
 				    $("#tinconsignee").val(resp.invoicedata.consignee.tinconsignee);
 				}
 				else if ($("#taxapplicable").val() ==  '7') {
 					$("#gstinconsignee").val(resp.invoicedata.consignee.gstinconsignee);
-					$("#smalllinkvat").hide();
-					$("#smalllink").show();
 				}
 				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 				$("#consigneestate").val(resp.invoicedata.consignee.consigneestate);
@@ -2984,7 +2979,15 @@ if (event.which == 13) {
 				$("#consigneeaddress").val("");
 				$("#consigneestate").val("Andaman and Nicobar Islands");
 				$("#statecodeofconsignee").text("35");
-			    }
+				}
+				if ($("#taxapplicable").val() == '22') {
+					$("#smalllinkvat").show();
+					$("#smalllink").hide();
+					$("#smalllinkonlyvat").show();
+				} else {
+					$("#smalllinkvat").hide();
+					$("#smalllink").show();
+					}
 			    $("#invoicestate").change();
 			    // Loading bank details and other information.
 				$("#totalinvoicevalue").text(resp.invoicedata.invoicetotal);
