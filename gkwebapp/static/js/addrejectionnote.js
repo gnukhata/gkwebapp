@@ -740,7 +740,7 @@ $(document).ready(function() {
 			else{
 			    $("#rejectionnote_godown").attr("data-goid", "");
 			    $("#rejectionnote_godown").val("None");
-			    $("#rejectionnote_consignment").val("None");
+			    // $("#rejectionnote_consignment").val("None");
 			}
 		    }
 		})
