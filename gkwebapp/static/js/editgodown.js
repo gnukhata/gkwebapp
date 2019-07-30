@@ -206,11 +206,11 @@ $(document).ready(function() {
                 },
                 success: function(resp) {
                     if (resp["gkstatus"] == 0) {
+                        $("#reset").click();
                         $('.modal-backdrop').remove();
                         $("#delsuccess-alert").alert();
                         $("#delsuccess-alert").fadeTo(2250, 500).slideUp(500, function() {
                         $("#delsuccess-alert").hide();
-                          $("#godown").click();
                         });
                     } else if (resp["gkstatus"] == 5) {
                         $("#transaction-alert").alert();
