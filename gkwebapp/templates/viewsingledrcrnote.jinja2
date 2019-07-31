@@ -2,6 +2,8 @@
 <form class="form-inline" >
   <input id="status" type="hidden" value="{{ gkresult["inoutflag"] }}">
    <div class="col-md-12">
+			<div class="row col-md-12">
+
 		 <div  class="row col-md-12" id="maindrcrdiv">
     <div class="col-md-4">
       {% if gkresult["dctypeflag"] == 3 %}
@@ -156,7 +158,7 @@
 					</label>
 	{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
 							</div>
-    </div>
+    </div></div>
     <!-- used end -->
     {% if gkresult["invdata"]["taxflag"] == 22 %}
       <div class="row col-md-12 ">
