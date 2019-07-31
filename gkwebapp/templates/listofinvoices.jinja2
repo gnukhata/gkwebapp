@@ -167,6 +167,9 @@
                <th class="smlwrap text-center" >
                   {% trans %}Godown{% endtrans %}
                </th>
+               <th class="mdlwrap text-center" >
+                  {% trans %}Narration{% endtrans %}
+               </th>
                {% if deleteflag == 0 %}
                <th class="smlwrap text-center">
                      {% trans %}Action{% endtrans %}
@@ -190,6 +193,7 @@
             <td class="smlwrap text-right">{{invoice["netamt"]}}</td>
             <td class="smlwrap text-right">{{invoice["taxamt"]}}</td>
             <td class=" smlwrap text-center">{{invoice["godown"]}}</td>
+            <td class="mdlwrap text-center">{{invoice["invoice_narration"]}}</td>
 
             {% if deleteflag == 0 %}               
             <td class="smlwrap text-center">

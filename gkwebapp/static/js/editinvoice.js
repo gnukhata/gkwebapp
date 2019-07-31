@@ -2772,7 +2772,7 @@ if (event.which == 13) {
 		    {
 			if(resp.gkstatus == 0){
 			    // Div that has all fields of invoice is shown.
-			    $("#invdetailsdiv").show();
+				$("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
 			    $('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
 				$('input, select:not(#invselect)').prop("disabled", true);
@@ -3064,7 +3064,8 @@ if (event.which == 13) {
 				$("#bank").hide();
 				$("#cash").show();
 				$("#oncredit").hide();
-			    }
+				}
+				$("#invoice_narration").val(resp.invoicedata.invoice_narration);
 			    //Code for populting organisation's bankdetails in create sale invoice on click event on Bank radio button.
 			    if ($("#status").val() == "15" && resp.invoicedata.paymentmode == "3") {      //Checking whether it is sale invoice or not (15 = sale invoice).
 				if($("#chkpaymentmode option:selected").val()=="2"){
@@ -3134,7 +3135,7 @@ if (event.which == 13) {
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
-	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), select').prop("disabled", false);
+	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), #invoice_narration, select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .delchalfield, .supplydate, .custsupchange").prop("disabled", true);
 	}
@@ -3662,7 +3663,8 @@ if (event.which == 13) {
       //For sales invoice store address.
       if($("#status").val() == 15){
 	  address = $("#originaddress").val();
-      }
+	  }
+	  var invoice_narration=$("#invoice_narration").val();
       var form_data = new FormData();
 	  form_data.append("dcid", $("#invoice_deliverynote option:selected").val());
 	  form_data.append("roundoff",roundoffvalue);
@@ -3684,6 +3686,7 @@ if (event.which == 13) {
       form_data.append("invtotalword", numbertowords);
 	  form_data.append("ewaybillno", $("#ewayBill_no").val());
       form_data.append("av",JSON.stringify(av));
+	  form_data.append("invoice_narration",invoice_narration);
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
 	 let sourcestate = $("#invoice_customerstate").val();
