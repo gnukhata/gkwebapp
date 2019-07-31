@@ -23,7 +23,7 @@ Contributors:
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
 """
 
-from pyramid.view import view_config 
+from pyramid.view import view_config
 import requests, json
 import time
 from pyramid.renderers import render_to_response
