@@ -704,7 +704,7 @@ $(document).ready(function() {
 			    var dict={"-1":"Admin","0":"Manager","1":"Operator","2":"Auditor","3":"Godown In Charge"};
 			    var userrole = dict[resp.invDetails.designation];
 			    $("#issuer_designation").val(userrole);
-			    if(resp["orgdata"]["orgaddr"]){
+			    if(resp["orgdata"]["orgaddr"] && resp.invDetails.sourcestate == resp["orgdata"]["orgstate"]){
 				$("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
 			    }else{
 				$("#invoice_addr").val("");

@@ -101,7 +101,7 @@ $(document).ready(function() {
 	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);
 	}else{
-	    if(resp["orgdata"]["orgaddr"]){
+	    if(resp["orgdata"]["orgaddr"]  && resp.gkresult.rejinvdata.sourcestate == resp["orgdata"]["orgstate"]){
 		$("#invoice_addr").val(resp["orgdata"]["orgaddr"]+","+resp["orgdata"]["orgcity"]+","+resp["orgdata"]["orgstate"]+","+resp["orgdata"]["orgpincode"]);
 	    }else{
 		$("#invoice_addr").val("");
