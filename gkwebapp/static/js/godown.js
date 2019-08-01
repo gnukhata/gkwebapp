@@ -95,6 +95,7 @@ $(document).ready(function() {
         $("#import-success-alert").alert();
         $("#import-success-alert").fadeTo(2250, 400).slideUp(500, function(){
           $("#import-success-alert").hide();
+        $("a[href ='#godown_create']").click();
         });
         return false;
       }
