@@ -60,6 +60,16 @@
         <input type='text' class="form-control input-sm common numtype" name="prodsp"  id="saleprice" maxlength="13" value="{{proddesc["prodsp"]}}">
       </div>
     </div>
+    <div class="row">
+      <div class="form-group col-sm-5">
+        <label for="amountdiscount" class="common">{% trans %}Discout Amount{% endtrans %}:</label>
+        <input type='text' class="form-control text-right input-sm common numtype" id="amountdiscount" maxlength="13" value="{{ proddesc["discountamount"] }}" name="amountdiscount">
+      </div>
+      <div class="form-group col-sm-offset-1 col-sm-5">
+        <label for="percentdiscount" class="common">{% trans %}Discount Percent{% endtrans %}:</label>
+        <input type='text' class="form-control text-right input-sm common numtype" name="percentdiscount"  id="percentdiscount" maxlength="13" value="{{ proddesc["discountpercent"] }}">
+      </div>
+    </div>
     <div id="extsp" class="row">
       <input type="text" id="numberofspecs" value="{{prodspecs|length}}" hidden>
       {% if prodspecs|length > 0 %}
