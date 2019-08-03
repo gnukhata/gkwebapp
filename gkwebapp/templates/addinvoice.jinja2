@@ -400,9 +400,7 @@
 		  <input type="text" class="taxapplicable" id="vat" value="22"  hidden>
 		</div>
                 <div class="col-md-3">
-		  <div class="form-group form-inline">
-                    <label for="discountinpercent"><input type="checkbox" style="margin-right:5px" id="discountinpercent" value="1">{% trans %}Discount in Percent{% endtrans %}</label>
-                  </div>
+		    <input type="text" style="margin-right:5px" id="discountinpercent" value="1" hidden />
 		</div>
 		<div class="col-md-6">
 		  <a data-toggle="collapse" class="pull-right" id="smalllink" style="text-decoration: none" href="#moresmall" >Instructions<span class="glyphicon glyphicon-triangle-bottom"></span></a>
@@ -509,7 +507,16 @@
 		      <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		      <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		      <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		      <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+		      <th class="smvwrap text-center">
+			{% trans %}Discount Amount{% endtrans %}
+			<div class="pull-right dropdown">
+			  <a class="dropdown-toggle btn btn-xs btn-default" style="padding: 2px 2px 2px 2px !important" id="discountbuttonvat" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+			  <ul class="dropdown-menu" role="menu" aria-label="Dropdown to choose whether discount is in amount or percent.">
+			    <li class="active" id="discountinamountvat"role="presentation"><a role="menuitem" href="#">Discount in Amount</a></li>
+			    <li id="discountinpercentvat" role="presentation"><a role="menuitem" href="#">Discount in Percent</a></li>
+			  </ul>
+			</div>
+		      </th>
 		      <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 		      <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 		      <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -626,7 +633,7 @@
 		    </div>
 		    <div class="col-sm-10" style="overflow-x:scroll;">
 		      <div class="row">
-			<table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:160%; max-width:160%">
+			<table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:170%; max-width:170%">
 			  <thead class="bg-primary">
 			    <tr>
 			      <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
@@ -634,7 +641,16 @@
 			      <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			      <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 			      <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-			      <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			      <th rowspan="2" class="smwrap text-center">
+				{% trans %}Discount Amount{% endtrans %}
+				<div class="pull-right dropdown">
+				  <a class="dropdown-toggle btn btn-xs btn-default" style="padding: 2px 2px 2px 2px !important" id="discountbutton" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+				  <ul class="dropdown-menu" role="menu" aria-label="Dropdown to choose whether discount is in amount or percent.">
+				    <li class="active" id="discountinamount"role="presentation"><a role="menuitem" href="#">Discount in Amount</a></li>
+				    <li id="discountinpercent" role="presentation"><a role="menuitem" href="#">Discount in Percent</a></li>
+				  </ul>
+				</div>
+			      </th>
 			      <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 			      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
@@ -656,7 +672,7 @@
 			</table>
 		      </div>
 		      <div class="row">
-			<table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:160%; max-width:160%; overflow-x:hidden;overflow-y:scroll;">
+			<table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:170%; max-width:170%; overflow-x:hidden;overflow-y:scroll;">
 			  <tbody>
 			    <tr>
 			      <td class="mdwrap">
@@ -719,7 +735,7 @@
 			</table>
 		      </div>
 		      <div class="row">
-			<table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:160%; max-width:160%;">
+			<table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:170%; max-width:170%;">
 			  <tfoot>
 			    <tr>
 			      <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
