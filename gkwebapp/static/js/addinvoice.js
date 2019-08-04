@@ -164,7 +164,7 @@ $(document).ready(function() {
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
-        if ($("#discountinpercent").val() == 16){
+        if ($("#discountpercent").val() == 16){
             rowdiscount = (rowqty * rowprice * rowdiscount)/100;
         }
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
@@ -204,7 +204,7 @@ $(document).ready(function() {
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
             let looprowdiscount = 0.00;
-          if ($("#discountinpercent").val() == 16){
+          if ($("#discountpercent").val() == 16){
                 let discountval = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
                 let taxableval = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
                 looprowdiscount = (discountval * taxableval)/100;
@@ -643,8 +643,8 @@ $(document).ready(function() {
     });
 
   $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
-    let discflag = $(this).data("discflag");
-      $("#discountinpercent").val(discflag);
+      let discflag = $(this).data("discflag");
+      $("#discountpercent").val(discflag);
       let curindex = 0;
       if ($(".taxapplicable").val() == 7) {
             curindex = $("#invoice_product_table_gst tbody tr:last").index();
@@ -907,7 +907,6 @@ $(document).ready(function() {
 				var pincode_val=($("#originpincode").val());
 				var reg = /^[0-9]+$/;
 				if(pincode_val == ""){
-					console.log(pincode_val);				
 					$("#pin-blank-alert").alert();
 					$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 					$("#pin-blank-alert").hide();
@@ -3675,8 +3674,8 @@ if (event.which == 13) {
 	  form_data.append("paymentmode",15);
       }
       form_data.append("taxflag", $(".taxapplicable").val());
-      form_data.append("transportationmode", $("#transportationmode").val());
-      form_data.append("discflag", $("#discountinpercent").val());      
+	    form_data.append("transportationmode", $("#transportationmode").val());
+	    form_data.append("discflag", parseInt($("#discountpercent").val()));      
     form_data.append("vehicleno", $("#vehicleno").val());
     form_data.append("inoutflag",inoutflag);  
       var dateofsupply = $.trim($("#supply_date").val() + $("#supply_month").val() + $("#supply_year").val());
