@@ -57,8 +57,10 @@ $(document).ready(function() {
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
 	$('.supplydate').autotab('number');
-	$(".borderdiv").height($("#maindivinv").height());	
 	var gstins;
+    $(".borderdiv").height($("#maindivinv").height());
+    $(".discaddon").hide();
+    $(".discaddon").siblings().width("100%");
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
@@ -644,7 +646,16 @@ $(document).ready(function() {
 
   $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
       let discflag = $(this).data("discflag");
+      $(".discflagfield").toggleClass("active");
       $("#discountpercent").val(discflag);
+      if(discflag == 16){
+	  $(".discaddon").show();
+	  $(".discaddon").siblings().width("80%");
+      }
+      else {
+	  $(".discaddon").hide();
+	  $(".discaddon").siblings().width("100%");
+      }
       let curindex = 0;
       if ($(".taxapplicable").val() == 7) {
             curindex = $("#invoice_product_table_gst tbody tr:last").index();
