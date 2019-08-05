@@ -130,6 +130,9 @@ $(document).ready(function() {
 	var rowqty = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').val()).toFixed(2);
 	var rowprice = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(4) input').val()).toFixed(2);
 	var rowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val()).toFixed(2);
+	if ($("#discountpercent").val() == 16){
+            rowdiscount = (rowqty * rowprice * rowdiscount)/100;
+        }
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(0) select option:selected').attr("gsflag") == 19) {
 	    rowtaxableamount = rowprice - rowdiscount;
@@ -165,7 +168,16 @@ $(document).ready(function() {
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
+	    let looprowdiscount = 0.00;
+            if ($("#discountpercent").val() == 16){
+                let discountval = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
+                let taxableval = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
+                looprowdiscount = (discountval * taxableval)/100;
+            }
+            else{
+                looprowdiscount = parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(5) input').val());
+            }
+	    totaldiscount = totaldiscount + looprowdiscount;
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(6) input').val());
 	    tottaxable = totaltaxable;
 	    totalcgst = totalcgst + parseFloat($('#invoice_product_table_gst tbody tr:eq(' + i + ') td:eq(8) input').val());
@@ -202,7 +214,12 @@ $(document).ready(function() {
 	}
 
 	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+	if ($("#discountpercent").val() == 1){
+	    $('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+	}
+	else {
+	    $('#discounttotal_product_gst').text("");
+	}
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
@@ -250,7 +267,16 @@ $(document).ready(function() {
 	 $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(8) input').val(parseFloat(rowtotal).toFixed(2));
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
-	    totaldiscount = totaldiscount + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+	    let looprowdiscount = 0.00;
+            if ($("#discountpercent").val() == 16){
+                let discountval = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+                let taxableval = parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val()));
+                looprowdiscount = (discountval * taxableval)/100;
+            }
+            else{
+                looprowdiscount = parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(4) input').val());
+            }
+	    totaldiscount = totaldiscount + looprowdiscount;
 	    totaltaxable = totaltaxable + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(5) input').val());
 	    tottaxable = totaltaxable;
 	    totaltax = totaltax + parseFloat($('#invoice_product_table_vat tbody tr:eq(' + i + ') td:eq(7) input').val());
@@ -284,7 +310,12 @@ $(document).ready(function() {
 	    }
 	}
 	//Total of various columns are displayed on the footer.
-	$('#discounttotal_product_vat').val(parseFloat(totaldiscount).toFixed(2));
+	if ($("#discountpercent").val() == 1){
+	    $('#discounttotal_product_vat').show().val(parseFloat(totaldiscount).toFixed(2));
+	}
+	else {
+	    $('#discounttotal_product_vat').hide();
+	}
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
@@ -474,6 +505,29 @@ $(document).ready(function() {
 	}
 	$("#invoicestate").change();
 	});	
+
+    $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
+      let discflag = $(this).data("discflag");
+      $(".discflagfield").toggleClass("active");
+      $("#discountpercent").val(discflag);
+      if(discflag == 16){
+	  $(".discaddon").show();
+	  $(".discaddon").siblings().width("80%");
+      }
+      else {
+	  $(".discaddon").hide();
+	  $(".discaddon").siblings().width("100%");
+      }
+      let curindex = 0;
+      if ($(".taxapplicable").val() == 7) {
+            curindex = $("#invoice_product_table_gst tbody tr:last").index();
+            calculategstaxamt(curindex);
+        }
+        else {
+            curindex = $("#invoice_product_table_vat tbody tr:last").index();
+            calculatevataxamt(curindex);
+        }
+    });
 
     //Key Event for Invoice Date Field.
     $("#invoice_date").keydown(function(event) {
@@ -2981,7 +3035,12 @@ if (event.which == 13) {
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
 				$('.invoice_product_per_price_gst').numeric({ negative: false });
 				$("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
-				$("#discounttotal_product_gst").text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
+				if ($("#discountpercent").val() == 1){
+				    $('#discounttotal_product_gst').text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
+				}
+				else {
+				    $('#discounttotal_product_gst').text("");
+				}
 				$("#taxablevaluetotal_product_gst").text(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totalcgst_product_gst").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#totalsgst_product_gst").text(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
@@ -3028,7 +3087,12 @@ if (event.which == 13) {
 				$("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 				$('.invoice_product_quantity_vat').numeric({ negative: false });
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
-				$("#discounttotal_product_vat").val(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
+				if ($("#discountpercent").val() == 1){
+				    $('#discounttotal_product_vat').show().val(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
+				}
+				else {
+				    $('#discounttotal_product_vat').hide();
+				}
 				$("#taxablevaluetotal_product_vat").val(parseFloat(resp.invoicedata.totaltaxablevalue).toFixed(2));
 				$("#totaltax").val(parseFloat(resp.invoicedata.totaltaxamt).toFixed(2));
 				$("#total_product_vat").val(parseFloat(resp.invoicedata.invoicetotal).toFixed(2));
