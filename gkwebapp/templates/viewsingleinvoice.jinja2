@@ -211,7 +211,9 @@
 	    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+	    <th rowspan="2" class="smwrap text-center">
+	      {% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}
+	    </th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -235,7 +237,7 @@
 		{{ gkresult["invcontents"][product]["priceperunit"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["discount"] }}
+		{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 	      </td>
 	      <td class="smvwrap text-right">
 		{{ gkresult["invcontents"][product]["taxableamount"] }}
@@ -260,7 +262,7 @@
 	    </td>
 	    <!--  Total : ptotal       -->
 	    <td class="smvwrap text-right">
-	      {{ gkresult["totaldiscount"] }}
+	      {{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 	    </td>
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxablevalue"] }}
@@ -290,7 +292,7 @@
     <div class="col-md-12">
       <br>
       <div class="row col-md-12" id="gstproducttable">
-      <div class="col-sm-12 bg-info" style="padding:5px"><small id="txtareahelp" class="row col-sm-12 text-primary form-text text-muted">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</small></div>
+	<div class="col-sm-12 bg-info" style="padding:5px"><small id="txtareahelp" class="row col-sm-12 text-primary form-text text-muted">{% trans %}Please scroll horizontally to see all fields in this table.{% endtrans %}</small></div>
 	<div class="col-sm-10" style="overflow-x:scroll;">
 	  <div class="row">
 	    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
@@ -301,7 +303,9 @@
 		  <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		  <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		  <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+		  <th rowspan="2" class="smwrap text-center">
+		    {% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}
+		  </th>
 		  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		  {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 		  {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
@@ -344,7 +348,7 @@
 		      {{ gkresult["invcontents"][product]["priceperunit"] }}
 		    </td>
 		    <td class="smwrap text-right">
-		      {{ gkresult["invcontents"][product]["discount"] }}
+		      {{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 		    </td>
 		    <td class="smwrap text-right">
 		      {{ gkresult["invcontents"][product]["taxableamount"] }}
@@ -370,7 +374,7 @@
 	      <tfoot>
 		<tr>
 		  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-		  <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}</td>
+		  <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</td>
 		  <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
