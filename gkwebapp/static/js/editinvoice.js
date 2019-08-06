@@ -695,7 +695,6 @@ $(document).ready(function() {
 				var pincode_val=($("#originpincode").val());
 				var reg = /^[0-9]+$/;
 				if(pincode_val == ""){
-					console.log(pincode_val);				
 					$("#pin-blank-alert").alert();
 					$("#pin-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 					$("#pin-blank-alert").hide();
@@ -911,6 +910,15 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 			$("#invoice_customerstate").change();
+
+			if(sessionStorage.vatorgstflag == '7'){
+			$("#invoice_customerstate").empty();
+			for (let i in resp["gkresult"]["statelist"]){
+				$.each(resp["gkresult"]["statelist"][i], function(k, v) {
+				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+				});
+			}
+		}
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
@@ -2852,7 +2860,17 @@ if (event.which == 13) {
 			    $("#invoice_date").val(invoicedate["0"]);
 			    $("#invoice_month").val(invoicedate["1"]);
 			    $("#invoice_year").val(invoicedate["2"]);
-			    $("#invoice_year").blur();
+				$("#invoice_year").blur();
+
+				gstins = resp.invoicedata.custSupDetails.custgstinlist;
+				if(sessionStorage.vatorgstflag == '7'){
+				$("#invoice_customerstate").empty();
+				for (let i in resp.invoicedata.custSupDetails.statelist){
+					$.each(resp.invoicedata.custSupDetails.statelist[i], function(k, v) {
+					$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+					});
+					}
+				}
 			    if ($("#status").val() == 15) {
 				$("#invoicestate").val(resp.invoicedata.sourcestate);
 				$("#statecodeforinvoice").text(pad(resp.invoicedata.sourcestatecode, 2));
@@ -2871,10 +2889,12 @@ if (event.which == 13) {
 				//when supplier state changed
 				$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
 				$("#statecodeofcustomer").text(pad(resp.invoicedata.sourcestatecode, 2));
-			    }
+				}
+
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
 				}
+
 				if(resp.invoicedata.custSupDetails.csflag == 3){
 
 					$('#custchange.custsupchange').prop('checked', true).change();

@@ -1029,14 +1029,15 @@ $(document).ready(function() {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
 			$("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
-			// $("#invoice_customerstate").attr("disabled", false);			
 			$("#invoice_customerstate").change();
+			if(sessionStorage.vatorgstflag == '7'){
 			$("#invoice_customerstate").empty();
 			for (let i in resp["gkresult"]["statelist"]){
 				$.each(resp["gkresult"]["statelist"][i], function(k, v) {
 				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
 				});
 			}	
+			}
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
 		    $("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
@@ -1114,6 +1115,7 @@ $(document).ready(function() {
 	    }
 	}
 	$(".product_name_vat, .product_name_gst").change();
+	$("#Consignee").trigger("change");
     });
     $("#invoice_customerstate").change();
     
