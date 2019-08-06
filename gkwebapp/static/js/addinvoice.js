@@ -56,6 +56,7 @@ $(document).ready(function() {
     $('.invoicedate').autotab('number');  //Focus shifts from fields among date fields.
 	$('.supplydate').autotab('number');
 	$(".borderdiv").height($("#maindivinv").height());	
+	var gstins;
     //Whenever a new row in a table is to be added html for a row is to be appended to table body. Such html is stored in variables.
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();  //HTML for GST Product Table row.
     var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  //HTML for table displaying totals in GST Product Table.
@@ -1027,9 +1028,15 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-			console.log(resp["gkresult"]);
-		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
-		    $("#invoice_customerstate").change();
+			$("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
+			// $("#invoice_customerstate").attr("disabled", false);			
+			$("#invoice_customerstate").change();
+			$("#invoice_customerstate").empty();
+			for (let i in resp["gkresult"]["statelist"]){
+				$.each(resp["gkresult"]["statelist"][i], function(k, v) {
+				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+				});
+			}	
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
 		    $("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
@@ -1039,7 +1046,7 @@ $(document).ready(function() {
 			
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
-			let gstins = resp["gkresult"]["gstin"];
+			gstins = resp["gkresult"]["gstin"];
 		    if (gstins != null && $("#invoice_customerstate option:selected").attr("stateid") in gstins) {
 				  $("#gstin").text(resp["gkresult"]["gstin"][$("#invoice_customerstate option:selected").attr("stateid")]);  
 			//GSTIN is loaded if available.
@@ -1088,12 +1095,12 @@ $(document).ready(function() {
     //Change event for customer state.
     $("#invoice_customerstate").change(function(event) {
 	$("#statecodeofcustomer").text(pad($("#invoice_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
-	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
-	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
-	}
-	else {
-	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
-	}
+	if (gstins != null && $("#invoice_customerstate option:selected").attr("stateid") in gstins) {
+		$("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+		}
+		else {
+		$("#gstin").text('');  //If GSTIN is not available it is set as blank.
+		}
 	if ($(".taxapplicable").val() == 7) {
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
