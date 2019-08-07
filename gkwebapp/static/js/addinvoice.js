@@ -1544,13 +1544,12 @@ $(document).ready(function() {
 		    }).done(function(resp) {
 			console.log("success");
 			if (resp["gkstatus"] == 0) {
-			    $("#invoice_customerstate").val(resp["gkresult"]["state"]);
 			    $("#invoice_customer").change();
-			    $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
+				$("#invoice_supplierstate").val(resp["gkresult"]["state"]);			
 			    $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
 			    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
 			    $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
-			    $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+				$("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);	
 			    //disable Consignee checkbox when delivery note selected and consignee details present 
 			    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
 				$("#Consignee").attr("disabled", true);  }
@@ -1564,8 +1563,22 @@ $(document).ready(function() {
 		    });
 		    $('#invoice_product_table_vat tbody').empty();
 		    $('#invoice_product_table_gst tbody').empty();
-		    $('#invoice_product_table_total tbody').empty();
-		    
+			$('#invoice_product_table_total tbody').empty();
+
+			if(resp["delchal"]["delchaldata"]["inoutflag"] == 15){
+			if(sessionStorage.vatorgstflag == '7'){
+				$("#invoice_customerstate").append('<option value="'+resp["delchal"]["destinationstate"]+'" stateid="'+resp["delchal"]["taxstatecode"]+'">'+resp["delchal"]["destinationstate"]+'</option>');
+			}
+				$("#invoice_customerstate").val(resp["delchal"]["destinationstate"]);
+				$("#invoice_customerstate").change();
+			}
+			else{
+			if(sessionStorage.vatorgstflag == '7'){
+				$("#invoice_customerstate").append('<option value="'+resp["delchal"]["sourcestate"]+'" stateid="'+resp["delchal"]["sourcestatecode"]+'">'+resp["delchal"]["sourcestate"]+'</option>');
+			}
+				$("#invoice_customerstate").val(resp["delchal"]["sourcestate"]);
+				$("#invoice_customerstate").change();
+			}
 		    var totqty = 0;
 		    $.ajax({
 			url: '/invoice?action=getdelinvprods',

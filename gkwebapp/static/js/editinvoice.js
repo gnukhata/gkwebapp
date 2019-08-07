@@ -910,7 +910,6 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 			$("#invoice_customerstate").change();
-
 			if(sessionStorage.vatorgstflag == '7'){
 			$("#invoice_customerstate").empty();
 			for (let i in resp["gkresult"]["statelist"]){
@@ -963,7 +962,7 @@ $(document).ready(function() {
 	//Add Supplier or Customer Option
 			$(this).prop("disabled", true);
 		    $("#invoice_customerstate option:first").prop("selected", true);
-		    $("#invoice_customerstate").change();
+			$("#invoice_customerstate").change();
 		    $("#accountno").val("");
 		    $("#branchname").val("");
 		    $("#ifsc").val("");
@@ -980,12 +979,12 @@ $(document).ready(function() {
     //Change event for customer state.
     $("#invoice_customerstate").change(function(event) {
 	$("#statecodeofcustomer").text(pad($("#invoice_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
-	if ($("#invoice_customerstate option:selected").attr("stateid") in gstins) {
-	       $("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
-	}
-	else {
-	    $("#gstin").text("");  //If GSTIN is not available it is set as blank.
-	}
+	if (gstins != null && $("#invoice_customerstate option:selected").attr("stateid") in gstins) {
+		$("#gstin").text(gstins[$("#invoice_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
+		}
+		else {
+		$("#gstin").text('');  //If GSTIN is not available it is set as blank.
+		}
 	if ($("#taxapplicable").val() == 7) {
 	    if ($("#invoice_customerstate option:selected").val() == $("#invoicestate option:selected").val()) {
 		$(".igstfield").hide();
@@ -998,7 +997,7 @@ $(document).ready(function() {
 	}
 	$(".product_name_vat, .product_name_gst").change();
     });
-    $("#invoice_customerstate").change();
+	$("#invoice_customerstate").change();
 
     //Key down event for Customer State.
     $("#invoice_customerstate").keydown(function(event) {
@@ -1407,13 +1406,12 @@ $(document).ready(function() {
 			    .done(function(resp) {
 				console.log("success");
 				if (resp["gkstatus"] == 0) {
-				    $("#invoice_customerstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_customer").change();
 				    $("#invoice_supplierstate").val(resp["gkresult"]["state"]);
 				    $("#invoice_customeraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_supplieraddr").val(resp["gkresult"]["custaddr"]);
 				    $("#invoice_customertin").val(resp["gkresult"]["custtan"]);
-				    $("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
+					$("#invoice_suppliertin").val(resp["gkresult"]["custtan"]);
 				    //disable Consignee checkbox when delivery note selected and consignee details present 
 				    if($("#invoice_deliverynote option:selected").text()!="" && $("#consigneename").val()!=""){
 					$("#Consignee").attr("disabled", true);  }
@@ -1430,6 +1428,21 @@ $(document).ready(function() {
 			$('#invoice_product_table_vat tbody').empty();
 			$('#invoice_product_table_gst tbody').empty();
 			$('#invoice_product_table_total tbody').empty();
+
+			if(resp["delchal"]["delchaldata"]["inoutflag"] == 15){
+			if(sessionStorage.vatorgstflag == '7'){
+				$("#invoice_customerstate").append('<option value="'+resp["delchal"]["destinationstate"]+'" stateid="'+resp["delchal"]["taxstatecode"]+'">'+resp["delchal"]["destinationstate"]+'</option>');
+			}
+				$("#invoice_customerstate").val(resp["delchal"]["destinationstate"]);
+				$("#invoice_customerstate").change();
+			}
+			else{
+				if(sessionStorage.vatorgstflag == '7'){
+				$("#invoice_customerstate").append('<option value="'+resp["delchal"]["sourcestate"]+'" stateid="'+resp["delchal"]["sourcestatecode"]+'">'+resp["delchal"]["sourcestate"]+'</option>');
+				}
+				$("#invoice_customerstate").val(resp["delchal"]["sourcestate"]);
+				$("#invoice_customerstate").change();
+			}
 			var totqty = 0;
 			$.ajax({
 			    url: '/invoice?action=getdelinvprods',
@@ -2880,6 +2893,7 @@ if (event.which == 13) {
 				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
 				//when customer state changed
 				$("#invoice_customerstate").val(resp.invoicedata.destinationstate);
+				$("#invoice_customerstate").change();
 				$("#statecodeofcustomer").text(pad(resp.invoicedata.taxstatecode, 2));
 			    
 			    }
@@ -2888,6 +2902,7 @@ if (event.which == 13) {
 				$("#statecodeforinvoice").text(pad(resp.invoicedata.taxstatecode, 2));
 				//when supplier state changed
 				$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
+				$("#invoice_customerstate").change();
 				$("#statecodeofcustomer").text(pad(resp.invoicedata.sourcestatecode, 2));
 				}
 
@@ -2917,7 +2932,6 @@ if (event.which == 13) {
 				$("#taxapplicabletext").text('GST');
 				$('#invoice_product_table_gst tbody').empty();
 				$('#invoice_product_table_total tbody').empty();
-				$("#gstin").text(resp.invoicedata.custSupDetails.custgstin);
 				let curindex = 0;
 				$.each(resp.invoicedata.invcontents, function(key, value) {
 				    $('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
