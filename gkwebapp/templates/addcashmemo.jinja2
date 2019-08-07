@@ -141,6 +141,7 @@
             </div>
 
           </div>
+	  <input type="text" style="margin-right:5px" id="discountpercent" value="1" hidden />
           <div class="col-md-2">
             <div class="form-group">
 	      <label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label><br>
@@ -221,7 +222,16 @@
   		<th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
   		<th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
   		<th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-  		<th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+  		<th class="smvwrap text-center">
+		  {% trans %}Discount Amount{% endtrans %}
+		  <div class="pull-right dropdown">
+		    <a class="dropdown-toggle btn btn-xs btn-default" style="padding: 2px 2px 2px 2px !important" id="discountbuttonvat" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+		    <ul class="dropdown-menu" role="menu" aria-label="Dropdown to choose whether discount is in amount or percent.">
+		      <li class="active discflagfield" id="discountinamountvat" role="presentation" data-discflag="1"><a role="menuitem">Discount in Amount</a></li>
+		      <li class="discflagfield" id="discountinpercentvat" role="presentation" data-discflag="16"><a role="menuitem">Discount in Percent</a></li>
+		    </ul>
+		  </div>
+		</th>
   		<th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
   		<th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
   		<th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -265,8 +275,11 @@
 		  {% endif %}
   		</td>
   		<td class="smvwrap">
-  		  <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
-  		</td>
+		  <div class="input-group">
+		    <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+		    <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+		  </div>
+		</td>
 
   		<td class="smvwrap">
   		  <input type="text" class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
@@ -344,7 +357,16 @@
 			<th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			<th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-			<th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			<th rowspan="2" class="smwrap text-center">
+			  {% trans %}Discount Amount{% endtrans %}
+			  <div class="pull-right dropdown">
+			    <a class="dropdown-toggle btn btn-xs btn-default" style="padding: 2px 2px 2px 2px !important" id="discountbutton" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+			    <ul class="dropdown-menu" role="menu" aria-label="Dropdown to choose whether discount is in amount or percent.">
+			      <li class="active discflagfield" id="discountinamountvat" role="presentation" data-discflag="1"><a role="menuitem">Discount in Amount</a></li>
+			      <li class="discflagfield" id="discountinpercentvat" role="presentation" data-discflag="16"><a role="menuitem">Discount in Percent</a></li>
+			    </ul>
+			  </div>
+			</th>
 			<th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 			<th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
@@ -401,7 +423,10 @@
 			  </div>
 			</td>
 			<td class="smwrap">
-			  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+			  <div class="input-group">
+			    <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+			    <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+			  </div>
 			</td>
 			<td class="smwrap">
 			  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
