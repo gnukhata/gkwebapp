@@ -171,8 +171,13 @@ $(document).ready(function() {
         }
 	var rowtaxableamount=(rowqty * rowprice) - rowdiscount; //Taxable amount for each row is calculated.
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) input').is(":disabled") && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').is(":disabled")) {
-	    rowdiscount = (rowprice * rowdiscount)/100;
-	    rowtaxableamount = rowprice - rowdiscount;
+	    if ($("#discountpercent").val() == 16){
+		rowdiscount = (rowprice * rowdiscount)/100;
+		rowtaxableamount = rowprice - rowdiscount;
+	    }
+	    else {
+		rowtaxableamount = rowprice - rowdiscount;
+	    }
 	}
 
 	//Initialising variables for calculating total of Discount, Taxable Amount, Tax Amounts, and Total Amounts.
