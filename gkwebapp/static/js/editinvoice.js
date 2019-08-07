@@ -519,7 +519,7 @@ $(document).ready(function() {
 	  $(".discaddon").siblings().width("100%");
       }
       let curindex = 0;
-      if ($(".taxapplicable").val() == 7) {
+      if ($("#taxapplicable").val() == 7) {
             curindex = $("#invoice_product_table_gst tbody tr:last").index();
             calculategstaxamt(curindex);
         }
@@ -4165,7 +4165,6 @@ $("#chkpaymentmode").change(function(event) {
 	$("#cash").hide();
 	$("#oncredit").hide();
 	if ($("#status").val() == "15" && editflag == 'false') {
-	    console.log("pay",paymentmod);
 	    $('#chkbank').trigger('click');    //trigger click event on bank radio button.
 	}
 	if (editflag == 'false'){
