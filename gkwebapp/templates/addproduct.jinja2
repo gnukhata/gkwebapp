@@ -592,7 +592,9 @@
             A downloadedable sample spreadsheet is available below.<br>
             <b>Please maintain column names in following order:</b><br>
             Product Name(A1), HSN Code(B1), Unit Of Measurement(C1), Mrp(D1), Sale Price(E1), Tax(F1), State(G1), Rate(H1), Godown(I1), Opening Stock(J1) <br>
-            <b>States should be in following format:</b><br>
+            <b>Notes :</b> 1.Unit Of Measurement(C1) field should be blank while importing service.<br>
+                           2.For godown wise opening stock insert godown name in Godown(I1) field,otherwise keep that blank.
+            <br><b>States should be in following format:</b><br>
             {%endtrans %}
             {% for state in states %}
                 {% for key, value in state.items() %}
