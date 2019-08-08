@@ -266,7 +266,7 @@ def getsubgroup(request):
 def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
-    if request.params.has_key("defaultflag"):
+    if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0) :
         gkdata["defaultflag"] = int(request.params["defaultflag"])
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
@@ -316,7 +316,9 @@ def addmultiaccount(request):
     for acc in accdetails:
         gkdata["accountname"]=acc["accountname"]
         gkdata["openingbal"]=acc["openbal"]
-        gkdata["defaultflag"] = int(acc["defaultflag"])
+        if int(acc["defaultflag"]) != 0:
+            gkdata["defaultflag"] = int(acc["defaultflag"])
+
         result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
         if result.json()["gkstatus"] == 0:
             gkdata2 = {"activity":acc["accountname"] + " account created"}
@@ -367,7 +369,7 @@ def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
 
-    if request.params.has_key("defaultflag"):
+    if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0):
         gkdata["defaultflag"] = int(request.params["defaultflag"])
 
     '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
