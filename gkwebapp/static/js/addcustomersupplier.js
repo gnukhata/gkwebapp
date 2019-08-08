@@ -196,8 +196,9 @@ $("#add_state").keydown(function(event) {
     $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
   }
   else if (event.which==190 && event.ctrlKey) {
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
     event.preventDefault();
+
+	$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus().select();
   }
   else if (event.which==13) {
       event.preventDefault();
@@ -283,6 +284,9 @@ $("#add_state").keydown(function(event) {
 		$("#cussup_save").focus();
 		}
 	}
+		else if (event.which==188 && event.ctrlKey) {
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+		}
     });
 
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
