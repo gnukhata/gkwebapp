@@ -62,7 +62,7 @@
 	    <th class="smvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+	    {% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -86,7 +86,7 @@
 		{{ gkresult["invcontents"][product]["priceperunit"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ gkresult["invcontents"][product]["discount"] }}
+		{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 	      </td>
 	      <td class="smvwrap text-right">
 		{{ gkresult["invcontents"][product]["taxableamount"] }}
@@ -111,7 +111,7 @@
 	    </td>
 	    <!--  Total : ptotal       -->
 	    <td class="smvwrap text-right">
-	      {{ gkresult["totaldiscount"] }}
+	      {% if gkresult["discflag"]|int == 1 %}{{ gkresult["totaldiscount"] }}{% endif %}
 	    </td>
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxablevalue"] }}
@@ -143,7 +143,9 @@
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+		    <th rowspan="2" class="smwrap text-center">
+		      {% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}
+		    </th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}CGST{% endtrans %}</th>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="taxwrap text-center">{% trans %}SGST/UTGST{% endtrans %}</th>{% endif %}
@@ -183,7 +185,7 @@
 			{{ gkresult["invcontents"][product]["priceperunit"] }}
 		      </td>
 		      <td class="smwrap text-right">
-			{{ gkresult["invcontents"][product]["discount"] }}
+			{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 		      </td>
 		      <td class="smwrap text-right">
 			{{ gkresult["invcontents"][product]["taxableamount"] }}
@@ -206,7 +208,7 @@
 		<tfoot>
 		  <tr>
 		    <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-		    <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}</td>
+		    <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</td>
 		    <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}

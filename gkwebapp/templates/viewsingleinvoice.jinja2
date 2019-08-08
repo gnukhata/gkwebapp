@@ -23,7 +23,7 @@
 			{%trans %}Invoice{% endtrans%}{{ gkresult["invoiceno"] }}{% trans %} has been deleted.{% endtrans %}
     </div>
 	<div class="alert alert-danger" id="transaction-alert"  aria-live="rude" role="alert" hidden>
-			{% trans %}invoice cannot be deleted!{% endtrans %}
+			{% trans %}Invoice cannot be deleted!{% endtrans %}
 	</div>
 	<div class="row col-sm-12" id="maindivviewinv">
     <div class="col-md-4" style="word-wrap: break-word;min-width: 160px;max-width: 30%;">
@@ -262,7 +262,7 @@
 	    </td>
 	    <!--  Total : ptotal       -->
 	    <td class="smvwrap text-right">
-	      {{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
+	      {% if gkresult["discflag"]|int == 1 %}{{ gkresult["totaldiscount"] }}{% endif %}
 	    </td>
 	    <td class="smvwrap text-right">
 	      {{ gkresult["totaltaxablevalue"] }}
