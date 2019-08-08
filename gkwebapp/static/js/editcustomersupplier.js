@@ -571,7 +571,7 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
 		$(this).focus().select();
 	    }
 	    else{
-		$(this).next('input').focus().select();
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
 		return false;
 	    }
 	}
