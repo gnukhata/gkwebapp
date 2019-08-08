@@ -3445,6 +3445,7 @@ $("#roundoff_checkbox").change(function(e){
 			$("#failure-alert").html("Something went wrong!");
 	var form_data = new FormData();
 	form_data.append("roundoffflag", roundoffflag);
+        form_data.append("discflag", parseInt($("#discountpercent").val()));
 	form_data.append("custid", $("#deliverychallan_customer option:selected").val());
 	form_data.append("dcno", $("#deliverychallan_challanno").val());
 	form_data.append("dcdate", $("#deliverychallan_year").val()+'-'+$("#deliverychallan_month").val()+'-'+$("#deliverychallan_date").val());

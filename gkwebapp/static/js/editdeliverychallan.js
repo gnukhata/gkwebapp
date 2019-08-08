@@ -293,6 +293,12 @@ $(document).ready(function() {
 		$('.unitaddon_qty_gst:eq(' + curindex + '), .unitaddon_freeqty_gst:eq(' + curindex + ')').text(value.uom);
 		$('.invoice_product_per_price_gst:eq(' + curindex + ')').text(value.priceperunit);
 		$('.invoice_product_discount_gst:eq(' + curindex + ')').text(value.discount);
+                if(parseInt(resp.delchaldata.discflag) == 1){
+                    $(".discaddon").hide();
+                }
+                else {
+                    $(".discaddon").show();
+                }
 		$('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').text(value.taxableamount);
 		if(resp.delchaldata.taxname == 'IGST'){
 		    $(".sgstfield").hide();
@@ -355,6 +361,12 @@ $(document).ready(function() {
 		$('.unitaddon_qty_vat:eq(' + curindex + '), .unitaddon_freeqty_vat:eq(' + curindex + ')').text(value.uom);
 		$('.invoice_product_per_price_vat:eq(' + curindex + ')').text(value.priceperunit);
 		$('.invoice_product_discount_vat:eq(' + curindex + ')').text(value.discount);
+                if(parseInt(resp.delchaldata.discflag) == 1){
+                    $(".discaddon").hide();
+                }
+                else {
+                    $(".discaddon").show();
+                }
 		$('.invoice_product_taxablevalue_vat:eq(' + curindex + ')').text(value.taxableamount);
 		$('.invoice_product_tax_rate_vat:eq(' + curindex + ')').text(value.taxrate);
 		$('.invoice_product_tax_amount_vat:eq(' + curindex + ')').text(value.taxamount);
