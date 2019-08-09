@@ -156,7 +156,7 @@ def getallsups(request):
 
 @view_config(route_name='import',request_param='action=cussupimport',renderer='json')
 def cussupimport(request):
-    # try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb=load_workbook(xlsxfile)
@@ -190,8 +190,6 @@ def cussupimport(request):
                         if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                 elif sheet_no==1 and sheetRow[0].value==None and sheetRow[1].value==None and sheetRow[2].value==None and sheetRow[3].value==None and sheetRow[4].value==None and sheetRow[5].value==None and sheetRow[6].value==None and sheetRow[7].value==None and sheetRow[8].value!=None and sheetRow[9].value==None and sheetRow[10].value==None and sheetRow[11].value==None and sheetRow[12].value==None:
-                        print str(sheetRow[8].value)[:2]
-                        print str(sheetRow[8].value)[2:]
                         if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                 else:
@@ -292,12 +290,12 @@ def cussupimport(request):
                     bank_dict={"ifsc":sheetRow[12].value,"bankname":sheetRow[10].value,"accountno":sheetRow[9].value,"branchname":sheetRow[11].value}
                     cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag, "bankdetails":bank_dict}
                 result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cussupDict),headers=header)
-                result=result.json()
-                if result["gkstatus"]==1:
+                
+                if result.json()["gkstatus"]==1:
                     dupFlag=True
                     dupList.append(sheetRow[0].coordinate)
-                elif result["gkstatus"]!=0:
-                    return {"gkstatus":result["gkstatus"]}
+                elif result.json()["gkstatus"]!=0:
+                    return {"gkstatus":result.json()["gkstatus"]}
             if dupFlag==True:
                 errorRowKey=str(ws[sheet_no])
                 for errorCell in dupList:
@@ -312,5 +310,5 @@ def cussupimport(request):
         if dupFlag==True:
             return {"gkstatus":6,"errorTuples":errorTuples,"errorRows":errorRows,"dupFlag":dupFlag}
         return {"gkstatus":0}
-    # except:
-    #     return {"gkstatus":3}
+    except:
+        return {"gkstatus":3}

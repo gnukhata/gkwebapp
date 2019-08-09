@@ -1013,13 +1013,11 @@ $(document).ready(function() {
                             $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function() {
                                 $("#cus-success-alert").hide();
                             });
-
                         } else {
                             $("#sup-success-alert").alert();
                             $("#sup-success-alert").fadeTo(2250, 500).slideUp(500, function() {
                                 $("#sup-success-alert").hide();
                             });
-
                         }
                         $('#custsupmodal').modal('hide');
                         $('.modal-backdrop').remove();
