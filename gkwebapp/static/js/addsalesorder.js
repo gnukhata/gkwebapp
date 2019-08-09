@@ -835,16 +835,13 @@ $(document).ready(function() {
 		    $("#salesorder_customerpincode").text(resp["gkresult"]["pincode"]);  //Pincode of Customer is loaded.			
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
         //All GSTINs of this customer are
-		    gstins = resp["gkresult"]["gstin"];
-        if ($("#salesorder_customer option:selected").attr("custid") in gstins) {
+			gstins = resp["gkresult"]["gstin"];
+        if (gstins != null &&  $("#salesorder_customerstate option:selected").attr("stateid") in gstins) {
       	       $("#gstin").text(resp["gkresult"]["gstin"][$("#salesorder_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
       	}
       	else {
       	    $("#gstin").text('');  //If GSTIN is not available it is set as blank.
       	}
-		    //GSTIN of customer in default state is selected.
-		    $("#gstin").text(resp["gkresult"]["gstin"][$("#salesorder_customerstate option:selected").attr("stateid")]);
-
 		    //State Code of Customer State is loaded.
 		    $("#statecodeofcustomer").text(pad($("#salesorder_customerstate option:selected").attr("stateid"), 2));
 		    //Consignee State is synced with Customer State.
@@ -884,7 +881,7 @@ $(document).ready(function() {
     //Change event for customer state.
     $("#salesorder_customerstate").change(function(event) {
 	$("#statecodeofcustomer").text(pad($("#salesorder_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
-	if ($("#salesorder_customerstate option:selected").attr("stateid") in gstins) {
+	if (gstins != null && $("#salesorder_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#salesorder_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
 	else {
