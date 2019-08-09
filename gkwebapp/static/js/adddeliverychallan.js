@@ -3386,7 +3386,7 @@ $("#roundoff_checkbox").change(function(e){
 				$('#invoice_date').focus().select();
 				return false;
 			}
-			if(($("#originaddress").val()=='') && $("delivery_out").is(":visible")==true)
+			if(($("#originaddress").val()=='') && $("#delivery_out").is(":visible")==true)
     		{
 				$("#confirm_yes .modal-body").animate({scrollTop: 0},'slow');
 				$("#invoice-number-alert").html("Address should not be empty!");
