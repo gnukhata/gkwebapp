@@ -1023,7 +1023,7 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
     $("#cussup_edit_save").show();
     $("#edit_cussup_reset").show();  
 	$("#textareahelp1").show();
-	$(".state_del").hide();
+	$(".state_del").show();
     $("#edit_cussup").prop("disabled", true);
     $("#edit_cussup_list").focus().select();
     $("#edit_cussup_name").prop("disabled", false);
