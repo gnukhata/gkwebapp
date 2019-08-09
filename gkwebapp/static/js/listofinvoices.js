@@ -549,7 +549,10 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 
 		if (inoutflag == '9') {
 		    $("#printbutton").hide();
-        }
+                }
+                else {
+                    $("#inv_rec").css("margin-right", "0px");
+                }
         $("#viewinvdiv").show();
         $(".borderdiv").height($("#maindivviewinv").height());	
 
