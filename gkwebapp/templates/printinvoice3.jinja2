@@ -133,10 +133,8 @@
             <span style="font-weight:bold !important; font-size:small;"> Website :</span><span style=" font-size:small;">{{org["orgwebsite"]}}</span> 
           {% endif %}
 	  {% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
-	    <div class="form-group form-inline col-sm-12 nopadding">
-	      <label for="orgstategstin" style="font-weight:bold !important ; font-size:small !important;">{% trans %}GSTIN{% endtrans %} : </label>
-	      {% if org["orgstategstin"] %}{{ org["orgstategstin"] }}{% endif %}
-	    </div>
+	    <br/>
+            <span style="font-weight:bold !important; font-size:small;">{% trans %}GSTIN{% endtrans %} : </span><span style=" font-size:small;">{% if org["orgstategstin"] %}{{ org["orgstategstin"] }}{% endif %}</span>
 	  {% endif %}
 		</div>
 
@@ -508,7 +506,7 @@
  
 	    <div class="row hborderdiv gstfield sgstfield">
 	      <div class="col-sm-6">
-		<label for="taxableamount" style="font-size:110% !important;font-weight:bold !important;">{% trans %}boldmount{% endtrans %} :</label>
+		<label for="taxableamount" style="font-size:110% !important;font-weight:bold !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
 	      </div>
 	      <div class="col-sm-6 text-right">
 		<label id="taxableamount" style="font-size:110% !important; font-weight:normal; !important">{{ gkresult["totaltaxablevalue"] }}</label>
@@ -622,8 +620,8 @@
   </div>
 	<div class="text-center">
 			{% if gkresult["invoicetotalword"]!= None %}
-	      <label for="totalValueInWord" style="font-size:140% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-	      <i><label id="totalValueInWord"  style="font-size:140% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+	      <label for="totalValueInWord" style="font-size:160% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+	      <i><label id="totalValueInWord"  style="font-size:160% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
 	{% endif %}
 	</div>
 	<br>

@@ -130,10 +130,8 @@
             <span style="font-weight:bold !important; font-size:small;"> Website :</span><span style=" font-size:small;">{{org["orgwebsite"]}}</span> 
           {% endif %}
 	  {% if gkresult["inoutflag"] == 15 and gkresult["taxflag"] == 7 %}
-	    <div class="form-group form-inline col-sm-12 nopadding">
-	      <label for="orgstategstin" style="font-weight:bold !important; font-size:small !important;">{% trans %}GSTIN{% endtrans %} : </label>
-	      {% if org["orgstategstin"] %}{{ org["orgstategstin"] }}{% endif %}
-	    </div>
+	    <br/>
+            <span style="font-weight:bold !important; font-size:small;">{% trans %}GSTIN{% endtrans %} : </span><span style=" font-size:small;">{% if org["orgstategstin"] %}{{ org["orgstategstin"] }}{% endif %}</span>
 	  {% endif %}
 	</div>
 	<div style="float:right;font-size:150%;padding-right:1%">
@@ -647,10 +645,10 @@
 		 <div class="row hborderdiv" style="border-bottom-style:solid;">
 	    <div class="form-group form-inline">
 	      <div class="col-sm-6">
-			<label for="totalinvoicevalueroundoff"  style="font-size:110% !important;font-weight:bold!important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
+			<label for="totalinvoicevalueroundoff"  style="font-size:160% !important;font-weight:bold!important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
 		      </div>
 		      <div class="col-sm-6 text-right">
-			<label style="font-size:110% !important; font-weight:normal !important">{{ gkresult["roundoffvalue"] }}</label>
+			<label style="font-size:160% !important; font-weight:normal !important">{{ gkresult["roundoffvalue"] }}</label>
 		      </div>
 	    </div>
 	   </div>
