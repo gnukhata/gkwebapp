@@ -157,7 +157,6 @@ def getallsups(request):
 @view_config(route_name='import',request_param='action=cussupimport',renderer='json')
 def cussupimport(request):
     # try:
-        print "ok"
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb=load_workbook(xlsxfile)
@@ -219,7 +218,7 @@ def cussupimport(request):
                             sheetErrors.append(sheetRow[7].coordinate)
                     # GST
                     if sheetRow[8].value!=None:
-                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[0-9]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                     # for suppliers
                     if sheet_no==1:
