@@ -1087,7 +1087,7 @@ def ProductImport(request):
         godownflag=False
         taxes=[]
         tax={}
-        gstrate=["5","8","12","28"]
+        gstrate=["5","18","12","28"]
         gkdata=[]
         errorlist=[]
         duplicateFlag=False
