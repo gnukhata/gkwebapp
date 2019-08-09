@@ -187,10 +187,12 @@ def cussupimport(request):
             for sheetRow in sheetList[1:]:
                 # if only GSTIN is present
                 if sheet_no==0 and sheetRow[0].value==None and sheetRow[1].value==None and sheetRow[2].value==None and sheetRow[3].value==None and sheetRow[4].value==None and sheetRow[5].value==None and sheetRow[6].value==None and sheetRow[7].value==None and sheetRow[8].value!=None:
-                        if int(str(sheetRow[8].value)[:2]) not in statecodeList and not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                 elif sheet_no==1 and sheetRow[0].value==None and sheetRow[1].value==None and sheetRow[2].value==None and sheetRow[3].value==None and sheetRow[4].value==None and sheetRow[5].value==None and sheetRow[6].value==None and sheetRow[7].value==None and sheetRow[8].value!=None and sheetRow[9].value==None and sheetRow[10].value==None and sheetRow[11].value==None and sheetRow[12].value==None:
-                        if int(str(sheetRow[8].value)[:2]) not in statecodeList and not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-Z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                        print str(sheetRow[8].value)[:2]
+                        print str(sheetRow[8].value)[2:]
+                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                 else:
                     # name
@@ -218,7 +220,7 @@ def cussupimport(request):
                             sheetErrors.append(sheetRow[7].coordinate)
                     # GST
                     if sheetRow[8].value!=None:
-                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[0-9]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
+                        if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                             sheetErrors.append(sheetRow[8].coordinate)
                     # for suppliers
                     if sheet_no==1:
