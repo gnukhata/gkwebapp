@@ -1131,7 +1131,7 @@ $("#invoice_date").keydown(function(event) {
 	    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
 	    //All GSTINs of this customer are
 	    gstins = resp["gkresult"]["gstin"];
-            if ($("#deliverychallan_customer option:selected").attr("custid") in gstins) {
+            if (gstins != null && $("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
       		$("#gstin").text(resp["gkresult"]["gstin"][$("#deliverychallan_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
       	    }
       	    else {
@@ -1170,7 +1170,7 @@ $("#invoice_date").keydown(function(event) {
     //Change Event for 'Supplier/customer' state.
     $("#deliverychallan_customerstate").change(function(event) {
 	$("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));  //State code is loaded.
-	if ($("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
+	if (gstins != null && $("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
 	       $("#gstin").text(gstins[$("#deliverychallan_customerstate option:selected").attr("stateid")]);  //GSTIN is loaded if available.
 	}
 	else {
