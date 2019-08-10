@@ -36,7 +36,16 @@ $(document).ready(function() {
 	if(sessionStorage.cussup == 0){
 	$("#add_cussup input:radio[value=19]").click();
 	}
-
+	
+    $("#moresmall").on('shown.bs.collapse', function(event) {
+        event.preventDefault();
+        $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
+    });
+    $("#moresmall").on('hidden.bs.collapse', function(event) {
+        event.preventDefault();
+        $("#smalllink").html('See more. <span class="glyphicon glyphicon-triangle-bottom"></span>');
+	});
+	
     $("#add_cussup input:radio").change(function(event) {
 	event.preventDefault();
 	if($("#add_cussup input:radio:checked").val() == '3'){
@@ -191,13 +200,29 @@ $("#add_state").keydown(function(event) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex+') td:eq(0) select').focus().select();
   }
+  else if(event.which==188 && event.shiftKey)
+  	{
+	event.preventDefault();
+	if(curindex == 0){
+		$("#add_cussup_pan").focus();
+	}
+	else{
+	$('#gstintable tbody tr:eq('+previndex+') td:eq(0) select').focus().select();
+	}
+  	}
     else if (event.which==188 && event.ctrlKey) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input').focus().select();
   }
   else if (event.which==190 && event.ctrlKey) {
-    $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input').focus().select();
     event.preventDefault();
+
+	if ($.trim($("#add_cussup_pan").val()) !="") {
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+		 }
+		 else {
+		  $('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:eq(1)').focus();
+		 }
   }
   else if (event.which==13) {
       event.preventDefault();
@@ -260,6 +285,7 @@ $("#add_state").keydown(function(event) {
     $(document).off("keydown", ".panno").on("keydown", ".panno", function(event) {
 	var curindex = $(this).closest('tr').index();
 	var previndex = curindex-1;
+	var nextindex = curindex+1;
 	panno = $(this).val();
 	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
@@ -271,7 +297,7 @@ $("#add_state").keydown(function(event) {
 		$(this).focus().select();
 	    }
 	    else{
-		$(this).next('input').focus().select();
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
 		return false;
 	    }
 	}
@@ -283,6 +309,22 @@ $("#add_state").keydown(function(event) {
 		$("#cussup_save").focus();
 		}
 	}
+		else if (event.which==188 && event.ctrlKey) {
+		$('#gstintable tbody tr:eq('+curindex+') td:eq(0) select').focus();
+		}
+		else if (event.which==190 && event.ctrlKey) {
+			$('#gstintable tbody tr:eq('+curindex+') td:eq(1) input:last').focus();
+			}
+		else if(event.which==190 && event.shiftKey){
+			  event.preventDefault();
+			  $('#gstintable tbody tr:eq('+nextindex+') td:eq(1) input:eq(1)').focus();
+			}
+		else if(event.which==188 && event.shiftKey){
+			  event.preventDefault();
+			  if(curindex != 0){
+			  $('#gstintable tbody tr:eq('+previndex+') td:eq(1) input:eq(1)').focus();
+			  }
+				}
     });
 
     $(document).off("change",".gstin").on("change",".gstin",function(event) {
@@ -355,20 +397,25 @@ $("#add_state").keydown(function(event) {
   else if(event.which==190 && event.shiftKey)
   {
     event.preventDefault();
-    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(1) input').focus().select();
+    $('#gstintable tbody tr:eq('+nextindex1+') td:eq(1) input').focus();
   }
   else if (event.which==188 && event.shiftKey)
   {
     if(previndex1>-1)
     {
       event.preventDefault();
-      $('#gstintable tbody tr:eq('+previndex1+') td:eq(1) input').focus().select();
+      $('#gstintable tbody tr:eq('+previndex1+') td:eq(1) input:eq(2)').focus();
     }
   }
   else if (event.ctrlKey && event.which==188) {
-    event.preventDefault();
-    $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
+	event.preventDefault();
+	if($('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').is(":disabled")){
+	$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select').focus();
   }
+  else{
+	$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
+  }
+}
   else if (event.which==190 && event.ctrlKey) {
     event.preventDefault();
     $('#gstintable tbody tr:eq('+nextindex1+') td:eq(0) select').focus();
