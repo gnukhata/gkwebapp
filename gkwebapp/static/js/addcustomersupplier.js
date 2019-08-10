@@ -1010,24 +1010,7 @@ if($("#vatorgstflag").val() == '22'){
 	      .done(function(resp) {
 		  if(resp["gkstatus"] == 0){
 		      allow = 0;
-		      $.ajax(
-			  {
-
-			      type: "POST",
-			      url: "/addaccount",
-			      global: false,
-			      async: false,
-			      datatype: "json",
-			      data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
-			      beforeSend: function(xhr)
-			      {
-				  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-			      },
-			      success: function(resp)
-			      {
-				  if(resp["gkstatus"]==0)
-				  {
-					  $("#customersupplier_create").click();
+			  $("#customersupplier_create").click();
 				      $("#add_cussup input:radio:checked").val(csflag);
 				      if (custsupdata == '3') {
 					  $("#cus-success-alert").alert();
@@ -1046,11 +1029,6 @@ if($("#vatorgstflag").val() == '22'){
 				      $('#custsupmodal').modal('hide');
 				      $('.modal-backdrop').remove();
 				      return false;
-				  }
-			      }
-			  }
-		      );
-		      return false;
 		  }
 		  if(resp["gkstatus"] ==1){
 		      // gkstatus 1 implies its a duplicate entry.
