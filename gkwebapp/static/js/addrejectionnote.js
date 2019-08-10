@@ -892,6 +892,7 @@ $(document).ready(function() {
 
     $("#rejectionnote_save").click(function(event) {       // save event to save rejection note.
 	event.stopPropagation();
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	// below are all the validation checks
 	if (!($("#rejectionnote_invoice").val()) && !($("#rejectionnote_deliverynote").val())) {
 	    $("#dcinv-blank-alert").alert();
