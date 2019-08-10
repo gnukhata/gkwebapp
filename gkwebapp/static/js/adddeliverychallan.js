@@ -1137,9 +1137,7 @@ $("#invoice_date").keydown(function(event) {
       	    else {
       		$("#gstin").text('');  //If GSTIN is not available it is set as blank.
       	    }
-	    //GSTIN of customer in default state is selected.
-	    $("#gstin").text(resp["gkresult"]["gstin"][$("#deliverychallan_customerstate option:selected").attr("stateid")]);
-	    
+
 	    //State Code of Customer State is loaded.
 	    $("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));
 	    
