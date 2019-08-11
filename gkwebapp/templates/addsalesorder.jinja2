@@ -130,18 +130,18 @@
 		    <input type="text" id="originaddress" class="form-control input-sm col-sm-8" name="originaddress" size="30"></input>
 			</div>
 			<div class="form-group form-inline">
-					<label for="originpincode" class="fsize col-md-4">{% trans %}PIN Code :{% endtrans %} <label for="originpincode" style="color:red;font-size:120%;">*</label></label>
-					<input type="text" id="originpincode" class="form-control input-sm col-sm-8" name="originpincode"></input>
-				</div>
+			  <label for="originpincode" class="fsize col-md-4">{% trans %}PIN Code :{% endtrans %} <label for="originpincode" style="color:red;font-size:120%;">*</label></label>
+			  <input type="text" id="originpincode" class="form-control input-sm col-sm-8" name="originpincode"></input>
+			</div>
+		{% endif %}
+		{% if resultgstvat != '22' %}
+		  <div class="form-group form-inline">
+		    <label class="fsize gstinfield col-sm-4" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
+		    <label class="nopadding fsize gstinfield" id="orggstin"></label>
+		  </div>
 		{% endif %}
 	      </div>
 	      <div class="col-md-6 borderdiv">
-		  {% if resultgstvat != '22' %}
-		    <div class="form-group form-inline" hidden>
-		      <label class="fsize gstinfield col-sm-4" for="orggstin">{% trans %}GSTIN{% endtrans %} :</label>
-		      <label class="nopadding fsize gstinfield" id="orggstin"></label>
-		    </div>
-		  {% endif %}
          	  <div class="form-group form-inline">
          	    <label for="payterms" class="col-sm-4">{% trans %}Terms{% endtrans %} :</label>
          	    <input id="payterms" type="text" class="form-control input-sm col-sm-8" name="payterms" size="30"></input>
