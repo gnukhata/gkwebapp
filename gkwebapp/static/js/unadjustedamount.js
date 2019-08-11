@@ -245,8 +245,17 @@ $(document).ready(function() {
 	$("#invtable tbody tr:eq("+curindex1+") td:eq(3)").html('<div class="form-control">'+parseFloat(originalvalue).toFixed(2)+'</div>');
       }
       else {
+	//Alert is displayed if voucher is not selected.
+	if ($("#invtable tbody tr.selected").length < 1) {
+	  $(".alert").hide();
+	  $("#bwnovoucher-alert").alert();
+	  $("#bwnovoucher-alert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#bwnovoucher-alert").hide();
+	  });
+	  return false;
+	}
 	//Whenever Amount Adjusted is greater than Amount Pending alert is displayed.
-	if (parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(4) input").val()) > parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
+	else if (parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(4) input").val()) > parseFloat($("#invtable tbody tr:eq("+curindex1+") td:eq(3)").data("amountpending"))) {
 	    $("#invtable tbody tr:eq("+curindex1+") td:eq(4) input").focus().select();
 	    $(".alert").hide();
 	  $("#bwinvamount-alert").alert();
@@ -327,13 +336,15 @@ $(document).ready(function() {
       if ($("#invtable tbody tr:eq("+i+") td:eq(4) input").length != 0) {
 	//Creating a dictionary and appending to the list.
 	var amountpaid = parseFloat($("#invtable tbody tr:eq("+i+") td:eq(4) input").val());
-	var invid = parseInt($("#invtable tbody tr:eq("+i+")").data("invid"));
+	if(amountpaid > 0){
+	  var invid = parseInt($("#invtable tbody tr:eq("+i+")").data("invid"));
 	  var invamount = {};
-	invamount["vouchercode"] = $("#selectedvoucher").val();  
-	invamount["adjamount"] = amountpaid;
-	invamount["invid"] = invid;
-	billwisedata.push(invamount);
-	totalamountpaid = totalamountpaid + amountpaid;
+	  invamount["vouchercode"] = $("#selectedvoucher").val();  
+	  invamount["adjamount"] = amountpaid;
+	  invamount["invid"] = invid;
+	  billwisedata.push(invamount);
+	  totalamountpaid = totalamountpaid + amountpaid;
+	}
       }
     }
       //Validations.

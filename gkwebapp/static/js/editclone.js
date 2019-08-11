@@ -1655,7 +1655,6 @@ $(document).ready(function()
 		        },
 		      })
 		  .done(function(jsonobj) {
-		      console.log(jsonobj["gkstatus"]);
 		        if(jsonobj["gkstatus"]==0){
 		          $('#confirm_del').modal('hide');
 		          $('#confirm_del').on('hidden.bs.modal', function (e)
