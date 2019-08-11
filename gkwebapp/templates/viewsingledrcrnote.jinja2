@@ -153,12 +153,19 @@
 	{{ gkresult["custSupDetails"]["custaddr"] }}
 			</div>
       <div class="form-inline form-group col-sm-12 nopadding">
-					<label>
-							{% trans %}PIN Code{% endtrans %} :
-					</label>
+	<label>
+	  {% trans %}PIN Code{% endtrans %} :
+	</label>
 	{% if gkresult["custSupDetails"]["pincode"] %}{{ gkresult["custSupDetails"]["pincode"] }}{% endif %}
-							</div>
+      </div>
     </div></div>
+    {% if gkresult["badquality"]|int == 1 %}
+      <div class="col-sm-12">
+	<div class="form-group form-inline col-sm-12">
+	  <label class="fsize gstinfield" for="orggstin">{% trans %}Goods are of bad quality.{% endtrans %}</label>
+	</div>
+      </div>
+    {% endif %}
     <!-- used end -->
     {% if gkresult["invdata"]["taxflag"] == 22 %}
       <div class="row col-md-12 ">

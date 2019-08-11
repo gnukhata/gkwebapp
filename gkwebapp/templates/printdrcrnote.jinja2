@@ -277,6 +277,11 @@
 	      <tr>
 	  </tbody>
 	</table>
+	{% if gkresult["badquality"]|int == 1 %}
+	  <div class="form-group form-inline col-sm-12 nopadding">
+	    <label class="fsize gstinfield" for="orggstin">{% trans %}Goods are of bad quality.{% endtrans %}</label>
+	  </div>
+	{% endif %}
       </div>
       {% if gkresult["invdata"]["taxflag"] == 22 %}
 	<div class="row">
