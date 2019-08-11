@@ -86,7 +86,6 @@ $(document).ready(function()
     {
 	if ($("#viewinvsel").length > 0){
             $(".invhide").show();
-            // $("#delete").hide().prop("disabled", true);
     }
     else {
         $(".invhide").hide();
@@ -1681,38 +1680,6 @@ $(document).ready(function()
 		      });
 
 	  });
-
-   // var cnf = confirm("Are you sure?");
-   /* if (cnf) {
-
-      $.ajax({
-        url: '/deletevoucher',
-        type: 'POST',
-        datatype: 'json',
-        data: {vcode: $("#vcode").val()},
-        beforeSend: function(xhr)
-        {
-          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-        },
-      })
-      .done(function(jsonobj) {
-        if(jsonobj["gkstatus"]==0){
-          $('#myModal').modal('hide');
-
-        }
-        else {
-          $("#notran-del-alert").alert();
-          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
-            $("#notran-del-alert").hide();
-          });
-        }
-      });
-
-    }
-    else {
-      $("#delete").focus();
-    }
-    */
 
 
   });
