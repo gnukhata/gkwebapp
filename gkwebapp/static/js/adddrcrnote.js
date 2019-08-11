@@ -790,6 +790,7 @@ $(document).ready(function() {
 		    }
 		    
 		    var productcode;
+		    let curindex = 0;
 		    if (resp.invoicedata.taxflag=="7"){
 			$('#drcrnote_product_table_gst tbody').empty();
 			$('#drcrnote_product_table_total tbody').empty();
@@ -807,6 +808,7 @@ $(document).ready(function() {
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(2) span').text(value.uom);
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(3) span').text(value.uom);
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2));
+				$('#drcrnote_product_table_gst tbody tr:last td:eq(2) input').change();
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(3) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(0).toFixed(2));
 				$('#drcrnote_product_table_gst tbody tr:last td:eq(5) input').val(parseFloat(0).toFixed(2)).attr("data", parseFloat(value.taxableamount).toFixed(2));
@@ -858,13 +860,9 @@ $(document).ready(function() {
 				    $(".totalwrap").css("width", "49%");
 				}
 			    }
+			    calculategstaxamt(curindex);
+			    curindex = curindex + 1;
 		    });
-		    $("#taxablevaluetotal_product_gst").text(0.00);
-		    $("#totalcgst_product_gst").text(0.00);
-		    $("#totalsgst_product_gst").text(0.00);
-		    $("#totalcess_product_gst").text(0.00);
-		    $("#total_product_gst").text(0.00);
-		    $("#totaligst_product_gst").text(0.00);
 	    	    $("#taxapplicabletext").text("GST");
 	            $("#drcrnote_table_vat").hide();  //Hides VAT Product table and fields for TIN.
 			$("#vathelp").hide();
@@ -890,6 +888,7 @@ $(document).ready(function() {
 			    $('#drcrnote_table_vat tbody tr:last td:eq(2) span').text(value.uom);
 			    $('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2));
 			    $('#drcrnote_table_vat tbody tr:last td:eq(2) input').val(parseFloat(value.priceperunit).toFixed(2)).attr("data", parseFloat(value.priceperunit).toFixed(2));
+			    $('#drcrnote_table_vat tbody tr:last td:eq(1) input').change();
 			    
 			    $('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.taxableamount).toFixed(2));
 			    $('#drcrnote_table_vat tbody tr:last td:eq(4) input').val(parseFloat(value.taxableamount).toFixed(2)).attr("data", parseFloat(0).toFixed(2));
@@ -901,11 +900,9 @@ $(document).ready(function() {
 			    $('#drcrnote_table_vat tbody tr:last td:eq(6) input').val(parseFloat(value.taxamount).toFixed(2)).attr("data", parseFloat(0).toFixed(2));
 			    $('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.totalAmount).toFixed(2));
 			    $('#drcrnote_table_vat tbody tr:last td:eq(7) input').val(parseFloat(value.totalAmount).toFixed(2)).attr("data", parseFloat(0).toFixed(2));
+			    calculatevataxamt(curindex);
+			    curindex = curindex + 1;
 			});
-			$("#drcrnote_table_vat tbody tr:first td:eq(8)").empty();
-			$("#taxablevaluetotal_product_vat").val(0);
-			$("#totaltax").val(resp.invoicedata.totaltaxamt);
-			$("#total_product_vat").val(resp.invoicedata.invoicetotal); 
 			$("#taxapplicabletext").text("VAT");
 			$("#gstproducttable").hide();
 			$(".gstinfield").hide();
