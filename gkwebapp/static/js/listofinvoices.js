@@ -80,13 +80,13 @@ function vouchercall(vtype,inv_id){
 }
 
 $(document).off('click', '.inv_receipt').on('click', '.inv_receipt', function(e) {
-    inv_id = $(this).closest("tr").data("invid");
-    vouchercall("receipt",inv_id)
+    let inv_id = $(this).closest("tr").data("invid");
+    vouchercall("receipt",inv_id);
   });
 
 $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e) {
-    inv_id = $(this).closest("tr").data("invid");
-    vouchercall("payment",inv_id)
+    let inv_id = $(this).closest("tr").data("invid");
+    vouchercall("payment",inv_id);
   });    
   
     if($("#invoiceviewlistdiv").length==0){
@@ -309,7 +309,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                                       $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
                                         $("#failure-alert1").hide();
                                       });
-                                    })
+                                  });
                                   });
                                   }); 
                           }
@@ -324,14 +324,13 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
           });
         }
         else{
-            return false
+            return false;
         }
             });
 
     $('#voucher_modal').on('hidden.bs.modal', function (e){
         var allow = 1;
         if(allow == 1){
-        if (!$("#viewinvdiv").is(":visible")){
         var dataset = {
             "flag": $("#invoicetypeselect").val(),
             "fromdate": $("#fromdate").data("fromdate"),
@@ -349,18 +348,16 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         },
     })
     .done(function(resp) {
-    $("#info").html(resp);
+      $("#listdiv").html(resp);
+      $("#latable tbody tr:first td:eq(1) a").focus();
+      $("#latable tbody tr:first").addClass("selected");
     })
     .fail(function() {
         $("#failure-alert1").alert();
         $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
           $("#failure-alert1").hide();
         });
-      })
-    }
-    else{
-        $("#latable tbody tr:eq(" + sessionStorage.currentrow + ")").dblclick();
-    }
+    });
     } allow =0;
     });
         
@@ -514,7 +511,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         // This function opens a modal of the selected voucher.
         // It shows the complete details of the selected voucher along with option to edit, delete and clone.
         currentrow = $(this).index();
-        sessionStorage.currentrow = currentrow
+        sessionStorage.currentrow = currentrow;
         e.preventDefault();
     	invoice_id = "";
         invoice_id = $(this).data("invid");
