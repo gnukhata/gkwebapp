@@ -533,13 +533,19 @@ $(document).ready(function() {
 		    console.log("success");
 		    if(invstate == resp["orgdetails"]["orgstate"]){
 			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]);
-			$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
 			$("#originaddress").prop("disabled", true);
-			$("#originpincode").prop("disabled", true);
-
-			}else{$("#originaddress").prop("disabled", false);
-			$("#originpincode").prop("disabled", false);}
-         	}
+			}
+			else{
+				$("#originaddress").prop("disabled", false);
+			 }
+			 if(invstate == resp["orgdetails"]["orgstate"] && resp["orgdetails"]["orgpincode"] != ""){
+				$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
+				$("#originpincode").prop("disabled", true);
+				 }		
+			else{
+				$("#originpincode").prop("disabled", false);
+			}
+		}
             })
             .fail(function() {
                 console.log("error");
@@ -586,8 +592,11 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
 		if($("#originaddress").is(":disabled")){
+			if ($("#originaddress").is(":disabled")){
 		    $("#invoice_issuer_name").focus().select();
 		}
+		$("#originpincode").focus().select();
+	}
 		$("#originaddress").focus().select();
 	    }
 	    else {
@@ -688,7 +697,9 @@ $(document).ready(function() {
 			}
 			
 			else if (event.which == 38) {
-		
+				if ($("#originaddress").is(":disabled")){
+					$("#invoicestate").focus();
+				}
 				$("#originaddress").focus().select();  //Focus shifts to TIN of Consignee.
 				
 		
@@ -3105,6 +3116,8 @@ if (event.which == 13) {
 	    $(".custfield, .delchalfield, .supplydate, .custsupchange").prop("disabled", true);
 	}
 	$("#originaddress").prop("disabled",true);
+	$("#originpincode").prop("disabled",true);
+
 	if ($("#taxapplicable").val() == 7) {
 	    $(".product_name_gst").each(function(index){
 		if ($(".product_name_gst:eq(" + index + ") option:selected").attr("gsflag") != 7) {  // If an item is not a product

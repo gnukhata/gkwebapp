@@ -46,7 +46,9 @@ $(document).ready(function() {
                     }
 	})
 	.done(function(resp){
-		$("#invoicestate").val(resp["gkresult"]).attr('selected',true);
+		if(resp["gkresult"] != 'null'){
+		$("#invoicestate").val(resp["gkresult"]);    //State of organisation is selected automatically.
+		$("#invoicestate").change();}
 	});
 
     //Events that are triggered when the page for creating an invoice is loaded.
@@ -676,13 +678,18 @@ $(document).ready(function() {
 		    console.log("success");
 		    if(invstate == resp["orgdetails"]["orgstate"]){
 			$("#originaddress").val(resp["orgdetails"]["orgaddr"]+","+resp["orgdetails"]["orgcity"]+","+resp["orgdetails"]["orgstate"]);
-			$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
 			$("#originaddress").prop("disabled", true);
-			$("#originpincode").prop("disabled", true);
 
-			}else{$("#originaddress").prop("disabled", false);
+			}else{
+				$("#originaddress").prop("disabled", false);
+			 }
+			 if(invstate == resp["orgdetails"]["orgstate"] && resp["orgdetails"]["orgpincode"] != ""){
+				$("#originpincode").val(resp["orgdetails"]["orgpincode"]);
+				$("#originpincode").prop("disabled", true);
+				 }		
+			else{
 				$("#originpincode").prop("disabled", false);}
-         	}
+			} 
             })
             .fail(function() {
                 console.log("error");
@@ -726,8 +733,11 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
 		if($("#originaddress").is(":disabled")){
+			if ($("#originaddress").is(":disabled")){
 		    $("#invoice_issuer_name").focus().select();
 		}
+		$("#originpincode").focus().select();
+	}
 		$("#originaddress").focus().select();
 	    }
 	    else {
@@ -824,7 +834,9 @@ $(document).ready(function() {
 			}
 			
 			else if (event.which == 38) {
-		
+				if($("#originaddress").is(":disabled")){
+					$("#invoicestate").focus();
+				}
 				$("#originaddress").focus().select();  //Focus shifts to TIN of Consignee.
 				
 		
