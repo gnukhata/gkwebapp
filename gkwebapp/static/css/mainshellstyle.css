@@ -72,14 +72,14 @@ input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 	overflow-x: auto;
   }
   .submenu{
-	color: #696969;
+	color:#020d1f;
 	text-decoration: none !important;
 	margin-left: 6px;
 	font-size: 16px;
 	border: none;		
   }
   .submenu_item{
-		color: #696969;
+		color:#393b3d;
 		text-decoration: none !important;
 		margin-left: 20px;
 		border: none;

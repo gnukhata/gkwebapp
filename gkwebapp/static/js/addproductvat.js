@@ -403,10 +403,13 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
   }
 
 });
-/*-------------------------------------Add Stock key events starts here-------------------------------------------------------------*/
-         //For shifting focus of addstock button to select godown button of pop up window
+/*-------------------------------------Add Stock key events starts here -------------------------------------------------*/
 
-    
+if (sessionStorage.userrole==3){
+  $("#showonlygodown").show();
+}
+//For shifting focus of addstock button to select godown button of pop up window
+
     $('#addstockmodal').on('shown.bs.modal', function() {
 
 	$.ajax({
@@ -435,6 +438,31 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
      });
             });
 
+  $(document).off("change","#godown_name").on("change", '#godown_name', function(event) {
+      let selectgoid = $("#godown_name").val();
+        $.ajax({
+          url: '/product?type=prodlistdata',
+                type: "POST",
+                datatype: 'json',
+                global: false,
+                async: false,
+                data: {"goid": selectgoid},
+                beforeSend: function(xhr)
+          {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+          }
+          })
+          .done(function(resp) {
+            proddata=resp["products"]
+            $("#stocktable tbody").html("");
+            $('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
+            
+  				  $("#prodstockid").append('<option value="" disabled hidden selected> Select Product </option>');          
+            for (let i in proddata){
+            $('#prodstockid').append('<option value="' + proddata[i].productcode + '">' + proddata[i].productdesc + '</option>');
+           }
+           });
+          });
 
      $(document).off("change",".prodstock").on("change", '.prodstock', function(event) {
 	let curindex= $(this).closest('tr').index();
@@ -464,7 +492,7 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
       console.log("complete");
     });
     });
-
+  
     $(document).off("click","#stock_done").on("click", '#stock_done', function(event) {
 	var gobj = {};
 	var stockallow = 1;
@@ -596,45 +624,97 @@ $(document).off('keydown', '#newuom').on('keydown', '#newuom', function(event) {
 
     });
 
-    /*Event for validation of shifting focus*/
 
-    $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
-    let curindex = $(this).closest('tr').index();
-    let nextindex = curindex + 1;
-	let previndex = curindex - 1;
-	if (event.which == 13) {
-	    event.preventDefault();
-	    $('.open_stock:eq('+ curindex +')').focus().select();
-	}
-	return false;
+    $(document).off("click",".prodstock").on("click", '.prodstock', function(event) {
+      if($("#prodstockid > option").length==1){
+        $("#emptygodownalert").alert();
+        $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+          $("#emptygodownalert").hide();
+        });
+        $("#godown_name").focus();
+     return false;
+    }
     });
-
     
-    $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
-	let curindex = $(this).closest('tr').index();
-	var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
-	let nextindex = curindex + 1;
-	let previndex = curindex - 1;
-	if (event.which == 13){
-	    event.preventDefault();
-	    if (selectedpro==""){
-		$("#product-name-blank-alert").alert();
-		$("#product-name-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
-		    $("#product-name-blank-alert").hide();
-		});
-		return false;
-	    }
-	    $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
-	    	 $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
-	    $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
-	    $('.prodstock:eq('+ nextindex +')').focus().select();
-	}
-  });
+    $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
+      let curindex = $(this).closest('tr').index();
+      let nextindex = curindex + 1;
+    let previndex = curindex - 1;
+    var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();  
+    if (event.which == 13) {
+        event.preventDefault();
+        if($("#prodstockid > option").length==1){
+          $("#emptygodownalert").alert();
+          $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#emptygodownalert").hide();
+          });
+          $("#godown_name").focus();
+       return false;
+      }
+        else{
+          $('.open_stock:eq('+ curindex +')').focus().select();
+        }
+    }
+    else if (event.which == 190 && event.shiftKey) {
+      event.preventDefault();
+      $('#stocktable tbody tr:eq(' + nextindex + ') td:eq(0) select').focus();
+    } else if (event.which == 188 && event.shiftKey) {
+      if (previndex > -1) {
+        event.preventDefault();
+        $('#stocktable tbody tr:eq(' + previndex + ') td:eq(0) select').focus();
+      }
+      else if (curindex == 0){
+        $("#godown_name").focus();
+      }
+    }else if (event.which==190 && event.ctrlKey) {
+      event.preventDefault();
+      $('#stocktable tbody tr:eq('+ curindex +') td:eq(1) input').focus();
+    }
+    return false;
+      });
+
+      $(document).off("keydown", ".open_stock").on("keydown", ".open_stock", function(event) {
+        let curindex = $(this).closest('tr').index();
+        var selectedpro = $('#stocktable tbody tr:eq('+curindex+') td:eq(0) select option:selected').val();
+        let nextindex = curindex + 1;
+        let previndex = curindex - 1;
+        if (event.which == 13){
+            event.preventDefault();
+            if (selectedpro==""){
+          $("#emptyproductalert").alert();
+          $("#emptyproductalert").fadeTo(2250, 500).slideUp(500, function(){
+              $("#emptyproductalert").hide();
+          });
+          return false;
+            }
+            $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
+               $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
+            $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+            $('.prodstock:eq('+ nextindex +')').focus().select();
+        }
+        else if (event.which == 190 && event.shiftKey) {
+          event.preventDefault();
+          $('#stocktable tbody tr:eq(' + nextindex + ') td:eq(1) input').focus();
+        } else if (event.which == 188 && event.shiftKey) {
+          if (previndex > -1) {
+            event.preventDefault();
+            $('#stocktable tbody tr:eq(' + previndex + ') td:eq(1) input').focus();
+          }
+        }else if (event.which==188 && event.ctrlKey) {
+          event.preventDefault();
+          $('#stocktable tbody tr:eq('+ curindex +') td:eq(0) select').focus();
+        }
+        });
 
 
-    
-
-
+  $(document).off("keyup").on("keyup", function(event) {
+     if (event.which == 45) {
+        event.preventDefault();
+          $("#stock_done").focus();
+          return false;
+          }
+      });
+      
 $("#addcatselect").change(function(event) {
   /* Act on the event */
 

@@ -56,9 +56,13 @@ def showproducttab(request):
 def addstkgstpopup(request):
     header={"gktoken":request.headers["gktoken"]}
     result2 = requests.get("http://127.0.0.1:6543/godown", headers=header)
-    productdetails=requests.get("http://127.0.0.1:6543/products?list=all",headers=header)
-    return{"products":productdetails.json()["gkresult"],"godown":result2.json()["gkresult"], "tax":request.params["tax"]}
+    return{"godown":result2.json()["gkresult"], "tax":request.params["tax"]}
     
+@view_config(route_name="product",request_param="type=prodlistdata", renderer="json")
+def addprodstkpopup(request):
+    header={"gktoken":request.headers["gktoken"]}
+    productdetails=requests.get("http://127.0.0.1:6543/products?list=allprod&goid=%d"%(int(request.params["goid"])),headers=header)
+    return{"products":productdetails.json()["gkresult"]}
 
 @view_config(route_name="product",request_param="type=addtabvat", renderer="gkwebapp:templates/addproductvat.jinja2")
 def addProductTabVat(request):

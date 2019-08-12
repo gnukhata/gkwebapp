@@ -1506,6 +1506,17 @@ $(document).ready(function() {
 
     });
 
+    $(document).off("click",".prodstock").on("click", '.prodstock', function(event) {
+        if($("#prodstockid > option").length==1){
+          $("#emptygodownalert").alert();
+          $("#emptygodownalert").fadeTo(2250, 500).slideUp(500, function(){
+            $("#emptygodownalert").hide();
+          });
+          $("#godown_name").focus();
+       return false;
+      }
+      });
+        
     /*Event for validation of shifting focus*/
 
     $(document).off("keydown", ".prodstock").on("keydown", ".prodstock", function(event) {
