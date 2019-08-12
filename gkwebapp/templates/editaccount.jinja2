@@ -118,6 +118,7 @@ th {
 							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
 							  <option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
+							<small id="newsubgrouptxt" class="form-text text-muted">Press left Shift button to add a new Sub-Group.</small>
 							<div id="bnkdiv" style="margin-top:18px;" hidden>
 							  <label> <input class="defbx" type="checkbox" id="bnkac"> {% trans %}Set default for Bank Transaction{% endtrans %}</label>
 							</div>
@@ -175,7 +176,8 @@ Account can be selected either using arrows or typing the first few characters q
 Note that an account with either opening balance or transactions cannot be deleted.</br>
 You can edit only name and opening balance of system generated accounts.</br>
 In the Edit mode, you can use Enter key to navigate forward and up arrow to navigate backward.</br>
-Note you can't change the group or sub-group of an account.</br>
+You can create new subgroup under a group by selecting New Sub-Group option in Sub-Group Name field.<br>
+Note : you can't change the group or sub-group of an account.</br>
 You can set an account default for a purpose by clicking the corresponding checkbox.<br>
  Eg: Set default for Bank Transaction. {% endtrans %}</font>
 

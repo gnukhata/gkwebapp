@@ -221,10 +221,9 @@ $("#openbal").keydown(function(event){
       });
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
-		if(event.which==32) {
-			event.preventDefault();
-			$("#subgroupname ").val("New").trigger("change").click();
-			return false;
+		if(event.which==16){
+		$("#subgroupname option").filter(function(i, e) { return $(e).text() == "New Sub-Group"; }).prop('selected', true);
+		$("#newsubgroup").focus();
 		}
 	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
@@ -267,6 +266,27 @@ $("#openbal").keydown(function(event){
 		$("#newsubgroup").focus().select();
 		return false;
 	    }
+		// Ajax to add new subgroup
+			$.ajax({
+				url: '/addaccount?type=subgroup',
+				type: 'POST',
+				global: false,
+				async: false,
+				datatype: 'json',
+				data: {"groupname": $("#groupname option:selected").val(),"newsubgroup":$("#newsubgroup").val()},
+				beforeSend: function(xhr)
+			{
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			}
+			})
+			.done(function(resp)  
+			{
+				$('#subgroupname').append('<option value="' + resp["gkresult"] + '">' +$("#newsubgroup").val()+ '</option>');
+				$("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
+				$("#nsgp").hide();
+				$("#subgroupname").focus();
+				$("#newsubgroup").val("");
+			});
       $("#maccounts").focus().select();
 	}
 	if (event.which==38) {

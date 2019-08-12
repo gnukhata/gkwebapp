@@ -73,6 +73,7 @@ $(document).ready(function()
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
+        $("#newsubgrouptxt").hide();
     $("groupname").change();  
     if ($("#groupname option:selected").text() == 'Indirect Expense'){
         if(accdetails["defaultflag"] == 180){
@@ -267,6 +268,7 @@ $(document).ready(function()
       $("#openingbal").focus().select();
       $("#groupname").prop("disabled", true);
       $("#subgroupname").prop("disabled", true);
+      $("#newsubgrouptxt").hide();
     }
     else{
       if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
@@ -286,9 +288,11 @@ $(document).ready(function()
 	if(deflag == 2 || deflag == 3 || deflag == 16 || deflag == 19 || deflag == 180 || deflag == 181){
 	    $("#groupname").prop('disabled',true);
 	    $("#subgroupname").prop("disabled", true);
+        $("#newsubgrouptxt").hide();
 	    $("#accountname").focus().select();
 	}else{
 	    $("#subgroupname").prop("disabled", false);
+        $("#newsubgrouptxt").show();
 	    $("#groupname").prop("disabled", false);
 	    $("#groupname").focus().select();
 	}
@@ -367,10 +371,9 @@ $(document).ready(function()
 
     //Keydown for 'subgroupname' field.
     $("#subgroupname").keydown(function(event){
-        if(event.which==32) {
-			event.preventDefault();
-			$("#subgroupname ").val("New").trigger("change").click();
-			return false;
+        if(event.which==16){
+		$("#subgroupname option").filter(function(i, e) { return $(e).text() == "New Sub-Group"; }).prop('selected', true);
+		$("#newsubgroup").focus();
 		}
 	if(event.which == 13){
 	    event.preventDefault();
@@ -481,6 +484,27 @@ $(document).ready(function()
 		$("#newsubgroup").focus().select();
 		return false;
 	    }
+        // Ajax to add new subgroup
+			$.ajax({
+				url: '/addaccount?type=subgroup',
+				type: 'POST',
+				global: false,
+				async: false,
+				datatype: 'json',
+				data: {"groupname": $("#groupname option:selected").val(),"newsubgroup":$("#newsubgroup").val()},
+				beforeSend: function(xhr)
+			{
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+			}
+			})
+			.done(function(resp) 
+			{
+				$('#subgroupname').append('<option value="' + resp["gkresult"] + '">' +$("#newsubgroup").val()+ '</option>');
+				$("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
+				$("#nsgp").hide();
+				$("#subgroupname").focus();
+				$("#newsubgroup").val("");
+			});
 	    $("#accountname").focus();
 	}
 	if(event.which == 38){

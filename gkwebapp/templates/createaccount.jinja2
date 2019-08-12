@@ -177,8 +177,9 @@ outline: none;
 							<br/>
 							<label for="subgroupname" id="sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
 							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
-								<option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
+								<option for="subgroupname" value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
+							<small class="form-text text-muted">Press left Shift button to add a new Sub-Group.</small>
 							<br/>
 							<div id="bnkdiv" hidden>
 							  <label> <input class="defbx" type="checkbox" id="bnkac"> {% trans %}Set default for Bank Transaction{% endtrans %}</label>
@@ -370,7 +371,8 @@ outline: none;
 		    This is the module for creating accounts under a certain group and optionally sub-group.</br>
 		    You can use the underlined character along with alt+shift key as shortcut.</br>
 		    You can also navigate forward using enter key and backword using up arrow key.</br>
-		    You can create multiple accounts under a group or subgroup by using the create multiple account checkbox. Press space bar on the checkbox to activate it.
+		    You can create multiple accounts under a group or subgroup by using the create multiple account checkbox. Press space bar on the checkbox to activate it.<br>
+				You can create new subgroup under a group by selecting New Sub-Group option in Sub-Group Name field.
 		  {% endtrans %}
 		  {%if vatorgstflag=='7' or vatorgstflag=='29' %}
 		    {%trans%}

@@ -431,3 +431,13 @@ def abbreviation(request):
     result = requests.get("http://127.0.0.1:6543/state?abbreviation&statecode=%d"%(int(request.params["statecode"])), headers=header)
     abbreviation = result.json()["abbreviation"]
     return {"gkstatus":result.json()["gkstatus"], "abbreviation":abbreviation}
+
+@view_config(route_name="addaccount", request_param="type=subgroup", renderer="json")
+def subgroup(request):
+    header={"gktoken":request.headers["gktoken"]}
+    data={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
+    result = requests.post("http://127.0.0.1:6543/groupsubgroups", data =json.dumps(data),headers=header)
+    if result.json()["gkstatus"] == 0:
+        return{"gkstatus":result.json()["gkstatus"], "subgroupcode":result.json()["gkresult"]}
+    else:
+        return{"gkstatus":result.json()["gkstatus"]}
