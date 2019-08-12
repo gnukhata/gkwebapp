@@ -222,12 +222,9 @@ $("#openbal").keydown(function(event){
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
 		if(event.which==32) {
-		// $("#subgroupname option[value='New']").attr('selected', 'selected');
-		$("#subgroupname").val("New");
-		$("#subgroupname").click();
-		// // $("#subgroupname").prop("disabled", true);
-		// console.log("asas");
-		// $("#newsubgroup").click();
+			event.preventDefault();
+			$("#subgroupname ").val("New").trigger("change").click();
+			return false;
 		}
 	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();

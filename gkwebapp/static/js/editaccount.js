@@ -367,6 +367,11 @@ $(document).ready(function()
 
     //Keydown for 'subgroupname' field.
     $("#subgroupname").keydown(function(event){
+        if(event.which==32) {
+			event.preventDefault();
+			$("#subgroupname ").val("New").trigger("change").click();
+			return false;
+		}
 	if(event.which == 13){
 	    event.preventDefault();
 	    if($.trim($("#subgroupname option:selected").val())=="New"){
