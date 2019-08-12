@@ -374,6 +374,7 @@ $(document).ready(function(){
     }
   })
    .done(function(resp){
+    sessionStorage.userrole=resp["gkresult"]["userrole"];
      userrole2 = resp["gkresult"]["userrole"];
      if(resp["gkresult"]["userrole"]==3){
        $("#master").remove();
