@@ -73,7 +73,6 @@ $(document).ready(function()
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
         $("#subgroupname").prop("disabled", true);
-        $("#newsubgrouptxt").hide();
     $("groupname").change();  
     if ($("#groupname option:selected").text() == 'Indirect Expense'){
         if(accdetails["defaultflag"] == 180){
