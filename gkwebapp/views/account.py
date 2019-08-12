@@ -487,9 +487,6 @@ def accImpotrt(request):
                             openingBl = float(-openingBl)
                         newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
                         continue
-                    # checking if opening Balance is not in Credit column. i.e. column no. 2 (A).#if newacc.json()["gkstatus"]!=0:
-                            #return {"gkstatus":newacc["gkstatus"]}
-                        continue
                     #It means value is in debit column 
                     if accRow[2].value==None and accRow[1].value!=None:
                         openingBl = accRow[1].value
