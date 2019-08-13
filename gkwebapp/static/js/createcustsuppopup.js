@@ -972,27 +972,10 @@ else{
     .done(function(resp) {
 	if(resp["gkstatus"] == 0){
 	    allow =0;
-        $.ajax(
-          {
-
-            type: "POST",
-            url: "/addaccount",
-            global: false,
-            async: false,
-            datatype: "json",
-            data: {"accountname":$("#add_cussup_name").val(),"openbal":0,"subgroupname":groupcode},
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
-            success: function(resp)
-            {
-              if(resp["gkstatus"]==0)
+		if(resp["gkstatus"]==0)
 		{
 		var customeradded = $("#add_cussup_name").val();
                 $('#selectedcustsup').val(customeradded);
-
-            //    $('#selectedcustsup').val($.trim($("#add_cussup_name").val()));
                       if (custsupval == '3') {
                   $("#cus-success-alert").alert();
                   $("#cus-success-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -1013,9 +996,6 @@ else{
                 }
               return false;
               }
-            }
-          });
-          return false;
         }
 
       if(resp["gkstatus"] ==1){
