@@ -500,7 +500,7 @@ $(document).ready(function()
 			})
 			.done(function(resp) 
 			{
-				$('#subgroupname').append('<option value="' + resp["gkresult"] + '">' +$("#newsubgroup").val()+ '</option>');
+				$('#subgroupname').append('<option value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</option>');
 				$("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
 				$("#nsgp").hide();
 				$("#subgroupname").focus();
