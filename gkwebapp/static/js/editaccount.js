@@ -372,7 +372,9 @@ $(document).ready(function()
     $("#subgroupname").keydown(function(event){
         if(event.which==16){
 		$("#subgroupname option").filter(function(i, e) { return $(e).text() == "New Sub-Group"; }).prop('selected', true);
-		$("#newsubgroup").focus();
+		$("#nsgp").show();
+        $('.default').hide();
+		$("#newsubgroup").focus().select();
 		}
 	if(event.which == 13){
 	    event.preventDefault();
@@ -504,7 +506,6 @@ $(document).ready(function()
 				$("#subgroupname").focus();
 				$("#newsubgroup").val("");
 			});
-	    $("#accountname").focus();
 	}
 	if(event.which == 38){
 	    event.preventDefault();

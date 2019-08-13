@@ -219,11 +219,14 @@ $("#openbal").keydown(function(event){
 	      $("#subgroupname").focus().select();
 	  }
       });
+	  
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
 		if(event.which==16){
-		$("#subgroupname option").filter(function(i, e) { return $(e).text() == "New Sub-Group"; }).prop('selected', true);
-		$("#newsubgroup").focus();
+	    	event.preventDefault();
+			$("#subgroupname").val("New");
+      		$("#nsgp").show();
+			$("#newsubgroup").focus().select();
 		}
 	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
@@ -287,7 +290,6 @@ $("#openbal").keydown(function(event){
 				$("#subgroupname").focus();
 				$("#newsubgroup").val("");
 			});
-      $("#maccounts").focus().select();
 	}
 	if (event.which==38) {
 	 event.preventDefault();
