@@ -425,6 +425,15 @@ def showregisterreport(request):
  
     return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "totalrow": result.json()["totalrow"], "taxcolumns":result.json()["taxcolumns"], "registerheader": registerheader,"orderflag":orderflag}
 
+@view_config(route_name="invoice",request_param="action=getinvoiceno",renderer="json")
+def getinvoiceno(request):
+        header = {"gktoken": request.headers["gktoken"]}
+        type=request.params["inoutflag"]
+        print(type)
+        result = requests.get("http://127.0.0.1:6543/invoice?getinvid&type=%s"%type, headers=header)
+        print(result.json()["invoiceid"])
+        if result.json()["gkstatus"]==0:
+            return {"gkstatus":0,"invoiceno":result.json()["invoiceid"]}
 
 '''
 This function returns a spreadsheet form of List of Invoices Report.
@@ -874,16 +883,3 @@ def registerspreadsheet(request):
     except:
         print "File not found"
         {"gkstatus":3}
-
-@view_config(route_name="invoice",request_param="action=getinvoiceno",renderer="json")
-def getinvoiceno(request):
-    try:
-        header = {"gktoken": request.headers["gktoken"]}
-        type=request.params["inoutflag"]
-        print(type)
-        result = requests.get("http://127.0.0.1:6543/invoice?getinvid&type=%s"%type, headers=header)
-        print(result.json()["invoiceid"])
-        if result.json()["gkstatus"]==0:
-            return {"gkstatus":0,"invoiceno":result.json()["invoiceid"]}
-    except Exception as e:
-        print(e) 
