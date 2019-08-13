@@ -33,6 +33,7 @@ Contributors:
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
+
     $('.modal-backdrop').remove();
     $('.invoicedate').autotab('number');
     $("select:first").focus();
@@ -349,11 +350,27 @@ $(document).ready(function() {
     $("#invoice_challanno").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
+		if ($("#status").val()==9){
+			$("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
+		}
+	    else{
+			$("#ewayBill_no").focus().select(); 
+		}
 	}
 	if (event.which == 38) {
 	    event.preventDefault();
 	    $("#invoice_deliverynote").focus();  //Focus shifts to Delivery Note field when Up Arrow Key is pressed down.
+	}
+    });
+	// Key event for eway bill no.
+	$("#ewayBill_no").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+		$("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_challanno").focus(); 
 	}
     });
 
@@ -464,7 +481,12 @@ $(document).ready(function() {
 	}
 	if (event.which == 38) {
 	    event.preventDefault();
-	    $("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+		if($("#status").val()==9){
+			$("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+		}
+	    else{
+			$("#ewayBill_no").focus().select();  
+		}
 	}
     });
 
@@ -2825,6 +2847,7 @@ if (event.which == 13) {
 				$("#consigneeaddress").val(resp.invoicedata.consignee.consigneeaddress);
 			    $("#consigneepincode").val(resp.invoicedata.consignee.consigneepincode);				
 			    $("#invoice_challanno").val(resp.invoicedata.invoiceno);
+				$("#ewayBill_no").val(resp.invoicedata.ewaybillno);
 			    let invoicedate = resp.invoicedata.invoicedate.split('-');
 			    $("#invoice_date").val(invoicedate["0"]);
 			    $("#invoice_month").val(invoicedate["1"]);
@@ -3659,6 +3682,7 @@ if (event.which == 13) {
       form_data.append("designation", designation);
       form_data.append("invtotal", invoicetotal);
       form_data.append("invtotalword", numbertowords);
+	  form_data.append("ewaybillno", $("#ewayBill_no").val());
       form_data.append("av",JSON.stringify(av));
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
