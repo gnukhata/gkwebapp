@@ -421,13 +421,31 @@ $(document).ready(function() {
     $("#invoice_challanno").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
+		if($("#status").val() == 9){
+			$("#invoice_date").focus().select();  //Focus shifts to Invoice Date when Enter key is pressed down.
+		}
+		else{
+			$("#ewayBill_no").focus();
+		}
 	}
 	if (event.which == 38) {
 	    event.preventDefault();
 	    $("#invoice_deliverynote").focus();  //Focus shifts to Delivery Note field when Up Arrow Key is pressed down.
 	}
     });
+	// Key event for eway bill no.
+	$("#ewayBill_no").keydown(function(event) {
+	if (event.which == 13) {
+	    event.preventDefault();
+		$("#invoice_date").focus().select();  
+	}
+	if (event.which == 38) {
+	    event.preventDefault();
+	    $("#invoice_challanno").focus();
+	}
+    });
+
+
 
     //Function to add leading zeros in date and month fields.
     function pad(str, max) { //to add leading zeros in date
@@ -610,7 +628,12 @@ $(document).ready(function() {
 	}
 	if (event.which == 38) {
 	    event.preventDefault();
-	    $("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+		if ($("#status").val()==9){
+			$("#invoice_challanno").focus().select();  //Focus shifts to Invoice Number.
+		}
+	    else{
+			$("#ewayBill_no").focus().select();
+		}
 	}
     });
 
