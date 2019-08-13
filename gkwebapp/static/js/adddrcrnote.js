@@ -1503,7 +1503,6 @@ if (!curdate.between(financialstart, financialend)) {
       
 	  var dctypeflag = $("#status").val();
 	  var drcr_narration =$("#drcr_narration").val();
-	  console.log(drcr_narration);
 
 //send data invid,drcrno,date,ref,caseflag,dctypeflag,totreduct,contents,userid
       var form_data = new FormData();
