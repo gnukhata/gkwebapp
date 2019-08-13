@@ -3947,7 +3947,7 @@ var inout
 if ($("#status").val()==15)
 {
 	inout="SL";
-	$("#invoice_challanno").val(resp["invoiceno"].toString()+"/"+inout+"-"+(sessionStorage.year2).substring(6,10))
+	$("#invoice_challanno").val(resp["invoiceno"].toString()+"/"+inout+"-"+(sessionStorage.year2).substring(8,10))
 }
 else
 {inout="PU";}
