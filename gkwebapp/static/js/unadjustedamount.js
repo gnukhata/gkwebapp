@@ -246,7 +246,7 @@ $(document).ready(function() {
       }
       else {
 	//Alert is displayed if voucher is not selected.
-	if ($("#invtable tbody tr.selected").length < 1) {
+	if ($("#vouchertable tbody tr.selected").length < 1) {
 	  $(".alert").hide();
 	  $("#bwnovoucher-alert").alert();
 	  $("#bwnovoucher-alert").fadeTo(2250, 500).slideUp(500, function(){
