@@ -4006,17 +4006,17 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("invtotal", parseFloat(invoicetotal).toFixed(2));
 		
 		if ($("#roundvalue").is(":checked")){
-			var res = 	parseFloat(Math.round(tottaxable)).toFixed().toString();
-			roundoffvalue = 1;
+		  var res = 	parseFloat(Math.round(invoicetotal)).toFixed().toString();
+		  roundoffvalue = 1;
 		}
-		else{
-			var res = tottaxable.toString();
+		  else{
+		    var res = invoicetotal.toString();
 
-			roundoffvalue = 0;
-		}
-	    var str = res.split(".");
-	    var len = str[1];
-	    if(tottaxable!=0){
+		    roundoffvalue = 0;
+		  }
+		  var str = res.split(".");
+		  var len = str[1];
+		  if(invoicetotal!=0){
 		if(str[1] != undefined){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
