@@ -95,24 +95,24 @@
 	
 	  <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
           <h3>{{org["orgname"]}}</h3>
-		  <span style="font-weight:bold !important ; font-size:small;">
-	  {% if gkresult["address"]!=""%}
-			{{ gkresult["address"] }}
-			{% if gkresult["pincode"]!='' %}
-			,{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
-			{% endif %}
-	  {% else %}
-            {% if org["orgaddr"]!='' %}
-              {{org["orgaddr"]}}
-            {% endif %}
-            {% if org["orgcity"]!='' %}
-              , {{org["orgcity"]}}
-	    {% endif %}
+	  <span style="font-weight:bold !important ; font-size:small;">
+	    {% if gkresult["address"]!=""%}
+	      {{ gkresult["address"] }}
+	      {% if gkresult["pincode"]!='' %}
+		- {{ gkresult["pincode"] }}.
+	      {% endif %}
+	    {% else %}
+              {% if org["orgaddr"]!='' %}
+		{{org["orgaddr"]}}
+              {% endif %}
+              {% if org["orgcity"]!='' %}
+		, {{org["orgcity"]}}
+	      {% endif %}
+	      {% if org["orgstate"]!='' %}
+		, {{org["orgstate"]}}
+              {% endif %}
 	    {% if org["orgpincode"] %}
-				-{% if org["orgpincode"]%}{{ org["orgpincode"] }}{% endif %} ,
-            {% endif %}
-            {% if org["orgstate"]!='' %}
-              , {{org["orgstate"]}}.
+				- {{ org["orgpincode"] }}.
             {% endif %}
 	  {% endif %}
 		</span>

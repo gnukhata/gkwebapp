@@ -403,8 +403,6 @@ def Invoiceprint(request):
         return render_to_response("gkwebapp:templates/printinvoice4.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
     else:
         return render_to_response("gkwebapp:templates/printinvoice.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
-    # return {"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"]}
-    # return render_to_response("gkwebapp:templates/printinvoice.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"]},request=request)
 
 
 @view_config(route_name="invoice", request_param="action=getattachment", renderer="gkwebapp:templates/viewinvoiceattachment.jinja2")

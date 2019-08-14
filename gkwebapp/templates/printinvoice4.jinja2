@@ -42,6 +42,9 @@
 	 padding-top: 10px;
 	 border-width: 1px;
      }
+     #detailsdiv tbody {
+	 font-size: 130%;
+     }
     </style>
   </head>
 		<script>
@@ -97,26 +100,26 @@
 	<div class="col-xs-9 nopaddng" style="word-wrap: break-word;min-width: 50%;max-width: 50%; font-size:120%;float:left;padding-left:1%">
 	  
           <h3>{{org["orgname"]}}</h3>
-		  <span style="font-weight:bold !important ; font-size:small;">
-	  {% if gkresult["address"]!=""%}
-			{{ gkresult["address"] }}
-			{% if gkresult["pincode"]!='' %}
-			,{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %}
+	  <span style="font-weight:bold !important ; font-size:small;">
+	    {% if gkresult["address"]!=""%}
+	      {{ gkresult["address"] }}
+	      {% if gkresult["pincode"]!='' %}
+		- {{ gkresult["pincode"] }}.
 
-			{% endif %}
-	  {% else %}
-            {% if org["orgaddr"]!='' %}
-              {{org["orgaddr"]}}
-            {% endif %}
-            {% if org["orgcity"]!='' %}
-              , {{org["orgcity"]}}
-	    {% endif %}
+	      {% endif %}
+	    {% else %}
+              {% if org["orgaddr"]!='' %}
+		{{org["orgaddr"]}}
+              {% endif %}
+              {% if org["orgcity"]!='' %}
+		, {{org["orgcity"]}}
+	      {% endif %}
+	      {% if org["orgstate"]!='' %}
+		{{org["orgstate"]}}
+              {% endif %}
 	    {% if org["orgpincode"] %}
-				-{% if gkresult["pincode"] %}{{ gkresult["pincode"] }}{% endif %},
+				- {{ gkresult["pincode"] }}.
 				
-            {% endif %}
-            {% if org["orgstate"]!='' %}
-              , {{org["orgstate"]}}.
             {% endif %}
 	  {% endif %}
 		</span>
@@ -142,7 +145,7 @@
       </div>
       <br>
 <div class="row">
-		<table class="table table-bordered table-condensed" >
+		<table class="table table-bordered table-condensed" id="detaildiv">
 			<thead style="width:100%">
 				<th style="white-space: nowrap">Details of Invoice</th>
 				<th style="white-space: nowrap">Details of Receiver | Billed To</th>
