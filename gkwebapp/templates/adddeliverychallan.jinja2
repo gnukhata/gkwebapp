@@ -990,9 +990,13 @@
             				<input class="form-control input-sm col-sm-8" id="inv_issuer" placeholder="{% trans %}Issuer's name{% endtrans %}"  aria-label="{% trans %}Issuer's Name{% endtrans %}">
             			</div>
             			<div class="form-inline form-group invoice_issuer">
-            				<label class="col-sm-4 fsize">{% trans %}Designation{% endtrans %} :</label>
-            				<input class="form-control input-sm col-sm-8" id="inv_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
+            			  <label class="col-sm-4 fsize">{% trans %}Designation{% endtrans %} :</label>
+            			  <input class="form-control input-sm col-sm-8" id="inv_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
             			</div>
+				<div class="form-group form-inline">
+				  <label class="col-sm-4 fsize" for="ewayBill_no">{% trans %}Eway Bill No{% endtrans %} :</label>
+				  <input class="form-control input-sm col-sm-8" size="15" id="ewayBill_no" maxlength="16" >
+				</div>
             		</div>
             	</form>
 							<label class="btn btn-primary btn-sm" for="inv_my-file-selector">

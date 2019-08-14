@@ -3991,6 +3991,7 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("custid", $("#deliverychallan_customer option:selected").val());
 		form_data.append("dcid",dcid);
 		form_data.append("invoiceno", $("#invoice_number").val());
+		form_data.append("ewaybillno", $("#ewayBill_no").val());    
 		form_data.append("invoicedate", $.trim($("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val()));
 		form_data.append("contents", JSON.stringify(contents));
 		form_data.append("tax", JSON.stringify(tax));
@@ -4003,8 +4004,6 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("orgstategstin",$("#inv_orggstin").text() );
 		form_data.append("designation", designation);
 		form_data.append("invtotal", parseFloat(invoicetotal).toFixed(2));
-		var totalamount=0.0
-		totalamount = totalamount + parseFloat($('#invoice_product_table_total tbody tr:eq(' + i + ') td:eq(0) input').val());
 		
 		if ($("#roundvalue").is(":checked")){
 			var res = 	parseFloat(Math.round(tottaxable)).toFixed().toString();
