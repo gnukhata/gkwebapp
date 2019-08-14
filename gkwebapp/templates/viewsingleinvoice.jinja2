@@ -599,8 +599,8 @@
 		{% endif %}
 		{% if gkresult["narration"] != None %}
 	<div class="col-sm-4">
-	      <label for="invoice_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label>
-		  <label id="invoice_narration" style="font-size:100% !important; font-weight: normal !important;">{{gkresult["narration"]}}</label>  
+	      <label for="invoice_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label><br>
+		  <textarea id="invoice_narration" style="font-size:100% !important; font-weight: normal !important;">{{gkresult["narration"]}}</textarea>  
 	</div>
 	{% endif %}
   </div>
