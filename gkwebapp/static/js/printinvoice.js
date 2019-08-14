@@ -31,7 +31,6 @@ $(document).ready(function() {
     $("title").html("");
     window.scrollTo(0,0);
     
-  $("#notes").focus().select();
   $("#invprint_origin").click(function(event) {
     window.print();
   });
@@ -139,7 +138,6 @@ window.onafterprint = afterPrint;
         $("#printinvoice3").html("");
         $("#printinvoice1").html("");
           $("#printinvoice4").html("");
-          $("#notes").focus().select();
       }
       }
     );
@@ -164,7 +162,6 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
           $("#printinvoice4").html("");
-          $("#notes").focus().select();
       }
       }
     );
@@ -188,7 +185,6 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice3").html("");
           $("#printinvoice4").html("");
-          $("#notes").focus().select();
       }
       }
     );
@@ -213,7 +209,6 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
           $("#printinvoice3").html("");
-          $("#notes").focus().select();
       }
       }
     );
