@@ -3437,7 +3437,9 @@ if (event.which == 13) {
       form_data.append("invtotal", parseFloat(invoicetotal).toFixed(2));
       form_data.append("invtotalword", numbertowords);
 	  form_data.append("av",JSON.stringify(av));
+	  if (invoice_narration.length !=0 ){
 	  form_data.append("invoice_narration",invoice_narration);
+	  }
 	  
       if ($("#status").val() == 9) {
 	 /*let destinationstate = $("#invoicestate option:selected").val();
