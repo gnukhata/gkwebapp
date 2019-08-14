@@ -247,7 +247,7 @@ $(document).ready(function() {
 	}
 	$("#roundvaluediv").hide();
 	$("#roundvalue").change(function(e){
-		if($("#taxapplicabletext").text()=="GST"){
+	  if($(".taxapplicable").val() == 7){
 			$('.invoice_product_quantity_gst').change();
 		}
 		else{
@@ -1467,6 +1467,7 @@ $(document).off("keyup").on("keyup", function(event) {
     $("#invoice_save").click(function(event) {
         // Validations start below
         event.stopPropagation();
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 
         var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
         if ($.trim($('#invoice_challanno').val()) == "") {

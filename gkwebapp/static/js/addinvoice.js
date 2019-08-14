@@ -261,7 +261,7 @@ $(document).ready(function() {
 	}
 	$("#roundvaluediv").hide();
 	$("#roundvalue").change(function(e){
-		if($("#gst").is(":checked")){
+	  if($(".taxapplicable").val() == 7){
 			$('.invoice_product_quantity_gst').change();
 		}
 		else{
