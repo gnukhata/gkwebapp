@@ -1671,12 +1671,19 @@ $(document).ready(function()
 		        }
 
 		      else {
-			  console.log("no");
-		          $("#notran-del-alert").alert();
-		          $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
-		            $("#notran-del-alert").hide();
-		          });
-		        }
+			console.log("no");
+			$('#confirm_del').modal('hide');
+			$('#confirm_del').on('hidden.bs.modal', function (e)
+		          {
+		            $('.modal-backdrop').remove();
+		            $("#notran-del-alert").alert();
+		            $("#notran-del-alert").fadeTo(2250, 500).slideUp(500, function(){
+		              $("#notran-del-alert").hide();
+		            });
+		  	  });
+
+
+		      }
 		      });
 
 	  });
