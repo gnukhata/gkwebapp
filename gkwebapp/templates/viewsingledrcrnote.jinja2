@@ -396,9 +396,13 @@
 
 
     <div class="col-sm-12" style="margin-top:0.2cm;">
-      <div class="col-sm-4">
-      </div>
-      <div class="col-sm-4">
+      <div class="col-sm-8">
+				{% if gkresult["drcr_narration"] != None %}
+					<div class="form-group pull-left col-sm-5" style="margin-top:20px;padding-left:0 !important;">
+							<label for="drcr_narration">{% trans %}Narration{% endtrans %} :</label><br>
+							<textarea id="drcr_narration" style="width: 100%;" disabled="">{{gkresult["drcr_narration"]}}</textarea>  
+					</div>
+					{% endif %}
       </div>
       <div class="col-sm-4" style="margin-top:0.7cm;">
 	<div class="row hborderdiv">
@@ -476,10 +480,6 @@
 	</div>
 	{% endif %}
       </div>
-	  <div class="col-sm-4">
-	      <label for="drcr_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label>
-		  <label id="drcr_narration" style="font-size:100% !important; font-weight: normal !important;">{{gkresult["drcr_narration"]}}</label>  
-	  </div>
     </div>
 
     

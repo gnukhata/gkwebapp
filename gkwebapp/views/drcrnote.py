@@ -25,7 +25,11 @@ def showadddrcrnote(request):
 @view_config(route_name="drcrnote",request_param="action=save",renderer="json")
 def savedrcrnote(request):
     header={"gktoken":request.headers["gktoken"]}
-    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"]), "drcrmode":request.params["drcrmode"],"dcinvtnflag":request.params["dcinvtnflag"], "drcr_narration":request.params["drcr_narration"]}
+    drcrdata = {"invid":request.params["invid"],"drcrdate":request.params["drcrdate"],"drcrno":request.params["drcrno"],"totreduct":request.params["totreduct"],"dctypeflag":request.params["dctypeflag"],"reductionval":json.loads(request.params["reductionval"]), "drcrmode":request.params["drcrmode"],"dcinvtnflag":request.params["dcinvtnflag"], }
+    if ("drcr_narration" in request.params):
+        s = str(request.params["drcr_narration"]).isspace()
+        if (s == False):
+            drcrdata["drcr_narration"] = request.params["drcr_narration"]
     drcrdata["roundoffflag"] = int(request.params["roundoffflag"])
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
@@ -55,7 +59,7 @@ def getDrCrDetails(request):
     header={"gktoken":request.headers["gktoken"]}
     drcrnotedata = requests.get("http://127.0.0.1:6543/drcrnote?drcr=single&drcrid=%d"%(int(request.params["drcrid"])),headers=header)
     if drcrnotedata.json()["gkstatus"] == 0:
-        return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrnotedata.json()["gkresult"]}
+         return {"gkstatus": drcrnotedata.json()["gkstatus"],"gkresult":drcrnotedata.json()["gkresult"]}
 
 @view_config(route_name="drcrnote",request_param="action=print",renderer="gkwebapp:templates/printdrcrnote.jinja2")
 def drcrNoteprint(request):

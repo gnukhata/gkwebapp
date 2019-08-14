@@ -1175,6 +1175,19 @@ $(document).ready(function() {
       }
   });
 
+  var delta = 500;
+  var lastKeypressTime = 0;
+  $("#drcr_narration").keydown(function(event) {
+	if (event.which==13){
+	var thisKeypressTime = new Date();
+	if ( thisKeypressTime - lastKeypressTime <= delta )
+	{
+		$("#drcrnote_save").focus();
+		thisKeypressTime = 0;
+	}
+	lastKeypressTime = thisKeypressTime;
+	}
+});
  //keydown event for insert key
      var modalpresent = 0;
   $(document).off("keyup").on("keyup", function(event) {
@@ -1540,8 +1553,9 @@ if (!curdate.between(financialstart, financialend)) {
       //sending hardcode values until caseflag not set
       form_data.append("totreduct",totreduct);
 	  form_data.append("reductionval",JSON.stringify(idrate));
-	  form_data.append("drcr_narration",drcr_narration);
-
+	  if (drcr_narration.length != 0){
+	  	  form_data.append("drcr_narration",drcr_narration);
+	  }
       voucherdetails["custname"] = $.trim($("#drcrnote_custsupp").text());
       voucherdetails["taxflag"] = taxflag;
       voucherdetails["taxname"] = taxname;
@@ -1584,16 +1598,16 @@ if (!curdate.between(financialstart, financialend)) {
 				$("#cr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
 				$("#cr-success-alert").removeClass("alert-success");
 				$("#cr-success-alert").addClass("alert-warning");
-			    }
+				}
                             $("#cr-success-alert").alert();
                             $("#cr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#creditnote_create").click();
                             $("#cr-success-alert").hide();
-			    });
+				});
 			}else
 			{
 			    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-			    if (resp["vchCode"] != 0) {
+			    if ("vchCode" in  resp && resp["vchCode"] != 0) {
 				$("#dr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]["vchCode"]);
 			    }
 			    else{
@@ -1601,8 +1615,8 @@ if (!curdate.between(financialstart, financialend)) {
 				$("#dr-success-alert").removeClass("alert-success");
 				$("#dr-success-alert").addClass("alert-warning");
 			    }
-                            $("#dr-success-alert").alert();
-                            $("#dr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
+                    $("#dr-success-alert").alert();
+                    $("#dr-success-alert").fadeTo(2250, 500).slideUp(500, function() {
 				$("#debitnote_create").click();
                             $("#dr-success-alert").hide();
 			    });
