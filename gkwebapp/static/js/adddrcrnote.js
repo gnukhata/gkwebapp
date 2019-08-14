@@ -1610,7 +1610,7 @@ if (!curdate.between(financialstart, financialend)) {
 			    if ("vchCode" in  resp && resp["vchCode"] != 0) {
 				$("#dr-success-alert").append(" Accounting entry made with voucher no " + resp["vchCode"]["vchCode"]);
 			    }
-			    else{
+			    else if ("vchCode" in  resp && resp["vchCode"]["vflag"] == 0){
 				$("#dr-success-alert").append(" Accounting entry could not be made due to mismatch of accounts. Please make the entry yourself.");
 				$("#dr-success-alert").removeClass("alert-success");
 				$("#dr-success-alert").addClass("alert-warning");
