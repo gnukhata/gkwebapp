@@ -3758,7 +3758,8 @@ $("#roundoff_checkbox").change(function(e){
 			consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
 			consignee["consigneeaddress"] = $.trim($("#deliverychallan_consigneeaddr").val());
 			consignee["consigneestate"] = $.trim($("#consigneestate").val());
-			consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+		    consignee["consigneestatecode"] = $.trim($("#statecodeofconsignee").text());
+		    consignee["consigneepincode"] = $.trim($("#deliverychallan_consigneepincode").val());
 		}
 		bankdetails["accountno"] = $.trim($("#accountno").val());
 		bankdetails["bankname"] = $.trim($("#bankname").val());
@@ -4049,7 +4050,7 @@ $("#roundoff_checkbox").change(function(e){
 			destinationstate = $("#consigneestate option:selected").val();
 			}*/
 		//appending address to the form_data.
-		form_data.append("address", address);
+		    form_data.append("address", address);
 		form_data.append("taxstate", $("#deliverychallan_customerstate option:selected").val());
 		form_data.append("sourcestate", $("#inv_invoicestate option:selected").val());
 	  }
