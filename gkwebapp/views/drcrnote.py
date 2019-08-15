@@ -29,7 +29,7 @@ def savedrcrnote(request):
     if ("drcr_narration" in request.params):
         s = str(request.params["drcr_narration"]).isspace()
         if (s == False):
-            drcrdata["drcr_narration"] = request.params["drcr_narration"]
+            drcrdata["drcrnarration"] = request.params["drcr_narration"]
     drcrdata["roundoffflag"] = int(request.params["roundoffflag"])
     if request.params.has_key("reference"):
         drcrdata["reference"]=json.loads(request.params["reference"])
