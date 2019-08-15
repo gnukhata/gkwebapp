@@ -159,9 +159,8 @@
 			<td style="word-wrap: break-word;min-width: 30%;max-width: 30%;">
 					{% if gkresult["dcno"] %}
 		    	<label class="normal" for="instrumentno">{% trans %}Deli. Note No.{% endtrans %} : </label>
-		    	{{gkresult["dcno"]}}
+		    	{{gkresult["dcno"]}}<br/>
 		  		{% endif %}
-					<br>
 					<label class="normal"for="bankname">{% trans %}Invoice No.{% endtrans %} : </label>
 		  		{{ gkresult["invoiceno"] }}
 					<br>
@@ -253,22 +252,21 @@
 		  
 				{% endif %}
 				{% if gkresult["taxflag"] == 7 %}
-		    <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
-		    {% if gkresult["consignee"]["gstinconsignee"] %}{{ gkresult["consignee"]["gstinconsignee"] }}{% endif %}
+				  <label for="gstinconsignee" class=" col-form-label col-form-label-sm" id="transmode">{% trans %}GSTIN{% endtrans %} :</label>
+				  {% if gkresult["consignee"]["gstinconsignee"] %}{{ gkresult["consignee"]["gstinconsignee"] }}{% endif %}
 				{% endif %}
+				<br>
+				<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
+		 		{% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% endif %}
+				<br>
+				<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
+		  		{% if gkresult["consignee"]["consigneestatecode"] %}{{ '%02d' | format(gkresult["consignee"]["consigneestatecode"] | int) }}{% endif %}
 				<br>
 				<label for="consigneeaddress" class=" col-form-label col-form-label-sm" id="consigneeaddress">{% trans %}Address :{% endtrans %}</label>
 		  	{% if gkresult["consignee"]["consigneeaddress"] %}{{ gkresult["consignee"]["consigneeaddress"] }}{% endif %}
 				<br>
 				<label for="consigneepincode" class=" col-form-label col-form-label-sm" id="consigneepincide">{% trans %}PIN Code :{% endtrans %}</label>
 		  	{% if gkresult["consignee"]["consigneepincode"] %}{{ gkresult["consignee"]["consigneepincode"] }}{% endif %}
-				<br>
-				<label for="orgstate" class="col-form-label col-form-label-sm">{% trans %}State{% endtrans %} :</label>
-		 		{% if gkresult["consignee"]["consigneestate"] %}{{ gkresult["consignee"]["consigneestate"] }}{% endif %}
-				<br>
-				<label for="stcode">{% trans %}State Code{% endtrans %} :</label>
-		  	{% if gkresult["consignee"]["consigneestatecode"] %}{{ '%02d' | format(gkresult["consignee"]["consigneestatecode"] | int) }}{% endif %}
-
 			</td>
 			</tr>
 		</tbody>
@@ -655,8 +653,8 @@
 	<br>
 	<div class="text-center">
 			{% if gkresult["invoicetotalword"]!= None %}
-	      <label for="totalValueInWord" style="font-size:160% !important; font-weight: bold !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-	      <i><label id="totalValueInWord"  style="font-size:160% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+	      <label for="totalValueInWord" style="font-size:200% !important; font-weight: bold !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+	      <i><label id="totalValueInWord"  style="font-size:200% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
 	{% endif %}
 	</div>
 	<br>
