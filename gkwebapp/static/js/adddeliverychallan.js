@@ -3315,6 +3315,9 @@ $("#roundoff_checkbox").change(function(e){
 	});
 	
     $('#dc_save_yes').click(function (e){
+	$('.modal').modal('hide');
+	$('.modal-backdrop').remove();
+	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
     	if (sessionStorage.invoicesave==1)
     	{
 			var files = $("#inv_my-file-selector")[0].files;
@@ -3484,35 +3487,19 @@ $("#roundoff_checkbox").change(function(e){
 			dcid=resp["gkresult"];
 			$('.modal-backdrop').remove();
 			$('.modal').modal('hide');
-			$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-            $("#success-alert").alert();
-            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#success-alert").hide();
-			});
 			$("#invoice_save_deliverynote").click();
 			return false;
 		}
 		else
 		{
-            if ($("#deliverychallan_edit").length == 0) {
-		$("#deliverychallan").click();
-            }
-            if ($("#status").val()=='9') {
-		//9 is for delivery in
-		$("#deliverychallan_record").click();
-            }
-            else {
-		$("#deliverychallan_create").click();
-            }
-	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-            $("#success-alert").alert();
-            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#success-alert").hide();
-		let dcid = resp["gkresult"];
-		let inoutflag = $("#status").val();
-		viewdelchal(dcid,inoutflag);
-            });
-            return false;
+		    $("#success-alert").alert();
+		    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#success-alert").hide();
+			let dcid = resp["gkresult"];
+			let inoutflag = $("#status").val();
+			viewdelchal(dcid,inoutflag);
+		    });
+		    return false;
 	}}
 	else if(resp["gkstatus"] == 1) {
 	    $('.modal-backdrop').remove();
@@ -3583,9 +3570,7 @@ $("#roundoff_checkbox").change(function(e){
   $("#confirm_yes").on('hidden.bs.modal', function(event) {
       // after te modal is closed the focus should be on the delivery note number so this event
 	$("#deliverychallan_challanno").focus();
-	sessionStorage.setItem("invoicesave",0);
 		$("#invoice_number_input").hide();
-
 		$("#confirm_yes .modal-content").attr("style",""); 
 		$("#confirm_yes .modal-body").attr("style",""); 
   });
@@ -3632,14 +3617,14 @@ $("#roundoff_checkbox").change(function(e){
     $("#backbutton").click(function(event){
 	$("#viewdc").html("");
 	$("#viewdeldiv").hide();
-	$('#delist').show();
+	$('#delist, #deliverychallan_div').show();
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 	if ($("#backbutton").attr("inoutflag") == '9') {
-	    $("#deliverychallan_div").show();
+	    $("#deliverychallan_record").click();
 	} else if($("#backbutton").attr("inoutflag") == '15') {
-	    $("#deliverychallan_div").show();
+	    $("#deliverychallan_create").click();
 	}
-	$(".input-sm:visible").first().focus();  //Focus on the first element when the page loads
+	return false;
     });
 
     //Click event for 'Print button' of Preview delivery challan.
@@ -3712,7 +3697,7 @@ $("#roundoff_checkbox").change(function(e){
 
 
 	$("#invoice_save_deliverynote").click(function(event) {
-		
+		$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 		event.preventDefault();
 		event.stopPropagation();
 		if (dcid==0)
@@ -4117,45 +4102,28 @@ $("#roundoff_checkbox").change(function(e){
 			  })
 			  .done(function(resp) {
 				if(resp["gkstatus"] == 0){
-
-					if ($("#deliverychallan_edit").length == 0) {
-		$("#deliverychallan").click();
-            }
-            if ($("#status").val()=='9') {
-		//9 is for delivery in
-		$("#deliverychallan_record").click();
-            }
-            else {
-		$("#deliverychallan_create").click();
-            }
-	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-		$("#success-alert").html("invoice created with deliverychallan id="+dcid);	
-	    if(resp["gkvch"]["status"] == 0)
-	    {
-	    	$("#success-alert").html("invoice created with deliverychallan id="+dcid+"  voucher no.="+resp["gkvch"]["vchid"]);	
-		}
-		else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
-			$("#inv-vch-failed-alert").alert();
-			$("#inv-vch-failed-alert").fadeTo(2250, 500).slideUp(500, function() {
-			    $("#inv-vch-failed-alert").hide();			
-			});
-			}
-            $("#success-alert").alert();
-            $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
-		$("#success-alert").hide();
-		$("#success-alert").html("Note created!");
-		let inoutflag = $("#status").val();
-		
-		viewdelchal(dcid,inoutflag);
-            });
-            return false;
+				    if(resp["gkvch"]["status"] == 0)
+				    {
+	    				$("#success-alert").html("Delivery Note <b>"+$("#deliverychallan_challanno").val()+ "</b>, Invoice <b>" + $("#invoice_number").val() + "</b> and a Voucher <b>" +resp["gkvch"]["vchid"] + "</b> has been created.");	
+				    }
+				    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
+					$("#success-alert").html("Delivery Note <b>"+$("#deliverychallan_challanno").val()+ "</b> and Invoice <b>" + $("#invoice_number").val() + "</b>has been created.<br/>Invoice saved without an accounting entry due to missmatch of accounts. Please make the accounting entry manually.");	
+				    }
+				    $("#success-alert").alert();
+				    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
+					$("#success-alert").hide();
+					$("#success-alert").html("Note created!");
+					let inoutflag = $("#status").val();
+					
+					viewdelchal(dcid,inoutflag);
+				    });
+				    return false;
 				}
 				else if(resp["gkstatus"] == 1) {
 					$('.modal-backdrop').remove();
 					$('.modal').modal('hide');
-					$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 						$("#deliverychallan_challanno").focus();
-						$("#duplicate-alert").html("deliverynote created but invoice number entered was duplicate!")
+				    $("#duplicate-alert").html("Delivery Note created but Invoice could not be created due to duplicate invoice number.");
 						$("#duplicate-alert").alert();
 						$("#duplicate-alert").fadeTo(2250, 500).slideUp(500, function(){
 					$("#duplicate-alert").hide();
@@ -4180,7 +4148,7 @@ $("#roundoff_checkbox").change(function(e){
 					$('.modal').modal('hide');
 					$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
 						$("#deliverychallan_purchaseorder").focus();
-						$("#failure-alert").html("deliverynote created but error occured while creating invoice");
+						$("#failure-alert").html("Delivery Note created but Invoice could not be created.");
 						$("#failure-alert").alert();
 						$("#failure-alert").fadeTo(2250, 500).slideUp(500, function(){
 						$("#failure-alert").hide();
@@ -4207,10 +4175,8 @@ $("#roundoff_checkbox").change(function(e){
 				.always(function() {
 				  console.log("complete");
 				});
-				return false;
   
 
-		return false;
-	}
+		}
 	});
 });
