@@ -4018,7 +4018,7 @@ $("#roundoff_checkbox").change(function(e){
 		  var str = res.split(".");
 		  var len = str[1];
 		  if(invoicetotal!=0){
-		if(str[1] != undefined){
+		    if(str[1] != undefined && str[1] != '00'){
 		    if(len.length == 1){
 			str[1] = str[1]+0;
 			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
