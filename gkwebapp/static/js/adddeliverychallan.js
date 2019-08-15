@@ -3537,7 +3537,7 @@ $("#roundoff_checkbox").change(function(e){
     
     if(sessionStorage.invoicesave==1)
 		{
-			$("#invoice_number_input").show();			
+		    $("#invoice_number_input, #invnavmessage").show();
 			$("#invoice_number").val($("#deliverychallan_challanno").val());
 			$("#invoice_number").focus().select();
 			$("#invoice_date").val($("#deliverychallan_date").val());
@@ -3561,7 +3561,8 @@ $("#roundoff_checkbox").change(function(e){
 				$("#delivery_out").hide();	
 			}
 		}
-	else{
+      else{
+	  $("#invoice_number_input, #invnavmessage").hide();
 		$("#dc_save_no").focus();
 	}
 
