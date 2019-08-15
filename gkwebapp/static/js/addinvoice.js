@@ -2168,6 +2168,15 @@ $(document).ready(function() {
             $('.invoice_product_discount_vat:eq(' + curindex + ')').val(0);
         }
 	var curindex = $(this).closest('#invoice_product_table_vat tbody tr').index();
+	if ($("#discountpercent").val() == 16 && parseFloat(parseFloat($(this).val()).toFixed(2)) > 100){
+	    $("#discount-more-alert").alert();
+	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
+		$(".invoice_product_discount_vat:eq(" + curindex + ")").focus().select();
+		  $("#discount-more-alert").hide();
+	      });
+	    return false;
+	    }
+	else{
 	if (parseFloat(parseFloat($(this).val()).toFixed(2)) > (parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(1) input').val()).toFixed(2)) * parseFloat(parseFloat($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) input').val()).toFixed(2)))) {
 	    $("#discount-more-alert").alert();
 	    $("#discount-more-alert").fadeTo(2250, 500).slideUp(500, function() {
@@ -2175,6 +2184,7 @@ $(document).ready(function() {
 		  $("#discount-more-alert").hide();
 	      });
 	    return false;
+	}
 	}
       calculatevataxamt(curindex);
   });
