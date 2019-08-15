@@ -3620,11 +3620,25 @@ $("#roundoff_checkbox").change(function(e){
 	$("#viewdeldiv").hide();
 	$('#delist, #deliverychallan_div').show();
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+	let delopenurl = "";
 	if ($("#backbutton").attr("inoutflag") == '9') {
-	    $("#deliverychallan_record").click();
+	    delopenurl = "/deliverychallan?action=showadd&status=in";
 	} else if($("#backbutton").attr("inoutflag") == '15') {
-	    $("#deliverychallan_create").click();
+	    delopenurl = "/deliverychallan?action=showadd&status=out";
 	}
+	$.ajax({
+	    type: "POST",
+	    url: delopenurl,
+	    global: false,
+	    async: false,
+	    datatype: "text/html",
+	    beforeSend: function(xhr){
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	    },
+	    success: function(resp){
+		$("#deliverychallan_div").html(resp);
+	    }
+	});
 	return false;
     });
 
@@ -4108,7 +4122,7 @@ $("#roundoff_checkbox").change(function(e){
 	    				$("#success-alert").html("Delivery Note <b>"+$("#deliverychallan_challanno").val()+ "</b>, Invoice <b>" + $("#invoice_number").val() + "</b> and a Voucher <b>" +resp["gkvch"]["vchid"] + "</b> has been created.");	
 				    }
 				    else if (resp["gkstatus"] == 0 && resp["gkvch"]["status"] == 1) {	
-					$("#success-alert").html("Delivery Note <b>"+$("#deliverychallan_challanno").val()+ "</b> and Invoice <b>" + $("#invoice_number").val() + "</b>has been created.<br/>Invoice saved without an accounting entry due to missmatch of accounts. Please make the accounting entry manually.");	
+					$("#success-alert").html("Delivery Note <b>"+$("#deliverychallan_challanno").val()+ "</b> and Invoice <b>" + $("#invoice_number").val() + "</b> has been created.<br/>Invoice saved without an accounting entry due to missmatch of accounts. Please make the accounting entry manually.");	
 				    }
 				    $("#success-alert").alert();
 				    $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
