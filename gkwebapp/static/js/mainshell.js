@@ -409,7 +409,6 @@ $(document).ready(function(){
       $(".hidevoucher").remove();
       $(".transactionmenu").remove();
       $(".gstmenuitem").remove();
-      $("#short_rcp").remove();
       let userremovables = ["#showviewlog","#accountingrepdiv", "#showviewregister","#listofinvoices", "#listofunpaidinvoices", "#show_unbilled_deliveries","#listofusers","#listofdeletedinvoices","#administrationrepdiv"];
       sessionStorage.userremovables = userremovables;
 
@@ -426,7 +425,6 @@ $(document).ready(function(){
        $("#showviewbudget").remove();
        $("#budget").remove();
        $(".operatorhide").remove();
-       $(".operatorhide_on").remove();
        $("#listofusers").remove();
        let userremovables = ["#consolidatedbalancesheet","#showprofitloss","#listofusers","#showviewbudget","#showviewlog","#showdeletedvoucher","#showprjstate","#administrationrepdiv"];
        sessionStorage.userremovables = userremovables;
