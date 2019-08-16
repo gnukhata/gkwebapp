@@ -1,3 +1,25 @@
+[16 August 2019 Release 6.0 Update]
+* Payment button uncleared invoices.
+* P&L and Balance Sheets available for any period within a financial year.
+* Improvements in responsiveness.
+* Facility to Create Invoice from Delivery Note.
+* Facility to import bulk data in the form of spreadsheets on modules Account, Customer & Supplier, Product and Godown to ease data entry.
+* Notes can be added to documents like Invoice, Debit & Credit Note.
+* Round Off feature for Delivery note , Credit/Debit note and Purchase/sales order , Cashmemo with automatic accounting entries
+* Cash/Bank balances visible in dashboard.
+* Performance enhancements in dashboard.
+* Checkbox to indicate if goods returned are of bad quality in Credit Note.
+* Improvement in print templates for invoice.
+* Any voucher can be deleted. Amount Paid for invoice gets adjusted automatically.
+* PIN code can be added for Customer/Supplier.
+* Both customers and suppliers are listed in create screens of documents.
+* Security enhancements like setting Content Security Policy and response headers like x-frame-options.
+* Improved navigation and shortcuts user and company preference wise.
+* Performance enhancements.
+* Bug fixes.
+
+
+
 [26 April 2019 Release 6.0]
 * Facility to create,edit and view report of Profit & Loss Budget and cash Budget.
 * Added dynamic dashboard.
