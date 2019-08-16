@@ -374,7 +374,7 @@
 	      <tfoot>
 		<tr>
 		  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
-		  <td class="text-right smwrap">{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</td>
+		  <td class="text-right smwrap">{% if gkresult["discflag"]|int == 1 %}{{ gkresult["totaldiscount"] }}{% endif %}</td>
 		  <td class="text-right smwrap">{{ gkresult["totaltaxablevalue"] }}</td>
 		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
 		  {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right taxwrap">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
