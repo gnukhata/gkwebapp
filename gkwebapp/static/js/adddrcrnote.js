@@ -615,7 +615,7 @@ $(document).ready(function() {
 	taxamount = (reductprice * rowtaxrate)/100;  //Amount of tax to be applied is found out.
 	
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(6) input').val(parseFloat(taxamount).toFixed(2));
-	rowtotal = parseFloat(reductprice) + parseFloat(taxamount);
+        rowtotal = parseFloat(parseFloat(reductprice).toFixed(2)) + parseFloat(parseFloat(taxamount).toFixed(2));
 	$('#drcrnote_table_vat tbody tr:eq(' + curindex + ') td:eq(7) input').val(parseFloat(rowtotal).toFixed(2));
 	
 	//Total of discount, taxable amount, tax amounts and total are found out
