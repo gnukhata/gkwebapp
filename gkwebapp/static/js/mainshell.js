@@ -929,17 +929,20 @@ $(document).ready(function(){
     beforeSend: function(xhr)
     {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
-    },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-      $("#msspinmodal").modal("hide");
-      
     }
-        }
-      );
-      return false;
-    });
+  })
+  .done(function(resp) {
+    $('#info').html(resp);
+    $("#msspinmodal").modal("hide");
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+});
 
   
     $('#authors').click(function (e) {
@@ -956,17 +959,20 @@ $(document).ready(function(){
     beforeSend: function(xhr)
     {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
-    },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-      $("#msspinmodal").modal("hide");
-      
     }
-        }
-      );
-      return false;
-    });
+  })
+  .done(function(resp) {
+    $('#info').html(resp);
+    $("#msspinmodal").modal("hide");
+
+  })
+  .fail(function() {
+    console.log("error");
+  })
+  .always(function() {
+    console.log("complete");
+  });
+});
 
     $('#license').click(function (e) {
       // calls add account page.
@@ -982,17 +988,20 @@ $(document).ready(function(){
     beforeSend: function(xhr)
     {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
-    },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-      $("#msspinmodal").modal("hide");
-      
     }
-        }
-      );
-      return false;
+  })
+    .done(function(resp) {
+      $('#info').html(resp);
+      $("#msspinmodal").modal("hide");
+
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
     });
+  });
 
     $('#about').click(function (e) {
       // calls add account page.
@@ -1008,17 +1017,20 @@ $(document).ready(function(){
     beforeSend: function(xhr)
     {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
-    },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-      $("#msspinmodal").modal("hide");
-      
     }
-        }
-      );
-      return false;
+    })
+    .done(function(resp) {
+      $('#info').html(resp);
+      $("#msspinmodal").modal("hide");
+
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
     });
+  });
 
     $('#deletecompany').click(function (e) {
       // calls add account page.
@@ -1034,17 +1046,20 @@ $(document).ready(function(){
     beforeSend: function(xhr)
     {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
-    },
-    success: function(resp)
-    {
-      $("#info").html(resp);
-      $("#msspinmodal").modal("hide");
-      
     }
-        }
-      );
-      return false;
+    })
+    .done(function(resp) {
+      $('#info').html(resp);
+      $("#msspinmodal").modal("hide");
+
+    })
+    .fail(function() {
+      console.log("error");
+    })
+    .always(function() {
+      console.log("complete");
     });
+  });
 
   $("#exportdata").on('shown.bs.modal', function(event) {
     $("#exportbutton").focus();
@@ -1196,43 +1211,6 @@ $(document).ready(function(){
       }
     });
   });
-  $(document).off("click","#deleteorg").on("click", "#deleteorg", function(event)
-    {
-      // opens a dialog box asking for confirmation to delete the organisation.
-      event.preventDefault();
-      $('.modal-backdrop').remove();
-      $('.modal').modal('hide');
-      $('#m_confirmdelorg').modal('show').one('click', '#orgdel', function (e)
-        {
-          $("#msspinmodal").modal();
-          $.ajax({
-            url: '/deleteorg',
-            type: 'POST',
-            datatype: 'json',
-            beforeSend: function(xhr)
-            {
-              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-            },
-          })
-           .done(function(resp) {
-             if (resp["gkstatus"]==0) {
-               sessionStorage.clear();
-               window.location.replace("/");
-             }
-           })
-           .fail(function() {
-             console.log("error");
-           })
-           .always(function() {
-             console.log("complete");
-           });
-
-        });
-      $('#m_confirmdelorg').on('shown.bs.modal', function(event) {
-        $("#m_cancel").focus();
-      });
-    }
-  );
 
   $(document).off("click", '#report_back').on("click", '#report_back', function(event) {
     $("#report_li").click();

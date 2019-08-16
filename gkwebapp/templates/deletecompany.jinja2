@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{% trans %}GNUKhata |Delete Company{% endtrans %}</title>
+  <title>{% trans %}GNUKhata | Delete Company{% endtrans %}</title>
    <style media="screen">
     .shadow {
       box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -11,37 +11,36 @@
   		font-size: 90%;
   	}
     div.container {
-        width:500px;
+        width:650px;
         height:500px;
         margin: auto;
     }
     </style>
 </head>
 <body>
-  <div style="padding-top:5px" class='container'>
+  <div style="padding-top:30px" class='container'>
     <div class="row">
       <div class="panel shadow">
         <div class="panel-heading">
-       <span style="font-size:17px;">  Delete Company? </span>
+       <span style="font-size:17px;"> Delete Company? </span>
         </div>
         <div class="panel-body " style="height:35vh;">
 	    <div class="content">
-              <div class="header">
-                 </div>
-              <div class="body">
-                   <p><b> You are about to delete this company. This will destroy all the data related to this company such as company details, preferences, accounts, vouchers, documents, attachments etc.<br> Please proceed if you are absolutely sure of what you are doing and the subsequent implications.
-                   </b> </p>
-                    <p><b>{% trans %}Are you sure?{% endtrans %}</b></p>
-              </div>
-              <div class="footer">
-                  <div class="pull-right">
-                    <button type="button" id ="m_cancel" class="btn btn-warning btn-sm" ><i class="fa fa-times" aria-hidden="true"></i> {% trans %}No{% endtrans %}</button>
-                    <button type="button" id="orgdel"  class="btn btn-danger btn-sm"><i class="fa fa-check" aria-hidden="true"></i> {% trans %}Yes{% endtrans %}</button>
+                <div class="header"></div>
+                <div class="body">
+                <div style="text-align: justify; text-justify: inter-word;">
+                        <p>
+              <b> You are about to delete this company. This will destroy all the data related to this company such as company details, preferences, accounts, vouchers, documents, attachments etc.</b><br><b>Please proceed if you are absolutely sure of what you are doing and the subsequent implications. </b>
+                        </p>
+                <p><b>{% trans %}Are you sure?{% endtrans %}</b></p>
                   </div>
                 </div>
+                <div class="-footer">
+                        <button type="button" id="orgdel" class="pull-right btn btn-danger btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Yes</button>
+                      </div>
 	    </div><!-- /.-content -->
-	  </div><!-- /.-dialog -->
-<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/export.js')}}"></script>
+      </div><!-- /.-dialog -->
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/deletecompany.js')}}"></script>      
 </body>
 </html>
       
