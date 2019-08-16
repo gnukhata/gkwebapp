@@ -678,8 +678,8 @@ $(document).ready(function() {
         let cessamount = (reductprice * cessrate)/100;  //Amount of Cess to be applied is found out.
 	$('#drcrnote_product_table_gst tbody tr:eq(' + curindex + ') td:eq(13) input').val(parseFloat(cessamount).toFixed(2));
 
-	rowtotal = parseFloat(reductprice) + (2*parseFloat(sgstamount)) + parseFloat(igstamount) + parseFloat(cessamount); //Sum of Taxable Amount and Tax Amount is found out.
-        $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
+      rowtotal = parseFloat(parseFloat(reductprice).toFixed(2)) + (2*parseFloat(parseFloat(sgstamount).toFixed(2))) + parseFloat(parseFloat(igstamount).toFixed(2)) + parseFloat(parseFloat(cessamount).toFixed(2)); //Sum of Taxable Amount and Tax Amount is found out.
+      $('#drcrnote_product_table_total tbody tr:eq(' + curindex + ') td:eq(0) input').val(parseFloat(rowtotal).toFixed(2));
 
 	//Total of discount, taxable amount, tax amounts and total are found out
 	for(var i = 0; i < $("#drcrnote_product_table_gst tbody tr").length; i++) {
