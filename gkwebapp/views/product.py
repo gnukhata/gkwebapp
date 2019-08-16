@@ -1078,7 +1078,7 @@ def printablestockonhandreport(request):
 
 @view_config(route_name="product",request_param="type=productimport", renderer="json")
 def ProductImport(request):
-    try:
+    #try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
@@ -1086,6 +1086,7 @@ def ProductImport(request):
         productSheet = wb.active
         productList = tuple(productSheet.rows)
         uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
+        print uom
         godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
         states = requests.get("http://127.0.0.1:6543/state", headers=header).json()["gkresult"]
         s=[]
@@ -1123,10 +1124,10 @@ def ProductImport(request):
                             errorlist.append(productrow[0].coordinate)
                         if productrow[1].value==None:
                             errorlist.append(productrow[1].coordinate)
-                        if productrow[5].value==None:
-                            errorlist.append(productrow[5].coordinate)
                         if productrow[7].value==None:
-                            errorlist.append(productrow[5].coordinate)
+                            errorlist.append(productrow[7].coordinate)
+                        if productrow[9].value==None:
+                            errorlist.append(productrow[7].coordinate)
 
 
                         proddetails={}        
@@ -1137,90 +1138,102 @@ def ProductImport(request):
                         proddetails["productdesc"] =  productrow[0].value           
                         proddetails["gscode"]=productrow[1].value
                         proddetails["prodmrp"] = productrow[3].value
-                        proddetails["prodsp"] = productrow[4].value                    
+                        proddetails["prodsp"] = productrow[4].value
+                        proddetails["amountdiscount"] = productrow[5].value
+                        proddetails["percentdiscount"] = productrow[6].value
+                        
                         proddetails["specs"] = {}
+                        print productrow[2].value
                         if productrow[2].value !=None :
                             proddetails["gsflag"]=7
                             for i in uom:
                                 if i["description"]==productrow[2].value:
                                     uomid=i["uomid"]
                                     break
-                            proddetails["uomid"] = uomid    
+                            try:
+                                proddetails["uomid"] = uomid
+                            except:
+                                errorlist.append(productrow[2].coordinate)  
                         else:        
                             proddetails["gsflag"] = 19
-                        proddetails["openingstock"]=0.00
-                        if productrow[8].value!=None:
-                            proddetails["openingstock"] =productrow[9].value
+                        #proddetails["openingstock"]=0.00
+                        if productrow[11].value!=None:
+                            proddetails["openingstock"] =productrow[11].value
+                        else:
+                            proddetails["openingstock"] = 0.00
 
                         #tax dictionary generation
-                        tax["taxname"]=productrow[5].value
-                        tax["taxrate"]= productrow[7].value
+                        tax["taxname"]=productrow[7].value
+                        tax["taxrate"]= productrow[9].value
                         if tax["taxname"]=="GST": #if GST then no state should be mentioned
                             tax["state"]=''
                             tax["taxname"]="IGST"
-                            if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
-                                errorlist.append(productrow[7].coordinate)
-                        elif productrow[6].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
-                            errorlist.append(productrow[6].coordinate)                    
-                        elif tax["taxname"]!="VAT" and productrow[6].value!=None: 
-                            errorlist.append(productrow[6].coordinate)
+                            if str(tax["taxrate"]) not in gstrate:
+                                #rate should be specific ["5","8","12","28"]
+                                errorlist.append(productrow[9].coordinate)
+                        #VAT should have a state specified
+                        elif productrow[8].value==None and tax["taxname"]=="VAT": 
+                            errorlist.append(productrow[8].coordinate)                    
+                        elif tax["taxname"]!="VAT" and productrow[8].value!=None: 
+                            errorlist.append(productrow[8].coordinate)
                         elif tax["taxname"]=="VAT":                                            
-                            if productrow[6].value in s:
-                                tax["state"]=productrow[6].value                                
+                            if productrow[8].value in s:
+                                tax["state"]=productrow[8].value                                
                             else:
-                                errorlist.append(productrow[6].coordinate)
+                                errorlist.append(productrow[8].coordinate)
                         else:
-                            tax["state"]=''
+                            tax["state"]= None
                         taxes.append(tax)
                         #godown dictionary generation
-                        if productrow[8].value!=None:
+                        if productrow[10].value!=None:
                             flag=0
                             for g in godown:
-                                if g["goname"]==productrow[8].value:
+                                if g["goname"]==productrow[10].value:
                                     godownflag=True
                                     flag=1
-                                    godowns[g["goid"]]=productrow[9].value
+                                    godowns[g["goid"]]=productrow[11].value
                                     break 
                             if flag==0:
-                                errorlist.append(productrow[8].coordinate)                  
+                                errorlist.append(productrow[10].coordinate)                  
 
 
-                elif productrow[5].value!=None or productrow[8].value!=None: # if multiple tax or godowns exist
+                elif productrow[7].value!=None or productrow[10].value!=None:
+                    # if multiple tax or godowns exist
                     #tax dictionary generation
-                    if productrow[5].value!=None:
+                    if productrow[7].value!=None:
                         tax={}
-                        tax["taxname"]=productrow[5].value
-                        tax["taxrate"]=productrow[7].value
-                        if productrow[7].value==None:
-                            errorlist.append(productrow[5].coordinate)
+                        tax["taxname"]=productrow[7].value
+                        tax["taxrate"]=productrow[9].value
+                        if productrow[9].value==None:
+                            errorlist.append(productrow[9].coordinate)
                         if tax["taxname"]=="GST": #if tax=GST then no state should be mentioned
                             tax["taxname"]="IGST"
                             tax["state"]=''
                             if str(tax["taxrate"]) not in gstrate: #rate should be specific ["5","8","12","28"]
-                                errorlist.append(productrow[7].coordinate)
-                        elif productrow[6].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
-                            errorlist.append(productrow[6].coordinate)
+                                errorlist.append(productrow[9].coordinate)
+                        elif productrow[8].value==None and tax["taxname"]=="VAT": #VAT should have a state specified
+                            errorlist.append(productrow[8].coordinate)
 
-                        elif tax["taxname"]!="VAT" and productrow[6].value!=None: 
-                            errorlist.append(productrow[6].coordinate)
+                        elif tax["taxname"]!="VAT" and productrow[8].value!=None: 
+                            errorlist.append(productrow[8].coordinate)
                         elif tax["taxname"]=="VAT":
-                            if productrow[6].value in s:
-                                tax["state"]=productrow[6].value                                
+                            if productrow[8].value in s:
+                                tax["state"]=productrow[8].value                                
                             else:
-                                errorlist.append(productrow[6].coordinate)
+                                errorlist.append(productrow[8].coordinate)
                         else:
                             tax["state"]=''
                         taxes.append(tax)     
                     #godown dictionary generation               
-                    if productrow[8].value!=None:
+                    if productrow[10].value!=None:
                         for g in godown:
-                                if g["goname"]==productrow[8].value:
+                                if g["goname"]==productrow[10].value:
                                     godownflag=True
                                     flag=1
-                                    godowns[g["goid"]]=productrow[9].value
+                                    godowns[g["goid"]]=productrow[10].value
                                     break 
                         if flag==0:
-                            errorlist.append(productrow[8].coordinate)       
+                            errorlist.append(productrow[10].coordinate)       
 
         if len(proddetails)!=0 :
             temp={}
@@ -1286,6 +1299,6 @@ def ProductImport(request):
             return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
         else:
             return {"gkstatus":0}
-    except Exception as e:
-        print(e)
-        return {"gkstatus":result.json()["gkstatus"]}
+    #except Exception as e:
+    #    print(e)
+    #    return {"gkstatus":result.json()["gkstatus"]}
