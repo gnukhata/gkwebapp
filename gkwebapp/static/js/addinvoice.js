@@ -262,9 +262,13 @@ $(document).ready(function() {
 	
 	if ($("#discountpercent").val() == 1){
 	    $('#discounttotal_product_gst').text(parseFloat(totaldiscount).toFixed(2));
+	    $(".discaddon").hide();
+	    $(".discaddon").siblings().width("100%");
 	}
 	else {
 	    $('#discounttotal_product_gst').text("");
+	    $(".discaddon").show();
+	    $(".discaddon").siblings().width("80%");
 	}
 		$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 		$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
@@ -371,9 +375,13 @@ $(document).ready(function() {
 	//Total of various columns are displayed on the footer.
 	if ($("#discountpercent").val() == 1){
 	    $('#discounttotal_product_vat').show().val(parseFloat(totaldiscount).toFixed(2));
+	    $(".discaddon").hide();
+	    $(".discaddon").siblings().width("100%");
 	}
 	else {
 	    $('#discounttotal_product_vat').hide();
+	    $(".discaddon").show();
+	    $(".discaddon").siblings().width("80%");
 	}
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
@@ -2352,6 +2360,14 @@ $(document).ready(function() {
 		  $("#invoice_product_table_vat tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
               }
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
+	      if ($("#discountpercent").val() == 1){
+		  $(".discaddon").hide();
+		  $(".discaddon").siblings().width("100%");
+	      }
+	      else {
+		  $(".discaddon").show();
+		  $(".discaddon").siblings().width("80%");
+	      }
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
 	      $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
 	      setTimeout( function() { $('#invoice_product_table_vat tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
