@@ -567,10 +567,10 @@
                   <tr>
                   <th>Row No.</th>
                   <th>product name</th>
-                  <th>HSN Code</th>
+                  <th>HSN/SAC Code</th>
                   <th>Unit of Measurement</th>
-                  <th>Mrp</th>
-                  <th>Sale Price</th>
+                  <th>Mrp / Maximum Rate</th>
+                  <th>Sale Price / Default Rate</th>
                   <th>Discout Amount</th>
                   <th>Discount Percent(%)</th>
                   <th>Tax</th> 
@@ -579,31 +579,31 @@
                   <th>Godown</th>
                   <th>Opening Stock</th>
                   </tr>
-                </thead>
-              <tbody id="errors">
-            </tbody>
+                  </thead>
+                  <tbody id="errors">
+                  </tbody>
                 </table>
+              </div>
           </div>
-        </div>
       </div>
-    </div>
+          </div>
           <div id="ImportHelpModal"  tabindex="-1" class="modal fade " role="dialog"style="width:90%; margin-top: 30px;"  aria-hidden="true">
-      <div class="modal-dialog bgcolor " style="width:100%;" >
-          <div class="modal-content ">
-            <div class="modal-header">
-                {% trans %}<strong>Import Instructions</strong>{% endtrans %}
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <div class="modal-dialog bgcolor " style="width:100%;" >
+              <div class="modal-content ">
+                <div class="modal-header">
+                  {% trans %}<strong>Import Instructions</strong>{% endtrans %}
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
-          </div>
-              <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-                <p>
-            <font color="#566573">{% trans %}
-            <b>Please read and follow the instructions carefully for smooth and flawless Product data import.</b><br>
-            To import products/services in GNUKhata a certain format is necessary.<br>
-            A downloadedable sample spreadsheet is available below.<br>
-            <b>Please maintain column names in following order:</b><br>
-            Product Name(A1), HSN Code(B1), Unit Of Measurement(C1), Mrp / Maximum Rate(D1), Sale Price / Default Rate(E1), Tax(F1), State(G1), Rate(H1), Godown(I1), Opening Stock(J1) <br>
+                </div>
+                <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+                  <p>
+                    <font color="#566573">{% trans %}
+                      <b>Please read and follow the instructions carefully for smooth and flawless Product data import.</b><br>
+                      To import products/services in GNUKhata a certain format is necessary.<br>
+                      A downloadedable sample spreadsheet is available below.<br>
+                      <b>Please maintain column names in following order:</b><br>
+                      Product Name(A1), HSN Code(B1), Unit Of Measurement(C1), Mrp / Maximum Rate(D1), Sale Price / Default Rate(E1), Discout Amount(F1), Discount Percent(%)(G1), Tax(H1), State(I1), Rate(J1), Godown(K1), Opening Stock(L1) <br>
             <b>Note :</b> <br>1.Unit of Measurement(C) field should be blank for services.<br>
                            2.For godown wise opening stock enter already created godown name in Godown(I) field, otherwise keep it blank.<br>
             <br><b>States should be in following format:</b><br>

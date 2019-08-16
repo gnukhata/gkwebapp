@@ -1078,7 +1078,7 @@ def printablestockonhandreport(request):
 
 @view_config(route_name="product",request_param="type=productimport", renderer="json")
 def ProductImport(request):
-    #try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
@@ -1086,7 +1086,6 @@ def ProductImport(request):
         productSheet = wb.active
         productList = tuple(productSheet.rows)
         uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
-        print uom
         godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
         states = requests.get("http://127.0.0.1:6543/state", headers=header).json()["gkresult"]
         s=[]
@@ -1109,6 +1108,8 @@ def ProductImport(request):
             rowcount+=1
             # first row of spreadsheet has column headings. Skipping that row.  
             if (rowcount > 1):
+                if (productrow[0].value == None and productrow[1].value == None and productrow[2].value == None and productrow[3].value == None and productrow[4].value == None and productrow[5].value == None and productrow[6].value == None and productrow[7].value == None and productrow[8].value == None and productrow[9].value == None and productrow[10].value == None and productrow[11].value == None):
+                        continue
                 #new entry in name column encountered
                 if productrow[0].value != None: 
                     if len(proddetails)!=0:
@@ -1117,7 +1118,7 @@ def ProductImport(request):
                         temp["productdetails"]=productdetails
                         temp["taxes"]=taxes
                         gkdata.append(temp)                    
-
+                    
                     if productrow[0].value != "product name":  
                         newrows.append(rowcount)
                         if productrow[0].value==None:
@@ -1137,13 +1138,24 @@ def ProductImport(request):
                         tax={}
                         proddetails["productdesc"] =  productrow[0].value           
                         proddetails["gscode"]=productrow[1].value
-                        proddetails["prodmrp"] = productrow[3].value
-                        proddetails["prodsp"] = productrow[4].value
-                        proddetails["amountdiscount"] = productrow[5].value
-                        proddetails["percentdiscount"] = productrow[6].value
-                        
+                        if productrow[3].value != None:
+                            proddetails["prodmrp"] = productrow[3].value
+                        else:
+                             proddetails["prodmrp"] = 0.00
+                        if productrow[4].value != None:
+                            proddetails["prodsp"] = productrow[4].value
+                        else:
+                            proddetails["prodsp"] = 0.00
+                        if productrow[5].value != None:
+                            proddetails["amountdiscount"] = productrow[5].value
+                        else:
+                            proddetails["amountdiscount"] = 0.00
+                        if productrow[6].value != None:
+                            proddetails["percentdiscount"] = productrow[6].value
+                        else:
+                            proddetails["percentdiscount"] = 0.00
+                            
                         proddetails["specs"] = {}
-                        print productrow[2].value
                         if productrow[2].value !=None :
                             proddetails["gsflag"]=7
                             for i in uom:
@@ -1299,6 +1311,6 @@ def ProductImport(request):
             return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
         else:
             return {"gkstatus":0}
-    #except Exception as e:
-    #    print(e)
-    #    return {"gkstatus":result.json()["gkstatus"]}
+    except Exception as e:
+        print(e)
+        return {"gkstatus":result.json()["gkstatus"]}
