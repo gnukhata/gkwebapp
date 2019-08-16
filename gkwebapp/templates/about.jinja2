@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | About{% endtrans %}</title>
+   <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    div.container {
+        width:650px;
+        height:500px;
+        margin: auto;
+    }
+    </style>
+</head>
+<body>
+  <div style="padding-top:30px" class='container'>
+    <div class="row">
+      <div class="panel shadow">
+        <div class="panel-heading">
+       <span style="font-size:17px;"> About </span>
+        </div>
+        <div class="panel-body " style="height:25vh; overflow-y:scroll;">
+	    <div class="content">
+                <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+                        <p>
+                          <a href="http://gnukhata.in" target="_blank">{% trans %}GNUKhata{% endtrans %}</a> {% trans %} a free and open source, industry standard software for accounting and inventory management being developed at{% endtrans %} <a href="http://dff.org.in" target="_blank">{% trans %}Digital Freedom Foundation{% endtrans %}</a>.{% trans %} Funded by{% endtrans %} <a href="https://icfoss.in/" target="_blank"> {% trans %}International Centre for Free and Open Source Software(ICFOSS){% endtrans %}</a>.
+                      {% trans %}Now commercially supported by{% endtrans %} <a href="http://www.accionlabs.com/" target="_blank"> {% trans %}Accion Labs Pvt. Ltd{% endtrans %}</a>.
+                        </p>
+                  </div>
+	    </div><!-- /.-content -->
+	  </div><!-- /.-dialog -->
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/export.js')}}"></script>
+</body>
+</html>
+      

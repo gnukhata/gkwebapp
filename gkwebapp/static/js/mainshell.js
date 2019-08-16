@@ -940,8 +940,111 @@ $(document).ready(function(){
       );
       return false;
     });
-  
 
+  
+    $('#authors').click(function (e) {
+      // calls add account page.
+      $("#msspinmodal").modal("show");
+      $.ajax(
+        {
+  
+    type: "POST",
+    url: "/authors",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+    {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+    },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+      $("#msspinmodal").modal("hide");
+      
+    }
+        }
+      );
+      return false;
+    });
+
+    $('#license').click(function (e) {
+      // calls add account page.
+      $("#msspinmodal").modal("show");
+      $.ajax(
+        {
+  
+    type: "POST",
+    url: "/license",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+    {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+    },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+      $("#msspinmodal").modal("hide");
+      
+    }
+        }
+      );
+      return false;
+    });
+
+    $('#about').click(function (e) {
+      // calls add account page.
+      $("#msspinmodal").modal("show");
+      $.ajax(
+        {
+  
+    type: "POST",
+    url: "/about",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+    {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+    },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+      $("#msspinmodal").modal("hide");
+      
+    }
+        }
+      );
+      return false;
+    });
+
+    $('#deletecompany').click(function (e) {
+      // calls add account page.
+      $("#msspinmodal").modal("show");
+      $.ajax(
+        {
+  
+    type: "POST",
+    url: "/deletecompany",
+    global: false,
+    async: false,
+    datatype: "text/html",
+    beforeSend: function(xhr)
+    {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken);
+    },
+    success: function(resp)
+    {
+      $("#info").html(resp);
+      $("#msspinmodal").modal("hide");
+      
+    }
+        }
+      );
+      return false;
+    });
 
   $("#exportdata").on('shown.bs.modal', function(event) {
     $("#exportbutton").focus();

@@ -146,7 +146,8 @@
             <li id="orgpref" class="hideoperator hidemanager godownhide  submenuitem administrationmenu closebooks"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Company Preferences{% endtrans %}</a></li>
             <li id="exportdata" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item kmd" data-toggle="modal" href="">{% trans %}Export Data{% endtrans %}</a></li>
             <li id="tallyimport" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Import Data{% endtrans %}</a></li>
-            <li id="deleteorg" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Delete Company{% endtrans %}</a></li>
+            <!-- <li id="deleteorg" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Delete Company{% endtrans %}</a></li> -->
+            <li id="deletecompany" class="hideoperator hidemanager godownhide submenuitem administrationmenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}Delete Company{% endtrans %}</a></li>
             
             <li id="helpdropdown" class="submenuli" data-menuname="helpmenu">
               <a href="" id="help" class="submenu kmd"  data-menuname="helpmenu" role="button" aria-haspopup="true" aria-expanded="false">{% trans %}Help{% endtrans %}  <i class="fa fa-caret-down"></i></a>
@@ -155,10 +156,11 @@
             <li onclick="location.href='http://gnukhata.in/manual.pdf'" class="submenuitem helpmenu"><a class="submenu_item kmd" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
             
             <li id="shortcuts" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="tab" href="">{% trans %}Shortcuts{% endtrans %}</a></li>
-            <li id="authors" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="modal"  href="" data-target="#gnukhataauthors">{% trans %}Authors{% endtrans %}</a></li>
+
+            <li id="authors" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="tab"  href="" >{% trans %}Authors{% endtrans %}</a></li>
             
-            <li id="license" class="submenuitem helpmenu"><a class="submenu_item kmd" data-toggle="modal"  href="" data-target="#gnukhatalicense">{% trans %}License{% endtrans %}</a></li>
-            <li id="about" class="submenuitem helpmenu"><a class="submenu_item kmd" data-toggle="modal"  href="" data-target="#aboutgnukhata">{% trans %}About{% endtrans %}</a></li>		
+            <li id="license" class="submenuitem helpmenu"><a class="submenu_item kmd" data-toggle="tab"  href="" >{% trans %}License{% endtrans %}</a></li>
+            <li id="about" class="submenuitem helpmenu"><a class="submenu_item kmd" data-toggle="tab"  href="">{% trans %}About{% endtrans %}</a></li>		
           </ul>
         </nav>
         <div id="navhead" class="navbar-header hidden-print">
@@ -860,81 +862,6 @@
 
       <div class="container-fluid tab-pane" id="catsearchmodal">
 
-      </div>
-
-      <div id="gnukhatalicense" tabindex="-1" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-	  <div class="modal-content">
-	    <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">{% trans %}License{% endtrans %}</h4>
-	    </div>
-	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-              <p>
-                {% trans %}This software is licensed under version 3 of the{% endtrans %} <a href="http://www.gnu.org/licenses/agpl-3.0.html" target="_blank">{% trans %}GNU Affero General Public License(GNU AGPLv3){% endtrans %}</a>.
-                {% trans %}You may use a newer version of the same license.{% endtrans %} {% trans %}The libraries used in this software are licensed under their respective{% endtrans %} <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">{% trans %}free software licenses{% endtrans %}</a>.
-              </p>
-              <p style="margin-top: 30px;">
-                {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016, 2017, 2018.{% endtrans %}<br>
-	        {% trans %}Partial Copyright © Accion Labs Pvt. Ltd. 2017, 2018.{% endtrans %}<br>
-	        {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
-              </p>
-	    </div>
-	  </div>
-        </div>
-      </div>
-      <div id="aboutgnukhata" tabindex="-1" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-	  <div class="modal-content">
-	    <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">{% trans %}GNUKhata <small style="color:white;"> version 6.0 </small>{% endtrans %}</h4>
-	    </div>
-	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-              <p>
-                <a href="http://gnukhata.in" target="_blank">{% trans %}GNUKhata{% endtrans %}</a> {% trans %} a free and open source, industry standard software for accounting and inventory management being developed at{% endtrans %} <a href="http://dff.org.in" target="_blank">{% trans %}Digital Freedom Foundation{% endtrans %}</a>.{% trans %} Funded by{% endtrans %} <a href="https://icfoss.in/" target="_blank"> {% trans %}International Centre for Free and Open Source Software(ICFOSS){% endtrans %}</a>.
-	        {% trans %}Now commercially supported by{% endtrans %} <a href="http://www.accionlabs.com/" target="_blank"> {% trans %}Accion Labs Pvt. Ltd{% endtrans %}</a>.
-              </p>
-	    </div>
-	  </div>
-        </div>
-      </div>
-      <div id="gnukhataauthors" tabindex="-1" class="modal fade" role="dialog">
-        <div class="modal-dialog">
-	  <div class="modal-content">
-	    <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">{% trans %}Authors{% endtrans %}</h4>
-	    </div>
-	    <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-              <p>
-                Krishnakant Mane(Founder & Project Leader) <a href="mailto:kk@dff.org.in">kk@dff.org.in</a><br />
-                Arun Kelkar (Domain Expert) <a href="mailto:arunkelkar@dff.org.in">arunkelkar@dff.org.in</a><br />
-
-              </p>
-              <p>
-                Abhijith Balan <a href="mailto:abhijith@dff.org.in">abhijith@dff.org.in</a><br/>
-                Ark Arjun (Logo designer) <a href="maiito:arkarjun@gmail.com">arkarjun@gmail.com</a></br>
-                Bhushan Patil <a href ="mailto:techgenzhosting@gmail.com"> techgenzhosting@gmail.com</a><br/>        
-                Prajkta Patkar <a href ="mailto:prajakta@dff.org.in"> prajakta@dff.org.in</a><br/>
-                Rupali Badgujar <a href ="mailto:rupalibadgujar1234@gmail.com"> rupalibadgujar1234@gmail.com</a><br/>
-                Rohan Khairnar <a href ="mailto:rohankhairnar5@gmail.com"> rohankhairnar5@gmail.com</a><br/>
-                Gaurav Thakur <a href ="gaurav.thakur@sakec.ac.in"> gaurav.thakur@sakec.ac.in</a><br/>
-                Jainam Doshi <a href ="jainam.doshi@sakec.ac.in"> jainam.doshi@sakec.ac.in</a><br/>
-                Nirali Dodhia <a href ="nirali.dodhia@sakec.ac.in"> nirali.dodhia@sakec.ac.in</a><br/>
-                Nishit Jakharia <a href ="nishitjakhariya@gmail.com"> nitheshjakhariya@gmail.com</a><br/>
-                Rudresh Dongre <a href ="rudresh.dongre@sakec.ac.in"> rudresh.dongre@sakec.ac.in</a><br/>
-
-
-
-	      </p>
-              <p>
-                For former developers list visit <a href="http://gnukhata.in/#team" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a>
-              </p>
-	    </div>
-
-	  </div>
-        </div>
       </div>
       <div id="m_confirmdelorg" class="modal fade" tabindex="-1" role="dialog">
         <div class="vertical-alignment-helper">

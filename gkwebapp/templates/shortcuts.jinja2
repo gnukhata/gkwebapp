@@ -24,8 +24,12 @@
         <div class="panel-heading">
        <span style="font-size:17px;">  Shortcuts </span>
         </div>
-        <div class="panel-body">
+        <div class="panel-body" style=" height:80vh; overflow-y:scroll;">
 	    <div class="content">
+                <p>
+                <b>{% trans %}Special Shortcuts{% endtrans %}</b>
+                </p>
+        
             <div class="row">
                 <div class="col-xs-4">{% trans %}To use screen specific shortcuts{% endtrans %} : </div>
                 <div class="col-xs-8">
@@ -43,7 +47,6 @@
 
                 </div>
             </div>
-        </div>
               <hr>
               <p>
                 <b>{% trans %}Index Page{% endtrans %}</b>
@@ -135,7 +138,8 @@
                     {% trans %}Individual Screen{% endtrans %} - ALT + SHIFT + {% trans %}(Underlined Character){% endtrans %}
                   </p>
                 </div>
-           
+        </div>
+           </div>
 	  </div><!-- /.-dialog -->
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcuts.js')}}"></script>
 </body>

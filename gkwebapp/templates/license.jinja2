@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | License{% endtrans %}</title>
+   <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    div.container {
+        width:650px;
+        height:500px;
+        margin: auto;
+    }
+    </style>
+</head>
+<body>
+  <div style="padding-top:30px" class='container'>
+    <div class="row">
+      <div class="panel shadow">
+        <div class="panel-heading">
+       <span style="font-size:17px;"> License </span>
+        </div>
+        <div class="panel-body " style="height:35vh; overflow-y:scroll;">
+	    <div class="content">
+                <div  style="text-align: justify; text-justify: inter-word;">
+                        <p>
+                          {% trans %}This software is licensed under version 3 of the{% endtrans %} <a href="http://www.gnu.org/licenses/agpl-3.0.html" target="_blank">{% trans %}GNU Affero General Public License(GNU AGPLv3){% endtrans %}</a>.
+                          {% trans %}You may use a newer version of the same license.{% endtrans %} {% trans %}The libraries used in this software are licensed under their respective{% endtrans %} <a href="http://www.gnu.org/licenses/license-list.html" target="_blank">{% trans %}free software licenses{% endtrans %}</a>.
+                        </p>
+                        <p style="margin-top: 30px;">
+                          {% trans %}Copyright © Digital Freedom Foundation 2013,2014,2015,2016, 2017, 2018.{% endtrans %}<br>
+                      {% trans %}Partial Copyright © Accion Labs Pvt. Ltd. 2017, 2018.{% endtrans %}<br>
+                      {% trans %}Visit{% endtrans %} <a href="http://gnukhata.in" target="_blank">{% trans %}gnukhata.in{% endtrans %}</a> {% trans %}for more information.{% endtrans %}
+                        </p>
+                  </div>
+	    </div><!-- /.-content -->
+	  </div><!-- /.-dialog -->
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/export.js')}}"></script>
+</body>
+</html>
+      

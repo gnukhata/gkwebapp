@@ -98,15 +98,7 @@ $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
   $("#exportdata").click(function(){
   $("#info").load("/export");
 });
-$("#authors").click(function(){
-  $("#gnukhataauthors").modal("show");
-});
-$("#license").click(function(){
-  $("#gnukhatalicense").modal("show");
-});
-$("#about").click(function(){
-  $("#aboutgnukhata").modal("show");
-});
+
 $("#shownews").click(function(){
   $("#newsmodal").modal("show");
 });

@@ -142,5 +142,21 @@ def cashbankaccbal(request):
     return{"gkstatus":result.json()["gkstatus"],"bankaccdata":result.json()["bankaccdata"],"cashaccdata":result.json()["cashaccdata"]}
 
 @view_config(route_name="shortcuts",renderer="gkwebapp:templates/shortcuts.jinja2")
-def showreport(request):
+def shortcuts(request):
+    return {"status":True}
+
+@view_config(route_name="authors",renderer="gkwebapp:templates/authors.jinja2")
+def authors(request):
+    return {"status":True}
+
+@view_config(route_name="license",renderer="gkwebapp:templates/license.jinja2")
+def license(request):
+    return {"status":True}
+
+@view_config(route_name="about",renderer="gkwebapp:templates/about.jinja2")
+def about(request):
+    return {"status":True}
+
+@view_config(route_name="deletecompany",renderer="gkwebapp:templates/deletecompany.jinja2")
+def deletecompany(request):
     return {"status":True}
