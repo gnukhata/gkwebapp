@@ -295,9 +295,13 @@ $(document).ready(function() {
 		$('.invoice_product_discount_gst:eq(' + curindex + ')').text(value.discount);
                 if(parseInt(resp.delchaldata.discflag) == 1){
                     $(".discaddon").hide();
+		    $(".discheading").text("Discount Amount");
+		    $(".discaddon").siblings().width("100%");
                 }
                 else {
                     $(".discaddon").show();
+		    $(".discheading").text("Discount %");
+		    $(".discaddon").siblings().width("80%");
                 }
 		$('.invoice_product_taxablevalue_gst:eq(' + curindex + ')').text(value.taxableamount);
 		if(resp.delchaldata.taxname == 'IGST'){

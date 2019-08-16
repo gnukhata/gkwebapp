@@ -229,7 +229,7 @@
 			  <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 			  <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 			  <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-			  <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+			  <th class="smvwrap text-center discheading">{% trans %}Discount Amount{% endtrans %}</th>
 			  <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 			  <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 			  <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -257,8 +257,10 @@
 			    <label class="invoice_product_per_price_vat form-control input-sm text-right numtype"></label>
 			  </td>
 			  <td class="smvwrap">
-			    <label class="invoice_product_discount_vat form-control input-sm text-right numtype"></label>
-                            <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+			    <div class="input-group">
+			      <label class="invoice_product_discount_vat form-control input-sm text-right numtype"></label>
+                              <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+			    </div>
 			  </td>
 			  <td class="smvwrap">
 			    <label class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype"></label>
@@ -305,7 +307,7 @@
 			</div>
 			<div class="col-sm-10" style="overflow-x:scroll;">
 			  <div class="row">
-			    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:140%; max-width:140%">
+			    <table id="invoice_product_table_gst_heading" class="nopadding table table-condensed table-bordered" style="width:170%; max-width:170%">
 			      <thead class="bg-primary">
 				<tr>
 				  <th rowspan="2" class="mdwrap text-center">{% trans %}Product/ Service{% endtrans %}</th>
@@ -313,7 +315,7 @@
 				  <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 				  <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 				  <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-				  <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+				  <th rowspan="2" class="smwrap text-center discheading">{% trans %}Discount Amount{% endtrans %}</th>
 				  <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 				  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
 				  <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}SGST/UTGST{% endtrans %}</th>
@@ -335,7 +337,7 @@
 			    </table>
 			  </div>
 			  <div class="row">
-			    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%; overflow-x:hidden;overflow-y:scroll;">
+			    <table id="invoice_product_table_gst" class="nopadding table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:170%; max-width:170%; overflow-x:hidden;overflow-y:scroll;">
 			      <tbody>
 				<tr>
 				  <td class="mdwrap">
@@ -360,8 +362,10 @@
 				    <label class="invoice_product_per_price_gst form-control input-sm text-right numtype"></label>
 				  </td>
 				  <td class="smwrap">
-				    <label class="invoice_product_discount_gst form-control input-sm text-right numtype"></label>
-                                    <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+				    <div class="input-group">
+				      <label class="invoice_product_discount_gst form-control input-sm text-right numtype"></label>
+                                      <span class="input-group-addon input-sm unitaddon discaddon">%</span>
+				    </div>
 				  </td>
 				  <td class="smwrap">
 				    <label class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype"></label>
@@ -381,7 +385,7 @@
 			    </table>
 			  </div>
 			  <div class="row">
-			    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:140%; max-width:140%;">
+			    <table id="invoice_product_table_gst_tfoot" class=" table table-condensed table-bordered fixed-table fixed-tablepurchase" style="width:170%; max-width:170%;">
 			      <tfoot>
 				<tr>
 				  <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
