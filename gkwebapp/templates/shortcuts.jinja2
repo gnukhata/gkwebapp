@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{% trans %}GNUKhata | Shortcuts{% endtrans %}</title>
+   <style media="screen">
+    .shadow {
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+  		font-size: 90%;
+  	}
+    div.container {
+        width:900px;
+        height:1000px;
+        margin: auto;
+    }
+    </style>
+</head>
+<body>
+  <div style="padding-top:5px" class='container'>
+    <div class="row">
+      <div class="panel shadow">
+        <div class="panel-heading">
+       <span style="font-size:17px;">  Shortcuts </span>
+        </div>
+        <div class="panel-body">
+	    <div class="content">
+            <div class="row">
+                <div class="col-xs-4">{% trans %}To use screen specific shortcuts{% endtrans %} : </div>
+                <div class="col-xs-8">
+                  <p>{% trans %}Firefox{% endtrans %}- Alt + Shift + {% trans %}the underlined character{% endtrans %}</p>
+                  <p>{% trans %}Google Chrome, Opera or Internet Explorer {% endtrans %}- Alt + {% trans %}the underlined character{% endtrans %}</p>
+                  <p>{% trans %}Older versions of Opera(prior to version 12.1){%endtrans%}- Shift + Esc + {% trans %}the underlined character{% endtrans %}</p>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-4">{% trans %}To access "n" th tab inside a page{% endtrans %} : </p></div>
+                <div class="col-xs-8">
+                  <p>{% trans %}Firefox{% endtrans %} - Alt + Shift + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
+                  <p>{% trans %}Google Chrome, Opera or Internet Explorer{% endtrans %} - Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
+                  <p>{% trans %}Older versions of Opera(prior to version 12.1) {% endtrans %} - Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
+
+                </div>
+            </div>
+        </div>
+              <hr>
+              <p>
+                <b>{% trans %}Index Page{% endtrans %}</b>
+              </p>
+              <div class="row">
+                <div class="col-xs-6">
+                  <p>
+                    {% trans %}Select Existing Company{% endtrans %} - CTRL + SHIFT + E
+                  </p>
+                </div>
+                <div class="col-xs-6">
+                  <p>
+                    {% trans %}Create Company{% endtrans %} - CTRL + SHIFT + R
+                  </p>
+                </div>
+              </div>
+              <hr>
+              <p>             
+                <b>{% trans %}Menu{% endtrans %}</b>
+              </p>
+              <div class="row">
+                <div class="col-xs-6">
+                    <p>
+                        {% trans %}Side Menu{% endtrans %} - F3
+                        </p>
+                  <p>
+                    {% trans %}Logout{% endtrans %} - CTRL - L
+                  </p>
+                  <p>
+                    {% trans %}Change Company{% endtrans %} - CTRL + O
+                  </p>
+                  <p class="godowninchagehide internalauditorhide operatorhide hidefm">
+                    {% trans %}Project{% endtrans %} - ALT + P
+                  </p>
+	                <p class="godowninchagehide internalauditorhide operatorhide hidenof">
+                    {% trans %}Cost Center{% endtrans %} - ALT + C
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Bank Reconciliation Statement{% endtrans %} - ALT + R
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Create Account{% endtrans %} - F2
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Receipt{% endtrans %} - F4
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Payment{% endtrans %} - F5
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Sale{% endtrans %} - F6
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Purchase{% endtrans %} - F7
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                      {% trans %}Contra{% endtrans %} - F8
+                    </p>
+                </div>
+                <div class="col-xs-6">
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Journal{% endtrans %} - F9
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Sale Return{% endtrans %} - CTRL + 1
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Purchase Return{% endtrans %} - CTRL + 2
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Credit Note{% endtrans %} - CTRL + 3
+                  </p>
+                  <p class="godowninchagehide internalauditorhide">
+                    {% trans %}Debit Note{% endtrans %} - CTRL + 4
+                  </p>
+                  <p class="godowninchagehide">
+                    {% trans %}Find & Edit Voucher{% endtrans %} - F10
+                  </p>
+                  <p>
+                    {% trans %}Reports{% endtrans %} - F11
+                  </p>
+                  <p class="godowninchagehide internalauditorhide operatorhide hidemanager">
+                    {% trans %}Close Books/Roll Over{% endtrans %} - ALT + L
+                  </p>
+                  <p>
+                    {% trans %}Manual{% endtrans %} - ALT + M
+                  </p>
+                  <p>
+                    {% trans %}Individual Screen{% endtrans %} - ALT + SHIFT + {% trans %}(Underlined Character){% endtrans %}
+                  </p>
+                </div>
+           
+	  </div><!-- /.-dialog -->
+<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/shortcuts.js')}}"></script>
+</body>
+</html>
+      

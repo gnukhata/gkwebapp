@@ -154,7 +154,7 @@
             <li onclick="location.href='http://support.gnukhata.in/'" class="submenuitem helpmenu"><a class="submenu_item kmd" id="support" href="http://support.gnukhata.in/">{% trans %}Support{% endtrans %}</a></li>
             <li onclick="location.href='http://gnukhata.in/manual.pdf'" class="submenuitem helpmenu"><a class="submenu_item kmd" id="manual" target="_blank" href="http://gnukhata.in/manual.pdf">{% trans %}Manual{% endtrans %}</a></li>
             
-            <li id="shortcuts" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="modal" href="" data-target="#gnukhatashortcuts">{% trans %}Shortcuts{% endtrans %}</a></li>
+            <li id="shortcuts" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="tab" href="">{% trans %}Shortcuts{% endtrans %}</a></li>
             <li id="authors" class="submenuitem helpmenu "><a class="submenu_item kmd " data-toggle="modal"  href="" data-target="#gnukhataauthors">{% trans %}Authors{% endtrans %}</a></li>
             
             <li id="license" class="submenuitem helpmenu"><a class="submenu_item kmd" data-toggle="modal"  href="" data-target="#gnukhatalicense">{% trans %}License{% endtrans %}</a></li>
@@ -860,132 +860,6 @@
 
       <div class="container-fluid tab-pane" id="catsearchmodal">
 
-      </div>
-
-      <div id="gnukhatashortcuts" tabindex="-1" class="modal fade" role="dialog">
-        <div class="modal-dialog modal-lg">
-	  <div class="modal-content">
-	    <div class="modal-header">
-              <button id="secondmodal" type="button" class="close" data-dismiss="modal">&times;</button>
-              <h4 class="modal-title">{% trans %}Shortcuts{% endtrans %}</h4>
-	    </div>
-            <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-              <p>
-                <b>{% trans %}Special Shortcuts{% endtrans %}</b>
-              </p>
-              <div class="row">
-                <div class="col-xs-4">{% trans %}To use screen specific shortcuts{% endtrans %} : </div>
-                <div class="col-xs-8">
-                  <p>{% trans %}Firefox{% endtrans %}- Alt + Shift + {% trans %}the underlined character{% endtrans %}</p>
-                  <p>{% trans %}Google Chrome, Opera or Internet Explorer {% endtrans %}- Alt + {% trans %}the underlined character{% endtrans %}</p>
-                  <p>{% trans %}Older versions of Opera(prior to version 12.1){%endtrans%}- Shift + Esc + {% trans %}the underlined character{% endtrans %}</p>
-                </div>
-              </div>
-
-              <div class="row">
-                <div class="col-xs-4">{% trans %}To access "n" th tab inside a page{% endtrans %} : </p></div>
-                <div class="col-xs-8">
-                  <p>{% trans %}Firefox{% endtrans %} - Alt + Shift + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
-                  <p>{% trans %}Google Chrome, Opera or Internet Explorer{% endtrans %} - Alt + {% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
-                  <p>{% trans %}Older versions of Opera(prior to version 12.1) {% endtrans %} - Shift + Esc +{% trans %}"n" number key{% endtrans %} (n = 1, 2, 3)</p>
-
-                </div>
-              </div>
-              <hr>
-              <p>
-                <b>{% trans %}Index Page{% endtrans %}</b>
-              </p>
-              <div class="row">
-                <div class="col-xs-6">
-                  <p>
-                    {% trans %}Select Existing Company{% endtrans %} - CTRL + SHIFT + E
-                  </p>
-                </div>
-                <div class="col-xs-6">
-                  <p>
-                    {% trans %}Create Company{% endtrans %} - CTRL + SHIFT + R
-                  </p>
-                </div>
-              </div>
-              <hr>
-              <p>             
-                <b>{% trans %}Menu{% endtrans %}</b>
-              </p>
-              <div class="row">
-                <div class="col-xs-6">
-                    <p>
-                        {% trans %}Side Menu{% endtrans %} - F3
-                        </p>
-                  <p>
-                    {% trans %}Logout{% endtrans %} - CTRL - L
-                  </p>
-                  <p>
-                    {% trans %}Change Company{% endtrans %} - CTRL + O
-                  </p>
-                  <p class="godownhide internalaud operatorhide hideforfm">
-                    {% trans %}Project{% endtrans %} - ALT + P
-                  </p>
-	                <p class="godownhide internalaud operatorhide hidefornof">
-                    {% trans %}Cost Center{% endtrans %} - ALT + C
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Bank Reconciliation Statement{% endtrans %} - ALT + R
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Create Account{% endtrans %} - F2
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Receipt{% endtrans %} - F4
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Payment{% endtrans %} - F5
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Sale{% endtrans %} - F6
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Purchase{% endtrans %} - F7
-                  </p>
-                  <p class="godownhide internalaud">
-                      {% trans %}Contra{% endtrans %} - F8
-                    </p>
-                </div>
-                <div class="col-xs-6">
-                  <p class="godownhide internalaud">
-                    {% trans %}Journal{% endtrans %} - F9
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Sale Return{% endtrans %} - CTRL + 1
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Purchase Return{% endtrans %} - CTRL + 2
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Credit Note{% endtrans %} - CTRL + 3
-                  </p>
-                  <p class="godownhide internalaud">
-                    {% trans %}Debit Note{% endtrans %} - CTRL + 4
-                  </p>
-                  <p class="godownhide">
-                    {% trans %}Find & Edit Voucher{% endtrans %} - F10
-                  </p>
-                  <p>
-                    {% trans %}Reports{% endtrans %} - F11
-                  </p>
-                  <p class="godownhide internalaud operatorhide hidemanager">
-                    {% trans %}Close Books/Roll Over{% endtrans %} - ALT + L
-                  </p>
-                  <p>
-                    {% trans %}Manual{% endtrans %} - ALT + M
-                  </p>
-                  <p>
-                    {% trans %}Individual Screen{% endtrans %} - ALT + SHIFT + {% trans %}(Underlined Character){% endtrans %}
-                  </p>
-                </div>
-              </div>
-	    </div>
-	  </div>
-        </div>
       </div>
 
       <div id="gnukhatalicense" tabindex="-1" class="modal fade" role="dialog">

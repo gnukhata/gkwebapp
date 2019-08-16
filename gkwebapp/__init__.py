@@ -103,6 +103,7 @@ def main(global_config, **settings):
     config.add_route('showprojectstatementreport', '/showprojectstatementreport')
     config.add_route('showaccount', '/showaccount')
     config.add_route('showreport', '/showreport')
+    config.add_route('shortcuts', '/shortcuts')
     config.add_route('showlistofaccounts', '/showlistofaccounts')
     config.add_route('showmultiacc', '/showmultiacc')
     config.add_route('multiacc', '/multiacc')

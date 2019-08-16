@@ -140,3 +140,7 @@ def cashbankaccbal(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/dashboard?type=cashbankaccountdata",headers=header)
     return{"gkstatus":result.json()["gkstatus"],"bankaccdata":result.json()["bankaccdata"],"cashaccdata":result.json()["cashaccdata"]}
+
+@view_config(route_name="shortcuts",renderer="gkwebapp:templates/shortcuts.jinja2")
+def showreport(request):
+    return {"status":True}
