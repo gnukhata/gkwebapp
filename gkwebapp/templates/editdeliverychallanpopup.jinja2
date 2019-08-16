@@ -231,7 +231,9 @@
 	    <th class="qtyvwrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 	    <th class="qtyvwrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 	    <th class="smvwrap text-center">{% trans %}Rate{% endtrans %}</th>
-	    <th class="smvwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+	    <th class="smvwrap text-center">
+	      {% if delchaldata["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}
+	    </th>
 	    <th class="smvwrap text-center">{% trans %}Taxable Value{% endtrans %}</th>
 	    <th class="ratewrap text-center">{% trans %}Tax Rate{% endtrans %} %</th>
 	    <th class="smvwrap text-center">{% trans %}Tax Amount{% endtrans %}</th>
@@ -254,7 +256,7 @@
 		{{ delchaldata["delchalContents"][product]["priceperunit"] }}
 	      </td>
 	      <td class="smvwrap text-right">
-		{{ delchaldata["delchalContents"][product]["discount"] }}
+		{{ delchaldata["delchalContents"][product]["discount"] }}{% if delchaldata["discflag"]|int == 16 %}%{% endif %}
 	      </td>
 	      <td class="smvwrap text-right">
 		{{ delchaldata["delchalContents"][product]["taxableamount"] }}
@@ -277,7 +279,7 @@
 	      {% trans %}Total{% endtrans %}
 	    </td>
 	    <td class="smvwrap text-right">
-	      {{ delchaldata["totaldiscount"] }}
+	      {% if delchaldata["discflag"]|int == 1 %}{{ delchaldata["totaldiscount"] }}{% endif %}
 	    </td>
 	    <td class="smvwrap text-right">
 	      {{ delchaldata["totaltaxablevalue"] }}
@@ -309,7 +311,9 @@
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Billed Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="qtywrap text-center">{% trans %}Free Quantity{% endtrans %}</th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Rate{% endtrans %}</th>
-		    <th rowspan="2" class="smwrap text-center">{% trans %}Discount Amount{% endtrans %}</th>
+		    <th rowspan="2" class="smwrap text-center">
+		      {% if delchaldata["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{% else %}{% trans %}Discount %{% endtrans %}{%endif%}
+		    </th>
 		    <th rowspan="2" class="smwrap text-center">{% trans %}Taxable Value {% endtrans %}</th>
 		    {% if delchaldata["taxname"]=='SGST' %}
 		      <th colspan="2" class="taxwrap text-center sgstfield">{% trans %}CGST{% endtrans %}</th>
@@ -350,7 +354,7 @@
 			{{ delchaldata["delchalContents"][product]["gscode"] }}
 		      </td>
 		      <td class="qtywrap text-right">
-			  {{ delchaldata["delchalContents"][product]["qty"]}} {{ delchaldata["delchalContents"][product]["uom"]}}
+			{{ delchaldata["delchalContents"][product]["qty"]}} {{ delchaldata["delchalContents"][product]["uom"]}}
 		      </td>
 		      <td class="qtywrap text-right">
 			{{ delchaldata["delchalContents"][product]["freeqty"] }} {{ delchaldata["delchalContents"][product]["uom"] }}
@@ -359,7 +363,7 @@
 			{{ delchaldata["delchalContents"][product]["priceperunit"]}}
 		      </td>
 		      <td class="smwrap text-right">
-			{{ delchaldata["delchalContents"][product]["discount"] }}
+			{{ delchaldata["delchalContents"][product]["discount"] }}{% if delchaldata["discflag"]|int == 16 %}%{%endif%}
 		      </td>
 		      <td class="smwrap text-right">
 			{{ delchaldata["delchalContents"][product]["taxableamount"] }}
@@ -403,7 +407,7 @@
 		  <tr>
 		    <td colspan="5" class="text-right totalwrap" style="vertical-align:middle; font-size:75%">Total</td>
 		    <td class="text-right smwrap">
-		      {{ delchaldata["totaldiscount"] }}
+		      {% if delchaldata["discflag"]|int == 1 %}{{ delchaldata["totaldiscount"] }}{%endif%}
 		    </td>
 		    <td class="text-right smwrap">
 		      {{ delchaldata["totaltaxablevalue"] }}
