@@ -369,7 +369,7 @@
 		<th rowspan="2" class="text-center"><small>{% trans %}Billed Qty{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Free Qty{% endtrans %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Rate{% endtrans %}</small></th>
-		<th rowspan="2" class="text-center"><small>{% trans %}{% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}{% endtrans %}</small></th>
+		<th rowspan="2" class="text-center"><small>{% if gkresult["discflag"]|int == 1 %}{% trans %}Discount Amount{% endtrans %}{%else%}{% trans %}Discount %{% endtrans %}{% endif %}</small></th>
 		<th rowspan="2" class="text-center"><small>{% trans %}Taxable Value {% endtrans %}</small></th>
 		{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="text-center"><small>{% trans %}CGST{% endtrans %}</small></th>{% endif %}
 		{% if gkresult["taxname"]=='SGST' %}<th colspan="2" class="text-center"><small>{% trans %}SGST/UTGST{% endtrans %}</small></th>{% endif %}
