@@ -2914,6 +2914,7 @@ if (event.which == 13) {
 			    else {
 				$("#invoice_editprint").show();
 			    }
+			    $("#discountpercent").val(resp.invoicedata.discflag);
 			    // Loads delivery note data if any.
 			    if(resp.invoicedata.dcid){
 				delchalproducts = [];
@@ -3038,7 +3039,7 @@ if (event.which == 13) {
 				$('.invoice_product_quantity_gst').numeric({ negative: false });
 				$('.invoice_product_per_price_gst').numeric({ negative: false });
 				$("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
-				if ($("#discountpercent").val() == 1){
+				if (resp.invoicedata.discflag == 1){
 				    $('#discounttotal_product_gst').text(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 				}
 				else {
@@ -3090,7 +3091,7 @@ if (event.which == 13) {
 				$("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 				$('.invoice_product_quantity_vat').numeric({ negative: false });
 				$('.invoice_product_per_price_vat').numeric({ negative: false });
-				if ($("#discountpercent").val() == 1){
+				if (resp.invoicedata.discflag == 1){
 				    $('#discounttotal_product_vat').show().val(parseFloat(resp.invoicedata.totaldiscount).toFixed(2));
 				}
 				else {
@@ -3272,6 +3273,12 @@ if (event.which == 13) {
 			    else {
 				$("#rev2radio").prop("checked", true);
 				$("#rev1radio").prop("checked", false);
+			    }
+			    if(resp.invoicedata.discflag == 1){
+				$(".discaddon").hide();
+			    }
+			    else {
+				$(".discaddon").show();
 			    }
 			    // Disabling all fields again.
 			    $('.editdis').prop("disabled", true);
