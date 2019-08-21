@@ -565,8 +565,10 @@ $(document).ready(function() {
 		$("#smalllink").show();	
 		$("#smalllinkvat").hide();
 		$("#smalllinkonlyvat").hide();
+		$("#invoice_customerstate").empty();
+		$("#invoice_customerstate").append('<option > Select State </option>');
 				
-			
+		
 	    $(".tinfield").hide();
 	    $("#gstproducttable").show();  //Shows GST Product table.
 	    $(".gstinfield").show();
@@ -595,7 +597,24 @@ $(document).ready(function() {
 		$("#smalllinkonlyvat").hide();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();
-	    $(".product_name_vat").searchify();
+		$(".product_name_vat").searchify();
+
+		$.ajax({
+			url: '/invoice?type=getstatelist',
+					type: 'POST',
+					async: false,
+					beforeSend: function(xhr) {
+						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					}
+		})
+		.done(function(resp){
+			$("#invoice_customerstate").empty();
+			for (let i in resp["gkresult"]){
+				$.each(resp["gkresult"][i], function(k, v) {
+				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+				});
+			}	
+		});
 	}
     });
 
@@ -1030,7 +1049,9 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 			$("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
 			$("#invoice_customerstate").change();
-			if(sessionStorage.vatorgstflag == '7'){
+			// if(sessionStorage.vatorgstflag == '7'){
+			if ($(".taxapplicable").val() == "7"){
+
 			$("#invoice_customerstate").empty();
 			for (let i in resp["gkresult"]["statelist"]){
 				$.each(resp["gkresult"]["statelist"][i], function(k, v) {

@@ -251,6 +251,13 @@ def showstate(request):
         orgstateforinv = 'null'
     return {"gkresult":orgstateforinv}
 
+@view_config(route_name="invoice",request_param="type=getstatelist",renderer="json")
+def showstatelist(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/state", headers=header)
+    return {"gkresult": result.json()["gkresult"]}
+    
+
 @view_config(route_name="invoice",request_param="action=showeditinv",renderer="gkwebapp:templates/editinvoice.jinja2")
 def showeditableinvoices(request):
     header={"gktoken":request.headers["gktoken"]}
