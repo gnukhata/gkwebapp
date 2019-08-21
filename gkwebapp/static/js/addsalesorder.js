@@ -2983,6 +2983,7 @@ if (event.which == 13) {
 	      return false;
 	  }
 	  }
+
 	  var ps_narration=$("#ps_narration").val();
       
     $('.modal-backdrop').remove();
@@ -3053,7 +3054,9 @@ if (event.which == 13) {
 		}
 		form_data.append("file" + i, files[i]);
 		}
+		if (ps_narration.length !=0 ){
 		form_data.append("ps_narration",ps_narration);
+		}
 
 	$.ajax({
                 url: '/purchaseorder?action=save',
@@ -3335,6 +3338,21 @@ if (event.which == 13) {
 	 event.preventDefault();
 	 $("#branch").focus().select();
        };
-    });
+	});
+
+
+  var delta = 500;
+  var lastKeypressTime = 0;
+  $("#ps_narration").keydown(function(event) {
+	if (event.which==13){
+	var thisKeypressTime = new Date();
+	if ( thisKeypressTime - lastKeypressTime <= delta )
+	{
+		$("#salesorder_save").focus();
+		thisKeypressTime = 0;
+	}
+	lastKeypressTime = thisKeypressTime;
+	}
+});
     
 });
