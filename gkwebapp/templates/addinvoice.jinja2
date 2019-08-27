@@ -229,15 +229,15 @@
 			{% trans %}Customer State{% endtrans %}:
 		      {% endif %}
 		    </label>
-		    <select id="invoice_customerstate" class="form-control input-sm col-sm-8">
+		    <select id="invoice_customerstate" class="form-control input-sm col-sm-8" disabled>
 					{% if resultgstvat == '29' or resultgstvat == '7' %}
 					<option>Select State</option>
-					{% else %}
-						<!-- {% for state in states %}
-			  			{% for key, value in state.items() %}
-			    			<option value="{{value}}" stateid="{{key}}">{{value}}</option>
-			  			{% endfor %}
-						{% endfor %} -->
+					{% else %} 
+					{% for state in states %}
+						{% for key, value in state.items() %}
+							<option value="{{value}}" stateid="{{key}}">{{value}}</option>
+						{% endfor %}
+					 {% endfor %}
 				{% endif %}
 		    </select>
 		  </div>

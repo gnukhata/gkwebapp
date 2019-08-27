@@ -237,12 +237,12 @@
 		      <select id="invoice_customerstate" class="custfield form-control input-sm col-sm-8 delreset">
 					{% if resultgstvat == '29' or resultgstvat == '7' %}
 					<option>Select State</option>
-					{% else %}
+					{% else %} 
 						{% for state in states %}
 							{% for key, value in state.items() %}
 								<option value="{{value}}" stateid="{{key}}">{{value}}</option>
 							{% endfor %}
-						{% endfor %}
+						 {% endfor %}
 				{% endif %}
 		      </select>
 		    </div>

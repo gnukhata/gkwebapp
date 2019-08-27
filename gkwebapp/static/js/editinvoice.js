@@ -471,7 +471,7 @@ $(document).ready(function() {
 	    }
 	}
 	$("#invoicestate").change();
-    });
+	});	
 
     //Key Event for Invoice Date Field.
     $("#invoice_date").keydown(function(event) {
@@ -910,14 +910,15 @@ $(document).ready(function() {
 		if (resp["gkstatus"] == 0) {
 		    $("#invoice_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
 			$("#invoice_customerstate").change();
-			if(sessionStorage.vatorgstflag == '7'){
+			if($("#taxapplicable").val() == "7"){
 			$("#invoice_customerstate").empty();
 			for (let i in resp["gkresult"]["statelist"]){
 				$.each(resp["gkresult"]["statelist"][i], function(k, v) {
 				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
 				});
+				}
 			}
-		}
+			
 		    $("#invoice_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
 		    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
@@ -2876,35 +2877,6 @@ if (event.which == 13) {
 				$("#invoice_year").blur();
 
 				gstins = resp.invoicedata.custSupDetails.custgstinlist;
-				if(sessionStorage.vatorgstflag == '7'){
-				$("#invoice_customerstate").empty();
-				for (let i in resp.invoicedata.custSupDetails.statelist){
-					$.each(resp.invoicedata.custSupDetails.statelist[i], function(k, v) {
-					$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
-					});
-					}
-				}
-			    if ($("#status").val() == 15) {
-				$("#invoicestate").val(resp.invoicedata.sourcestate);
-				$("#statecodeforinvoice").text(pad(resp.invoicedata.sourcestatecode, 2));
-				$("#originaddress").val(resp.invoicedata.address);
-				$("#originpincode").val(resp.invoicedata.pincode);
-				$("#invoice_issuer_name").val(resp.invoicedata.issuername);
-				$("#invoice_issuer_designation").val(resp.invoicedata.designation);
-				//when customer state changed
-				$("#invoice_customerstate").val(resp.invoicedata.destinationstate);
-				$("#invoice_customerstate").change();
-				$("#statecodeofcustomer").text(pad(resp.invoicedata.taxstatecode, 2));
-			    
-			    }
-			    else {
-				$("#invoicestate").val(resp.invoicedata.destinationstate);
-				$("#statecodeforinvoice").text(pad(resp.invoicedata.taxstatecode, 2));
-				//when supplier state changed
-				$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
-				$("#invoice_customerstate").change();
-				$("#statecodeofcustomer").text(pad(resp.invoicedata.sourcestatecode, 2));
-				}
 
 			    if (resp.invoicedata.orgstategstin) {
 				$("#orggstin").text(resp.invoicedata.orgstategstin);
@@ -3026,7 +2998,54 @@ if (event.which == 13) {
 					  $("#vathelp").show();
 			      $(".gstfield").hide();
 				$(".vatfield").show();
-			    }
+				}
+				if($("#taxapplicable").val() ==  '7'){
+					$("#invoice_customerstate").empty();
+					for (let i in resp.invoicedata.custSupDetails.statelist){
+						$.each(resp.invoicedata.custSupDetails.statelist[i], function(k, v) {
+						$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+						});
+						}
+					}
+				else if($("#taxapplicable").val() ==  '22'){ 
+					$.ajax({
+						url: '/invoice?type=getstatelist',
+								type: 'POST',
+								async: false,
+								beforeSend: function(xhr) {
+									xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+								}
+					})
+					.done(function(resp){
+						$("#invoice_customerstate").empty();
+						for (let i in resp["gkresult"]){
+							$.each(resp["gkresult"][i], function(k, v) {
+							$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
+							});
+						}	
+					});
+				}
+				if ($("#status").val() == 15) {
+					$("#invoicestate").val(resp.invoicedata.sourcestate);
+					$("#statecodeforinvoice").text(pad(resp.invoicedata.sourcestatecode, 2));
+					$("#originaddress").val(resp.invoicedata.address);
+					$("#originpincode").val(resp.invoicedata.pincode);
+					$("#invoice_issuer_name").val(resp.invoicedata.issuername);
+					$("#invoice_issuer_designation").val(resp.invoicedata.designation);
+					//when customer state changed
+					$("#invoice_customerstate").val(resp.invoicedata.destinationstate);
+					$("#invoice_customerstate").change();
+					$("#statecodeofcustomer").text(pad(resp.invoicedata.taxstatecode, 2));
+					
+					}
+					else {
+					$("#invoicestate").val(resp.invoicedata.destinationstate);
+					$("#statecodeforinvoice").text(pad(resp.invoicedata.taxstatecode, 2));
+					//when supplier state changed
+					$("#invoice_customerstate").val(resp.invoicedata.sourcestate);
+					$("#invoice_customerstate").change();
+					$("#statecodeofcustomer").text(pad(resp.invoicedata.sourcestatecode, 2));
+					}
 			    // Loading consignee ddetails if any.
 			    if (resp.invoicedata.consignee.consigneename) {
 				$("#consigneename").val(resp.invoicedata.consignee.consigneename);

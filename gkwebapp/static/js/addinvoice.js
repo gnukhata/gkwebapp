@@ -565,10 +565,11 @@ $(document).ready(function() {
 		$("#smalllink").show();	
 		$("#smalllinkvat").hide();
 		$("#smalllinkonlyvat").hide();
-		$("#invoice_customerstate").empty();
-		$("#invoice_customerstate").append('<option > Select State </option>');
-				
-		
+
+		if ($("#invoice_deliverynote").val() == ""){
+		$("#invoice_customer").change();
+		}
+
 	    $(".tinfield").hide();
 	    $("#gstproducttable").show();  //Shows GST Product table.
 	    $(".gstinfield").show();
@@ -599,22 +600,9 @@ $(document).ready(function() {
 	    $(".vatfield").show();
 		$(".product_name_vat").searchify();
 
-		$.ajax({
-			url: '/invoice?type=getstatelist',
-					type: 'POST',
-					async: false,
-					beforeSend: function(xhr) {
-						xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-					}
-		})
-		.done(function(resp){
-			$("#invoice_customerstate").empty();
-			for (let i in resp["gkresult"]){
-				$.each(resp["gkresult"][i], function(k, v) {
-				$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');
-				});
-			}	
-		});
+		if ($("#invoice_deliverynote").val()== ""){
+			$("#invoice_customer").change();
+	}
 	}
     });
 
@@ -1047,11 +1035,10 @@ $(document).ready(function() {
 	    .done(function(resp) {
 		console.log("success");
 		if (resp["gkstatus"] == 0) {
-			$("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
-			$("#invoice_customerstate").change();
-			// if(sessionStorage.vatorgstflag == '7'){
+			if($("#invoice_deliverynote").val() == ""){
+			$("#invoice_customerstate").prop("disabled", false);
+			}
 			if ($(".taxapplicable").val() == "7"){
-
 			$("#invoice_customerstate").empty();
 			for (let i in resp["gkresult"]["statelist"]){
 				$.each(resp["gkresult"]["statelist"][i], function(k, v) {
@@ -1059,6 +1046,26 @@ $(document).ready(function() {
 				});
 			}	
 			}
+			else if($(".taxapplicable").val() == "22"){
+				$.ajax({
+					url: '/invoice?type=getstatelist',
+							type: 'POST',
+							async: false,
+							beforeSend: function(xhr) {
+								xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+							}
+				})
+				.done(function(resp){
+					$("#invoice_customerstate").empty();
+					for (let i in resp["gkresult"]){
+						$.each(resp["gkresult"][i], function(k, v) {
+						$("#invoice_customerstate").append('<option value="'+v+'" stateid="'+k+'">'+v+'</option>');		
+						});
+					}	
+				});
+			}
+			$("#invoice_customerstate").val(resp["gkresult"]["state"]);    //State of Customer is selected automatically.
+			$("#invoice_customerstate").change();
 		    $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
 		    $("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		    $("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
