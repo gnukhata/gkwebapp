@@ -224,7 +224,20 @@ $.ajax(
     var canvas = document.getElementById("pieChart");
     // Global Options:
      Chart.defaults.global.defaultFontColor = 'black';
-    var data = {
+     if (resp["DirectIncome"] == "0.00" && resp["InDirectIncome"] == "0.00" && resp["DirectExpense"] == "0.00" && resp["InDirectExpense"] == "0.00"){
+      var data = {
+        labels: ["No Data Found","Direct Income", "Indirect Income","Direct Expense", "Indirect Expense"],
+          datasets: [
+            {
+                fill: true,
+                backgroundColor: ["#cccccc","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
+                data: ["1","0.00","0.00","0.00","0.00",],
+            }
+        ]
+    };
+
+     }
+   else{ var data = {
         labels: ["Direct Income", "Indirect Income","Direct Expense", "Indirect Expense"],
           datasets: [
             {
@@ -234,6 +247,7 @@ $.ajax(
             }
         ]
     };
+  }
     // Notice the rotation from the documentation.
     var options = {
                   responsive: true,
@@ -264,7 +278,26 @@ $.ajax(
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
       },
       success: function(resp){  
-       new Chart(document.getElementById("doughnut-chart"), {
+      if (resp["data"][0] == "0.00" && resp["data"][1] == "0.00"){
+        new Chart(document.getElementById("doughnut-chart"), {
+          type: 'doughnut',
+          data: {
+            labels: ["No Data Found","Capital and Liabilities","Property and Assets"],
+            datasets: [
+              {
+                fill: true,
+                backgroundColor: ["#cccccc","#3e95cd","#8e5ea2"],
+                data: ["1","0.00","0.00"],
+              }
+            ]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+          }
+      });
+      }
+      else{ new Chart(document.getElementById("doughnut-chart"), {
         type: 'doughnut',
         data: {
           labels: ["Capital and Liabilities","Property and Assets"],
@@ -280,9 +313,8 @@ $.ajax(
           responsive: true,
           maintainAspectRatio: true,
         }
-        
     });
-       
+  }
       }
     })
   
@@ -322,6 +354,7 @@ $.ajax(
                 label: 'Quantity In',
                 data: indata,
                 backgroundColor: [
+
                     'rgba(51, 51, 51)',
                     'rgba(51, 51, 51)',
                     'rgba(51, 51, 51)',
