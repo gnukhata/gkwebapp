@@ -602,15 +602,53 @@ if (sessionStorage.userrole==3){
 	}
     });
 
+
+//click event for '+'(add button) in 'stock Table'. 
+$(document).off("click", ".stockaddbtn").on("click", ".stockaddbtn", function(event) {
+  var curindex_stbtn = $(this).closest('tr').index();
+  var nextindex_stbtn = curindex_stbtn + 1;
+  var selecteprod = $('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(0) select option:selected').val();
+  var numberofprod = $('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(0) select option:not(:hidden)').length - 1;
+  if (curindex_stbtn != ($("#stocktable tbody tr").length - 1)) {
+      $('#stocktable tbody tr:eq(' + nextindex_stbtn + ') td:eq(0) select').focus().select();
+  } else {
+      if (numberofprod >= 0) {
+          if ($('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(0) select option:selected').val() == "") {
+              $("#emptyproductalert").alert();
+              $("#emptyproductalert").fadeTo(2250, 500).slideUp(500, function() {
+                  $("#emptyproductalert").hide();
+              });
+              $('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(0) select').focus();
+              return false;
+          }
+          if (numberofprod > 0) {
+              $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
+              $('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(2) span').hide('.glyphicon-plus');
+
+          } else {
+              $("#stock_done").focus();
+          }
+          $(".open_stock").numeric();
+          //selected product are removed from list.
+          $('#stocktable tbody tr:eq(' + nextindex_stbtn + ') td:eq(0) select option[value=' + selecteprod + ']').prop('hidden', true).prop('disabled', true);
+          $('#stocktable tbody tr:eq(' + nextindex_stbtn + ') td:eq(0) select option[value=""]').prop('selected', true);
+          $('#stocktable tbody tr:eq(' + nextindex_stbtn + ') td:eq(0) select').focus().select();
+      } else {
+          $("#stock_done").focus();
+      }
+  }
+});
+
 /*Event for deleting a particular row*/    
     $(document).off("click",".product_del").on("click", ".product_del", function() {
 	$(this).closest('tr').fadeOut(200, function(){
 	    $(this).closest('tr').remove();//closest method gives the closest element specified
 	    if($('#stocktable tbody tr').length == 0){// After deleting 0th row gives field to adding new gstin.
 		$('#stocktable tbody').append('<tr>'+stkhtml+'</tr>');
-	
-       
-	    }
+      }
+      if (!($('.stockaddbtn').is(':visible'))) {
+        $('#stocktable tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus stockaddbtn"></span></div>');
+    }
 	    $('#stocktable tbody tr:last td:eq(0) select').focus().select();
 	});
 	$('#stocktable tbody tr:last td:eq(0) select').select();
@@ -690,6 +728,7 @@ if (sessionStorage.userrole==3){
             $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
                $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
             $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
+            $('#stocktable tbody tr:eq(' + curindex + ') td:eq(2) span').hide('.glyphicon-plus');
             $('.prodstock:eq('+ nextindex +')').focus().select();
         }
         else if (event.which == 190 && event.shiftKey) {

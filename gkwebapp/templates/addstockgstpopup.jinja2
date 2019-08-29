@@ -38,16 +38,18 @@
 	    <table id="stocktable" class="table table-condensed table-bordered fixed-table">
 	      <thead class="bg-primary input-sm">
 		<tr>
-		  <th class="col-xs-6 text-center">{% trans %}Product{% endtrans %}</th>
+		  <th class="col-xs-5 text-center">{% trans %}Product{% endtrans %}</th>
                   <th class="col-xs-2 text-center">{% trans %}HSN code{% endtrans %}</th>
 		  <th class="col-xs-3 text-center">{% trans %}Stock{% endtrans %}</th>
 		  <th class="col-xs-1">
+			</th>
+			<th class="col-xs-1">
 		  </th>
 		</tr>
 	      </thead>
 	      <tbody>
 		<tr>
-		  <td class="col-xs-6">
+		  <td class="col-xs-5">
 		    <select class="form-control input-sm prodstock" id="prodstockid">
 		      <option value="" disabled hidden selected>Select Product</option>
 
@@ -66,7 +68,11 @@
 		      </div>
 		    </div>
 		  </td>
-		  
+			<td class="col-xs-1">
+					<div style="text-align: center;">
+							<span class="glyphicon glyphicon glyphicon-plus stockaddbtn">
+						</div>
+		  </td>
 		  <td class="col-xs-1">
 		    <a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 		  </td>
@@ -78,15 +84,17 @@
 	<table id="stocktable" class="table table-condensed table-bordered fixed-table">
 	  <thead class="bg-primary input-sm">
 	    <tr>
-	      <th class="col-xs-6 text-center">{% trans %}Product{% endtrans %}</th>
+	      <th class="col-xs-5 text-center">{% trans %}Product{% endtrans %}</th>
 	      <th class="col-xs-3 text-center">{% trans %}Stock{% endtrans %}</th>
 	      <th class="col-xs-1">
-	      </th>
+				</th>
+				<th class="col-xs-1">
+					</th>
 	    </tr>
 	  </thead>
 	  <tbody>
 	    <tr>
-	      <td class="col-xs-6">
+	      <td class="col-xs-5">
 		<select class="form-control input-sm prodstock" id="prodstockid">
 		  <option value="" disabled hidden selected>Select Product</option>
 
@@ -101,7 +109,12 @@
 		    </div>			    
 		  </div>
 		</div>
-	      </td>
+				</td>
+				<td class="col-xs-1">
+						<div style="text-align: center;">
+								<span class="glyphicon glyphicon glyphicon-plus stockaddbtn">
+							</div>
+				</td>
 	      <td class="col-xs-1">
 		<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>
 	      </td>
