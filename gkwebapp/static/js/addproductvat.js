@@ -624,6 +624,7 @@ $(document).off("click", ".stockaddbtn").on("click", ".stockaddbtn", function(ev
           if (numberofprod > 0) {
               $('#stocktable tbody').append('<tr>' + $(this).closest('tr').html() + '</tr>');
               $('#stocktable tbody tr:eq(' + curindex_stbtn + ') td:eq(2) span').hide('.glyphicon-plus');
+            $('.unitname:eq(' + curindex_stbtn + ')').text("");
 
           } else {
               $("#stock_done").focus();
@@ -729,6 +730,7 @@ $(document).off("click", ".stockaddbtn").on("click", ".stockaddbtn", function(ev
                $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value='+selectedpro+']').prop('hidden', true).prop('disabled', true);
             $('#stocktable tbody tr:eq('+nextindex+') td:eq(0) select option[value=""]').prop('selected', true);
             $('#stocktable tbody tr:eq(' + curindex + ') td:eq(2) span').hide('.glyphicon-plus');
+            $('.unitname:eq(' + nextindex + ')').text("");
             $('.prodstock:eq('+ nextindex +')').focus().select();
         }
         else if (event.which == 190 && event.shiftKey) {
