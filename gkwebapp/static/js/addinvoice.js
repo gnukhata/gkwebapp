@@ -1537,6 +1537,19 @@ $(document).ready(function() {
 		    $("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			$("#invoice_customerpincode").prop("disabled", true);
+
+			if (resp["delchal"]["taxname"] == 'VAT'){
+				$("input[id='vat'][value='22']").click();
+				// $("#taxapplicable").val("22").prop("checked", true);
+				$("#taxapplicabletext").text("VAT");
+		        $(".taxapplicable").val("22");
+				console.log("dsfsdfdsfdfdsfdsfdsfsdf");
+			}
+			else{
+				$("input[id='gst'][value='7']").click();
+				// $("#taxapplicabletext").text("VAT");
+		        $(".taxapplicable").val("7");
+			}
 		    if ("delchalContents" in resp["delchal"]) {
 			delchalContents = resp["delchal"]["delchalContents"];
 		    }

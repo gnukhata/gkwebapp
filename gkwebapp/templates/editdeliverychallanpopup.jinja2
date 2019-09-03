@@ -100,12 +100,23 @@
 	    <label for="deliverychallan_customerstate" class="col-sm-4 fsize infield">Supplier State :</label>
 	  {% else %}
 	    <label for="deliverychallan_customerstate" class="col-sm-4 fsize outfield">Customer State :</label>
-	  {% endif %}
-	  <label id="deliverychallan_customerstate" class="col-sm-8">{{ delchaldata["custSupDetails"]["custsupstate"] }}</label>
+		{% endif %}
+
+	  {% if delchaldata["delchaldata"]["inoutflag"] == 9 %}
+		<label id="deliverychallan_customerstate" class="col-sm-8">{{ delchaldata["sourcestate"] }}</label>		
+	  {% else %}
+		<label id="deliverychallan_customerstate" class="col-sm-8">{{ delchaldata["destinationstate"] }}</label>		
+		{% endif %}
+
 	</div>
 	<div class="form-group form-inline">
-	  <label for="statecodeofcustomer" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
-	  <label id="statecodeofcustomer" class="col-sm-8">{{ '%02d' | format(delchaldata["custSupDetails"]["custsupstatecode"]| int) }}</label>
+		<label for="statecodeofcustomer" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
+	  {% if delchaldata["delchaldata"]["inoutflag"] == 9 %}		
+		<label id="statecodeofcustomer" class="col-sm-8">{{ '%02d' | format(delchaldata["sourcestatecode"]| int) }}</label>
+	  {% else %}
+		<label id="statecodeofcustomer" class="col-sm-8">{{ '%02d' | format(delchaldata["taxstatecode"]| int) }}</label>
+		{% endif %}
+		
 	</div>
 	<!-- For VAT -->
 	{% if delchaldata["delchaldata"]["taxflag"] == 22 %}

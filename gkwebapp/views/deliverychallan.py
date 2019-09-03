@@ -87,6 +87,7 @@ def showeditpopupdeliverychallan(request):
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=single&dcid=%d"%(int(dcid)), headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    print delchal.json()["gkresult"]
     return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
