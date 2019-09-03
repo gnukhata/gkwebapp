@@ -45,6 +45,7 @@ $(document).ready(function() {
 
 
 	let roundoffflag = 0;
+	let ps_narration= "" ;
     if(sessionStorage.vatorgstflag == '22' ){
       $(".gstinfield").hide();
 	$(".tinfield").show();
@@ -2790,6 +2791,7 @@ if (event.which == 13) {
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
           consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
 		  consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
+		  console.log(consignee["consigneeaddress"]);
           consignee["consigneepincode"] = $.trim($("#consigneepincode").val());
 		  
           consignee["consigneestate"] = $.trim($("#consigneestate").val());
@@ -2984,7 +2986,7 @@ if (event.which == 13) {
 	  }
 	  }
 
-	  var ps_narration=$("#ps_narration").val();
+	  ps_narration=$("#ps_narration").val();
       
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
@@ -3015,7 +3017,7 @@ if (event.which == 13) {
 	    form_data.append("taxstate", $("#salesorder_customerstate option:selected").val());
 	    form_data.append("sourcestate", $("#salesorderstate option:selected").val());
 	    form_data.append("freeqty", JSON.stringify(freeqty));
-	    form_data.append("discount", JSON.stringify(discount));
+		form_data.append("discount", JSON.stringify(discount));
 	    form_data.append("consignee", JSON.stringify(consignee));
 	    //Code for sending data to the database based on which radio button is checked i.e."cash" or "bank".
             if ($("#chkcash").is(":checked")) {
