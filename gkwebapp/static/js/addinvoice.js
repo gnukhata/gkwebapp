@@ -1504,6 +1504,7 @@ $(document).ready(function() {
       }
     });
     $("#invoice_deliverynote").change(function(event) {
+		console.log("change event click");
 	if ($("#invoice_deliverynote option:selected").val() != '') {
 		$("#msspinmodal").modal("show");
 		var deliverydate = $("#invoice_deliverynote option:selected").attr("dateofsupply");
@@ -1522,6 +1523,10 @@ $(document).ready(function() {
 		}
 	    }).done(function(resp) {
 		if (resp["gkstatus"] == 0) {
+			console.log("-------------------------------------------------");
+			console.log(resp["delchal"]["taxname"]);
+			console.log("----------------------------------------------------------------------------");
+
 			$(".custsupchange").prop("disabled", false);
 			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
 				$("#custchange.custsupchange").click();
@@ -1539,16 +1544,10 @@ $(document).ready(function() {
 			$("#invoice_customerpincode").prop("disabled", true);
 
 			if (resp["delchal"]["taxname"] == 'VAT'){
-				$("input[id='vat'][value='22']").click();
-				// $("#taxapplicable").val("22").prop("checked", true);
-				$("#taxapplicabletext").text("VAT");
-		        $(".taxapplicable").val("22");
-				console.log("dsfsdfdsfdfdsfdsfdsfsdf");
+				$("#vat").click();
 			}
 			else{
-				$("input[id='gst'][value='7']").click();
-				// $("#taxapplicabletext").text("VAT");
-		        $(".taxapplicable").val("7");
+				$("#gst").click();
 			}
 		    if ("delchalContents" in resp["delchal"]) {
 			delchalContents = resp["delchal"]["delchalContents"];
