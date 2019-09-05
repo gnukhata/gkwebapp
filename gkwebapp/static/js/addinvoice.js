@@ -1523,10 +1523,18 @@ $(document).ready(function() {
 		}
 	    }).done(function(resp) {
 		if (resp["gkstatus"] == 0) {
-			console.log("-------------------------------------------------");
-			console.log(resp["delchal"]["taxname"]);
-			console.log("----------------------------------------------------------------------------");
 
+			//Invoice state
+			if(resp["delchal"]["delchaldata"]["inoutflag"] == 15){
+				$("#invoice_issuer_designation").val(resp["delchal"]["delchaldata"]["designation"]);
+				$("#invoice_issuer_name").val(resp["delchal"]["delchaldata"]["issuername"]);
+				$("#invoicestate").val(resp["delchal"]["sourcestate"]);
+				$("#invoicestate").change();
+			}
+			else{
+				$("#invoicestate").val(resp["delchal"]["destinationstate"]);
+				$("#invoicestate").change();
+			}
 			$(".custsupchange").prop("disabled", false);
 			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
 				$("#custchange.custsupchange").click();
@@ -1535,7 +1543,7 @@ $(document).ready(function() {
 			if(resp["delchal"]["custSupDetails"]["csflag"]==19){
 				$("#supchange.custsupchange").click();
 				$(".custsupchange").prop("disabled", true);
-			} 
+			}
 
 		    //details of customer and supplier
 		    $("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
