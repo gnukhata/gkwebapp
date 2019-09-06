@@ -1145,7 +1145,21 @@ $(document).ready(function() {
 	else {
 	    $("#rejectionnote_out").click();
 	}
-    });
+	});
+	
+	$.ajax({
+		url: '/showuser?action=getuser',
+		type: 'POST',
+		dataType: 'json',
+		async : false,
+		beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	})
+	.done(function(resp){
+		$("#issuer_name").val(resp.unamerole["username"]);
+	  $("#issuer_designation").val(resp.unamerole["userroleName"]);
+	});
 });
 
 
