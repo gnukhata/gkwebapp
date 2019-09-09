@@ -4195,4 +4195,17 @@ $("#roundoff_checkbox").change(function(e){
 
 		}
 	});
+	$.ajax({
+		url: '/showuser?action=getuser',
+		type: 'POST',
+		dataType: 'json',
+		async : false,
+		beforeSend: function(xhr) {
+		xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		}
+	})
+	.done(function(resp){
+		$("#invoice_issuer_name").val(resp.unamerole["username"]);
+	  $("#invoice_issuer_designation").val(resp.unamerole["userroleName"]);
+	});
 });
