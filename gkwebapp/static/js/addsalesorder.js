@@ -2791,7 +2791,6 @@ if (event.which == 13) {
           consignee["tinconsignee"] = $.trim($("#tinconsignee").val());
           consignee["gstinconsignee"] = $.trim($("#gstinconsignee").val());
 		  consignee["consigneeaddress"] = $.trim($("#consigneeaddress").val());
-		  console.log(consignee["consigneeaddress"]);
           consignee["consigneepincode"] = $.trim($("#consigneepincode").val());
 		  
           consignee["consigneestate"] = $.trim($("#consigneestate").val());
