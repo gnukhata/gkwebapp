@@ -48,6 +48,7 @@ $(document).ready(function(){
     sessionStorage.onview=0;
     sessionStorage.companyremovables = [];
     sessionStorage.userremovables = [];
+    sessionStorage.accMenuFlag = 0;   // flag for print account list back button
     $("#spinmodal").modal("hide");
     $('.modal-backdrop').remove();
     jQuery.fn.extend({

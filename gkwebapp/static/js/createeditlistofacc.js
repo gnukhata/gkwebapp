@@ -44,7 +44,7 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
-        sessionStorage.accMenuFlag = 1;
+        sessionStorage.acclistMenuFlag = 1;
         $("#createeditlistofacc_div").html(resp);
       }
       }
@@ -65,7 +65,7 @@ $(document).ready(function() {
         },
       success: function(resp)
       {
-        sessionStorage.accMenuFlag = 1;
+        sessionStorage.acclistMenuFlag = 1;
         $("#createeditlistofacc_div").html(resp);
       }
       }
@@ -89,12 +89,12 @@ $(document).ready(function() {
        $("#titlehide").hide();
        $("#report_back").hide();
        $("#backbutton").show();
-       sessionStorage.accMenuFlag = 0;   
+       sessionStorage.acclistMenuFlag = 1;   
       }
       }
     );
     });
-    if (sessionStorage.accMenuFlag == 0){
+    if (sessionStorage.acclistMenuFlag == 0){
       $("#list_of_account").click();
     }
     else{

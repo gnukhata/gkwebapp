@@ -98,7 +98,6 @@
         window.print();
       });
       $("#loaback").click(function(event) {
-        console.log(sessionStorage.accMenuFlag);
        if (sessionStorage.accMenuFlag == 1){
          $.ajax(
       {
@@ -120,7 +119,7 @@
     );
        }
        else{
-         
+         sessionStorage.acclistMenuFlag = 0;
           $('#addaccount').click();
        }
     
