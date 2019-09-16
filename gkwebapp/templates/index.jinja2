@@ -4,7 +4,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost:6544 'unsafe-inline' 'unsafe-eval';"/>
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' localhost:6544 'unsafe-inline' 'unsafe-eval' data:;"/>
     <title>{% trans %}GNUKhata v6.0{% endtrans %}</title>
     <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/bootstrap.min.css')}}">
     <link rel="stylesheet" type="text/css" media="screen" href="{{request.static_url('gkwebapp:static/css/font-awesome.min.css')}}">
@@ -158,12 +158,12 @@
     <!-- ClickJacking Defence Code -->
     <style id="antiClickjack">body{display:none !important;}</style>
     <script type="text/javascript">
-      if (self === top) {
-          var antiClickjack = document.getElementById("antiClickjack");
-          antiClickjack.parentNode.removeChild(antiClickjack);
-      } else {
-          top.location = self.location;
-      }
+     if (self === top) {
+       var antiClickjack = document.getElementById("antiClickjack");
+       antiClickjack.parentNode.removeChild(antiClickjack);
+     } else {
+       top.location = self.location;
+     }
     </script>
 
 
@@ -203,11 +203,11 @@
             <a class="navbar-brand" style="margin-left:-20px">v6.0</a>
           </div>
           <!-- <div id="ticker" hidden>
-            <ul class="nav navbar-nav brand" style="margin: auto">
-              <li><a data-toggle="tab" style="display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="orgdata" href=""></a></li>
-              <li><a style=" display: block; color: #333; padding: 1px 1px;font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
-            </ul>
-          </div> -->
+               <ul class="nav navbar-nav brand" style="margin: auto">
+               <li><a data-toggle="tab" style="display: block; color: #333; padding: 1px 1px; font-weight: bold; text-decoration: none;" id="orgdata" href=""></a></li>
+               <li><a style=" display: block; color: #333; padding: 1px 1px;font-weight: bold; text-decoration: none;" id="yeardata" href=""></a></li>
+               </ul>
+               </div> -->
           <!-- Collect the nav links, forms, and other content for toggling -->
           <div class="collapse navbar-collapse" id="gknavcollapse">
             <ul class="nav navbar-nav navbar-right">
@@ -285,17 +285,17 @@
         </div>
       </div>
     </div>
-      <!-- ClickJacking Defence Code -->
-      <style id="antiClickjack">body{display:none !important;}</style>
+    <!-- ClickJacking Defence Code -->
+    <style id="antiClickjack">body{display:none !important;}</style>
     
-      <script type="text/javascript">
-        if (self === top) {
-            var antiClickjack = document.getElementById("antiClickjack");
-            antiClickjack.parentNode.removeChild(antiClickjack);
-        } else {
-            top.location = self.location;
-        }
-      </script>  
+    <script type="text/javascript">
+     if (self === top) {
+       var antiClickjack = document.getElementById("antiClickjack");
+       antiClickjack.parentNode.removeChild(antiClickjack);
+     } else {
+       top.location = self.location;
+     }
+    </script>  
     <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
     <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/index.js')}}"></script>
