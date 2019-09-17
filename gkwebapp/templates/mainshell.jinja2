@@ -229,17 +229,10 @@
 
     <main role="main">
       <div class="visible-print printorgdetails" id="printorgnameyear" style="text-align:center;"><b id="printorgname"></b><br>(<i>{% trans %}FY{% endtrans %} :</i><b id="printyears"></b>)</div>
-      <div id="logodiv" style="position:relative; height:100vh;">
-        <div class="panel text-center shadow" style="margin:0; position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">
-          <div id="welcomemessage" style="font-weight:bold; font-size:1.5em; color:grey; padding:5%">
-            {% trans %}Loading Dashboard...{% endtrans %}
-            <button type="button" class="close" id="closesplash" style="color: grey; opacity:2; box-shadow:3px 3px 3px 3px #fafafa">&times;</button>
-          </div>
-          <div class="row hidden-print" style="min-width:350px;">
-            <div style="position:relative; padding:5%;">
-              <img class="img-responsive " src="{{request.static_url('gkwebapp:static/images/gnukhata_icon.png')}}" alt="GNUKhata Icon" style="max-width:150px;max-height:150px; display: block; margin-left: auto; margin-right: auto ">
-            </div>
-          </div>
+      <div id="logodiv" style=" height:100vh;">
+        <div class=" text-center " style=" width:250px;margin:0; position: absolute;top: 50%;left: 50%;margin-right: -50%;transform: translate(-50%, -50%);">                
+            <div class="lds-roller"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>
+            <p style="font-weight:bold; font-size:1.5em; color:grey; padding:5%">{% trans %}Loading Dashboard...{% endtrans %}</p>                  
         </div>
       </div>
 
@@ -863,7 +856,7 @@
       <div class="container-fluid tab-pane" id="catsearchmodal">
 
       </div>
-      <div id="msspinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
+    <div id="msspinmodal" tabindex="-1" class="modal text-center fade" role="dialog">
         <div class="vertical-alignment-helper">
 	  <div id="msspinmodalcontent" class="modal-content vertical-align-center">
             <div class="modal-body">
