@@ -1987,6 +1987,12 @@ $("#invoice_date").keydown(function(event) {
     }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	    $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+            if ($("#discountpercent").val() == 1){
+		$(".discaddon").hide();
+	    }
+	    else {
+		$(".discaddon").show();
+	    }
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 	    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	    for (let i = 0; i <= curindex1; i++) {
@@ -2489,6 +2495,12 @@ $("#invoice_date").keydown(function(event) {
     }
 	  if ($('#invoice_product_table_vat tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
 	      $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+	      if ($("#discountpercent").val() == 1){
+		  $(".discaddon").hide();
+	      }
+	      else {
+		$(".discaddon").show();
+	      }
 	  $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 	  for (let i = 0; i <= curindex1; i++) {
               var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
