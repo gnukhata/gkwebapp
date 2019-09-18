@@ -1646,6 +1646,7 @@ $(document).ready(function() {
       }
     });
     $("#invoice_deliverynote").change(function(event) {
+	let delchal_discflag = 1;
 	if ($("#invoice_deliverynote option:selected").val() != '') {
 		$("#msspinmodal").modal("show");
 		var deliverydate = $("#invoice_deliverynote option:selected").attr("dateofsupply");
@@ -1680,6 +1681,7 @@ $(document).ready(function() {
 				$("#invoicestate").prop("disabled", true);
 
 			}
+		    delchal_discflag = resp["delchal"]["discflag"];
 			$(".custsupchange").prop("disabled", false);
 			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
 				$("#custchange.custsupchange").click();
@@ -1855,13 +1857,15 @@ $(document).ready(function() {
 		$("#Consignee").attr("disabled", false);
 		$("#invoicestate").prop("disabled", false);
 	}
-	if ($("#discountpercent").val() == 1){
-		$(".discaddon").hide();
-                $(".discaddon").siblings().width("100%");
+	if (delchal_discflag == 1){
+	    $(".discaddon").hide();
+            $(".discaddon").siblings().width("100%");
+	    $(".discheader").text("Discount Amount");
 	    }
 	    else {
 		$(".discaddon").show();
                 $(".discaddon").siblings().width("80%");
+		$(".discheader").text("Discount %");
 	    }
     });
 
