@@ -1308,6 +1308,31 @@ $("#invoice_date").keydown(function(event) {
 	}
     });
 
+  $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
+    let discflag = $(this).data("discflag");
+    $(".discflagfield").toggleClass("active");
+    $("#discountpercent").val(discflag);
+    if(discflag == 16){
+      $(".discaddon").show();
+      $(".discaddon").siblings().width("80%");
+      $(".discheader").text("Discount %");
+    }
+    else {
+      $(".discaddon").hide();
+      $(".discaddon").siblings().width("100%");
+      $(".discheader").text("Discount Amount");
+    }
+    let curindex = 0;
+    if ($(".taxapplicable").val() == 7) {
+      curindex = $("#invoice_product_table_gst tbody tr:last").index();
+      calculategstaxamt(curindex);
+    }
+    else {
+      curindex = $("#invoice_product_table_vat tbody tr:last").index();
+      calculatevataxamt(curindex);
+    }
+  });
+
   $(document).off("change",".product_name").on("change",".product_name",function(event)
   { // depending on the productcode its unit of measurement is retrieved from te database and displayed to the user
     var productcode = $(this).find('option:selected').val();
