@@ -1337,7 +1337,15 @@ calculatevataxamt(curindex1);
       $("#invoice_product_table_vat tbody tr:eq(" + curindex1 + ") td:eq(1) input").focus().select();
       return false;
   }
-$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+	$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
+	if($("#discountpercent").val() == 16){
+		$(".discaddon").show();
+		$(".discaddon").siblings().width("80%");
+	    }
+	    else {
+		$(".discaddon").hide();
+		$(".discaddon").siblings().width("100%");
+	    }
   $('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
   for (let i = 0; i <= curindex1; i++) {
             var selectedproduct = $("#invoice_product_table_vat tbody tr:eq("+ i +") td:eq(0) select option:selected").val();
@@ -2386,6 +2394,14 @@ $(document).off("keyup").on("keyup", function(event) {
 	}
 	}
           $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+	  if($("#discountpercent").val() == 16){
+		$(".discaddon").show();
+		$(".discaddon").siblings().width("80%");
+	    }
+	    else {
+		$(".discaddon").hide();
+		$(".discaddon").siblings().width("100%");
+	    }
           $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
     	  $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
     	  for (let i = 0; i <= curindex1; i++) {
