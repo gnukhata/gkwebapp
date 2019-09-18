@@ -4053,5 +4053,18 @@ else
 	$("#invoice_issuer_name").val(resp.unamerole["username"]);
 	$("#invoice_issuer_designation").val(resp.unamerole["userroleName"]);
 	});
-});
 
+	var delta = 500;
+	var lastKeypressTime = 0;
+	$("#invoice_narration").keydown(function(event) {
+	  if (event.which==13){
+	  var thisKeypressTime = new Date();
+	  if ( thisKeypressTime - lastKeypressTime <= delta )
+	  {
+		  $("#invoice_save").focus();
+		  thisKeypressTime = 0;
+	  }
+	  lastKeypressTime = thisKeypressTime;
+	  }
+  });
+});

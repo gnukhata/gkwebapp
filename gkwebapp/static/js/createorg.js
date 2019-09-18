@@ -327,7 +327,7 @@ $(document).ready(function(){
 	    }
 	}
 	if (event.which == 38) {
-	    $("#invinvsbillradio").focus();
+	    $("#mode").focus();
 	}
     });
     
@@ -351,12 +351,21 @@ $(document).ready(function(){
     $("#avno").keydown(function(event){
 	if (event.which==13) {
 	    event.preventDefault();
-	    $('#btnsubmit').focus();
+	    $('#ainvno').focus();
 	}
 	if (event.which == 38) {
 	    $("#sales").focus();
 	}
     });
+    $("#ainvno").keydown(function(event){
+        if (event.which==13) {
+            event.preventDefault();
+            $('#btnsubmit').focus();
+        }
+        if (event.which == 38) {
+            $("#avno").focus();
+        }
+        });
      $("#onlyaccradio").keydown(function(event) {
           if (event.which==38) {
 	      event.preventDefault();

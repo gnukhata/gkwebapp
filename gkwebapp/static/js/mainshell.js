@@ -746,7 +746,7 @@ $(document).ready(function(){
 		  }
 	      }
 	      if (event.which == 38) {
-		  $("#invinvsbillradio").focus();
+		  $("#mode").focus();
 	      }
 	  });
 	  $("#sales").change(function(event){
@@ -766,16 +766,24 @@ $(document).ready(function(){
 		  $("#sales").focus();
 	      }
 	  });
-	  $(".voucherno").keydown(function(event){
+	  $("#avno").keydown(function(event){
 	      if (event.which==13) {
 		  event.preventDefault();
-		  $('#orgprefsave').focus();
+		  $('#ainvno').focus();
 	      }
 	      if (event.which == 38) {
 		  $("#sales").focus();
 	      }
 	  });
-	  
+    $("#ainvno").keydown(function(event){
+      if (event.which==13) {
+    event.preventDefault();
+    $('#orgprefsave').focus();
+      }
+      if (event.which == 38) {
+    $("#avno").focus();
+      }
+  });
        $("#orgprefsave").click(function(event){
 	   var invflag,billflag,invsflag,avnoflag,ainvnoflag,avflag,maflag,modeflag;
 	   if ($("#invinvsbillradio").is(":checked"))
