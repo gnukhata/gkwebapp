@@ -1510,6 +1510,7 @@ $(document).ready(function() {
 		$("#supply_date").val(deliverydate[0] + deliverydate[1]).prop("disabled", true);
 		$("#supply_month").val(deliverydate[3] + deliverydate[4]).prop("disabled", true);
 		$("#supply_year").val(deliverydate[6] + deliverydate[7] + deliverydate[8] + deliverydate[9]).prop("disabled", true);
+		$(".taxapplicable").prop("disabled", false);
 	    var delchalContents = {};
 	    $.ajax({
 		url: '/invoice?action=getdeliverynote',
@@ -1548,12 +1549,14 @@ $(document).ready(function() {
 		    $("#invoice_customer").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			$("#invoice_customerpincode").prop("disabled", true);
-
 			if (resp["delchal"]["taxname"] == 'VAT'){
 				$("#vat").click();
+				$(".taxapplicable").prop("disabled", true);
+
 			}
 			else{
 				$("#gst").click();
+				$(".taxapplicable").prop("disabled", true);
 			}
 		    if ("delchalContents" in resp["delchal"]) {
 			delchalContents = resp["delchal"]["delchalContents"];
@@ -1694,7 +1697,8 @@ $(document).ready(function() {
 	    $("#consigneeaddress").val("").prop("disabled", false);
 	    $("#supply_date").val("").prop("disabled", false);
 	    $("#supply_month").val("").prop("disabled", false);
-	    $("#supply_year").val("").prop("disabled", false);
+		$("#supply_year").val("").prop("disabled", false);
+		$(".taxapplicable").prop("disabled", false);
 	    $('#invoice_product_table_vat tbody').empty();
 	    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	    $('#invoice_product_table_gst tbody').empty();
