@@ -472,12 +472,14 @@ $(document).ready(function() {
       $(".discflagfield").toggleClass("active");
       $("#discountpercent").val(discflag);
       if(discflag == 16){
-	  $(".discaddon").show();
-	  $(".discaddon").siblings().width("80%");
+	$(".discaddon").show();
+	$(".discaddon").siblings().width("80%");
+	$(".discheader").text("Discount %");
       }
       else {
-	  $(".discaddon").hide();
-	  $(".discaddon").siblings().width("100%");
+	$(".discaddon").hide();
+	$(".discaddon").siblings().width("100%");
+	$(".discheader").text("Discount Amount");
       }
       let curindex = 0;
       if ($(".taxapplicable").val() == 7) {
