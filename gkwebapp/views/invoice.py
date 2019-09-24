@@ -152,7 +152,6 @@ def updateinvoice(request):
     header={"gktoken":request.headers["gktoken"]}
 
     invoicedata = {"ewaybillno":request.params["ewaybillno"],"invid":request.params["invid"],"invoiceno":request.params["invoiceno"],"taxstate":request.params["taxstate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]),"custid":request.params["custid"],"invoicetotal":request.params["invtotal"],"invoicetotalword":request.params["invtotalword"], "contents":json.loads(request.params["contents"]),"issuername":request.params["issuername"],"designation":request.params["designation"],"freeqty":json.loads(request.params["freeqty"]), "discount":json.loads(request.params["discount"]), "consignee":json.loads(request.params["consignee"]), "taxflag":request.params["taxflag"],"sourcestate":request.params["sourcestate"],"transportationmode":request.params["transportationmode"], "reversecharge":request.params["reversecharge"], "vehicleno":request.params["vehicleno"],"orgstategstin":request.params["orgstategstin"], "paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"],"roundoffflag":int(request.params["roundoff"])}
-    request.params["invoice_narration"]
     if ("invoice_narration" in request.params):
         s = str(request.params["invoice_narration"]).isspace()
         if (s == False):
