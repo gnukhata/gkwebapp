@@ -152,6 +152,7 @@
 					{% if del_unbilled_type == "All" %}
 					<th class="mdwrap calign" >{% trans %}Delivery Type{% endtrans %}</th>
 					{% endif %}
+					<th class="smwrap1 calign" >{% trans %}Action{% endtrans %}</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -176,6 +177,9 @@
 						{{record["dcflag"]}}
 					</td>
 					{% endif %}
+					<td class="smwrap1 calign">
+					<a href="#" class="cancel_delchal" ><span class="glyphicon glyphicon-remove"></span></a>
+					</td>
 				</tr>
 				{% endfor %}
 			</tbody>
