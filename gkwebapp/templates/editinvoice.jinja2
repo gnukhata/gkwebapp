@@ -110,7 +110,7 @@
 		    {% endif %}
 		    <div class="form-group form-inline" id="deliverynoterow">
 		      <label class="col-sm-4 fsize" for="invoice_deliverynote">{% trans %}Deli. Note No.{% endtrans %} :</label>
-		      <select class="form-control firstfield input-sm col-sm-8"  id="invoice_deliverynote">
+		      <select class=" editdis form-control firstfield input-sm col-sm-8"  id="invoice_deliverynote">
 			<option value="" dcno = "" selected>None</option>
 			{% for deliverynote in deliverynotes %}
 			  {% if status=="in" %}
@@ -127,19 +127,19 @@
 		    </div>
 		    <div class="form-group form-inline">
 		      <label class="col-sm-4 fsize" for="invoice_challanno">{% trans %}Invoice No{% endtrans %} :</label>
-		      <input class="form-control firstfield input-sm col-sm-8" size="15" id="invoice_challanno" maxlength="16" >
+		      <input class="form-control editdis firstfield input-sm col-sm-8" size="15" id="invoice_challanno" maxlength="16" >
 		    </div>
 				{% if status=="out" %}
 		  <div class="form-group form-inline">
 		    <label class="col-sm-4 fsize" for="ewayBill_no">{% trans %}Eway Bill No{% endtrans %} :</label>
-		    <input class="form-control input-sm col-sm-8" size="15" id="ewayBill_no" maxlength="16" >
+		    <input class="form-control editdis input-sm col-sm-8" size="15" id="ewayBill_no" maxlength="16" >
 		  </div>
 		{% endif %}
 		    <div class="form-group form-inline">
 		      <label for="invoice_date" class="col-sm-4 fsize">{% trans %}Invoice Date{% endtrans %} :</label>
-		      <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" >
-		      <input type="text" class="form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" >
-		      <input type="text" class="form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" >
+		      <input type="text" class="editdis form-control input-sm invoicedate" size="2" maxlength="2" placeholder="DD" id="invoice_date" >
+		      <input type="text" class="editdis form-control input-sm invoicedate" size="2" maxlength="2" placeholder="MM" id="invoice_month" >
+		      <input type="text" class="editdis form-control input-sm invoicedate" size="4" maxlength="4" placeholder="YYYY" id="invoice_year" >
 		    </div>
 		    <div class="form-group form-inline">
 		      {% if status=="in" %}
@@ -147,7 +147,7 @@
 		      {% else %}
 			<label for="invoicestate" class="col-sm-4 fsize">{% trans %}State of Origin{% endtrans %} :</label>
 		      {% endif %}
-		      <select class="form-control input-sm col-sm-8" id="invoicestate" aria-describedby="statecodeforinvoice">
+		      <select class="editdis form-control input-sm col-sm-8" id="invoicestate" aria-describedby="statecodeforinvoice">
 			{% for state in states %}
 			  {% for key, value in state.items() %}
 			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -161,11 +161,11 @@
 		    </div>
 		    <div class="form-group form-inline invoice_issuer" hidden>
 		      <label for="originaddress" class="col-sm-4 fsize">{% trans %}Address :{% endtrans %}</label>
-		      <input type="text" id="originaddress" class="col-sm-8 form-control input-sm" name="originaddress" size="30"></input>
+		      <input type="text" id="originaddress" class="editdis col-sm-8 form-control input-sm" name="originaddress" size="30"></input>
 				</div>
 				<div class="form-group form-inline invoice_issuer" hidden>
 		      <label for="originpincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
-		      <input type="text" id="originpincode" class="col-sm-8 form-control input-sm" name="originpincode" size="20"></input>
+		      <input type="text" id="originpincode" class="editdis col-sm-8 form-control input-sm" name="originpincode" size="20"></input>
 		    </div>
 		    {% if resultgstvat != '22' %}
 		      <div class="form-group form-inline invoice_issuer" hidden>
@@ -175,11 +175,11 @@
 		    {% endif %}
 		    <div class="form-group form-inline invoice_issuer" hidden>
 		      <label class="col-sm-4 fsize" for="invoice_issuer_name">{% trans %}Issuer's Name{% endtrans %} :</label>
-		      <input class="form-control input-sm col-sm-8" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}"  aria-label="{% trans %}Issuer's Name{% endtrans %}">
+		      <input class="editdis form-control input-sm col-sm-8" id="invoice_issuer_name" placeholder="{% trans %}Issuer's name{% endtrans %}"  aria-label="{% trans %}Issuer's Name{% endtrans %}">
 		    </div>
 		    <div class="form-inline form-group invoice_issuer" hidden>
 		      <label class="col-sm-4 fsize">{% trans %}Designation{% endtrans %} :</label>
-		      <input class="form-control input-sm col-sm-8" id="invoice_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
+		      <input class="editdis form-control input-sm col-sm-8" id="invoice_issuer_designation" aria-label="{% trans %}Designation{% endtrans %}" placeholder="{% trans %}Issuer's designation{% endtrans %}">
 		    </div>
 		  </div>
 
@@ -194,9 +194,9 @@
 								{% trans %}Select party{% endtrans %}:
 						</label>
 						<div class="radio col-sm-8" style="margin-left:-15px; margin-top:-7px">
-							<label><input type="radio" class="custsupchange" name="csradio" id="custchange" aria-label="Customer"> Customer</label>
+							<label><input type="radio" class="custsupchange editdis " name="csradio" id="custchange" aria-label="Customer"> Customer</label>
 				
-							<label><input type="radio" class="custsupchange" name="csradio" id="supchange" aria-label="Supplier"> Supplier</label>
+							<label><input type="radio" class="custsupchange editdis " name="csradio" id="supchange" aria-label="Supplier"> Supplier</label>
 						</div>
 						</div>
 		    <div class="form-group form-inline">
@@ -207,8 +207,8 @@
 			  {% trans %}Customer{% endtrans %} :
 			{% endif %}
 		      </label>
-		      <select class="form-control custfield input-sm col-sm-8 fsize delreset" id="invoice_customer" accesskey="" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
-			<option value="-1" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+		      <select class="editdis form-control custfield input-sm col-sm-8 fsize delreset" id="invoice_customer" accesskey="" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
+			<option class="editdis" value="-1" style="font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;">
 				&#xf067 Add {% if status=="in" %}{% trans %}Supplier{% endtrans %}{% else %}{% trans %}Customer{% endtrans %}{% endif %}
 			</option>
 			<option value="" disabled hidden selected>
@@ -234,7 +234,7 @@
 			  {% trans %}Customer State{% endtrans %}:
 			{% endif %}
 		      </label>
-		      <select id="invoice_customerstate" class="custfield form-control input-sm col-sm-8 delreset">
+		      <select id="invoice_customerstate" class="editdis custfield form-control input-sm col-sm-8 delreset">
 					{% if resultgstvat == '29' or resultgstvat == '7' %}
 					<option>Select State</option>
 					{% else %} 
@@ -276,7 +276,7 @@
 		    {% if status == "out" %}
 		      <div class="form-group form-inline">
 			<div class="col-sm-12">
-			  <input type="checkbox" id="Consignee" >
+			  <input class="editdis" type="checkbox" id="Consignee" >
 			  <label for="Consignee">{%trans%}Shipping address is same as billing address{%endtrans%}</label>
 			</div>
 		      </div>
@@ -286,11 +286,11 @@
 		    <h4>Details of Consignee | Shipped to: </h4>
 		    <div class="form-group form-inline">
 		      <label for="consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
-		      <input type="text" id="consigneename" class="consigneefield col-sm-8 form-control input-sm delreset"></input>
+		      <input type="text" id="consigneename" class="editdis consigneefield col-sm-8 form-control input-sm delreset"></input>
 		    </div>
 		    <div class="form-group form-inline">
 		      <label for="consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
-		      <select class="consigneefield form-control input-sm col-sm-8 delreset" id="consigneestate" >
+		      <select class="editdis consigneefield form-control input-sm col-sm-8 delreset" id="consigneestate" >
 			{% for state in states %}
 			  {% for key, value in state.items() %}
 			    <option value="{{value}}" stateid="{{key}}">{{value}}</option>
@@ -308,15 +308,15 @@
 		    </div>
 		    <div class="form-group form-inline gstinfield">
 		      <label for="gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-		      <input type="text" id="gstinconsignee" class="consigneefield col-sm-8 form-control input-sm gstin delreset" name="gstinconsignee" maxlength="15"></input>
+		      <input type="text" id="gstinconsignee" class="editdis consigneefield col-sm-8 form-control input-sm gstin delreset" name="gstinconsignee" maxlength="15"></input>
 		    </div>
 		    <div class="form-group form-inline">
 		      <label for="consigneeaddress" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-		      <input type="text" id="consigneeaddress" class="consigneefield col-sm-8 form-control input-sm delreset" name="consigneeaddress"></input>
+		      <input type="text" id="consigneeaddress" class="editdis consigneefield col-sm-8 form-control input-sm delreset" name="consigneeaddress"></input>
 				</div>
 				<div class="form-group form-inline">
 					<label for="consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
-					<input type="text" id="consigneepincode" class="consigneefield col-sm-8 form-control input-sm delreset" name="consigneepincode"></input>
+					<input type="text" id="consigneepincode" class="editdis consigneefield col-sm-8 form-control input-sm delreset" name="consigneepincode"></input>
 				</div>
 
 		  </div>
@@ -327,10 +327,10 @@
 		    <label for="taxapplicabletext" name="taxflag">{% trans %}Tax Applicable{% endtrans %} : </label>
 		    {% if resultgstvat == '29' or resultgstvat == '7' %}
 		      <label id="taxapplicabletext" class="">GST</label>
-		      <input type="text"  id="taxapplicable" value="7" accesskey="" hidden>
+		      <input class="editdis" type="text"  id="taxapplicable" value="7" accesskey="" hidden>
 		    {% else %}
 		      <label id="taxapplicabletext" >VAT</label>
-		      <input type="text"  id="taxapplicable" value="22" accesskey="" hidden>
+		      <input class="editdis" type="text"  id="taxapplicable" value="22" accesskey="" hidden>
 		    {% endif %}
 			</div>
 			<div class="col-md-9">
@@ -343,9 +343,9 @@
 
 			</div>
 		  {% if status=="in" %}
-		    <input type="hidden" id="status" value="9">
+		    <input class="editdis" type="hidden" id="status" value="9">
 		  {% else %}
-		    <input type="hidden" id="status" value="15">
+		    <input class="editdis" type="hidden" id="status" value="15">
 		  {% endif %}
 		</div>
 		<div class="col-md-12">
@@ -451,7 +451,7 @@
 		    <tbody>
 		      <tr>
 			<td class="mdvwrap">
-			  <select class="form-control input-sm product_name_vat">
+			  <select class="editdis form-control input-sm product_name_vat">
 			    <option value="" disabled hidden selected>Select Product</option>
 			    {% for product in products %}
 			      <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
@@ -460,38 +460,38 @@
 			</td>
 			<td class="qtyvwrap">
 			  <div class="input-group">
-			    <input type="text" class="invoice_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddonqty_vat">
+			    <input type="text" class="editdis invoice_product_quantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddonqty_vat">
 			    <span class="input-group-addon input-sm unitaddonqty_vat"></span>
 			  </div>
 			</td>
 			<td class="qtyvwrap">
 			  <div class="input-group">
-			    <input type="text" class="invoice_product_freequantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddonfreeqty_vat">
+			    <input type="text" class="editdis invoice_product_freequantity_vat form-control input-sm text-right numtype" value="0.00" placeholder="0" size="10" aria-describedby="unitaddonfreeqty_vat">
 			    <span class="input-group-addon input-sm unitaddonfreeqty_vat"></span>
 			  </div>
 			</td>
 			<td class="smvwrap">
 			  <div class="input-group">
-			    <input type="text" class="invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
+			    <input type="text" class="editdis invoice_product_per_price_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" id="firstvatprice">
 			    <span class="input-group-addon input-sm unitaddon priceaddon pricespan_vat"  data-prodsp=""  data-prodmrp="" data-prodlp="">O</span>
 			  </div>
 			</td>
 			<td class="smvwrap">
-			  <input type="text" class="invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+			  <input type="text" class="editdis invoice_product_discount_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
 			</td>
 
 			<td class="smvwrap">
-			  <input type="text" class="invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
+			  <input type="text" class="editdis invoice_product_taxablevalue_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10" disabled>
 			</td>
 			<td class="ratewrap">
-			  <input type="text" class="invoice_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
+			  <input type="text" class="editdis invoice_product_tax_rate_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" size="10">
 			</td>
 			<td class="smvwrap">
 
-			  <input  size="10" class="invoice_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
+			  <input  size="10" class="editdis invoice_product_tax_amount_vat form-control text-right numtype"  value="0.00" placeholder="0.00" disabled>
 			</td>
 			<td class="smvwrap">
-			  <input size="10" type="text" class="invoice_product_total_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
+			  <input size="10" type="text" class="editdis invoice_product_total_vat form-control input-sm text-right numtype" value="0.00" placeholder="0.00" disabled>
 			</td>
 			<td class="crosswrap">
 			  <a href="#" class="product_add" style="margin-bottom:3px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
@@ -505,19 +505,19 @@
 			</td>
 			<!--  Total : ptotal       -->
 			<td class="smvwrap">
-			  <input type="text" id="discounttotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+			  <input type="text" id="discounttotal_product_vat" class="editdis form-control input-sm text-right" value="0.00" size="10" disabled>
 			</td>
 			<td class="smvwrap">
-			  <input type="text" id="taxablevaluetotal_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+			  <input type="text" id="taxablevaluetotal_product_vat" class="editdis form-control input-sm text-right" value="0.00" size="10" disabled>
 			</td>
 			<td class="ratewrap">
 
 			</td>
 			<td class="smvwrap">
-			  <input type="text" id="totaltax" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+			  <input type="text" id="totaltax" class="editdis form-control input-sm text-right" value="0.00" size="10" disabled>
 			</td>
 			<td class="smvwrap">
-			  <input type="text" id="total_product_vat" class=" form-control input-sm text-right" value="0.00" size="10" disabled>
+			  <input type="text" id="total_product_vat" class="editdis form-control input-sm text-right" value="0.00" size="10" disabled>
 			</td>
 			<td class="crosswrap">
 
@@ -588,7 +588,7 @@
 			    <tbody>
 			      <tr>
 				<td class="mdwrap">
-				  <select class="form-control input-sm product_name_gst">
+				  <select class="editdis form-control input-sm product_name_gst">
 				    <option value="" disabled hidden selected>Select Product</option>
 				    {% for product in productsnservices %}
 				      <option value="{{product['productcode']}}" gsflag="{{product["gsflag"]}}">{{product["productdesc"]}}</option>
@@ -600,42 +600,42 @@
 				</td>
 				<td class="qtywrap">
 				  <div class="input-group">
-				    <input type="text" class="invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddonqty_gst">
+				    <input type="text" class="editdis invoice_product_quantity_gst form-control input-sm text-right numtype" size="8" value="0" placeholder="0" aria-describedby="unitaddonqty_gst">
 				    <span class="input-group-addon input-sm unitaddonqty_gst"></span>
 				  </div>
 				</td>
 				<td class="qtywrap">
 				  <div class="input-group">
-				    <input type="text" class="invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddonfreeqty_gst">
+				    <input type="text" class="editdis invoice_product_freequantity_gst form-control input-sm text-right numtype smwrap" size="8" value="0" placeholder="0" aria-describedby="unitaddonfreeqty_gst">
 				    <span class="input-group-addon input-sm unitaddonfreeqty_gst"></span>
 				  </div>		      </td>
 
 				<td class="smwrap">
 				  <div class="input-group">
-				    <input type="text" class="invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" id="firstgstprice">
+				    <input type="text" class="editdis invoice_product_per_price_gst form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" id="firstgstprice">
 				    <span class="input-group-addon input-sm unitaddon priceaddon pricespan_gst" data-prodsp="" data-prodop=""  data-prodmrp=""  data-prodlp="">O</span>
 				  </div>
 				</td>
 				<td class="smwrap">
-				  <input type="text" class="invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
+				  <input type="text" class="editdis invoice_product_discount_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00">
 				</td>
 				<td class="smwrap">
-				  <input type="text" class="invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
+				  <input type="text" class="editdis invoice_product_taxablevalue_gst form-control input-sm text-right numtype" value="0.00" size="9" placeholder="0.00" disabled>
 				</td>
 
-				<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-				<td class="taxcell sgstfield"><input type="text" class="invoice_product_cgstamount tamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
+				<td class="taxcell sgstfield"><input type="text" class="editdis invoice_product_cgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+				<td class="taxcell sgstfield"><input type="text" class="editdis invoice_product_cgstamount tamount form-control input-sm text-right numtype" size="8" value="0.00" placeholder="0.00" disabled></td>
 
-				<td class="taxcell  sgstfield"><input type="text" class="invoice_product_sgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-				<td class="taxcell sgstfield"><input type="text" class="invoice_product_sgstamount tamount input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+				<td class="taxcell  sgstfield"><input type="text" class="editdis invoice_product_sgstrate trate form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+				<td class="taxcell sgstfield"><input type="text" class="editdis invoice_product_sgstamount tamount input-sm form-control text-right numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
 
 				<td class="taxcell igstfield">
-				  <input type="text" class="invoice_product_igstrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-				  <td class="taxcell igstfield"><input type="text" class="invoice_product_igstamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+				  <input type="text" class="editdis invoice_product_igstrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+				  <td class="taxcell igstfield"><input type="text" class="editdis invoice_product_igstamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 				  </td>
 				  <td class="taxcell">
-				    <input type="text" class="invoice_product_cessrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
-				    <td class="taxcell"><input type="text" class="invoice_product_cessamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
+				    <input type="text" class="editdis invoice_product_cessrate trate input-sm text-right form-control numtype" size="9" value="0.00" placeholder="0.00" disabled></td>
+				    <td class="taxcell"><input type="text" class="editdis invoice_product_cessamount tamount form-control input-sm text-right numtype" size="9" value="0.00" placeholder="0.00" disabled>
 				    </td>
 			      </tr>
 			    </tbody>
@@ -667,7 +667,7 @@
 			  </thead>
 			  <tbody>
 			    <tr>
-			      <td class="col-xs-8"><input type="text" class="invoice_product_total_gst form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
+			      <td class="col-xs-8"><input type="text" class="editdis invoice_product_total_gst form-control input-sm text-right numtype" value="0.00" size="14" placeholder="0.00" disabled></td>
 			      <td class="col-xs-4 text-center">
 				<a href="#" class="product_add" style="margin-bottom:3px;"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span></a>
 			      </td>
@@ -690,7 +690,7 @@
 		  <div class="form-inline col-sm-6" style="padding-top:1%;"> 
 		    <label for="inv">{% trans %}&nbsp &nbsp Payment Details{% endtrans %}:</label>
 		    <div class="form-group form-inline" style="padding-left:3%;">
-		      <select class="form-control input-sm col-sm-6" id="chkpaymentmode" style="width:100px;">
+		      <select class="editdis form-control input-sm col-sm-6" id="chkpaymentmode" style="width:100px;">
 			<option value="3" >
 			  {% trans %}Cash{% endtrans %}
 			</option>
@@ -739,26 +739,26 @@
 		    <div class="row col-sm-12">
 		      <div class="form-group form-inline">
 			<label for="accountno" class="col-sm-5">{% trans %}Account No.{% endtrans %} :</label>
-			<input type="text" id="accountno" class="lastfield form-control input-sm col-sm-7"></input>
+			<input type="text" id="accountno" class="editdis lastfield form-control input-sm col-sm-7"></input>
 		      </div>
 		    </div>
 		    <div class="row col-sm-12">
 		      <div class="form-group form-inline">
 			<label for="bankname" class="col-sm-5">{% trans %}Bank Name{% endtrans %} :</label>
-			<input type="text" id="bankname" class="lastfield form-control input-sm col-sm-7" name="bankname" ></input>
+			<input type="text" id="bankname" class="editdis lastfield form-control input-sm col-sm-7" name="bankname" ></input>
 		      </div>
 		    </div>
 		    <br>
 		    <div class="row col-sm-12">
 		      <div class="form-group form-inline">
 			<label for="branch" class="col-sm-5">{% trans %}Branch Name{% endtrans %} :</label>
-			<input type="text" id="branchname" class="lastfield form-control input-sm col-sm-7" ></input>
+			<input type="text" id="branchname" class="editdis lastfield form-control input-sm col-sm-7" ></input>
 		      </div>
 		    </div>
 		    <div class="row col-sm-12">
 		      <div class="form-group form-inline">
 			<label for="ifsc" class="col-sm-5">{% trans %}IFSC code{% endtrans %} :</label>
-			<input type="text" id="ifsc" class="lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
+			<input type="text" id="ifsc" class="editdis lastfield form-control input-sm col-sm-7" name="ifsc" ></input>
 		      </div>
 		    </div>
 		  </div><br>
@@ -774,7 +774,7 @@
 		    <div class="row col-sm-12">
 		      <div class="form-inline form-group">
 			<label for="transportationmode" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
-			<select type="text" id="transportationmode" class="col-sm-7 lastfield form-control input-sm">
+			<select type="text" id="transportationmode" class="editdis col-sm-7 lastfield form-control input-sm">
 			  <option value="Road">{% trans %}Road{% endtrans %}</option>
 			  <option value="Rail">{% trans %}Rail{% endtrans %}</option>
 			  <option value="Air">{% trans %}Air{% endtrans %}</option>
@@ -786,7 +786,7 @@
 		    <div class="row col-sm-12">
 		      <div class="form-inline form-group" id="vehiclenodiv" hidden>
 			<label for="inv" class="col-sm-5">{% trans %}Vehicle No.{% endtrans %} :</label>
-			<input type="text" id="vehicleno" class="col-sm-7 lastfield form-control input-sm" name="vehicleno"></input>
+			<input type="text" id="vehicleno" class="editdis col-sm-7 lastfield form-control input-sm" name="vehicleno"></input>
 		      </div>
 		    </div>
 		    <div class="row col-sm-12">
@@ -807,11 +807,11 @@
 		      <div class="form-group form-inline">
 			<label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
 			<div class="form-group col-sm-7">
-			  <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date">
+			  <input type="text" class="editdis lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="DD" id="supply_date">
 
-			  <input type="text" class="lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month">
+			  <input type="text" class="editdis lastfield form-control input-sm supplydate" size="2" maxlength="2" placeholder="MM" id="supply_month">
 
-			  <input type="text" class="lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year">
+			  <input type="text" class="editdis lastfield form-control input-sm supplydate" size="4" maxlength="4" placeholder="YYYY" id="supply_year">
   			</div>
 		      </div>
 		    </div>
@@ -819,13 +819,13 @@
 		    <div  class="row col-sm-12">
 		      <div class="form-group form-inline reversepurchase" hidden>
 			<label for="inv" class="col-sm-5">{% trans %}Reverse Charge{% endtrans %}:</label>
-			{#<input type="text" id="reversecharge" class="col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>#}
+			{#<input type="text" id="reversecharge" class="editdis col-sm-7 lastfield form-control input-sm nopadding" name="reversecharge"></input>#}
 			<div class="form-group col-sm-7 nopadding">
 			  <div class="radio">
-        		    <label><input type="radio" class="iib lastfield form-control input-sm nopadding" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
+        		    <label><input type="radio" class="editdis iib lastfield form-control input-sm nopadding" name="iib" id="rev1radio" aria-label="">&nbsp {% trans %}Yes{% endtrans %}.</label>
         		  </div>
 			  <div class="radio">
-        		    <label><input type="radio" class="iib form-control input-sm nopadding" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
+        		    <label><input type="radio" class="editdis iib form-control input-sm nopadding" name="iib" id="rev2radio" aria-label="" checked>&nbsp {% trans %}No{% endtrans %}.</label>
         		  </div>
 			</div>
 		      </div>
@@ -907,7 +907,7 @@
 		    <div class="row">
 		    <div class="form-group form-inline  hborderdiv" >
 				<div class="col-sm-1">
-				<input type="checkbox" id="roundvalue" style="">
+				<input class="editdis" type="checkbox" id="roundvalue" style="">
 				
 				</div>
 		      <div class="col-sm-6">
@@ -936,7 +936,7 @@
 		  <div class ="col-sm-4 ">
 					<div class="form-group pull-left">
 							<label for="ivoice_narration">{% trans %}Narra<u>t</u>ion{% endtrans %} :</label>
-							<textarea class="form-control" name="narration" id="invoice_narration"  rows="2" cols="70" accesskey="t" disabled></textarea>
+							<textarea class="editdis form-control" name="narration" id="invoice_narration"  rows="2" cols="70" accesskey="t" disabled></textarea>
 			</div>
 		  </div>
 		  <div class ="col-sm-8">

@@ -2796,8 +2796,8 @@ if (event.which == 13) {
 			    // Div that has all fields of invoice is shown.
 				$("#invdetailsdiv").show();
 			    // All fields are disabled until Edit button is clicked.
-			    $('input:not(#status, #taxapplicable), select:not(#invselect)').val("");
-				$('input, select:not(#invselect)').prop("disabled", true);
+			    $('.editdis').val("");
+				$(".editdis").prop("disabled", true);
 				$(".borderdiv").height($("#maindiveditinv").height());	
 			    // Div with buttons is shown.
 			    $("#buttonsdiv").show();
@@ -3165,7 +3165,7 @@ if (event.which == 13) {
 				$("#rev1radio").prop("checked", false);
 			    }
 			    // Disabling all fields again.
-			    $('input, select:not(#invselect)').prop("disabled", true);
+			    $('.editdis').prop("disabled", true);
 			}
 		    }
 		});
