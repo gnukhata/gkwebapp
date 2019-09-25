@@ -1529,10 +1529,14 @@ $(document).ready(function() {
 				$("#invoice_issuer_name").val(resp["delchal"]["delchaldata"]["issuername"]);
 				$("#invoicestate").val(resp["delchal"]["sourcestate"]);
 				$("#invoicestate").change();
+				$("#invoicestate").prop("disabled", true);
+
 			}
 			else{
 				$("#invoicestate").val(resp["delchal"]["destinationstate"]);
 				$("#invoicestate").change();
+				$("#invoicestate").prop("disabled", true);
+
 			}
 			$(".custsupchange").prop("disabled", false);
 			if(resp["delchal"]["custSupDetails"]["csflag"]==3){
@@ -1707,6 +1711,7 @@ $(document).ready(function() {
 	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 		$(".product_name_gst, .product_name_vat, #invoicestate").change();
 		$("#Consignee").attr("disabled", false);
+		$("#invoicestate").prop("disabled", false);
 	}
     });
 

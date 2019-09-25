@@ -1377,6 +1377,7 @@ $(document).ready(function() {
 			}
 			$("#invoice_customer").val(resp["delchal"]["custSupDetails"]["custid"]);
 			$("#invoice_customer").prop("disabled", true);
+			$("#invoicestate").prop("disabled", true);
 			$("#invoice_customerstate").prop("disabled", true);
 			if(resp["delchal"]["delchaldata"]["consignee"]){
 			    $("#consigneename").val(resp["delchal"]["delchaldata"]["consignee"]["consigneename"]).prop("disabled", true);
@@ -1493,6 +1494,7 @@ $(document).ready(function() {
 	}
 	else {
 		$(".custsupchange").prop("disabled", false);
+		$("#invoicestate").prop("disabled", false);
 	    $('#invoice_product_table_vat tbody').empty();
 	    $('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 	    $('#invoice_product_table_gst tbody').empty();
@@ -3190,7 +3192,7 @@ if (event.which == 13) {
 	$(".uploadclass").show();
 	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), #invoice_narration, select').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
-	    $(".custfield, .delchalfield, .supplydate, .custsupchange, #invoice_deliverynote").prop("disabled", true);
+	    $(".custfield, .delchalfield, .supplydate, .custsupchange, #invoice_deliverynote, #invoicestate").prop("disabled", true);
 	}
 	$("#originaddress").prop("disabled",true);
 	$("#originpincode").prop("disabled",true);
