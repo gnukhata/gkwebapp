@@ -28,6 +28,8 @@ Contributors:
 "Pravin Dake" <pravindake24@gmail.com>
 "Nitesh Chaughule" <nitesh@disroot.org>
 "Aditya Shukla" <adityashukla9158.as@gmail.com>
+"Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+
 */
 
 // This script is for the addinvoice.jinja2
@@ -506,8 +508,46 @@ $(document).ready(function() {
     $("#invoice_year").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+		// $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+		if ($("#status").val()  == 15) {
+		if ($("#invoice_deliverynote option:selected").val() != '') {			
+			if ($("#invoicestate").is(":disabled")){
+			if($("#originaddress").is(":disabled")){
+				if ($("#originpincode").is(":disabled")){
+				$("#invoice_issuer_name").focus().select();
+			}
+			$("#originpincode").focus().select();
+		}
+			$("#originaddress").focus().select();
+		}
+		$("#invoicestate").focus().select();
+		}
+		else{
+		$("#invoicestate").focus().select();
+		}
 	}
+	else{
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+			if ($("#invoicestate").is(":disabled")){
+				if($("#consigneename").is(":disabled")) {
+					if ($("#taxapplicable").val() == 7) {
+						$(".invoice_product_quantity_gst:first").focus().select();
+					}
+					else{
+						$(".invoice_product_quantity_vat:first").focus().select();
+					}
+				}
+				else{
+					$("#consigneename").focus();
+				}
+		}else{
+			$("#invoicestate").focus();
+		}
+	}else{
+		$("#invoicestate").focus();
+	}
+	}
+}
 	if (event.which == 38) {
 	    event.preventDefault();
 	    $("#invoice_month").focus().select();  //Focus shifts to month field.
@@ -614,7 +654,7 @@ $(document).ready(function() {
 	    event.preventDefault();
 	    if ($("#status").val()  == 15) {
 		if($("#originaddress").is(":disabled")){
-			if ($("#originaddress").is(":disabled")){
+			if ($("#originpincode").is(":disabled")){
 		    $("#invoice_issuer_name").focus().select();
 		}
 		$("#originpincode").focus().select();

@@ -32,6 +32,8 @@
    "Pravin Dake" <pravindake24@gmail.com>
    "Nitesh Chaughule" <nitesh@disroot.org>
    "Aditya Shukla" <adityashukla9158.as@gmail.com>
+   "Rupali Badgujar" <rupalibadgujar1234@gmail.com>
+
  */
 
 // This script is for the addinvoice.jinja2
@@ -661,7 +663,45 @@ $(document).ready(function() {
     $("#invoice_year").keydown(function(event) {
 	if (event.which == 13) {
 	    event.preventDefault();
-	    $("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+		if($("#status").val() == 15){
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+			if ($("#invoicestate").is(":disabled")){
+				if ($("#originaddress").is(":disabled")){
+					if($("#originpincode").is(":disabled")){
+						$("#invoice_issuer_name").focus();
+					}else{
+						$("#originpincode").focus();
+					}
+				}else{
+					$("#originaddress").focus();
+				}
+			}else{
+				$("#invoicestate").focus()
+			}
+		}
+		$("#invoicestate").focus();  //Focus shifts to State of Origin/Delivery.
+	}
+	else{
+		if ($("#invoice_deliverynote option:selected").val() != '') {
+			if ($("#invoicestate").is(":disabled")){
+				if($("#consigneename").is(":disabled")){
+				if ($("#taxapplicable").val() == 7) {
+			    $(".invoice_product_quantity_vat:first").focus().select();
+				}
+				else{
+					$(".invoice_product_quantity_gst:first").focus().select();
+				}
+			}
+				$("#consigneename").focus();
+			}
+			else{
+				$("#invoicestate").focus();
+			}
+		}else{
+			$("#invoicestate").focus();
+		}
+
+	}
 	}
 	if (event.which == 38) {
 	    event.preventDefault();
@@ -903,12 +943,20 @@ $(document).ready(function() {
 			else {
 			    $(".product_name_vat:first").focus().select();
 			}
-		    }
-		    if($(".taxapplicable").val() == 22){
-			$("#vat").focus().select();
-		    }else{
-			$("#gst").focus().select();
-		    }
+			}
+			else{
+				if ($("#invoice_deliverynote option:selected").val() != '') {
+					$(".invoice_product_quantity_gst:first").focus().select();
+				}
+				else{
+					if($(".taxapplicable").val() == 22){
+						$("#vat").focus().select();
+					}
+					else{
+						$("#gst").focus().select();
+					}
+			}
+			}
 		}
             }
 	    else {
@@ -1339,11 +1387,18 @@ $(document).ready(function() {
 		else {
 		    $(".product_name_vat:first").focus().select();
 		}
-	    }else{
-		if($(".taxapplicable").val() == 22){
-		    $("#vat").focus().select();
-		}else{
-		    $("#gst").focus().select();
+		}
+		else{
+			if ($("#invoice_deliverynote option:selected").val() != '') {
+		    	$(".invoice_product_quantity_gst:first").focus().select();
+			}
+			else{
+				if($(".taxapplicable").val() == 22){
+		    		$("#vat").focus().select();
+				}
+				else{
+		    		$("#gst").focus().select();
+				}
 		}
 	    }
 	    $('html,body').animate({scrollTop: ($("#taxapplicablescroll").offset().top + 200)},'fast');
