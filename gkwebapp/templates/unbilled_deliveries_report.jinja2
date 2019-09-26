@@ -178,7 +178,9 @@
 					</td>
 					{% endif %}
 					<td class="smwrap1 calign">
+					{% if record["canceldelchal"] == 1 %}
 					<a href="#" class="cancel_delchal" ><span class="glyphicon glyphicon-remove"></span></a>
+					{% endif %}
 					</td>
 				</tr>
 				{% endfor %}

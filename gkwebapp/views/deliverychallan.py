@@ -421,3 +421,9 @@ def getattachment(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/delchal?attach=image&dcid=%d"%(int(request.params["dcid"])), headers=header)
     return {"attachment":result.json()["gkresult"],"dcid":request.params["dcid"], "cancelflag":result.json()["cancelflag"],"userrole":result.json()["userrole"],"dcno":result.json()["dcno"]}
+
+@view_config(route_name="deliverychallan",request_param="type=canceldelchal",renderer="json")
+def delchalCancel(request):
+    header={"gktoken":request.headers["gktoken"]}
+    invoicedata = requests.delete("http://127.0.0.1:6543/delchal?type=canceldel",data =json.dumps({"dcid":request.params["dcid"]}), headers=header)
+    return {"gkstatus": invoicedata.json()["gkstatus"]}

@@ -34,6 +34,11 @@ $(document).ready(function() {
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 
+    $('.cancel_delchal').tooltip({
+        title : "Clicking this button will cancel this Deliverynote.",
+        placement : "bottom"
+		});
+		
 	// Changing color of row if selected
 	$(document).off('focus' ,'.dcno').on('focus' ,'.dcno',function() {
 		$('.del_unbilled_table tr').removeClass('selected');
@@ -376,5 +381,27 @@ $(".search").children(".form-control").keyup(function(event){
   	    }
 	};
 	xhr.send();
-    });
+	});
+	
+    $("#unbill_del_table").off('click', '.cancel_delchal').on('click', '.cancel_delchal', function(e) {
+		var id = $(this).closest("tr").attr('data-value');
+
+		$.ajax(
+			{
+			type: "POST",
+			url: "/deliverychallan?type=canceldelchal",
+			global: false,
+			async: false,
+			datatype: "json",
+			data: {"dcid":id},
+			beforeSend: function(xhr)
+			  {
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			  },
+			  success: function(resp)
+			  {
+				  console.log(resp,"afterresp");
+			  }
+			});
+	});
 });
