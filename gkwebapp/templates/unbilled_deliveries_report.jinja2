@@ -103,6 +103,15 @@
 	</style>
 </head>
 <body>
+			<div class="alert alert-success" id="success-alert1" hidden>
+				{% trans %}Delivery Note cancelled successfully.{% endtrans %}
+			</div>
+			<div class="alert alert-danger" id="notran-del-alert1" hidden>
+				{% trans %}Delivery Note could not be cancelled!.{% endtrans %}
+			</div>
+			<div class="alert alert-danger" id="failure-alert1"  hidden>
+				{% trans %}Something went wrong!{% endtrans %}
+		   	</div>
 {% if gkresult == [] %}
   <div class="panel shadow">
     <div class="panel-body" style="text-align:center;color:#a94442"><b>
@@ -221,6 +230,27 @@
 	    <button type="button" class="btn btn-sm btn-info" id="view_del_attachment" accesskey="w" style="display:none">{% trans %}Vie<u>w</u> Attachment{% endtrans %}</button>
 	  </div>
 	</div>
+
+
+	<div id="confirm_delete" class="modal fade" tabindex="-1" role="dialog">
+			<div class="vertical-alignment-helper">
+			  <div class="modal-dialog modal-sm vertical-align-center">
+				<div class="modal-content">
+				  <div class="modal-header">
+	  
+					<h4 class="modal-title">{% trans %}Cancel this Delivery Note ?{% endtrans %}</h4>
+				  </div>
+				  <div class="modal-body">
+					<p>{% trans %}Are you sure?{% endtrans %}</p>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" id ="m_cancel" class="btn btn-warning" data-dismiss="modal">{% trans %}No{% endtrans %}</button>
+					<button type="button" id="delchaldel1" data-dismiss="modal" class="btn btn-success">{% trans %}Yes{% endtrans %}</button>
+				  </div>
+				</div><!-- /.modal-content -->
+			  </div><!-- /.modal-dialog -->
+			</div>
+		  </div><!-- /.modal -->
 	{%endif%}
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/bootstrap-table.js')}}"></script>
 	<script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/unbilled_deliveries_report.js')}}"></script>

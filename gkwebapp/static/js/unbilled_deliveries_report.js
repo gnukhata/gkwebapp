@@ -385,23 +385,78 @@ $(".search").children(".form-control").keyup(function(event){
 	
     $("#unbill_del_table").off('click', '.cancel_delchal').on('click', '.cancel_delchal', function(e) {
 		var id = $(this).closest("tr").attr('data-value');
+		if (id != ""){
+			$('#myModal').modal('hide');
+			$('#confirm_delete').modal('show');
+			$('#confirm_delete').on('shown.bs.modal', function (e)
+				{
+				  $("#m_cancel").focus();
+				});
+		    $(document).off('click', '#delchaldel1').on('click', '#delchaldel1', function(e) {
 
-		$.ajax(
-			{
-			type: "POST",
-			url: "/deliverychallan?type=canceldelchal",
-			global: false,
-			async: false,
-			datatype: "json",
-			data: {"dcid":id},
-			beforeSend: function(xhr)
-			  {
-				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-			  },
-			  success: function(resp)
-			  {
-				  console.log(resp,"afterresp");
-			  }
-			});
+				$.ajax(
+				{
+					type: "POST",
+					url: "/deliverychallan?type=canceldelchal",
+					global: false,
+					async: false,
+					datatype: "json",
+					data: {"dcid":id},
+					beforeSend: function(xhr)
+			  		{
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			  		},
+			  		success: function(resp)
+			  		{
+						  console.log(resp,"afterresp");
+						  
+						  if(resp["gkstatus"]==0){
+							  console.log("text in side ")
+							$('#confirm_delete').modal('hide');
+							  $('#confirm_delete').on('hidden.bs.modal', function (e)
+									{
+									  $("#success-alert1").alert();
+									  $("#success-alert1").fadeTo(2250, 500).slideUp(500, function(){
+										$("#success-alert1").hide();
+
+										var new_date_input = $("#inputdate").attr("value");
+										var del_unbilled_type = $("#del_unbilled_type").attr("value");
+										var inout = $("#inout").attr("value");
+										$.ajax(
+										{
+											type: "POST",
+											url: "/show_del_unbilled_report",
+											global: false,
+											async: false,
+											data: {"inputdate": new_date_input, "inout":inout, "del_unbilled_type":del_unbilled_type},
+											datatype: "text/html",
+											beforeSend: function(xhr)
+											{
+											  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+											}
+										  })
+										  .done(function(resp) {
+											$("#info").html(resp);
+										  })
+										  .fail(function() {
+											console.log("error");
+										  })
+										  .always(function() {
+											console.log("complete");
+										  });
+									
+									  });
+									  }); 
+							  }
+						  else {
+							  $("#notran-del-alert1").alert();
+							  $("#notran-del-alert1").fadeTo(2250, 500).slideUp(500, function(){
+								$("#notran-del-alert1").hide();
+							  });
+							}
+			  		}
+				});
+		});
+	}
 	});
 });
