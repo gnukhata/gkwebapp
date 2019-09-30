@@ -3355,5 +3355,18 @@ if (event.which == 13) {
 	lastKeypressTime = thisKeypressTime;
 	}
 });
-    
+
+$.ajax({
+	url: '/showuser?action=getuser',
+	type: 'POST',
+	dataType: 'json',
+	async : false,
+	beforeSend: function(xhr) {
+	xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+	}
+})
+.done(function(resp){
+	$("#purchaseorder_issuer_name").val(resp.unamerole["username"]);
+  $("#purchaseorder_issuer_designation").val(resp.unamerole["userroleName"]);
+});
 });
