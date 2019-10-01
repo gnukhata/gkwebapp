@@ -1863,6 +1863,27 @@ $(document).ready(function(){
         }
       );
       });
+
+
+      $(document).off("click", '#show_cancelled_deliveries').on("click", '#show_cancelled_deliveries', function(event) {
+        $.ajax(
+          {
+            type: "POST",
+            url: "/deliverychallan?action=viewcanceldel",
+            global: false,
+            async: false,
+            datatype: "json",
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+            $("#info").html(resp);
+          }
+          }
+        );
+        });
     
 
   $(document).off("click", '#listofunpaidinvoices').on("click", '#listofunpaidinvoices', function(event) {

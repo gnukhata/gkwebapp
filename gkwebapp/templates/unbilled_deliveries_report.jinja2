@@ -3,15 +3,31 @@
 <head>
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
-	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
+			{% if canceldelflag|int == 0 %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
+			{% else %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Cancelled Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
+			{% endif %}
 		{% else %}
-	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+			{% if canceldelflag|int == 0 %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+			{% else %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Cancelled Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_cancelled_type}}</title>
+			{% endif %}
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
-	<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
+			{% if canceldelflag|int == 0 %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
+			{% else %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Cancelled Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
+			{% endif %}
 		{% else %}
-		<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+			{% if canceldelflag|int == 0 %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
+			{% else %}
+				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Cancelled Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_cancelled_type}}</title>
+			{% endif %}
 		{% endif %}
 	{% endif %}
 	<style type="text/css">
@@ -126,15 +142,31 @@
   <div class="col-xs-10 nopadding">
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
-	<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% if canceldelflag|int == 0 %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% else %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Cancelled Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% endif %}
 		{% else %}
-	<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+			{% if canceldelflag|int == 0 %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+			{% else %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Cancelled Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+			{% endif %}
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
-	<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% if canceldelflag|int == 0 %}			
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% else %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Cancelled Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+			{% endif %}
 		{% else %}
-	<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+			{% if canceldelflag|int == 0 %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+			{% else %}
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Cancelled Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+			{% endif %}
 		{% endif %}
 	{% endif %}
   </div>
@@ -161,7 +193,12 @@
 					{% if del_unbilled_type == "All" %}
 					<th class="mdwrap calign" >{% trans %}Delivery Type{% endtrans %}</th>
 					{% endif %}
+					{% if del_cancelled_type == "All" %}
+					<th class="mdwrap calign" >{% trans %}Delivery Type{% endtrans %}</th>
+					{% endif %}
+					{% if canceldelflag == 0 %}
 					<th class="smwrap1 calign" >{% trans %}Action{% endtrans %}</th>
+					{% endif %}
 				</tr>
 			</thead>
 			<tbody>
@@ -186,18 +223,30 @@
 						{{record["dcflag"]}}
 					</td>
 					{% endif %}
+					{% if del_cancelled_type == "All" %}
+					<td class="mdwrap calign">
+						{{record["dcflag"]}}
+					</td>
+					{% endif %}
+					{% if canceldelflag == 0 %}
 					<td class="smwrap1 calign">
 					{% if record["canceldelchal"] == 1 %}
 					<a href="#" class="cancel_delchal" ><span class="glyphicon glyphicon-remove"></span></a>
 					{% endif %}
 					</td>
+					{% endif %}
 				</tr>
 				{% endfor %}
 			</tbody>
 		</table>
 	</div>
 	<span style="margin:auto; margin-top:15px; display:table;">
+		{% if canceldelflag == 0 %}	 
 	  <button type="button" class="btn btn-sm btn-danger" id="tbback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+	  {% else%}
+	  <button type="button" class="btn btn-sm btn-danger" id="tbcback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+	  {% endif %}
+
 	  {# Depending Report type (i.e "Delivery In"/"Delivery Out") Button will shows. #}
 	  {% if inout == "9" %}
 	    <button type="button" class="btn btn-sm btn-primary inoutdel" id="inwarddel" accesskey="o"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %} View <u>O</u>utward Deliveries{% endtrans %}</button>

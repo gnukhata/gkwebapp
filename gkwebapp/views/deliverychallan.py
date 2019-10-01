@@ -368,8 +368,42 @@ def show_unbilled_deliveries_report(request):
         del_unbilled_type = "Sale"
     elif del_unbilled_type == "16":
         del_unbilled_type = "Purchase"
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type,"canceldelflag":0}
 
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type}
+@view_config(route_name="show_del_cancelled_report",renderer="gkwebapp:templates/unbilled_deliveries_report.jinja2")
+def show_cancelled_deliveries_report(request):
+    header={"gktoken":request.headers["gktoken"]}
+    inputdate = request.params["inputdate"]
+    inout = request.params["inout"]
+    del_cancelled_type = request.params["del_cancelled_type"]
+    if del_cancelled_type == "All":
+        del_cancelled_type = "0"
+    elif del_cancelled_type == "Approval":
+        del_cancelled_type = "1"
+    elif del_cancelled_type == "Consignment":
+        del_cancelled_type = "3"
+    elif del_cancelled_type == "Sale":
+        del_cancelled_type = "4"
+    elif del_cancelled_type == "Purchase":
+        del_cancelled_type = "16"
+    gkdata = {"inputdate": inputdate, "del_cancelled_type": del_cancelled_type}
+    new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
+    if inout == "9":
+        result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=i", data = json.dumps(gkdata), headers=header)
+    elif inout == "15":
+        result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=o", data = json.dumps(gkdata), headers=header)
+    if del_cancelled_type == "0":
+        del_cancelled_type = "All"
+    elif del_cancelled_type == "1":
+        del_cancelled_type = "Approval"
+    elif del_cancelled_type == "3":
+        del_cancelled_type = "Consignment"
+    elif del_cancelled_type == "4":
+        del_cancelled_type = "Sale"
+    elif del_cancelled_type == "16":
+        del_cancelled_type = "Purchase"
+    return{"gkstatus":result.json()["gkstatus"], "gkresult":result.json()["gkresult"], "del_cancelled_type": del_cancelled_type, "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout,"canceldelflag":1}
+
 
 @view_config(route_name="del_unbilled", request_param="action=view", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
 def view_unbilled_deliveries(request):
@@ -379,8 +413,17 @@ def view_unbilled_deliveries(request):
     for record in result.json()["gkresult"]:
         gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
         goddata.append(gdata)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata,"deleteflag":0}
 
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata}
+@view_config(route_name="deliverychallan", request_param="action=viewcanceldel", renderer="gkwebapp:templates/view_unbilled_deliveries.jinja2")
+def view_cancelled_deliveries(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    goddata=[]
+    for record in result.json()["gkresult"]:
+        gdata= {"godownid": str(record["goid"]), "godownname" : str(record["goname"])}
+        goddata.append(gdata)
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": goddata,"deleteflag":1}
 
 @view_config(route_name="print_unbilled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
 def print_del_unbilled(request):

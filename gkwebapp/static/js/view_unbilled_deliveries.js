@@ -256,6 +256,79 @@ else {
       });
 
   });
+
+  $("#cancelled_deliveries_view").click(function(event) {
+    console.log($("#del_unbilled_type option:selected").val());
+    console.log($("#report_type option:selected").val());
+
+    // --------------------starting validations------------------
+    if ($("#del_unbilled_year").val() ==0||$("#del_unbilled_month").val()==0||$("#del_unbilled_date").val()==0) {
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 400).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#del_unbilled_date').focus().select();
+      return false;
+    }
+    var inputdate = $("#del_unbilled_year").val()+$("#del_unbilled_month").val()+$("#del_unbilled_date").val();
+    var date_input = $("#del_unbilled_date").val()+"-"+$("#del_unbilled_month").val()+"-"+$("#del_unbilled_year").val();
+    var new_date_input = $("#del_unbilled_year").val()+"-"+$("#del_unbilled_month").val()+"-"+$("#del_unbilled_date").val();
+    if(!Date.parseExact(inputdate, "yyyyMMdd")){
+      $("#date-alert").alert();
+      $("#date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#date-alert").hide();
+      });
+      $('#del_unbilled_date').focus().select();
+      return false;
+    }
+
+    if (!Date.parseExact(inputdate,"yyyyMMdd").between(financialstart,financialend)) {
+      $("#between-date-alert").alert();
+      $("#between-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#between-date-alert").hide();
+      });
+      $('#del_unbilled_date').focus().select();
+      return false;
+    }
+    date_today = Date.parseExact(wholedate, "yyyy-MM-dd");
+    if (!Date.parseExact(inputdate,"yyyyMMdd").between(financialstart, date_today)) {
+      $("#financial-date-alert").alert();
+      $("#financial-date-alert").fadeTo(2250, 500).slideUp(500, function(){
+        $("#financial-date-alert").hide();
+      });
+      $('#del_unbilled_date').focus().select();
+      return false;
+    }
+    // -----------------------end of validations---------------------
+
+    // ajax function to get unbilled delivery report for given period.
+
+    $.ajax(
+      {
+        type: "POST",
+        url: "/show_del_cancelled_report",
+        global: false,
+        async: false,
+        data: {"inputdate": new_date_input, "inout":$("#report_type option:selected").val(), "del_cancelled_type": $("#del_unbilled_type option:selected").val()},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        // console.log(resp);
+        $("#info").html(resp);
+        //alert("Show_Delivery_Report_Success");
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+  });
   // reset function.
   $("#unbilled_deliveries_reset").click(function(event) {
     $("#show_unbilled_deliveries").click();

@@ -215,6 +215,25 @@ $(document).ready(function() {
 			}
 		  );
 			});
+			$("#tbcback").click(function(event) {
+				$.ajax(
+					{
+					  type: "POST",
+					  url: "/deliverychallan?action=viewcanceldel",
+					  global: false,
+					  async: false,
+					  datatype: "json",
+					  beforeSend: function(xhr)
+					  {
+						xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+					  },
+					  success: function(resp)
+					  {
+					  $("#info").html(resp);
+					}
+					}
+				  );
+					});
 
 	$('#del_unbilled_clearfields').click(function(){
     $(".search").children(".form-control").val("");
