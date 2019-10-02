@@ -89,6 +89,15 @@ def showeditpopupdeliverychallan(request):
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
     return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"]}
 
+@view_config(route_name="deliverychallan", request_param="action=showcancelpopup", renderer="gkwebapp:templates/editdeliverychallanpopup.jinja2")
+def showcancelledpopupdeliverychallan(request):
+    header={"gktoken":request.headers["gktoken"]}
+    dcid = request.params["dcid"]
+    delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=singlecancel&dcid=%d"%(int(dcid)), headers=header)
+    godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
+    resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"]}
+
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
     header={"gktoken":request.headers["gktoken"]}

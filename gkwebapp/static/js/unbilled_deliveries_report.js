@@ -40,17 +40,29 @@ $(document).ready(function() {
 		});
 		
 	// Changing color of row if selected
+	if($("#canceldelflag").val() == 0){
 	$(document).off('focus' ,'.dcno').on('focus' ,'.dcno',function() {
 		$('.del_unbilled_table tr').removeClass('selected');
 		$(this).closest('tr').addClass('selected');
 	});
 	$(document).off('blur' ,'.dcno').on('blur' ,'.dcno',function() {
 		$('.del_unbilled_table tr').removeClass('selected');
-
 	});
+}
+	else{
+		// Changing color of row if selected
+		$(document).off('focus' ,'.dcno').on('focus' ,'.dcno',function() {
+			$('.del_cancelled_table tr').removeClass('selected');
+			$(this).closest('tr').addClass('selected');
+		});
+		$(document).off('blur' ,'.dcno').on('blur' ,'.dcno',function() {
+			$('.del_cancelled_table tr').removeClass('selected');
+		});
+	}
 	var curindex ;
 	var nextindex;
 	var previndex;
+	if($("#canceldelflag").val() == 0){	
 	$(document).off('keydown' ,'.dcno').on('keydown' ,'.dcno',function(event) { // function for navigation in the table. i.e up and down arrow key.
 		curindex = $(this).closest('tr').index();
 		nextindex = curindex+1;
@@ -70,7 +82,28 @@ $(document).ready(function() {
 		}
 
 	});
+}
+else{
+	$(document).off('keydown' ,'.dcno').on('keydown' ,'.dcno',function(event) { // function for navigation in the table. i.e up and down arrow key.
+		curindex = $(this).closest('tr').index();
+		nextindex = curindex+1;
+		previndex = curindex-1;
+		if (event.which==40)
+		{
+			event.preventDefault();
+			$('.del_cancelled_table tbody tr:eq('+nextindex+') td:eq(1) a').focus();
+		}
+		else if (event.which==38)
+		{
+			if(previndex>-1)
+			{
+				event.preventDefault();
+				$('.del_cancelled_table tbody tr:eq('+previndex+') td:eq(1) a').focus();
+			}
+		}
 
+	});
+}
 	$("#viewprintableversion").click(function(event){
 	// Function to get a printable version of the report.
 			$("#msspinmodal").modal("show");
@@ -177,6 +210,68 @@ $(document).ready(function() {
 	    }
 	});
 	});
+
+	$(".del_cancelled_table").off('click','tr').on('click','tr',function(e){ // function to change color of row when it is selected using mouse.
+		e.preventDefault();
+		var id = $(this).attr('data-value');
+		var currindex = $(this).index();
+		$('.del_cancelled_table tr').removeClass('selected');
+		$(this).toggleClass('selected');
+		$('.del_cancelled_table tbody tr:eq('+currindex+') a').focus();
+
+	});
+
+	$(".del_cancelled_table").off('keydown','tr').on('keydown','tr',function(e){ // This function will call dblclick function of the selected row.
+		var id = $(this).attr('data-value');
+		var rindex = $(this).index();
+
+		if(e.which==13)
+		{
+		$('.del_cancelled_table tbody tr:eq('+rindex+')').dblclick() ;
+		}
+});
+
+
+	$(".del_cancelled_table").off('dblclick','tr').on('dblclick','tr',function(e){
+		e.preventDefault();
+		var id = $(this).attr('data-value');
+		console.log(id,"dcid");
+		if (id==""){
+			return false;
+		}
+		$("#modalindex").val($(this).index());
+		$.ajax({
+			type: "POST",
+			url: "/deliverychallan?action=showcancelpopup",
+			global: false,
+			async: false,
+			datatype: "text/html",
+			data : {"dcid":id},
+			beforeSend: function(xhr)
+			{
+			xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			}
+		})
+		.done(function(resp){
+			console.log("response");
+			$("#report_delchal").hide();
+			$("#viewdeldiv").show();
+			$("#viewdc").html("");
+			$("#viewdc").html(resp);
+	
+			if($("#status").val() == 9){
+			$("#print_button").hide();
+			}else{
+			$("#print_button").show();
+			}
+	
+			if($("#attachmentcount").val() > 0){
+			$("#view_del_attachment").show();
+			}else{
+			$("#view_del_attachment").hide();
+			}
+		});
+		});
 		
 	$("#back").click(function(event){
 		$.ajax(
@@ -402,8 +497,7 @@ $(".search").children(".form-control").keyup(function(event){
       }
     }
 
-  });
-
+	});
 
     $("#print_button").click(function(event){
 	$.ajax({

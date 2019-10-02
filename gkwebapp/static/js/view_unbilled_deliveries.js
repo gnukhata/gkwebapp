@@ -118,7 +118,7 @@ $(document).ready(function() {
         if(nextIndex < n){
           event.preventDefault();
           f[nextIndex].focus();
-          f[nextIndex].select();
+          // f[nextIndex].select();
         }
       }
       var s1 = $("#del_unbilled_type option:selected").index();
@@ -165,7 +165,10 @@ else {
 
   $("#del_unbilled_type").keydown(function(event) {
     if (event.which==13) {
+      if($("#deleteflag").val() == 0){
       $("#unbilled_deliveries_view").click();
+    }
+      else{$("#cancelled_deliveries_view").click();}
     }
   });
 
@@ -258,9 +261,6 @@ else {
   });
 
   $("#cancelled_deliveries_view").click(function(event) {
-    console.log($("#del_unbilled_type option:selected").val());
-    console.log($("#report_type option:selected").val());
-
     // --------------------starting validations------------------
     if ($("#del_unbilled_year").val() ==0||$("#del_unbilled_month").val()==0||$("#del_unbilled_date").val()==0) {
       $("#date-alert").alert();

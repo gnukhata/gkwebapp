@@ -287,6 +287,7 @@
 	<input type="hidden" id="modalindex" value=""></input>
 	<input type="hidden" id="del_unbilled_type" value="{{del_unbilled_type}}">
 	<input type="hidden" id="del_cancelled_type" value="{{del_cancelled_type}}">
+	<input type="hidden" id="canceldelflag" value="{{canceldelflag}}">
 
 
 	<div id="viewdeldiv" hidden>
@@ -301,8 +302,10 @@
 	    </div>
 	  </div>
 	  <div class="col-sm-3 col-sm-offset-4" align="center" id="buttondiv">
-	    <button type="button" class="btn btn-sm btn-danger" id="backbutton" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
-	    <button type="button" class="btn btn-sm btn-primary" id="print_button" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-danger" id="backbutton" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+	{% if canceldelflag == 0 %}	 		
+		<button type="button" class="btn btn-sm btn-primary" id="print_button" accesskey="t"><i class="fa fa-print" aria-hidden="true" style="margin-right:5px;"></i>{% trans %}Prin<u>t</u>{% endtrans %}</button>
+		{% endif %}
 	    <button type="button" class="btn btn-sm btn-info" id="view_del_attachment" accesskey="w" style="display:none">{% trans %}Vie<u>w</u> Attachment{% endtrans %}</button>
 	  </div>
 	</div>
