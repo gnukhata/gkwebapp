@@ -89,10 +89,11 @@
       <div class="panel-footer">
         {% if deleteflag == 0 %}
         <button type="button" class="btn btn-sm btn-primary" name="button" id="unbilled_deliveries_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="unbilled_deliveries_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         {% else %}
         <button type="button" class="btn btn-sm btn-primary" name="button" id="cancelled_deliveries_view" accesskey="v"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %}<u>V</u>iew{% endtrans %}</button>
+        <button type="button" name="button" class="btn btn-sm btn-danger" id="cancelled_deliveries_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         {% endif %}
-        <button type="button" name="button" class="btn btn-sm btn-danger" id="unbilled_deliveries_reset" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
         <button id="report_back" class="btn btn-danger btn-sm" accesskey="e">{% trans %}<u>B</u>ack{% endtrans %}</button>
       </div>
     </div>

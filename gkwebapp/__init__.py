@@ -174,6 +174,7 @@ def main(global_config, **settings):
     config.add_route('show_del_unbilled_report','/show_del_unbilled_report')
     config.add_route('show_del_cancelled_report','/show_del_cancelled_report')
     config.add_route('print_unbilled_deliveries_report','/print_unbilled_deliveries_report')
+    config.add_route('print_cancelled_deliveries_report','/print_cancelled_deliveries_report')
     config.add_route('purchaseorder','/purchaseorder')
     config.add_route('salesorder','/salesorder')
     config.add_route('lastfivegodowns', '/lastfivegodowns')

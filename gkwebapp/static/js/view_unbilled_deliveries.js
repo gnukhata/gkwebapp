@@ -333,4 +333,7 @@ else {
   $("#unbilled_deliveries_reset").click(function(event) {
     $("#show_unbilled_deliveries").click();
   });
+  $("#cancelled_deliveries_reset").click(function(event) {
+    $("#show_cancelled_deliveries").click();
+  });
 });

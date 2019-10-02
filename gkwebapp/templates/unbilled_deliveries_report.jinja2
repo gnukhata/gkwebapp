@@ -3,13 +3,13 @@
 <head>
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
 			{% else %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Cancelled Deliveries - Invoices Not Received | All Godowns | All Types{% endtrans %}</title>
 			{% endif %}
 		{% else %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
 			{% else %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Inward Cancelled Deliveries - Invoices Not Received | All Godowns | Delivery Type: {% endtrans %}{{del_cancelled_type}}</title>
@@ -17,13 +17,13 @@
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
 			{% else %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Cancelled Deliveries - Invoices Not Prepared | All Types | All Godowns{% endtrans %}</title>
 			{% endif %}
 		{% else %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_unbilled_type}}</title>
 			{% else %}
 				<title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Outward Cancelled Deliveries - Invoices Not Prepared | All Godowns | Delivery Type: {% endtrans %}{{del_cancelled_type}}</title>
@@ -34,13 +34,13 @@
 	 .shadow {
 	     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 	 }
-	 #unbill_del_table td {
+	 #unbill_del_table td, #cancelled_del_table td {
 	     font-size: 75%;
 	     padding: 4 !important;
 	     margin: 4 !important;
 	 }
 
-	 #unbill_del_table th {
+	 #unbill_del_table th, #cancelled_del_table th {
 	     font-size: 85%;
 	 }
 	 .card-view .title {
@@ -50,17 +50,17 @@
 	     text-align: left !important;
 	 }
 
-	 #unbill_del_table tbody {
+	 #unbill_del_table tbody, #cancelled_del_table tbody {
 	     display:block;
 	     height: calc(69vh);
 	     overflow-y:scroll;
 	 }
-	 #unbill_del_table thead,#unbill_del_table tbody tr {
+	 #unbill_del_table thead,#unbill_del_table tbody tr ,#cancelled_del_table thead,#cancelled_del_table tbody tr {
 	     display:table;
 	     width:100%;
 	     table-layout:fixed;
 	 }
-	 #unbill_del_table thead {
+	 #unbill_del_table thead, #cancelled_del_table thead {
 	     width: calc( 99.1% )
 	 }
 	 .ralign{
@@ -129,43 +129,55 @@
 				{% trans %}Something went wrong!{% endtrans %}
 		   	</div>
 {% if gkresult == [] %}
+	{% if canceldelflag == 0 %}		   
   <div class="panel shadow">
     <div class="panel-body" style="text-align:center;color:#a94442"><b>
         {% trans %}No Unbilled Deliveries found!{% endtrans %}
     </b></div>
   </div>
+  {% else %}
+  <div class="panel shadow">
+		<div class="panel-body" style="text-align:center;color:#a94442"><b>
+			{% trans %}No Cancelled Deliveries found!{% endtrans %}
+		</b></div>
+	  </div>
+  {% endif %}
   <center>
-	    <button type="button" class="btn btn-sm btn-danger" id="back" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+	{% if canceldelflag == 0 %}		   
+		<button type="button" class="btn btn-sm btn-danger" id="back" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+		{% else %}
+		<button type="button" class="btn btn-sm btn-danger" id="cback" accesskey="k"><i class="fa fa-arrow-left" style="margin-right:5px;" aria-hidden="true"></i>{% trans %}Bac<u>k</u>{% endtrans %}</button>
+		{% endif %}
 	</center>
     {% else %}
   <div id="report_delchal">
   <div class="col-xs-10 nopadding">
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Cancelled Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% endif %}
 		{% else %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Cancelled Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
 			{% endif %}
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
-			{% if canceldelflag|int == 0 %}			
+			{% if canceldelflag == 0 %}			
 				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Cancelled Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% endif %}
 		{% else %}
-			{% if canceldelflag|int == 0 %}
+			{% if canceldelflag == 0 %}
 				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Cancelled Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
 			{% endif %}
 		{% endif %}
 	{% endif %}
@@ -178,7 +190,11 @@
     </span>
   </div>
 	<div>
+		{% if canceldelflag == 0 %}
 		<table id="unbill_del_table" class="table shadow table-bordered del_unbilled_table" >
+			{% else %}
+			<table id="cancelled_del_table" class="table shadow table-bordered del_cancelled_table" >
+			{% endif %}
 			<thead class="bg-primary">
 				<tr>
 					<th class="smwrap1 calign">{% trans %}Sr.No.{% endtrans %}</th>
@@ -241,26 +257,37 @@
 		</table>
 	</div>
 	<span style="margin:auto; margin-top:15px; display:table;">
-		{% if canceldelflag == 0 %}	 
-	  <button type="button" class="btn btn-sm btn-danger" id="tbback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
-	  {% else%}
-	  <button type="button" class="btn btn-sm btn-danger" id="tbcback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
-	  {% endif %}
+	{% if canceldelflag == 0 %}	 
+		<button type="button" class="btn btn-sm btn-danger" id="tbback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
 
-	  {# Depending Report type (i.e "Delivery In"/"Delivery Out") Button will shows. #}
-	  {% if inout == "9" %}
-	    <button type="button" class="btn btn-sm btn-primary inoutdel" id="inwarddel" accesskey="o"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %} View <u>O</u>utward Deliveries{% endtrans %}</button>
-	  {% elif inout == "15" %}
-	    <button type="button" class="btn btn-sm btn-primary inoutdel" id="outwarddel" accesskey="i"><i class="fa fa-eye" aria-hidden="true"></i>{% trans %} View <u>I</u>nward Deliveries {% endtrans %}</button>
-	    {% endif %}
-	      <button type="button" class="btn btn-sm btn-primary" id="printbutton" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+		{# Depending Report type (i.e "Delivery In"/"Delivery Out") Button will shows. #}
+		{% if inout == "9" %}
+	    	<button type="button" class="btn btn-sm btn-primary inoutdel" id="inwarddel" accesskey="o"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %} View <u>O</u>utward Deliveries{% endtrans %}</button>
+	  	{% elif inout == "15" %}
+	    	<button type="button" class="btn btn-sm btn-primary inoutdel" id="outwarddel" accesskey="i"><i class="fa fa-eye" aria-hidden="true"></i>{% trans %} View <u>I</u>nward Deliveries {% endtrans %}</button>
+		{% endif %}
+	    <button type="button" class="btn btn-sm btn-primary" id="printbutton" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
 		<button type="button" class="btn btn-sm btn-info" id="viewprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+	{% else %}
+		<button type="button" class="btn btn-sm btn-danger" id="tbcback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
+
+		{# Depending Report type (i.e "Delivery In"/"Delivery Out") Button will shows. #}
+		{% if inout == "9" %}
+	    	<button type="button" class="btn btn-sm btn-primary inoutcanceldel" id="inwardcanceldel" accesskey="o"><i class="fa fa-eye" aria-hidden="true"></i> {% trans %} View <u>O</u>utward Deliveries{% endtrans %}</button>
+	  	{% elif inout == "15" %}
+	    	<button type="button" class="btn btn-sm btn-primary inoutcanceldel" id="outwardcanceldel" accesskey="i"><i class="fa fa-eye" aria-hidden="true"></i>{% trans %} View <u>I</u>nward Deliveries {% endtrans %}</button>
+		{% endif %}
+	    <button type="button" class="btn btn-sm btn-primary" id="printcancelbutton" accesskey="x"><i class="fa fa-file-excel-o" aria-hidden="true"></i> {% trans %}E<u>x</u>port to Spreadsheet{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info" id="viewcancelprintableversion" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}View Prin<u>t</u>able Version{% endtrans %}</button>
+	{% endif %}
 	</span>
   </div>
 	<input type="hidden" id="inputdate" value="{{inputdate}}">
 	<input type="hidden" id="inout" value="{{inout}}">
 	<input type="hidden" id="modalindex" value=""></input>
 	<input type="hidden" id="del_unbilled_type" value="{{del_unbilled_type}}">
+	<input type="hidden" id="del_cancelled_type" value="{{del_cancelled_type}}">
+
 
 	<div id="viewdeldiv" hidden>
 	  <div class="panel editblank">

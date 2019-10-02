@@ -319,6 +319,127 @@ def unbillspreadsheet(request):
     except:
         return {"gkstatus":3}
 
+#Code for Export To spreadsheet
+@view_config(route_name="deliverychallan",request_param="action=cancellspreadsheet", renderer="")
+def unbillspreadsheet(request):
+    # try:
+        header={"gktoken":request.headers["gktoken"]}
+        fystart = str(request.params["fystart"]);
+        fyend = str(request.params["fyend"]);
+        orgname = str(request.params["orgname"])
+        #orgname += " (FY: " + fystart+" to "+fyend +")"
+        inputdate = request.params["inputdate"]
+        del_cancelled_type = str(request.params["del_cancelled_type"]);
+        if del_cancelled_type == "All":
+            del_cancelled_type = "0"
+            deltype = "All Types"
+            merge = 6
+        elif del_cancelled_type == "Approval":
+            del_cancelled_type = "1"
+            deltype = "Delivery Type : Approval"
+            merge = 5
+        elif del_cancelled_type == "Consignment":
+            del_cancelled_type = "3"
+            deltype = "Delivery Type : Consignment"
+            merge = 5
+        elif del_cancelled_type == "Sale":
+            del_cancelled_type = "4"
+            deltype = "Delivery Type : Sale"
+            merge = 5
+        elif del_cancelled_type == "Purchase":
+            del_cancelled_type = "16"
+            deltype = "Delivery Type : Purchase"
+            merge = 5
+        gkdata = {"inputdate": inputdate, "del_cancelled_type": del_cancelled_type}
+        new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
+        inout = request.params["inout"]
+        if inout == "9":
+            result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=i", data = json.dumps(gkdata), headers=header)
+            headingtext="Cancelled Inward Deliveries - Invoices Not Received | All Godowns | %s"%deltype
+            title = "Supplier Name"
+        elif inout == "15":
+            result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=o", data = json.dumps(gkdata), headers=header)
+            headingtext = "Cancelled Outward Deliveries - Invoices Not Received | All Godowns | %s"%deltype
+            title = "Customer Name"
+        result = result.json()["gkresult"]
+        # A workbook is opened.
+        unbilldelwb = openpyxl.Workbook()
+        # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
+        sheet = unbilldelwb.active
+        # Title of the sheet and width of columns are set
+        sheet.column_dimensions['A'].width = 8
+        sheet.column_dimensions['B'].width = 18
+        sheet.column_dimensions['C'].width = 14
+        sheet.column_dimensions['D'].width = 24
+        sheet.column_dimensions['E'].width = 16
+        sheet.column_dimensions['F'].width = 16
+        # Cells of first two rows are merged to display organisation details properly.
+        sheet.merge_cells('A1:F2')
+        # Name and Financial Year of organisation is fetched to be displayed on the first row.
+        sheet['A1'].font = Font(name='Liberation Serif',size='16',bold=True)
+        sheet['A1'].alignment = Alignment(horizontal = 'center', vertical='center')
+        # Organisation name and financial year are displayed.
+        sheet.merge_cells('A3:F3')
+        sheet['A3'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A3'].alignment = Alignment(horizontal = 'center', vertical='center')
+        sheet.merge_cells('A4:F4')
+        sheet['A4'].font = Font(name='Liberation Serif',size='14',bold=True)
+        sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
+        if inout == "9":
+               sheet.title = "Cancelled Deliveries In"
+        elif inout == "15":
+            sheet.title = "Cancelled Deliveries Out"
+        sheet['A1'] = orgname + ' (FY: ' + fystart + ' to ' + fyend +')'
+        sheet['A3'] = headingtext
+        sheet['A4'] = "As on Date: "+new_inputdate
+        if request.params["del_cancelled_type"] == "9":
+            sheet.title = "Cancelled Deliveries In"
+            sheet['A4'] = "Cancelled Deliveries In"
+        elif request.params["del_cancelled_type"] == "15":
+            sheet.title = "Cancelled Deliveries Out"
+            sheet['A4'] = "Cancelled Deliveries Out"
+        sheet['A5'] = "Sr. No."
+        sheet['B5'] = "Deli. Note No."
+        sheet['C5'] = "Deli. Note Date"
+        sheet['D5'] = title
+        sheet['E5'] = "Godown Name"
+        if del_cancelled_type == "0":
+            sheet['F5'] = "Delivery Type"
+        titlerow = sheet.row_dimensions[5]
+        titlerow.font = Font(name='Liberation Serif',size=12,bold=True)
+        titlerow.alignment = Alignment(horizontal = 'center', vertical='center')
+        row = 6
+        for deliverychallan in result:
+            sheet['A'+str(row)] = deliverychallan["srno"]
+            sheet['A'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['A'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['B'+str(row)] = deliverychallan["dcno"]
+            sheet['B'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['B'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['C'+str(row)] = deliverychallan["dcdate"]
+            sheet['C'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['D'+str(row)] = deliverychallan["custname"]
+            sheet['D'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['E'+str(row)] = deliverychallan["goname"]
+            sheet['E'+str(row)].alignment = Alignment(horizontal='center')
+            sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            if del_cancelled_type == "0":
+                sheet['F'+str(row)]  = deliverychallan["dcflag"]
+                sheet['F'+str(row)].alignment = Alignment(horizontal='center')
+                sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            row += 1
+        output = cStringIO.StringIO()
+        unbilldelwb.save(output)
+        contents = output.getvalue()
+        output.close()
+        headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Cotent-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
+        # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
+        return Response(contents, headerlist=headerList.items())
+    # except:
+    #     return {"gkstatus":3}
+
 @view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
 def deliveryprint(request):
     header={"gktoken":request.headers["gktoken"]}
@@ -457,7 +578,42 @@ def print_del_unbilled(request):
         del_unbilled_type = "Sale"
     elif del_unbilled_type == "16":
         del_unbilled_type = "Purchase"
-    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type}
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_unbilled_type": del_unbilled_type,"canceldelflag":0}
+
+
+@view_config(route_name="print_cancelled_deliveries_report",renderer="gkwebapp:templates/print_unbilled_deliveries.jinja2")
+def print_del_cancelled(request):
+    header={"gktoken":request.headers["gktoken"]}
+    inputdate = request.params["inputdate"];
+    del_cancelled_type = request.params["del_cancelled_type"];
+    if del_cancelled_type == "All":
+        del_cancelled_type = "0"
+    elif del_cancelled_type == "Approval":
+        del_cancelled_type = "1"
+    elif del_cancelled_type == "Consignment":
+        del_cancelled_type = "3"
+    elif del_cancelled_type == "Sale":
+        del_cancelled_type = "4"
+    elif del_cancelled_type == "Purchase":
+        del_cancelled_type = "16"
+    gkdata = {"inputdate": inputdate, "del_cancelled_type": del_cancelled_type}
+    new_inputdate = datetime.strftime(datetime.strptime(str(inputdate),"%Y-%m-%d").date(),'%d-%m-%Y')
+    inout = request.params["inout"]
+    if inout == "9":
+        result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=i", data = json.dumps(gkdata), headers=header)
+    elif inout == "15":
+        result = requests.get("http://127.0.0.1:6543/delchal?type=listofcancelleddel&inout=o", data = json.dumps(gkdata), headers=header)
+    if del_cancelled_type == "0":
+        del_cancelled_type = "All"
+    elif del_cancelled_type == "1":
+        del_cancelled_type = "Approval"
+    elif del_cancelled_type == "3":
+        del_cancelled_type = "Consignment"
+    elif del_cancelled_type == "4":
+        del_cancelled_type = "Sale"
+    elif del_cancelled_type == "16":
+        del_cancelled_type = "Purchase"
+    return {"gkstatus":result.json()["gkstatus"], "gkresult": result.json()["gkresult"], "inputdate":inputdate, "new_inputdate":new_inputdate, "inout":inout, "del_cancelled_type": del_cancelled_type,"canceldelflag":1}
 
 @view_config(route_name="deliverychallan", request_param="action=getattachment", renderer="gkwebapp:templates/viewdelchalattachment.jinja2")
 def getattachment(request):

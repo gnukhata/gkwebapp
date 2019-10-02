@@ -93,6 +93,27 @@ $(document).ready(function() {
 
 	});
 
+	$("#viewcancelprintableversion").click(function(event){
+		// Function to get a printable version of the report.
+				$("#msspinmodal").modal("show");
+				$.ajax(
+					{
+						type: "GET",
+						url: "/print_cancelled_deliveries_report",
+						global: false,
+						async: false,
+						datatype: "text",
+			  data: {"inputdate": $("#inputdate").val(), "inout":$("#inout").val(), "del_cancelled_type": $("#del_cancelled_type").val()},
+			  beforeSend: function(xhr)
+						{
+							xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+						}
+					})
+					.done(function(resp) {
+						$("#info").html(resp);
+					});
+	
+		});
 
 
 
@@ -156,11 +177,33 @@ $(document).ready(function() {
 	    }
 	});
 	});
+		
 	$("#back").click(function(event){
 		$.ajax(
 			{
 			  type: "POST",
 			  url: "/del_unbilled?action=view",
+			  global: false,
+			  async: false,
+			  datatype: "json",
+			  beforeSend: function(xhr)
+			  {
+				xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			  },
+			  success: function(resp)
+			  {
+			 $("#info").html(resp);
+			}
+			}
+		  );
+		
+	});
+
+	$("#cback").click(function(event){
+		$.ajax(
+			{
+			  type: "POST",
+			  url: "/deliverychallan?action=viewcanceldel",
 			  global: false,
 			  async: false,
 			  datatype: "json",
@@ -296,7 +339,45 @@ $(".search").children(".form-control").keyup(function(event){
       });
 
     });
-    
+	
+
+    var del_cancelled_type = $("#del_cancelled_type").attr("value");
+    $(".inoutcanceldel").click(function(event) {
+	if(inout == "9"){
+	    inout = "15";
+	}else if(inout == "15"){
+	    inout = "9";
+	}
+	if(del_cancelled_type == "Purchase"){ 
+	    del_cancelled_type = "Sale";
+	}else if(del_cancelled_type == "Sale"){
+	    del_cancelled_type = "Purchase";
+	}
+	$.ajax(
+	{
+        type: "POST",
+        url: "/show_del_cancelled_report",
+        global: false,
+        async: false,
+        data: {"inputdate": new_date_input, "inout":inout, "del_cancelled_type":del_cancelled_type},
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        }
+      })
+      .done(function(resp) {
+        $("#info").html(resp);
+      })
+      .fail(function() {
+        console.log("error");
+      })
+      .always(function() {
+        console.log("complete");
+      });
+
+    });
+    	
 	//For search data
 	var curindex ;
   var nextindex;
@@ -401,6 +482,29 @@ $(".search").children(".form-control").keyup(function(event){
 	};
 	xhr.send();
 	});
+
+	$("#printcancelbutton").click(function(event) {
+		// this function creates a spreadsheet of the report.
+		event.preventDefault();
+		var orgname = sessionStorage.getItem('orgn');
+		var orgtype = sessionStorage.getItem('orgt');
+		var unbdelstring = '&inputdate='+$("#inputdate").val()+'&inout='+$("#inout").val()+'&del_cancelled_type='+ $("#del_cancelled_type").val();
+		var xhr = new XMLHttpRequest();
+		xhr.open('GET', '/deliverychallan?action=cancellspreadsheet&fystart='+sessionStorage.getItem('year1') + '&orgname='+orgname+'&orgtype='+orgtype+'&fyend='+sessionStorage.getItem('year2')+unbdelstring, true);
+		xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+		xhr.responseType = 'blob';
+		
+		xhr.onload = function(e) {
+			  if (this.status == 200) {
+			// if successfull a file will be served to the client.
+			// get binary data as a response
+				var blob = this.response;
+			 var url = window.URL.createObjectURL(blob);
+			window.location.assign(url);
+			  }
+		};
+		xhr.send();
+		});
 	
     $("#unbill_del_table").off('click', '.cancel_delchal').on('click', '.cancel_delchal', function(e) {
 		var id = $(this).closest("tr").attr('data-value');
