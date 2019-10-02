@@ -235,7 +235,6 @@ else{
 	$(".del_cancelled_table").off('dblclick','tr').on('dblclick','tr',function(e){
 		e.preventDefault();
 		var id = $(this).attr('data-value');
-		console.log(id,"dcid");
 		if (id==""){
 			return false;
 		}
@@ -253,7 +252,6 @@ else{
 			}
 		})
 		.done(function(resp){
-			console.log("response");
 			$("#report_delchal").hide();
 			$("#viewdeldiv").show();
 			$("#viewdc").html("");
@@ -625,10 +623,7 @@ $(".search").children(".form-control").keyup(function(event){
 			  		},
 			  		success: function(resp)
 			  		{
-						  console.log(resp,"afterresp");
-						  
 						  if(resp["gkstatus"]==0){
-							  console.log("text in side ")
 							$('#confirm_delete').modal('hide');
 							  $('#confirm_delete').on('hidden.bs.modal', function (e)
 									{

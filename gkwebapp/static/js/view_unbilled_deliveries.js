@@ -317,7 +317,6 @@ else {
         }
       })
       .done(function(resp) {
-        // console.log(resp);
         $("#info").html(resp);
         //alert("Show_Delivery_Report_Success");
       })
