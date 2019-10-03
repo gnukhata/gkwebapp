@@ -31,8 +31,13 @@ This script is for the report page of Unbilled Deliveries.
 $(document).ready(function() {
 	$(".fixed-table-loading").remove(); // Remove unwanted symbol of loading from bootstrap-table
 	$("#msspinmodal").modal("hide");
+	if($("#canceldelflag").val() == 0){
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
 	$('.del_unbilled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+	}else{
+		$('.del_cancelled_table tbody tr:first-child td:eq(1) a').focus(); // Set focus on first row on load.
+		$('.del_cancelled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
+	}
 
     $('.cancel_delchal').tooltip({
         title : "Clicking this button will cancel this Deliverynote.",
