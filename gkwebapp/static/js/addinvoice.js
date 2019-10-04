@@ -932,7 +932,7 @@ $(document).ready(function() {
 	if (event.which == 13) {
 	    event.preventDefault();
 	    if ($("#invoice_customer").is(":disabled")) {
-		$("#Consignee").focus();//Focus shifts to Consignee Checkbox when delivernote selected with no consignee details
+		$("#consigneename").focus().select();//Focus shifts to Consignee Checkbox when delivernote selected with no consignee details
 	    } 
 	    if ($("#invoice_customer").is(":disabled")) {
 		if($("#consigneename").is(":disabled")){
@@ -1379,6 +1379,16 @@ $(document).ready(function() {
 				$("#consigneepincode").focus();
 				return false;
 				}
+		}else{
+			if($("#consigneeaddress").val() != ""){
+				$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+				$("#pinval-blank-alert").alert();
+				$("#pinval-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pinval-blank-alert").hide();
+				});
+				$("#consigneepincode").focus();
+				return false;
+			}
 		}
 	if(invoicedate < gstdate){
 		if ($("#invoice_deliverynote option:selected").val() != '') {
