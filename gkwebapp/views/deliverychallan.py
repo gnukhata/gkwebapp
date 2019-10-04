@@ -330,7 +330,7 @@ def unbillspreadsheet(request):
 
 #Code for Export To spreadsheet
 @view_config(route_name="deliverychallan",request_param="action=cancellspreadsheet", renderer="")
-def unbillspreadsheet(request):
+def cancelledspreadsheet(request):
     # try:
         header={"gktoken":request.headers["gktoken"]}
         fystart = str(request.params["fystart"]);
