@@ -4208,4 +4208,18 @@ $("#roundoff_checkbox").change(function(e){
 		$("#invoice_issuer_name").val(resp.unamerole["username"]);
 	  $("#invoice_issuer_designation").val(resp.unamerole["userroleName"]);
 	});
+
+	$.ajax({
+		url: '/invoice?type=getstatess',
+					  type: 'POST',
+			async: false,
+			beforeSend: function(xhr) {
+						  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+					  }
+	})
+	.done(function(resp){
+	  if(resp["gkresult"] != 'null'){
+	  $("#invoicestate").val(resp["gkresult"]);  
+	  $("#invoicestate").change();}
+	});
 });
