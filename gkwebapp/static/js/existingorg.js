@@ -47,7 +47,7 @@ $(document).ready(function(){
       }
   });
 
-  $("#org-name-input").keyup(function(){
+  $("#org-name-input").keyup(function(event){
     let searchtext = $("#org-name-input").val().toLowerCase();
     if (searchtext != "") {
       $(".org-name-option").each(function(index){
@@ -64,11 +64,11 @@ $(document).ready(function(){
     }
   });
 
-  $("#org-name").change(function(){
+  $(".org-name-option").click(function(){
       //Creating an object to store organisation name and type
-      var selectedorg = $("#org-name").val();
-      orgobj.orgname = $("#org-name option[value=" + selectedorg + "]").data("orgname");
-      orgobj.orgtype = $("#org-name option[value=" + selectedorg + "]").data("orgtype");
+      var selectedorg = $(this).data("value");
+      orgobj.orgname = $(this).data("orgname");
+      orgobj.orgtype = $(this).data("orgtype");
       if (orgobj.orgname!=""&&orgobj.orgtype!="") {
 	  $.ajax({
               type: "POST",
@@ -79,11 +79,12 @@ $(document).ready(function(){
               dataType: "json",
               success: function(jsonObj) {
 		  let ListofYears = jsonObj["gkresult"];
-		  $('#finalyears').empty();
+		  $('#final-year-ul').empty();
+		  $('#final-year-ul').append('<input id="final-year-input" class="form-control selectinput" />');
 		  for (let i in ListofYears ) {
-		      $('#finalyears').append('<option value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</option>');
+		      $('#final-year-ul').append('<li><a class="final-year-option selectdropdown" data-value="' + ListofYears[i].orgcode + '">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</a></li>');
 		  }
-		  var numofyears =  $("#finalyears option:visible").length;
+		  var numofyears =  $(".final-year-option").length;
 		  if (numoforg == 1){ //for setting focus to the "next" button if there is only one organisation present
 		      if(numofyears==1)
 		      {

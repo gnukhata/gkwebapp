@@ -45,7 +45,7 @@
               <br/>
 	      <label for="org-name" id="orname">{% trans %}<u>C</u>ompany Name{% endtrans %} :</label>
 	      <div class="dropdown">
-		<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="org-nameb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="org-name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 		  Select Company
 		  <span class="caret"></span>
 		</button>
@@ -60,9 +60,15 @@
 
             <div style="margin-bottom: 45px" class="input-group col-xs-12">
               <label for="finalyears" id="orname">{% trans %}Select <u>F</u>inancial Year{% endtrans %} :</label><br/>
-              <select style="border-radius: 4px" class = "form-control col-xs-12" id="finalyears" name="orgcode" accesskey="f">
-                <option value="" disabled selected hidden>{% trans %}Select Financial Year{% endtrans %}</option>
-              </select>
+              <div class="dropdown">
+		<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="finalyears" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		  Select Financial Year
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu selectdropdown" aria-labelledby="final-year-label" id="final-year-ul">
+		  <input id="final-year-input" class="form-control selectinput" />
+		</ul>
+	      </div>
             </div>
 -
 
