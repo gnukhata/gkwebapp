@@ -42,13 +42,20 @@
           <form id="orgform" class="form-horizontal" role="form">
 
             <div style="margin-bottom: 25px" class="input-group col-xs-12">
-              <label for="org-name" id="orname">{% trans %}<u>C</u>ompany Name{% endtrans %} :</label><br/>
-              <select style="border-radius: 4px" class = "form-control col-xs-12" id="org-name"  name = "orgname" accesskey="c">
-                <option value="" data-orgname="" data-orgtype="" disabled selected hidden>{% trans %}Select Company{% endtrans %}</option>
-                {% for orgs in gkresult %}
-                  <option value="{{loop.index}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</option>
-                {% endfor %}
-              </select>
+              <br/>
+	      <label for="org-name" id="orname">{% trans %}<u>C</u>ompany Name{% endtrans %} :</label>
+	      <div class="dropdown">
+		<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="org-nameb" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+		  Select Company
+		  <span class="caret"></span>
+		</button>
+		<ul class="dropdown-menu selectdropdown" aria-labelledby="org-name-label" id="org-name-ul">
+		  <input id="org-name-input" class="form-control selectinput" />
+		  {% for orgs in gkresult %}
+                    <li><a class="org-name-option selectdropdown" href="#" data-value="{{loop.index}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</a></li>
+                  {% endfor %}
+		</ul>
+	      </div>
             </div>
 
             <div style="margin-bottom: 45px" class="input-group col-xs-12">
@@ -57,7 +64,7 @@
                 <option value="" disabled selected hidden>{% trans %}Select Financial Year{% endtrans %}</option>
               </select>
             </div>
-
+-
 
 
 

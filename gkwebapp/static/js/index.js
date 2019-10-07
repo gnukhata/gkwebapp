@@ -26,24 +26,6 @@ Contributors:
 */
 // This script is for the first page of GNUKhata i.e index page.
 $(document).ready(function(){
-    jQuery.fn.extend({
-	searchify : function(){
-	    var selectwidth = $(this).width(); //Width of original element
-	    var selectheight = $(this).height(); //Height of original element
-	    $(this).searchable();  // Function to convert original select element into a searcheable element
-	    //Setting dimensions of new element same as that of the original element.
-	    $(this).width(parseFloat(selectwidth));
-	    $(this).height(parseFloat(selectheight));
-	    $(this).find("option").height(parseFloat(selectheight)).width(parseFloat(selectwidth));
-	    $(this).find("option").each(function() {
-		if ($(this).html()=="") {
-		    $(this).remove();
-		}
-	    });
-	    $(this).next().next().css({"margin-top":"-7px"});
-	    $(this).next().width(parseFloat(selectwidth));
-	}
-    });
     $("#selectorg").load("/existingorg");
     $("#createorg").load("/createorg");
     if (sessionStorage.changeorg == 1) {
@@ -68,7 +50,6 @@ $(document).ready(function(){
 		    }
 		    else {
 			$("#selectnav").click();
-			$("#org-name").searchify();
 		    }
 		}).fail(function() {
 		    console.log("error");

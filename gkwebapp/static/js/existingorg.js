@@ -32,14 +32,7 @@ $(document).ready(function(){
 	    event.preventDefault();
 	    setTimeout( function() { $("#finalyears").focus(); }, 25 );
 	}
-	if (event.which == 40) {
-	    event.preventDefault();
-	    $("#org-name").text("");
-	}
     });
-    if ($("#org-name").is(":not(:hidden)")) {
-	$("#org-name").searchify();
-    }
   $("#finalyears").keydown( function(e) {
 
     if (e.which == 13)
@@ -52,6 +45,23 @@ $(document).ready(function(){
 	      $("#org-name").focus();
 	  }
       }
+  });
+
+  $("#org-name-input").keyup(function(){
+    let searchtext = $("#org-name-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".org-name-option").each(function(index){
+	if (index != 0) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).show();
+	  }
+	  else {
+	    $(this).hide();
+	  }
+	}
+      });
+    }
   });
 
   $("#org-name").change(function(){
@@ -85,7 +95,6 @@ $(document).ready(function(){
 		      }
 		      
 		  }
-		  $("#finalyears").searchify();
               }
 	  });
       }
