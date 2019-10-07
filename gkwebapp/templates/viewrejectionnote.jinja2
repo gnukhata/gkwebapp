@@ -147,27 +147,61 @@
     <div class="panel shadow rejectionnote_view_panel">
       <div class="panel-body">
         <div class="container-fluid row">
+					<div class="col-sm-12">
+				{%if noofrejectionnotesin == 0 and noofrejectionnotesout == 0 %}
+				<div class="form-group form-inline col-sm-9" id="rejection">
+					<label class="text-danger">{% trans %}No Rejection Note Found!{% endtrans %}</label>
+					
+				</div>
+				{% else %}
+				<div class="form-group form-inline col-sm-3">
+					<div class="radio">
+						<label><input type="radio" class="rejectionradio" name="rejradio" id="rejinradio" aria-label="Customer" checked> Rejection In</label>
+					</div>
+					<div class="radio">
+						<label><input type="radio" class="rejectionradio" name="rejradio" id="rejoutradio" aria-label="Supplier"> Rejection Out</label>
+					</div>
+				</div>
 
-          <div class="form-group col-md-5">
-            <label for="rejectionnote_view_list">{% trans %}Rejection Note{% endtrans %} :</label>
-            <select class="form-control input-sm" id="rejectionnote_view_list">
-              <option value="" disabled selected hidden>{% trans %}Select Rejection Note{% endtrans %}</option>
-              <optgroup label="Rejection In" id="rejin">
-                {% for rn in rejectionnotes %}
-                {% if rn['inout'] == 9 %}
-                  <option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
-                {% endif %}
-                {% endfor %}
-              </optgroup>
-              <optgroup label="Rejection Out" id="rejout">
-                {% for rn in rejectionnotes %}
-                {% if rn['inout'] == 15 %}
-                  <option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
-                {% endif %}
-                {% endfor %}
-              </optgroup>
-            </select>
-          </div>
+				<div class="form-group form-inline col-sm-9" id="rejectionin">
+					{%if noofrejectionnotesin == 0 %}
+						<label class="text-danger">{% trans %}No Rejection In Note Found!{% endtrans %}</label>
+					{%else%}
+						<label for="rejectionnote_view_list">{% trans %}List of Reject<u>i</u>on In Notes{% endtrans %} :</label>
+						<select class="form-control input-sm rejectionnote_view_list" id="rejectionnotein_view_list" accesskey="D">
+							<option value="" disabled hidden selected>{% trans %}Select Rejection In Notes{% endtrans %}</option>
+							{% for rn in rejectionnotes %}
+							{% if rn['inout'] == 9 %}
+								<option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
+							{% endif %}
+							{% endfor %}
+						</select>
+						<br>
+						<small id="textareahelp" class="form-text text-muted" style="margin:145px">{% trans %}Press "Shift+Tab" keys to shift focus on Rejection In/Out. {% endtrans %}</small>
+					{%endif%}
+				</div>
+
+
+		<div class="form-group form-inline col-sm-9" id="rejectionout">
+		  {%if noofrejectionnotesout == 0 %}
+		    <label class="text-danger">{% trans %}No Rejection Out Note Found!{% endtrans %}</label>
+		  {%else%}
+		    <label for="rejectionnote_view_list">{% trans %}List of Rejecti<u>o</u>n Out Notes{% endtrans %} :</label>
+		    <select class="form-control input-sm rejectionnote_view_list" id="rejectionnoteout_view_list"  accesskey="D">
+		      <option value="" disabled hidden selected>{% trans %}Select Rejection Out Notes{% endtrans %}</option>
+					{% for rn in rejectionnotes %}
+					{% if rn['inout'] == 15 %}
+						<option value="{{rn['rnid']}}">{{rn["rnno"]}}, {{rn["rndate"]}}</option>
+					{% endif %}
+					{% endfor %}
+		    </select>
+		    <br>
+		    <small id="textareahelp" class="form-text text-muted" style="margin:145px">{% trans %}Press "Shift+Tab" keys to shift focus on Rejection In/Out. {% endtrans %}</small>
+		  {%endif%}
+		</div>
+    
+				{% endif %}
+					</div>
         </div>
 	<div class="viewrejectionnote_div" hidden>
         <div class="col-md-4 leftcolumn">

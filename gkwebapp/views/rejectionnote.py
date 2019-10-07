@@ -45,7 +45,7 @@ def showaddrejectionnote(request):
 def showviewrejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rnotes = requests.get("http://127.0.0.1:6543/rejectionnote?type=all", headers=header)
-    return {"gkstatus":rnotes.json()["gkstatus"],"rejectionnotes":rnotes.json()["gkresult"]}
+    return {"gkstatus":rnotes.json()["gkstatus"],"rejectionnotes":rnotes.json()["gkresult"],"noofrejectionnotesin":rnotes.json()["rejincount"],"noofrejectionnotesout":rnotes.json()["rejoutcount"]}
 
 @view_config(route_name="rejectionnote",request_param="action=nonrejectedinvprods",renderer="json")
 def nonrejectedinvprods(request):

@@ -34,15 +34,11 @@ $(document).ready(function() {
     });
 
     $("#rejback").click(function(event) {
-	if ($("#latable").length == 0 && $("#invoice_div").length == 0) {
-	    $("#rejectionnote").click();
-	}
-	else {
-	    $('#printload').html("");
-	    $("#invload").show();
-	    $("#buttondiv").show();
+	    $('#printdiv').html("");
+	    $("#tabdiv").show();
+		$("#buttondiv").show();
+		$('#rejectionnoteout_view_list').focus();		
 	    $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-	}
     });
     (function() {
 	var beforePrint = function() {

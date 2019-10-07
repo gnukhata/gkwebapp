@@ -29,15 +29,57 @@ $(document).ready(function() {
     var curindex = $(this).closest('#invoice_product_table_gst tbody tr').index();
     var gsthtml = $('#invoice_product_table_gst tbody tr:first').html();
     var vathtml = $('#invoice_product_table_vat tbody tr:first').html();
-    var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  
-  $("#rejectionnote_view_list").focus();
-  $("#rejectionnote_view_list").change(function(event) {
+		var totaltablehtml = $("#invoice_product_table_total tbody tr:first").html();  
+		$("#rejinradio").click().focus();
+		$("#rejectionout").hide();
+
+		$(document).off("change",".rejectionradio").on("change",".rejectionradio",function(event) {
+			//Checking which radio button is selected.
+						if ($("#rejinradio").is(":checked")) {
+					//If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
+							$("#rejectionin").show();
+							$("#rejectionout").hide();
+							$(".viewrejectionnote_div").hide();
+							$(".panel-footer").hide(); 
+							$("#rejectionnotein_view_list option:first").prop("selected",true);
+							$("#rejectionnotein_view_list").change();
+						} else {
+					//If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
+							$("#rejectionin").hide();
+							$("#rejectionout").show();
+							$(".viewrejectionnote_div").hide();
+							$("#rejectionnoteout_view_list option:first").prop("selected",true);
+							$("#rejectionnoteout _view_list").change();
+								}
+						});
+
+	    // keydown event for radiobutton
+			$("#rejinradio").keydown(function(event) {
+				if (event.which==13) {
+						$("#rejectionnotein_view_list").focus().select();
+				}
+					});
+					$("#rejoutradio").keydown(function(event) {
+				if (event.which==13) {
+						$("#rejectionnoteout_view_list").focus().select();
+				}
+					});
+
+  $("#rejectionnotein_view_list, #rejectionnoteout_view_list").change(function(event) {
+		var rnid;
+		if ($("#rejinradio").is(":checked"))
+		{
+			rnid=$("#rejectionnotein_view_list option:selected").val();
+		}
+		else {
+			rnid=$("#rejectionnoteout_view_list option:selected").val();
+		} 
     $.ajax({
       url: '/rejectionnote?action=getrejectionnote',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"rnid":$("#rejectionnote_view_list option:selected").val()},
+      data: {"rnid":rnid},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -50,7 +92,8 @@ $(document).ready(function() {
 	    $(".inrej").show();
 	    $(".outrej").hide();
 	    $(".panel-footer").hide();
-	}else{ $(".inrej").hide();
+	}else{
+		 $(".inrej").hide();
 	       $(".outrej").show();
 	       $(".panel-footer").show();
 	     }
@@ -241,14 +284,18 @@ $(document).ready(function() {
             url: '/rejectionnote?action=getprint',
             type: 'POST',
             dataType: 'html',
-            data: {"rnid":$("#rejectionnote_view_list option:selected").val()},
+            data: {"rnid":$("#rejectionnoteout_view_list option:selected").val()},
             beforeSend: function(xhr) {
                 xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
             }
         })
             .done(function(resp) {
-                console.log("success");
-                $('#info').html(resp);
+								console.log("success");
+								$('#printdiv').show();								
+                $('#printdiv').html(resp);
+							$('#tabdiv').hide();
+
+								
             })
             .fail(function() {
                 console.log("error");
