@@ -545,12 +545,14 @@ if(event.which==13)
 	//Checking which radio button is selected.
         if ($("#delinradio").is(":checked")) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
-                $("#delchalin").show();
+				$("#delchalin").show();
+				$(".deliverychallan_edit_div").hide();				
 		$("#delchalout").hide();
 
         } else {
 	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
-                $("#delchalin").hide();
+				$("#delchalin").hide();
+				$(".deliverychallan_edit_div").hide();				
 		$("#delchalout").show();
             }
         });
