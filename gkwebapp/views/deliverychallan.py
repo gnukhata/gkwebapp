@@ -96,7 +96,7 @@ def showcancelledpopupdeliverychallan(request):
     delchal = requests.get("http://127.0.0.1:6543/delchal?delchal=singlecancel&dcid=%d"%(int(dcid)), headers=header)
     godowns = requests.get("http://127.0.0.1:6543/godown", headers=header)
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
-    return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"]}
+    return {"gkstatus": delchal.json()["gkstatus"], "delchaldata": delchal.json()["gkresult"], "numberofgodowns":len(godowns.json()["gkresult"]), "resultgstvat":resultgstvat.json()["gkresult"], "canceldelflag":1}
 
 @view_config(route_name="deliverychallan",request_param="action=getproducts",renderer="json")
 def getproducts(request):
