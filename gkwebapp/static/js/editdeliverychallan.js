@@ -546,14 +546,16 @@ if(event.which==13)
         if ($("#delinradio").is(":checked")) {
 	    //If cash is selected then bankdetails fields are hide and 'CASH RECEIVED' is shown.
 				$("#delchalin").show();
-				$(".deliverychallan_edit_div").hide();				
-		$("#delchalout").hide();
+				$(".deliverychallan_edit_div").hide();	
+				$(".panel-footer").hide();			
+				$("#delchalout").hide();
 
         } else {
 	    //If bank is selected then bankdetails fields are shown and 'CASH RECEIVED' is hide.
 				$("#delchalin").hide();
-				$(".deliverychallan_edit_div").hide();				
-		$("#delchalout").show();
+				$(".deliverychallan_edit_div").hide();	
+				$(".panel-footer").hide();			
+				$("#delchalout").show();
             }
         });
 
