@@ -140,4 +140,12 @@ $(document).ready(function(){
       sessionStorage.setItem('yyyymmddyear1', syear );
       sessionStorage.setItem('yyyymmddyear2', eyear );
   });
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
+  });
+  $(".searchabledropdown").on("hidden.bs.dropdown", function () {
+    let dropbutton = $(this).data("button-id");
+    document.getElementById(dropbutton).focus();
+  });
 });
