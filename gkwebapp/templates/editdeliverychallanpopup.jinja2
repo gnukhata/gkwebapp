@@ -122,7 +122,7 @@
 	{% if delchaldata["delchaldata"]["taxflag"] == 22 %}
 	  <div class="form-group form-inline tinfield">
 	    <label for="tin" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-	    <label type="text" id="tin" class="col-sm-8">{% if delchaldata["custSupDetails"]["custtin"] != "" %}{{ delchaldata["custSupDetails"]["custtin"] }}{% else %}N/A{% endif %}</label>
+	    <label type="text" id="tin" class="col-sm-8">{% if delchaldata["custSupDetails"]["custtin"] != "" %}{{ delchaldata["custSupDetails"]["custtin"] }}{% endif %}</label>
 	  </div>
 	{% endif %}
 	<!-- For GST -->
@@ -153,11 +153,11 @@
 	<h4>Details of Consignee | Shipped to: </h4>
 	<div class="form-group form-inline">
 	  <label for="delchal_consigneename" class="col-sm-4 fsize">{% trans %}Name{% endtrans %} :</label>
-	  <label id="delchal_consigneename" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneename"] }}{% else %}N/A{% endif %}</label>
+	  <label id="delchal_consigneename" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneename"] }}{% endif %}</label>
 	</div>
 	<div class="form-group form-inline">
 	  <label for="delchal_consigneestate" class="col-sm-4 fsize">{% trans %}State{% endtrans %} :</label>
-	  <label class="col-sm-8" id="delchal_consigneestate">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneestate"] }}{% else %}N/A{% endif %}</label>
+	  <label class="col-sm-8" id="delchal_consigneestate">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneestate"] }}{% endif %}</label>
 	</div>
 	<div class="form-group form-inline">
 	  <label for="delchal_statecodeofconsignee" class="col-sm-4 fsize">{% trans %}State Code{% endtrans %} :</label>
@@ -167,23 +167,23 @@
 	{% if delchaldata["delchaldata"]["taxflag"] == 22 %}
 	  <div class="form-group form-inline tinfield">
 	    <label for="delchal_tinconsignee" class="col-sm-4 fsize">{% trans %}TIN{% endtrans %} :</label>
-	    <label type="text" id="delchal_tinconsignee" class="col-sm-8" name="tinconsignee">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["tinconsignee"] }}{% else %}N/A{% endif %}</label>
+	    <label type="text" id="delchal_tinconsignee" class="col-sm-8" name="tinconsignee">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["tinconsignee"] }}{% endif %}</label>
 	  </div>
 	{% endif %}
 	<!-- For GST -->
 	{% if delchaldata["delchaldata"]["taxflag"] == 7 %}
 	  <div class="form-group form-inline gstinfield">
 	    <label for="delchal_gstinconsignee" class="col-sm-4 fsize" >{% trans %}GSTIN{% endtrans %} :</label>
-	    <label id="delchal_gstinconsignee" class="col-sm-8 gstin">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["gstinconsignee"] }}{% else %}N/A{% endif %}</label>
+	    <label id="delchal_gstinconsignee" class="col-sm-8 gstin">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["gstinconsignee"] }}{% endif %}</label>
 	  </div>
 	{% endif %}
 	<div class="form-group form-inline">
 	  <label for="delchal_consigneeaddr" class="col-sm-4 fsize">{% trans %}Consignee Address :{% endtrans %}</label>
-	  <label id="delchal_consigneeaddr" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneeaddress"] }}{% else %}N/A{% endif %}</label>
+	  <label id="delchal_consigneeaddr" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneeaddress"] }}{% endif %}</label>
 	</div>
 	<div class="form-group form-inline">
 	  <label for="delchal_consigneepincode" class="col-sm-4 fsize">{% trans %}PIN Code :{% endtrans %}</label>
-	  <label id="delchal_consigneepincode" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneepincode"] }}{% else %}N/A{% endif %}</label>
+	  <label id="delchal_consigneepincode" class="col-sm-8">{% if delchaldata["delchaldata"]["consignee"] %}{{ delchaldata["delchaldata"]["consignee"]["consigneepincode"] }}{% endif %}</label>
 	</div>
       </div>
 	</div>
@@ -453,7 +453,7 @@
 	<div class="row col-sm-12">
 	  <div class="form-inline form-group">
 	    <label for="deliverychallan_edit_modeoftransport" class="col-sm-5" id="transmode">{% trans %}Mode of Transportation{% endtrans %} :</label>
-	    <label id="deliverychallan_edit_modeoftransport" class="col-sm-5">{% if delchaldata["delchaldata"]["modeoftransport"] %}{{ delchaldata["delchaldata"]["modeoftransport"] }}{% else %}N/A{% endif %}</label>
+	    <label id="deliverychallan_edit_modeoftransport" class="col-sm-5">{% if delchaldata["delchaldata"]["modeoftransport"] %}{{ delchaldata["delchaldata"]["modeoftransport"] }}{% endif %}</label>
 	  </div>
 	</div>
 	<div class="row col-sm-12">
@@ -481,7 +481,7 @@
 	<div class="row col-sm-12">
 	  <div class="form-group form-inline">
 	    <label for="supply_date" class="col-sm-5">{% trans %}Date of Supply{% endtrans %}:</label>
-	    <label id="supply_date" class="col-sm-5">{% if delchaldata["dateofsupply"] %}{{ delchaldata["dateofsupply"] }}{% else %}N/A{% endif %}</label>
+	    <label id="supply_date" class="col-sm-5">{% if delchaldata["dateofsupply"] %}{{ delchaldata["dateofsupply"] }}{% endif %}</label>
 	  </div>
 	</div>
       </div>
