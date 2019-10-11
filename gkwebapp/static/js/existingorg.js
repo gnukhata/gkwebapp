@@ -71,7 +71,10 @@ $(document).ready(function(){
       });
     }
       else{
-	  $(".org-name-option").show();
+	  $(".org-name-option").each(function(index){
+	      $(this).parent().show();
+	      $(this).show();
+	  });
       }
   });
 
@@ -105,6 +108,12 @@ $(document).ready(function(){
 	}
       });
     }
+      else{
+	  $(".final-year-option").each(function(index){
+	      $(this).parent().show();
+	      $(this).show();
+	  });
+      }
   });
 
     $(document).off('keydown' ,'#final-year-input').on('keydown' ,'#final-year-input',function(event) {
