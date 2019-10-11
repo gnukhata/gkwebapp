@@ -88,16 +88,18 @@ $(document).ready(function(){
 	}
     });
 
-    $("#final-year-input").keyup(function(event){
+  $(document).off('keyup' ,'#final-year-input').on('keyup' ,'#final-year-input',function(event) {
     let searchtext = $("#final-year-input").val().toLowerCase();
     if (searchtext != "") {
       $(".final-year-option").each(function(index){
 	if (index != 0) {
 	  let rowtext = $(this).text().toLowerCase();
 	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
 	    $(this).show();
 	  }
 	  else {
+	    $(this).parent().hide();
 	    $(this).hide();
 	  }
 	}
