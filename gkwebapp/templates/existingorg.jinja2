@@ -35,7 +35,7 @@
 
         </div>
 
-        <div style="padding-top:30px" class="panel-body" >
+        <div style="padding-top:20px" class="panel-body" >
 
 
 
@@ -50,7 +50,8 @@
 		  <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu selectdropdown" aria-labelledby="org-name-label" id="org-name-ul">
-		  <input id="org-name-input" class="form-control selectinput" />
+		  <li><input id="org-name-input" class="form-control selectinput" /></li>
+		  <li class="emptyselect"><a href="#" class="org-name-option selectdropdown emptyselect"></a></li>
 		  {% for orgs in gkresult %}
                     <li><a class="org-name-option selectdropdown" href="#" data-value="{{loop.index}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</a></li>
                   {% endfor %}
@@ -66,11 +67,11 @@
 		  <span class="caret"></span>
 		</button>
 		<ul class="dropdown-menu selectdropdown" aria-labelledby="final-year-label" id="final-year-ul">
-		  <input id="final-year-input" class="form-control selectinput" />
+		  <li><input id="final-year-input" class="form-control selectinput" /></li>
+		  <li class="emptyselect"><a href="#" class="final-year-option selectdropdown emptyselect"></a></li>
 		</ul>
 	      </div>
             </div>
--
 
 
 
