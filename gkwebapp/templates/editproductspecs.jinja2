@@ -227,9 +227,11 @@
 		<div class="row">
 		<div class="form-group col-sm-6 pd ">
 	{% if proddesc["gsflag"]==7 %}
-	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label>
+	  <label for="gscode" class="" id="hsnorservnolabel">New HSN No. :</label><label for="gscode" class="common" id="gscodes" style="color:red;font-size: 120%;"></label>
+		         
 	{%else%}
-	  <label for="gscode" class="" id="hsnorservnolabel" style="font-size: 96%;">New Services Accounting Code :</label>
+	  <label for="gscode" class="" id="hsnorservnolabel" style="font-size: 96%;">New Services Accounting Code :</label><label for="gscode" class="common" id="gscodes" style="color:red;font-size: 120%;"></label>
+		         
 	{%endif%}
 	<input type='text' class="form-control input-sm numtype hsn" name="gscode"  id="gscode" value="{{proddesc['gscode']}}" placeholder="e.g. 0101 21 00">
       </div> 

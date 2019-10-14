@@ -782,6 +782,20 @@ $(document).ready(function() {
                 }
             }
         }
+        var gstselected = 0;
+        var rowcount = $("#product_tax_table tbody tr").length;
+        for (i = 0; i < rowcount; i++) {
+            if ($("#product_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'IGST' || $("#product_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'CESS') {
+                gstselected = 1;
+                break;
+            }
+        }
+        if (gstselected == 1) {
+        $("#gscodes").text("*");
+        }
+        else{
+        $("#gscodes").text("");
+        }
     });
 
 
@@ -993,7 +1007,6 @@ $(document).ready(function() {
             $('#product_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
         } else if (event.which == 27) {
             event.preventDefault();
-
             if ($("#additem input:radio:checked").val() == '19') {
                 $("#hsnno").focus();
             } else {
