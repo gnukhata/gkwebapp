@@ -641,7 +641,8 @@ if(event.which==13)
 	})
 	    .done(function(resp) {
 		console.log("success");
-		$('#info').html(resp);
+		$(".nav").hide();
+		$('#deliverychallan_div').html(resp);
 	    })
 	    .fail(function() {
 		console.log("error");

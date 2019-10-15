@@ -32,6 +32,7 @@ $(document).ready(function() {
     window.scrollTo(0,0);
     
   $("#invprint_origin").click(function(event) {
+    $("#print_heading").text("TAX INVOICE - ORIGINAL FOR RECIPIENT");
     window.print();
   });
   $("#invprint_duplicate").click(function(event) {

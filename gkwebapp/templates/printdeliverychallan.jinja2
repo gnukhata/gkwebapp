@@ -57,7 +57,7 @@
 	</div>
 	{% if gkresult["delchaldata"]["inoutflag"] == 15%}
 	  <div class="row text-center">
-	    <h5><u>DELIVERY OUT NOTE </u></h5>
+	    <h5><u id=delprint_heading>DELIVERY OUT NOTE - ORIGINAL FOR BUYER</u></h5>
 	  </div>
 	{% else %}
 	  <div class="row text-center">
@@ -789,7 +789,9 @@
       {% endif %}
       <span style="margin:auto; display:table;">
     	<button type="button" class="btn btn-sm btn-danger hidden-print" id="delchalback" accesskey="k">{% trans %}Bac<u>k</u>{% endtrans %}</button>
-    	<button type="button" class="btn btn-sm btn-info hidden-print" id="delchalprint" accesskey="t">{% trans %}Prin<u>t</u>{% endtrans %}</button>
+    	<button type="button" class="btn btn-sm btn-info hidden-print" id="delchalprint_origin" accesskey="o">{% trans %}Print <u>O</u>riginal{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info hidden-print" id="delchalprint_duplicate" accesskey="d">{% trans %}Print <u>D</u>uplicate{% endtrans %}</button>
+		<button type="button" class="btn btn-sm btn-info hidden-print" id="delchalprint_triplicate" accesskey="t">{% trans %}Print <u>T</u>riplicate{% endtrans %}</button>
       </span>
     </div>
     <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/printdeliverychallan.js')}}"></script>

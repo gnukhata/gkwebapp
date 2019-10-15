@@ -37,24 +37,42 @@ $(document).ready(function() {
     }
   });
   */
+
   $("#notes").focus().select();
 
-  $("#delchalprint").click(function(event) {
+  $("#delchalprint_origin").click(function(event) {
+    $("#delprint_heading").text("DELIVERY OUT NOTE - ORIGINAL FOR BUYER");
+    window.print();
+  });
+  $("#delchalprint_duplicate").click(function(event) {
+    $("#delprint_heading").text("DELIVERY OUT NOTE - DUPLICATE FOR TRANSPORTER");
+    window.print();
+  });
+  $("#delchalprint_triplicate").click(function(event) {
+    $("#delprint_heading").text("DELIVERY OUT NOTE - TRIPLICATE FOR SELLER");
     window.print();
   });
 
   $("#delchalback").click(function(event) {
-      if ($("#deliverychallan_div").length == 0) {
-	  $("#deliverychallan").click();
-      }
-      else {
-	  $('#printdc').html("");
-	  $("#viewdc").show();
-	  $("#buttondiv").show();
-	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
-      }
-  });
-
+        $.ajax(
+          {
+          type: "POST",
+          url: "/deliverychallan",
+          global: false,
+          async: false,
+          datatype: "text/html",
+          beforeSend: function(xhr)
+          {
+            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+          },
+          success: function(resp)
+          {
+            $("#deliverychallan_edit").click();
+            $(".nav").show();
+            $("#deloutradio").prop("checked",true).focus();
+          }
+          });
+    });
     
   (function() {
 var beforePrint = function() {
