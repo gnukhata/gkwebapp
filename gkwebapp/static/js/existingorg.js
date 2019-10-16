@@ -151,13 +151,13 @@ $(document).ready(function(){
 		  for (let i in ListofYears ) {
 		    $('#final-year-ul').append('<li><a class="final-year-option selectdropdown" data-value="' + ListofYears[i].orgcode + '" href="#">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</a></li>');
 		  }
-		  $('.final-year-option:eq(1)').click();
+		  $('.final-year-option:eq(0)').click();
 		  var numofyears =  $(".final-year-option").length;
-		  if(numofyears==2)
+		  if(numofyears==1)
 		      {
 			  $("#callLogin").click();
 		      }
-		      else if(numofyears > 2) //set focus to organisation name if there are more than one organisations
+		      else if(numofyears > 1) //set focus to organisation name if there are more than one organisations
 	              {
 			  $("#finalyears").focus().select();
 		      }
@@ -167,8 +167,8 @@ $(document).ready(function(){
   });
     
     //If only one organisation and only one financial year is present, it will get selected by default and focus will be shifted to the "next" button 
-    if(numoforg==2){
-        $(".org-name-option").eq(1).click();
+    if(numoforg==1){
+        $(".org-name-option").eq(0).click();
     }
     else{
 	$("#org-name").focus();
