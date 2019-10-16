@@ -57,7 +57,7 @@ $(document).ready(function(){
     let searchtext = $("#org-name-input").val().toLowerCase();
     if (searchtext != "") {
       $(".org-name-option").each(function(index){
-	if (index != 0) {
+	if (index != -1) {
 	  let rowtext = $(this).text().toLowerCase();
 	  if (rowtext.indexOf(searchtext) != -1) {
 	    $(this).parent().show();
@@ -95,7 +95,7 @@ $(document).ready(function(){
     let searchtext = $("#final-year-input").val().toLowerCase();
     if (searchtext != "") {
       $(".final-year-option").each(function(index){
-	if (index != 0) {
+	if (index != -1) {
 	  let rowtext = $(this).text().toLowerCase();
 	  if (rowtext.indexOf(searchtext) != -1) {
 	    $(this).parent().show();
@@ -147,7 +147,7 @@ $(document).ready(function(){
               success: function(jsonObj) {
 		  let ListofYears = jsonObj["gkresult"];
 		  $('#final-year-ul').empty();
-		  $('#final-year-ul').append('<li><input id="final-year-input" class="form-control selectinput" /></li><li class="emptyselect"><a href="#" class="final-year-option selectdropdown emptyselect"></a></li>');
+		  $('#final-year-ul').append('<li><input id="final-year-input" class="form-control selectinput" /></li>');
 		  for (let i in ListofYears ) {
 		    $('#final-year-ul').append('<li><a class="final-year-option selectdropdown" data-value="' + ListofYears[i].orgcode + '" href="#">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</a></li>');
 		  }
@@ -208,7 +208,6 @@ $(document).ready(function(){
       sessionStorage.setItem('yyyymmddyear2', eyear );
   });
   $(".searchabledropdown").on("shown.bs.dropdown", function () {
-    $(".emptyselect").hide();
     let searchinput = $(this).data("input-id");
     document.getElementById(searchinput).focus();
   });

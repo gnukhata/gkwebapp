@@ -51,7 +51,6 @@
 		</button>
 		<ul class="dropdown-menu selectdropdown" aria-labelledby="org-name-label" id="org-name-ul">
 		  <li><input id="org-name-input" class="form-control selectinput" /></li>
-		  <li class="emptyselect"><a href="#" class="org-name-option selectdropdown emptyselect"></a></li>
 		  {% for orgs in gkresult %}
                     <li><a class="org-name-option selectdropdown" href="#" data-value="{{loop.index}}" data-orgname="{{orgs["orgname"]|safe}}" data-orgtype="{{orgs["orgtype"]|safe}}">{{orgs["orgname"]}}, {{orgs["orgtype"]}}</a></li>
                   {% endfor %}
@@ -68,7 +67,6 @@
 		</button>
 		<ul class="dropdown-menu selectdropdown" aria-labelledby="final-year-label" id="final-year-ul">
 		  <li><input id="final-year-input" class="form-control selectinput" /></li>
-		  <li class="emptyselect"><a href="#" class="final-year-option selectdropdown emptyselect"></a></li>
 		</ul>
 	      </div>
             </div>
