@@ -41,10 +41,10 @@
 	    <span aria-hidden="true">&times;</span>
 	  </button>
           {% if gkstatus=="in" %}
-            <h5 class="modal-title">Create Supplier</h5>
+            <h5 class="modal-title hidetitle">Create Supplier</h5>
 	    <input type="hidden" id="add_cussup" value="19" hidden>
           {%else%}
-            <h5 class="modal-title">Create Customer</h5>
+            <h5 class="modal-title hidetitle">Create Customer</h5>
 	    <input type="hidden" id="add_cussup" value="3" hidden>
           {%endif%}
 	</div>
@@ -355,7 +355,9 @@
 		  </div>
 		</div>
       <div class="panel-footer">
-        <button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+				<button class="btn btn-success btn-sm" id="cussup_save" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Save{% endtrans %}</button>
+
+				<button class="btn btn-success btn-sm" id="cussup_save_acc" data-toggle="tooltip" data-placement="top" title="{% trans %}Press Insert to save anywhere on the current screen to save{% endtrans %}" hidden><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}Next{% endtrans %}</button>
 
       </div>
    </div>

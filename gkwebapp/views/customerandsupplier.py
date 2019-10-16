@@ -64,6 +64,7 @@ def showaddcustomersupplierpopup(request):
     debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
     credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
     resultgstvat = requests.get("http://127.0.0.1:6543/products?tax=vatorgst",headers=header)
+    print (request.params["status"])
     return {"gkstatus" : request.params["status"], "customers": customers.json()["gkresult"], "suppliers": suppliers.json()["gkresult"], "debtgroupcode":debtgroupcode, "credgroupcode":credgroupcode, "states":states.json()["gkresult"], "vatorgstflag":resultgstvat.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=showedit",renderer="gkwebapp:templates/editcustomersupplier.jinja2")
@@ -100,6 +101,14 @@ def savecustomersupplier(request):
     return {"gkstatus": result.json()["gkstatus"]}
 
 
+# @view_config(route_name="customersuppliers",request_param="action=addacc",renderer="json")
+# def sendcustomersuppliertoacc(request):
+#     header={"gktoken":request.headers["gktoken"]}
+#     print request.params
+#     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"pincode":request.params["pincode"]}
+#     return {"gkstatus": 1,"custsupdata":dataset}
+
+    
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}

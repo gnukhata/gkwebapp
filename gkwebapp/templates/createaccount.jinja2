@@ -296,7 +296,8 @@ outline: none;
 							</div>
 							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
-							<br/>
+							<a id="addcust"><small> Add more fields.</small></a>
+							<br>
 							<label for="openbal" id="obal" hidden>{% trans %}<u>O</u>pening Balance{% endtrans %} : </label>
 							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o" hidden/>
 							<br/>
@@ -304,9 +305,10 @@ outline: none;
 							<button id="reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 							<label class="btn btn-primary btn-sm" for="my-file-selector">
 							<input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
-                    		<i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
+              <i class="fa fa-download" aria-hidden="true"></i> Imp<u>o</u>rt
                 			</label>
-	      					<i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
+							<i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
+								
 						</div>
 					</form>
 					<div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog" style="width:650px; margin-top: 150px; margin-left:300px">
@@ -474,6 +476,8 @@ outline: none;
 		</div>
 	</div>
 	<input type="hidden" value="{{vatorgstflag}}" id="vatorgstflag">
+	<input type="hidden" id="status" value="">
+
 	<div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:300px;"  aria-hidden="true">
 	  <div class="modal-dialog bgcolor " >
 	    <div class="modal-content ">
@@ -509,6 +513,7 @@ outline: none;
 	    </div>
 	  </div>
 	</div>
+	<div id="viewcustsup"></div>
 
 		<div id="multiaccount_modal" >
 		</div><!-- /.modal -->

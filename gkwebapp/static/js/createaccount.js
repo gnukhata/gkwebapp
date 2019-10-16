@@ -41,13 +41,15 @@ $(document).ready(function()
     $("#bnkdiv").hide();
     $("#chsdiv").hide();
     $("#purdiv").hide();
-    $("#salediv").hide();
+	$("#salediv").hide();
+	$("#addcust").hide();
   $("#groupname").focus().select();
     $("#accountform").validate();
     var taxstate = "";
     var taxtype = "";
     var taxrate = "";
-    var cessrate = "";
+	var cessrate = "";
+	var custsup;
   $("#groupname").bind("change keyup", function(){
       var gname = $("#groupname option:selected").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
@@ -96,7 +98,8 @@ $(document).ready(function()
   $("#nsgp").hide();
 
   $(".gsselect").bind("change keyup", function(){
-    var sgroups = $("#subgroupname option:selected").val();
+	$("#addcust").hide();
+	var sgroups = $("#subgroupname option:selected").val();
     if (sgroups=="New")
     {
       $("#nsgp").show();
@@ -152,7 +155,13 @@ $(document).ready(function()
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#rodivpaid").hide();
-		$("#rodivreceived").hide();
+	   $("#rodivreceived").hide();
+	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
+		$("#addcust").show();
+		custsup = '15';
+	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
+		$("#addcust").show();
+		custsup = '9';
 	  }
 	  else{
 	  $("#bnkdiv").hide();
@@ -162,6 +171,73 @@ $(document).ready(function()
       }
 
   });
+
+//   $("#addcust").click(function() {
+
+// 	if ($.trim($("#accountname").val())=="") {
+// 		$("#blank-alert").alert();
+// 		$("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+// 		$("#blank-alert").hide();
+//    });
+// 		$("#accname").focus().select();
+// 		  return false;
+// 		}
+		
+// 	  let custname=$("#accountname").val();
+// 	  console.log(custname);
+// 	  var statusinout;
+// 	  if (custsup == '9') {
+// 		$("#status").val('9');
+// 		statusinout = "in";
+// 	  }
+// 	  if (custsup == '15') {
+// 		$("#status").val('15');
+// 		statusinout = "out";
+// 	  }
+//     $.ajax({
+
+// 		type: "POST",
+// 		url: "/customersuppliers?action=showaddpopup",
+// 		global: false,
+// 		async: false,
+// 		data: { "status": statusinout },
+// 		datatype: "text/html",
+// 		beforeSend: function(xhr) {
+// 		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+// 		},
+// 		success: function(resp) {
+  
+// 		  $("#viewcustsup").html("");
+// 		  $('.modal-backdrop').remove();
+// 		  $('.modal').modal('hide');
+// 		  $("#viewcustsup").html(resp);
+// 			$('#custsupmodal').modal('show');
+// 		  $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
+// 					{					
+// 					// modalpresent = 1;
+// 			  if (custsup == '9') {
+// 				$("#add_cussup").val('19');
+// 			  } else {
+// 				$('#add_cussup').val('3');
+// 			  }
+// 			  $('#add_cussup_name').val(custname);
+// 			  $(".hidetitle").hide();
+// 			  $('#add_cussup_name').prop("disabled",true);
+// 			  $("#add_cussup_email").focus();  	
+// 			  $("#cussup_save_acc").show();
+// 			  $("#cussup_save").hide();		    
+// 			});
+// 		  $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
+// 					{
+
+// 	  console.log(custsup);
+// 	  // modalpresent = 0;
+// 					});
+// 			}
+// 		});
+			
+//   });
+
 
   $("#reset").click(function()
   {
