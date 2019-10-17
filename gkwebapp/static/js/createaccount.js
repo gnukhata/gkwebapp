@@ -30,6 +30,7 @@ Contributors:
 
 $(document).ready(function()
 {
+
   $("#msspinmodal").modal("hide");
     $('.modal-backdrop').remove();
     $("#gstaccount").prop("disabled", true);
@@ -171,73 +172,6 @@ $(document).ready(function()
       }
 
   });
-
-//   $("#addcust").click(function() {
-
-// 	if ($.trim($("#accountname").val())=="") {
-// 		$("#blank-alert").alert();
-// 		$("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
-// 		$("#blank-alert").hide();
-//    });
-// 		$("#accname").focus().select();
-// 		  return false;
-// 		}
-		
-// 	  let custname=$("#accountname").val();
-// 	  console.log(custname);
-// 	  var statusinout;
-// 	  if (custsup == '9') {
-// 		$("#status").val('9');
-// 		statusinout = "in";
-// 	  }
-// 	  if (custsup == '15') {
-// 		$("#status").val('15');
-// 		statusinout = "out";
-// 	  }
-//     $.ajax({
-
-// 		type: "POST",
-// 		url: "/customersuppliers?action=showaddpopup",
-// 		global: false,
-// 		async: false,
-// 		data: { "status": statusinout },
-// 		datatype: "text/html",
-// 		beforeSend: function(xhr) {
-// 		  xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-// 		},
-// 		success: function(resp) {
-  
-// 		  $("#viewcustsup").html("");
-// 		  $('.modal-backdrop').remove();
-// 		  $('.modal').modal('hide');
-// 		  $("#viewcustsup").html(resp);
-// 			$('#custsupmodal').modal('show');
-// 		  $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
-// 					{					
-// 					// modalpresent = 1;
-// 			  if (custsup == '9') {
-// 				$("#add_cussup").val('19');
-// 			  } else {
-// 				$('#add_cussup').val('3');
-// 			  }
-// 			  $('#add_cussup_name').val(custname);
-// 			  $(".hidetitle").hide();
-// 			  $('#add_cussup_name').prop("disabled",true);
-// 			  $("#add_cussup_email").focus();  	
-// 			  $("#cussup_save_acc").show();
-// 			  $("#cussup_save").hide();		    
-// 			});
-// 		  $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
-// 					{
-
-// 	  console.log(custsup);
-// 	  // modalpresent = 0;
-// 					});
-// 			}
-// 		});
-			
-//   });
-
 
   $("#reset").click(function()
   {
@@ -587,7 +521,265 @@ $("#openbal").keydown(function(event){
 		$("#maccounts").focus().select();
 	    }
     }
-    });
+	});
+	
+	var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	var email="";
+	var custsupdatatemp = {};
+  
+	$(document).off("click", '#cussup_save_acc').on("click", '#cussup_save_acc', function(event) {
+	  event.preventDefault();
+	  //Validation for PAN
+	  var allow = 1;
+	  var cuss_pan = $("#add_cussup_pan").val();
+	  var panno1= $(".panno").val();
+	  var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+	  if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+	  $("#pan-incorrect-alert").alert();
+	  $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+		  $("#pan-incorrect-alert").hide();
+	  });
+	  $("#add_cussup_pan").focus();
+	  return false;
+	  }
+  
+  
+	  if ($("#checkbnkpop").is(":checked")) {
+		  if($("#cust_accountno").val()=="" || $("#cust_bankname").val()=="" || $("#cust_branchname").val()=="" || $("#cust_ifsc").val()=="" ) {
+			  $("#allbank-blank-alert").alert();
+			  $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#allbank-blank-alert").hide();
+			  });
+			  $("#cust_accountno").focus();
+			  return false;
+		  }
+		  }
+	
+		  
+		  // Validation for proper email.
+		  email = $("#add_cussup_email").val();
+		  if ((!email.match(emailExp)) && email!="") {
+		  $("#improper-email-alert").alert();
+		  $("#improper-email-alert").fadeTo(2250, 500).slideUp(500, function(){
+			  $("#improper-email-alert").hide();
+			  });
+		  $("#add_cussup_email").focus().select();
+		  return false;
+		  }
+  
+	  if ($.trim($("#add_cussup_name").val())=="") {
+		  if($('#status').val()=='9' || $('#status').val()=="16"){
+			$("#supname-blank-alert").alert();
+			$("#supname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#supname-blank-alert").hide();
+				});
+			} else {
+			$("#custname-blank-alert").alert();
+			$("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+				$("#custname-blank-alert").hide();
+			});
+			}
+		  $("#add_cussup_name").focus();
+		  return false;
+		}
+		if ($.trim($("#add_state").val())=="") {
+		  $("#state-blank-alert").alert();
+		  $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+			$("#state-blank-alert").hide();
+		  });
+	
+		  $("#add_state").focus();
+		  return false;
+		}
+		if ($.trim($("#add_cussup_address").val())=="") {
+		  $("#address-blank-alert-popup").alert();
+		  $("#address-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+			$("#address-blank-alert-popup").hide();
+		  });
+		  $("#add_cussup_address").focus();
+		  return false;
+		}
+	
+		//validation for pincode number
+		var pincode_val=($("#add_cussup_pin").val());
+		var reg = /^[0-9]+$/;
+		if (pincode_val == "") {
+			$("#pin-blank-alert-popup").alert();
+			$("#pin-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+				$("#pin-blank-alert-popup").hide();
+			});
+			$("#add_cussup_pin").focus();
+			return false;
+			  }
+		  else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+			  $("#pinval-blank-alert-popup").alert();
+			  $("#pinval-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+				  $("#pinval-blank-alert-popup").hide();
+			  });
+			  $("#add_cussup_pin").focus();
+			  return false;
+			  }
+				// Validation for bank details
+	  if (!($("#cust_accountno").val() == "" && $("#cust_bankname").val() == "" && $("#cust_branchname").val() == "" && $("#cust_ifsc").val() == "")){
+		  if ($("#cust_accountno").val() == "" || $("#cust_bankname").val() == "" || $("#cust_branchname").val() == "" || $("#cust_ifsc").val() == ""){
+		   $("#allbank-blank-alert").alert();
+		   $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+		   $("#allbank-blank-alert").hide();
+		   });
+		   $("#cust_accountno").focus();
+			  return false;
+		 }
+	   }
+  
+	   var gobj = {}; // Creating a dictionary for storing statecode with gstin.
+	   $("#gstintable tbody tr").each(function(){
+	   var curindex1 = $(this).index();
+	   var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+	   var gstin1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	 if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+	 gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	 var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+	 if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+		 $("#improper-gstin-alert").alert();
+		 $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		 $("#improper-gstin-alert").hide();
+		 $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
+		 });
+		 allow = 0;
+		 return false;
+	 }
+	 else if(panno1 =="" && gstin1 !=""){
+		 $("#improper-gstin-alert").alert();
+		 $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		 $("#improper-gstin-alert").hide();
+		 });
+		 allow = 0;
+		 $(".panno").focus();
+		 return false;
+	 }
+	 else if(panno1 !="" && gstin1 ==""){
+		 $("#improper-gstin-alert").alert();
+		 $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		 $("#improper-gstin-alert").hide();
+		 });
+		 allow = 0;
+		 $(".gstin").focus();
+		 return false;
+	 }else if(panno1 !="" && lastleg.length != 3){
+		 $("#improper-gstin-alert").alert();
+		 $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+		 $("#improper-gstin-alert").hide();
+		 });
+		 allow = 0;
+		 $(".gstin").focus();
+		 return false;
+	 }
+  
+	 if(gstinstring.length == 15){
+			 gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+	 }
+	 }
+	   });
+	   var custtan  = "";
+	   if ($("#add_cussup_tan").length > 0) {
+	   custtan = $("#add_cussup_tan").val();
+	   }
+	  if ($("#status").val() == "9" || $('#status').val()=="16" || $('#vtype').val()=="payment"){
+		   var bankdetails = {}; //dictionary for bank details
+	   if ($.trim($("#cust_accountno").val()) != "" && $.trim($("#cust_bankname").val()) !="" && $.trim($("#cust_ifsc").val()) !="" && $.trim($("#cust_branchname").val()) !=""){
+		   bankdetails["accountno"] = $.trim($("#cust_accountno").val());
+		   bankdetails["bankname"] = $.trim($("#cust_bankname").val());
+		   bankdetails["ifsc"] = $.trim($("#cust_ifsc").val());
+		   bankdetails["branchname"] = $.trim($("#cust_branchname").val());
+	   }
+		 }
+		  if(allow == 1){
+		  custsupdatatemp["custname"] = $("#add_cussup_name").val();
+		  custsupdatatemp["custaddr"] = $.trim($("#add_cussup_address").val());
+		  custsupdatatemp["pincode"] = $("#add_cussup_pin").val();
+		  custsupdatatemp["custphone"] = $("#add_cussup_phone").val();
+		  custsupdatatemp["custemail"] = $("#add_cussup_email").val();
+		  custsupdatatemp["custfax"] = $("#add_cussup_fax").val();
+		  custsupdatatemp["custpan"] = $("#add_cussup_pan").val();
+		  custsupdatatemp["custtan"] = custtan;
+		  custsupdatatemp["gstin"] = gobj;
+		  custsupdatatemp["state"] = $("#add_state").val();
+		  custsupdatatemp["csflag"] = $("#add_cussup").val();
+		  custsupdatatemp["bankdetails"] = bankdetails;
+		  custsupdatatemp["state"] = $("#add_state").val();
+		  custsupdatatemp["state"] = $("#add_state").val();
+		  $('#custsupmodal').modal('hide');
+		  allow = 0 ;
+			  } 
+			  event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
+		  }
+	  );
+  
+  
+	$("#addcust").click(function() {
+	  if ($.trim($("#accountname").val())=="") {
+		  $("#blank-alert").alert();
+		  $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+		  $("#blank-alert").hide();
+	 });
+	 sessionStorage.removeItem('custsupdata');
+		  $("#accname").focus().select();
+			return false;
+		  }
+		  
+		let custname=$("#accountname").val();
+		var statusinout;
+		if (custsup == '9') {
+		  $("#status").val('9');
+		  statusinout = "in";
+		}
+		if (custsup == '15') {
+		  $("#status").val('15');
+		  statusinout = "out";
+		}
+	  $.ajax({
+  
+		  type: "POST",
+		  url: "/customersuppliers?action=showaddpopup",
+		  global: false,
+		  async: false,
+		  data: { "status": statusinout },
+		  datatype: "text/html",
+		  beforeSend: function(xhr) {
+			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+		  },
+		  success: function(resp) {
+	
+			$("#viewcustsup").html("");
+			$('.modal-backdrop').remove();
+			$('.modal').modal('hide');
+			$("#viewcustsup").html(resp);
+			  $('#custsupmodal').modal('show');
+			$('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
+					  {					
+					  // modalpresent = 1;
+				if (custsup == '9') {
+				  $("#add_cussup").val('19');
+				} else {
+				  $('#add_cussup').val('3');
+				}
+				$('#add_cussup_name').val(custname);
+				$(".hidetitle").hide();
+				$('#add_cussup_name').prop("disabled",true);
+				$("#add_cussup_email").focus();  	
+				$("#cussup_save_acc").show();
+				$("#cussup_save").hide();		    
+			  });
+			$('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
+					  {
+				  $("#obal").focus().select();
+					  });
+			  }
+		  });
+			  
+	});  
+
+
     $("#accountform").submit(function(e)
 {
 
@@ -655,7 +847,7 @@ $("#openbal").keydown(function(event){
 	}
 	else{
 	defaultflag = 0;
-    }
+	}
   $("#msspinmodal").modal("show");
   $.ajax(
     {
@@ -665,7 +857,7 @@ $("#openbal").keydown(function(event){
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val()},
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val(),"moredata":JSON.stringify(custsupdatatemp)},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -674,6 +866,7 @@ $("#openbal").keydown(function(event){
       {
         if(resp["gkstatus"]==0)
         {
+		sessionStorage.removeItem('custsupdata');
           $('.modal-backdrop').remove();
           $("#success-alert").alert();
             $("#success-alert").fadeTo(2250, 500).slideUp(500, function(){
