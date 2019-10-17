@@ -293,8 +293,7 @@ def addaccount(request):
     result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(newgkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         gkdata = {"activity":request.params["accountname"] + " account created"}
-        newgkdata["gkdata"]=gkdata
-        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(newgkdata),headers=header)
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 
