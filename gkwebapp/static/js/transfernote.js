@@ -92,4 +92,18 @@ $(document).ready(function() {
     }
   );
   });
+
+    $.ajax({
+      url: '/showuser?action=getuser',
+      type: 'POST',
+      dataType: 'json',
+      async : false,
+      beforeSend: function(xhr) {
+    xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+  })
+  .done(function(resp){
+      $("#name_issuer").val(resp.unamerole["username"]);
+    $("#designation").val(resp.unamerole["userroleName"]);
+  });
 });
