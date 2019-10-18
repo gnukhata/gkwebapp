@@ -139,6 +139,8 @@ window.onafterprint = afterPrint;
         $("#printinvoice3").html("");
         $("#printinvoice1").html("");
           $("#printinvoice4").html("");
+          $("#printinvoice5").html("");
+
       }
       }
     );
@@ -163,6 +165,7 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
           $("#printinvoice4").html("");
+          $("#printinvoice5").html("");
       }
       }
     );
@@ -186,6 +189,7 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice3").html("");
           $("#printinvoice4").html("");
+          $("#printinvoice5").html("");
       }
       }
     );
@@ -210,10 +214,37 @@ window.onafterprint = afterPrint;
         $("#printinvoice2").html("");
         $("#printinvoice1").html("");
           $("#printinvoice3").html("");
+          $("#printinvoice5").html("");
       }
       }
     );
     });
+
+    $("a[href='#printinvoice5']").click(function() {
+      
+      $.ajax(
+      {
+      type: "POST",
+      url: "/invoice?action=print",
+   
+      datatype: "html",
+      data: {"invid":$("#invid").val(),"pflag":'5'}, 
+      beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+      success: function(resp)
+      {
+        $("#printinvoice5").html(resp);
+        $("#printinvoice4").html("");
+        $("#printinvoice2").html("");
+        $("#printinvoice1").html("");
+          $("#printinvoice3").html("");
+      }
+      }
+    );
+    });
+    
     $("a[href='#printinvoice1']").click();
 
 });

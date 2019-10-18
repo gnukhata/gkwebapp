@@ -407,6 +407,8 @@ def Invoiceprint(request):
         return render_to_response("gkwebapp:templates/printinvoice1.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
     elif(request.params["pflag"] == '4'):
         return render_to_response("gkwebapp:templates/printinvoice4.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
+    elif(request.params["pflag"] == '5'):
+        return render_to_response("gkwebapp:templates/printinvoice5.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
     else:
         return render_to_response("gkwebapp:templates/printinvoice.jinja2",{"gkstatus":org.json()["gkstatus"],"org":org.json()["gkdata"],"gkresult":invoicedata.json()["gkresult"],"invid":(int(request.params["invid"]))},request=request)
 
