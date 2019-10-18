@@ -77,23 +77,16 @@
     <body>
       <input type="hidden" id="invid" value="{{ invid }}">
       <div class="container-fluid">
-  
-        <!-- <div class="hidden-print row text-center text-primary"style="font-size:100%">
-      <b style="font-size:10px">{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
-        </div> -->
-      <div class="row text-center">
-        <h5><u id="print_heading"> TAX INVOICE - ORIGINAL FOR RECIPIENT</u></h5>
-        
-      </div>
-    
+    <br>
       <div class="row">
-      <div class="col-xs-9 nopaddng" style="width:100%;">
+      <div class="col-xs-9 nopaddng">
+	<div id="logo_div">
             <div class="img-thumbnail img-circle " style="float:left">
               <div style="position: relative; padding: 0; cursor: pointer;" type="file">
             <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox3">
               </div>
             </div>
-      
+      </div>
   
         <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
               <h3 style="margin-top:10px !important;">{{org["orgname"]}}</h3>
@@ -139,30 +132,29 @@
           {% endif %}
         </div>
       </div>
-      </div>
-      <br><br>
-    <div class="row">
-    <div class="col-md-7">
+    <div class="col-md-3" style="padding-top:30px">
     <table class=" table table-condensed table-bordered">
-        <thead>
+            <tbody>
             <tr>
-                 <th>{% trans %}Invoice No.{% endtrans %}</th>
-                 <th>{% trans %}Invoice Date{% endtrans %}</th>
-                {% if gkresult["inoutflag"] == 9 %}
-                    <th> {% trans %}Supplier{% endtrans %}</th>
-                    <th>{% trans %}Supplier Address{% endtrans %} </th>
-                  {% else %}
-                    <th> {% trans %}Customer{% endtrans %} </th>
-                    <th>{% trans %}Contact No.{% endtrans %}</th>
-                  {% endif %}
-            
+                 <td><b>{% trans %}Invoice No.{% endtrans %}</b></td>
+                 <td>{{ gkresult["invoiceno"] }}</td>
             </tr>
-        </thead>
-        <tbody>
-                <td>{{ gkresult["invoiceno"] }}</td>
+            <tr>
+                 <td><b>{% trans %}Invoice Date{% endtrans %}</b></td>
                 <td>{{ gkresult["invoicedate"] }}</td>
+            </tr>
+            <tr>
+                {% if gkresult["inoutflag"] == 9 %}
+                <td> <b>{% trans %}Supplier{% endtrans %}</b></td>
+                {% else %}
+                <td> <b>{% trans %}Customer{% endtrans %}</b> </td>
+                {% endif %}
                 <td>{{ gkresult["custSupDetails"]["custname"] }}</td>
+            </tr>
+            <tr>
+                <td><b>{% trans %}Contact No.{% endtrans %}</b></td>
                 <td>{{ gkresult["custSupDetails"]["custphone"] }}</td>
+            </tr>
 
         </tbody>
 </table>
@@ -348,14 +340,14 @@
           <div class="col-sm-6 nopadding">
             {% if gkresult["paymentmode"] | int ==3 %}
                 {% if gkresult["inoutflag"] | int == 15 %}
-                    <b style="font-size:200%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>
+                    <b style="font-size:180%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>
                 {% endif %}
             {% endif %}
             {% if gkresult["paymentmode"] | int ==15 %}
-                <b style="font-size:200%">{% trans %}ON CREDIT{% endtrans %}</b>
+                <b style="font-size:180%">{% trans %}ON CREDIT{% endtrans %}</b>
             {% endif %}
             {% if gkresult["paymentmode"] | int ==2 %}
-                <b style="font-size:200%">{% trans %}BANK TRANSACTION{% endtrans %}</b>
+                <b style="font-size:180%">{% trans %}BANK TRANSACTION{% endtrans %}</b>
             {% endif %}
             <br>
             <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
@@ -366,7 +358,7 @@
 
         <div class="col-sm-6 pull-right">
             {% if gkresult["roundoff"] == 1 %}
-              <div class="row form-group form-inline pull-right">
+              <div class="row form-group form-inline">
                 <div class="col-sm-6 text-right">
               <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
                 </div>
@@ -403,32 +395,14 @@
       <br>
       <br>	
       <div class="row">
-        <table style="width:100%">
-              <tr>
-            <td class="text-left">
-              <div class="col-xs-6"  style="padding-left:0px !important;">
-                <label for="notes" class="hidden-print">Notes :</label>
-                    <textarea name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
-                    <p class="visible-print" id = "notespara">
+            <div class="col-xs-6"  style="padding-left:0px !important;">
+                    <label for="notes" style="font-size: 10px !important;"class="hidden-print">Notes :</label>
+                        <textarea style="width:50% !important" name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+                        <p class="visible-print" id = "notespara">
                     </p>
-              </div>
-            </td>
-  
-            <td >
-            </td>
-          </tr>
-              <tr>
-              <td class="text-left">
-       <div class="col-xs-6">
-          <strong><i style="font-weight:normal !important">Thank you for your business!</i></strong>
-        </div>
-              </td>
-  
-              <td >
-              </td>
-              </tr>
-          </table>
+            </div>
       </div>
+      <div class="text-center"><strong><i style="font-weight:normal !important;font-size:160% !important;">Thank you & visit again</i></strong></div><br>
     </body>
   </html>
   
