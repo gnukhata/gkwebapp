@@ -79,16 +79,16 @@
       <div class="container-fluid">
     <br>
       <div class="row">
-      <div class="col-xs-9 nopaddng">
+      <div class="col-md-9" style="margin-left:-10px">
 	<div id="logo_div">
             <div class="img-thumbnail img-circle " style="float:left">
-              <div style="position: relative; padding: 0; cursor: pointer;" type="file">
+              <div style="position: relative; cursor: pointer;" type="file">
             <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox3">
               </div>
             </div>
       </div>
   
-        <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%">
+        <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left">
               <h3 style="margin-top:10px !important;">{{org["orgname"]}}</h3>
           <span style="font-weight:bold !important ; font-size:small;">
             {% if gkresult["address"]!=""%}
@@ -163,7 +163,7 @@
         <br>
         {% if gkresult["taxflag"] == 22 %}
               
-      <div class="row">
+      <div class="row" style="margin-left:5px;">
         <label for="tax applicable" name="taxflag"><b style="font-size:130%">{% trans %}Tax Applicable{% endtrans %} :</b></label>
        <b style="font-size:130%"> VAT </b>
       </div>
