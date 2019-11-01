@@ -1027,6 +1027,17 @@ $(document).ready(function() {
                 $('#product_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
             }
             $('#product_tax_table tbody tr:last td:eq(0) select').focus().select();
+            var gstselected = 0;
+            var rowcount = $("#product_tax_table tbody tr").length;
+            for (i = 0; i < rowcount; i++) {
+                if ($("#product_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'IGST' || $("#product_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'CESS') {
+                    gstselected = 1;
+                    break;
+                }
+            }
+            if (gstselected == 0) {
+            $("#gscodes").text("");
+            }
         });
         $('#product_tax_table tbody tr:last td:eq(0) select').select();
     });
