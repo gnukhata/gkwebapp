@@ -151,15 +151,18 @@ $(document).ready(function(){
 		  for (let i in ListofYears ) {
 		    $('#final-year-ul').append('<li><a class="final-year-option selectdropdown" data-value="' + ListofYears[i].orgcode + '" href="#">' + ListofYears[i].yearstart+' to '+ListofYears[i].yearend + '</a></li>');
 		  }
-		  $('.final-year-option:eq(0)').click();
+
 		  var numofyears =  $(".final-year-option").length;
 		  if(numofyears==1)
-		      {
-			  $("#callLogin").click();
+		  {
+		      setTimeout( function() {
+			  $('.final-year-option:eq(0)').click();
+			  $("#callLogin").click(); }, 500 );
 		      }
 		      else if(numofyears > 1) //set focus to organisation name if there are more than one organisations
 	              {
 			  $("#finalyears").focus().select();
+			  $('.final-year-option:eq(0)').click();
 		      }
               }
 	  });
@@ -176,7 +179,7 @@ $(document).ready(function(){
      $(document).off('click' ,'.final-year-option').on('click' ,'.final-year-option',function(event) {
 	$("#finalyears").data("value", $(this).data("value"));
 	$("#finalyears").text($(this).text());
-	financialyears = $(this).text();
+	 financialyears = $(this).text();
     });
   //Click event that loads the login page.
   $("#callLogin").click(function(event){
@@ -192,7 +195,6 @@ $(document).ready(function(){
       }
       //Orgcode is sent to fetch the login page.
       var orgcode = $("#finalyears").data("value");
-      $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
       //Details of selected organisation is stored in session storage.
       var oname = orgobj.orgname;
       var otype = orgobj.orgtype;
@@ -206,6 +208,7 @@ $(document).ready(function(){
       sessionStorage.setItem('year2', yyddmmeyear);
       sessionStorage.setItem('yyyymmddyear1', syear );
       sessionStorage.setItem('yyyymmddyear2', eyear );
+      $("#selectorg").load("/login?orgcode="+ orgcode+"&flag=0", setTimeout( function() { $("#login_username").focus(); }, 500 ));
   });
   $(".searchabledropdown").on("shown.bs.dropdown", function () {
     let searchinput = $(this).data("input-id");
