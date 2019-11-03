@@ -37,12 +37,18 @@
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewledger_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewledger_accname"" style="color:red;font-size: 120%;">*</label>
-          <select class = "form-control input-sm" id="viewledger_accname"  name = "viewledger_accname" >
-            <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
-            {% for accs in gkresult %}
-            <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
-            {% endfor %}
-          </select>
+          <div class="dropdown searchabledropdown" data-input-id="viewledger-input" data-button-id="viewledger">
+	    <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewledger_accname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	      {% trans %}Select Account{% endtrans %}
+	      <span class="caret"></span>
+	    </button>
+	    <ul class="dropdown-menu selectdropdown" aria-labelledby="viewledger-label" id="viewledger-ul">
+	      <li><input id="viewledger-input" class="form-control selectinput" /></li>
+	      {% for accs in gkresult %}
+                <li><a class="viewledger-option selectdropdown" href="#" data-value="{{accs['accountcode']}}">{{accs["accountname"]}}</a></li>
+              {% endfor %}
+	    </ul>
+	  </div>
           <br>
           <label> <input type="checkbox" id="viewledger_monthly">{% trans %}Monthly Ledger{% endtrans %}</label>
           <br>

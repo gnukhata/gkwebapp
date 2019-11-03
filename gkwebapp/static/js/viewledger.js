@@ -30,7 +30,6 @@ This script is for the view page of Ledger report.
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#msspinmodal").modal("hide");
-  $("#viewledger_accname").searchify();
   $("#viewledger_accname").focus();
   $('.viewledger_date').autotab('number');
 $("#viewledger_monthly").attr('checked', true);
@@ -224,10 +223,55 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
     }
   });
 
+  $(".viewledger-option").click(function(){
+    //Creating an object to store organisation name and type
+    $("#viewledger_accname").data("value", $(this).data("value"));
+    $("#viewledger_accname").text($(this).text());
+    $("#viewledger_accname").focus();
+  });
+  
+  $(document).off('keyup' ,'#viewledger-input').on('keyup' ,'#viewledger-input',function(event) {
+    let searchtext = $("#viewledger-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".viewledger-option").each(function(index){
+	if (index != -1) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
+	    $(this).show();
+	  }
+	  else {
+	    $(this).parent().hide();
+	    $(this).hide();
+	  }
+	}
+      });
+    }
+    else{
+      $(".viewledger-option").each(function(index){
+	$(this).parent().show();
+	$(this).show();
+      });
+    }
+  });
 
-    $("#viewledger_accname").keydown(function(event) {
-	if (event.which==13 || event.which==9) {
-	if ($("#viewledger_accname").val()==null) {
+  $(document).off('keydown' ,'#viewledger-input').on('keydown' ,'#viewledger-input',function(event) {
+    if (event.which == 13 || event.which == 40){
+      event.preventDefault();
+      $("#viewledger-input").parent().parent().find("a:visible").first().focus();
+    }
+    if(event.which == 38){
+      setTimeout( function() {
+	$("#finalyears").click();
+	$("#finalyears").focus();
+      }, 25 );
+    }
+  });
+
+  $("#viewledger_accname").keydown(function(event) {
+    if (event.which==13 || event.which==9) {
+      event.preventDefault();
+      if ($("#viewledger_accname").data("value")==null) {
 	    $("#account-blank-alert").alert();
 	    $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		$("#account-blank-alert").hide();
@@ -235,7 +279,6 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
 	    $('#viewledger_accname').focus();
 	    return false;
 	}
-	    event.preventDefault();
             $("#viewledger_monthly").focus().select();
         }
     });
@@ -245,7 +288,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
 
   $("#viewledger_submit").click(function(event) {
     // --------------------starting validations------------------
-    if ($("#viewledger_accname").val()==null) {
+    if ($("#viewledger_accname").data("value")==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
@@ -329,7 +372,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":0,"accountcode":$("#viewledger_accname").val(),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":prj,"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
+        data: {"backflag":0,"accountcode":$("#viewledger_accname").data("value"),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":prj,"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -345,4 +388,8 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
   $("#viewledger_reset").click(function(event) {
     $("#showviewledger").click();
   });
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
   });
+});
