@@ -1122,6 +1122,17 @@ $(document).ready(function() {
       $('#product_edit_tax_table tbody tr:last td:eq(0) select').focus().select();
     });
     $('#product_edit_tax_table tbody tr:last td:eq(0) select').select();
+    var gstselected = 0;
+    var rowcount = $("#product_tax_table tbody tr").length;
+    for (i = 0; i < rowcount; i++) {
+        if ($("#product_edit_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'IGST' || $("#product_edit_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'CESS') {
+            gstselected = 1;
+            break;
+        }
+    }
+    if (gstselected == 0) {
+    $("#gscodes").text("");
+    }
   });
   /* -----------------------Tax key events end----------------------------------------- */
   /* -----------------------Godown Key events start here----------------------------------------- */
