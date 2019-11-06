@@ -229,6 +229,14 @@ option {
 	 min-height: 15px !important;
 	 padding-top: 7px !important;
 }
+.selectdropdown {
+	 width:100%;
+	 text-align:left !important;
+     }
+     .selectinput {
+	 margin:4px !important;
+	 width: 98% !important;
+     }
 @media (min-width: 767px) {
     nav, .navbar-collapse, .navbar-fixed-top, .navbar-header, nav > li, .navbar-brand {
 	min-height:35px !important;

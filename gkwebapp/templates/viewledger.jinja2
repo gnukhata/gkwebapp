@@ -53,6 +53,8 @@
           <label> <input type="checkbox" id="viewledger_monthly">{% trans %}Monthly Ledger{% endtrans %}</label>
           <br>
 
+	  <div class="row">
+	    <div class="col-sm-6">
           <label for="viewledger_fromdate">{% trans %}From Date{% endtrans %} :</label>
           <div class="form-inline" >
 
@@ -64,7 +66,8 @@
             </div>
 
           </div>
-          <br>
+	    </div>
+	  <div class="col-sm-6">
           <label for="viewledger_todate">{% trans %}To Date{% endtrans %} :</label>
           <div class="form-inline" >
 
@@ -75,6 +78,8 @@
               <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
             </div>
           </div>
+	  </div>
+	  </div>
           <br>
           <label> <input type="checkbox" class="dis" id="viewledger_nar" >{% trans %}Narration{% endtrans %}</label>
           <br>
