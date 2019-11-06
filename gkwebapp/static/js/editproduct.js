@@ -501,7 +501,20 @@ $(document).ready(function() {
 	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
 	    $('.addbtn').prop('disabled',true);
       $('.goaddbtn').prop('disabled',true);
-      $(".tax_name").change();
+      var gstselected = 0;
+      var rowcount = $("#product_edit_tax_table tbody tr").length;
+      for (i = 0; i < rowcount; i++) {
+          if ($("#product_edit_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'IGST' || $("#product_edit_tax_table tbody tr:eq(" + i + ") td:eq(0) select").val() == 'CESS') {
+              gstselected = 1;
+              break;
+          }
+      }
+      if (gstselected == 1) {
+      $("#gscodes").text("*");
+      }
+      else{
+      $("#gscodes").text("");
+      }
       }
           existingnonetax = resp["gkresult"];
       })
