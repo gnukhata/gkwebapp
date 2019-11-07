@@ -280,7 +280,12 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
 	    return false;
 	}
             $("#viewledger_monthly").focus().select();
-        }
+    }
+    else {
+      if (!$("#viewledger_accname").hasClass("open")){
+	$("#viewledger_accname").click();
+      }
+    }
     });
       
 

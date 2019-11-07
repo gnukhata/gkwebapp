@@ -135,7 +135,7 @@ a:focus,
 		}
 	  }
 	  
-input[type="radio"]:focus {outline: 2px #1f0e5e solid !important;}
+input[type="radio"]:focus, button.selectdropdown:focus {outline: 2px #1f0e5e solid !important;}
 input[type="checkbox"]:focus {outline: 2px #1f0e5e solid !important;}
 
 .flowdiv{
