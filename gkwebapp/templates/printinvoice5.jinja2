@@ -350,9 +350,9 @@
                 <b style="font-size:180%">{% trans %}BANK TRANSACTION{% endtrans %}</b>
             {% endif %}
             <br>
-            <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
+            <label for="totalinvoicevalue" style="font-size:150% !important ;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
             <br>
-                 <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}Served By{% endtrans %} : {{ gkresult["issuername"] }}</label>
+                 <label for="totalinvoicevalue" style="font-size:150% !important;font-weight:bold!important;">{% trans %}Served By{% endtrans %} : {{ gkresult["issuername"] }}</label>
                 
           </div>
 
@@ -388,8 +388,8 @@
     </div>
       <div class="text-center">
               {% if gkresult["invoicetotalword"]!= None %}
-            <label for="totalValueInWord" style="font-size:200% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-            <i><label id="totalValueInWord"  style="font-size:200% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+            <label for="totalValueInWord" style="font-size:180% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+            <i><label id="totalValueInWord"  style="font-size:180% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
       {% endif %}
       </div>
       <br>
