@@ -30,26 +30,39 @@ $(document).ready(function(){
     $("#ticker").hide();
     var orgobj = {};
     $("#org-name").keydown(function(event){
-	$("#org-name").click();
-	if (event.which == 13) {
+	if (event.which == 13 || event.which ==9) {
 	    event.preventDefault();
 	    setTimeout( function() { $("#finalyears").focus(); }, 25 );
 	}
+      else {
+	if(!$("#org-name").parent().hasClass("open")){
+	  $("#org-name").click();
+	}
+      }
     });
     $("#finalyears").keydown( function(e) {
-	$("#finalyears").click();
 
     if (e.which == 13)
     {
       e.preventDefault();
       $("#callLogin").click();
     }
-      else if(e.which == 38){
+    if (e.which == 9)
+    {
+      e.preventDefault();
+      $("#callLogin").focus();
+    }  
+      if(e.which == 38){
 	  e.preventDefault();
 	  setTimeout( function() {
-	      $("#finalyears").click();
+	      if($("#finalyears").parent().hasClass("open")){
+		$("#finalyears").click();
+	      }
 	      $("#org-name").focus();
 	  }, 25 );
+      }
+      if(!$("#finalyears").parent().hasClass("open") && e.which != 13 && e.which !=9 && e.which != 38){
+	$("#finalyears").click();
       }
   });
 
