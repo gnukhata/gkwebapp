@@ -1242,7 +1242,7 @@ def ProductImport(request):
                                 if g["goname"]==productrow[10].value:
                                     godownflag=True
                                     flag=1
-                                    godowns[g["goid"]]=productrow[10].value
+                                    godowns[g["goid"]]=productrow[11].value
                                     break 
                         if flag==0:
                             errorlist.append(productrow[10].coordinate)       
