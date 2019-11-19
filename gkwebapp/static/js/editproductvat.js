@@ -161,6 +161,30 @@ $(document).ready(function() {
 	// Event for 'Enter' key.
 	if (event.which == 13) {
 	    event.preventDefault();
+	    $("#amountdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
+  
+  $(document).off('keydown', '#amountdiscount').on('keydown', '#amountdiscount', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#percentdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#saleprice").focus();
+	}
+    });
+  
+    $(document).off('keydown', '#percentdiscount').on('keydown', '#percentdiscount', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
 	    if ($("#numberofspecs").val() > 0) {
 		$("#spec_table tbody tr:first td:eq(1) input:first").focus();
 	    }
