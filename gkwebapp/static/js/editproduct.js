@@ -129,7 +129,44 @@ $(document).ready(function() {
 	    
 	}
     });
-    $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+
+  $(document).off('keydown', '#maxprice').on('keydown', '#maxprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#saleprice").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#edituom").focus();
+	}
+  });
+  
+  $(document).off('keydown', '#saleprice').on('keydown', '#saleprice', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#amountdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#maxprice").focus();
+	}
+    });
+  
+  $(document).off('keydown', '#amountdiscount').on('keydown', '#amountdiscount', function(event) {
+	// Event for 'Enter' key.
+	if (event.which == 13) {
+	    event.preventDefault();
+	    $("#percentdiscount").focus();
+	}
+	else if (event.which==38) {
+	    event.preventDefault();
+	    $("#saleprice").focus();
+	}
+    });
+  
+    $(document).off('keydown', '#percentdiscount').on('keydown', '#percentdiscount', function(event) {
 	// Event for 'Enter' key.
 	if (event.which == 13) {
 	    event.preventDefault();
@@ -163,7 +200,7 @@ $(document).ready(function() {
 	}
 	else if (event.which==38) {
 	    event.preventDefault();
-	    $("#maxprice").focus();
+	    $("#amountdiscount").focus();
 	}
     });
   //    $("#gscode").change(function(event){
