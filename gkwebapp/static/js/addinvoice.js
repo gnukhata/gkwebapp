@@ -685,24 +685,35 @@ $(document).ready(function() {
 
   $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
       let discflag = $(this).data("discflag");
-      $(".discflagfield").toggleClass("active");
+      let disckey;
+      if (!$(this).hasClass("active")){
+	  $(".discflagfield").toggleClass("active");
+      }
       $("#discountpercent").val(discflag);
       if(discflag == 16){
+	  disckey = 'discountpercent';
 	  $(".discaddon").show();
 	  $(".discaddon").siblings().width("80%");
 	  $(".discheader").text("Discount %");
       }
       else {
+	  disckey = 'discountamount';
 	  $(".discaddon").hide();
 	  $(".discaddon").siblings().width("100%");
 	  $(".discheader").text("Discount Amount");
       }
       let curindex = 0;
       if ($(".taxapplicable").val() == 7) {
+	  for (let i = 0; i < $("#invoice_product_table_gst tbody tr").length; i++) {
+	      $("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) input").val($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(5) span").data(disckey));
+	  }
             curindex = $("#invoice_product_table_gst tbody tr:last").index();
             calculategstaxamt(curindex);
         }
-        else {
+      else {
+	  for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
+	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) span").data(disckey));
+	  }
             curindex = $("#invoice_product_table_vat tbody tr:last").index();
             calculatevataxamt(curindex);
         }
