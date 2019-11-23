@@ -511,16 +511,19 @@ $(document).ready(function() {
 
     $(document).off("click", '.discflagfield').on("click", '.discflagfield', function(event) {
       let discflag = $(this).data("discflag");
+      let disckey;
       if (!$(this).hasClass("active")){
 	  $(".discflagfield").toggleClass("active");
       }
       $("#discountpercent").val(discflag);
-      if(discflag == 16){
+	if(discflag == 16){
+	    disckey = 'discountpercent';
 	  $(".discaddon").show();
 	  $(".discaddon").siblings().width("80%");
 	  $(".discheader").text("Discount %");
       }
-      else {
+	else {
+	    disckey = 'discountamount';
 	  $(".discaddon").hide();
 	  $(".discaddon").siblings().width("100%");
 	  $(".discheader").text("Discount Amount");
