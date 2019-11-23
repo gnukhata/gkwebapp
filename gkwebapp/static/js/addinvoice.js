@@ -712,7 +712,7 @@ $(document).ready(function() {
         }
       else {
 	  for (let i = 0; i < $("#invoice_product_table_vat tbody tr").length; i++) {
-	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val($("#invoice_product_table_gst tbody tr:eq(" + i + ") td:eq(4) span").data(disckey));
+	      $("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) input").val($("#invoice_product_table_vat tbody tr:eq(" + i + ") td:eq(4) span").data(disckey));
 	  }
             curindex = $("#invoice_product_table_vat tbody tr:last").index();
             calculatevataxamt(curindex);
