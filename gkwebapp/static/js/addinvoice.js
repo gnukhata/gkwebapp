@@ -1,6 +1,6 @@
 /*
   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  Copyright (C) 2017, 2018 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+  Copyright (C) 2017, 2018,2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
@@ -1612,6 +1612,14 @@ $(document).ready(function() {
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodsp", resp["prodsp"]);
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodmrp", resp["prodmrp"]);
 		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodlp", resp["prodlp"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountamount", resp["discountamount"]);
+		    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountpercent", resp["discountpercent"]);
+		    if ($("#discountpercent").val() == 16){
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountpercent"]);
+		    }
+		    else {
+			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountamount"]);
+		    }
 		}
 		
 	    })
@@ -2531,6 +2539,14 @@ $(document).ready(function() {
 		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) input').prop("disabled", true).val("0.00");
 		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(2) span').text("");
 		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(3) span').text("");
+	     }
+	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountamount", resp["discountamount"]);
+	     $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountpercent", resp["discountpercent"]);
+	     if ($("#discountpercent").val() == 16){
+		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountpercent"]);
+	     }
+	     else {
+		 $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountamount"]);
 	     }
 	 }
 
