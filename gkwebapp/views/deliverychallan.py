@@ -122,9 +122,9 @@ def delchalgetproduct(request):
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
     data = result.json()["gkresult"]
     if data.has_key("unitname"):
-        return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"]}
+        return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
     else:
-        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"]}
+        return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
 
 
 @view_config(route_name="deliverychallan",request_param="action=getpurchaseorder",renderer="json")
