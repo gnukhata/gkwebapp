@@ -4322,8 +4322,10 @@ if (event.which == 13) {
               return false;
             }
             let vatgst = 'vat';
+	    let discindex = 4;
             if ($(".taxapplicable").val() == 7) {
                 vatgst = 'gst';
+		discindex = 5;
             }
             let curindex = $('#invoice_product_table_' + vatgst + ' tbody tr:last').index();
             $("#msspinmodal").modal("show");
@@ -4342,8 +4344,16 @@ if (event.which == 13) {
 		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').append('<option value=' + productcode + ' gsflag="' + resp["gsflag"] +'">' + resp["productdesc"] + '<option>'); //Append a product
                     $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').searchify();
                     $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').val(productcode).change();
+		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') span').data("discountamount", resp["discountamount"]);
+		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') span').data("discountpercent", resp["discountpercent"]);
+		    if ($("#discountpercent").val() == 16){
+			$('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') input').val(resp["discountpercent"]);
+		    }
+		    else {
+			$('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex + ') input').val(resp["discountamount"]);
+		    }
                     $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
-                    $('.product_name_gst:visible, .product_name_vat:visible').last().focus();
+                    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').focus();
 		}
 		
 	    }).fail(function() {
