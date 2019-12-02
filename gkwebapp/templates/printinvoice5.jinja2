@@ -337,50 +337,50 @@
         {% endif %}
   
         <div class="row">
-          <div class="col-sm-6 nopadding">
+          <div class="col-sm-9 pull-left nopadding">
             {% if gkresult["paymentmode"] | int ==3 %}
                 {% if gkresult["inoutflag"] | int == 15 %}
-                    <b style="font-size:180%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>
+                    <b style="font-size:12px">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>
                 {% endif %}
             {% endif %}
             {% if gkresult["paymentmode"] | int ==15 %}
-                <b style="font-size:180%">{% trans %}ON CREDIT{% endtrans %}</b>
+                <b style="font-size:12px">{% trans %}ON CREDIT{% endtrans %}</b>
             {% endif %}
             {% if gkresult["paymentmode"] | int ==2 %}
-                <b style="font-size:180%">{% trans %}BANK TRANSACTION{% endtrans %}</b>
+                <b style="font-size:12px">{% trans %}BANK TRANSACTION{% endtrans %}</b>
             {% endif %}
             <br>
-            <label for="totalinvoicevalue" style="font-size:150% !important ;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
+            <label for="totalinvoicevalue" style="font-size:12px !important ;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
             <br>
-                 <label for="totalinvoicevalue" style="font-size:150% !important;font-weight:bold!important;">{% trans %}Served By{% endtrans %} : {{ gkresult["issuername"] }}</label>
+                 <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Served By{% endtrans %} : {{ gkresult["issuername"] }}</label>
                 
           </div>
 
-        <div class="col-sm-6 pull-right">
+        <div class="col-sm-3 pull-right" style="padding-right: 0px;">
             {% if gkresult["roundoff"] == 1 %}
               <div class="row form-group form-inline">
-                <div class="col-sm-6 text-right">
-              <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+                <div class="col-sm-8 text-right">
+              <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
                 </div>
-                <div class="col-sm-6 text-left">
-              <label id="totalinvoicevalue" style="font-size:200% !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
+                <div class="col-sm-4 text-left">
+              <label id="totalinvoicevalue" style="font-size:12px !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
                 </div>
               </div>
               <div class="row form-group form-inline">
-                <div class="col-sm-6 text-right">
-                  <label for="totalinvoicevalueroundoff"  style="font-size:200% !important;font-weight:bold!important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
+                <div class="col-sm-8 text-right">
+                  <label for="totalinvoicevalueroundoff"  style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
                     </div>
-                    <div class="col-sm-6 text-left">
-                  <label style="font-size:200% !important; font-weight:normal !important">{{ gkresult["roundoffvalue"] }}</label>
+                    <div class="col-sm-4 text-left">
+                  <label style="font-size:12px !important; font-weight:normal !important">{{ gkresult["roundoffvalue"] }}</label>
                     </div>
               </div>
                {% else %}
               <div class="row form-group form-inline">
-                <div class="col-sm-6 text-right">
-              <label for="totalinvoicevalue" style="font-size:200% !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
+                <div class="col-sm-8 text-right">
+              <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
                 </div>
-                <div class="col-sm-6 text-left">
-              <label id="totalinvoicevalue" style="font-size:200% !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
+                <div class="col-sm-4 text-left">
+              <label id="totalinvoicevalue" style="font-size:12px !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
                 </div>
               </div>
                {% endif %}
@@ -388,12 +388,11 @@
     </div>
       <div class="text-center">
               {% if gkresult["invoicetotalword"]!= None %}
-            <label for="totalValueInWord" style="font-size:180% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-            <i><label id="totalValueInWord"  style="font-size:180% !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+            <label for="totalValueInWord" style="font-size:12px !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+            <i><label id="totalValueInWord"  style="font-size:12px !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
       {% endif %}
       </div>
-      <br>
-      <br>	
+     	
       <div class="row">
             <div class="col-xs-6"  style="padding-left:0px !important;">
                     <label for="notes" style="font-size: 10px !important;"class="hidden-print">Notes :</label>
@@ -402,7 +401,7 @@
                     </p>
             </div>
       </div>
-      <div class="text-center"><strong><i style="font-weight:normal !important;font-size:160% !important;">Thank you & visit again</i></strong></div><br>
+      <div class="text-center"><strong><i style="font-weight:normal !important;font-size:12px !important;">Thank you! Visit again</i></strong></div><br>
     </body>
   </html>
   
