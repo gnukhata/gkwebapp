@@ -1427,7 +1427,7 @@ $(document).ready(function() {
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(3) span').data("prodlp", resp["prodlp"]);
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountamount", resp["discountamount"]);
 	   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountpercent", resp["discountpercent"]);
-	   if(!editflag){
+	   if(!editflag && $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val() == 0){
 	       if ($("#discountpercent").val() == 16){
 		   $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountpercent"]);
 	       }
@@ -2255,7 +2255,7 @@ $(document).ready(function() {
 	   }
 	   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountamount", resp["discountamount"]);
 	   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountpercent", resp["discountpercent"]);
-	   if(!editflag){
+	   if(!editflag && $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val() == 0){
 	       if ($("#discountpercent").val() == 16){
 		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountpercent"]);
 	       }
@@ -4441,11 +4441,13 @@ $("#chkpaymentmode").change(function(event) {
                     $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').val(productcode).change();
 		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') span').data("discountamount", resp["discountamount"]);
 		    $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') span').data("discountpercent", resp["discountpercent"]);
-		    if ($("#discountpercent").val() == 16){
+		    if($('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') input').val() == 0){
+			if ($("#discountpercent").val() == 16){
 			$('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex  + ') input').val(resp["discountpercent"]);
 		    }
 		    else {
 			$('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(' + discindex + ') input').val(resp["discountamount"]);
+		    }
 		    }
                     $('html,body').animate({scrollTop: ($("#consigneeaddress").offset().top)},'fast');
                     $('#invoice_product_table_' + vatgst + ' tbody tr:eq(' + curindex + ') td:eq(0) select').focus();

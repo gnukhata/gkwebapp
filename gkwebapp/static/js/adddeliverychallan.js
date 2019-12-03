@@ -1483,11 +1483,13 @@ $("#invoice_date").keydown(function(event) {
 	   }
 	   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountamount", resp["discountamount"]);
 	   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) span').data("discountpercent", resp["discountpercent"]);
-	   if ($("#discountpercent").val() == 16){
-	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountpercent"]);
-	   }
-	   else {
-	       $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountamount"]);
+	   if($('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val() == 0){
+	       if ($("#discountpercent").val() == 16){
+		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountpercent"]);
+	       }
+	       else {
+		   $('#invoice_product_table_gst tbody tr:eq(' + curindex + ') td:eq(5) input').val(resp["discountamount"]);
+	       }
 	   }
        }
 
@@ -1577,11 +1579,13 @@ $("#invoice_date").keydown(function(event) {
 			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(2) span').text(resp["unitname"]);
 			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountamount", resp["discountamount"]);
 			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) span').data("discountpercent", resp["discountpercent"]);
-			if ($("#discountpercent").val() == 16){
-			$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountpercent"]);
-			}
-			else {
-			    $('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountamount"]);
+			if($('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val() == 0){
+			    if ($("#discountpercent").val() == 16){
+				$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountpercent"]);
+			    }
+			    else {
+				$('#invoice_product_table_vat tbody tr:eq(' + curindex + ') td:eq(4) input').val(resp["discountamount"]);
+			    }
 			}
 		    }
 		    
