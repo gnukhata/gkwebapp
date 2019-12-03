@@ -2439,8 +2439,8 @@ $(document).off("keyup").on("keyup", function(event) {
               }
           $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
           $("#invoicestate").change();
-          $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change();
-	  $(".product_name_gst, .product_name_vat").searchify();
+          $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");;
+	  $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
 	  setTimeout( function() { $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
       }
 	else{$("#chkcash").click().focus();}
