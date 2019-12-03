@@ -57,18 +57,16 @@
 	<h5><u>CASH MEMO</u></h5>
       </div>
       {% endif %}
-      <div class="row col-sm-12">
-      <div class="col-xs-3" id="logo_div">
-
-        <div class="img-thumbnail img-circle ">
-          <div style="position: relative; padding: 0; cursor: pointer;" type="file">
-	    <img class="img-circle"  style="width: 100px; height: 100px;" id="imgbox">
-          </div>
-        </div>
-      </div>
-      <div class="row col-xs-9 nopaddng">
-
-        <h3>{{org["orgname"]}}</h3>
+      <div class="row">
+      <div class="col-xs-9 nopaddng" style="padding-left:0px !important;">
+			<div class="img-thumbnail img-circle " style="float:left">
+					<div style="position: relative; padding: 0; cursor: pointer;" type="file">
+				  <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox">
+					</div>
+				  </div>
+		<div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%;padding-bottom:1%">
+		<h3>{{org["orgname"]}}</h3>
+		<span style="font-weight:bold !important ; font-size:small;">
         {% if org["orgaddr"]!='' %}
           {{org["orgaddr"]}},
         {% endif %}
@@ -80,57 +78,55 @@
         {% endif %}
         {% if org["orgstate"]!='' %}
            {{org["orgstate"]}}.
-        {% endif %}
-	<br>
-        {% if org["orgtelno"]!='' %}
-          Contact No.: {{org["orgtelno"]}},
-        {% endif %}
-        {% if org["orgemail"]!='' %}
-          Email : {{org["orgemail"]}},
-        {% endif %}
-        {% if org["orgfax"] %}
-          Fax : {{org["orgfax"]}},
-        {% endif %}
-        {% if org["orgwebsite"]!='' %}
-          Website : {{org["orgwebsite"]}}
-        {% endif %}
-	{# {% if gkresult["taxflag"] == 7 %} #}
-	  <div class="form-group form-inline col-sm-12 nopadding">
-	    <label for="orgstategstin">{% trans %}GSTIN{% endtrans %} : </label>
-	    {% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}
-	  </div>
-	{# {% endif %} #}
+		{% endif %}
+		</span>
+		{% if org["orgtelno"]!='' %}
+		<br>
+		<span style="font-weight:bold !important ; font-size:small;">  Contact No.:</span><span style=" font-weight:normal; "> {{org["orgtelno"]}}</span>
+	  {% endif %}
+  {% if org["orgfax"] %}
+		<span style="font-weight:bold !important ; font-size:small;">  Fax : </span><span style=" font-weight:normal;"> {{org["orgfax"]}}</span>
+	  {% endif %}
+	  {% if org["orgemail"]!='' %}
+	<br/>
+		<span style="font-weight:bold !important ; font-size:small;">  Email : </span><span style=" font-weight:normal;">{{org["orgemail"]}}</span>
+	  {% endif %}
+	  {% if org["orgwebsite"]!='' %}
+	<br/>
+		<span style="font-weight:bold !important; font-size:small;">  Website : </span><span style=" font-weight:normal;">{{org["orgwebsite"]}}</span> 
+	  {% endif %}
+  {% if gkresult["taxflag"] == 7 %}
+		<br/>
+		<span style="font-weight:bold !important; font-size:small;">{% trans %}GSTIN{% endtrans %} : </span><span style=" font-weight:normal;">{% if gkresult["orgstategstin"] %}{{ gkresult["orgstategstin"] }}{% endif %}</span>
+  {% endif %}
+</div>
       </div>
-
+	  <div class="col-xs-3 nopadding" style="padding-top: 30px !important;">
+			<table class=" table table-condensed table-bordered">
+					<tbody>
+					<tr>
+						 <td><b>{% trans %}Cash Memo No.{% endtrans %}</b></td>
+						 <td> {{ gkresult["invoiceno"] }}</td>
+					</tr>
+					<tr>
+						 <td><b>{% trans %}Date{% endtrans %}</b></td>
+						<td>{{ gkresult["invoicedate"] }}</td>
+					</tr>
+					<tr>
+						<td><b>{% trans %}Tax Applicable{% endtrans %}</b></td>
+						{% if gkresult["taxflag"] == 22 %}
+						<td>VAT</td>						
+					  {% else %}
+					  <td>GST</td>
+					  {% endif %}
+					</tr>
+		
+				</tbody>
+		</table>
+		</div>
     </div>
-    <br>
-    <div class="row col-sm-12">
-      <div class="form-group form-inline col-sm-3 nopadding">
-  <label class="normal"for="bankname">{% trans %}Cash Memo No{% endtrans %} : </label>
-  {{ gkresult["invoiceno"] }}
-      </div>
-      <div class="form-group form-inline col-sm-3 nopadding">
-  <label for="instrument_date" class="normal">{% trans %}Date{% endtrans %} : </label>
-  {{ gkresult["invoicedate"] }}
-      </div>
-      <div class="form-group form-inline col-sm-3 nopadding">
-  <label>{% trans %}State{% endtrans %} : </label>
-
-    {{ gkresult["sourcestate"] }}
-      </div>
-      <div class="col-sm-3 text-right">
-  	<label for="tax applicable" name="taxflag">{% trans %}Tax Applicable{% endtrans %} :</label>
-    {% if gkresult["taxflag"] == 22 %}
-  	VAT
-    {% else %}
-    GST
-    {% endif %}
-        </div>
-      </div>
-
 {% if gkresult["taxflag"] == 22 %}
       <div class=" row col-md-12">
-	<br>
 	<table class=" table table-condensed table-bordered">
 	  <thead class="bg-primary">
 	    <tr>
@@ -207,7 +203,7 @@
       </div>
  {% else %}
    <br>
-      <div class="col-sm-12 row">
+      <div class="row">
 	<table class="table table-condensed table-bordered">
 	  <thead class="bg-primary">
 	    <tr>
@@ -286,7 +282,7 @@
 	</table>
       </div>
 {% endif %}
-<div class="col-sm-12 row">
+<div class="row">
   <div class ="col-sm-4 pull-right" >
     <div class="row">
       <div class="form-inline">
@@ -413,25 +409,26 @@
     <strong>{% if gkresult["inoutflag"] | int == 15 %}{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}{% endif %}</strong>
   {% endif %}
   {% if gkresult["invoicetotalword"]!= None %}
-    <div class ="col-sm-12 ">
-      <div class="col-sm-6">
-      </div>
-      <div class="col-sm-6">
+    <div class ="col-sm-12 text-center">
+      <!-- <div class="col-sm-6">
+      </div> -->
+      <!-- <div class="col-sm-6"> -->
 	<br>
 	<label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total In Words {% endtrans %} :</label></label>
 	<i><label id="totalValueInWord"  style="font-size:100% !important;">{{gkresult["invoicetotalword"]}}</label></i>
 	<br >
-      </div>
+      <!-- </div> -->
     </div>
   {% endif %}
 
 </div>
     <br>
-    <div class="row">
-      <div class="col-xs-6">
+    <div class="row text-center">
+      <div class="col-xs-12">
 	<strong><i>Thank you!</i></strong>
       </div>
   </div>
+  <br>
   <div class="row">
     <span style="margin:auto; display:table;">
       <button type="button" class="btn btn-sm btn-danger hidden-print" id="invback" accesskey="k">{% trans %}Bac<u>k</u>{% endtrans %}</button>
