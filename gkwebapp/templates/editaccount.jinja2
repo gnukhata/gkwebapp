@@ -145,6 +145,8 @@ th {
 							</div>
 							<label for="accountname" id="accname">{% trans %}New Name of <u>A</u>ccount{% endtrans %} :</label>
 							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
+							<a id="addcust"><small> Add more fields.</small></a>
+							<div>{{custsupdata}}</div>
 							</br>
 							<label for="openingbal" id="openbal">{% trans %}<u>O</u>pening Balance{% endtrans %} :</label>
 							<input type="text" id="openingbal" class="form-control input-sm" name="openingbal" style="text-align:right" accesskey="o"></input>
@@ -188,6 +190,7 @@ You can set an account default for a purpose by clicking the corresponding check
     </div>
   </div>
 </div>
+<div id="viewcustsup"></div>
 
 
 					<div id="m_confirmdel" class="modal fade" tabindex="-1" role="dialog">

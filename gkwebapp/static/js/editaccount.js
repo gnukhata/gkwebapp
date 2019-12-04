@@ -38,11 +38,13 @@ $(document).ready(function()
   $("#editaccountform").validate();
   $("#editaccountform").hide();
   $("#alertmsg").hide();  
+  $("#addcust").hide();
   $("#bnkac").prop("disabled",false);
   $("#chsac").prop("disabled",false);  
   $('#openingbal').numeric();   //numeric is a library used for restricting the user to input only numbers and decimal inside a text box
   $("#submit").hide();
   $("#delete").hide();
+  var custsup;
   var deflag;  
   $("#editaccountname").bind("change keyup", function()
   {	  
@@ -185,7 +187,14 @@ $(document).ready(function()
 		$("#saleac").prop("checked", false);
 		$("#saleac").prop("disabled", true);
 	    }
-	}else{
+    }else if($("#subgroupname").text() == 'Sundry Debtors'){
+		$("#addcust").show();
+		custsup = '15';
+	  }else if($("#subgroupname").text() == 'Sundry Creditors for Purchase'){
+		$("#addcust").show();
+		custsup = '9';
+	  }
+    else{
 	    $("#bnkdiv").hide();
 	    $("#chsdiv").hide();
 	    $("#salediv").hide();
@@ -194,7 +203,9 @@ $(document).ready(function()
         $("#alertchs").hide();
         $('#roundoffsale').hide();
 	    $("#alertpur").hide();
-	    $("#alertsale").hide();
+        $("#alertsale").hide();
+		$("#addcust").hide();
+        
 	}
 	$("#accountname").val(accdetails["accountname"]);
         $("#accountname").prop("disabled", true);
@@ -440,7 +451,13 @@ $(document).ready(function()
       $("#bnkdiv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else{
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
+		$("#addcust").show();
+		custsup = '15';
+	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
+		$("#addcust").show();
+		custsup = '9';
+	  }else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
@@ -643,6 +660,78 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 }
 );
+
+
+
+
+
+$("#addcust").click(function() {
+    console.log(custsup,"xdffffffffff");
+    if ($.trim($("#accountname").val())=="") {
+        $("#blank-alert").alert();
+        $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
+        $("#blank-alert").hide();
+   });
+   sessionStorage.removeItem('custsupdata');
+        $("#accname").focus().select();
+          return false;
+        }
+        
+      let custname=$("#accountname").val();
+      var statusinout;
+      if (custsup == '9') {
+        $("#status").val('9');
+        statusinout = "in";
+      }
+      if (custsup == '15') {
+        $("#status").val('15');
+        statusinout = "out";
+      }
+    $.ajax({
+
+        type: "POST",
+        url: "/customersuppliers?action=showaddpopup",
+        global: false,
+        async: false,
+        data: { "status": statusinout },
+        datatype: "text/html",
+        beforeSend: function(xhr) {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+        success: function(resp) {
+  
+          $("#viewcustsup").html("");
+          $('.modal-backdrop').remove();
+          $('.modal').modal('hide');
+          $("#viewcustsup").html(resp);
+            $('#custsupmodal').modal('show');
+          $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
+                    {					
+                    // modalpresent = 1;
+              if (custsup == '9') {
+                $("#add_cussup").val('19');
+              } else {
+                $('#add_cussup').val('3');
+              }
+              $('#add_cussup_name').val(custname);
+              $(".hidetitle").hide();
+              $('#add_cussup_name').prop("disabled",true);
+              $("#add_cussup_email").focus();  	
+              $("#cussup_save_acc").show();
+              $("#cussup_save").hide();		    
+            });
+          $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
+                    {
+                $("#obal").focus().select();
+                    });
+            }
+        });
+            
+  });  
+
+
+
+
 
 
 
