@@ -57,8 +57,17 @@
    .mdwrap{
        width:8%
    }
-
-
+   #ledgertableouterdiv{
+       overflow-x:auto;
+       overflow:y:auto;
+   }
+   #ledgertable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+   }
   </style>
 </head>
 <body>
@@ -80,14 +89,22 @@
     <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
     <input type="hidden" id="modalindex" value=""></input>
     <div class="row">
-      <div class="col-xs-10 nopadding">
+      <div class="col-md-9 nopadding">
 	{% if ledgerheader["projectname"]!="" %}
-	  <span  class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
+	  <div class="col-md-4">
+	    <span  class="text-left" style="margin:auto; display:table;padding-right:5px"><i id="prjnamelbl">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader["projectname"]}}</strong></span>
+	  </div>
+	  <div class="col-md-4">
+	{% else  %}
+	    <div class="col-md-8">
 	{% endif %}
-	<span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
-	<center><span style="margin-left:40%; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span></center>
+	<span style="margin:auto; display:table;padding-right:5px"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{ledgerheader["accountname"]}}</strong></span>
+	    </div>
+	    <div class="col-md-4">
+	      <span class="text-right" style="margin:auto; display:table; padding-right:5px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
+	    </div>
       </div>
-      <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+      <div class="col-md-3 input-group input-group-sm" style="margin-bottom:2px;">
 	<span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
 	</span>
 	<input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
@@ -95,7 +112,7 @@
     </span>
   </div>
   </div>
-    <div class="row">
+    <div class="row" id="ledgertableouterdiv">
       <table id="ledgertable" class="table shadow table-bordered">
 	<thead class="bg-primary">
           <tr>
