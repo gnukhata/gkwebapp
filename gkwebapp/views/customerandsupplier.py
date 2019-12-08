@@ -102,6 +102,7 @@ def savecustomersupplier(request):
 @view_config(route_name="customersuppliers",request_param="action=edit",renderer="json")
 def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
+    newdataset = {}
     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"]),"pincode":request.params["pincode"]}
     if request.params.has_key("bankdetails"):
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
@@ -112,8 +113,8 @@ def editcustomersupplier(request):
         accs = requests.get("http://127.0.0.1:6543/accounts", headers=header)
         for acc in accs.json()["gkresult"]:
             if acc["accountname"] == request.params["oldcustname"]:
-                updateacc = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
-                resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(updateacc),headers=header)
+                newdataset["gkdata"] = {"accountname":request.params["custname"],"openingbal":acc["openingbal"],"accountcode":acc["accountcode"]}
+                resulteditacc = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(newdataset),headers=header)
                 break
     return {"gkstatus": result.json()["gkstatus"],"custsup":request.params["custsup"]}
 
@@ -152,6 +153,12 @@ def getallsups(request):
     header={"gktoken":request.headers["gktoken"]}
     suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall",headers=header)
     return {"customers":suppliers.json()["gkresult"]}
+
+@view_config(route_name="customersuppliers",request_param="action=getforacc",renderer="json")
+def getcustsupforacc(request):
+    header={"gktoken":request.headers["gktoken"]}
+    result = requests.get("http://127.0.0.1:6543/customersupplier?acc=single&custname=%s"%(request.params["custname"]),headers=header)
+    return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name='import',request_param='action=cussupimport',renderer='json')
 def cussupimport(request):

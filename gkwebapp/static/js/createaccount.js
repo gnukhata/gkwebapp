@@ -159,9 +159,11 @@ $(document).ready(function()
 	   $("#rodivreceived").hide();
 	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
 		$("#addcust").show();
+		$("#addcust").removeClass("disabled");
 		custsup = '15';
 	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
 		$("#addcust").show();
+		$("#addcust").removeClass("disabled");
 		custsup = '9';
 	  }
 	  else{
@@ -684,7 +686,7 @@ $("#openbal").keydown(function(event){
 	   if ($("#add_cussup_tan").length > 0) {
 	   custtan = $("#add_cussup_tan").val();
 	   }
-	  if ($("#status").val() == "9" || $('#status').val()=="16" || $('#vtype').val()=="payment"){
+	  if ($("#status").val() == "9" || $('#status').val()=="16"){
 		   var bankdetails = {}; //dictionary for bank details
 	   if ($.trim($("#cust_accountno").val()) != "" && $.trim($("#cust_bankname").val()) !="" && $.trim($("#cust_ifsc").val()) !="" && $.trim($("#cust_branchname").val()) !=""){
 		   bankdetails["accountno"] = $.trim($("#cust_accountno").val());
@@ -938,7 +940,8 @@ $("#openbal").keydown(function(event){
   $('#maccounts').change(function() {
   if($('#maccounts').attr('checked', true)){
       $(".defbx").attr('checked',false);
-      $("#gstaccount").attr('checked',false);
+	  $("#gstaccount").attr('checked',false);
+	  $("#addcust").addClass("disabled");
   }
   if ($.trim($("#groupname option:selected").val())=="") {
     $("#grpblank-alert").alert();

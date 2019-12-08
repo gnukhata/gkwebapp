@@ -46,8 +46,15 @@ $(document).ready(function()
   $("#delete").hide();
   var custsup;
   var deflag;  
+  var oldcustname;
+  var custsupflag = 0;
   $("#editaccountname").bind("change keyup", function()
   {	  
+    custsupflag = 0;
+    custsupdatatemp = {};
+    $("#addcust").hide();
+    $("#addcust").addClass('disabled');
+    oldcustname = $("#editaccountname option:selected").text();
     $("#submit").hide();
     $("#alertmsg").hide();
     var acccode = $("#editaccountname option:selected").val();
@@ -189,10 +196,12 @@ $(document).ready(function()
 	    }
     }else if($("#subgroupname").text() == 'Sundry Debtors'){
 		$("#addcust").show();
-		custsup = '15';
+    custsup = '15';
+    custsupflag = 1;
 	  }else if($("#subgroupname").text() == 'Sundry Creditors for Purchase'){
 		$("#addcust").show();
-		custsup = '9';
+    custsup = '9';
+    custsupflag = 1;
 	  }
     else{
 	    $("#bnkdiv").hide();
@@ -269,6 +278,7 @@ $(document).ready(function()
     $("#submit").show();
     $("#alertmsg").hide();
     $("#edit").hide();
+    $("#addcust").removeClass('disabled');
     var acccode = $("#editaccountname option:selected").val();
       var accname= $("#editaccountname option:selected").text();
       var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
@@ -453,10 +463,12 @@ $(document).ready(function()
        $("#roundoffdivreceived").hide();
       }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
 		$("#addcust").show();
-		custsup = '15';
+    custsup = '15';
+    custsupflag = 1;
 	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
 		$("#addcust").show();
-		custsup = '9';
+    custsup = '9';
+    custsupflag = 1;
 	  }else{
 	  $("#bnkdiv").hide();
 	  $("#chsdiv").hide();
@@ -663,10 +675,203 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
 
 
 
+var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+var email="";
+var custsupdatatemp = {};
+
+$(document).off("click", '#cussup_save_acc').on("click", '#cussup_save_acc', function(event) {
+  event.preventDefault();
+  //Validation for PAN
+  var allow = 1;
+  var cuss_pan = $("#add_cussup_pan").val();
+  var panno1= $(".panno").val();
+  var regExp1 = /[a-zA-z]{5}\d{4}[a-zA-Z]{1}/;
+  if ((cuss_pan.length != 10 || !cuss_pan.match(regExp1)) && cuss_pan !="") {
+  $("#pan-incorrect-alert").alert();
+  $("#pan-incorrect-alert").fadeTo(2250, 500).slideUp(500, function(){
+    $("#pan-incorrect-alert").hide();
+  });
+  $("#add_cussup_pan").focus();
+  return false;
+  }
+
+
+  if ($("#checkbnkpop").is(":checked")) {
+    if($("#cust_accountno").val()=="" || $("#cust_bankname").val()=="" || $("#cust_branchname").val()=="" || $("#cust_ifsc").val()=="" ) {
+      $("#allbank-blank-alert").alert();
+      $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#allbank-blank-alert").hide();
+      });
+      $("#cust_accountno").focus();
+      return false;
+    }
+    }
+
+    
+    // Validation for proper email.
+    email = $("#add_cussup_email").val();
+    if ((!email.match(emailExp)) && email!="") {
+    $("#improper-email-alert").alert();
+    $("#improper-email-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#improper-email-alert").hide();
+      });
+    $("#add_cussup_email").focus().select();
+    return false;
+    }
+
+  if ($.trim($("#add_cussup_name").val())=="") {
+    if($('#status').val()=='9' || $('#status').val()=="16"){
+    $("#supname-blank-alert").alert();
+    $("#supname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#supname-blank-alert").hide();
+      });
+    } else {
+    $("#custname-blank-alert").alert();
+    $("#custname-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+      $("#custname-blank-alert").hide();
+    });
+    }
+    $("#add_cussup_name").focus();
+    return false;
+  }
+  if ($.trim($("#add_state").val())=="") {
+    $("#state-blank-alert").alert();
+    $("#state-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+    $("#state-blank-alert").hide();
+    });
+
+    $("#add_state").focus();
+    return false;
+  }
+  if ($.trim($("#add_cussup_address").val())=="") {
+    $("#address-blank-alert-popup").alert();
+    $("#address-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+    $("#address-blank-alert-popup").hide();
+    });
+    $("#add_cussup_address").focus();
+    return false;
+  }
+
+  //validation for pincode number
+  var pincode_val=($("#add_cussup_pin").val());
+  var reg = /^[0-9]+$/;
+  if (pincode_val == "") {
+    $("#pin-blank-alert-popup").alert();
+    $("#pin-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+      $("#pin-blank-alert-popup").hide();
+    });
+    $("#add_cussup_pin").focus();
+    return false;
+      }
+    else if (!reg.test(pincode_val) || pincode_val.length != 6) {
+      $("#pinval-blank-alert-popup").alert();
+      $("#pinval-blank-alert-popup").fadeTo(2250, 500).slideUp(500, function(){
+        $("#pinval-blank-alert-popup").hide();
+      });
+      $("#add_cussup_pin").focus();
+      return false;
+      }
+      // Validation for bank details
+  if (!($("#cust_accountno").val() == "" && $("#cust_bankname").val() == "" && $("#cust_branchname").val() == "" && $("#cust_ifsc").val() == "")){
+    if ($("#cust_accountno").val() == "" || $("#cust_bankname").val() == "" || $("#cust_branchname").val() == "" || $("#cust_ifsc").val() == ""){
+     $("#allbank-blank-alert").alert();
+     $("#allbank-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
+     $("#allbank-blank-alert").hide();
+     });
+     $("#cust_accountno").focus();
+      return false;
+   }
+   }
+
+   var gobj = {}; // Creating a dictionary for storing statecode with gstin.
+   $("#gstintable tbody tr").each(function(){
+   var curindex1 = $(this).index();
+   var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
+   var gstin1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+ if ($.trim($('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid"))!="") {
+ gstinstring = gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+ var lastleg = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
+ if((panno1.length != 10 || !panno1.match(regExp1)) && panno1 !="" ) {
+   $("#improper-gstin-alert").alert();
+   $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+   $("#improper-gstin-alert").hide();
+   $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').focus();
+   });
+   allow = 0;
+   return false;
+ }
+ else if(panno1 =="" && gstin1 !=""){
+   $("#improper-gstin-alert").alert();
+   $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+   $("#improper-gstin-alert").hide();
+   });
+   allow = 0;
+   $(".panno").focus();
+   return false;
+ }
+ else if(panno1 !="" && gstin1 ==""){
+   $("#improper-gstin-alert").alert();
+   $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+   $("#improper-gstin-alert").hide();
+   });
+   allow = 0;
+   $(".gstin").focus();
+   return false;
+ }else if(panno1 !="" && lastleg.length != 3){
+   $("#improper-gstin-alert").alert();
+   $("#improper-gstin-alert").fadeTo(2250, 500).slideUp(500, function(){
+   $("#improper-gstin-alert").hide();
+   });
+   allow = 0;
+   $(".gstin").focus();
+   return false;
+ }
+
+ if(gstinstring.length == 15){
+     gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+ }
+ }
+   });
+   if (panno1 != ''){
+    custsupdatatemp["gstin"] = gobj;
+}
+   var custtan  = "";
+   if ($("#add_cussup_tan").length > 0) {
+   custtan = $("#add_cussup_tan").val();
+   }
+  if ($("#status").val() == "9" || $('#status').val()=="16"){
+     var bankdetails = {}; //dictionary for bank details
+   if ($.trim($("#cust_accountno").val()) != "" && $.trim($("#cust_bankname").val()) !="" && $.trim($("#cust_ifsc").val()) !="" && $.trim($("#cust_branchname").val()) !=""){
+     bankdetails["accountno"] = $.trim($("#cust_accountno").val());
+     bankdetails["bankname"] = $.trim($("#cust_bankname").val());
+     bankdetails["ifsc"] = $.trim($("#cust_ifsc").val());
+     bankdetails["branchname"] = $.trim($("#cust_branchname").val());
+     custsupdatatemp["bankdetails"] = bankdetails;
+   }
+   }
+    if(allow == 1){
+    custsupdatatemp["custname"] = $("#add_cussup_name").val();
+    custsupdatatemp["custaddr"] = $.trim($("#add_cussup_address").val());
+    custsupdatatemp["pincode"] = $("#add_cussup_pin").val();
+    custsupdatatemp["custphone"] = $("#add_cussup_phone").val();
+    custsupdatatemp["custemail"] = $("#add_cussup_email").val();
+    custsupdatatemp["custfax"] = $("#add_cussup_fax").val();
+    custsupdatatemp["custpan"] = $("#add_cussup_pan").val();
+    custsupdatatemp["custtan"] = custtan;
+    custsupdatatemp["state"] = $("#add_state").val();
+    custsupdatatemp["csflag"] = $("#add_cussup").val();
+    custsupdatatemp["state"] = $("#add_state").val();
+    custsupdatatemp["state"] = $("#add_state").val();
+    custsupdatatemp["oldcustname"] = oldcustname;
+    $('#custsupmodal').modal('hide');
+    allow = 0 ;
+      }
+      event.stopPropagation(); // stoopping the event for unnecessarily repeating itself
+    }
+  );
 
 
 $("#addcust").click(function() {
-    console.log(custsup,"xdffffffffff");
     if ($.trim($("#accountname").val())=="") {
         $("#blank-alert").alert();
         $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
@@ -710,8 +915,14 @@ $("#addcust").click(function() {
                     // modalpresent = 1;
               if (custsup == '9') {
                 $("#add_cussup").val('19');
+                // $('#checkbnkpop').val(1);
+                // $("#bankdetails").show();
+                // $("#textareahelplbl").hide();
               } else {
                 $('#add_cussup').val('3');
+                // $('#checkbnkpop').val(0);
+                // $("#bankdetails").hide();
+                // $("#textareahelplbl").show();
               }
               $('#add_cussup_name').val(custname);
               $(".hidetitle").hide();
@@ -720,10 +931,67 @@ $("#addcust").click(function() {
               $("#cussup_save_acc").show();
               $("#cussup_save").hide();		    
             });
-          $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
-                    {
-                $("#obal").focus().select();
-                    });
+            if(!(jQuery.isEmptyObject(custsupdatatemp))){
+              custresp=custsupdatatemp;
+            }else{
+            $.ajax({
+
+              type: "POST",
+              url: "/customersuppliers?action=getforacc",
+              global: false,
+              async: false,
+              data: { "custname": oldcustname },
+              datatype: "text/html",
+              beforeSend: function(xhr) {
+              xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+              },
+                success: function(resp) {
+                custresp=resp.gkresult;
+              }
+            });
+          }
+            if(!(jQuery.isEmptyObject(custresp)))  {
+              var rowhtml = $('#gstintable tbody tr:first').html();
+              $("#add_cussup_email").val(custresp["custemail"]);
+              $("#add_cussup_phone").val(custresp["custphone"]);
+              $("#add_state").val(custresp["state"]);
+              $("#add_cussup_address").val(custresp["custaddr"]);
+              $("#add_cussup_pin").val(custresp["pincode"]);
+              $("#add_cussup_fax").val(custresp["custfax"]);
+              $("#add_cussup_pan").val(custresp["custpan"]);
+              if(jQuery.isEmptyObject(custresp["gstin"])){
+                $('#gstintable tbody').empty();
+                $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
+                $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+                $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val("");
+                $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val("");
+                $('#gstintable tbody tr:last td:eq(1) input:eq(2)').val("");
+              }else{
+                $('#gstintable tbody').empty(); 
+                  for(var gstin in custresp["gstin"]){
+                var gstinstr = custresp["gstin"][gstin];
+                $('#gstintable tbody').append('<tr>' + rowhtml + '</tr>');	
+                $('#gstintable tbody tr:last td:eq(0) select option[stateid='+gstin+']').prop("selected", true);
+                $('#gstintable tbody tr:last td:eq(1) input:eq(0)').val(gstinstr.substring(0, 2));
+                $('#gstintable tbody tr:last td:eq(1) input:eq(1)').val(gstinstr.substring(2, 12));
+                $('#gstintable tbody tr:last td:eq(1) input:eq(2)').val(gstinstr.substring(12, 15));
+                  }
+                  if (custresp["bankdetails"]["accountno"]) {
+                    $("#bnkdetails").show();
+                    $('#checkbnkpop').hide();
+                    $("#cust_accountno").val(custresp["bankdetails"]["accountno"]);
+                    $("#cust_bankname").val(custresp["bankdetails"]["bankname"]);
+                    $("#cust_branchname").val(custresp["bankdetails"]["branchname"]);
+                    $("#cust_ifsc").val(custresp["bankdetails"]["ifsc"]);
+                      }
+              }
+
+            }
+
+            $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
+            {
+        $("#obal").focus().select();
+            });
             }
         });
             
@@ -804,7 +1072,6 @@ $("#editaccountform").submit(function(e)
     var subgrpname = $("#subgroupname option:selected").text();
     var subgrpcode = $("#subgroupname option:selected").val();
     var newgrpname = $("#newsubgroup").val();
-    
   $("#msspinmodal").modal("show");
   
   $.ajax(
@@ -814,7 +1081,7 @@ $("#editaccountform").submit(function(e)
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname, "defaultflag":defaultflag},
+	data: {"accountname":accountname, "accountcode":accountcode, "openingbal":openingbal, "groupname":groupname, "groupcode":groupcode, "subgrpname":subgrpname, "subgrpcode":subgrpcode, "newgrpname":newgrpname, "defaultflag":defaultflag,"moredata":JSON.stringify(custsupdatatemp),"oldcustname":oldcustname,"custsupflag":custsupflag},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

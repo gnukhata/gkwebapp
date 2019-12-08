@@ -289,7 +289,7 @@ def addaccount(request):
         gkdata["groupcode"] = grpcode
     else:
         gkdata["groupcode"] = request.params["subgroupname"]
-        newgkdata["gkdata"]=gkdata
+    newgkdata["gkdata"]=gkdata
     result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(newgkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         gkdata = {"activity":request.params["accountname"] + " account created"}
@@ -374,8 +374,12 @@ def addGSTaccounts(request):
 @view_config(route_name="editaccount", renderer="json")
 def editaccount(request):
     header={"gktoken":request.headers["gktoken"]}
+    newgkdata={}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openingbal"],"accountcode":request.params["accountcode"]}
-
+    newgkdata["oldcustname"] = request.params["oldcustname"]
+    newgkdata["custsupflag"] = int(request.params["custsupflag"])
+    if "custname" in request.params["moredata"]:
+        newgkdata["moredata"] = json.loads(request.params["moredata"])
     if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0):
         gkdata["defaultflag"] = int(request.params["defaultflag"])
 
@@ -396,40 +400,12 @@ def editaccount(request):
         gkdata["groupcode"] = grpcode
     else:
         gkdata["groupcode"] = request.params["subgrpcode"]
+    newgkdata["gkdata"]=gkdata
     result = requests.get("http://127.0.0.1:6543/account/%s"%(request.params["accountcode"]), headers=header)
     accountname = result.json()["gkresult"]["accountname"]
     groupcode = result.json()["gkresult"]["groupcode"]
     
-    result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
-    if result.json()["gkstatus"] == 0:
-        groups = requests.get("http://127.0.0.1:6543/groupsubgroups?groupflatlist", headers=header)
-        debtgroupcode = groups.json()["gkresult"]["Sundry Debtors"]
-        credgroupcode = groups.json()["gkresult"]["Sundry Creditors for Purchase"]
-        custid = -1
-        custdetails = {}
-        if debtgroupcode == groupcode:
-            resultcust = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
-            for cust in resultcust.json()["gkresult"]:
-                if cust["custname"] == accountname:
-                    custid = cust["custid"]
-                    custdetailsres = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(cust["custid"])), headers=header)
-                    row = custdetailsres.json()["gkresult"]
-                    custdetails = {"custid":row["custid"], "custname":request.params["accountname"], "custaddr":row["custaddr"], "custphone":row["custphone"], "custemail":row["custemail"], "custfax":row["custfax"], "custpan":row["custpan"], "custtan":row["custtan"],"state":row["state"], "custdoc":row["custdoc"], "csflag":row["csflag"]}
-                    break
-            if custid != -1:
-                resultdelc = requests.put("http://127.0.0.1:6543/customersupplier", data =json.dumps(custdetails),headers=header)
-        elif credgroupcode == groupcode:
-            resultsup = requests.get("http://127.0.0.1:6543/customersupplier?qty=supall", headers=header)
-            for cust in resultsup.json()["gkresult"]:
-                if cust["custname"] == accountname:
-                    custid = cust["custid"]
-                    custdetailsres = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%(int(cust["custid"])), headers=header)
-                    row = custdetailsres.json()["gkresult"]
-                    custdetails = {"custid":row["custid"], "custname":request.params["accountname"], "custaddr":row["custaddr"], "custphone":row["custphone"], "custemail":row["custemail"], "custfax":row["custfax"], "custpan":row["custpan"], "custtan":row["custtan"],"state":row["state"], "custdoc":row["custdoc"], "csflag":row["csflag"]}
-                    break
-            if custid != -1:
-                gkdata = {"custid":custid}
-                resultdels = requests.put("http://127.0.0.1:6543/customersupplier", data =json.dumps(custdetails),headers=header)
+    result = requests.put("http://127.0.0.1:6543/accounts", data =json.dumps(newgkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="addaccount", renderer="json", request_param="type=abbreviation")
