@@ -3861,10 +3861,11 @@ $("#roundoff_checkbox").change(function(e){
             }
         })
         .done(function(resp) {
+			sessionStorage.editprintdelfalg = 0;
             console.log("success");
             $('#printdc').html(resp);
 	    $("#viewdc").hide();
-	    $("#buttondiv").hide();
+		$("#buttondiv").hide();
         })
         .fail(function() {
             console.log("error");

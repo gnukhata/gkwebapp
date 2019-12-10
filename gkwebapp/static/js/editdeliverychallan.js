@@ -45,7 +45,8 @@ $(document).ready(function() {
   $("#delinradio").click().focus();
   $("#delchalout").hide();
   $('.panel-footer').hide();  
-    $(".deliverychallan_OLD_div").hide();
+	$(".deliverychallan_OLD_div").hide();
+	sessionStorage.editprintdelfalg=0;
 
     //Function to add leading zeros in statecode fields.
     function pad(str, max) { 
@@ -86,7 +87,6 @@ $(document).ready(function() {
 	else {
 	    dcid=$("#deliverychallanout_edit_list option:selected").val();
 	} 
-
       if (dcid!="")
 	  $.ajax({
       url: '/deliverychallan?action=getdelchal',
@@ -100,6 +100,7 @@ $(document).ready(function() {
       }
     })
 	.done(function(resp) {
+		console.log(resp,"respresp");
 	    $(".panel-footer").hide();
 	if(resp.delchaldata.delchalContents){
 	    $(".deliverychallan_OLD_div").hide();
@@ -640,6 +641,7 @@ if(event.which==13)
 	    }
 	})
 	    .done(function(resp) {
+			sessionStorage.editprintdelfalg=dcid;
 		console.log("success");
 		$(".nav").hide();
 		$('#deliverychallan_div').html(resp);

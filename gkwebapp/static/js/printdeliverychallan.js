@@ -53,27 +53,27 @@ $(document).ready(function() {
     window.print();
   });
 
-  $("#delchalback").click(function(event) {
-        $.ajax(
-          {
-          type: "POST",
-          url: "/deliverychallan",
-          global: false,
-          async: false,
-          datatype: "text/html",
-          beforeSend: function(xhr)
-          {
-            xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-          },
-          success: function(resp)
-          {
-            $("#deliverychallan_edit").click();
+    $("#delchalback").click(function(event) {
+      if (sessionStorage.editprintdelfalg != 0) {
+        dcid =sessionStorage.editprintdelfalg;
             $(".nav").show();
-            $("#deloutradio").prop("checked",true).focus();
-          }
-          });
-    });
-    
+            $("#deliverychallan_edit").click();
+            $("#deloutradio").click().focus();  
+            $("#deliverychallanout_edit_list").val(dcid);
+            $("#deliverychallanout_edit_list").change();
+        $("#viewdc").show();
+        $("#buttondiv").show();
+        $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+    }
+    else {
+    console.log("print");
+	  $('#printdc').html("");
+	  $("#viewdc").show();
+	  $("#buttondiv").show();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'slow');
+      }
+  });
+
   (function() {
 var beforePrint = function() {
   console.log("beforeprint");
