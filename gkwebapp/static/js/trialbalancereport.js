@@ -287,11 +287,16 @@ $(document).ready(function() {
 
 		xhr.onload = function(e) {
   	if (this.status == 200) {
-		// if successfull a file will be served to the client.
-    // get binary data as a response
-    	var blob = this.response;
-	 		var url = window.URL.createObjectURL(blob);
-			window.location.assign(url)
+	// get binary data as a response
+	var blob = this.response;
+	let windowURL = window.webkitURL || window.URL;
+	var dwelement = document.createElement('a');
+	let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+	dwelement.download = "trialbalance.xlsx";
+	dwelement.href = windowURL.createObjectURL(blob);
+	dwelement.textContent = 'Download Sheet';
+	dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');
+	dwelement.click();		      
   	}
 	};
 

@@ -49,7 +49,7 @@
 	     width:3%
 	 }
 	 .smwrap1{
-	     width:2.4%
+	     width:3%
 	 }
 
 	 .mdwrap{
@@ -61,21 +61,33 @@
 	 .ewrap{
 	     width:8%
 	 }
+	 #nettrialtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #ntbtable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
 	</style>
 </head>
 <body>
-  <div class="col-xs-10 nopadding">
-    <span style="margin-left:40%; display:table;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+  <div class="col-md-9 nopadding">
+    <span style="text-align: center; display:table;margin: auto;"><strong>{% trans %}Net Trial Balance{% endtrans %}</strong> {% trans %}for the period from{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
   </div>
-  <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+  <div class="col-md-3 float-right input-group input-group-sm" style="margin-bottom:2px;">
     <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
     </span>
     <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
     <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
   </div>
-	<div class="row">
+	<div class="row"  id="nettrialtableouterdiv">
 		<table id="ntbtable" class="table shadow table-bordered trialbaltable" >
 			<button class="btn btn-sm btn-danger pull-right" type="button" style="margin-right: 15px;display:none;" id="ntbclearfields">{% trans %}Clear Search{% endtrans %}<span class="glyphicon glyphicon-remove" style="margin-left: 5px;"></span></button>
 			<thead class="bg-primary">

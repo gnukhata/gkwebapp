@@ -45,9 +45,37 @@
 	.calign{
 		text-align:center;
 	}
+	 .smwrap{
+	     width:3%
+	 }
+	 .smwrap1{
+	     width:3%
+	 }
+
+	 .mdwrap{
+	     width:6%
+	 }
+	 .lngwrap{
+	     width:22%
+	 }
+	 .ewrap{
+	     width:8%
+	 }
   .row{
     margin-top: 5px;
   }
+  #prjtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #prjsttable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
   </style>
 </head>
@@ -55,50 +83,53 @@
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
   <input type="hidden" id="projectcode" name="projectcode" value="{{projectcode}}"></input>
   <input type="hidden" id="projectname" name="projectname" value="{{projectname}}"></input>
-  <div class="col-xs-10 nopadding">
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <b>{{from}}</b> {% trans %}to{% endtrans %} <b>{{to}}</b></span>
-  <span style="margin-left:50%; display:table;"><i>{% trans %}Statement for{% endtrans %}</i> : <b>{{projectname}}</b></span>
+  <div class="row">
+  <div class="col-md-9 nopadding">
+      <span class="col-md-8" style="text-align: center; display:table;margin: auto;"><i>{% trans %}Statement for{% endtrans %}</i> : <b>{{projectname}}</b></span>
+  <span class="col-md-4" style="text-align: center; display:table;margin: auto;"><i>{% trans %}Period{% endtrans %}</i> : <b>{{from}}</b> {% trans %}to{% endtrans %} <b>{{to}}</b></span>
+
   </div>
-  <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+  <div class=" col-md-3 float-right input-group input-group-sm" style="margin-bottom:2px;">
     <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
     </span>
     <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
     <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
   </div>
-  <div class="row">
+</div>
+  <div class="row" id="prjtableouterdiv">
     <table id="prjsttable" class="table shadow table-bordered">
       <thead class="bg-primary">
         <tr>
-          <th class="col-xs-1">{% trans %}Sr. No.{% endtrans %}</th>
-          <th class="col-xs-7">{% trans %}Account{% endtrans %}</th>
-          <th class="col-xs-2">{% trans %}Group{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Outgoings{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Incomings{% endtrans %}</th>
+          <th class="smwrap">{% trans %}Sr. No.{% endtrans %}</th>
+          <th class="lngwrap">{% trans %}Account{% endtrans %}</th>
+          <th class="mdwrap">{% trans %}Group{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Outgoings{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Incomings{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
         {% for record in records %}
         <tr data-value="{{record['accountcode']}}">
-          <td class="col-xs-1">
+          <td class="smwrap">
             {{record['srno']}}
           </td>
           {% if record['accountname']=="" %}
-          <td class="col-xs-7">
+          <td class="lngwrap">
             <a class="prjstaccs" href="">&nbsp</a>
           </td>
           {% else %}
-          <td class="col-xs-7">
+          <td class="lngwrap">
             <a class="prjstaccs" href="">{{record['accountname']}}</a>
           </td>
           {% endif %}
-          <td class="col-xs-2">
+          <td class="mdwrap">
             {{record["groupname"]}}
           </td>
-          <td class="col-xs-1 ralign">
+          <td class="smwrap ralign">
             {{record["totalout"]}}
           </td>
-          <td class="col-xs-1 ralign">
+          <td class="smwrap ralign">
             {{record["totalin"]}}
           </td>
         </tr>
