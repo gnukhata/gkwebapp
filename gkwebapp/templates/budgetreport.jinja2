@@ -69,22 +69,34 @@ th {
      #mthltable thead {
 	 width: calc( 99.01% );
      }
+     #bgttableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #mthltable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 </style>
 <body>
-  <div class="container-fluid "><center>
+  <div class="row"><center>
     {% if btype == '3' %}
     <h4> <b>Cash Budget Report </b> </h4></center>
     {% else %}
     <h4> <b id="profitlossname"></b> </h4></center>
     {% endif %}
 
-    <div class = "panel">
-        <div ><center>
-             <strong id="budgetdetails"> {{budgetdetail}} </strong> </center>
+    <!-- <div class = "panel"> -->
+        <div class=""><center>
+             <strong id="budgetdetails" style="text-align: center;"> {{budgetdetail}} </strong></center>
         </div>
-        <div class="panel-body">
+        <!-- <div class="panel-body"> -->
         {%if btype == '3'%}
-        <div class="table-responsive">
+        <div class="" id="bgttableouterdiv">
           <table id="mthltable" class="shadow table table-bordered table-condensed ">
             <thead class="bg-primary">
 			    <tr>
@@ -397,8 +409,8 @@ th {
                 </div>
             
             {%endif%}
-        </div>
-        </div>
+        <!-- </div> -->
+        <!-- </div> -->
         </div>   
       </div>
       <center>

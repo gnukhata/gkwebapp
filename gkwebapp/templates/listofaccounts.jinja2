@@ -45,13 +45,26 @@
      #latable thead {
 	 width: calc( 99.1%);
      }
+     #acctableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
+
 
     </style>
   </head>
   <body>
     <div class="col-xs-10 nopadding">
     <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
-    <span id="titlehide" style="margin-left:50%; display:table; font-size:120%;"><strong>{% trans %}List of Accounts{% endtrans %}</strong></h3> </span>
+    <span id="titlehide" style="margin:auto; display:table; text-align: center; font-size:120%;"><strong>{% trans %}List of Accounts{% endtrans %}</strong></h3> </span>
     </div>
     <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
@@ -62,7 +75,7 @@
       <span class="input-group-addon" ><i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#LaModal"></i></span>
     </div>
 
-    <div class="row">
+    <div class="row" id="acctableouterdiv">
       <table id="latable" class="table shadow table-bordered">
 	<thead class="bg-primary">
           <tr>
