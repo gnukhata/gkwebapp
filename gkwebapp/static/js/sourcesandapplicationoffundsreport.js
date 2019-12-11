@@ -276,8 +276,14 @@ $("#print").click(function(event) {
   if (this.status == 200) {
   // get binary data as a response
     var blob = this.response;
-    var url = window.URL.createObjectURL(blob);
-    window.location.assign(url)
+    let windowURL = window.webkitURL || window.URL;
+    var dwelement = document.createElement('a');
+    let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+    dwelement.download = "sourcesandapplication.xlsx";
+    dwelement.href = windowURL.createObjectURL(blob);
+    dwelement.textContent = 'Download Sheet';
+    dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');
+    dwelement.click();
   }
 };
 

@@ -54,6 +54,18 @@
 .row {
 	margin-top: 5px;
 }
+#rctableouterdiv,#pytableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #rctable ,#pytable{
+       min-width: 600;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 </style>
 </head>
 <body>
@@ -72,7 +84,7 @@
     </span>
   </div>
   <div class="row">
-		<div class="table-responsive col-xs-6 nopadding">
+		<div class="table-responsive col-xs-6 nopadding" id="rctableouterdiv">
 			<table id="rctable" class="table shadow table-bordered cashflowtable">
 				<thead class="bg-primary">
 					<tr>
@@ -106,7 +118,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="table-responsive col-xs-6 nopadding">
+		<div class="table-responsive col-xs-6 nopadding" id="pytableouterdiv">
 			<table id="pytable" class="table shadow table-bordered cashflowtable">
 				<thead class="bg-primary">
 					<tr>

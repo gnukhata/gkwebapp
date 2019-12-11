@@ -52,17 +52,29 @@
        font-weight:normal !important;
        font-style:italic !important;
    }
+   #satableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #satable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
   </style>
 </head>
 <body>
   <input type="hidden" id="calculateto" name="calculateto" value="{{to}}"></input>
   <input type="hidden" id="calculatefrom" name="calculatefrom" value="{{from}}"></input>
-<div class="row">
-  <div class="table-responsive">
+<div class="row" id="">
+  <div class="table-responsive" id="satableouterdiv">
     <table id="satable" class="shadow table table-condensed fixed-table cbalsheettable">
       <thead class="bg-primary">
         <tr>
-          <th colspan="4" class="text-center col-xs-12" >
+          <th colspan="4" class="text-center col-xs-12" style="white-space: normal;" >
             {% trans %}Statement of Sources and Applications of Funds{% endtrans %} </strong>{% trans %}from{% endtrans %} <strong>{{from[8:10]+to[4:8]+to[0:4]}}</strong>{% trans %} to {% endtrans %}<strong>{{to[8:10]+to[4:8]+to[0:4]}}</strong></span>
           </th>
         </tr>
@@ -175,7 +187,7 @@
     <input type="hidden" name="balancesheettype" id="balancesheettype" value="{{balancesheettype}}">
     <input type="hidden" name="cto" id="cto" value="{{to}}">
     <input type="hidden" id="cfrom" name="cfrom" value="{{from}}"></input>
-  </div>
+  <!-- </div> -->
 </div>
 
     <span class="hidden-print" style="margin:auto; display:table;">
