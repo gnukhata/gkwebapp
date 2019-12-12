@@ -69,14 +69,14 @@
 </style>
 </head>
 <body>
-  <div class="col-xs-10 nopadding">
+  <div class="col-md-9 nopadding">
 	{% if orgtype=="Profit Making" %}
-		<span style="margin-left:46%; display:table;"><strong>{% trans %}Cash Flow Account{% endtrans %} </strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+		<span style="margin:auto; display:table; text-align:center;"><strong>{% trans %}Cash Flow Account{% endtrans %} </strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	{% else %}
-		<span style="margin-left:46%; display:table;"><strong>{% trans %}Receipt & Payment Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+		<span style="margin:auto; display:table; text-align:center;"><strong>{% trans %}Receipt & Payment Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
 	{% endif %}
   </div>
-  <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+  <div class=" col-md-3 float-right input-group input-group-sm" style="margin-bottom:2px;">
     <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
     </span>
     <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
