@@ -71,8 +71,18 @@ width:1.4%
  .mdwrap{
  	width:8%
  }
-
-
+ #sohtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 800;
+       min-height: 300;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
   </style>
 </head>
@@ -87,19 +97,24 @@ width:1.4%
   <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
   <input type="hidden" id="goaddr" name="goaddr" value="{{goaddr}}"></input>
 
-  <span class="pull-right" style="padding-right:15px"><i>{% trans %} As On{% endtrans %}</i> : <strong>{{stockrefresh["date"]}}</strong></span>
 
 
 
+<div class="row">
+  <div class="col-md-10">
   {% if godown == "" %}
-  <span style="margin:auto; display:table;"><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
-  <span style="margin:auto; display:table;"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+  <span style="margin:auto; display:table; text-align: center;"><strong><i>{% trans %}Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; text-align: center;"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   {% else %}
-  <span style="margin-left: 42%;"><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
+  <span style="margin:auto; display:table; text-align: center;"><strong><i>{% trans %}Godown Wise Stock on Hand Report{% endtrans %}</i></strong></span>
   <span style="margin:auto; display:table; width: 100%;text-align: center"><i>{% trans %}Name of the Product {% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
   <span style="margin:auto; display:table;width: 100%;text-align: center"><i>{% trans %} &nbsp Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong><i>{% trans %} Godown Address{% endtrans %}: </i><strong>{{goaddr}}</strong></span>
   {% endif %}
-
+</div>
+<div class="col-md-2">
+  <span class="" style="margin:auto; display:table; text-align: center;"><i>{% trans %} As On{% endtrans %}</i> : <strong>{{stockrefresh["date"]}}</strong></span>
+  </div></div>
+<div class="row" id="sohtableouterdiv">
   <table id="latable"  style="margin-top:30px;" class="table shadow table-bordered size mx-auto ">
 
     <thead class="bg-primary">
@@ -209,7 +224,7 @@ width:1.4%
           </tbody>
 
   </table>
-
+</div>
   {% if godown == "" %}
   <span style="margin-top:30px; margin-left:35%; display:table; ">
     <nbsp><nbsp>
