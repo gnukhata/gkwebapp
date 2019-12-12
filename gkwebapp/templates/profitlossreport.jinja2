@@ -74,19 +74,31 @@
 	 font-weight:normal !important;
 	 font-style:italic !important;
      }
+	 #exptableouterdiv,#inctableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #expensetbl, #incometbl {
+       min-width: 600;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
     </style>
   </head>
   <body>
-    <div class="col-xs-10 nopadding">
+    <div class="col-md-9 nopadding">
       {% if orgtype=="Profit Making" %}
 	<input type="hidden" id="headingprofit" value="Profit & Loss">
-	<span class="hidden-print" style="margin-left:40%; display:table;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+	<span class="hidden-print" style="margin:auto; display:table; text-align: center;"><strong>{% trans %}Profit & Loss Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
       {% else %}
 	<input type="hidden" id="headingprofit" value="Income & Expenditure Account">
-	<span class="hidden-print" style="margin-left:40%; display:table;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
+	<span class="hidden-print" style="margin:auto; display:table; text-align: center;"><strong>{% trans %}Income & Expenditure Account{% endtrans %}</strong> {% trans %}for the period{% endtrans %} <strong>{{from}}</strong> {% trans %}to{% endtrans %} <strong>{{to}}</strong></span>
       {% endif %}
     </div>
-    <div class="float-right input-group input-group-sm" style="margin-bottom:2px;">
+    <div class="col-md-3 float-right input-group input-group-sm" style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
       </span>
       <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
@@ -94,7 +106,7 @@
       </span>
     </div>
     <div class="row">
-      <div class="table-responsive col-xs-6 nopadding">
+      <div class="table-responsive col-xs-6 nopadding" id="exptableouterdiv">
 	<table id="expensetbl" class="shadow fixed-table table table-condensed cashflowtable">
           <thead class="bg-primary">
             <tr >
@@ -198,7 +210,7 @@
 	  </tfoot>
 	</table>
       </div>
-      <div class="table-responsive col-xs-6 nopadding">
+      <div class="table-responsive col-xs-6 nopadding" id="inctableouterdiv">
 	<table id="incometbl" class="shadow table fixed-table table-condensed cashflowtable">
           <thead class="bg-primary">
             <tr >

@@ -55,6 +55,18 @@
    .lgwrap {
        width: 17%;
    }
+   #prodtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
   </style>
 </head>
 <body>
@@ -68,18 +80,21 @@
   <input type="hidden" id="goname" name="goname" value="{{godown}}"></input>
   <input type="hidden" id="goaddr" name="goaddr" value="{{godownadd}}"></input>
   <div class="row">
-    <div class="col-xs-10 nopadding">
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
+    <div class="col-md-10 nopadding">
+      <div>
+        <div class="col-md-8">
       {% if godown == "" %}
-	<span style="margin-left: 46.4%;"><strong><i>{% trans %}Product Report{% endtrans %}</i></strong></span>
-	<span style="margin-left:42px; display:table; width: 100%;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+	<span style="margin:auto; display:table; text-align: center;"><strong><i>{% trans %}Product Report{% endtrans %}</i></strong></span>
+	<span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
       {% else %}
-	<span style="margin-left: 42.7%;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
-	<span style="margin-left:42%; display:table; width: 100%;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
-	<span style="margin-left:35%; display:table; width: 100%;"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
-      {% endif %}
-    </div>
-    <div class="pull-right input-group input-group-sm" style="margin-bottom:2px; padding-right:21px;">
+	<span style="margin:auto; display:table; text-align: center;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
+	<span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
+	<span style=" margin:auto; display:table;"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
+      {% endif %}</div>
+      <div class="col-md-4">
+      <span class="" style="margin:auto; display:table;"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
+    </div></div></div>
+    <div class="col-md-2 pull-right input-group input-group-sm" style="margin-bottom:2px; padding-right:21px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
       </span>
       <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
@@ -87,7 +102,7 @@
       </span>
     </div>
   </div>
-  
+  <div class="row" id="prodtableouterdiv">
   <table id="latable" class="table shadow table-bordered" >
     <thead class="bg-primary">
       <tr>
@@ -292,6 +307,7 @@
       {% endfor %}
     </tbody>
   </table>
+</div>
   <div class="col-xs-12">
     <small>
         <b>Deli Note No. : </b> Delivery Note Number, &nbsp
