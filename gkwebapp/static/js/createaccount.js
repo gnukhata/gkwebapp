@@ -524,6 +524,7 @@ $("#openbal").keydown(function(event){
 	    }
     }
 	});
+
 	
 	var emailExp =/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 	var email="";
@@ -759,7 +760,7 @@ $("#openbal").keydown(function(event){
 			  $('#custsupmodal').modal('show');
 			$('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
 					  {					
-					  // modalpresent = 1;
+					  modalpresent = 1;
 				if (custsup == '9') {
 				  $("#add_cussup").val('19');
 				} else {
@@ -774,6 +775,7 @@ $("#openbal").keydown(function(event){
 			  });
 			$('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
 					  {
+						modalpresent = 0;
 				  $("#obal").focus().select();
 					  });
 			  }
@@ -1019,11 +1021,19 @@ $("#openbal").keydown(function(event){
 	      console.log("failed");
 	  });
   });
-     $(document).off("keyup").on("keyup", function(event) {
-      if (event.which == 45) {
-	event.preventDefault();
-	    $("#submit").click();
-      }
+
+	 var modalpresent = 0;
+	 $(document).off("keyup").on("keyup", function(event) {
+		 if (event.which == 45) {
+			 event.preventDefault();
+			 if (modalpresent == 0) {
+				 $("#submit").click();
+			 }
+			 else {
+				 $("#cussup_save_acc").click();
+			 }
+			 return false;
+		 }
 	 });
 	 $("#my-file-selector").change(function(event) {
 		$('#upload-file-info').html($(this).val());

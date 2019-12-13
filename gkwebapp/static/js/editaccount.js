@@ -912,7 +912,7 @@ $("#addcust").click(function() {
             $('#custsupmodal').modal('show');
           $('#custsupmodal').on('shown.bs.modal', function(e) // shown.bs.modal is an event which fires when the modal is opened
                     {					
-                    // modalpresent = 1;
+                    modalpresent = 1;
               if (custsup == '9') {
                 $("#add_cussup").val('19');
                 // $('#checkbnkpop').val(1);
@@ -990,6 +990,8 @@ $("#addcust").click(function() {
 
             $('#custsupmodal').on('hidden.bs.modal', function(e) // hidden.bs.modal is an event which fires when the modal is closeed
             {
+            modalpresent = 0;
+
         $("#obal").focus().select();
             });
             }
@@ -1120,10 +1122,17 @@ $("#editaccountform").submit(function(e)
 
   e.preventDefault();
 });
+ var modalpresent = 0;
  $(document).off("keyup").on("keyup", function(event) {
-      if (event.which == 45) {
-	event.preventDefault();
-	    $("#editaccountform").submit();
-      }
+   if (event.which == 45) {
+     event.preventDefault();
+     if (modalpresent == 0) {
+       $("#editaccountform").click();
+     }
+     else {
+       $("#cussup_save_acc").click();
+     }
+     return false;
+   }
  });
 });
