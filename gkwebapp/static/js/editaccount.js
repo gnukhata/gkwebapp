@@ -321,6 +321,7 @@ $(document).ready(function()
 );
     //Change event for 'group name' field.
     $("#groupname").bind("change keyup", function(){
+      $("#addcust").hide();
 	if($("#editaccountname option:selected").val() !=""){
 	    var gname = $("#groupname option:selected").text();
 	    if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
@@ -343,6 +344,9 @@ $(document).ready(function()
         $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
         }
+    if (gname=="Current Assets"|| gname=="Current Liabilities"){
+      $("#addcust").show();
+    }
         
 	}
 	var groups = $("#groupname option:selected").val();
@@ -415,6 +419,7 @@ $(document).ready(function()
 
     $("#nsgp").hide();
     $(".gsselect").bind("change keyup", function(){
+      $("#addcust").hide();
 	var sgroups = $("#subgroupname option:selected").val();
 	if(sgroups == "New"){
         $("#nsgp").show();
@@ -461,11 +466,11 @@ $(document).ready(function()
       $("#bnkdiv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors' && $("#groupname option:selected").text()=="Current Assets"){
 		$("#addcust").show();
     custsup = '15';
     custsupflag = 1;
-	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
+	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase' && $("#groupname option:selected").text()=="Current Liabilities"){
 		$("#addcust").show();
     custsup = '9';
     custsupflag = 1;
