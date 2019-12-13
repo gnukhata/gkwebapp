@@ -25,7 +25,15 @@
   }
 
   .smwrap{
-  width:5%
+  width:3%
+  }
+  .smwrap1{
+    width:5%
+
+  }
+  .mdwrap{
+    width:15%
+
   }
 
   .calign{
@@ -45,36 +53,49 @@
   #latable thead {
       width: calc( 99.1% );
   }
+  #cattableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
 
   </style>
 </head>
 <body>
-  <div class="col-xs-10 nopadding">
-  <span style="margin-left:50%; display:table; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
+  <div class="row">
+  <div class="col-md-10 nopadding">
+  <span style="margin: auto; display:table; text-align: center; font-size:120%;"><strong>{% trans %}List of Categories{% endtrans %}</strong></span>
   <small style="margin-bottom: 10px;  display:table;" class="form-text text-muted">This is the columnar view of categories.</small>
   </div>
-  <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+  <div class="col-md-2 pull-right input-group input-group-sm" style="margin-bottom:2px;">
     <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
     </span>
     <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
     <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
-  </div>
-  
+  </div></div>
+  <div class="row" id="cattableouterdiv">
   <table id="latable" class="table shadow table-bordered">
     <thead class="bg-primary">
       <tr>
-        <th class="col-xs-1 smwrap calign" >
+        <th class="smwrap calign" >
           {% trans %}Sr.No.{% endtrans %}
         </th>
-        <th class="col-xs-5" >
+        <th class="mdwrap" >
           {% trans %}Category{% endtrans %}
         </th>
-        <th class="col-xs-5" >
+        <th class="mdwrap" >
           {% trans %}Sub-Category{% endtrans %}
         </th>
-        <th class="col-xs-1" >
+        <th class="smwrap1" >
           {% trans %}Status{% endtrans %}
         </th>
       </tr>
@@ -83,23 +104,23 @@
 
       {% for record in gkresult %}
       <tr	data-value="{{record["categorycode"]}}">
-        <td class="col-xs-1 smwrap calign" >
+        <td class="smwrap calign" >
           {{record["srno"]}}
         </td>
-        <td class="col-xs-5">
+        <td class="mdwrap">
           {{record["categoryname"]}}
         </td>
-        <td class="col-xs-5" >
+        <td class="mdwrap" >
         {% for child in record["children"] %}
           {{child["categoryname"]}} <br>
         {% endfor %}
         </td>
         {% if record["categorystatus"] == "Active" %}
-        <td class="col-xs-1 text-success">
+        <td class="smwrap1 text-success">
           {{record["categorystatus"]}}
         </td>
         {% else %}
-        <td class="col-xs-1 text-danger">
+        <td class="smwrap1 text-danger">
           {{record["categorystatus"]}}
         </td>
         {% endif %}
@@ -108,6 +129,7 @@
 
     </tbody>
   </table>
+  </div>
   <span style="margin:auto; display:table;">
     <nbsp><nbsp>
     <button class="btn btn-sm btn-primary" type="button"  id="print" accesskey="x">{% trans %}<i class="fa fa-file-excel-o" aria-hidden="true"></i> E<u>x</u>port to Spreadsheet{% endtrans %}</button>

@@ -60,6 +60,18 @@
      .mdwrap{
 	 width:8%
      }
+     #gdwtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
     </style>
   </head>
@@ -71,18 +83,20 @@
     </b></div>
   </div>
     {% else %}
-    <div class="col-xs-10 nopadding">
-      <span style="margin-left:50%; display:table; font-size:120%;"><strong>
+    <div class="row">
+    <div class="col-md-10 nopadding">
+      <span style="margin:auto; text-align: center; display:table; font-size:120%;"><strong>
         {% trans %}List of Godowns{% endtrans %}
         </strong></span>
     </div>
-    <div class="pull-right input-group input-group-sm " style="margin-bottom:2px;">
+    <div class=" col-md-2 pull-right input-group input-group-sm " style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
       </span>
       <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
       <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
       </span>
-    </div>
+    </div></div>
+    <div class="row"  id="gdwtableouterdiv">
     <table id="latable" class="table shadow table-bordered">
       <thead class="bg-primary">
 	<tr>
@@ -108,7 +122,6 @@
 	</tr>
       </thead>
       <tbody>
-
 	{% for record in gkresult %}
 	  <tr	value="{{record["godownid"]}}">
             <td class="smwrap1 calign" >
@@ -126,8 +139,8 @@
             <td class="dtwrap lalign" >
               {{record["godowncontact"]}}
             </td>
+            <td class="smwrap lalign text-success">
             {% if record["godownstatus"] == "Active" %}
-              <td class="smwrap lalign text-success">
 		{{record["godownstatus"]}}
               </td>
             {%endif%}
@@ -135,7 +148,7 @@
 	{% endfor %}
 
       </tbody>
-    </table>
+    </table></div>
     <span style="margin:auto; display:table;">
       <nbsp><nbsp>
 	<button type="button" id="report_back" accesskey="k" class="btn btn-sm btn-danger">Bac<u>k</u></button>

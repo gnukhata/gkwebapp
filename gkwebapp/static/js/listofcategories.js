@@ -133,9 +133,15 @@ $(document).ready(function() {
         xhr.onload = function(e) {
         if (this.status == 200) {
         // get binary data as a response
-          var blob = this.response;
-          var url = window.URL.createObjectURL(blob);
-          window.location.assign(url)
+        var blob = this.response;
+        let windowURL = window.webkitURL || window.URL;
+        var dwelement = document.createElement('a');
+        let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        dwelement.download = "Category.xlsx";
+        dwelement.href = windowURL.createObjectURL(blob);
+        dwelement.textContent = 'Download Sheet';
+        dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');
+        dwelement.click();
         }
       };
 
@@ -145,7 +151,25 @@ $(document).ready(function() {
   });
 
   $('#tree').click(function (e) {
-    $("#listofcategories").click();
+        // calls list of categories report.
+        $.ajax(
+          {
+    
+            type: "POST",
+            url: "/category?action=tree",
+            global: false,
+            async: false,
+            datatype: "text/html",
+            beforeSend: function(xhr)
+            {
+              xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+            },
+            success: function(resp)
+            {
+              $("#info").html(resp);
+            }
+          }
+        );
   });
 
 });
