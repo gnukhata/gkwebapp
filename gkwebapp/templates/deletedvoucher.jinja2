@@ -45,14 +45,36 @@
      .calign{
 	 text-align:center;
      }
+     .smwrap{
+       width: 4%;
+     }
+     .lgwrap{
+       width: 20%;
+     }
+     .mdwrap{
+       width: 5%;
+     }
+     #vctableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #deletedvouchertable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
     </style>
   </head>
   <body>
-    <div class="col-xs-10 nopadding">
-      <span style="margin-left:50%; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
+    <div class="row">
+    <div class="col-md-10 nopadding">
+      <span style="margin:auto; text-align: center; display:table;"><b>{% trans %}List of Deleted Vouchers{% endtrans %}</b></span>
   </br>
     </div>
-    <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+    <div class="col-md-2 pull-right input-group input-group-sm" style="margin-bottom:2px;">
       <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
       </span>
       <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
@@ -60,12 +82,12 @@
       </span>
       <span class="input-group-addon" ><i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#DelVModal"></i></span>
     </div>
-      
-  <div class="row">
+    </div>
+  <div class="row" id="vctableouterdiv">
     <table id="deletedvouchertable" class=" table shadow table-bordered">
       <thead class="bg-primary">
         <tr>
-          <th class="col-xs-1 dateorder">
+          <th class="smwrap dateorder">
 	    {% trans %}Date{% endtrans %}
 	    {% if orderflag=="4" %}
 	      <span  id="delVoucherDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
@@ -73,44 +95,44 @@
 	    <span  id="delVoucherDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
 	    {% endif %}
 	  </th>
-          <th class="col-xs-1">{% trans %}V.No.{% endtrans %}</th>
-          <th class="col-xs-1">{% trans %}Type{% endtrans %}</th>
-          <th class="col-xs-5">{% trans %}Particulars{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Amount{% endtrans %}</th>
-          <th class="col-xs-1 ralign">{% trans %}Amount{% endtrans %}</th>
-          <th class = "col-xs-2 calign projecth">{% trans %}Project{% endtrans %}</th>
+          <th class="smwrap">{% trans %}V.No.{% endtrans %}</th>
+          <th class="smwrap">{% trans %}Type{% endtrans %}</th>
+          <th class="lgwrap">{% trans %}Particulars{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Amount{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Amount{% endtrans %}</th>
+          <th class = "mdwrap calign projecth">{% trans %}Project{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
 
         {% for transaction in gkresult%}
           <tr value="{{transaction["vouchercode"]}}">
-            <td class="col-xs-1">{{transaction["voucherdate"]}}</td>
+            <td class="smwrap">{{transaction["voucherdate"]}}</td>
             {% if transaction['vouchernumber']=="" %}
-              <td class="col-xs-1">
+              <td class="smwrap">
 		<a class="vno" href="">&nbsp</a>
               </td>
             {% else %}
-              <td class="col-xs-1" style="width:100px; word-wrap:break-word;">
+              <td class="smwrap" style=" word-wrap:break-word;">
 		<a class="vno" href="">{{transaction['vouchernumber']}}</a>
               </td>
             {% endif %}
             {% if transaction["vouchertype"]=="" %}
-              <td class="col-xs-1">&nbsp</td>
+              <td class="smwrap">&nbsp</td>
             {% elif (transaction["vouchertype"]=="purchasereturn")%}
-              <td class="col-xs-1">{% trans %}Purchase Return{% endtrans %}</td>
+              <td class="smwrap">{% trans %}Purchase Return{% endtrans %}</td>
             {% elif (transaction["vouchertype"]=="salesreturn")%}
-              <td class="col-xs-1">{% trans %}Sale Return{% endtrans %}</td>
+              <td class="smwrap">{% trans %}Sale Return{% endtrans %}</td>
             {% elif (transaction["vouchertype"]=="creditnote")%}
-              <td class="col-xs-1">{% trans %}Credit Note{% endtrans %}</td>
+              <td class="smwrap">{% trans %}Credit Note{% endtrans %}</td>
             {% elif (transaction["vouchertype"]=="debitnote")%}
-              <td class="col-xs-1">{% trans %}Debit Note{% endtrans %}</td>
+              <td class="smwrap">{% trans %}Debit Note{% endtrans %}</td>
             {% else %}
-              <td class="col-xs-1">
+              <td class="smwrap">
 		{{(transaction["vouchertype"]).title()}}
               </td>
             {% endif %}
-            <td class="col-xs-5">
+            <td class="lgwrap">
               {% for key in transaction["drs"].keys()%}
 		{{key}}
   </br>
@@ -125,13 +147,13 @@
     [{{transaction["narration"]}}]
   {%endif%}
             </td>
-            <td class="col-xs-1 ralign">
+            <td class="smwrap ralign">
               {% for key in transaction["drs"].keys()%}
 		{{transaction["drs"][key]}}
   </br>
               {% endfor %}
             </td>
-            <td class="col-xs-1 ralign">
+            <td class="smwrap ralign">
               {% for key in transaction["drs"].keys()%}
   </br>
               {% endfor %}</br>
@@ -141,7 +163,7 @@
               {% endfor %}
             </td>
 
-            <td class = "col-xs-2 calign">
+            <td class = "mdwrap calign">
               {% if transaction["projectname"] != ""%}
 		{{transaction["projectname"]}}
               {% else %}
