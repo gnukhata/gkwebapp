@@ -89,7 +89,9 @@
       {% else %}
 	<span style="margin:auto; display:table; text-align: center;"><strong><i>{% trans %}Godown Wise Product Report{% endtrans %}</i></strong></span>
 	<span style="margin:auto; display:table;"><i>{% trans %}Name of the Product{% endtrans %}: </i><strong>{{stockrefresh["productdesc"]}}</strong></span>
-	<span style=" margin:auto; display:table;"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
+  <span class="hidden-lg row"><span class="col-md-6" style="text-align: center; margin:auto; display:table;"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong></span>
+  <span class="col-md-6" style="text-align: center; margin:auto; display:table;"> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span></span>
+  <span class="hidden-md hidden-xs" style=" margin:auto; display:table;"><i>{% trans %}Name of the Godown{% endtrans %}: </i><strong>{{godown}}</strong> <i>{% trans %}Godown Address{% endtrans %}: </i><strong>{{godownadd}}</strong></span>
       {% endif %}</div>
       <div class="col-md-4">
       <span class="" style="margin:auto; display:table;"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{stockrefresh["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{stockrefresh["calculateto"]}}</strong></span>
