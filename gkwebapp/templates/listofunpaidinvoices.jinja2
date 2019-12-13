@@ -92,6 +92,18 @@
 	 display:block;
 	 width: calc( 100% - 0.75em );
      }
+     #Utsinvtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
     </style>
    </head>
    <body>
@@ -99,18 +111,20 @@
        <input type="text" id="reporttypeselect" value="{{typeflag}}" hidden></input>
        <input type="text" id="reportorderselect" value="{{orderflag}}" hidden></input>
        <input type="text" id="reportinoutselect" value="{{inoutflag}}" hidden></input>
-       <div class="col-xs-10 nopadding">
-       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
-       <span style="margin-left: 29%;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
+       <div class="row">
+       <div class="col-md-10 nopadding">
+       <span class="col-md-8" style="margin:auto; display:table; text-align: center;"><strong>{{type}} {% trans %}List of Outstanding{% endtrans %} {{inout}} {% trans %}Invoices in{% endtrans %} {{order}} Order</strong></span>
+       <span class="col-md-4" style="margin:auto; display:table; text-align: center;"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{fromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{todate}}</strong></span>
        <br>
        </div>
-       <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+       <div class="col-md-2 pull-right input-group input-group-sm" style="margin-bottom:2px;">
 	 <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
 	 </span>
 	 <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
 	 <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
 	 </span>
-       </div>
+       </div></div>
+       <div class="row" id="Utsinvtableouterdiv">
       <table id="latable" style="" class="table shadow table-bordered" >
          <thead class="bg-primary">
             <tr>
@@ -151,6 +165,7 @@
             {% endfor %}
          </tbody>
       </table>
+    </div>
       <span style="margin:auto; display:table;">
          <nbsp>
          <nbsp>

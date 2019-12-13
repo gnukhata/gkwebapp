@@ -91,6 +91,18 @@
 	 display:block;
 	 width: calc( 100% - 0.75em );
      }
+     #invtableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #latable,#latabledel {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
     </style>
    </head>
    <body>
@@ -105,29 +117,32 @@
             </div>
    
      <div id="listdiv">
-       <div class="col-xs-10 nopadding">
+        <div class="row">
+       <div class="col-md-10 nopadding">
       <input type="text" id="invoicetypeselect" value={{flag}} hidden></input>
       {% if gkresult == [] %}
          <div class="bg-danger " style="margin-top:2%;padding-top:10px;padding-bottom:10px;text-align:center;width:50%">
          <label class= "text-danger" style="font-size:100% !important;"> No Invoice found! </label>
          </div>
       {% else %}
-      <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       {% if deleteflag == 0 %}
-      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
+      <span class="col-md-8" style=" margin:auto; display:table; text-align: center;"><strong>List of <i>{%if flag == "0" %}All{%elif flag == "1" %}Sales{%elif flag == "2" %}Purchase{% endif %}</i> Invoices</strong></span>
             {% else %}
-      <span style="margin-left: 46.4%;"><strong>List of <i>{%if flag == "0" %}All Cancelled{%elif flag == "1" %}Cancelled Sales{%elif flag == "2" %}Cancelled Purchase{% endif %}</i> Invoices</strong></span>
+      <span class="col-md-8" style="margin:auto; display:table; text-align: center;"><strong>List of <i>{%if flag == "0" %}All Cancelled{%elif flag == "1" %}Cancelled Sales{%elif flag == "2" %}Cancelled Purchase{% endif %}</i> Invoices</strong></span>
       {% endif %}
+      <span class="col-md-4" style="margin:auto; display:table; text-align: center;"><i>{% trans %}Period{% endtrans %}</i> : <strong id="fromdate" data-fromdate="{{fromdate}}">{{displayfromdate}}</strong> {% trans %}to{% endtrans %} <strong id="todate" data-todate="{{todate}}">{{displaytodate}}</strong></span>
       <br>
        </div>
 
-       <div class="pull-right input-group input-group-sm col-xs-2" style="margin-bottom:2px;">
+       <div class="col-md-2 pull-right input-group input-group-sm " style="margin-bottom:2px;">
 	 <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
 	 </span>
 	 <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
 	 <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
 	 </span>	 
        </div>
+     </div>
+       <div class="row" id="invtableouterdiv">
    {% if deleteflag == 0 %}
       <table id="latable" class="table shadow table-bordered" >
    {% else %}
@@ -208,6 +223,7 @@
             {% endfor %}
          </tbody>
       </table>
+   </div>
       <span style="margin:auto; display:table;">
          <nbsp>
          <nbsp>
