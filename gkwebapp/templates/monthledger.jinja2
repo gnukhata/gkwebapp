@@ -41,7 +41,18 @@ th {
 .cred{
     color:red;
   }
-
+  #monthledgertableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #ledgertable {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
 
 </style>
 </head>
@@ -49,11 +60,11 @@ th {
   <div id="monthdiv" class="container-fluid">
     <div class="panel">
       <div class="panel-heading">
-        <center><span style="margin:auto; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{accountname}}</strong></span></center>
+        <center><span style="margin:auto; text-align: center; display:table;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <strong>{{accountname}}</strong></span></center>
         <input type="hidden" id="accname" name="projectname" value="{{accountname}}"></input>
       </div>
       <div class="panel-body">
-        <div class="table-responsive">
+        <div class="row" id="monthledgertableouterdiv">
           <table id="mthltable" class="shadow table table-bordered table-condensed tabledesign col-md-4">
             <thead class="bg-primary">
               <tr>
