@@ -276,7 +276,7 @@ $(document).ready(function() {
         let windowURL = window.webkitURL || window.URL;
         var dwelement = document.createElement('a');
         let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
-        dwelement.download = "OutstandingInvoice.xlsx";
+        dwelement.download = "TransferNote.xlsx";
         dwelement.href = windowURL.createObjectURL(blob);
         dwelement.textContent = 'Download Sheet';
         dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');

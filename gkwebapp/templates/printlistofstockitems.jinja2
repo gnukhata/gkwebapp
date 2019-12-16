@@ -44,7 +44,7 @@
   </style>
 </head>
 <body>
-  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Products{% endtrans %}</strong></span>
+  <span class="printorgdetails hidden-print" style="margin:auto; display:table;"><strong>{% trans %}List of Products and Services{% endtrans %}</strong></span>
 
   <div class="table-responsive printorgdetails">
     <table class="table table-condensed table-bordered table-striped shadow">
@@ -113,7 +113,24 @@
         window.print();
       });
       $("#loaback").click(function(event) {
-        $("#listofstockitems").click();
+        $.ajax(
+      {
+
+        type: "POST",
+        url: "/product?type=list",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        beforeSend: function(xhr)
+        {
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+        },
+        success: function(resp)
+        {
+          $("#info").html(resp);
+        }
+      }
+    );
       });
       if (sessionStorage.vatorgstflag == 22) {
         $(".type").hide();
