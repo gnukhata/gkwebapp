@@ -39,6 +39,14 @@ $(document).ready(function() {
 		$('.del_cancelled_table tbody tr:first-child td:eq(1) a').closest('tr').addClass('selected');
 	}
 
+    if(sessionStorage.userrole == 2){
+	$("table thead tr th:last").hide();
+	$("table tbody tr").each(function(){
+	    $(this).find("td:last").hide();
+	}
+	);
+    }
+  
     $('.cancel_delchal').tooltip({
         title : "Clicking this button will cancel this Deliverynote.",
         placement : "bottom"

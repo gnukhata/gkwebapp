@@ -28,6 +28,14 @@ $(document).ready(function() {
     $(".fixed-table-loading").remove();
     var currentrow = 0;
 
+    if(sessionStorage.userrole == 2){
+	$("table thead tr th:last").hide();
+	$("table tbody tr").each(function(){
+	    $(this).find("td:last").hide();
+	}
+	);
+    }
+
 function vouchercall(vtype,inv_id){
     $.ajax(
         {
