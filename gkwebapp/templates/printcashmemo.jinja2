@@ -21,7 +21,7 @@
        padding: 3px !important;
        margin:  0 !important;
    }
-   table { page-break-inside:auto }
+   table { page-break-inside:auto; }
    tr    { page-break-inside:avoid; page-break-after:auto }
    thead { display: table-header-group; }
    tfoot { display: table-footer-group; }
@@ -57,14 +57,14 @@
 	<h5><u>CASH MEMO</u></h5>
       </div>
       {% endif %}
-      <div class="row">
+      <div class="row" id="cashmemo_details_div">
       <div class="col-xs-9 nopaddng" style="padding-left:0px !important;">
 			<div class="img-thumbnail img-circle " style="float:left">
 					<div style="position: relative; padding: 0; cursor: pointer;" type="file">
 				  <img class="img-circle"  style="width: 90px; height: 90px;" id="imgbox">
 					</div>
 				  </div>
-		<div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%;padding-bottom:1%">
+		<div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;padding-left:1%;padding-bottom:10px;">
 		<h3>{{org["orgname"]}}</h3>
 		<span style="font-weight:bold !important ; font-size:small;">
         {% if org["orgaddr"]!='' %}
@@ -101,8 +101,8 @@
   {% endif %}
 </div>
       </div>
-	  <div class="col-xs-3 nopadding" style="padding-top: 30px !important;">
-			<table class=" table table-condensed table-bordered">
+	  <div class="col-xs-3 nopadding">
+			<table id="cashmemo_details_table_top" class=" table table-condensed table-bordered" style="position: absolute;  top: 0;">
 					<tbody>
 					<tr>
 						 <td><b>{% trans %}Cash Memo No.{% endtrans %}</b></td>
@@ -282,7 +282,7 @@
 	</table>
       </div>
 {% endif %}
-<div class="row">
+<div class="row" style="padding-top: 20px;">
   <div class ="col-sm-4 pull-right" >
     <div class="row">
       <div class="form-inline">

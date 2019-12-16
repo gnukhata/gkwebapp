@@ -29,6 +29,10 @@ $(document).ready(function() {
   oninvoice = 1;
   $("title").html("");
     window.scrollTo(0,0);
+    let divheight = $("#cashmemo_details_div").height();
+    let tableheight = $("#cashmemo_details_table_top").height();
+    let table_top_margin = divheight - tableheight - 10;
+    $("#cashmemo_details_table_top").css({"margin-top":table_top_margin});
   $("#invprint").click(function(event) {
     window.print();
   });
@@ -39,7 +43,6 @@ $(document).ready(function() {
   });
   (function() {
 var beforePrint = function() {
-  console.log("beforeprint");
   if (oninvoice==1) {
     $("#printorgnameyear").removeClass('visible-print').addClass('hidden-print');
   }
@@ -50,7 +53,6 @@ var beforePrint = function() {
     }
 };
 var afterPrint = function() {
-  console.log("afterPrint");
     $("#printorgnameyear").removeClass('hidden-print').addClass('visible-print');
     $("#printyears").removeClass('hidden-print');
     $("#notespara").html("Notes : ");
