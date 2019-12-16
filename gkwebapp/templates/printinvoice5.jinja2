@@ -64,6 +64,10 @@
            else{
              $("#logo_div").hide();
            }
+	     let divheight = $("#invoice_details_div").height();
+	     let tableheight = $("#invoice_details_table_top").height();
+	     let table_top_margin = divheight - tableheight - 10;
+	     $("#invoice_details_table_top").css({"margin-top":table_top_margin});
   
           console.log("success");
       })
@@ -78,7 +82,7 @@
       <input type="hidden" id="invid" value="{{ invid }}">
       <div class="container-fluid">
     <br>
-      <div class="row">
+      <div class="row" id="invoice_details_div">
       <div class="col-md-9 nopadding" style="padding-left:0px !important;">
 	<div id="logo_div">
             <div class="img-thumbnail img-circle " style="float:left">
@@ -88,7 +92,7 @@
             </div>
       </div>
   
-        <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left">
+        <div style="word-wrap: break-word;min-width: 40%;max-width: 40%; font-size:120%;float:left;margin-bottom:10px;">
               <h3 style="margin-top:10px !important;">{{org["orgname"]}}</h3>
           <span style="font-weight:bold !important ; font-size:small;">
             {% if gkresult["address"]!=""%}
@@ -132,8 +136,8 @@
           {% endif %}
         </div>
       </div>
-    <div class="col-md-3" style="padding-top:30px;padding-right:0px !important;">
-    <table class=" table table-condensed table-bordered">
+    <div class="col-md-3 nopadding"">
+    <table id="invoice_details_table_top" class=" table table-condensed table-bordered" style="top: 0;">
             <tbody>
             <tr>
                  <td><b>{% trans %}Invoice No.{% endtrans %}</b></td>
