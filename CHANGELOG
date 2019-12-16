@@ -1,3 +1,18 @@
+[16 December 2019 Release 6.50]
+* More screens are responsive.
+* Resolved bug that prevented Company Logo from being displayed.
+* New format for printing invoice for retailers.
+* Discount can be set in percent or as amount while creating a Product or Service. This gets loaded automatically while creating documents.
+* Facility to cancel invoices associated with Delivery Notes.
+* Facility to cancel Delivery Notes and a report listing all cancelled deliveries.
+* Better search combo in select company screen and report screens
+* Consistency in creating customer/supplier ledger account
+* Auto populate Issuer name and designation field in documents
+* Enhancement in rejection note.
+* Sample charts and diagrams in dashboard when there is no data.
+* Enhancement in Activity log.
+
+
 [16 August 2019 Release 6.0 Update]
 * Payment button uncleared invoices.
 * P&L and Balance Sheets available for any period within a financial year.
