@@ -78,7 +78,7 @@
 	 }
 
 	 .smwrap1{
-	     width:1.8%
+	     width:2.2%
 	 }
 
 	 .mdwrap{
@@ -116,6 +116,19 @@
 	 .table{
 	     margin-bottom:0px;
 	 }
+	 #deltableouterdiv{
+       overflow-x:auto;
+       overflow-y:auto;
+   }
+   #unbill_del_table, #cancelled_del_table {
+       min-width: 1200;
+       min-height: 600;
+   }
+   .btn {
+       margin-bottom:5px !important;
+       margin-left:5px !important;
+   }
+
 	</style>
 </head>
 <body>
@@ -151,45 +164,47 @@
 	</center>
     {% else %}
   <div id="report_delchal">
-  <div class="col-xs-10 nopadding">
+	  <div class="row">
+  <div class="col-md-10 nopadding">
 	{% if inout == "9" %}
 		{% if del_unbilled_type == "All" %}
 			{% if canceldelflag == 0 %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% endif %}
 		{% else %}
 			{% if canceldelflag == 0 %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Cancelled Inward Deliveries - Invoices Not Received{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong> {% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
 			{% endif %}
 		{% endif %}
 	{% elif inout == "15" %}
 		{% if del_unbilled_type == "All" %}
 			{% if canceldelflag == 0 %}			
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | All Types{% endtrans %}</span>
 			{% endif %}
 		{% else %}
 			{% if canceldelflag == 0 %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_unbilled_type}}</strong></span>
 			{% else %}
-				<span style="margin-left:28%; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
+				<span style="margin:auto; text-align:center; display:table;"><strong>{% trans %}Cancelled Outward Deliveries - Invoices Not Prepared{% endtrans %}</strong> {% trans %}as on date{% endtrans %} <strong>{{new_inputdate}}</strong>{% trans %}| All Godowns | Delivery Type: {% endtrans %} <strong>{{del_cancelled_type}}</strong></span>
 			{% endif %}
 		{% endif %}
 	{% endif %}
   </div>
-  <div class="pull-right input-group input-group-sm" style="margin-bottom:2px;">
+  <div class="col-md-2 pull-right input-group input-group-sm" style="margin-bottom:2px;">
     <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
     </span>
     <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
     <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
     </span>
   </div>
-	<div>
+  </div>
+	<div class="row" id="deltableouterdiv">
 		{% if canceldelflag == 0 %}
 		<table id="unbill_del_table" class="table shadow table-bordered del_unbilled_table" >
 			{% else %}

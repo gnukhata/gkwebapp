@@ -572,9 +572,15 @@ $(".search").children(".form-control").keyup(function(event){
   	    if (this.status == 200) {
 		// if successfull a file will be served to the client.
 		// get binary data as a response
-    		var blob = this.response;
-	 	var url = window.URL.createObjectURL(blob);
-		window.location.assign(url);
+        var blob = this.response;
+        let windowURL = window.webkitURL || window.URL;
+        var dwelement = document.createElement('a');
+        let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+        dwelement.download = "Deliverynote.xlsx";
+        dwelement.href = windowURL.createObjectURL(blob);
+        dwelement.textContent = 'Download Sheet';
+        dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');
+        dwelement.click();
   	    }
 	};
 	xhr.send();
@@ -595,9 +601,15 @@ $(".search").children(".form-control").keyup(function(event){
 			  if (this.status == 200) {
 			// if successfull a file will be served to the client.
 			// get binary data as a response
-				var blob = this.response;
-			 var url = window.URL.createObjectURL(blob);
-			window.location.assign(url);
+			var blob = this.response;
+			let windowURL = window.webkitURL || window.URL;
+			var dwelement = document.createElement('a');
+			let contentType = 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet';
+			dwelement.download = "CancelledDeliverynote.xlsx";
+			dwelement.href = windowURL.createObjectURL(blob);
+			dwelement.textContent = 'Download Sheet';
+			dwelement.dataset.downloadurl = [contentType, dwelement.download, dwelement.href].join(':');
+			dwelement.click();
 			  }
 		};
 		xhr.send();
