@@ -7,7 +7,6 @@ from PIL import Image
 import base64
 import cStringIO
 import os
-from odslib import ODS
 
 @view_config(route_name="drcrnote",renderer="gkwebapp:templates/drcrnote.jinja2")
 def showdrcrnote(request):
