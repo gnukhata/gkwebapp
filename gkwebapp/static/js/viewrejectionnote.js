@@ -140,6 +140,12 @@ $(document).ready(function() {
 	$("#invoice_gstin").val(resp.gkresult.rejinvdata.orgstategstin);
 	$("#invoice_tin").val(resp.gkresult.rejinvdata.custtin);
 	$("#issuer_name").val(resp.gkresult.rejinvdata.issuername);
+	$("#rej_narration").val("");
+	$("#nar_field").hide();
+	if(resp.gkresult.rejnarration != null){
+		$("#nar_field").show();
+		$("#rej_narration").val(resp.gkresult.rejnarration);
+	}
 	if(resp.gkresult.rejinvdata.inoutflag == 15){
 	    $("#invoice_addr").val(resp.gkresult.rejinvdata.address);
 	    $("#issuer_designation").val(resp.gkresult.rejinvdata.designation);

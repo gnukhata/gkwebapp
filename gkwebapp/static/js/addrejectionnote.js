@@ -888,10 +888,11 @@ $(document).ready(function() {
 							   '</td>' +
 							   '</tr>');
 	}
-    });
+	});
 
     $("#rejectionnote_save").click(function(event) {       // save event to save rejection note.
 	event.stopPropagation();
+	rej_narration = $("#rej_narration").val();
 	$('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 	// below are all the validation checks
 	if (!($("#rejectionnote_invoice").val()) && !($("#rejectionnote_deliverynote").val())) {
@@ -1064,6 +1065,9 @@ $(document).ready(function() {
 	if($("#rejectionnote_godown").attr("data-goid")){
 	    form_data.append("goid", $("#rejectionnote_godown").attr("data-goid"));
 	}
+	if (rej_narration.length !=0 ){
+		form_data.append("rej_narration",rej_narration);
+		}
 	form_data.append("products", JSON.stringify(rejprods));
 	form_data.append("rejectedtotal",rejectedtotal);
 	event.preventDefault();
@@ -1160,6 +1164,19 @@ $(document).ready(function() {
 		$("#issuer_name").val(resp.unamerole["username"]);
 	  $("#issuer_designation").val(resp.unamerole["userroleName"]);
 	});
+	var delta = 500;
+	var lastKeypressTime = 0;
+	$("#rej_narration").keydown(function(event) {
+	  if (event.which==13){
+	  var thisKeypressTime = new Date();
+	  if ( thisKeypressTime - lastKeypressTime <= delta )
+	  {
+		  $("#rejectionnote_save").focus();
+		  thisKeypressTime = 0;
+	  }
+	  lastKeypressTime = thisKeypressTime;
+	  }
+  });
 });
 
 

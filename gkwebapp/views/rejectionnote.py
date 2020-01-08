@@ -66,10 +66,15 @@ def getrejectionnote(request):
 def saverejectionnote(request):
     header={"gktoken":request.headers["gktoken"]}
     rndata = {"rnno":request.params["rnno"],"rndate":request.params["rndate"],"inout":request.params["inout"],"rejprods" : json.loads(request.params["products"]),"rejectedtotal":request.params["rejectedtotal"]}
+
     if "dcid" in request.params:
         rndata["dcid"] = request.params["dcid"]
     if "invid" in request.params:
         rndata["invid"] = request.params["invid"]
+    if "rej_narration" in request.params:
+        s = str(request.params["rej_narration"]).isspace()
+        if (s == False):
+            rndata["rejnarration"] = request.params["rej_narration"]
     stockdata = {"inout":int(request.params["inout"]),"items":json.loads(request.params["products"])}
     if request.params.has_key("goid"):
         stockdata["goid"]=int(request.params["goid"])

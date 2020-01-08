@@ -576,7 +576,14 @@
 		<label class="col-sm-6 fsize">{% trans %}Designation{% endtrans %} :</label>
 		<input class="form-control input-sm col-sm-6" id="issuer_designation" aria-label="{% trans %}Designation{% endtrans %}"disabled>
 	      </div>
-	    </div>
+		</div>
+		<div class="row" id="nar_field" hidden>
+			<div class="col-sm-12 form-inline form-group">
+				<label for="rej_narration">{% trans %}Narration{% endtrans %} :</label>
+				<textarea class="form-control" name="narration" id="rej_narration"  rows="2" cols="70" accesskey="t" disabled></textarea>
+				<small class="form-text text-muted">Press Enter key twice to save</small>
+			</div>
+		  </div>
 	  </div>
 	  <div class="col-md-4">
 	  </div>
