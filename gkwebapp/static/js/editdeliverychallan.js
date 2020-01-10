@@ -100,8 +100,8 @@ $(document).ready(function() {
       }
     })
 	.done(function(resp) {
-		console.log(resp,"respresp");
-	    $(".panel-footer").hide();
+		$(".panel-footer").hide();
+		$("#totalinword").hide();
 	if(resp.delchaldata.delchalContents){
 	    $(".deliverychallan_OLD_div").hide();
 	    $("#deliverychallan_OLD_product_div").hide();
@@ -210,7 +210,7 @@ $(document).ready(function() {
             $('#deliverychallan_edit_issuername').show();
             $('#deliverychallan_edit_designation').show();
             $('#deliverychallan_edit_issuername').val(resp.delchaldata.delchaldata.issuername);
-            $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
+			$('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
 	    $(".invoice_issuer").show();
 	}
 	if(resp.delchaldata.delchaldata.dcnarration != null){
@@ -222,6 +222,17 @@ $(document).ready(function() {
 	}
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
+	if(resp.delchaldata.delchaldata.totalinword != null){
+	$("#totalinword").show();
+	$('#totalValueInWord').text(resp.delchaldata.delchaldata.totalinword);
+	}
+	if (resp.delchaldata.delchaldata.roundoffflag == 1){
+		$("#roundoff_div").show();
+		$("#totalinvoicevalueroundoff").text(parseFloat(resp.delchaldata.delchaldata.roundedoffvalue).toFixed(2));
+	}
+	else{
+		$("#roundoff_div").hide();
+	}
 	//Sourcestate and Destinationstate.
 	    if (inoutflag == 15) {
 	    $("#invoicestate").text(resp.delchaldata.sourcestate);
@@ -344,13 +355,6 @@ $(document).ready(function() {
 	    $("#total_product_gst").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
 	    $("#taxableamount").text(parseFloat(resp.delchaldata.totaltaxablevalue).toFixed(2));
 		$("#totalinvoicevalue").text(parseFloat(resp.delchaldata.delchaldata.delchaltotal).toFixed(2));
-		if (resp.delchaldata.delchaldata.roundoffflag == 1){
-			$("#roundoff_div").show();
-			$("#totalinvoicevalueroundoff").text(parseFloat(resp.delchaldata.delchaldata.roundedoffvalue).toFixed(2));
-		}
-		else{
-			$("#roundoff_div").hide();
-		}
 	    $("#totalsgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totalcgtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));
 	    $("#totaligtax").text(parseFloat(resp.delchaldata.totaltaxamt).toFixed(2));

@@ -360,6 +360,32 @@ $("#invoice_date").keydown(function(event) {
 	else {
 	    $('#discounttotal_product_gst').text("");
 	}
+
+	if ($("#roundoff_checkbox").is(":checked")){
+		var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		roundoffflag = 1;
+	}
+	else{
+		var res = totalamount.toString();
+		roundoffflag = 0;
+	}
+	var str = res.split(".");
+	var len = str[1];
+	if(totalamount!=0){
+	if(str[1] != undefined){
+		if(len.length == 1){
+		str[1] = str[1]+0;
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
+		}else{
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
+		}
+	}else{
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
+
+	}
+	}else{
+	numbertowords = "Zero"+" "+ "Rupees";
+	}
 	$('#taxablevaluetotal_product_gst').text(parseFloat(totaltaxable).toFixed(2));
 	$('#totalcgst_product_gst').text(parseFloat(totalcgst).toFixed(2));
 	$('#totalsgst_product_gst').text(parseFloat(totalsgst).toFixed(2));
@@ -373,6 +399,8 @@ $("#invoice_date").keydown(function(event) {
 	$("#totaligtax").text(parseFloat(totaligst).toFixed(2));
 	$("#totalinvcess").text(parseFloat(totalcess).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
+	$("#totalinvoicevalueroundedoff").text(parseFloat(Math.round(totalamount)).toFixed(2));
 	tottaxable=totaltaxable;
 	tottax=totaltax;
     }
@@ -423,6 +451,31 @@ $("#invoice_date").keydown(function(event) {
 	else {
 	    $('#discounttotal_product_vat').hide();
 	}
+	if ($("#roundoff_checkbox").is(":checked")){
+		var res = 	parseFloat(Math.round(totalamount)).toFixed().toString();
+		roundoffflag = 1;
+	}
+	else{
+		var res = totalamount.toString();
+		roundoffflag = 0;
+	}
+	var str = res.split(".");
+	var len = str[1];
+	if(totalamount!=0){
+	if(str[1] != undefined){
+		if(len.length == 1){
+		str[1] = str[1]+0;
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
+		}else{
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
+		}
+	}else{
+		numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
+
+	}
+	}else{
+	numbertowords = "Zero"+" "+ "Rupees";
+	}
 	$('#taxablevaluetotal_product_vat').val(parseFloat(totaltaxable).toFixed(2));
 	$('#totaltax').val(parseFloat(totaltax).toFixed(2));
 	$('#total_product_vat').val(parseFloat(totalamount).toFixed(2));
@@ -430,6 +483,8 @@ $("#invoice_date").keydown(function(event) {
 	$("#taxableamount").text(parseFloat(totaltaxable).toFixed(2));
 	$("#totalinvtax").text(parseFloat(totaltax).toFixed(2));
 	$("#totalinvdiscount").text(parseFloat(totaldiscount).toFixed(2));
+	$("#totalinvoicevalueroundedoff").text(parseFloat(Math.round(totalamount)).toFixed(2));
+	$("#totalValueInWord").text(numbertowords);
 	tottaxable=totaltaxable;
 	tottax=totaltax;
     }
@@ -2851,6 +2906,13 @@ $("#roundoff_checkbox").change(function(e){
 		$("#roundoff_div").hide();
 		roundoffflag = 0;
 	}
+
+	if($(".taxapplicable").val() == 7){
+		$('.invoice_product_quantity_gst').change();
+	}
+	else{
+		$('.invoice_product_quantity_vat').change();
+	}
 });
 
 
@@ -3628,6 +3690,7 @@ $("#roundoff_checkbox").change(function(e){
 	form_data.append("inoutflag",$("#status").val());
 	form_data.append("contents", JSON.stringify(contents));	
 	form_data.append("orgstategstin",$("#orggstin").text());	
+	form_data.append("deltotalword", numbertowords);
 	if($("#consigneename").val() != ""){
 	    form_data.append("consignee", JSON.stringify(consignee));
 	}
@@ -4217,34 +4280,8 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("orgstategstin",$("#inv_orggstin").text() );
 		form_data.append("designation", designation);
 		form_data.append("invtotal", parseFloat(invoicetotal).toFixed(2));
-		
-		if ($("#roundvalue").is(":checked")){
-		  var res = 	parseFloat(Math.round(invoicetotal)).toFixed().toString();
-		  roundoffvalue = 1;
-		}
-		  else{
-		    var res = invoicetotal.toString();
-
-		    roundoffvalue = 0;
-		  }
-		  var str = res.split(".");
-		  var len = str[1];
-		  if(invoicetotal!=0){
-		    if(str[1] != undefined && str[1] != '00'){
-		    if(len.length == 1){
-			str[1] = str[1]+0;
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
-		    }else{
-			numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees"+" "+"and"+" "+ convertNumberToWords(parseInt(str[1]))+"Paise";
-		    }
-		}else{
-		    numbertowords =convertNumberToWords(parseInt(str[0]))+" "+"Rupees";
-
-		}
-	    }else{
-		numbertowords = "Zero"+" "+ "Rupees";
-	    }
-		form_data.append("invtotalword", numbertowords);
+		console.log(numbertowords,"numbertowords");
+		form_data.append("deltotalword", numbertowords);
 		form_data.append("av",JSON.stringify(av));
 		if ($("#status").val() == 9) {
 	   /*let destinationstate = $("#invoicestate option:selected").val();
