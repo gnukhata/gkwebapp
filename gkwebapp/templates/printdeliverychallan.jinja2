@@ -605,6 +605,14 @@
 	    </div>
 	  </div>
 	</div>
+	{% if gkresult["delchaldata"]["totalinword"] != None  %}
+	<div class ="col-sm-12" style="text-align: center;">
+		<br>
+		<label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Value In Words {% endtrans %} :</label>
+		<i><label id="totalValueInWord" style="font-size:100% !important; font-weight: normal">{{gkresult["delchaldata"]["totalinword"]}}</label></i>
+		<br>
+	  </div>
+	  {% endif %}
 	<div class="row">
 	  
 	</div>
