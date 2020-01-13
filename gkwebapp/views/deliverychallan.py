@@ -154,6 +154,7 @@ def savedelchal(request):
         s = str(request.params["dc_narration"]).isspace()
         if (s == False):
             delchaldata["dcnarration"] = request.params["dc_narration"]
+    delchaldata["roundoffflag"] = int(request.params["roundoffflag"])
     stockdata = {"inout":int(request.params["inout"])}
     if request.params.has_key("goid"):
         stockdata["goid"]=int(request.params["goid"])
