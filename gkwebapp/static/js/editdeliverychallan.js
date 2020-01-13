@@ -213,6 +213,13 @@ $(document).ready(function() {
             $('#deliverychallan_edit_designation').val(resp.delchaldata.delchaldata.designation);
 	    $(".invoice_issuer").show();
 	}
+	if(resp.delchaldata.delchaldata.dcnarration != null){
+		$("#dcnarration").show();
+		$("#dc_narration").text(resp.delchaldata.delchaldata.dcnarration);
+	}
+	else{
+		$("#dcnarration").hide();
+	}
 	$('#deliverychallan_edit_challanno').text(resp.delchaldata.delchaldata.dcno);
 	$("#deliverychallan_edit_date").text(resp.delchaldata.delchaldata.dcdate);
 	//Sourcestate and Destinationstate.

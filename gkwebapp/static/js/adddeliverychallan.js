@@ -3609,6 +3609,8 @@ $("#roundoff_checkbox").change(function(e){
 			
 			$("#invoice_number_input").hide();
 			$("#failure-alert").html("Something went wrong!");
+	dc_narration=$("#dc_narration").val();
+	
 	var form_data = new FormData();
 	form_data.append("roundoffflag", roundoffflag);
         form_data.append("discflag", parseInt($("#discountpercent").val()));
@@ -3638,7 +3640,9 @@ $("#roundoff_checkbox").change(function(e){
 	if ($("#deliverychallan_godown option").length!=0){
     	    form_data.append("goid", $("#deliverychallan_godown option:selected").val());
 	}
-
+	if (dc_narration.length !=0 ){
+		form_data.append("dc_narration",dc_narration);
+		}
 	//Delivery In
 	if ($("#status").val() == 9) {
 	    form_data.append("taxstate", $("#invoicestate option:selected").val());
