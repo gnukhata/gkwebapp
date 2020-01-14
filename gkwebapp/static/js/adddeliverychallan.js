@@ -4280,6 +4280,7 @@ $("#roundoff_checkbox").change(function(e){
 		form_data.append("orgstategstin",$("#inv_orggstin").text() );
 		form_data.append("designation", designation);
 		form_data.append("invtotal", parseFloat(invoicetotal).toFixed(2));
+		form_data.append("invtotalword", numbertowords);
 		form_data.append("deltotalword", numbertowords);
 		form_data.append("av",JSON.stringify(av));
 		if ($("#status").val() == 9) {
