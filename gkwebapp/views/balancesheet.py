@@ -574,11 +574,10 @@ def showbalancesheetreport(request):
         result = requests.get("http://127.0.0.1:6543/report?type=balancesheet&calculateto=%s&baltype=2&calculatefrom=%s"%(calculateto,calculatefrom), headers=header)
         return render_to_response("gkwebapp:templates/sourcesandapplicationoffundsreport.jinja2",{"records":result.json()["gkresult"],"balancesheettype":"conventionalbalancesheet","to":calculateto,"from":calculatefrom,"orgtype":orgtype},request=request)
 
-
 @view_config(route_name="allorgcode",request_param="type=orgcodelist", renderer="json")
 def listoforg(request):
     header={"gktoken":request.headers["gktoken"]}
-    result = requests.get("http://127.0.0.1:6543/organisations?type=orgcodelist", headers=header)
+    result = requests.get("http://127.0.0.1:6543/organisations?type=sameyear", headers=header)
     orgdata=[]
     for record in result.json()["gkdata"]:
         gdata= {"orgname":str(record["orgname"]),"orgtype":str(record["orgtype"]),"orgcode":str(record["orgcode"]),"yearstart":str(record["yearstart"]),"yearend":str(record["yearend"])}
