@@ -110,7 +110,7 @@ th {
 					<form id="editaccountform" method="post"  action="editaccount" class="form-horizontal" hidden>
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
-						  <label for="groupname" id="gname">{% trans %}Group Name{% endtrans %} :</label>
+						  <label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} :</label>
 						  <select class="form-control gsselect input-sm" id="groupname" name="groupname" accesskey="g">
 						    <option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
 						    {% for grps in groupdata %}
@@ -118,8 +118,8 @@ th {
 						    {% endfor %}
 						  </select>
 							<br/>
-							<label for="subgroupname" id="sname">{% trans %}Sub-Group Name{% endtrans %} :</label>
-							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
+							<label for="subgroupname" id="sname">{% trans %}Sub-Group <u>N</u>ame{% endtrans %} :</label>
+							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="n">
 							  <option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
 							<small id="newsubgrouptxt" class="form-text text-muted">Press Shift button to add a new Sub-Group.</small>

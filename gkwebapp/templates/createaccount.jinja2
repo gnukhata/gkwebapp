@@ -187,8 +187,8 @@ outline: none;
 								{% endfor %}
 							</select>
 							<br/>
-							<label for="subgroupname" id="sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
-							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
+							<label for="subgroupname" id="sname">{% trans %}Sub-Group <u>N</u>ame{% endtrans %} : </label>
+							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="n">
 								<option for="subgroupname" value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
 							<small class="form-text text-muted">Press Shift button to add a new Sub-Group.</small>
@@ -294,12 +294,12 @@ outline: none;
 							  </div>
 							  {%endif%}
 							</div>
-							<label for="accountname" id="accname">{% trans %}<u>A</u>ccount Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
-							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="a"></input>
+							<label for="accountname" id="accname">{% trans %}Acco<u>u</u>nt Name{% endtrans %} : </label><label for="accountname" style="color:red;font-size: 120%;">*</label>
+							<input type="text" id="accountname" class="form-control input-sm" name="accountname" accesskey="u"></input>
 							<a id="addcust" class="disabled"><small> Add more fields.</small></a>
 							<div>{{custsupdata}}</div>
 							<br>
-							<label for="openbal" id="obal" hidden>{% trans %}<u>O</u>pening Balance{% endtrans %} : </label>
+							<label for="openbal" id="obal" hidden>{% trans %}O<u>p</u>ening Balance{% endtrans %} : </label>
 							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="o" hidden/>
 							<br/>
 							<button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
