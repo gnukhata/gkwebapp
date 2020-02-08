@@ -1888,6 +1888,7 @@ $(document).ready(function() {
                 $(".discaddon").siblings().width("80%");
 		$(".discheader").text("Discount %");
 	    }
+	$("#discountpercent").val(delchal_discflag);
     });
 
 	if($("#status").val() == 15){
