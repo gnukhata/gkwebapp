@@ -59,7 +59,7 @@ $(document).ready(function()
     if (e.which == 13)
       {
         e.preventDefault();
-          $("#login").focus(); 
+          $("#login").focus().click(); 
       }
       if(e.which == 38)
     {
