@@ -107,7 +107,7 @@ def orglogin(request):
     if "gstin" in request.params:
         gkdata["orgdetails"]["gstin"]=json.loads(request.params["gstin"])
     if "orgstate" in request.params:
-        gkdata["orgdetails"]=request.params["orgstate"]
+        gkdata["orgdetails"]["orgstate"]=request.params["orgstate"]
     if request.params.has_key("bankdetails"):
         gkdata["orgdetails"]["bankdetails"]=json.loads(request.params["bankdetails"])
         
