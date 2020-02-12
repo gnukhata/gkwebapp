@@ -1918,14 +1918,15 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
        var curindex1 = $(this).index();
        var panno1= $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val();
 	   gstinstring = $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(0)').val() +$('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(1)').val() + $('#gstintable tbody tr:eq('+curindex1+') td:eq(1) input:eq(2)').val();
-           gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+       
+	if(gstinstring.length == 15){
+     gobj[$('#gstintable tbody tr:eq('+curindex1+') td:eq(0) select option:selected').attr("stateid")] = gstinstring;
+  }
    });
-    
     var form_data = new FormData();
     form_data.append("orgcity", $("#orgcity").val());
     form_data.append("orgaddr", $("#orgaddr").val());
     form_data.append("orgpincode", $("#orgpincode").val());
-    form_data.append("orgstate",$("#orgstate").val());
     form_data.append("orgcountry",$("#orgcountry").val());
     form_data.append("orgtelno",$("#orgtelno").val());
     form_data.append("orgfax",$("#orgfax").val());
@@ -1933,8 +1934,13 @@ $(document).off("click", "#createlogin").on("click", "#createlogin", function(e)
     form_data.append("orgemail",$("#orgemail").val());
     form_data.append("orgpan",$("#orgpan").val());
     form_data.append("orgmvat",$("#orgmvat").val());
-    form_data.append("orgstax",$("#orgstax").val());    
+    form_data.append("orgstax",$("#orgstax").val());   
+    if (!(jQuery.isEmptyObject( gobj ))){ 
       form_data.append("gstin",JSON.stringify(gobj)); //for gstin
+    }
+    if ($("#orgstate").val() != null){
+      form_data.append("orgstate",$("#orgstate").val());
+    }
       if($("#accnum").val()!="" && $("#branch_name").val()!="" && $("#bank_name").val()!="" && $("#ifsc_code").val()!=""){
 	  var bankdetails={};
          bankdetails["accountno"]=$.trim($("#accnum").val());
