@@ -180,15 +180,33 @@ outline: none;
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
 							<label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} : </label><label for="groupname" style="color:red;font-size: 120%;">*</label>
-							<select class = "form-control gsselect input-sm" id="groupname"  name = "groupname" accesskey="g">
+							
+							<!-- <select class = "form-control gsselect input-sm" id="groupname"  name = "groupname" accesskey="g">
 								<option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
 								{% for grps in gkresult %}
 								<option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
 								{% endfor %}
 							</select>
-							<br/>
-							<label for="subgroupname" id="sname">{% trans %}Sub-Group <u>N</u>ame{% endtrans %} : </label>
-							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="n">
+							<br/> -->
+
+
+							<div class="dropdown searchabledropdown" data-input-id="groupname-input" data-button-id="groupname_id">
+									<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="groupname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									  {% trans %}Select Group{% endtrans %}
+									  <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu selectdropdown" aria-labelledby="groupname-label" id="groupname-ul">
+									  <li><input id="groupname-input" class="form-control selectinput" /></li>
+								{% for grps in gkresult %}
+											<li><a class="groupname-option selectdropdown" href="#" data-value="{{grps['groupcode']}}">{{grps["groupname"]}}</a></li>
+										  {% endfor %}
+									</ul>
+								  </div>
+
+
+						<br>
+							<label for="subgroupname" id="sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
+							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">
 								<option for="subgroupname" value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
 							</select>
 							<small class="form-text text-muted">Press Shift button to add a new Sub-Group.</small>

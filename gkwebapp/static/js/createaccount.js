@@ -51,8 +51,20 @@ $(document).ready(function()
     var taxrate = "";
 	var cessrate = "";
 	var custsup;
-  $("#groupname").bind("change keyup", function(){
-      var gname = $("#groupname option:selected").text();
+
+	$(".groupname-option").click(function(){
+		//Creating an object to store organisation name and type
+		$("#groupname").data("value", $(this).data("value"));
+		$("#groupname").text($(this).text());
+		$("#groupname").focus();
+// 	  });
+
+// //   $("#groupname").bind("change keyup", function(){
+// 	$("#groupname").click(function(){
+
+	var gname = $("#groupname").text();
+	//   console.log(gname,"gname");
+	//   var gname1 = $(".groupname-option").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
     {
       $("#obal").hide();
@@ -67,7 +79,8 @@ $(document).ready(function()
       $("#openbal").show();
     }
 
-    var groups = $("#groupname option:selected").val();
+	var groups = $("#groupname").data("value");
+	console.log(groups,"groups");
     if (groups != '') {
       $.ajax({
         type: "POST",
@@ -86,7 +99,7 @@ $(document).ready(function()
           for (i in subgroups ) {
             $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
           }
-            var grpnam=$("#groupname option:selected").text();
+            var grpnam=$("#groupname").text();
             $('#subgroupname').prepend('<option value="None">None</option>');
 	    $("#subgroupname option:first").attr("selected", "selected");
             $('#subgroupname').append('<option value="New">New Sub-Group</option>');
@@ -99,6 +112,7 @@ $(document).ready(function()
   $("#nsgp").hide();
 
   $(".gsselect").bind("change keyup", function(){
+	  console.log($("#groupname").text());
 	$("#addcust").hide();
 	var sgroups = $("#subgroupname option:selected").val();
     if (sgroups=="New")
@@ -110,11 +124,11 @@ $(document).ready(function()
     else
     {
 	  $("#nsgp").hide();
-	  if ($("#groupname option:selected").text() == "Indirect Expense"){
+	  if ($("#groupname").text() == "Indirect Expense"){
 		$("#rodivpaid").show();
 		$("#rodivreceived").hide();
 	  }
-	  if ($("#groupname option:selected").text() == "Indirect Income"){
+	  if ($("#groupname").text() == "Indirect Income"){
 		$("#rodivpaid").hide();
 		$("#rodivreceived").show();
 	  }
@@ -180,7 +194,7 @@ $(document).ready(function()
     $('#addaccount').click();
   }
 );
-$("#groupname ").change(function(e){
+$("#groupname").change(function(e){
 	if($.trim($("#groupname option:selected").text()) == 'Indirect Expense' ){
 		$("#rodivpaid").show();
 		$("#rodivreceived").hide();
@@ -288,7 +302,7 @@ $("#openbal").keydown(function(event){
 				global: false,
 				async: false,
 				datatype: 'json',
-				data: {"groupname": $("#groupname option:selected").val(),"newsubgroup":$("#newsubgroup").val()},
+				data: {"groupname": $("#groupname").data("value"),"newsubgroup":$("#newsubgroup").val()},
 				beforeSend: function(xhr)
 			{
 			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
