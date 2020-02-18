@@ -100,9 +100,10 @@ $(document).ready(function()
             $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
           }
             var grpnam=$("#groupname").text();
-            $('#subgroupname').prepend('<option value="None">None</option>');
+			$('#subgroupname').prepend('<option value="None">None</option>');
 	    $("#subgroupname option:first").attr("selected", "selected");
-            $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+			$('#subgroupname').append('<option value="New">New Sub-Group</option>');
+			$(".gsselect").change();
         }
       });
     }
@@ -112,7 +113,6 @@ $(document).ready(function()
   $("#nsgp").hide();
 
   $(".gsselect").bind("change keyup", function(){
-	  console.log($("#groupname").text());
 	$("#addcust").hide();
 	var sgroups = $("#subgroupname option:selected").val();
     if (sgroups=="New")
@@ -195,11 +195,11 @@ $(document).ready(function()
   }
 );
 $("#groupname").change(function(e){
-	if($.trim($("#groupname option:selected").text()) == 'Indirect Expense' ){
+	if($.trim($("#groupname").text()) == 'Indirect Expense' ){
 		$("#rodivpaid").show();
 		$("#rodivreceived").hide();
 	  }
-	  else if($.trim($("#groupname option:selected").text()) == 'Indirect Income'){
+	  else if($.trim($("#groupname").text()) == 'Indirect Income'){
 		$("#rodivpaid").hide();
 		$("#rodivreceived").show();
 	  }
@@ -229,7 +229,7 @@ $("#openbal").keydown(function(event){
       $("#groupname").keydown(function(event) {
 	  if(event.which==13 || event.which == 9) {
 	      event.preventDefault();
-	      if ($.trim($("#groupname option:selected").val())=="") {
+	      if ($.trim($("#groupname").data('value'))=="") {
 		  
 		  $("#grpblank-alert").alert();
 		  $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
@@ -514,7 +514,7 @@ $("#openbal").keydown(function(event){
      $("#accountname").keydown(function(event){
 	if(event.which==13||event.which==9) {
 	    event.preventDefault();
-	    var gname = $("#groupname option:selected").text();    //Storing selected value from Goup Name dropdown list. 
+	    var gname = $("#groupname").text();    //Storing selected value from Goup Name dropdown list. 
             if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group"){
 		$("#submit").click();	
 	    } else {
@@ -810,7 +810,7 @@ $("#openbal").keydown(function(event){
     return false;
   }
 
-  if ($.trim($("#groupname option:selected").val())=="") {
+  if ($.trim($("#groupname").data('value'))=="") {
     $("#grpblank-alert").alert();
     $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#grpblank-alert").hide();
@@ -875,7 +875,7 @@ $("#openbal").keydown(function(event){
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname option:selected").val(),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val(),"moredata":JSON.stringify(custsupdatatemp)},
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname").data('value'),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val(),"moredata":JSON.stringify(custsupdatatemp)},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -959,7 +959,7 @@ $("#openbal").keydown(function(event){
 	  $("#gstaccount").attr('checked',false);
 	  $("#addcust").addClass("disabled");
   }
-  if ($.trim($("#groupname option:selected").val())=="") {
+  if ($.trim($("#groupname").data('value'))=="") {
     $("#grpblank-alert").alert();
     $("#grpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#grpblank-alert").hide();
@@ -992,13 +992,13 @@ $("#openbal").keydown(function(event){
   }
 
       var url = "/showmultiacc";
-      if ($("#groupname option:selected").text() == "Current Liabilities" && $("#subgroupname option:selected").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
+      if ($("#groupname").text() == "Current Liabilities" && $("#subgroupname option:selected").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
 	  url = "/showmultiacc?taxes";
       }
       $.ajax({
 	  type: "POST",
 	  url: url,
-	  data: {"groupcode":$("#groupname option:selected").val(),"groupname":$("#groupname option:selected").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+	  data: {"groupcode":$("#groupname").data('value'),"groupname":$("#groupname").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
 	  global: false,
 	  async: false,
 	  datatype: "text/html",
