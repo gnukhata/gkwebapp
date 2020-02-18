@@ -60,7 +60,6 @@ $(document).ready(function()
 // 	  });
 
 // //   $("#groupname").bind("change keyup", function(){
-// 	$("#groupname").click(function(){
 
 	var gname = $("#groupname").text();
 	//   console.log(gname,"gname");
@@ -109,7 +108,45 @@ $(document).ready(function()
     }
   });
 
-  
+
+  $(document).off('keyup' ,'#groupname-input').on('keyup' ,'#groupname-input',function(event) {
+    let searchtext = $("#groupname-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".groupname-option").each(function(index){
+	if (index != -1) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
+	    $(this).show();
+	  }
+	  else {
+	    $(this).parent().hide();
+	    $(this).hide();
+	  }
+	}
+      });
+    }
+    else{
+      $(".groupname-option").each(function(index){
+	$(this).parent().show();
+	$(this).show();
+      });
+    }
+  });
+
+  $(document).off('keydown' ,'#groupname-input').on('keydown' ,'#groupname-input',function(event) {
+    if (event.which == 13 || event.which == 40){
+      event.preventDefault();
+      $("#groupname-input").parent().parent().find("a:visible").first().focus();
+    }
+
+  });
+
+
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
+  });
   $("#nsgp").hide();
 
   $(".gsselect").bind("change keyup", function(){
