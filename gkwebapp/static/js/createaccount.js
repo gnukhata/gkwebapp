@@ -78,8 +78,20 @@ $(document).ready(function()
       $("#openbal").show();
     }
 
+	if(gname == 'Indirect Expense' ){
+		$("#rodivpaid").show();
+		$("#rodivreceived").hide();
+	  }
+	  else if(gname == 'Indirect Income'){
+		$("#rodivpaid").hide();
+		$("#rodivreceived").show();
+	  }
+	  else{
+		$("#rodivpaid").hide();
+		$("#rodivreceived").hide();
+	  }
+
 	var groups = $("#groupname").data("value");
-	console.log(groups,"groups");
     if (groups != '') {
       $.ajax({
         type: "POST",
@@ -110,7 +122,7 @@ $(document).ready(function()
 
 
   $(document).off('keyup' ,'#groupname-input').on('keyup' ,'#groupname-input',function(event) {
-    let searchtext = $("#groupname-input").val().toLowerCase();
+	let searchtext = $("#groupname-input").val().toLowerCase();
     if (searchtext != "") {
       $(".groupname-option").each(function(index){
 	if (index != -1) {
@@ -139,7 +151,6 @@ $(document).ready(function()
       event.preventDefault();
       $("#groupname-input").parent().parent().find("a:visible").first().focus();
     }
-
   });
 
 
@@ -231,20 +242,7 @@ $(document).ready(function()
     $('#addaccount').click();
   }
 );
-$("#groupname").change(function(e){
-	if($.trim($("#groupname").text()) == 'Indirect Expense' ){
-		$("#rodivpaid").show();
-		$("#rodivreceived").hide();
-	  }
-	  else if($.trim($("#groupname").text()) == 'Indirect Income'){
-		$("#rodivpaid").hide();
-		$("#rodivreceived").show();
-	  }
-	  else{
-		$("#rodivpaid").hide();
-		$("#rodivreceived").hide();
-	  }
-});
+
   // Keydown event for Opening Balance.
 $("#openbal").keydown(function(event){
 	if (event.which == 13) {
