@@ -76,12 +76,25 @@ th {
 				<div style="padding-top:5px" class="panel-body" >
 
           <label for="editaccountname" id="accname">{% trans %}List of Accounts{% endtrans %} :</label>
-          <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
+
+          <!-- <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
             <option value="{{accs['accountcode']}}" sysaccount="{{accs["sysaccount"]}}">{{accs["accountname"]}}</option>
             {% endfor %}
-          </select>
+          </select> -->
+
+
+
+		<div class="dropdown searchabledropdown" data-input-id="editaccountname-input" data-button-id="editaccountname">
+	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editaccountname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Account{% endtrans %}<span class="caret"></span></button>
+	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editaccountname-label" id="editaccountname-ul">
+					<li><input id="editaccountname-input" class="form-control selectinput" /></li>
+	      			{% for accs in gkresult %}
+                	<li><a class="editaccountname-option selectdropdown" href="#" data-sysaccount="{{accs['sysaccount']}}" data-value="{{accs['accountcode']}}">{{accs["accountname"]}}</a></li>
+              		{% endfor %}
+	    		</ul>
+	  </div>
 					<div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
 						<strong>{% trans %}This is a system generated account, it cannot be edited/deleted.{% endtrans %}</strong>
 					</div>

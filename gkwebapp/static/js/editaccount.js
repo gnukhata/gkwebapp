@@ -33,7 +33,7 @@ $(document).ready(function()
   $("#baltbl").hide();
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
-  $("#editaccountname").searchify();
+  // $("#editaccountname").searchify();
   $("#editaccountname").focus();
   $("#editaccountform").validate();
   $("#editaccountform").hide();
@@ -48,18 +48,43 @@ $(document).ready(function()
   var deflag;  
   var oldcustname;
   var custsupflag = 0;
-  $("#editaccountname").bind("change keyup", function()
-  {	  
-    custsupflag = 0;
-    custsupdatatemp = {};
-    $("#addcust").hide();
-    $("#addcust").addClass('disabled');
-    oldcustname = $("#editaccountname option:selected").text();
-    $("#submit").hide();
-    $("#alertmsg").hide();
-    var acccode = $("#editaccountname option:selected").val();
-      var accname= $("#editaccountname option:selected").text();
-      var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
+  $(".editaccountname-option").click(function(){
+
+    $("#editaccountname").data("value", $(this).data("value"));
+    $("#editaccountname").data("sysaccount", $(this).data("sysaccount"));
+    $("#editaccountname").text($(this).text());
+    $("#editaccountname").focus();
+    console.log($("#editaccountname").text(),"sfdfsdfsdfdsf");
+    console.log($("#editaccountname").data('value'),"value");
+    console.log($("#editaccountname").data('sysaccount'),"sysaccount");
+    
+    
+    
+      // $("#editaccountname").bind("change keyup", function()
+      // {	  
+        custsupflag = 0;
+        custsupdatatemp = {};
+        $("#addcust").hide();
+        $("#addcust").addClass('disabled');
+        oldcustname = $("#editaccountname").text();
+        $("#submit").hide();
+        $("#alertmsg").hide();
+        var acccode = $("#editaccountname").data('value');
+        var accname= $("#editaccountname").text();
+        var sysaccount = $("#editaccountname").data("sysaccount");
+
+  // $("#editaccountname").bind("change keyup", function()
+  // {	  
+  //   custsupflag = 0;
+  //   custsupdatatemp = {};
+  //   $("#addcust").hide();
+  //   $("#addcust").addClass('disabled');
+  //   oldcustname = $("#editaccountname option:selected").text();
+  //   $("#submit").hide();
+  //   $("#alertmsg").hide();
+  //   var acccode = $("#editaccountname option:selected").val();
+  //     var accname= $("#editaccountname option:selected").text();
+  //     var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
     if (acccode !=""){
     $.ajax({
       type: "POST",
@@ -270,6 +295,46 @@ $(document).ready(function()
     });
     }
   });
+
+  $(document).off('keyup' ,'#editaccountname-input').on('keyup' ,'#editaccountname-input',function(event) {
+    let searchtext = $("#editaccountname-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".editaccountname-option").each(function(index){
+	if (index != -1) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
+	    $(this).show();
+	  }
+	  else {
+	    $(this).parent().hide();
+	    $(this).hide();
+	  }
+	}
+      });
+    }
+    else{
+      $(".editaccountname-option").each(function(index){
+	$(this).parent().show();
+	$(this).show();
+      });
+    }
+  });
+
+  $(document).off('keydown' ,'#editaccountname-input').on('keydown' ,'#editaccountname-input',function(event) {
+    if (event.which == 13 || event.which == 40){
+      event.preventDefault();
+      $("#editaccountname-input").parent().parent().find("a:visible").first().focus();
+    }
+  });
+
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
+  });
+
+
+
   $("#edit").click(function(event)
   {
     event.preventDefault();
@@ -279,9 +344,9 @@ $(document).ready(function()
     $("#alertmsg").hide();
     $("#edit").hide();
     $("#addcust").removeClass('disabled');
-    var acccode = $("#editaccountname option:selected").val();
-      var accname= $("#editaccountname option:selected").text();
-      var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
+    var acccode = $("#editaccountname").data('value');
+      var accname= $("#editaccountname").text();
+      var sysaccount = $("#editaccountname").data("sysaccount");
     if (accname=="Closing Stock" || accname=="Stock at the Beginning" || accname=="Opening Stock" || sysaccount == 1){
       $("#accountname").prop("disabled", true);
       $("#openingbal").prop("disabled", false);
@@ -322,7 +387,7 @@ $(document).ready(function()
     //Change event for 'group name' field.
     $("#groupname").bind("change keyup", function(){
       $("#addcust").hide();
-	if($("#editaccountname option:selected").val() !=""){
+	if($("#editaccountname").data('value') !=""){
 	    var gname = $("#groupname option:selected").text();
 	    if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
 		$("#openingbal").hide();
@@ -551,7 +616,7 @@ $("#editaccountname").keyup(function(e) {
   if($("#editaccountform").is(':visible'))
   {
     if(e.which == 13)
-    {  if( $("#editaccountname option:selected").text()=="Income & Expenditure" ||  $("#editaccountname option:selected").text()=="Profit & Loss" )
+    {  if( $("#editaccountname").text()=="Income & Expenditure" ||  $("#editaccountname").text()=="Profit & Loss" )
     {
       $("#alertmsg").alert();
       $("#alertmsg").show();
