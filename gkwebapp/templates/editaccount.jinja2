@@ -77,15 +77,6 @@ th {
 
           <label for="editaccountname" id="accname">{% trans %}List of Accounts{% endtrans %} :</label>
 
-          <!-- <select class = "form-control input-sm" id="editaccountname"  name = "editaccountname" >
-            <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
-            {% for accs in gkresult %}
-            <option value="{{accs['accountcode']}}" sysaccount="{{accs["sysaccount"]}}">{{accs["accountname"]}}</option>
-            {% endfor %}
-          </select> -->
-
-
-
 		<div class="dropdown searchabledropdown" data-input-id="editaccountname-input" data-button-id="editaccountname">
 	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editaccountname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Account{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editaccountname-label" id="editaccountname-ul">

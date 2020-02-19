@@ -33,7 +33,6 @@ $(document).ready(function()
   $("#baltbl").hide();
   $("#msspinmodal").modal("hide");
   $('.modal-backdrop').remove();
-  // $("#editaccountname").searchify();
   $("#editaccountname").focus();
   $("#editaccountform").validate();
   $("#editaccountform").hide();
