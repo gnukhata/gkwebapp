@@ -54,14 +54,7 @@ $(document).ready(function()
     $("#editaccountname").data("sysaccount", $(this).data("sysaccount"));
     $("#editaccountname").text($(this).text());
     $("#editaccountname").focus();
-    console.log($("#editaccountname").text(),"sfdfsdfsdfdsf");
-    console.log($("#editaccountname").data('value'),"value");
-    console.log($("#editaccountname").data('sysaccount'),"sysaccount");
-    
-    
-    
-      // $("#editaccountname").bind("change keyup", function()
-      // {	  
+	  
         custsupflag = 0;
         custsupdatatemp = {};
         $("#addcust").hide();
@@ -73,18 +66,6 @@ $(document).ready(function()
         var accname= $("#editaccountname").text();
         var sysaccount = $("#editaccountname").data("sysaccount");
 
-  // $("#editaccountname").bind("change keyup", function()
-  // {	  
-  //   custsupflag = 0;
-  //   custsupdatatemp = {};
-  //   $("#addcust").hide();
-  //   $("#addcust").addClass('disabled');
-  //   oldcustname = $("#editaccountname option:selected").text();
-  //   $("#submit").hide();
-  //   $("#alertmsg").hide();
-  //   var acccode = $("#editaccountname option:selected").val();
-  //     var accname= $("#editaccountname option:selected").text();
-  //     var sysaccount = $("#editaccountname option:selected").attr("sysaccount");
     if (acccode !=""){
     $.ajax({
       type: "POST",
@@ -296,7 +277,7 @@ $(document).ready(function()
     }
   });
 
-  $(document).off('keyup' ,'#editaccountname-input').on('keyup' ,'#editaccountname-input',function(event) {
+    $("#editaccountname-input").keyup(function(event){
     let searchtext = $("#editaccountname-input").val().toLowerCase();
     if (searchtext != "") {
       $(".editaccountname-option").each(function(index){
@@ -695,7 +676,7 @@ $(document).off("click","#delete").on("click", "#delete", function(event)
   $('#m_confirmdel').modal('show').one('click', '#accdel', function (e)
   {
 
-    var code = $("#editaccountname option:selected").val();
+    var code = $("#editaccountname").data('value');
     $.ajax(
       {
 
@@ -1094,8 +1075,8 @@ $("#editaccountform").submit(function(e)
   else {
       openingbal=$("#openingbal").val();
   }
-  var acccode = $("#editaccountname option:selected").val();
-  var accname= $("#editaccountname option:selected").text();
+  var acccode = $("#editaccountname").data('value');
+  var accname= $("#editaccountname").text();
   if(accname=="Closing Stock" || accname=="Stock at the Beginning"){
      var accountname=accname;
   }
