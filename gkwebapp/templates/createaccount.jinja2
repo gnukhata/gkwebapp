@@ -180,15 +180,6 @@ outline: none;
 
 						<div style="margin-bottom: 5px" class="col-xs-12 from-group">
 							<label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} : </label><label for="groupname" style="color:red;font-size: 120%;">*</label>
-							
-							<!-- <select class = "form-control gsselect input-sm" id="groupname"  name = "groupname" accesskey="g">
-								<option value="" disabled selected hidden>{% trans %}Select Group{% endtrans %}</option>
-								{% for grps in gkresult %}
-								<option value="{{grps['groupcode']}}">{{grps["groupname"]}}</option>
-								{% endfor %}
-							</select>
-							<br/> -->
-
 
 							<div class="dropdown searchabledropdown" data-input-id="groupname-input" data-button-id="groupname_id">
 									<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="groupname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -202,8 +193,6 @@ outline: none;
 										  {% endfor %}
 									</ul>
 								  </div>
-
-
 						<br>
 							<label for="subgroupname" id="sname">{% trans %}Su<u>b</u>-Group Name{% endtrans %} : </label>
 							<select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="b">

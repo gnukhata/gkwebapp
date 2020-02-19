@@ -53,23 +53,17 @@ $(document).ready(function()
 	var custsup;
 
 	$(".groupname-option").click(function(){
-		//Creating an object to store organisation name and type
 		$("#groupname").data("value", $(this).data("value"));
 		$("#groupname").text($(this).text());
 		$("#groupname").focus();
-// 	  });
-
-// //   $("#groupname").bind("change keyup", function(){
 
 	var gname = $("#groupname").text();
-	//   console.log(gname,"gname");
-	//   var gname1 = $(".groupname-option").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
     {
       $("#obal").hide();
       $("#openbal").hide();
       $("#baltbl").hide();
-
+	  
     }
     else
     {
@@ -121,7 +115,7 @@ $(document).ready(function()
   });
 
 
-  $(document).off('keyup' ,'#groupname-input').on('keyup' ,'#groupname-input',function(event) {
+  $("#groupname-input").keyup(function(event) {
 	let searchtext = $("#groupname-input").val().toLowerCase();
     if (searchtext != "") {
       $(".groupname-option").each(function(index){
