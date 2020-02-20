@@ -267,11 +267,13 @@ $("#openbal").keydown(function(event){
 		  $("#groupname").focus();
 		  $("#groupname").select();
 		  return false;
-	      }
-	  }
-	  if(event.which==13){
-	      event.preventDefault();
+		  }
 	      $("#subgroupname").focus().select();
+	  }
+	  else {
+		if (!$("#groupname").hasClass("open")){
+	  $("#groupname").click();
+		}
 	  }
       });
 	  
