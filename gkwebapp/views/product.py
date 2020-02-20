@@ -1216,7 +1216,7 @@ def ProductImport(request):
                                 tax["state"]= None
                             else:
                                 errorlist.append(productrow[7].coordinate)
-                            if tax.length > 0:
+                            if len(tax) > 0:
                                 taxes.append(tax)
                         #godown dictionary generation
                         if productrow[10].value!=None:
@@ -1339,5 +1339,7 @@ def ProductImport(request):
         else:
             return {"gkstatus":0}
     except Exception as e:
-        print(e)
-        return {"gkstatus":result.json()["gkstatus"]}
+        try:
+            return {"gkstatus":result.json()["gkstatus"]}
+        except:
+            return {"gkstatus":1}
