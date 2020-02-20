@@ -608,7 +608,11 @@ $("#editaccountname").keyup(function(e) {
     }
   }
 }
-
+else {
+  if (!$("#editaccountname").hasClass("open")){
+$("#editaccountname").click();
+  }
+}
 });
 
 $("#accountname").keydown(function(event) {
