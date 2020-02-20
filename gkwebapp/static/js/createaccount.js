@@ -102,7 +102,10 @@ $(document).ready(function()
             var subgroups = jsonObj["gkresult"];
           $('#subgroupname').empty();
           for (i in subgroups ) {
-            $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+			// $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+
+            $('#subgroupname-option').append('<li><a class="subgroupname-option selectdropdown" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
+			
           }
             var grpnam=$("#groupname").text();
 			$('#subgroupname').prepend('<option value="None">None</option>');
