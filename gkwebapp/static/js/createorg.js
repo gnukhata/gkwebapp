@@ -1706,7 +1706,7 @@ $(document).off("keydown",".gstinstate").on("keydown",".gstinstate",function(eve
 	      }
 	      else if(gstinstring != ""){
 		  if(gstinstring.length != 15){
-		      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');X
+		      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
 		      $("#gstin-improper-alert").alert();
 		      $("#gstin-improper-alert").fadeTo(2250, 500).slideUp(500, function(){
 			  $("#gstin-improper-alert").hide();
