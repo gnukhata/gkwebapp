@@ -1137,13 +1137,13 @@ def ProductImport(request):
                             errorlist.append(productrow[1].coordinate)
                         if productrow[7].value !=None and productrow[9].value==None:
                             errorlist.append(productrow[9].coordinate)
-                        if productrow[5].value != None and not(str(productrow[5].value).isdigit()):
+                        if productrow[5].value != None and not(is_number(str(productrow[5].value))):
                             errorlist.append(productrow[9].coordinate)
-                        if productrow[6].value != None and not(str(productrow[6].value).isdigit()):
+                        if productrow[6].value != None and not(is_number(str(productrow[6].value))):
                             errorlist.append(productrow[9].coordinate)
-                        if productrow[9].value != None and not(str(productrow[9].value).isdigit()):
+                        if productrow[9].value != None and not(is_number(str(productrow[9].value))):
                             errorlist.append(productrow[9].coordinate)
-                        if productrow[11].value != None and not(str(productrow[11].value).isdigit()):
+                        if productrow[11].value != None and not(is_number(str(productrow[11].value))):
                             errorlist.append(productrow[9].coordinate)
 
                         proddetails={}        
