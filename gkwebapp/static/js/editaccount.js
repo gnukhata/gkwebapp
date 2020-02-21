@@ -81,14 +81,16 @@ $(document).ready(function()
       {
         let accdetails=jsonObj["gkresult"];  
 	deflag = accdetails["defaultflag"];
-	$("#editaccountform").show();  
-	$("#groupname").val(accdetails["groupcode"]);
-        $("#groupname").prop("disabled", true);  
+  $("#editaccountform").show();  
+  // $(".groupname-option").data('value',accdetails["groupcode"]);
+  // $(".groupname-option").text(accdetails['groupname']);
+  gname=accdetails['groupcode'];
+  $("#groupname").prop("disabled", true);  
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
-        $("#subgroupname").prop("disabled", true);
-    $("groupname").change();  
-    if ($("#groupname option:selected").text() == 'Indirect Expense'){
+    $("#subgroupname").prop("disabled", true);
+    $(".groupname-option[data-value="+ gname +"]").click();
+    if ($("#groupname").text() == 'Indirect Expense'){
         if(accdetails["defaultflag"] == 180){
         $("#alertroundoffpaid").alert();
         $("#alertroundoffpaid").show();
@@ -105,7 +107,7 @@ $(document).ready(function()
 		    $("#roundoffpaid").prop("disabled", true);
         }
     }
-    else if ($("#groupname option:selected").text() == 'Indirect Income'){
+    else if ($("#groupname").text() == 'Indirect Income'){
         if(accdetails["defaultflag"] == 181){
             $("#alertroundoffpaid").alert();
             $("#alertroundoffpaid").hide();
@@ -260,7 +262,7 @@ $(document).ready(function()
     }else{
 	$("#delete").show();
     }
-    var grpname = $("#groupname option:selected").text();
+    var grpname = $("#groupname").text();
 	if (grpname=="Direct Expense"|| grpname=="Direct Income"||grpname=="Indirect Expense"|| grpname=="Indirect Income") {
 	    $("#openingbal").hide();
 	    $("#openbal").hide();
@@ -318,7 +320,7 @@ $(document).ready(function()
   $("#edit").click(function(event)
   {
     event.preventDefault();
-    var grpname= $("#groupname").val();  
+    var grpname= $("#groupname").data('value');  
 
     $("#submit").show();
     $("#alertmsg").hide();
@@ -365,10 +367,16 @@ $(document).ready(function()
   }
 );
     //Change event for 'group name' field.
-    $("#groupname").bind("change keyup", function(){
+    // $("#groupname").bind("change keyup", function(){
+      $(".groupname-option").click(function(){
+    
+      $("#groupname").data("value", $(this).data("value"));
+	  	$("#groupname").text($(this).text());
+  		$("#groupname").focus();
+
       $("#addcust").hide();
 	if($("#editaccountname").data('value') !=""){
-	    var gname = $("#groupname option:selected").text();
+	    var gname = $("#groupname").text();
 	    if (gname=="Direct Expense"|| gname=="Direct Income"||gname=="Indirect Expense"|| gname=="Indirect Income") {
 		$("#openingbal").hide();
 		$("#openbal").hide();
@@ -394,7 +402,7 @@ $(document).ready(function()
     }
         
 	}
-	var groups = $("#groupname option:selected").val();
+	var groups = $("#groupname").data('value');
 	if (groups != '') {
 	    $.ajax({
 		type: "POST",
@@ -411,7 +419,7 @@ $(document).ready(function()
 		    var subgroups = jsonObj["gkresult"];
 		    var subgrp = $("#subgroupname option:selected").val();
 		    $('#subgroupname').empty();
-		    var grpnam=$("#groupname option:selected").text();
+		    var grpnam=$("#groupname").text();
 		    $('#subgroupname').prepend('<option value="None">None</option>');
 		    $('#subgroupname option:first').attr("selected", "selected");		    
 		    for (i in subgroups ) {
@@ -472,11 +480,11 @@ $(document).ready(function()
        $("#roundoffdivreceived").hide();
 	}else{
         $("#nsgp").hide();
-        if ($("#groupname option:selected").text()=="Indirect Expense"){
+        if ($("#groupname").text()=="Indirect Expense"){
             $("#roundoffdivpaid").show();
             $("#roundoffdivreceived").hide();
         }
-        if ($("#groupname option:selected").text()=="Indirect Income"){
+        if ($("#groupname").text()=="Indirect Income"){
             $("#roundoffdivpaid").hide();
             $("#roundoffdivreceived").show();
         }
@@ -511,11 +519,11 @@ $(document).ready(function()
       $("#bnkdiv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors' && $("#groupname option:selected").text()=="Current Assets"){
+      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors' && $("#groupname").text()=="Current Assets"){
 		$("#addcust").show();
     custsup = '15';
     custsupflag = 1;
-	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase' && $("#groupname option:selected").text()=="Current Liabilities"){
+	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase' && $("#groupname").text()=="Current Liabilities"){
 		$("#addcust").show();
     custsup = '9';
     custsupflag = 1;
