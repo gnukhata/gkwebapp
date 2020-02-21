@@ -100,18 +100,18 @@ $(document).ready(function()
         },
         success: function(jsonObj) {
             var subgroups = jsonObj["gkresult"];
-          $('#subgroupname').empty();
-          for (i in subgroups ) {
-			// $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+		  $('#subgroupname-ul').empty();
+		  $('#subgroupname-ul').append('<li><input id="subgroupname-input" class="form-control selectinput"/></li>');
+		  $('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" data-value="None">None</a></li>');
+		//   $(".subgroupname-option").text("");
+		  $(".subgroupname-option:first").attr('data-value',"");
+		  $(".subgroupname-option:first").click();
 
-            $('#subgroupname-option').append('<li><a class="subgroupname-option selectdropdown" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
-			
+          for (i in subgroups ) {
+			$('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');		
           }
             var grpnam=$("#groupname").text();
-			$('#subgroupname').prepend('<option value="None">None</option>');
-	    $("#subgroupname option:first").attr("selected", "selected");
-			$('#subgroupname').append('<option value="New">New Sub-Group</option>');
-			$(".gsselect").change();
+			$('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
         }
       });
     }
@@ -150,16 +150,14 @@ $(document).ready(function()
     }
   });
 
-
-  $(".searchabledropdown").on("shown.bs.dropdown", function () {
-    let searchinput = $(this).data("input-id");
-    document.getElementById(searchinput).focus();
-  });
   $("#nsgp").hide();
 
-  $(".gsselect").bind("change keyup", function(){
+	$(document).on('click', '.subgroupname-option', function() {
+		$("#subgroupname").data("value", $(this).data("value"));
+		$("#subgroupname").text($(this).text());
+		$("#subgroupname").focus();
 	$("#addcust").hide();
-	var sgroups = $("#subgroupname option:selected").val();
+	var sgroups = $("#subgroupname").data('value');
     if (sgroups=="New")
     {
       $("#nsgp").show();
@@ -178,7 +176,7 @@ $(document).ready(function()
 		$("#rodivreceived").show();
 	  }
     }
-      if ($.trim($("#subgroupname option:selected").text()) == 'Duties & Taxes') {
+      if ($.trim($("#subgroupname").text()) == 'Duties & Taxes') {
 	  $('#gstfielddiv').show();
 	  $("#gstaccount").prop("disabled", false);
       }
@@ -188,39 +186,39 @@ $(document).ready(function()
       }
 
       /** Under Group 'Current asset' if subgroup 'Bank' or 'Cash' is selected then 'bnkdiv' or 'chsdiv' show or hide respectively **/
-      if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
+      if($.trim($("#subgroupname").text()) == 'Bank'){
 	  $("#bnkdiv").show();
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
 	  $("#rodivpaid").hide();
 		$("#rodivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
+      }else if($.trim($("#subgroupname").text()) == 'Cash'){
 	  $("#chsdiv").show();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").hide();
 	  $("#salediv").hide();
 	  $("#rodivpaid").hide();
 		$("#rodivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
+      }else if($.trim($("#subgroupname").text()) == 'Purchase'){
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").show();
 	  $("#salediv").hide();
 	  $("#rodivpaid").hide();
 		$("#rodivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
+      }else if($.trim($("#subgroupname").text()) == 'Sales'){
 	  $("#purdiv").hide();
 	  $("#salediv").show();
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#rodivpaid").hide();
 	   $("#rodivreceived").hide();
-	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors'){
+	  }else if($.trim($("#subgroupname").text()) == 'Sundry Debtors'){
 		$("#addcust").show();
 		$("#addcust").removeClass("disabled");
 		custsup = '15';
-	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase'){
+	  }else if($.trim($("#subgroupname").text()) == 'Sundry Creditors for Purchase'){
 		$("#addcust").show();
 		$("#addcust").removeClass("disabled");
 		custsup = '9';
@@ -232,6 +230,43 @@ $(document).ready(function()
 	  $("#salediv").hide();
       }
 
+  });
+
+  $("#subgroupname-input").keyup(function(event) {
+	let searchtext = $("#subgroupname-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".subgroupname-option").each(function(index){
+	if (index != -1) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
+	    $(this).show();
+	  }
+	  else {
+	    $(this).parent().hide();
+	    $(this).hide();
+	  }
+	}
+      });
+    }
+    else{
+      $(".subgroupname-option").each(function(index){
+	$(this).parent().show();
+	$(this).show();
+      });
+    }
+  });
+
+  $(document).off('keydown' ,'#subgroupname-input').on('keydown' ,'#subgroupname-input',function(event) {
+    if (event.which == 13 || event.which == 40){
+      event.preventDefault();
+      $(".subgroupname-option").parent().parent().find("a:visible").first().focus();
+    }
+  });
+
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+	let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
   });
 
   $("#reset").click(function()
@@ -290,7 +325,7 @@ $("#openbal").keydown(function(event){
 		}
 	if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
-	    if ($.trim($("#subgroupname option:selected").val())=="New"){
+	    if ($.trim($("#subgroupname").data('value'))=="New"){
 	    $("#newsubgroup").focus().select();
 	    }
 	    else if($('.defbx').is(':visible')){
@@ -300,10 +335,15 @@ $("#openbal").keydown(function(event){
 		    $("#maccounts").focus().select();
 	    }
 	}
-	    if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
+	    else if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
       event.preventDefault();
       $("#groupname").focus().select();
-	    }
+		}
+		else {
+			if (!$("#subgroupname").hasClass("open")){
+		  $("#subgroupname").click();
+			}
+		  }
     });
 
     /** Keydown for 'bnkac' and 'chsac' checkbox **/
@@ -344,8 +384,11 @@ $("#openbal").keydown(function(event){
 			})
 			.done(function(resp)  
 			{
-				$('#subgroupname').append('<option value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</option>');
-				$("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
+				$('#subgroupname-option').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
+				$(".subgroupname-option").attr('data-value', resp["subgroupcode"]);
+				$(".subgroupname-option").text($("#newsubgroup").val());
+				$(".subgroupname-option").click();
+				// $("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
 				$("#nsgp").hide();
 				$("#subgroupname").focus();
 				$("#newsubgroup").val("");
@@ -853,7 +896,7 @@ $("#openbal").keydown(function(event){
     return false;
   }
 
-  if ($.trim($("#subgroupname option:selected").val())=="") {
+  if ($.trim($("#subgroupname").data('value'))=="") {
     $("#sgrpblank-alert").alert();
     $("#sgrpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#sgrpblank-alert").hide();
@@ -909,7 +952,7 @@ $("#openbal").keydown(function(event){
       global: false,
       async: false,
       datatype: "json",
-	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname").data('value'),"defaultflag":defaultflag, "subgroupname":$("#subgroupname option:selected").val(), "newsubgroup":$("#newsubgroup").val(),"moredata":JSON.stringify(custsupdatatemp)},
+	data: {"accountname":$("#accountname").val(), "openbal":$("#openbal").val(), "groupname":$("#groupname").data('value'),"defaultflag":defaultflag, "subgroupname":$("#subgroupname").data('value'), "newsubgroup":$("#newsubgroup").val(),"moredata":JSON.stringify(custsupdatatemp)},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -1002,7 +1045,7 @@ $("#openbal").keydown(function(event){
     $('#maccounts').attr('checked', false);
     return false;
   }
-  else if($.trim($("#subgroupname option:selected").val())=="") {
+  else if($.trim($("#subgroupname").data('value'))=="") {
     $("#sgrpblank-alert").alert();
     $("#sgrpblank-alert").fadeTo(2250, 500).slideUp(500, function(){
       $("#sgrpblank-alert").hide();
@@ -1026,13 +1069,13 @@ $("#openbal").keydown(function(event){
   }
 
       var url = "/showmultiacc";
-      if ($("#groupname").text() == "Current Liabilities" && $("#subgroupname option:selected").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
+      if ($("#groupname").text() == "Current Liabilities" && $("#subgroupname").text() == "Duties & Taxes" && ($("#vatorgstflag").val() == 7 || $("#vatorgstflag").val() == 29)) {
 	  url = "/showmultiacc?taxes";
       }
       $.ajax({
 	  type: "POST",
 	  url: url,
-	  data: {"groupcode":$("#groupname").data('value'),"groupname":$("#groupname").text(),"subgroupcode":$("#subgroupname option:selected").val(),"subgroupname":$("#subgroupname option:selected").text(),"newsubgroup":$("#newsubgroup").val()},
+	  data: {"groupcode":$("#groupname").data('value'),"groupname":$("#groupname").text(),"subgroupcode":$("#subgroupname").data('value'),"subgroupname":$("#subgroupname").text(),"newsubgroup":$("#newsubgroup").val()},
 	  global: false,
 	  async: false,
 	  datatype: "text/html",
@@ -1048,7 +1091,7 @@ $("#openbal").keydown(function(event){
 	      $("#multiaccount_modal").html(resp);
 	      $("#m_multiacc").modal('show');
 	      $('#m_multiacc').on('shown.bs.modal', function (e){
-		  if($("#subgroupname option:selected").text() == 'Bank' || $("#subgroupname option:selected").text() == 'Cash' || $("#subgroupname option:selected").text() == 'Purchase' || $("#subgroupname option:selected").text() == 'Sales'){
+		  if($("#subgroupname").text() == 'Bank' || $("#subgroupname").text() == 'Cash' || $("#subgroupname").text() == 'Purchase' || $("#subgroupname").text() == 'Sales'){
 		      $(".default:first").focus().select();
 		  }else if ($("#m_gstaccount").is(":visible")) {
 		      $("#m_gstaccount").focus().select();
