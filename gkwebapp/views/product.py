@@ -1373,4 +1373,4 @@ def ProductImport(request):
         try:
             return {"gkstatus":result.json()["gkstatus"]}
         except:
-            return {"gkstatus":1}
+            return {"gkstatus":3}
