@@ -1135,12 +1135,15 @@ def ProductImport(request):
                             errorlist.append(productrow[0].coordinate)
                         if productrow[1].value==None:
                             errorlist.append(productrow[1].coordinate)
-                        if productrow[7].value !=None and productrow[9].value==None:
-                            errorlist.append(productrow[9].coordinate)
                         if productrow[5].value != None and not(is_number(str(productrow[5].value))):
                             errorlist.append(productrow[5].coordinate)
                         if productrow[6].value != None and not(is_number(str(productrow[6].value))):
                             errorlist.append(productrow[6].coordinate)
+                        if productrow[7].value != None and str(productrow[7].value) not in ["GST","VAT", "CVAT"]:
+                            errorlist.append(productrow[7].coordinate)
+                        else:
+                            if productrow[7].value !=None and productrow[9].value==None:
+                                errorlist.append(productrow[9].coordinate)
                         if productrow[9].value != None and not(is_number(str(productrow[9].value))):
                             errorlist.append(productrow[9].coordinate)
                         if productrow[11].value != None and not(is_number(str(productrow[11].value))):
