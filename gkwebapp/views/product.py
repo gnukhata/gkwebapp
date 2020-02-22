@@ -1237,6 +1237,15 @@ def ProductImport(request):
                 elif productrow[7].value!=None or productrow[10].value!=None:
                     # if multiple tax or godowns exist
                     #tax dictionary generation
+                    if productrow[7].value != None and str(productrow[7].value) not in ["GST","VAT", "CVAT"]:
+                        errorlist.append(productrow[7].coordinate)
+                    else:
+                        if productrow[7].value !=None and productrow[9].value==None:
+                            errorlist.append(productrow[9].coordinate)
+                    if productrow[9].value != None and not(is_number(str(productrow[9].value))):
+                        errorlist.append(productrow[9].coordinate)
+                    if productrow[11].value != None and not(is_number(str(productrow[11].value))):
+                        errorlist.append(productrow[11].coordinate)
                     if productrow[7].value!=None and productrow[9].value != None and productrow[9].value != 0:
                         tax={}
                         if productrow[7].value=="GST": #if GST then no state should be mentioned
@@ -1274,8 +1283,8 @@ def ProductImport(request):
                                     flag=1
                                     godowns[g["goid"]]=productrow[11].value
                                     break 
-                        if flag==0:
-                            errorlist.append(productrow[10].coordinate)       
+                            if flag==0:
+                                errorlist.append(productrow[10].coordinate)       
 
         if len(proddetails)!=0 :
             temp={}
@@ -1319,7 +1328,7 @@ def ProductImport(request):
                                 taxdata["state"]=tax["state"]
                             taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
                             
-                #if duplicate entries exist then an error is generated while entering tax 
+                if duplicate entries exist then an error is generated while entering tax 
                 except Exception as e:           
                     if result.json()["gkstatus"]==1:
                         duplicateFlag=True                        
