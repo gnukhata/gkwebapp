@@ -56,6 +56,7 @@ $(document).ready(function()
 		$("#groupname").data("value", $(this).data("value"));
 		$("#groupname").text($(this).text());
 		$("#groupname").focus();
+		$('.option_li').empty();
 
 	var gname = $("#groupname").text();
     if (gname=="Direct Expense" || gname=="Direct Income" || gname=="Indirect Expense" || gname=="Indirect Income" || gname=="Select Group")
@@ -100,18 +101,18 @@ $(document).ready(function()
         },
         success: function(jsonObj) {
             var subgroups = jsonObj["gkresult"];
-		  $('#subgroupname-ul').empty();
-		  $('#subgroupname-ul').append('<li><input id="subgroupname-input" class="form-control selectinput"/></li>');
-		  $('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" data-value="None">None</a></li>');
+		//   $('#subgroupname-ul').append('<li><input id="subgroupname-input" class="form-control selectinput"/></li>');
+		 
 		//   $(".subgroupname-option").text("");
+			$(".subgroupname-option:first").text('None');
 		  $(".subgroupname-option:first").attr('data-value',"");
 		  $(".subgroupname-option:first").click();
-
+		  $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" data-value="None">None</a></li>');
           for (i in subgroups ) {
-			$('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');		
+			$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');		
           }
             var grpnam=$("#groupname").text();
-			$('#subgroupname-ul').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
+			$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
         }
       });
     }
