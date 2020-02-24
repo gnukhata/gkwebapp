@@ -101,13 +101,8 @@ $(document).ready(function()
         },
         success: function(jsonObj) {
             var subgroups = jsonObj["gkresult"];
-		//   $('#subgroupname-ul').append('<li><input id="subgroupname-input" class="form-control selectinput"/></li>');
-		 
-		//   $(".subgroupname-option").text("");
-			$(".subgroupname-option:first").text('None');
-		  $(".subgroupname-option:first").attr('data-value',"");
 		  $(".subgroupname-option:first").click();
-		  $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" data-value="None">None</a></li>');
+		 
           for (i in subgroups ) {
 			$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');		
           }
@@ -385,11 +380,10 @@ $("#openbal").keydown(function(event){
 			})
 			.done(function(resp)  
 			{
-				$('#subgroupname-option').append('<li><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
-				$(".subgroupname-option").attr('data-value', resp["subgroupcode"]);
-				$(".subgroupname-option").text($("#newsubgroup").val());
-				$(".subgroupname-option").click();
-				// $("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
+				console.log(resp["subgroupcode"],'resp["subgroupcode"]');
+				$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
+				$(".subgroupname-option").attr('data-value', resp["subgroupcode"]).click();
+	
 				$("#nsgp").hide();
 				$("#subgroupname").focus();
 				$("#newsubgroup").val("");
