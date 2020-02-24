@@ -1154,6 +1154,8 @@ def ProductImport(request):
                         #Non float tax rate
                         if productrow[9].value != None and not(is_number(str(productrow[9].value))):
                             errorlist.append(productrow[9].coordinate)
+                        if productrow[9].value != None and is_number(str(productrow[9].value)) and int(productrow[9].value) == 0:
+                            errorlist.append(productrow[9].coordinate)
                         #Non float godown openingstock
                         if productrow[11].value != None and not(is_number(str(productrow[11].value))):
                             errorlist.append(productrow[11].coordinate)
@@ -1257,6 +1259,8 @@ def ProductImport(request):
                         errorlist.append(productrow[9].coordinate)
                     #Non float tax rate
                     if productrow[9].value != None and not(is_number(str(productrow[9].value))):
+                        errorlist.append(productrow[9].coordinate)
+                    if productrow[9].value != None and is_number(str(productrow[9].value)) and int(productrow[9].value) == 0:
                         errorlist.append(productrow[9].coordinate)
                     #Non float godown openingstock
                     if productrow[11].value != None and not(is_number(str(productrow[11].value))):
