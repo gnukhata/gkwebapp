@@ -380,7 +380,6 @@ $("#openbal").keydown(function(event){
 			})
 			.done(function(resp)  
 			{
-				console.log(resp["subgroupcode"],'resp["subgroupcode"]');
 				$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
 				$(".subgroupname-option").attr('data-value', resp["subgroupcode"]).click();
 	
