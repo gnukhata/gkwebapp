@@ -617,6 +617,14 @@
             {% for u in uom %}
               {{u["description"]}},
             {% endfor %}<br><br>
+	    <b>Taxes:</b><br>
+	    Please keep the following in mind while giving taxes.
+	    <ul>
+	      <li>Tax Name must be one among these - GST, VAT, CVA.T</li>
+	      <li>If Tax Name is GST, then Rate must be on among these - 5, 12 , 18 , 28.</li>
+	      <li>Only one entry per product is allowed for GST and CVAT.</li>
+	      <li><b>Please do not enter "0" as tax rate. If your product is tax free then do not give anything under Tax Name, State and Rate.</b></li>
+	    </ul>
             {% trans %}
             <b>Sample Spreadsheet Format for Product Import: </b><br>
             {% endtrans %}
