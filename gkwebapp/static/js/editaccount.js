@@ -82,14 +82,12 @@ $(document).ready(function()
         let accdetails=jsonObj["gkresult"];  
 	deflag = accdetails["defaultflag"];
   $("#editaccountform").show();  
-  // $(".groupname-option").data('value',accdetails["groupcode"]);
-  // $(".groupname-option").text(accdetails['groupname']);
-  gname=accdetails['groupcode'];
+  gcode=accdetails['groupcode'];
   $("#groupname").prop("disabled", true);  
 	$('#subgroupname').empty();
 	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
     $("#subgroupname").prop("disabled", true);
-    $(".groupname-option[data-value="+ gname +"]").click();
+    $(".groupname-option[data-value="+ gcode +"]").click();
     if ($("#groupname").text() == 'Indirect Expense'){
         if(accdetails["defaultflag"] == 180){
         $("#alertroundoffpaid").alert();
@@ -437,13 +435,50 @@ $(document).ready(function()
 	}
     });
 
+    $("#groupname-input").keyup(function(event){
+      let searchtext = $("#groupname-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".groupname-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".groupname-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#groupname-input').on('keydown' ,'#groupname-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $("#groupname-input").parent().parent().find("a:visible").first().focus();
+      }
+    });
+
     //Keydown for 'group name' field.
     $("#groupname").keydown(function(event){
 	if(event.which == 13){
 	    event.preventDefault();
 	    $("#subgroupname").focus().select();
-	}
-	$("#groupname").change();
+  }
+  else {
+    if (!$("#groupname").hasClass("open")){
+  $("#groupname").click();
+    }
+  }
+	// $(".groupname-option").click();
     });
 
     //Keydown for 'subgroupname' field.
@@ -535,11 +570,11 @@ $(document).ready(function()
       }
 	
     });
-    if($.trim($("#groupname option:selected").text()) == 'Indirect Expense'){
+    if($.trim($("#groupname").text()) == 'Indirect Expense'){
        $("#roundoffdivpaid").show();
        $("#roundoffdivreceived").hide();
     }
-    else if($.trim($("#groupname option:selected").text()) == 'Indirect Income'){
+    else if($.trim($("#groupname").text()) == 'Indirect Income'){
         $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").show();
     }
@@ -579,7 +614,7 @@ $(document).ready(function()
 				global: false,
 				async: false,
 				datatype: 'json',
-				data: {"groupname": $("#groupname option:selected").val(),"newsubgroup":$("#newsubgroup").val()},
+				data: {"groupname": $("#groupname").data('value'),"newsubgroup":$("#newsubgroup").val()},
 				beforeSend: function(xhr)
 			{
 			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -1131,8 +1166,8 @@ $("#editaccountform").submit(function(e)
     }
     
     var accountcode = $("#accountcode").val();
-    var groupname = $("#groupname option:selected").text();
-    var groupcode = $("#groupname option:selected").val();
+    var groupname = $("#groupname").text();
+    var groupcode = $("#groupname").data('value');
     var subgrpname = $("#subgroupname option:selected").text();
     var subgrpcode = $("#subgroupname option:selected").val();
     var newgrpname = $("#newsubgroup").val();
