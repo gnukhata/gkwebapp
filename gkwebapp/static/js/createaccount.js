@@ -257,7 +257,13 @@ $(document).ready(function()
     if (event.which == 13 || event.which == 40){
       event.preventDefault();
       $(".subgroupname-option").parent().parent().find("a:visible").first().focus();
-    }
+	}
+	if(event.which==32){
+		event.preventDefault();
+		$(".subgroupname-option").attr('data-value', 'New').click();			
+		  $("#nsgp").show();
+		$("#newsubgroup").focus().select();
+	}
   });
 
   $(".searchabledropdown").on("shown.bs.dropdown", function () {
@@ -313,13 +319,11 @@ $("#openbal").keydown(function(event){
 	  
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
-		if(event.which==16){
-	    	event.preventDefault();
-			$("#subgroupname").val("New");
-      		$("#nsgp").show();
-			$("#newsubgroup").focus().select();
-		}
-	if(event.which==13 || event.which == 9) {
+	if(event.which==16) {
+		event.preventDefault();
+		$("#groupname").focus();
+		  }
+	else if(event.which==13 || event.which == 9) {
 	    event.preventDefault();
 	    if ($.trim($("#subgroupname").data('value'))=="New"){
 	    $("#newsubgroup").focus().select();
@@ -331,11 +335,13 @@ $("#openbal").keydown(function(event){
 		    $("#maccounts").focus().select();
 	    }
 	}
-	    else if (event.which==38 && (document.getElementById('subgroupname').selectedIndex==0)) {
-      event.preventDefault();
-      $("#groupname").focus().select();
-		}
-		else {
+	else if (event.which==32){
+		event.preventDefault();
+		$(".subgroupname-option").attr('data-value', 'New').click();			
+		  $("#nsgp").show();
+		$("#newsubgroup").focus().select();
+	}
+	else {
 			if (!$("#subgroupname").hasClass("open")){
 		  $("#subgroupname").click();
 			}
