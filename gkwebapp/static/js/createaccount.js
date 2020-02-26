@@ -319,11 +319,12 @@ $("#openbal").keydown(function(event){
 	  
     // Keydown event for Sub-Group Name.
     $("#subgroupname").keydown(function(event){
-	if(event.which==16) {
-		event.preventDefault();
-		$("#groupname").focus();
-		  }
-	else if(event.which==13 || event.which == 9) {
+	let keyArray = [9,13,16, 61];
+	if(event.shiftKey &&  event.which == 9) {
+	    event.preventDefault();
+	    $("#groupname").focus();
+	}
+	if(event.which==13 || (event.which == 9 && !event.shiftKey)) {
 	    event.preventDefault();
 	    if ($.trim($("#subgroupname").data('value'))=="New"){
 	    $("#newsubgroup").focus().select();
@@ -335,13 +336,15 @@ $("#openbal").keydown(function(event){
 		    $("#maccounts").focus().select();
 	    }
 	}
-	else if (event.which==32){
+	if (event.shiftKey &&  event.which == 61){
+
 		event.preventDefault();
-		$(".subgroupname-option").attr('data-value', 'New').click();			
+		$(".subgroupname-option[data-value='New']").click();			
 		  $("#nsgp").show();
 		$("#newsubgroup").focus().select();
+
 	}
-	else {
+	if($.inArray(event.which, keyArray) == -1) {
 			if (!$("#subgroupname").hasClass("open")){
 		  $("#subgroupname").click();
 			}
