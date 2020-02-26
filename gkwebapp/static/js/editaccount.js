@@ -424,7 +424,8 @@ $(document).ready(function()
           
 			}
 			else{
-			    $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value= ' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
+          $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value= ' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
+          $(".subgroupname-option:First").click();
 			}
 		    }
 		    $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
@@ -478,38 +479,10 @@ $(document).ready(function()
   }
     });
 
-    //Keydown for 'subgroupname' field.
-    $("#subgroupname").keydown(function(event){
-        if(event.which==16){
-		$("#subgroupname option").filter(function(i, e) { return $(e).text() == "New Sub-Group"; }).prop('selected', true);
-		$("#nsgp").show();
-        $('.default').hide();
-		$("#newsubgroup").focus().select();
-		}
-	if(event.which == 13){
-	    event.preventDefault();
-	    if($.trim($("#subgroupname option:selected").val())=="New"){
-		$("#newsubgroup").focus().select();
-	    }else if($(".defbx").is(':visible')){
-		$(".defbx").focus().select();
-	    }else{
-		$("#accountname").focus();
-	    }
-	}
-	if(event.which ==38 && (document.getElementById('subgroupname').selectedIndex==0)){
-	    event.preventDefault();
-	    $("#groupname").focus().select();
-	}
-    });
-
     $("#nsgp").hide();
 
     // $(".subgroupname-option").click(function(){
-      $(document).on('click', '.subgroupname-option', function() {
-
-    // $(".gsselect").bind("change keyup", function(){
-      console.log($(this).data("value"),"fdgdgdgfd");
-      console.log(($(this).text()),"ddfsdsff");
+   $(document).on('click', '.subgroupname-option', function() {
       $("#subgroupname").data("value", $(this).data("value"));
     $("#subgroupname").text($(this).text());
     
@@ -578,6 +551,73 @@ $(document).ready(function()
       }
 	
     });
+
+    $("#subgroupname-input").keyup(function(event){
+      let searchtext = $("#subgroupname-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".subgroupname-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".subgroupname-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#subgroupname-input').on('keydown' ,'#subgroupname-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $("#groupname-input").parent().parent().find("a:visible").first().focus();
+      }
+    });
+    
+    //Keydown for 'subgroupname' field.
+    $("#subgroupname").keydown(function(event){
+      let keyArray = [9,13,16, 61];
+	if(event.shiftKey &&  event.which == 9) {
+	    event.preventDefault();
+	    $("#groupname").focus();
+  }
+  if(event.which==13 || (event.which == 9 && !event.shiftKey)) {
+        event.preventDefault();
+        if ($.trim($("#subgroupname").data('value'))=="New"){
+      $("#newsubgroup").focus().select();
+        }else if($(".defbx").is(':visible')){
+      $(".defbx").focus().select();
+        }else{
+      $("#accountname").focus();
+        }
+    }  
+    if (event.shiftKey &&  event.which == 61){
+
+      event.preventDefault();
+      $(".subgroupname-option[data-value='New']").click();			
+        $("#nsgp").show();
+      $("#newsubgroup").focus().select();
+  
+    }
+  
+    if($.inArray(event.which, keyArray) == -1) {
+			if (!$("#subgroupname").hasClass("open")){
+		  $("#subgroupname").click();
+			}
+		  }
+
+ });
+
     if($.trim($("#groupname").text()) == 'Indirect Expense'){
        $("#roundoffdivpaid").show();
        $("#roundoffdivreceived").hide();
