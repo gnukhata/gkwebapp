@@ -47,6 +47,7 @@ $(document).ready(function()
   var deflag;  
   var oldcustname;
   var custsupflag = 0;
+  let sel_sgcode;
   $(".editaccountname-option").click(function(){
 
     $("#editaccountname").data("value", $(this).data("value"));
@@ -64,7 +65,6 @@ $(document).ready(function()
         var acccode = $("#editaccountname").data('value');
         var accname= $("#editaccountname").text();
         var sysaccount = $("#editaccountname").data("sysaccount");
-
     if (acccode !=""){
     $.ajax({
       type: "POST",
@@ -83,9 +83,9 @@ $(document).ready(function()
 	deflag = accdetails["defaultflag"];
   $("#editaccountform").show();  
   gcode=accdetails['groupcode'];
+  sel_sgcode = accdetails["subgroupcode"] 
   $("#groupname").prop("disabled", true);  
-	$('#subgroupname').empty();
-	$('#subgroupname').append('<option value="' + accdetails["subgroupcode"] + '">' + accdetails["subgroupname"] + '</option>');  
+	$('.option_li').empty(); 
     $("#subgroupname").prop("disabled", true);
     $(".groupname-option[data-value="+ gcode +"]").click();
     if ($("#groupname").text() == 'Indirect Expense'){
@@ -365,7 +365,6 @@ $(document).ready(function()
   }
 );
     //Change event for 'group name' field.
-    // $("#groupname").bind("change keyup", function(){
       $(".groupname-option").click(function(){
     
       $("#groupname").data("value", $(this).data("value"));
@@ -415,21 +414,20 @@ $(document).ready(function()
 		},
 		success: function(jsonObj) {
 		    var subgroups = jsonObj["gkresult"];
-		    var subgrp = $("#subgroupname option:selected").val();
-		    $('#subgroupname').empty();
-		    var grpnam=$("#groupname").text();
-		    $('#subgroupname').prepend('<option value="None">None</option>');
-		    $('#subgroupname option:first').attr("selected", "selected");		    
+		    $('.option_li').empty();
+		    var grpnam=$("#groupname").text();  
 		    for (i in subgroups ) {
 			//assign subgroup name selected if assign 'group name' is not changed.
-			if(subgrp == subgroups[i].subgroupcode){
-			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</option>');
+			if(sel_sgcode == subgroups[i].subgroupcode){
+          $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" data-value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</a></li>');
+          $(".subgroupname-option[data-value="+ sel_sgcode +"]").click();
+          
 			}
 			else{
-			    $('#subgroupname').append('<option value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</option>');
+			    $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value= ' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
 			}
 		    }
-		    $('#subgroupname').append('<option value="New">New Sub-Group</option>');
+		    $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
 		}
 	    });
 	}
@@ -478,7 +476,6 @@ $(document).ready(function()
   $("#groupname").click();
     }
   }
-	// $(".groupname-option").click();
     });
 
     //Keydown for 'subgroupname' field.
@@ -506,9 +503,20 @@ $(document).ready(function()
     });
 
     $("#nsgp").hide();
-    $(".gsselect").bind("change keyup", function(){
+
+    // $(".subgroupname-option").click(function(){
+      $(document).on('click', '.subgroupname-option', function() {
+
+    // $(".gsselect").bind("change keyup", function(){
+      console.log($(this).data("value"),"fdgdgdgfd");
+      console.log(($(this).text()),"ddfsdsff");
+      $("#subgroupname").data("value", $(this).data("value"));
+    $("#subgroupname").text($(this).text());
+    
+		$("#subgroupname").focus();
+
       $("#addcust").hide();
-	var sgroups = $("#subgroupname option:selected").val();
+	var sgroups = $("#subgroupname").data('value');
 	if(sgroups == "New"){
         $("#nsgp").show();
         $("#roundoffdivpaid").hide();
@@ -526,39 +534,39 @@ $(document).ready(function()
         
 	}
 
-	if($.trim($("#subgroupname option:selected").text()) == 'Bank'){
+	if($.trim($("#subgroupname").text()) == 'Bank'){
 	  $("#bnkdiv").show();
 	  $("#chsdiv").hide();
 	  $("#purdiv").hide();
       $("#salediv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Cash'){
+      }else if($.trim($("#subgroupname").text()) == 'Cash'){
 	  $("#chsdiv").show();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").hide();
       $("#salediv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Purchase'){
+      }else if($.trim($("#subgroupname").text()) == 'Purchase'){
 	  $("#chsdiv").hide();
 	  $("#bnkdiv").hide();
 	  $("#purdiv").show();
       $("#salediv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Sales'){
+      }else if($.trim($("#subgroupname").text()) == 'Sales'){
 	  $("#purdiv").hide();
 	  $("#salediv").show();
 	  $("#chsdiv").hide();
       $("#bnkdiv").hide();
       $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
-      }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Debtors' && $("#groupname").text()=="Current Assets"){
+      }else if($.trim($("#subgroupname").text()) == 'Sundry Debtors' && $("#groupname").text()=="Current Assets"){
 		$("#addcust").show();
     custsup = '15';
     custsupflag = 1;
-	  }else if($.trim($("#subgroupname option:selected").text()) == 'Sundry Creditors for Purchase' && $("#groupname").text()=="Current Liabilities"){
+	  }else if($.trim($("#subgroupname").text()) == 'Sundry Creditors for Purchase' && $("#groupname").text()=="Current Liabilities"){
 		$("#addcust").show();
     custsup = '9';
     custsupflag = 1;
@@ -1168,8 +1176,8 @@ $("#editaccountform").submit(function(e)
     var accountcode = $("#accountcode").val();
     var groupname = $("#groupname").text();
     var groupcode = $("#groupname").data('value');
-    var subgrpname = $("#subgroupname option:selected").text();
-    var subgrpcode = $("#subgroupname option:selected").val();
+    var subgrpname = $("#subgroupname").text();
+    var subgrpcode = $("#subgroupname").data('value');
     var newgrpname = $("#newsubgroup").val();
   $("#msspinmodal").modal("show");
   
