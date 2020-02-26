@@ -258,12 +258,6 @@ $(document).ready(function()
       event.preventDefault();
       $(".subgroupname-option").parent().parent().find("a:visible").first().focus();
 	}
-	if(event.which==32){
-		event.preventDefault();
-		$(".subgroupname-option").attr('data-value', 'New').click();			
-		  $("#nsgp").show();
-		$("#newsubgroup").focus().select();
-	}
   });
 
   $(".searchabledropdown").on("shown.bs.dropdown", function () {
