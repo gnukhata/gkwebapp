@@ -384,7 +384,7 @@ $("#openbal").keydown(function(event){
 			.done(function(resp)  
 			{
 				$('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
-				$(".subgroupname-option").attr('data-value', resp["subgroupcode"]).click();
+           $(".subgroupname-option[data-value='" + resp["subgroupcode"] + "']").click();
 	
 				$("#nsgp").hide();
 				$("#subgroupname").focus();
