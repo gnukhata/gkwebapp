@@ -85,7 +85,6 @@ $(document).ready(function()
   gcode=accdetails['groupcode'];
   sel_sgcode = accdetails["subgroupcode"] 
   $("#groupname").prop("disabled", true);  
-	$('.option_li').empty(); 
     $("#subgroupname").prop("disabled", true);
     $(".groupname-option[data-value="+ gcode +"]").click();
     if ($("#groupname").text() == 'Indirect Expense'){
@@ -415,21 +414,18 @@ $(document).ready(function()
 		success: function(jsonObj) {
 		    var subgroups = jsonObj["gkresult"];
 		    $('.option_li').empty();
-		    var grpnam=$("#groupname").text();  
+        var grpnam=$("#groupname").text();  
 		    for (i in subgroups ) {
-			//assign subgroup name selected if assign 'group name' is not changed.
-			if(sel_sgcode == subgroups[i].subgroupcode){
-          $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" data-value="' + subgroups[i].subgroupcode + '" selected>' +subgroups[i].subgroupname+ '</a></li>');
-          $(".subgroupname-option[data-value="+ sel_sgcode +"]").click();
-          
-			}
-			else{
-          $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value= ' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
-          $(".subgroupname-option:First").click();
-			}
-		    }
-		    $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New">New Sub-Group</a></li>');
-		}
+        $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
+        }
+        $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New ">New Sub-Group</a></li>');
+        if ($("#groupname").data('value')  != sel_sgcode){
+           $(".subgroupname-option[data-value='" + sel_sgcode + "']").click();
+        }
+        else{
+          $(".subgroupname-option:first").click();
+        }
+        		}
 	    });
 	}
     });
@@ -494,6 +490,8 @@ $(document).ready(function()
         $("#nsgp").show();
         $("#roundoffdivpaid").hide();
        $("#roundoffdivreceived").hide();
+       $("#newsubgroup").focus().select();
+
 	}else{
         $("#nsgp").hide();
         if ($("#groupname").text()=="Indirect Expense"){
@@ -580,7 +578,7 @@ $(document).ready(function()
     $(document).off('keydown' ,'#subgroupname-input').on('keydown' ,'#subgroupname-input',function(event) {
       if (event.which == 13 || event.which == 40){
         event.preventDefault();
-        $("#groupname-input").parent().parent().find("a:visible").first().focus();
+        $("#subgroupname-input").parent().parent().find("a:visible").first().focus();
       }
     });
     
@@ -670,8 +668,8 @@ $(document).ready(function()
 			})
 			.done(function(resp) 
 			{
-				$('#subgroupname').append('<option value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</option>');
-				$("#subgroupname option").filter(function(i, e) { return $(e).text() == $("#newsubgroup").val(); }).prop('selected', true);
+        $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + resp["subgroupcode"] + '">' +$("#newsubgroup").val()+ '</a></li>');
+      $(".subgroupname-option[data-value="+ resp["subgroupcode"] +"]").click();		
 				$("#nsgp").hide();
 				$("#subgroupname").focus();
 				$("#newsubgroup").val("");
