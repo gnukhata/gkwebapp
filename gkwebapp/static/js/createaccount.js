@@ -159,6 +159,7 @@ $(document).ready(function()
       $("#nsgp").show();
 	  $("#rodivpaid").hide();
 	  $("#rodivreceived").hide();
+	  $("#newsubgroup").focus().select();
     }
     else
     {
