@@ -485,7 +485,7 @@ $(document).ready(function()
 		$("#subgroupname").focus();
 
       $("#addcust").hide();
-	var sgroups = $("#subgroupname").data('value');
+  var sgroups = ($.trim($("#subgroupname").data('value')));
 	if(sgroups == "New"){
         $("#nsgp").show();
         $("#roundoffdivpaid").hide();
