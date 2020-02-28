@@ -56,15 +56,22 @@ $(document).ready(function() {
     var custsupdata = $("#edit_cussup").val();
 	
     //code for change event of edit lists custid as variable taken and conditions are applied. condition is set to call ajax only if custid is not null.
-    $("#Customer_edit_list, #Supplier_edit_list").change(function(event) {
+	$(".editcustomerlist-option, .editsupplierlist-option").click(function(event) {
+	// $("#Customer_edit_list, #Supplier_edit_list").change(function(event) {
 	var custid;
 	$("#edit_cussup_reset").hide();
 	 if ($("#custradio").is(":checked"))
 	{
-	    custid=$("#Customer_edit_list option:selected").val();
+		$("#editcustomerlist").data("value", $(this).data("value"));
+		$("#editcustomerlist").text($(this).text());
+		$("#editcustomerlist").focus();
+		custid=$("#editcustomerlist").data('value');
 	}
 	else  {
-	    custid=$("#Supplier_edit_list option:selected").val();
+		$("#editsupplierlist").data("value", $(this).data("value"));
+		$("#editsupplierlist").text($(this).text());
+		$("#editsupplierlist").focus();
+	    custid=$("#editsupplierlist").data('value');
 
 	}
 	 	if (custid!=''){
@@ -183,7 +190,45 @@ $(document).ready(function() {
     });
 
 	}	
-    });
+	});
+	
+	$("#editcustomerlist-input").keyup(function(event){
+		let searchtext = $("#editcustomerlist-input").val().toLowerCase();
+		if (searchtext != "") {
+		  $(".editcustomerlist-option").each(function(index){
+		if (index != -1) {
+		  let rowtext = $(this).text().toLowerCase();
+		  if (rowtext.indexOf(searchtext) != -1) {
+			$(this).parent().show();
+			$(this).show();
+		  }
+		  else {
+			$(this).parent().hide();
+			$(this).hide();
+		  }
+		}
+		  });
+		}
+		else{
+		  $(".editcustomerlist-option").each(function(index){
+		$(this).parent().show();
+		$(this).show();
+		  });
+		}
+	  });
+	
+	  $(document).off('keydown' ,'#editcustomerlist-input').on('keydown' ,'#editcustomerlist-input',function(event) {
+		if (event.which == 13 || event.which == 40){
+		  event.preventDefault();
+		  $("#editcustomerlist-input").parent().parent().find("a:visible").first().focus();
+		}
+	  });
+	
+	  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+		let searchinput = $(this).data("input-id");
+		document.getElementById(searchinput).focus();
+	  });
+	
     
   $("#Customer_edit_list").keydown(function(event) {
 
@@ -204,7 +249,7 @@ $(document).ready(function() {
     }
   });
 
-    $("#Supplier_edit_list").keydown(function(event) {
+    $("#editsupplierlist").keydown(function(event) {
 
     if (event.which==13) {
       event.preventDefault();
@@ -212,7 +257,7 @@ $(document).ready(function() {
     }
 
   });
-  $("#Supplier_edit_list").keydown(function(event) {
+  $("#editsupplierlist").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
       $("#edit_cussup_name").focus().select();
@@ -533,18 +578,22 @@ $(document).ready(function() {
     });
     $("#supradio").keydown(function(event) {
 	if (event.which==13) {
-	    $("#Supplier_edit_list").focus().select();
+	    $("#editsupplierlist").focus().select();
 	}
     });
 
     //change event for radio buttons to get first selected option of drop down list.
     $(document).off('focusin', '.custsupradio').on('focusin', '.custsupradio', function(event) {
-    $("#Customer_edit_list option:first").prop("selected",true);
-    $("#Customer_edit_list").change();
-    $("#Supplier_edit_list option:first").prop("selected",true);
-	$("#Supplier_edit_list").change();
+	// $("#Customer_edit_list option:first").prop("selected",true);
+	$("#editcustomerlist").focus();
+	$("#editsupplierlist").focus();
+	
+    // $("#Customer_edit_list").change();
+    // $("#Supplier_edit_list option:first").prop("selected",true);
+	// $("#Supplier_edit_list").change();
 	$(".panel-footer").hide();
 	$("#scrollbar").hide();
+	    // $(".groupname-option[data-value="+ gcode +"]").click();
     });
     
 
@@ -1005,17 +1054,21 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
   $('#gstintable tbody tr:last td:eq(0) select').select();
 });
     $("#edit_cussup_reset").click(function(event) {
-	if($("#Supplier_edit_list option:selected").val()==""){
-	if ($("#Customer_edit_list option:selected").val()!=""){   
-	    let selectedcust = $("#Customer_edit_list").val(); //Current Customer/Supplier.
-	$("#Customer_edit_list").val(selectedcust).change(); //Select Current Customer/Supplier and trigger change event.
+	if($("#editsupplierlist").data('value')==undefined){
+	if ($("#editcustomerlist").data('value')!=""){   
+	    let selectedcust = $("#editcustomerlist").data('value'); //Current Customer/Supplier.
+	// $("#Customer_edit_list").val(selectedcust).change(); //Select Current Customer/Supplier and trigger change event.
+	$(".editcustomerlist-option[data-value='" + selectedcust + "']").click();
+
 	$("#Customer_edit_list").focus();    
 	}}
-	if($("#Customer_edit_list option:selected").val()==""){
-	if ($("#Supplier_edit_list option:selected").val()!=""){
-	    let selectedsup = $("#Supplier_edit_list").val(); //Current Customer/Supplier.
-	    $("#Supplier_edit_list").val(selectedsup).change(); //Select Current Customer/Supplier and trigger change event.
-	    $("#Supplier_edit_list").focus();
+	if($("#editcustomerlist").data('value')==undefined){
+	if ($("#editsupplierlist").data('value')!=""){
+	    let selectedsup = $("#editsupplierlist").data('value'); //Current Customer/Supplier.
+		// $("#Supplier_edit_list").val(selectedsup).change(); //Select Current Customer/Supplier and trigger change event.
+		$(".editsupplierlist-option[data-value='" + selectedsup + "']").click();
+
+	    $("#editsupplierlist").focus();
 	}}
 	});
   $("#edit_cussup_btn").click(function(event) {
@@ -1217,9 +1270,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
       }
 	var form_data = new FormData();
 	if ($("#custradio").is(":checked")){ 
-	    form_data.append("custid", $("#Customer_edit_list option:selected").val());}
+	    form_data.append("custid", $("#editcustomerlist").data('value'));}
 	else{
-	    form_data.append("custid", $("#Supplier_edit_list option:selected").val());}
+	    form_data.append("custid", $("#editsupplierlist").data('value'));}
 	form_data.append("custname", $("#edit_cussup_name").val());
 	form_data.append("custaddr", $.trim($("#edit_cussup_address").val()));
 	form_data.append("custphone", $("#edit_cussup_phone").val());
@@ -1235,9 +1288,9 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	}
 	form_data.append("state", $("#edit_state").val());
 	if ($("#custradio").is(":checked")){
-	    form_data.append("oldcustname", $("#Customer_edit_list option:selected").text());}
+	    form_data.append("oldcustname", $("#editcustomerlist").text());}
 	else{
-	    form_data.append("oldcustname", $("#Supplier_edit_list option:selected").text());}
+	    form_data.append("oldcustname", $("#editsupplierlist").text());}
 	
 	if ($("#edit_cussup").val() == "Supplier"){
 	    var bankdetails = {}; //for bank details
@@ -1335,10 +1388,10 @@ $("#cussup_delete").click(function(event) {
   {
       var custid;
       if ($("#custradio").is(":checked")){ 
-	  custid=$("#Customer_edit_list option:selected").val();
+	  custid=$("#editcustomerlist").data('value');
       }
       else if ($("#supradio").is(":checked")){
-	  custid=$("#Supplier_edit_list option:selected").val();
+	  custid=$("#editsupplierlist").data('value');
       }
       if (custid!=''){
       $.ajax(
