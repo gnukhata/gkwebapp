@@ -117,7 +117,7 @@ th {
 
 					<label for="groupname" id="gname">{% trans %}<u>G</u>roup Name{% endtrans %} :</label>
 						<div class="dropdown searchabledropdown" data-input-id="groupname-input" data-button-id="groupname">
-								<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="groupname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Group{% endtrans %}<span class="caret"></span></button>
+								<button class="btn btn-default selectdropdown" type="button" id="groupname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Group{% endtrans %}<span class="caret"></span></button>
 									<ul class="dropdown-menu selectdropdown" aria-labelledby="groupname-label" id="groupname-ul">
 										<li><input id="groupname-input" class="form-control selectinput" /></li>
 											{% for grps in groupdata %}
@@ -125,12 +125,10 @@ th {
 										{% endfor %}
 									</ul>
 						</div>
+	  				<small class="form-text text-muted">Press Shift+Tab to shift focus to List of Accounts.</small>
 						  
 							<br>
 							<label for="subgroupname" id="sname">{% trans %}Sub-Group <u>N</u>ame{% endtrans %} :</label>
-							<!-- <select class = "form-control gsselect input-sm" id="subgroupname" name="subgroupname" accesskey="n">
-							  <option value="" disabled selected hidden>{% trans %}Select Sub-Group{% endtrans %}</option>
-							</select> -->
 
 							<div class="dropdown searchabledropdown" data-input-id="subgroupname-input" data-button-id="subgroupname">
 								<button class="btn btn-default selectdropdown" type="button" id="subgroupname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Sub-Group{% endtrans %}<span class="caret"></span></button>

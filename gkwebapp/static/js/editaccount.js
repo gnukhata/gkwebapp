@@ -464,14 +464,19 @@ $(document).ready(function()
 
     //Keydown for 'group name' field.
     $("#groupname").keydown(function(event){
-	if(event.which == 13){
+      let keyArray = [9,13,16];
+	if(event.shiftKey &&  event.which == 9) {
 	    event.preventDefault();
-	    $("#subgroupname").focus().select();
+      $("#editaccountname").focus();
   }
-  else {
-    if (!$("#groupname").hasClass("open")){
+  if(event.shiftKey == 13 || (event.which == 9 && !event.shiftKey)) {
+    event.preventDefault();
+    $("#groupname").focus();
+}
+if($.inArray(event.which, keyArray) == -1) {
+  if (!$("#groupname").hasClass("open")){
   $("#groupname").click();
-    }
+  }
   }
     });
 
