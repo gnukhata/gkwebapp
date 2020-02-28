@@ -9,6 +9,15 @@
        .state_del{
 	   color:#000000;
        }
+	   .label-cust-vcenter{ display: flex;height: 34px;justify-content: flex-end;
+align-items: center;
+align-content: center;
+padding: 4px 0;}
+
+	   @media only screen and (max-width:767px){
+		.label-cust-vcenter{justify-content:flex-start};	
+	   }
+
       </style>
   </head>
 
@@ -146,27 +155,20 @@
 		<label class="text-danger">{% trans %}No Customer/Supplier found!{% endtrans %}</label>
 	      </div>
             {%else%}
-	      <div class="form-group form-inline col-sm-3">
+	      <div class="form-group form-inline col-sm-2">
 		<div class="radio">
 		  <label><input type="radio" class="custsupradio" name="delradio" id="custradio" aria-label="Customer" checked> Customer</label>
 
 		  <label><input type="radio" class="custsupradio" name="delradio" id="supradio" aria-label="Supplier"> Supplier</label>
 		</div>
 	      </div>
-	      <div class="row form-group form-inline col-sm-9" id="custo">
+	      <div class="row form-group form-inline col-sm-10" id="custo">
 		{%if noofcustomer|int == 0 %}
 		  <label class="text-danger">{% trans %}No Customer found!{% endtrans %}</label>
 		{%else%}
-		  <label for="customersupplier_edit_list">{% trans %}List of <u>C</u>ustomer{% endtrans %} :</label>
-		  <!-- <select class="form-control input-sm" id="Customer_edit_list" accesskey="D">
-		    <option value="" disabled hidden selected>{% trans %}Select Customer{% endtrans %}</option>
-                    <optgroup label="Customers" id="custgroup">
-                      {% for customer in customers %}
-			<option value="{{customer["custid"]}}">{{customer["custname"]}}</option>
-                      {% endfor %}
-		    </optgroup>
-		  </select> -->
-		  <div class="dropdown searchabledropdown" style="width: 300px;" data-input-id="editcustomerlist-input" data-button-id="editcustomerlist">
+		<div class="row">
+		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u>C</u>ustomer{% endtrans %} :</label>
+		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editcustomerlist-input" data-button-id="editcustomerlist">
 	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editcustomerlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Customer{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editcustomerlist-label" id="editcustomerlist-ul">
 					<li><input id="editcustomerlist-input" class="form-control selectinput" /></li>
@@ -174,27 +176,20 @@
                 	<li><a class="editcustomerlist-option selectdropdown" href="#"  data-value="{{customer['custid']}}">{{customer["custname"]}}</a></li>
               		{% endfor %}
 	    		</ul>
-	  </div>
+	  </div></div>
 
 		  <br>
 		  <small id="textareahelp" class=" row form-text text-muted" style="margin:129px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
 		{%endif%}
 	      </div>
 	      
-	      <div class="form-group form-inline col-sm-9" id="suppl">
+	      <div class="form-group form-inline col-sm-10" id="suppl">
 		{%if noofsupplier|int == 0 %}
 		  <label class="text-danger">{% trans %}No Supplier found!{% endtrans %}</label>
 		{%else%}
-		  <label for="customersupplier_edit_list">{% trans %}List of <u>S</u>upplier{% endtrans %} :</label>
-		  <!-- <select class="form-control input-sm" id="Supplier_edit_list"  accesskey="D">
-		    <option value="" disabled hidden selected>{% trans %}Select Supplier{% endtrans %}</option>
-		    <optgroup label="Suppliers" id="supgroup">
-                      {% for supplier in suppliers %}
-			<option value="{{supplier["custid"]}}">{{supplier["custname"]}}</option>
-                      {% endfor %}
-		    </optgroup>
-		  </select> -->
-		  <div class="dropdown searchabledropdown" style="width: 300px;" data-input-id="editsupplierlist-input" data-button-id="editsupplierlist">
+		<div class="row">
+		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u>S</u>upplier{% endtrans %} :</label>
+		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editsupplierlist-input" data-button-id="editsupplierlist">
 	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editsupplierlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Supplier{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editsupplierlist-label" id="editsupplierlist-ul">
 					<li><input id="editsupplierlist-input" class="form-control selectinput" /></li>
@@ -202,7 +197,7 @@
                 	<li><a class="editsupplierlist-option selectdropdown" href="#"  data-value="{{supplier['custid']}}">{{supplier["custname"]}}</a></li>
               		{% endfor %}
 	    		</ul>
-	  </div>
+	  </div></div>
 		  <br>
 		  <small id="textareahelp" class="form-text text-muted" style="margin:120px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
 		{%endif%}
