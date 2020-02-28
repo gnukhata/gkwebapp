@@ -57,7 +57,6 @@ $(document).ready(function() {
 	
     //code for change event of edit lists custid as variable taken and conditions are applied. condition is set to call ajax only if custid is not null.
 	$(".editcustomerlist-option, .editsupplierlist-option").click(function(event) {
-	// $("#Customer_edit_list, #Supplier_edit_list").change(function(event) {
 	var custid;
 	$("#edit_cussup_reset").hide();
 	 if ($("#custradio").is(":checked"))
@@ -223,6 +222,39 @@ $(document).ready(function() {
 		  $("#editcustomerlist-input").parent().parent().find("a:visible").first().focus();
 		}
 	  });
+
+	  $("#editsupplierlist-input").keyup(function(event){
+		let searchtext = $("#editsupplierlist-input").val().toLowerCase();
+		if (searchtext != "") {
+		  $(".editsupplierlist-option").each(function(index){
+		if (index != -1) {
+		  let rowtext = $(this).text().toLowerCase();
+		  if (rowtext.indexOf(searchtext) != -1) {
+			$(this).parent().show();
+			$(this).show();
+		  }
+		  else {
+			$(this).parent().hide();
+			$(this).hide();
+		  }
+		}
+		  });
+		}
+		else{
+		  $(".editsupplierlist-option").each(function(index){
+		$(this).parent().show();
+		$(this).show();
+		  });
+		}
+	  });
+	
+	  $(document).off('keydown' ,'#editsupplierlist-input').on('keydown' ,'#editsupplierlist-input',function(event) {
+		if (event.which == 13 || event.which == 40){
+		  event.preventDefault();
+		  $("#editsupplierlist-input").parent().parent().find("a:visible").first().focus();
+		}
+	  });
+
 	
 	  $(".searchabledropdown").on("shown.bs.dropdown", function () {
 		let searchinput = $(this).data("input-id");
@@ -230,42 +262,30 @@ $(document).ready(function() {
 	  });
 	
     
-  $("#Customer_edit_list").keydown(function(event) {
-
+  $("#editcustomerlist").keydown(function(event) {
     if (event.which==13) {
       event.preventDefault();
-      $("#edit_cussup_btn").click();
-    }
-
-  });
-  $("#Customer_edit_list").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+	  $("#edit_cussup_btn").click();
       $("#edit_cussup_name").focus().select();
-    }
-    if (event.which==38){
-      event.preventDefault();
-      $("#Customer_edit_list").focus().select();
-    }
+	}
+	else {
+		if (!$("#editcustomerlist").hasClass("open")){
+	  $("#editcustomerlist").click();
+		}
+	}
   });
 
     $("#editsupplierlist").keydown(function(event) {
-
     if (event.which==13) {
       event.preventDefault();
-      $("#edit_cussup_btn").click();
-    }
-
-  });
-  $("#editsupplierlist").keydown(function(event) {
-    if (event.which==13) {
-      event.preventDefault();
+	  $("#edit_cussup_btn").click();
       $("#edit_cussup_name").focus().select();
-    }
-    if (event.which==38){
-      event.preventDefault();
-      $("#Customer_edit_list").focus().select();
-    }
+	}
+	else {
+		if (!$("#editsupplierlist").hasClass("open")){
+	  $("#editsupplierlist").click();
+		}
+	}	
   });
     
   $("#edit_cussup_name").keydown(function(event) {
@@ -573,7 +593,7 @@ $(document).ready(function() {
     // keydown event for radiobutton so that the focus will reach to frop down list after enter press.
     $("#custradio").keydown(function(event) {
 	if (event.which==13) {
-	    $("#Customer_edit_list").focus().select();
+	    $("#editcustomerlist").focus().select();
 	}
     });
     $("#supradio").keydown(function(event) {
@@ -582,20 +602,6 @@ $(document).ready(function() {
 	}
     });
 
-    //change event for radio buttons to get first selected option of drop down list.
-    $(document).off('focusin', '.custsupradio').on('focusin', '.custsupradio', function(event) {
-	// $("#Customer_edit_list option:first").prop("selected",true);
-	$("#editcustomerlist").focus();
-	$("#editsupplierlist").focus();
-	
-    // $("#Customer_edit_list").change();
-    // $("#Supplier_edit_list option:first").prop("selected",true);
-	// $("#Supplier_edit_list").change();
-	$(".panel-footer").hide();
-	$("#scrollbar").hide();
-	    // $(".groupname-option[data-value="+ gcode +"]").click();
-    });
-    
 
     //this is the change event written for radio buttons in customer supplier. 
    //on change event one of the list will be hidden. 
@@ -1057,7 +1063,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	if($("#editsupplierlist").data('value')==undefined){
 	if ($("#editcustomerlist").data('value')!=""){   
 	    let selectedcust = $("#editcustomerlist").data('value'); //Current Customer/Supplier.
-	// $("#Customer_edit_list").val(selectedcust).change(); //Select Current Customer/Supplier and trigger change event.
 	$(".editcustomerlist-option[data-value='" + selectedcust + "']").click();
 
 	$("#Customer_edit_list").focus();    
@@ -1065,7 +1070,6 @@ $(document).off("click",".state_del").on("click", ".state_del", function() {
 	if($("#editcustomerlist").data('value')==undefined){
 	if ($("#editsupplierlist").data('value')!=""){
 	    let selectedsup = $("#editsupplierlist").data('value'); //Current Customer/Supplier.
-		// $("#Supplier_edit_list").val(selectedsup).change(); //Select Current Customer/Supplier and trigger change event.
 		$(".editsupplierlist-option[data-value='" + selectedsup + "']").click();
 
 	    $("#editsupplierlist").focus();
