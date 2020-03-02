@@ -468,7 +468,7 @@ $(document).ready(function()
 	    event.preventDefault();
       $("#editaccountname").focus();
   }
-  else if(event.which == 13) {
+  else if(event.which == 13 || event.which == 9) {
     event.preventDefault();
     $("#subgroupname").focus();
 }
@@ -599,7 +599,7 @@ $(document).ready(function()
     $("#subgroupname").prop("disabled", false);
   }, 0);
 		}
-	else if(event.which == 13){
+	else if(event.which == 13 || event.which == 9){
 	    event.preventDefault();
 	    if($.trim($("#subgroupname").val())=="New"){
 		$("#newsubgroup").focus().select();
