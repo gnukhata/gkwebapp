@@ -1679,6 +1679,7 @@ $(document).ready(function() {
       }
     });
     var editformdata = $("#editprodform").serializeArray();
+    editformdata.push({name: 'productcode', value: $("#prodselect").data('value')});
       editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
     editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
@@ -1762,7 +1763,7 @@ $(document).ready(function() {
       .done(function(resp) {
         if (resp["gkstatus"] ==0) {
           $('.modal-backdrop').remove();
-          if ($("#prodselect option").length < 3) {
+          if ($(".prodselect-option").length < 3) {
           $("#product").click();
           }
           else {
