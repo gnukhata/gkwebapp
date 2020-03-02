@@ -291,11 +291,19 @@ $(document).ready(function() {
 		  $("#maxprice").focus();
 	      }
 	  }
-	  if (event.which==38) {
-	      event.preventDefault();
-	      $("#prodselect").focus();
-	  }
       }
+      if (event.which==38) {
+        if ( $("#editcatselect").length==0){
+          $("#prodselect").focus();
+        }
+        if ( $("#editcatselect").is(':disabled')){
+          $("#prodselect").focus();
+        }
+        else{
+          $("#editcatselect").focus();
+        }
+	      event.preventDefault();
+	  }
   });
     
     $(document).on('keydown', '#gscode', function(event) {
@@ -779,7 +787,7 @@ $(document).ready(function() {
     if (event.which == 38) {
       event.preventDefault();
       if($("#editcatselect option:selected").val() == ""){
-        $("#editproddesc").focus().select();
+        $("#prodselect").focus().select();
       }
     }
   });
