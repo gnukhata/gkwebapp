@@ -464,20 +464,19 @@ $(document).ready(function()
 
     //Keydown for 'group name' field.
     $("#groupname").keydown(function(event){
-      let keyArray = [9,13,16];
-	if(event.shiftKey &&  event.which == 9) {
+	if(event.which == 16) {
 	    event.preventDefault();
       $("#editaccountname").focus();
   }
-  if(event.shiftKey == 13 || (event.which == 9 && !event.shiftKey)) {
+  else if(event.which == 13) {
     event.preventDefault();
-    $("#groupname").focus();
+    $("#subgroupname").focus();
 }
-if($.inArray(event.which, keyArray) == -1) {
-  if (!$("#groupname").hasClass("open")){
+  else{
+    if (!$("#groupname").hasClass("open")){
   $("#groupname").click();
   }
-  }
+}
     });
 
     $("#nsgp").hide();
@@ -589,35 +588,32 @@ if($.inArray(event.which, keyArray) == -1) {
     
     //Keydown for 'subgroupname' field.
     $("#subgroupname").keydown(function(event){
-      let keyArray = [9,13,16, 61];
-	if(event.shiftKey &&  event.which == 9) {
+  if(event.which==32){
+    event.preventDefault();
+    $("#subgroupname").prop("disabled", true);
+    $(".subgroupname-option[data-value='New']").click();			
+		$("#nsgp").show();
+        $('.default').hide();
+    $("#newsubgroup").focus().select();
+    setTimeout(function () {
+    $("#subgroupname").prop("disabled", false);
+  }, 0);
+		}
+	else if(event.which == 13){
 	    event.preventDefault();
-	    $("#groupname").focus();
-  }
-  if(event.which==13 || (event.which == 9 && !event.shiftKey)) {
-        event.preventDefault();
-        if ($.trim($("#subgroupname").data('value'))=="New"){
-      $("#newsubgroup").focus().select();
-        }else if($(".defbx").is(':visible')){
-      $(".defbx").focus().select();
-        }else{
-      $("#accountname").focus();
-        }
-    }  
-    if (event.shiftKey &&  event.which == 61){
+	    if($.trim($("#subgroupname").val())=="New"){
+		$("#newsubgroup").focus().select();
+	    }else if($(".defbx").is(':visible')){
+		$(".defbx").focus().select();
+	    }else{
+		$("#accountname").focus();
+	    }
+	}
+	else if(event.which ==16){
+	    event.preventDefault();
+	    $("#groupname").focus().select();
+	}
 
-      event.preventDefault();
-      $(".subgroupname-option[data-value='New']").click();			
-        $("#nsgp").show();
-      $("#newsubgroup").focus().select();
-  
-    }
-  
-    if($.inArray(event.which, keyArray) == -1) {
-			if (!$("#subgroupname").hasClass("open")){
-		  $("#subgroupname").click();
-			}
-		  }
 
  });
 
