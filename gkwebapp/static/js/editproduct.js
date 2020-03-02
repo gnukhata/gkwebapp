@@ -45,7 +45,7 @@ $(document).ready(function() {
     $("#prodselect").keydown(function(e){
     if (e.which == 13) {
 	e.preventDefault();
-	if ($.trim($("#prodselect").val())=="") {
+	if ($.trim($("#prodselect").data('value'))=="") {
             $("#blank-alert").alert();
             $("#blank-alert").fadeTo(2250, 200).slideUp(500, function(){
 		$("#blank-alert").hide();
@@ -64,6 +64,11 @@ $(document).ready(function() {
 	    });
   }
     }
+    else {
+      if (!$("#prodselect").hasClass("open")){
+        $("#prodselect").click();
+    }
+  }
   });
 
     if(sessionStorage.invflag==0){
@@ -410,7 +415,11 @@ $(document).ready(function() {
     }
   });
 
-  $("#prodselect").change(function(event) {
+  // $("#prodselect").change(function(event) {
+    $(".prodselect-option").click(function(){
+      $("#prodselect").data("value", $(this).data("value"));
+      $("#prodselect").text($(this).text());
+      $("#prodselect").focus();
       /* Act on the event */
       var call;
        if(sessionStorage.vatorgstflag == '7' || sessionStorage.vatorgstflag == '29'){
@@ -420,7 +429,7 @@ $(document).ready(function() {
       else{
 	   call = '/product?type=detailsvat';
       }
-    prodcode= $("#prodselect option:selected").val();
+    prodcode= $("#prodselect").data('value');
       $.ajax({
         url: call,
         type: 'POST',
@@ -556,7 +565,7 @@ $(document).ready(function() {
         type: 'POST',
         dataType: 'json',
         async : false,
-        data: {"productcode":$("#prodselect option:selected").val()},
+        data: {"productcode":$("#prodselect").data('value')},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -589,6 +598,43 @@ $(document).ready(function() {
       });
   });
 
+
+  $("#prodselect-input").keyup(function(event) {
+    let searchtext = $("#prodselect-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".prodselect-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".prodselect-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#prodselect-input').on('keydown' ,'#prodselect-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $("#prodselect-input").parent().parent().find("a:visible").first().focus();
+      }
+    });
+    $(".searchabledropdown").on("shown.bs.dropdown", function () {
+      let searchinput = $(this).data("input-id");
+        document.getElementById(searchinput).focus();
+      });
+      
   $(document).off("shown.bs.collapse","#moresmall").on("shown.bs.collapse","#moresmall",function(event) {
     event.preventDefault();
     $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -646,7 +692,7 @@ $(document).ready(function() {
     if (event.which == 13)
     {
       event.preventDefault();
-      prodcode= $("#prodselect option:selected").val();
+      prodcode= $("#prodselect").data('value');
       if (prodcode!="")
       {
         $("#epedit").click();
@@ -654,15 +700,20 @@ $(document).ready(function() {
       }
 
     }
-    if (event.which==46)
+   else if (event.which==46)
     {
       event.preventDefault();
-      prodcode= $("#prodselect option:selected").val();
+      prodcode= $("#prodselect").data('value');
       if (prodcode!="")
       {
         $('#epdelete').click();
       }
     }
+    else {
+      if (!$("#prodselect").hasClass("open")){
+        $("#prodselect").click();
+    }
+  }
   });
   $(document).on('change', '#edituom',function(event) {
     if ($("#edituom option:selected").val()!='') {
@@ -1693,7 +1744,7 @@ $(document).ready(function() {
     /* Act on the event */
     $('.modal-backdrop').remove();
     $('.modal').modal('hide');
-    prodcode= $("#prodselect option:selected").val();
+    prodcode= $("#prodselect").data('value');
     $('#m_confirmdel').modal('show').one('click', '#proddel', function (e)
     {
       $.ajax({

@@ -31,13 +31,24 @@
 		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
 		  {%endif%}
       
-		  <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
+		  <!-- <select class = "form-control input-sm"  name = "productcode" id="prodselect" >
 		    <option value="" disabled selected hidden>{% trans %}Select Product / Service{% endtrans %}</option>
 		    {% for prod in gkresult %}
 		      <option value="{{prod['productcode']}}">{{prod["productdesc"]}}</option>
 		    {% endfor %}
 		{%endif%}
-		  </select>
+      </select> -->
+      
+      <div class="dropdown searchabledropdown" data-input-id="prodselect-input" data-button-id="prodselect">
+	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="prodselect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Account{% endtrans %}<span class="caret"></span></button>
+	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="prodselect-label" id="prodselect-ul">
+					<li><input id="prodselect-input" class="form-control selectinput" /></li>
+  		    {% for prod in gkresult %}            
+                	<li><a class="prodselect-option selectdropdown" href="#"  data-value="{{prod['productcode']}}">{{prod["productdesc"]}}</a></li>
+              		{% endfor %}
+	    		</ul>
+	  </div>
+
 	      </div>
 
 	    </div>
