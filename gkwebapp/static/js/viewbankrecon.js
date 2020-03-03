@@ -127,12 +127,12 @@ $(document).ready(function() {
     let searchinput = $(this).data("input-id");
       document.getElementById(searchinput).focus();
     });
-  $('select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
-    var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
-    var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
-      if (e.which == 13)
-      {
-	  if ($("#viewbankrecon_accname").data('value')==null) {
+
+  $('#viewbankrecon_accname').keydown( function(e) {
+
+    if (e.which == 13 || e.which == 9)
+    {
+      if ($("#viewbankrecon_accname").data('value')==null) {
 	      $("#account-blank-alert").alert();
 	      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#account-blank-alert").hide();
@@ -141,46 +141,74 @@ $(document).ready(function() {
 	      });
 	      return false;
 	  }
-	  else {
-	      var nextIndex = f.index(this) + 1;
-	      if(nextIndex < n){
-		  e.preventDefault();
-		  f[nextIndex].focus();
-		  f[nextIndex].select();
-              }
-	  }
-      
+      $("#viewbankrecon_fromdate").focus().select();
+    }
+    else{
+      if (!$("#viewbankrecon_accname").hasClass("open")){
+        $("#viewbankrecon_accname").click();
+        }
+    }
+  });
+
+    // navigation functions for enter key and up arrow keys.
+    $("#viewbankrecon_fromdate").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_frommonth").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_accname").focus().select();
+      }
+    });
+    $("#viewbankrecon_frommonth").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_fromyear").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_fromdate").focus().select();
+      }
+    });
+    $("#viewbankrecon_fromyear").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_todate").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_frommonth").focus().select();
+      }
+    });
+    $("#viewbankrecon_todate").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_tomonth").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_fromyear").focus().select();
+      }
+    });
+    $("#viewbankrecon_tomonth").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_toyear").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_todate").focus().select();
+      }
+    });
+    $("#viewbankrecon_toyear").keydown(function(e){
+      if(e.which==13){
+        $("#viewbankrecon_nar").focus().select();
+      }
+      if(e.which==38){
+        $("#viewbankrecon_tomonth").focus().select();
       }
     });
 
-    
-    $('input:text:enabled,input:checkbox:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
-    var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
-    var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
-      if (e.which == 13)
-      {
-	 var nextIndex = f.index(this) + 1;
-	 if(nextIndex < n){
-          e.preventDefault();
-          f[nextIndex].focus();
-          f[nextIndex].select();
-         }
-      }
-     if (e.which == 38 )
-      {
-        var prevIndex = f.index(this) - 1;
-        if(prevIndex < n){
-          e.preventDefault();
-          f[prevIndex].focus();
-          f[prevIndex].select();
-        }
-      }
-    });
   $("#viewbankrecon_nar").keydown(function(event) {
     if (event.which==13) {
 	$("#viewbankrecon_submit").focus();
 	return false;
     }
+    if (event.which==38) {
+    $("#viewbankrecon_toyear").focus().select();
+    }
+
   });
 
 
