@@ -19,7 +19,7 @@
     {% if gkresult == [] %}
            <div class="bg-danger" style="text-align:center;padding-top:3px;padding-botom:9px">
 		  <label class="text-danger">{% trans %}No Product/Service Found!{% endtrans %}</label>
-      <div>
+           </div>
       {% else %}
 	  <div class="container-fluid row nopadding" style="width: 48%;">
 	    <div class="form-group  col-sm-6">
@@ -30,21 +30,21 @@
 		  {% else %}
 		    <label for="prodselect" id="prodselect_lbl">{% trans %}List of Products {% endtrans %} :</label>
 		  {%endif%}
-      
       <div class="dropdown searchabledropdown" data-input-id="prodselect-input" data-button-id="prodselect">
 	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="prodselect" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Product / Service{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="prodselect-label" id="prodselect-ul">
 					<li><input id="prodselect-input" class="form-control selectinput" /></li>
   		    {% for prod in gkresult %}            
                 	<li><a class="prodselect-option selectdropdown" href="#"  data-value="{{prod['productcode']}}">{{prod["productdesc"]}}</a></li>
-              		{% endfor %}
+                  {% endfor %}    
 	    		</ul>
 	  </div>
 
 	      </div>
 
 	    </div>
-	  </div>
+    </div>
+		{% endif %}
 	  <div class="container-fluid" id="proddetails" style="padding:1 !important; margin:0 !important;" disabled >
 
 	  </div>
