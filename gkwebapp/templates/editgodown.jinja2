@@ -37,15 +37,20 @@
 	    <label for="editgoddet">
 				{% trans %}List of Godowns{% endtrans %} :
 				</label>
-	    <select class = "form-control input-sm" id="editgoddet">
-	      <option value="disabled" disabled selected hidden>
-					{% trans %}Select Godown{% endtrans %}
-					</option>
-	      {% for gods in gkresult %}
-		<option value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</option>
-	      {% endfor %}
-	  {% endif %}
-	    </select>
+		<br>
+		<div class="row col-xs-7 dropdown searchabledropdown" data-input-id="editgoddet-input" data-button-id="editgoddet">
+			<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editgoddet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			  {% trans %}Select Godown{% endtrans %}
+			  <span class="caret"></span>
+			</button>
+			<ul class="dropdown-menu selectdropdown" aria-labelledby="editgoddet-label" id="editgoddet-ul">
+			  <li><input id="editgoddet-input" class="form-control selectinput" /></li>
+		{% for gods in gkresult %}
+					<li><a class="editgoddet-option selectdropdown" href="#" data-value="{{gods['godownid']}}">{{gods["godownname"]}} ({{gods["godownaddress"]}})</a></li>
+			{% endfor %}
+			</ul>
+		  </div>
+		  {% endif %}
 	</div>
       </div>
       <div class="col-sm-6 editgodownform" hidden>
