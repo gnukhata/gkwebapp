@@ -38,12 +38,25 @@
         </div>
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewbankrecon_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewbankrecon_accname" style="color:red;font-size: 120%;">*</label>
-          <select class = "form-control input-sm" id="viewbankrecon_accname"  name = "viewbankrecon_accname" >
+          <!-- <select class = "form-control input-sm" id="viewbankrecon_accname"  name = "viewbankrecon_accname" >
             <option value="" disabled selected hidden>{% trans %}Select Account{% endtrans %}</option>
             {% for accs in gkresult %}
             <option value="{{accs['accountcode']}}">{{accs["accountname"]}}</option>
             {% endfor %}
-          </select>
+          </select>  -->
+	          <div class="dropdown searchabledropdown" data-input-id="viewbankrecon_accname-input" data-button-id="viewbankrecon_accname">
+									<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewbankrecon_accname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+									  {% trans %}Select Account{% endtrans %}
+									  <span class="caret"></span>
+									</button>
+									<ul class="dropdown-menu selectdropdown" aria-labelledby="viewbankrecon_accname-label" id="viewbankrecon_accname-ul">
+									  <li><input id="viewbankrecon_accname-input" class="form-control selectinput" /></li>
+                  {% for accs in gkresult %}          
+											<li><a class="viewbankrecon_accname-option selectdropdown" href="#" data-value="{{accs['accountcode']}}">{{accs["accountname"]}}</a></li>
+										  {% endfor %}
+									</ul>
+								  </div>
+
           <br>
 
           <label for="viewbankrecon_fromdate">{% trans %}From Date{% endtrans %} :</label>

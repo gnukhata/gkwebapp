@@ -29,6 +29,11 @@ This script is for the view page of Bank reconciliation..
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#viewbankrecon_accname").focus();
+  $(".viewbankrecon_accname-option").click(function(){
+		$("#viewbankrecon_accname").data("value", $(this).data("value"));
+		$("#viewbankrecon_accname").text($(this).text());
+    $("#viewbankrecon_accname").focus();
+  });    
   $('.viewbankrecon_date').autotab('number');
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -86,13 +91,48 @@ $(document).ready(function() {
   });
 
 
-
+  $("#viewbankrecon_accname-input").keyup(function(event) {
+    let searchtext = $("#viewbankrecon_accname-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".viewbankrecon_accname-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".viewbankrecon_accname-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#viewbankrecon_accname-input').on('keydown' ,'#viewbankrecon_accname-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $(".viewbankrecon_accname-option").parent().parent().find("a:visible").first().focus();
+    }
+    });
+  
+    $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+      document.getElementById(searchinput).focus();
+    });
   $('select:enabled').keydown( function(e) { // function for shifting focus on enter and up arrow key.
     var n = $("input:text:enabled,input:checkbox:enabled,select:enabled").length;
     var f = $('input:text:enabled,input:checkbox:enabled,select:enabled');
       if (e.which == 13)
       {
-	  if ($("#viewbankrecon_accname").val()==null) {
+	  if ($("#viewbankrecon_accname").data('value')==null) {
 	      $("#account-blank-alert").alert();
 	      $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 		  $("#account-blank-alert").hide();
@@ -146,7 +186,7 @@ $(document).ready(function() {
 
   $("#viewbankrecon_submit").click(function(event) {
     // --------------------starting validations------------------
-      if ($("#viewbankrecon_accname").val()==null) {
+      if ($("#viewbankrecon_accname").data('value')==null) {
       $("#account-blank-alert").alert();
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
@@ -223,7 +263,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"accountcode":$("#viewbankrecon_accname").val(),"accountname":$("#viewbankrecon_accname option:selected").text(),"calculatefrom":$("#viewbankrecon_fromyear").val()+"-"+$("#viewbankrecon_frommonth").val()+"-"+$("#viewbankrecon_fromdate").val(),"calculateto":$("#viewbankrecon_toyear").val()+"-"+$("#viewbankrecon_tomonth").val()+"-"+$("#viewbankrecon_todate").val(),"narrationflag":$("#viewbankrecon_nar").is(":checked")},
+        data: {"accountcode":$("#viewbankrecon_accname").data('value'),"accountname":$("#viewbankrecon_accname").text(),"calculatefrom":$("#viewbankrecon_fromyear").val()+"-"+$("#viewbankrecon_frommonth").val()+"-"+$("#viewbankrecon_fromdate").val(),"calculateto":$("#viewbankrecon_toyear").val()+"-"+$("#viewbankrecon_tomonth").val()+"-"+$("#viewbankrecon_todate").val(),"narrationflag":$("#viewbankrecon_nar").is(":checked")},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
