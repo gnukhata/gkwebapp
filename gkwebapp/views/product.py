@@ -1128,7 +1128,14 @@ def ProductImport(request):
                         productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
                         temp["productdetails"]=productdetails
                         temp["taxes"]=taxes
-                        gkdata.append(temp)                    
+                        gkdata.append(temp)
+                        proddetails={}
+                        godowns={}
+                        godownflag=False
+                        taxes=[]
+                        tax={}
+                        duplicateFlag=False
+                        multipletax = False
                     
                     if productrow[0].value != "product name":  
                         newrows.append(rowcount)
