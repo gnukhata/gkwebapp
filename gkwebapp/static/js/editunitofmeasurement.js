@@ -22,12 +22,17 @@ $(document).ready(function() {
     })
     .done(function(resp) {
 	var result = resp["gkresult"];
-	sysuom = resp["gkresult"]["sysunit"];
+  sysuom = resp["gkresult"]["sysunit"];
       $("#unit_edit_name").val(result["unitname"]);
       $("#unit_edit_name").prop("disabled", true);
       $("#unit_edit_desc").val(result["description"]);
       $("#unit_edit_desc").prop("disabled", true);	
-      $("#sub_unit_edit").val(result["subunitof"]);
+      if (result["subunitof"] == null){
+        $(".sub_unit_edit-option:first").click();
+      }
+      else{
+      $(".sub_unit_edit-option[data-value='" + result["subunitof"] + "']").click();
+    }
       $("#sub_unit_edit").prop("disabled", true);
       $("#unit_edit_conversion_rate").val(result["conversionrate"]);
       $("#unit_edit_conversion_rate").prop("disabled", true);
@@ -53,7 +58,7 @@ $(document).ready(function() {
 	    $(".subunit").hide();
 	}
 
-      if($("#sub_unit_edit option:selected").val()==''){
+      if($("#sub_unit_edit").data('value')==''){
         $("#edit_conversion_div").hide();
       }
       else{
@@ -101,6 +106,49 @@ $("#unit_edit_list-input").keyup(function(event) {
 	}
   });
 
+
+  $(".sub_unit_edit-option").click(function(event) {
+    $("#sub_unit_edit").data("value", $(this).data("value"));
+    $("#sub_unit_edit").text($(this).text());
+    $("#sub_unit_edit").focus();
+   if ($("#sub_unit_edit").data('value')==""){
+    $("#edit_conversion_div").val(0.00);
+    $("#edit_conversion_div").hide();
+  }
+  });
+
+  $("#sub_unit_edit-input").keyup(function(event) {
+    let searchtext = $("#sub_unit_edit-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".sub_unit_edit-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".sub_unit_edit-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#sub_unit_edit-input').on('keydown' ,'#sub_unit_edit-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $(".sub_unit_edit-option").parent().parent().find("a:visible").first().focus();
+    }
+    });
+
   $(".searchabledropdown").on("shown.bs.dropdown", function () {
 	let searchinput = $(this).data("input-id");
     document.getElementById(searchinput).focus();
@@ -144,23 +192,28 @@ $("#unit_edit_list-input").keyup(function(event) {
     });
 
     $("#sub_unit_edit").keydown(function(event) {
-      if (event.which==13 && $("#sub_unit_edit option:selected").val()=='') {
+      if (event.which==13 && $("#sub_unit_edit").data('value')=='') {
         event.preventDefault();
           $("#unit_edit_save").focus().click();
       }
-      if(event.which==13 && $("#sub_unit_edit option:selected").val()!='') {
+      else if(event.which==13 && $("#sub_unit_edit").data('value')!='') {
         event.preventDefault();
         $("#unit_edit_conversion_rate").focus().select();
 
       }
-      if (event.which==38 && $("#sub_unit_edit option:selected").val()=='') {
+     else if (event.which==38) {
+        $("#sub_unit_edit").prop("disabled", true);
         event.preventDefault();
         $("#unit_edit_desc").focus().select();
-        $("#edit_conversion_div").hide();
+        setTimeout(function () {
+          $("#sub_unit_edit").prop("disabled", false);
+          }, 0);
+    
       }
-      if(event.which==40 || $("#sub_unit_edit option:selected").val()!='') {
-        event.preventDefault();
-        $("#edit_conversion_div").show();
+      else{
+        if (!$("#sub_unit_edit").hasClass("open")){
+          $("#sub_unit_edit").click();
+          }
       }
     });
     $("#unit_edit_conversion_rate").keydown(function(event) {
@@ -209,7 +262,7 @@ $("#unit_edit_list-input").keyup(function(event) {
       return false;
     }
 
-    if ($("#unit_edit_name").val()==$("#sub_unit_edit option:selected").text()){
+    if ($("#unit_edit_name").val()==$("#sub_unit_edit").text()){
       $("#sameUnit-alert").alert();
       $("#sameUnit-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#sameUnit-alert").hide();
@@ -218,7 +271,7 @@ $("#unit_edit_list-input").keyup(function(event) {
       return false;
     }
 
-    if ($("#unit_edit_conversion_rate").val()=='' && $("#sub_unit_edit option:selected").val()!=''){
+    if ($("#unit_edit_conversion_rate").val()=='' && $("#sub_unit_edit").data('value')!=''){
       $("#conversion-alert").alert();
       $("#conversion-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#conversion-alert").hide();
@@ -227,7 +280,7 @@ $("#unit_edit_list-input").keyup(function(event) {
       return false;
     }
 
-    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 && $("#sub_unit_edit option:selected").val()!=''){
+    if ($("#unit_edit_conversion_rate").val()==0 && $("#unit_edit_conversion_rate").val()==0.00 && $("#sub_unit_edit").data('value')!=''){
       $("#conversion-rate-alert").alert();
       $("#conversion-rate-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#conversion-rate-alert").hide();
@@ -241,13 +294,12 @@ $("#unit_edit_list-input").keyup(function(event) {
 	}else{
 	    description = "";
 	}
-	
     $.ajax({
       url: '/unitofmeasurements?action=edit',
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list").data('value'), "description":description , "sysunit":0},
+	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit").data('value'),"uomid": $("#unit_edit_list").data('value'), "description":description , "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -288,7 +340,7 @@ $("#unit_edit_list-input").keyup(function(event) {
     .always(function() {
       console.log("complete");
     });
-    event.stopPropogation();
+    event.stopPropagation();
     });
     //click event for delete button so that to shift the focus on unit_edit_list.
   $("#unit_delete").click(function(event) {

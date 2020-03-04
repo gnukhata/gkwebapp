@@ -84,14 +84,20 @@
           </div>
           <div class="form-group subunit">
             <label for="sub_unit_edit">{% trans %}Sub Unit of :{% endtrans %}</label>
-            <select class="form-control input-sm" id="sub_unit_edit">
-              <option value="" selected>None</option>
+      <div class="dropdown searchabledropdown" data-input-id="sub_unit_edit-input" data-button-id="sub_unit_edit">
+              <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="sub_unit_edit" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {% trans %}Select Group{% endtrans %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu selectdropdown" aria-labelledby="sub_unit_edit-label" id="sub_unit_edit-ul">
+                <li><input id="sub_unit_edit-input" class="form-control selectinput" /></li>
+                <li><a class="sub_unit_edit-option selectdropdown" href="#" data-value="">None</a></li>
               {% for unitofmeasurement in gkresult %}
-		<option value="{{unitofmeasurement['uomid']}}">
-		  {{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != None %}({{unitofmeasurement["description"]}}){% endif %}
-		</option>
-              {% endfor %}
-            </select>
+                  <li><a class="sub_unit_edit-option selectdropdown" href="#" data-value="{{unitofmeasurement['uomid']}}">{{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != None %}({{unitofmeasurement["description"]}}){% endif %}</a></li>
+                  {% endfor %}
+              </ul>
+              </div>
+
           </div>
           <div class="form-group" id="edit_conversion_div">
             <label for="unit_edit_conversion_rate">{% trans %}Conversion Rate:{% endtrans %}</label>
