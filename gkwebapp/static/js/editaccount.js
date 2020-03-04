@@ -48,6 +48,7 @@ $(document).ready(function()
   var oldcustname;
   var custsupflag = 0;
   let sel_sgcode;
+  let gcode;
   $(".editaccountname-option").click(function(){
 
     $("#editaccountname").data("value", $(this).data("value"));
@@ -419,7 +420,7 @@ $(document).ready(function()
         $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="' + subgroups[i].subgroupcode + '">' +subgroups[i].subgroupname+ '</a></li>');
         }
         $('#subgroupname-ul').append('<li class="option_li"><a class="subgroupname-option selectdropdown" href="#" data-value="New ">New Sub-Group</a></li>');
-        if ($("#groupname").data('value')  != sel_sgcode){
+        if ($("#groupname").data('value')  != sel_sgcode && $("#groupname").data('value') == gcode){
            $(".subgroupname-option[data-value='" + sel_sgcode + "']").click();
         }
         else{
@@ -481,7 +482,6 @@ $(document).ready(function()
 
     $("#nsgp").hide();
 
-    // $(".subgroupname-option").click(function(){
    $(document).on('click', '.subgroupname-option', function() {
       $("#subgroupname").data("value", $(this).data("value"));
     $("#subgroupname").text($(this).text());
