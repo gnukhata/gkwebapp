@@ -4,14 +4,17 @@ $(document).ready(function() {
   $("#unit_edit_name").focus();
     var sysuom = "";
     $("#alertmsg").hide();
-  $("#unit_edit_list").change(function(event) {
-
+  // $("#unit_edit_list").change(function(event) {
+    $(".unit_edit_list-option").click(function(event) {
+      $("#unit_edit_list").data("value", $(this).data("value"));
+      $("#unit_edit_list").text($(this).text());
+      $("#unit_edit_list").focus();
     $.ajax({
       url: '/unitofmeasurements?action=getunit',
       type: 'POST',
       dataType: 'json',
       async : false,
-      data: {"uomid": $("#unit_edit_list option:selected").val()},
+      data: {"uomid": $("#unit_edit_list").data('value')},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -202,7 +205,7 @@ $(document).ready(function() {
       type: 'POST',
       dataType: 'json',
       async : false,
-	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list option:selected").val(), "description":description , "sysunit":0},
+	data: {"unitname": $("#unit_edit_name").val(),"conversionrate":$("#unit_edit_conversion_rate").val(),"subunitof":$("#sub_unit_edit option:selected").val(),"uomid": $("#unit_edit_list").data('value'), "description":description , "sysunit":0},
       beforeSend: function(xhr)
       {
         xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
@@ -259,7 +262,7 @@ $(document).ready(function() {
           url: '/unitofmeasurements?action=delete',
           async: false,
           datatype: "json",
-          data:{"uomid": $("#unit_edit_list option:selected").val()},
+          data:{"uomid": $("#unit_edit_list").data('value')},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
