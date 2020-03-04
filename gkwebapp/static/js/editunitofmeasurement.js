@@ -1,6 +1,7 @@
 $(document).ready(function() {
   $('.modal-backdrop').remove();
   $("#unit_edit_conversion_rate").numeric();
+  $("#unit_edit_list").focus();
   $("#unit_edit_name").focus();
     var sysuom = "";
     $("#alertmsg").hide();
@@ -68,6 +69,43 @@ $(document).ready(function() {
 
 });
 
+$("#unit_edit_list-input").keyup(function(event) {
+	let searchtext = $("#unit_edit_list-input").val().toLowerCase();
+    if (searchtext != "") {
+      $(".unit_edit_list-option").each(function(index){
+	if (index != -1) {
+	  let rowtext = $(this).text().toLowerCase();
+	  if (rowtext.indexOf(searchtext) != -1) {
+	    $(this).parent().show();
+	    $(this).show();
+	  }
+	  else {
+	    $(this).parent().hide();
+	    $(this).hide();
+	  }
+	}
+      });
+    }
+    else{
+      $(".unit_edit_list-option").each(function(index){
+	$(this).parent().show();
+	$(this).show();
+      });
+    }
+  });
+
+  $(document).off('keydown' ,'#unit_edit_list-input').on('keydown' ,'#unit_edit_list-input',function(event) {
+    if (event.which == 13 || event.which == 40){
+      event.preventDefault();
+      $(".unit_edit_list-option").parent().parent().find("a:visible").first().focus();
+	}
+  });
+
+  $(".searchabledropdown").on("shown.bs.dropdown", function () {
+	let searchinput = $(this).data("input-id");
+    document.getElementById(searchinput).focus();
+  });
+
     $("#unit_edit_name").keydown(function(event) {
       if (event.which==13) {
         event.preventDefault();
@@ -85,7 +123,12 @@ $(document).ready(function() {
 	    if(sysuom !=1){
 		$("#edit_btn").click();
 	    }
-	}
+  }
+  else{
+  if (!$("#unit_edit_list").hasClass("open")){
+    $("#unit_edit_list").click();
+    }
+    }
     });
 
     //Keydown for description of unit.
