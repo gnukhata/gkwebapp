@@ -55,16 +55,6 @@
 	      <label class="text-danger">{% trans %}No Unit of Measurement Found!{% endtrans %}</label>
 	      {% else %}
             <label for="unit_edit_list" id="edit_list">{% trans %}List of Units :{% endtrans %}</label>
-            <!-- <select class="form-control input-sm" id="unit_edit_list">
-              <option value="" disabled selected hidden>{% trans %}Select unit{% endtrans %}</option>
-              {% for unitofmeasurement in gkresult %}
-		<option value="{{unitofmeasurement['uomid']}}">
-		  {{unitofmeasurement["unitname"]}} {% if unitofmeasurement["description"] != None %}({{unitofmeasurement["description"]}}){% endif %}
-		</option>
-              {% endfor %}
-	    {%endif%}
-            </select> -->
-
             <div class="dropdown searchabledropdown" data-input-id="unit_edit_list-input" data-button-id="unit_edit_list">
               <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="unit_edit_list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                 {% trans %}Select Group{% endtrans %}
@@ -77,6 +67,7 @@
                   {% endfor %}
               </ul>
               </div>
+              {% endif %}
 
             <div class="alert alert-warning nopadding" id="alertmsg"  aria-live="rude" role="alert" hidden>
 	      <strong>{% trans %}This is a system generated unit, it cannot be edited/deleted.{% endtrans %}</strong>

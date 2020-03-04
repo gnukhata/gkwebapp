@@ -4,7 +4,6 @@ $(document).ready(function() {
   $("#unit_edit_name").focus();
     var sysuom = "";
     $("#alertmsg").hide();
-  // $("#unit_edit_list").change(function(event) {
     $(".unit_edit_list-option").click(function(event) {
       $("#unit_edit_list").data("value", $(this).data("value"));
       $("#unit_edit_list").text($(this).text());
