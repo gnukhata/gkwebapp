@@ -67,6 +67,49 @@ $(document).ready(function() {
     }
   }
 
+  $(".viewlog_username-option").click(function(){
+		$("#viewlog_username").data("value", $(this).data("value"));
+		$("#viewlog_username").text($(this).text());
+    $("#viewlog_username").focus();
+  });
+  $("#viewlog_username-input").keyup(function(event) {
+    let searchtext = $("#viewlog_username-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".viewlog_username-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".viewlog_username-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#viewlog_username-input').on('keydown' ,'#viewlog_username-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $(".viewlog_username-option").parent().parent().find("a:visible").first().focus();
+    }
+    });
+  
+    $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+      document.getElementById(searchinput).focus();
+    });
+  
+
   $("#viewlog_fromdate").blur(function(event) {
     $(this).val(pad($(this).val(),2));
   });
@@ -115,9 +158,19 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
     if(e.which==13){
       $("#viewlog_fromdate").focus().select();
     }
-    if(e.which == 38 && (document.getElementById('viewlog_username').selectedIndex==1||document.getElementById('viewlog_username').selectedIndex==0)) {
+    else if(e.which == 38) {
+      $("#viewlog_username").prop("disabled", true);
       e.preventDefault();
       $("#viewlog_type").focus();
+      setTimeout(function () {
+        $("#viewlog_username").prop("disabled", false);
+          }, 0);
+  
+    }
+    else {
+      if (!$("#viewlog_username").hasClass("open")){
+        $("#viewlog_username").click();
+        }
     }
   });
   $("#viewlog_fromdate").keydown(function(e){
@@ -192,7 +245,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
       return false;
     }
     if($("#viewlog_type option:selected").val() == 2){
-      if ($("#viewlog_username").val()==null) {
+      if ($("#viewlog_username").data('value')==null) {
         $("#user-blank-alert").alert();
         $("#user-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
           $("#user-blank-alert").hide();
@@ -271,7 +324,7 @@ $("#viewlog_toyear").val(yearpad($("#viewlog_toyear").val(),4));
         global: false,
         async: false,
         datatype: "text/html",
-          data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").val(), "username":$("#viewlog_username option:selected").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0},
+          data: {"typeflag":$("#viewlog_type option:selected").val(),"userid":$("#viewlog_username").data('value'), "username":$("#viewlog_username").text(), "calculatefrom":$("#viewlog_fromyear").val()+"-"+$("#viewlog_frommonth").val()+"-"+$("#viewlog_fromdate").val(),"calculateto":$("#viewlog_toyear").val()+"-"+$("#viewlog_tomonth").val()+"-"+$("#viewlog_todate").val(), "backflag":0},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

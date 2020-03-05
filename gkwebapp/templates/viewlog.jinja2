@@ -48,12 +48,19 @@
           <br>
           <div class = "form-group" id = "viewlog_users" hidden>
             <label for="viewlog_username">{% trans %}User Name{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="viewlog_username"  name = "viewlog_username" >
-
+       
+            <div class="dropdown searchabledropdown" data-input-id="viewlog_username-input" data-button-id="viewlog_username">
+              <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewlog_username" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {% trans %}Select User{% endtrans %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu selectdropdown" aria-labelledby="viewlog_username-label" id="viewlog_username-ul">
+                <li><input id="viewlog_username-input" class="form-control selectinput" /></li>
               {% for user in gkresult %}
-              <option value="{{user['userid']}}">{{user["username"]}}</option>
-              {% endfor %}
-            </select>
+                  <li><a class="viewlog_username-option selectdropdown" href="#" data-value="{{user['userid']}}">{{user["username"]}}</a></li>
+                  {% endfor %}
+              </ul>
+              </div>
           </div>
           <label for="viewlog_fromdate">{% trans %}From Date{% endtrans %} :</label>
           <div class="form-inline" >
