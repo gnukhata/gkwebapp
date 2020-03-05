@@ -100,12 +100,19 @@
           </div>
           <div class="form-group" id="goselect">
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editgoddet">
-              <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+     
+            <div class="dropdown searchabledropdown" data-input-id="editgoddet-input" data-button-id="editgoddet">
+              <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editgoddet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {% trans %}Select Godown{% endtrans %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu selectdropdown" aria-labelledby="editgoddet-label" id="editgoddet-ul">
+                <li><input id="editgoddet-input" class="form-control selectinput" /></li>
               {% for gods in godown %}
-              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-              {% endfor %}
-            </select>
+                  <li><a class="editgoddet-option selectdropdown" href="#" data-value="{{gods['goid']}}" data-godownname="{{gods['goname']}}" data-godownaddress="{{gods['goaddr']}}">{{gods["goname"]}} ({{gods["goaddr"]}})</a></li>
+                  {% endfor %}
+              </ul>
+              </div>
           </div>
           {%else%}
           <div class="form-group">
@@ -115,12 +122,20 @@
           </div>
           <div class="form-group" id="goselect" hidden>
             <label for="editgoddet">{% trans %}Godown{% endtrans %} :</label>
-            <select class = "form-control input-sm" id="editgoddet">
-              <option value="disabled" disabled selected hidden>{% trans %}Select Godown{% endtrans %}</option>
+
+
+            <div class="dropdown searchabledropdown" data-input-id="editgoddet-input" data-button-id="editgoddet">
+              <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editgoddet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                {% trans %}Select Godown{% endtrans %}
+                <span class="caret"></span>
+              </button>
+              <ul class="dropdown-menu selectdropdown" aria-labelledby="editgoddet-label" id="editgoddet-ul">
+                <li><input id="editgoddet-input" class="form-control selectinput" /></li>
               {% for gods in godown %}
-              <option value="{{gods['goid']}}" data-godownname="{{gods["goname"]}}" data-godownaddress="{{gods["goaddr"]}}">{{gods["goname"]}} ({{gods["goaddr"]}})</option>
-              {% endfor %}
-            </select>
+                  <li><a class="editgoddet-option selectdropdown" href="#" data-value="{{gods['goid']}}" data-godownname="{{gods['goname']}}" data-godownaddress="{{gods['goaddr']}}">{{gods["goname"]}} ({{gods["goaddr"]}})</a></li>
+                  {% endfor %}
+              </ul>
+              </div>
           </div>
           {% endif %}
           {% endif %}
