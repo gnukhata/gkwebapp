@@ -1052,6 +1052,10 @@ $(document).ready(function() {
 	    rejectedtotal = $.trim($('#invoice_product_table_vat tfoot tr:last td:eq(5) input').val());
 
 	}
+	event.preventDefault();
+	$('.modal-backdrop').remove();
+	$('.modal').modal('hide');
+	$('#confirm_yes').modal('show').one('click', '#rn_save_yes', function (e)     {
 	var form_data = new FormData();
 	form_data.append("rnno", $("#rejectionnote_noteno").val());
 	form_data.append("rndate", $("#rejectionnote_year").val()+'-'+$("#rejectionnote_month").val()+'-'+$("#rejectionnote_date").val());
@@ -1070,10 +1074,6 @@ $(document).ready(function() {
 		}
 	form_data.append("products", JSON.stringify(rejprods));
 	form_data.append("rejectedtotal",rejectedtotal);
-	event.preventDefault();
-	$('.modal-backdrop').remove();
-	$('.modal').modal('hide');
-	$('#confirm_yes').modal('show').one('click', '#rn_save_yes', function (e)     {
 	    $.ajax({
 		url: '/rejectionnote?action=save',
 		type: 'POST',
