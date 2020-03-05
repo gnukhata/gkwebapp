@@ -83,16 +83,63 @@ $(document).ready(function() {
 		}
 	});
 	// function to enable date fields on change of combo box  and setting focus on the date field on enter keyup.
-	$("#viewstock_productname").change(function(){
-				$(this).keyup(function(e){
-						if (e.which == 13) {
-							e.preventDefault();
-							$(".dis").attr('disabled', false);
-							$("#viewstock_fromdate").focus().select();
-						}
-				});
-				$(".dis").attr('disabled', false);
+	$(".viewstock_productname-option").click(function(){
+		$("#viewstock_productname").data("value", $(this).data("value"));
+		$("#viewstock_productname").text($(this).text());
+	$("#viewstock_productname").focus();
+	$(".dis").attr('disabled', false);
+	
+  });
+  $("#viewstock_productname-input").keyup(function(event) {
+    let searchtext = $("#viewstock_productname-input").val().toLowerCase();
+      if (searchtext != "") {
+        $(".viewstock_productname-option").each(function(index){
+    if (index != -1) {
+      let rowtext = $(this).text().toLowerCase();
+      if (rowtext.indexOf(searchtext) != -1) {
+        $(this).parent().show();
+        $(this).show();
+      }
+      else {
+        $(this).parent().hide();
+        $(this).hide();
+      }
+    }
+        });
+      }
+      else{
+        $(".viewstock_productname-option").each(function(index){
+    $(this).parent().show();
+    $(this).show();
+        });
+      }
+    });
+  
+    $(document).off('keydown' ,'#viewstock_productname-input').on('keydown' ,'#viewstock_productname-input',function(event) {
+      if (event.which == 13 || event.which == 40){
+        event.preventDefault();
+        $(".viewstock_productname-option").parent().parent().find("a:visible").first().focus();
+    }
+    });
+  
+    $(".searchabledropdown").on("shown.bs.dropdown", function () {
+    let searchinput = $(this).data("input-id");
+      document.getElementById(searchinput).focus();
+    });
+
+	$("#viewstock_productname").keydown(function(e){
+		if (e.which == 13) {
+			e.preventDefault();
+			$(".dis").attr('disabled', false);
+			$("#viewstock_fromdate").focus().select();
+			}
+		else{
+			if (!$("#viewstock_productname").hasClass("open")){
+				$("#viewstock_productname").click();
+				  }
+		}
 	});
+
 	$("#viewstock_fromdate").blur(function(event) {
 		$(this).val(pad($(this).val(),2));
 	});
@@ -206,7 +253,7 @@ $(document).ready(function() {
 	});
 	$("#viewstock_submit").click(function(event) {
 		// --------------------starting validations------------------
-		if ($("#viewstock_productname").val()==null) {
+		if ($("#viewstock_productname").data('value')==null) {
 			$("#account-blank-alert").alert();
 			$("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
 				$("#account-blank-alert").hide();
@@ -285,10 +332,10 @@ $(document).ready(function() {
 		// creating dataset for retrieving report from the server.
 	    var dataset = {};
 		if ($("#godownflag").val()==0) {
-		    dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""};
+		    dataset = {"productcode":$("#viewstock_productname").data('value'), "productdesc": $.trim($("#viewstock_productname").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(),"goid":-1,"goname":""};
 		}
 		else if ($("#godownflag").val()==1) {
-		    dataset = {"productcode":$("#viewstock_productname option:selected").val(), "productdesc": $.trim($("#viewstock_productname option:selected").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
+		    dataset = {"productcode":$("#viewstock_productname").data('value'), "productdesc": $.trim($("#viewstock_productname").text()),"calculatefrom":$("#viewstock_fromyear").val()+"-"+$("#viewstock_frommonth").val()+"-"+$("#viewstock_fromdate").val(),"calculateto":$("#viewstock_toyear").val()+"-"+$("#viewstock_tomonth").val()+"-"+$("#viewstock_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"backflag":0,"godownflag":$("#godownflag").val(), "goid":$("#editgoddet option:selected").val(), "goname":$("#editgoddet option:selected").data('godownname'), "goaddr":$("#editgoddet option:selected").data('godownaddress')};
 		}
 		$.ajax(
 			{

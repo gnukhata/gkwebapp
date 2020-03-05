@@ -48,12 +48,18 @@
 	{% else %}
         <div style="margin-bottom: 5px" class="col-xs-12 from-group">
           <label for="viewstock_productname" style="margin-top: 10px;">{% trans %}Product{% endtrans %} :</label>
-          <select class = "form-control input-sm" id="viewstock_productname"  name = "productname" >
-            <option value="" disabled selected hidden>{% trans %}Select Product{% endtrans %}</option>
-            {% for product in gkresult %}
-            <option value="{{product['productcode']}}">{{product["productdesc"]}}</option>
-            {% endfor %}
-          </select>
+          <div class="dropdown searchabledropdown" data-input-id="viewstock_productname-input" data-button-id="viewstock_productname">
+            <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewstock_productname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+              {% trans %}Select Product{% endtrans %}
+              <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu selectdropdown" aria-labelledby="viewstock_productname-label" id="viewstock_productname-ul">
+              <li><input id="viewstock_productname-input" class="form-control selectinput" /></li>
+          {% for product in gkresult %}
+                <li><a class="viewstock_productname-option selectdropdown" href="#" data-value="{{product['productcode']}}">{{product["productdesc"]}}</a></li>
+                {% endfor %}
+            </ul>
+            </div>
 
           <div class="col-xs-12" style="margin-top: 10px;">
             <div class="col-xs-6">
