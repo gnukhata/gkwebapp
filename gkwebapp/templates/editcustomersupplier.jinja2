@@ -167,16 +167,16 @@ padding: 4px 0;}
 		  <label class="text-danger">{% trans %}No Customer found!{% endtrans %}</label>
 		{%else%}
 		<div class="row">
-		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u>C</u>ustomer{% endtrans %} :</label>
+		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u style="margin-left:5px;">C</u>ustomers{% endtrans %} :</label>
 		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editcustomerlist-input" data-button-id="editcustomerlist">
-	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editcustomerlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Customer{% endtrans %}<span class="caret"></span></button>
-	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editcustomerlist-label" id="editcustomerlist-ul">
-					<li><input id="editcustomerlist-input" class="form-control selectinput" /></li>
+	    	    <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editcustomerlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Customer{% endtrans %}<span class="caret"></span></button>
+	    	    <ul class="dropdown-menu selectdropdown" aria-labelledby="editcustomerlist-label" id="editcustomerlist-ul">
+		      <li><input id="editcustomerlist-input" class="form-control selectinput" /></li>
                       {% for customer in customers %}
                 	<li><a class="editcustomerlist-option selectdropdown" href="#"  data-value="{{customer['custid']}}">{{customer["custname"]}}</a></li>
-              		{% endfor %}
-	    		</ul>
-	  </div></div>
+              	      {% endfor %}
+	    	    </ul>
+		  </div></div>
 
 		  <br>
 		  <small id="textareahelp" class=" row form-text text-muted" style="margin:129px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
@@ -187,8 +187,8 @@ padding: 4px 0;}
 		{%if noofsupplier|int == 0 %}
 		  <label class="text-danger">{% trans %}No Supplier found!{% endtrans %}</label>
 		{%else%}
-		<div class="row">
-		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u>S</u>upplier{% endtrans %} :</label>
+		  <div class="row">
+		    <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u style="margin-left:5px;">S</u>uppliers{% endtrans %} :</label>
 		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editsupplierlist-input" data-button-id="editsupplierlist">
 	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editsupplierlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Supplier{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editsupplierlist-label" id="editsupplierlist-ul">
