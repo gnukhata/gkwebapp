@@ -125,9 +125,7 @@ th {
 										{% endfor %}
 									</ul>
 						</div>
-	  				<small class="form-text text-muted">Press Shift to shift focus to List of Accounts.</small>
-						  
-							<br>
+	  				<br>
 							<label for="subgroupname" id="sname">{% trans %}Sub-Group <u>N</u>ame{% endtrans %} :</label>
 
 							<div class="dropdown searchabledropdown" data-input-id="subgroupname-input" data-button-id="subgroupname">
@@ -137,8 +135,6 @@ th {
 										<li><a class="subgroupname-option selectdropdown" href="#" data-value="none">None</a></li>
 									</ul>
 						</div>
-						<small class="form-text text-muted">Press Shift to shift focus to Group Name.</small><br>
-							<small id="newsubgrouptxt" class="form-text text-muted">Press Space button to add a new Sub-Group.</small>
 							<div id="bnkdiv" class="default" style="margin-top:18px;" hidden>
 							  <label> <input class="defbx" type="checkbox" id="bnkac"> {% trans %}Set default for Bank Transaction{% endtrans %}</label>
 							</div>
@@ -199,8 +195,12 @@ You can click edit button or press enter on the account you select.
 Account can be selected either using arrows or typing the first few characters quickly.</br>
 Note that an account with either opening balance or transactions cannot be deleted.</br>
 You can edit only name and opening balance of system generated accounts.</br>
-In the Edit mode, you can use Enter key to navigate forward and up arrow to navigate backward.</br>
-You can create new subgroup under a group by selecting New Sub-Group option in Sub-Group Name field.<br>
+You can create new subgroup under a group by selecting New Sub-Group option in Sub-Group Name field or by pressing Space bar while on the Sub-Group Name field.<br>
+In the Edit mode, use following key to navigate among the fields:-<br>
+<ul>
+<Li>Use 'Shift' key to shift focus from Group Name to List of Accounts and from Sub-Group Name to Group Name fields.<br></Li>
+<li>Use Enter key to navigate forward and up arrow to navigate backward among new Name of Account and Opening Balance fields.</br></li>
+</ul>
 Note : you can't change the group or sub-group of an account.</br>
 You can set an account default for a purpose by clicking the corresponding checkbox.<br>
  Eg: Set default for Bank Transaction. {% endtrans %}</font>
