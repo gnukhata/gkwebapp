@@ -507,6 +507,7 @@ $(document).ready(function(){
   })
    .done(function(resp) {
      username1=resp["username"];
+     sessionStorage.username=resp["username"];
 
    })
    .fail(function() {

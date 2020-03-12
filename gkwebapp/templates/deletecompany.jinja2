@@ -19,12 +19,15 @@
 </head>
 <body>
   <div style="padding-top:30px" class='container'>
+      <div class="alert alert-danger" id="paswd-alert" aria-live="rude" role="alert" hidden>
+          {% trans %}Password is incorrect!{% endtrans %}
+        </div>
     <div class="row">
       <div class="panel shadow">
         <div class="panel-heading">
        <span style="font-size:17px;"> Delete Company? </span>
         </div>
-        <div class="panel-body " style="height:35vh;">
+        <div class="panel-body " >
 	    <div class="content">
                 <div class="header"></div>
                 <div class="body">
@@ -32,12 +35,20 @@
                         <p>
               <b> You are about to delete this company. This will destroy all the data related to this company such as company details, preferences, accounts, vouchers, documents, attachments etc.</b><br><b>Please proceed if you are absolutely sure of what you are doing and the subsequent implications. </b>
                         </p>
-                <p><b>{% trans %}Are you sure?{% endtrans %}</b></p>
                   </div>
                 </div>
                 <div class="-footer">
-                        <button type="button" id="orgdel" class="pull-right btn btn-danger btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Yes</button>
+                    <p><b>{% trans %}Are you sure?{% endtrans %}</b></p>
+                        <button type="button" id="orgdel" class="btn btn-danger btn-sm"><i class="fa fa-check" aria-hidden="true"></i> Yes</button>
+                        <br><br>
+                        <div id="deletebutton" class="row col-xs-12" hidden>
+                            <p><b for="userpassword">{% trans %}Enter your password :{% endtrans %}</b></p>
+                          <input id="userpassword" style="border-radius: 4px" type="text" class="form-control col-xs-12" name="userpassword" accesskey="p"></input><br>
+                          <button type="button" id="confdel" class="btn btn-danger btn-sm" style="margin-top: 10px;"><i class="fa fa-check" aria-hidden="true"></i> Delete</button>
+                        </div>
+                       
                       </div>
+                     
 	    </div><!-- /.-content -->
       </div><!-- /.-dialog -->
 <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/deletecompany.js')}}"></script>      
