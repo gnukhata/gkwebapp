@@ -15,7 +15,18 @@
                             {% trans %}Please select organisation!{% endtrans %}
                           </div>
                           <label >{% trans %}Select Holding Organisation {% endtrans %} :</label>
-                          <select class = "form-control input-sm" id="holdingorglist" style="width:350px"></select>
+
+                          <div class="dropdown searchabledropdown" data-input-id="holdingorglist-input" data-button-id="holdingorglist">
+                            <button class="btn btn-default selectdropdown" type="button" id="holdingorglist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                              {% trans %}List of Organisations{% endtrans %}
+                              <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu selectdropdown" aria-labelledby="holdingorglist-label" id="holdingorglist-ul">
+                              <li><input id="holdingorglist-input" class="form-control selectinput" /></li>
+                            </ul>
+                            </div>
+
+
                             <small id="txtareahelp" class="form-text text-muted">{% trans %}Select Holding Organisation and press 'Enter' key.{% endtrans %}</small>
 </br>
                           <button class="btn btn-primary btn-sm" id ="confirm1" name="next" accesskey="n">{% trans %}<u>N</u>ext{% endtrans %}</button>
@@ -28,7 +39,17 @@
                           {% trans %}Please select organisation!{% endtrans %}
                         </div>
                           <label >{% trans %}Select Subsidiary Organisation {% endtrans %} :</label>
-                        <select class = "form-control input-sm" id="list" name="test[]" style="width:350px"></select>
+
+                         <div class="dropdown searchabledropdown" data-input-id="list-input" data-button-id="list">
+                          <button class="btn btn-default selectdropdown" type="button" id="list" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                            {% trans %}List of Organisations{% endtrans %}
+                            <span class="caret"></span>
+                          </button>
+                          <ul class="dropdown-menu selectdropdown" aria-labelledby="list-label" id="list-ul">
+                            <li><input id="list-input" class="form-control selectinput" /></li>
+                          </ul>
+                          </div>
+                          
                         <small id="txtareahelp" class="form-text text-muted">{% trans %}Select Subsidiary Organisation and press 'Enter' key.{% endtrans %}</small>
                       </br>
                     </br>

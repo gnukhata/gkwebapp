@@ -47,22 +47,65 @@ $(document).ready(function() {
        success: function(resp)
        {
          ListofOrgs = resp["gkresult"];
-         $('#holdingorglist').empty();
-         $('#holdingorglist').append('<option value="0" disabled selected hidden>List of Organisations</option>');
+        $('.option_li').empty();
          for(i in ListofOrgs)
          {
-         $('#holdingorglist').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
+         $('#holdingorglist-ul').append('<li class="option_li"><a class="holdingorglist-option selectdropdown" href="#" data-value="' + ListofOrgs[i].orgcode + '">' +ListofOrgs[i].orgname+ '</a></li>');		
+
          }
        }
    });
+   $(".holdingorglist-option").click(function(){
+		$("#holdingorglist").data("value", $(this).data("value"));
+		$("#holdingorglist").text($(this).text());
+    $("#holdingorglist").focus();
+  });
+
+    $("#holdingorglist-input").keyup(function(event) {
+      let searchtext = $("#holdingorglist-input").val().toLowerCase();
+        if (searchtext != "") {
+          $(".holdingorglist-option").each(function(index){
+      if (index != -1) {
+        let rowtext = $(this).text().toLowerCase();
+        if (rowtext.indexOf(searchtext) != -1) {
+          $(this).parent().show();
+          $(this).show();
+        }
+        else {
+          $(this).parent().hide();
+          $(this).hide();
+        }
+      }
+          });
+        }
+        else{
+          $(".holdingorglist-option").each(function(index){
+      $(this).parent().show();
+      $(this).show();
+          });
+        }
+      });
+    
+      $(document).off('keydown' ,'#holdingorglist-input').on('keydown' ,'#holdingorglist-input',function(event) {
+        if (event.which == 13 || event.which == 40){
+          event.preventDefault();
+          $("#holdingorglist-input").parent().parent().find("a:visible").first().focus();
+        }
+      });
+
+      $(".searchabledropdown").on("shown.bs.dropdown", function () {
+        let searchinput = $(this).data("input-id");
+          document.getElementById(searchinput).focus();
+        });
+
  $(document).off('focusin', '#holdingorglist').on('focusin', '#holdingorglist',function(event) {
 $("#subsidiary_div").hide();
  });
-   $(document).off('keydown', '#holdingorglist').on('keydown', '#holdingorglist',function(event) {
+    $("#holdingorglist").keydown(function(event) {
      if (event.which==13) {
        event.preventDefault();
 
-         if ($.trim($("#holdingorglist").val())=="") {
+         if ($.trim($("#holdingorglist").data('value'))=="") {
            $("#selorg-blank-alert").alert();
            $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
              $("#selorg-blank-alert").hide();
@@ -87,7 +130,7 @@ $("#subsidiary_div").hide();
                 global: false,
                 async: false,
                 datatype: "json",
-                data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
+                data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#holdingorglist").data('value')},
                 success: function(resp)
                 {
                   if(resp["gkstatus"]==0)
@@ -101,7 +144,7 @@ $("#subsidiary_div").hide();
                       $("#confirm1").focus();
                       $("#confirm1").click();
                       $("#confirm1").hide();
-                      horgname =$('#holdingorglist option:selected').text();
+                      horgname =$('#holdingorglist').text();
                     });
                   }
                   else
@@ -122,11 +165,18 @@ $("#subsidiary_div").hide();
                     });
           }
       }
-    });
+      else {
+        if (!$("#holdingorglist").hasClass("open")){
+        $("#holdingorglist").click();
+        }
+        }
+          });
+
+
 //Coding of Next button
   $("#confirm1").click(function(){
 
-    if ($.trim($("#holdingorglist").val())=="") {
+    if ($.trim($("#holdingorglist").data('value'))=="") {
       $("#selorg-blank-alert").alert();
       $("#selorg-blank-alert").fadeTo(1000, 500).slideUp(100, function(){
       $("#selorg-blank-alert").hide();
@@ -151,7 +201,7 @@ $("#subsidiary_div").hide();
             global: false,
             async: false,
             datatype: "json",
-            data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#holdingorglist option:selected").val()},
+            data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#holdingorglist").data('value')},
             success: function(resp)
             {
               if(resp["gkstatus"]==0)
@@ -196,7 +246,7 @@ $("#subsidiary_div").hide();
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
         success: function(resp) {
-          horgcode = $('#holdingorglist option:selected').val();
+          horgcode = $('#holdingorglist').data('value');
           ListofOrgs = resp["gkresult"];
           for(i in ListofOrgs){
               if(horgcode == ListofOrgs[i].orgcode)
@@ -218,11 +268,10 @@ $("#subsidiary_div").hide();
             xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
         },
         success: function(resp) {
-          orgdetails =  $('#holdingorglist option:selected').val();
-          listofselectedorg.push($('#holdingorglist option:selected').val());
+          orgdetails =  $('#holdingorglist').data('value');
+          listofselectedorg.push($('#holdingorglist').data('value'));
           ListofOrgs = resp["gkresult"];
-          $('#list').empty();
-          $('#list').append('<option value="0" disabled selected hidden>List of Organisations</option>');
+          $('.option_subli').empty();
         //  $('#selected').append('<li class="list-group-item" value=" " disabled selected hidden>Selected Organisation</li>');
           for (i in ListofOrgs ) {
             if(orgdetails == ListofOrgs[i].orgcode) //To remove logged in organisation from dropdown list.
@@ -237,23 +286,66 @@ $("#subsidiary_div").hide();
               var d2 = new Date(hyearend);
               if((horgtype != ListofOrgs[i].orgtype) || (d1.getTime() != yearstart.getTime()) || (d2.getTime() != yearend.getTime()))
               {
-                $('#list').append('<option value="' + ListofOrgs[i].orgcode + '" disabled>'+ ListofOrgs[i].orgname +'</option>');
+                $('#list-ul').append('<li class="option_subli"><a class="list-option selectdropdown" href="#" data-value="' + ListofOrgs[i].orgcode + '">' +ListofOrgs[i].orgname+ '</a></li>');		
+                $( "#list-ul" ).prop( "disabled", false );
+
               }
               else
               {
-                $('#list').append('<option value="' + ListofOrgs[i].orgcode + '">'+ ListofOrgs[i].orgname +'</option>');
+                
+                $('#list-ul').append('<li class="option_subli"><a class="list-option selectdropdown" href="#" data-value="' + ListofOrgs[i].orgcode + '">' +ListofOrgs[i].orgname+ '</a></li>');		
+                $( "#list-ul" ).prop( "disabled", false );
+
               }
             }
           }
+          $(".list-option").click(function(){
+            $("#list").data("value", $(this).data("value"));
+            $("#list").text($(this).text());  
+            $("#list").focus();
+          });
         }
       });
       }
       });
 
-    $(document).off('keydown','#list').on('keydown', '#list', function(event) {
+      $("#list-input").keyup(function(event) {
+        let searchtext = $("#list-input").val().toLowerCase();
+          if (searchtext != "") {
+            $(".list-option").each(function(index){
+        if (index != -1) {
+          let rowtext = $(this).text().toLowerCase();
+          if (rowtext.indexOf(searchtext) != -1) {
+            $(this).parent().show();
+            $(this).show();
+          }
+          else {
+            $(this).parent().hide();
+            $(this).hide();
+          }
+        }
+            });
+          }
+          else{
+            $(".list-option").each(function(index){
+        $(this).parent().show();
+        $(this).show();
+            });
+          }
+        });
+      
+        $(document).off('keydown' ,'#list-input').on('keydown' ,'#list-input',function(event) {
+          if (event.which == 13 || event.which == 40){
+            event.preventDefault();
+            $("#list-input").parent().parent().find("a:visible").first().focus();
+          }
+        });
+
+    
+      $("#list").keydown(function(event) {        
     if(event.which==13 ){
       event.preventDefault();
-      if($('#list option:selected').val() == 0)
+      if($('#list').data('value') == 0)
       {
         $("#confirm").focus();
       }
@@ -272,25 +364,28 @@ $("#subsidiary_div").hide();
                 });
                 return false;
         }
+        orgcode1=$("#list").data('value');
       $.ajax({  //used to authenticate the selected subsidiary organisation.
             type: "POST",
             url: "/userlogin",
             global: false,
             async: false,
             datatype: "json",
-            data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#list option:selected").val()},
+            data: {"username":$("#user_name").val(), "userpassword":$("#user_pwd").val(), "orgcode":$("#list").data('value')},
             success: function(resp)
             {
               if(resp["gkstatus"]==0)
               {
                   authuser1 = 0;
                   $("#span1").hide();
-                  $('#selected').append('<li class="list-group-item selectedorgs disabled">'+ $("#list option:selected").text() +'</li>'); //add selected organisation in the selected organisation dropdown.
-                  sorgname.push($('#list option:selected').text());
-                  if($('#list').val() != 0)
+                  $('#selected').append('<li class="list-group-item selectedorgs disabled">'+ $("#list").text() +'</li>'); //add selected organisation in the selected organisation dropdown.
+                  sorgname.push($('#list').text());
+                  if($('#list').data('value') != 0)
                   {
-                  listofselectedorg.push($('#list option:selected').val());
-                  $('#list option:selected').remove(); //to remove authenticated organisation from the list of organisation.
+                  listofselectedorg.push($('#list').data('value'));
+                  $(".list-option[data-value="+ orgcode1 +"]").remove();
+
+                  // $('#list option:selected').remove(); //to remove authenticated organisation from the list of organisation.
                   }
                   $('#list').val(0);
                   $("#success-alert").alert();
@@ -318,6 +413,11 @@ $("#subsidiary_div").hide();
 
       }
     }
+    else {
+      if (!$("#list").hasClass("open")){
+      $("#list").click();
+      }
+      }
     });
 //
 $(document).off("click","#confirm").on('click', '#confirm', function(event) {
