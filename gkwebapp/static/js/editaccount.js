@@ -612,7 +612,12 @@ $(document).ready(function()
 	else if(event.which ==16){
 	    event.preventDefault();
 	    $("#groupname").focus().select();
-	}
+  }
+  else{
+    if (!$("#subgroupname").hasClass("open")){
+      $("#subgroupname").click();
+      }
+  }
 
 
  });
