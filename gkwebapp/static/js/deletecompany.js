@@ -7,7 +7,6 @@
     });
       $("#confdel").click(function(e){
       event.preventDefault();
-      var varw;
 
         $.ajax({
           url: '/getorgcode',
@@ -19,7 +18,6 @@
           },
           success: function(resp)
           {
-            // sessionStorage.orgcode = resp['gkdata'];
             
             $.ajax({  //used to authenticate the selected subsidiary organisation.
               type: "POST",
