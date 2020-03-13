@@ -47,7 +47,6 @@ def showviewlog(request):
 @view_config(route_name="log",request_param="action=showlogreport")
 def showlogreport(request):
     header={"gktoken":request.headers["gktoken"]}
-    userid = request.params["userid"]
     calculatefrom = request.params["calculatefrom"]
     calculateto = request.params["calculateto"]
     logcalculatefrom = request.params["calculatefrom"]
@@ -68,6 +67,7 @@ def showlogreport(request):
              result = requests.get("http://127.0.0.1:6543/report?type=logbyorg&calculatefrom=%s&calculateto=%s"%(logcalculatefrom, logcalculateto), headers=header) 
              return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"],"logheader":logheader, "typeflag": "1","orderflag":"4"},request=request)
     else:
+        userid = request.params["userid"]
         if "orderflag" in request.params:
             result = requests.get("http://127.0.0.1:6543/report?type=logbyuser&userid=%s&calculatefrom=%s&calculateto=%s&orderflag=%d"%(userid, logcalculatefrom, logcalculateto,int(request.params["orderflag"])), headers=header)
             return render_to_response("gkwebapp:templates/logreport.jinja2",{"records":result.json()["gkresult"],"logheader": logheader, "username": request.params["username"],"userid":userid, "typeflag": "2","orderflag":"1"},request=request)
