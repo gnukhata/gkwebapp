@@ -27,8 +27,7 @@
 				{% trans %}Godown cannot be deleted!{% endtrans %}
       </div>
 
-      <div class="col-xs-12">
-	<div class="form-group">
+	<div class="col-sm-6 form-group">
 	  {% if numberofgodown ==0 %}
 	    <label class="text-danger">
 				{% trans %}No Godown Found!{% endtrans %}
@@ -38,7 +37,7 @@
 				{% trans %}List of Godowns{% endtrans %} :
 				</label>
 		<br>
-		<div class="row col-xs-7 dropdown searchabledropdown" data-input-id="editgoddet-input" data-button-id="editgoddet">
+		<div class="dropdown searchabledropdown" data-input-id="editgoddet-input" data-button-id="editgoddet">
 			<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editgoddet" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			  {% trans %}Select Godown{% endtrans %}
 			  <span class="caret"></span>
@@ -51,9 +50,9 @@
 			</ul>
 		  </div>
 		  {% endif %}
-	</div>
-      </div>
-      <div class="col-sm-6 editgodownform" hidden>
+
+	  <br>
+      <div class="editgodownform" hidden>
 	<div class="alert alert-danger" id="blank-alert"  aria-live="rude" role="alert" hidden>
 		{% trans %}Please enter godown name!{% endtrans %}
 	</div>
@@ -119,7 +118,7 @@
 	  <small id="gdtextareahelp" class="form-text text-muted">Press 'Enter' Key twice to shift focus to Contact Person.</small>
 	  <input type="hidden" id="goid" class="form-control" name="goid" ></input>
 	</div>
-      </div>
+      </div></div>
       <div class="col-sm-6 editgodownform" hidden>
 	<div class="form-group">
 	  <label for="gocontactname" id="godnname">{% trans %}Contact Person{% endtrans %} : </label>
