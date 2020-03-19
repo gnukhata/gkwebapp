@@ -270,8 +270,10 @@ def addaccount(request):
     header={"gktoken":request.headers["gktoken"]}
     newgkdata = {}
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
-    if "custname" in request.params["moredata"]:
+    if "moredata" in request.params and "custname" in request.params["moredata"]:
         newgkdata["moredata"] = json.loads(request.params["moredata"])
+    else:
+        newgkdata["moredata"] = {}
     if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0) :
         gkdata["defaultflag"] = int(request.params["defaultflag"])
     if request.params["subgroupname"]=="New":
