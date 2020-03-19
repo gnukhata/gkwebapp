@@ -474,7 +474,7 @@ $(document).ready(function()
     $("#subgroupname").focus();
 }
   else{
-    if (!$("#groupname").hasClass("open")){
+      if (!$("#groupname").parent().hasClass("open")){
   $("#groupname").click();
   }
 }
@@ -614,7 +614,7 @@ $(document).ready(function()
 	    $("#groupname").focus().select();
   }
   else{
-    if (!$("#subgroupname").hasClass("open")){
+      if (!$("#subgroupname").parent().hasClass("open")){
       $("#subgroupname").click();
       }
   }
@@ -703,12 +703,13 @@ $("#editaccountname").keyup(function(e) {
     }
   }
 }
-else {
-  if (!$("#editaccountname").hasClass("open")){
-$("#editaccountname").click();
-  }
-}
 });
+    $("#editaccountname").keydown(function(e) {
+	e.preventDefault();
+	if (!$("#editaccountname").parent().hasClass("open")){
+	    $("#editaccountname").click();
+	}
+    });
 
 $("#accountname").keydown(function(event) {
   /* Act on the event */
