@@ -290,6 +290,7 @@ def addaccount(request):
     else:
         gkdata["groupcode"] = request.params["subgroupname"]
     newgkdata["gkdata"]=gkdata
+    newgkdata["origin"]="createaccount"
     result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(newgkdata),headers=header)
     if result.json()["gkstatus"] == 0:
         gkdata = {"activity":request.params["accountname"] + " account created"}
@@ -326,8 +327,7 @@ def addmultiaccount(request):
         if int(acc["defaultflag"]) != 0:
             gkdata["defaultflag"] = int(acc["defaultflag"])
 
-        postset = {"gkdata":gkdata}
-        result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(postset),headers=header)
+        result = requests.post("http://127.0.0.1:6543/accounts", data =json.dumps(gkdata),headers=header)
         if result.json()["gkstatus"] == 0:
             gkdata2 = {"activity":acc["accountname"] + " account created"}
             resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata2),headers=header)
