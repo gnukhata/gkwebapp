@@ -607,7 +607,7 @@ $(document).ready(function() {
    //on change event one of the list will be hidden. 
   //also keydown performed.
 
-$(document).off("change",".custsupradio").on("change",".custsupradio",function(event) {
+    $(document).off("change",".custsupradio").on("change",".custsupradio",function(event) {
 	//Checking which radio button is selected.
         if ($("#custradio").is(":checked")) {
 	    
@@ -618,8 +618,14 @@ $(document).off("change",".custsupradio").on("change",".custsupradio",function(e
 	    
                 $("#custo").hide();
 		$("#suppl").show();
-            }
-        });
+        }
+	if ($("#editsupplierlist").data("value") != undefined){
+	    if ($("#editcustomerlist").data('value')!=""){   
+		let selectedcust = $("#editcustomerlist").data('value'); //Current Customer/Supplier.
+		$(".editcustomerlist-option[data-value='" + selectedcust + "']").click();
+	    }
+	}
+    });
 
 
     //Change event on GSTIN State
@@ -1390,13 +1396,7 @@ $("#cussup_delete").click(function(event) {
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
   {
-      var custid;
-      if ($("#custradio").is(":checked")){ 
-	  custid=$("#editcustomerlist").data('value');
-      }
-      else if ($("#supradio").is(":checked")){
-	  custid=$("#editsupplierlist").data('value');
-      }
+      var custid=$("#editsupplierlist").data('value');
       if (custid!=''){
       $.ajax(
       {
