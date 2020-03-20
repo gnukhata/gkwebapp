@@ -38,8 +38,8 @@ $(document).ready(function() {
     $(".panel-footer").hide();
     $("#custradio").focus();    
     $("#suppl").hide();
-	$("#scrollbar").hide();
-	
+    $("#scrollbar").hide();
+    	var custid;
 	$("#moresmall").on('shown.bs.collapse', function(event) {
         event.preventDefault();
         $("#smalllink").html('See less. <span class="glyphicon glyphicon-triangle-top"></span>');
@@ -57,7 +57,6 @@ $(document).ready(function() {
 	
     //code for change event of edit lists custid as variable taken and conditions are applied. condition is set to call ajax only if custid is not null.
 	$(".editcustomerlist-option, .editsupplierlist-option").click(function(event) {
-	var custid;
 	$("#edit_cussup_reset").hide();
 	 if ($("#custradio").is(":checked"))
 	{
@@ -188,7 +187,11 @@ $(document).ready(function() {
       console.log("complete");
     });
 
-	}	
+		}
+	    else{
+		$(".hidden-load").hide();
+		$(".panel-footer").hide();
+	    }
 	});
 	
 	$("#editcustomerlist-input").keyup(function(event){
@@ -619,12 +622,38 @@ $(document).ready(function() {
                 $("#custo").hide();
 		$("#suppl").show();
         }
-	if ($("#editsupplierlist").data("value") != undefined){
+	if ($("#custradio").is(":checked")){
+	    if ($("#editcustomerlist").data("value") != undefined){
 	    if ($("#editcustomerlist").data('value')!=""){   
 		let selectedcust = $("#editcustomerlist").data('value'); //Current Customer/Supplier.
 		$(".editcustomerlist-option[data-value='" + selectedcust + "']").click();
 	    }
-	}
+		else{
+		    $(".hidden-load").hide();
+		    $(".panel-footer").hide();
+		}
+	    }
+	    else{
+		$(".hidden-load").hide();
+		$(".panel-footer").hide();
+		}
+      }
+      else{
+	  if ($("#editsupplierlist").data("value") != undefined){
+	    if ($("#editsupplier").data('value')!=""){   
+		let selectedcust = $("#editsupplier").data('value'); //Current Customer/Supplier.
+		$(".editsupplier-option[data-value='" + selectedcust + "']").click();
+	    }
+	      else{
+		  $(".hidden-load").hide();
+		  $(".panel-footer").hide();
+	      }
+	  }
+	  else{
+	      $(".hidden-load").hide();
+	      $(".panel-footer").hide();
+	  }
+      }
     });
 
 
@@ -1396,7 +1425,12 @@ $("#cussup_delete").click(function(event) {
   $('.modal').modal('hide');
   $('#confirm_del').modal('show').one('click', '#accdel', function (e)
   {
-      var custid=$("#editsupplierlist").data('value');
+      if ($("#custradio").is(":checked")){
+	  custid=$("#editcustomerlist").data('value');
+      }
+      else{
+	  custid=$("#editsupplierlist").data('value');
+      }
       if (custid!=''){
       $.ajax(
       {

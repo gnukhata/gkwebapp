@@ -168,7 +168,8 @@ padding: 4px 0;}
 		{%else%}
 		<div class="row">
 		  <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u style="margin-left:5px;">C</u>ustomers{% endtrans %} :</label>
-		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editcustomerlist-input" data-button-id="editcustomerlist">
+		  <div class="col-md-10">
+		    <div class="dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editcustomerlist-input" data-button-id="editcustomerlist">
 	    	    <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editcustomerlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Customer{% endtrans %}<span class="caret"></span></button>
 	    	    <ul class="dropdown-menu selectdropdown" aria-labelledby="editcustomerlist-label" id="editcustomerlist-ul">
 		      <li><input id="editcustomerlist-input" class="form-control selectinput" /></li>
@@ -176,10 +177,10 @@ padding: 4px 0;}
                 	<li><a class="editcustomerlist-option selectdropdown" href="#"  data-value="{{customer['custid']}}">{{customer["custname"]}}</a></li>
               	      {% endfor %}
 	    	    </ul>
-		  </div></div>
-
-		  <br>
-		  <small id="textareahelp" class=" row form-text text-muted" style="margin:129px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		  </div>
+		  <small id="textareahelp" class=" row form-text text-muted">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		</div>
+		</div>
 		{%endif%}
 	      </div>
 	      
@@ -189,17 +190,19 @@ padding: 4px 0;}
 		{%else%}
 		  <div class="row">
 		    <label class="col-md-2 label-cust-vcenter" for="customersupplier_edit_list">{% trans %}List of <u style="margin-left:5px;">S</u>uppliers{% endtrans %} :</label>
-		  <div class="col-md-10 dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editsupplierlist-input" data-button-id="editsupplierlist">
-	    	<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editsupplierlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Supplier{% endtrans %}<span class="caret"></span></button>
+		    <div class="col-md-10">
+		      <div class="dropdown searchabledropdown" style="width: 70%;padding: 0 0 0 5px;" data-input-id="editsupplierlist-input" data-button-id="editsupplierlist">
+	    		<button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="editsupplierlist" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{% trans %}Select Supplier{% endtrans %}<span class="caret"></span></button>
 	    		<ul class="dropdown-menu selectdropdown" aria-labelledby="editsupplierlist-label" id="editsupplierlist-ul">
-					<li><input id="editsupplierlist-input" class="form-control selectinput" /></li>
-                      {% for supplier in suppliers %}
-                	<li><a class="editsupplierlist-option selectdropdown" href="#"  data-value="{{supplier['custid']}}">{{supplier["custname"]}}</a></li>
-              		{% endfor %}
+			  <li><input id="editsupplierlist-input" class="form-control selectinput" /></li>
+			  {% for supplier in suppliers %}
+                	    <li><a class="editsupplierlist-option selectdropdown" href="#"  data-value="{{supplier['custid']}}">{{supplier["custname"]}}</a></li>
+              		  {% endfor %}
 	    		</ul>
-	  </div></div>
-		  <br>
-		  <small id="textareahelp" class="form-text text-muted" style="margin:120px">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		      </div>
+		      <small id="textareahelp" class="row form-text text-muted">{% trans %}Press "Shift+Tab" keys to shift focus on Customer/Supplier. {% endtrans %}</small>
+		    </div>
+		  </div>
 		{%endif%}
 	      </div>
             {%endif%}	
