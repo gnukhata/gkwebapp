@@ -4435,4 +4435,18 @@ $("#roundoff_checkbox").change(function(e){
 	  $("#invoicestate").val(resp["gkresult"]);  
 	  $("#invoicestate").change();}
 	});
+
+	var delta = 500;
+	var lastKeypressTime = 0;
+	$("#dc_narration").keydown(function(event) {
+	  if (event.which==13){
+	  var thisKeypressTime = new Date();
+	  if ( thisKeypressTime - lastKeypressTime <= delta )
+	  {
+		  $("#deliverychallan_save").focus();
+		  thisKeypressTime = 0;
+	  }
+	  lastKeypressTime = thisKeypressTime;
+	  }
+  });
 });
