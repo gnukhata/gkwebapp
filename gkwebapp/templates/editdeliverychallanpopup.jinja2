@@ -615,20 +615,28 @@
       </div>
     </div>
     
-	  <div class="col-sm-12">
-	    {% if delchaldata["delchaldata"]["dcnarration"] != None %}
-	      <div class="col-sm-4">
-		<label for="dc_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label><br>
-		<textarea id="dc_narration" style="font-size:100% !important; font-weight: normal !important;" disabled>{{delchaldata["delchaldata"]["dcnarration"]}}</textarea>  
-	      </div>
-	    {% endif %}
-	    {% if delchaldata["delchaldata"]["totalinword"] != None  %}
-	      <div class="col-sm-8">
-		<label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Value In Words {% endtrans %} :</label>
-		<i><label id="totalValueInWord" style="font-size:100% !important; font-weight: normal">{{delchaldata["delchaldata"]["totalinword"]}}</label></i>
-	      </div>
-	    {% endif %}
+    <div class="col-sm-12">
+      {% if delchaldata["delchaldata"]["dcnarration"] != None %}
+	<div class="col-sm-4">
+	  <label for="dc_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label><br>
+	  <textarea id="dc_narration" style="font-size:100% !important; font-weight: normal !important;"  rows="2" cols="60"  disabled>{{delchaldata["delchaldata"]["dcnarration"]}}</textarea>
+	  {% if delchaldata["delchaldata"]["totalinword"] == None  %}
+	    <div class="col-sm-8">
+	    </div>
+	  {%endif%}
 	</div>
+      {% endif %}
+      {% if delchaldata["delchaldata"]["totalinword"] != None  %}
+	{% if delchaldata["delchaldata"]["dcnarration"] == None %}
+	  <div class="col-sm-4">
+	  </div>
+	{% endif %}
+	<div class="col-sm-8">
+	  <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Value In Words {% endtrans %} :</label>
+	  <i><label id="totalValueInWord" style="font-size:100% !important; font-weight: normal">{{delchaldata["delchaldata"]["totalinword"]}}</label></i>
+	</div>
+      {% endif %}
+    </div>
   </form>
   <input type="text" id="attachmentcount" value="{{ delchaldata["delchaldata"]["attachmentcount"] }}" hidden>
   <input type="text" id="dcid" value="{{ delchaldata["delchaldata"]["dcid"] }}" hidden>

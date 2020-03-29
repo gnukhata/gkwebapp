@@ -566,29 +566,31 @@
 			    <label id="totalinvoicevalueroundoff" style="font-size:100% !important; font-weight:normal !important"></label>
 			  </div>
 			</div>
-		      </div>
+			</div>
 		    </div>
 		  </div>
 		  <div class="col-sm-12 row">
-				<div class="col-sm-4" id="dcnarration">
-						<label for="dc_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label><br>
-						<textarea id="dc_narration" style="font-size:100% !important; font-weight: normal !important;" disabled></textarea>  
-				  </div>
-				  <div class="col-sm-8">
-				    <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Value In Words {% endtrans %} :</label>
-				    <i><label id="totalValueInWord" style="font-size:100% !important; font-weight: normal"></label></i>
-				  </div>
-			</div>
+		    <div class="col-sm-4">
+		      <div class="row" id="dcnarration">
+			<label for="dc_narration" style="font-size:100% !important;">{% trans %}Narration{% endtrans %} :</label><br>
+			<textarea id="dc_narration" style="font-size:100% !important; font-weight: normal !important;"  rows="2" cols="60"  disabled></textarea>
+		      </div>
+		    </div>
+		    <div class="col-sm-8">
+		      <label for="totalValueInWord" style="font-size:100% !important;">{% trans %}Total Value In Words {% endtrans %} :</label>
+		      <i><label id="totalValueInWord" style="font-size:100% !important; font-weight: normal"></label></i>
+		    </div>
+		  </div>
 		</form>
 	  </div>
 	  <div class="col-sm-12">
-	  <div class="col-md-5 deliverychallan_OLD_div" hidden>
-            <div class="form-group">
-              <label for="deliverychallan_edit_challtype">{% trans %}Note Type{% endtrans %} :</label>
-              <input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
-            </div>
-	    <div class="row">
-              <div class="form-group col-sm-6">
+	    <div class="col-md-5 deliverychallan_OLD_div" hidden>
+              <div class="form-group">
+		<label for="deliverychallan_edit_challtype">{% trans %}Note Type{% endtrans %} :</label>
+		<input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challtype" placeholder="{% trans %}challan type{% endtrans %}" accesskey="a">
+              </div>
+	      <div class="row">
+		<div class="form-group col-sm-6">
 		<label for="deliverychallan_edit_challanno_old">{% trans %}Note No{% endtrans %} :</label>
 		<input class="form-control input-sm deliverychallan_edit_disable" id="deliverychallan_edit_challanno_old" placeholder="{% trans %}Enter challan no{% endtrans %}" accesskey="a">
               </div>
