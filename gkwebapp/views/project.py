@@ -50,8 +50,8 @@ def addproject(request):
     gkdata = {"projectname":request.params["projectname"].strip(),"sanctionedamount":float(request.params["sanctionedamount"])}
     result = requests.post("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":gkdata["projectname"] + " project/cost center created"}
-		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+        gkdata = {"activity":gkdata["projectname"] + " project/cost center created"}
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="delproject", renderer="json")
@@ -62,8 +62,8 @@ def delproject(request):
     gkdata = {"projectcode":request.params["projectcode"]}
     result = requests.delete("http://127.0.0.1:6543/projects",data=json.dumps(gkdata), headers=header)
     if result.json()["gkstatus"] == 0:
-		gkdata = {"activity":projectname + " project/cost center deleted"}
-		resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
+        gkdata = {"activity":projectname + " project/cost center deleted"}
+        resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="viewproject", renderer="json")
