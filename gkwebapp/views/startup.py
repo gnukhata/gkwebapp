@@ -36,7 +36,7 @@ from pyramid.i18n import default_locale_negotiator
 s = requests.session()
 from PIL import Image
 import base64
-import cStringIO
+import io
 
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
 def index(request):
@@ -108,7 +108,7 @@ def orglogin(request):
         gkdata["orgdetails"]["gstin"]=json.loads(request.params["gstin"])
     if "orgstate" in request.params:
         gkdata["orgdetails"]["orgstate"]=request.params["orgstate"]
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         gkdata["orgdetails"]["bankdetails"]=json.loads(request.params["bankdetails"])
         
     filelogo={}
@@ -117,7 +117,7 @@ def orglogin(request):
 
             img=request.POST['logo'].file
             image=Image.open(img)
-            imgbuffer = cStringIO.StringIO()
+            imgbuffer = io.StringIO()
             image.save(imgbuffer, format="JPEG")
             img_str = base64.b64encode(imgbuffer.getvalue())
             image.close()
@@ -125,10 +125,10 @@ def orglogin(request):
 
             gkdata["orgdetails"]["logo"]=filelogo
     except:
-        print "no file found "
+        print("no file found ")
     result = requests.post("http://127.0.0.1:6543/organisations", data =json.dumps(gkdata))
     if result.json()["gkstatus"]==0:
-        if request.params.has_key("bankdetails"):
+        if "bankdetails" in request.params:
             #this is use when bank account details are available it create  bank account of that details  when we create new organization.
             try:
                 header={"gktoken":result.json()["token"]}

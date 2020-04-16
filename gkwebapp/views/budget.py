@@ -40,7 +40,7 @@ from pyramid.i18n import default_locale_negotiator
 s = requests.session()
 from PIL import Image
 import base64
-import cStringIO
+import io
 
 @view_config(route_name="budget", renderer="gkwebapp:templates/budget.jinja2")
 def budget(request):
@@ -322,13 +322,13 @@ def cashspreadsheet(request):
                 sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
 
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         budgetwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff' ,'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true ;path=/'}
-        return Response(contents, headerlist=headerList.items())       
+        return Response(contents, headerlist=list(headerList.items()))       
     except:
         return {"gkstatus":3}
 
@@ -484,12 +484,12 @@ def pnlpreadsheet(request):
             else:
                 sheet['E'+str(row)]='-'
 
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         budgetwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true ;path=/'}
-        return Response(contents, headerlist=headerList.items()) 
+        return Response(contents, headerlist=list(headerList.items())) 
     except:
         return {"gkstatus":3}

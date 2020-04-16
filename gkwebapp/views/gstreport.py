@@ -32,7 +32,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 from openpyxl.utils import get_column_letter
 
 @view_config(route_name="gstsummary",renderer="gkwebapp:templates/viewgstsummary.jinja2")
@@ -273,15 +273,15 @@ def gstsummspreadsheet(request):
                 n = n+1
                 r = r +1
         
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         gstsmwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/ '}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
         
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
 

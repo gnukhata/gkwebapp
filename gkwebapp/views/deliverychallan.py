@@ -38,7 +38,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from PIL import Image
 import base64
-import cStringIO
+import io
 import openpyxl
 from openpyxl.styles import Font, Alignment
 
@@ -121,7 +121,7 @@ def delchalgetproduct(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/products?qty=single&productcode=%d"%(int(request.params['productcode'])),headers=header)
     data = result.json()["gkresult"]
-    if data.has_key("unitname"):
+    if "unitname" in data:
         return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
     else:
         return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
@@ -156,26 +156,26 @@ def savedelchal(request):
             delchaldata["dcnarration"] = request.params["dc_narration"]
     delchaldata["roundoffflag"] = int(request.params["roundoffflag"])
     stockdata = {"inout":int(request.params["inout"])}
-    if request.params.has_key("goid"):
+    if "goid" in request.params:
         stockdata["goid"]=int(request.params["goid"])
-    if request.params.has_key("issuername"):
+    if "issuername" in request.params:
         delchaldata["issuername"]=request.params["issuername"]
-    if request.params.has_key("designation"):
+    if "designation" in request.params:
         delchaldata["designation"]=request.params["designation"]
-    if request.params.has_key("consignee"):
+    if "consignee" in request.params:
         delchaldata["consignee"]=json.loads(request.params["consignee"])
     if request.params["dateofsupply"] != "":
         delchaldata["dateofsupply"] = request.params["dateofsupply"]
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -185,7 +185,7 @@ def savedelchal(request):
             delchaldata["attachment"] = files
             delchaldata["attachmentcount"] = len(delchaldata["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
     delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
     result=requests.post("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
     if result.json()["gkstatus"]==0:
@@ -203,9 +203,9 @@ def editdelchal(request):
     stockdata = {"inout":int(request.params["inout"]),"items":products}
     if request.params["goid"]!='':
         stockdata["goid"]=int(request.params["goid"])
-    if request.params.has_key("issuername"):
+    if "issuername" in request.params:
         delchaldata["issuername"]=request.params["issuername"]
-    if request.params.has_key("designation"):
+    if "designation" in request.params:
         delchaldata["designation"]=request.params["designation"]
     delchalwholedata = {"delchaldata":delchaldata,"stockdata":stockdata}
     result=requests.put("http://127.0.0.1:6543/delchal",data=json.dumps(delchalwholedata),headers=header)
@@ -322,13 +322,13 @@ def unbillspreadsheet(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center')
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         unbilldelwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Cotent-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 
@@ -443,13 +443,13 @@ def cancelledspreadsheet(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center')
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         unbilldelwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Cotent-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     # except:
     #     return {"gkstatus":3}
 

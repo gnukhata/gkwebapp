@@ -86,7 +86,7 @@ def getcustomersupplier(request):
 def savecustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"state":request.params["state"],"custpan":request.params["custpan"],"custtan":request.params["custtan"],"csflag":int(request.params["csflag"]),"pincode":request.params["pincode"]}
-    if request.params.has_key("bankdetails"): 
+    if "bankdetails" in request.params: 
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
     if "gstin" in request.params:
         dataset["gstin"]=json.loads(request.params["gstin"])
@@ -104,9 +104,9 @@ def editcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
     newdataset = {}
     dataset={"custname":request.params["custname"],"custaddr":request.params["custaddr"],"custphone":request.params["custphone"],"custemail":request.params["custemail"],"custfax":request.params["custfax"],"custpan":request.params["custpan"],"state":request.params["state"],"custtan":request.params["custtan"],"custid":int(request.params["custid"]),"pincode":request.params["pincode"]}
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
-    if request.params.has_key("gstin"):
+    if "gstin" in request.params:
         dataset["gstin"]=json.loads(request.params["gstin"])
     result=requests.put("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
@@ -174,9 +174,9 @@ def cussupimport(request):
         states = requests.get("http://127.0.0.1:6543/state",headers=header)
         stateList,statecodeList=[],[]
         for state in states.json()["gkresult"]:
-            for cd in state.keys():
+            for cd in list(state.keys()):
                 statecodeList.append(str(cd))
-            for st in state.values():
+            for st in list(state.values()):
                 stateList.append(st)
         # check errors in file contents
         errorTuples={"Customers":[],"Suppliers":[]}
@@ -248,7 +248,7 @@ def cussupimport(request):
                 cellTuple=openpyxl.utils.cell.coordinate_from_string(errorCell)
                 errorRowNo=openpyxl.utils.cell.coordinate_from_string(errorCell)[1]
                 errorTuples[errorRowKey].append(cellTuple)
-                if errorRowNo not in errorRows[errorRowKey].keys():
+                if errorRowNo not in list(errorRows[errorRowKey].keys()):
                     errorRows[errorRowKey][errorRowNo]=[]
                     tempRow=sheetList[errorRowNo-1]
                     for tempCell in tempRow:
@@ -308,7 +308,7 @@ def cussupimport(request):
                     cellTuple=openpyxl.utils.cell.coordinate_from_string(errorCell)
                     errorRowNo=openpyxl.utils.cell.coordinate_from_string(errorCell)[1]
                     errorTuples[errorRowKey].append(cellTuple)
-                    if errorRowNo not in errorRows[errorRowKey].keys():
+                    if errorRowNo not in list(errorRows[errorRowKey].keys()):
                         errorRows[errorRowKey][errorRowNo]=[]
                         tempRow=sheetList[errorRowNo-1]
                         for tempCell in tempRow:

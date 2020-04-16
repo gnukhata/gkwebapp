@@ -36,7 +36,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from PIL import Image
-import cStringIO
+import io
 import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.utils import get_column_letter
@@ -103,24 +103,24 @@ def saveinvoice(request):
             invoicedata["invnarration"] = request.params["invoice_narration"]
     if request.params["dateofsupply"] != "":
         invoicedata["dateofsupply"] = request.params["dateofsupply"]
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
-    if request.params.has_key("address"):
+    if "address" in request.params:
         invoicedata["address"] = request.params["address"]
-    if request.params.has_key("pincode"):
+    if "pincode" in request.params:
         invoicedata["pincode"] = request.params["pincode"]
-    if request.params.has_key("pricedetails"):
+    if "pricedetails" in request.params:
         invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -130,7 +130,7 @@ def saveinvoice(request):
             invoicedata["attachment"] = files
             invoicedata["attachmentcount"] = len(invoicedata["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
     stock = json.loads(request.params["stock"])
     if request.params["dcid"]!="":
         invoicedata["dcid"] = request.params["dcid"]
@@ -160,22 +160,22 @@ def updateinvoice(request):
             invoicedata["invnarration"] = None
     if request.params["dateofsupply"] != "":
         invoicedata["dateofsupply"] = request.params["dateofsupply"]
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         invoicedata["bankdetails"]=json.loads(request.params["bankdetails"])
-    if request.params.has_key("address"):
+    if "address" in request.params:
         invoicedata["address"] = request.params["address"]
-    if request.params.has_key("pricedetails"):
+    if "pricedetails" in request.params:
         invoicedata["pricedetails"] = json.loads(request.params["pricedetails"])
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -185,7 +185,7 @@ def updateinvoice(request):
             invoicedata["attachment"] = files
             invoicedata["attachmentcount"] = len(invoicedata["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
     stock = json.loads(request.params["stock"])
     if request.params["dcid"]!="":
         invoicedata["dcid"] = request.params["dcid"]
@@ -234,7 +234,7 @@ def getproduct(request):
        lastprice = requests.get("http://127.0.0.1:6543/products?type=lastprice&productcode=%d&inoutflag=%d&custid=%d"%(int(request.params['productcode']),int(request.params['inoutflag']),int(request.params['custid'])),headers=header)
        if lastprice.json()["gkstatus"] == 0:
             pricedata = lastprice.json()["gkresult"] 
-    if data.has_key("unitname"):
+    if "unitname" in data:
         return {"gkstatus": result.json()["gkstatus"],"unitname":data["unitname"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata), "productdesc":data["productdesc"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
     else:
         return {"gkstatus": result.json()["gkstatus"],"gsflag":data["gsflag"],"gscode":data["gscode"], "prodsp":data["prodsp"], "prodmrp":data["prodmrp"], "prodlp":"%.2f"%float(pricedata), "productdesc":data["productdesc"],"discountpercent":data["discountpercent"],"discountamount":data["discountamount"]}
@@ -263,14 +263,14 @@ def showeditableinvoices(request):
     inputdate = request.params["inputdate"]
     gkdata = {"inputdate": inputdate, "type": "invoice"}
     if request.params["status"] == "out":
-        if request.params.has_key("invid"):
+        if "invid" in request.params:
             invlist = [{"invid":request.params["invid"], "invoiceno":"", "invoicedata":"", "custname":""}]
         else:
             result = requests.get("http://127.0.0.1:6543/invoice?type=rectifyinvlist&invtype=15", headers=header)
             invlist = result.json()["invoices"]
         suppliers = requests.get("http://127.0.0.1:6543/customersupplier?qty=custall", headers=header)
     else:
-        if request.params.has_key("invid"):
+        if "invid" in request.params:
             invlist = [{"invid":request.params["invid"], "invoiceno":"", "invoicedata":"", "custname":""}]
         else:
             result = requests.get("http://127.0.0.1:6543/invoice?type=rectifyinvlist&invtype=9", headers=header)
@@ -566,15 +566,15 @@ def listofinvspreadsheet(request):
             sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         invoicewb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true ;path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
     
 '''
@@ -694,15 +694,15 @@ def listofcanceledinvspreadsheet(request):
             sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         invoicewb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true ;path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
     
 
@@ -811,7 +811,7 @@ def registerspreadsheet(request):
             sheet['E'+str(rowCount)] = invoice["customertin"]
             sheet['E'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
             sheet['E'+str(rowCount)].alignment = Alignment(horizontal='center')
-            if invoice.has_key("custgstin"):
+            if "custgstin" in invoice:
                 sheet['F'+str(rowCount)] = invoice["custgstin"]
                 sheet['F'+str(rowCount)].font = Font(name='Liberation Serif',size='12',bold=False)
                 sheet['F'+str(rowCount)].alignment = Alignment(horizontal='center')
@@ -890,13 +890,13 @@ def registerspreadsheet(request):
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             colvar += 1
             
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         registerwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/ '}        
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "File not found"
+        print("File not found")
         {"gkstatus":3}

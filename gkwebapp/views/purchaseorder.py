@@ -27,7 +27,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from PIL import Image
 import base64
-import cStringIO
+import io
 import os
 
 @view_config(route_name="purchaseorder",request_param="type=tab",renderer="gkwebapp:templates/purchaseorder.jinja2")
@@ -104,13 +104,13 @@ def savepurchaseorder(request):
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -120,7 +120,7 @@ def savepurchaseorder(request):
             purchaseorderdata["attachment"] = files
             purchaseorderdata["attachmentcount"] = len(purchaseorderdata["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
     result=requests.post("http://127.0.0.1:6543/purchaseorder",data=json.dumps(purchaseorderdata),headers=header)
     return {"gkstatus":result.json()["gkstatus"]}
 

@@ -24,7 +24,7 @@ Contributors:
 "Akhil KP" <akhilkpdasan@protonmail.com>
 'Prajkta Patkar'<prajakta@dff.org.in>"""
 
-import os, cStringIO
+import os, io
 import requests
 from pyramid.view import view_config
 from pyramid.response import Response
@@ -72,10 +72,10 @@ def gstr1_spreadsheet(request):
 
     wb = gst_r1_template(result)
 
-    output = cStringIO.StringIO()
+    output = io.StringIO()
     wb.save(output)
     contents = output.getvalue()
     output.close()
     headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
     # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
-    return Response(contents, headerlist=headerList.items())
+    return Response(contents, headerlist=list(headerList.items()))

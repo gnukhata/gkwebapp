@@ -40,7 +40,7 @@ from pyramid.response import Response
 from pyramid.httpexceptions import HTTPFound
 from PIL import Image
 import base64
-import cStringIO
+import io
 
 
 @view_config(route_name='locale')
@@ -116,7 +116,7 @@ def editOrganisation(request):
     if "orgstate" in request.params:
         gkdata["orgstate"]=request.params["orgstate"]
 # conversion of data into json format for bank details# 
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         gkdata["bankdetails"]=json.loads(request.params["bankdetails"])
         
     filelogo={}
@@ -125,7 +125,7 @@ def editOrganisation(request):
 
             img=request.POST['logo'].file
             image=Image.open(img)
-            imgbuffer = cStringIO.StringIO()
+            imgbuffer = io.StringIO()
             image.save(imgbuffer, format="JPEG")
             img_str = base64.b64encode(imgbuffer.getvalue())
             image.close()
@@ -133,9 +133,9 @@ def editOrganisation(request):
 
             gkdata["logo"]=filelogo
     except:
-        print "no file found "
+        print("no file found ")
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
-    if result.json()["gkstatus"]==0 and request.params.has_key("bankdetails"):
+    if result.json()["gkstatus"]==0 and "bankdetails" in request.params:
             #this is use when bank account details are available it create  bank account of that details  when we editorganization.
         try:
             subgroupcode = requests.get("http://127.0.0.1:6543/groupsubgroups?orgbank", headers=header)

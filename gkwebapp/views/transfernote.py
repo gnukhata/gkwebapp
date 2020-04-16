@@ -38,7 +38,7 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import cStringIO
+import io
 import openpyxl
 from openpyxl.styles import Font, Alignment
 
@@ -81,7 +81,7 @@ def printlistoftransfernotes(request):
                 godownname = ""
                 godownaddress = ""
                 goid = 0
-                if request.params.has_key("goid"):
+                if "goid" in request.params:
                     goid = int(request.params["goid"])
                     transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
                     godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
@@ -135,7 +135,7 @@ def listoftransfernotesspreadsheet(request):
         sheet['A4'].alignment = Alignment(horizontal = 'center', vertical='center')
         titlerow = 5
         #If an id of a godown is received it will give all transfernotes involving that godown with godownname and godownaddress.
-        if request.params.has_key("goid"):
+        if "goid" in request.params:
             goid = int(request.params["goid"])
             transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d"%(startDate, endDate, goid),headers=header)
             godown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(request.params["goid"])), headers=header)
@@ -214,15 +214,15 @@ def listoftransfernotesspreadsheet(request):
             else:
                 row = subrow
 
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         transfernotewb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Content-Type-Options':'nosniff','Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "File not found"
+        print("File not found")
         return{"gkstatus":3}
     
 @view_config(route_name="transfernotes",request_param="action=showlist",renderer="gkwebapp:templates/listoftransfernotes.jinja2")
@@ -233,7 +233,7 @@ def showlistoftransfernotes(request):
                 godownname = ""
                 godownaddress = ""
                 goid = 0
-                if request.params.has_key("goid"):
+                if "goid" in request.params:
                     goid = int(request.params["goid"])
                     if "orderflag" in request.params:
                         transfernotes = requests.get("http://127.0.0.1:6543/transfernote?type=list&startdate=%s&enddate=%s&goid=%d&orderflag=%d"%(startDate, endDate, goid, int(request.params["orderflag"])),headers=header)
@@ -275,9 +275,9 @@ def savetransfernote(request):
                 if request.params["nopkt"]!='':
                         transferdata["nopkt"]=request.params["nopkt"]
                 
-                if request.params.has_key("duedate"):
+                if "duedate" in request.params:
                     transferdata["duedate"]=request.params["duedate"]
-                if request.params.has_key("grace"):
+                if "grace" in request.params:
                     transferdata["grace"]=request.params["grace"]
                 
                 products = {}

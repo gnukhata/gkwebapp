@@ -40,7 +40,7 @@ import openpyxl
 from openpyxl import load_workbook
 from openpyxl import Workbook 
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
@@ -273,13 +273,13 @@ def listofgodownssspreadsheet(request):
 
             row = row + 1
             srno += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         godownwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 
@@ -298,7 +298,7 @@ def godownImport(request):
         stateList=[]
         duplicateFlag=False
         for state in states.json()["gkresult"]:
-            for st in state.values():
+            for st in list(state.values()):
                 stateList.append(st)
         for godownrow in godownList[1 : ]:
             if godownrow[2].value not in stateList or godownrow[2].value ==None:
@@ -329,6 +329,6 @@ def godownImport(request):
         else:
             return {"gkstatus":0}
      except Exception as e:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
 

@@ -39,7 +39,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -207,9 +207,9 @@ def saveproduct(request):
         else:
             proddetails["specs"]= json.loads(request.params["specs"])
 
-    if request.params.has_key("gscode"):
+    if "gscode" in request.params:
         proddetails["gscode"]=request.params["gscode"]
-    if request.params.has_key("gsflag"):
+    if "gsflag" in request.params:
         proddetails["gsflag"]=request.params["gsflag"]
     else:
         proddetails["gsflag"] = 7
@@ -219,7 +219,7 @@ def saveproduct(request):
     if godownflag == True:
             godnames = ""
             j = 1;
-            for i in godowns.keys():
+            for i in list(godowns.keys()):
                 resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
                 godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
                 if j != len(godowns):
@@ -291,9 +291,9 @@ def editproduct(request):
             godowns = json.loads(request.params["godowns"])
         else:
             proddetails["specs"]= json.loads(request.params["specs"])
-    if request.params.has_key("gscode"):
+    if "gscode" in request.params:
         proddetails["gscode"]=request.params["gscode"]
-    if request.params.has_key("gsflag"):
+    if "gsflag" in request.params:
         proddetails["gsflag"]=request.params["gsflag"]
     else:
          proddetails["gsflag"] = 7
@@ -504,13 +504,13 @@ def listofstockitemsspreadsheet(request):
                 sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 row +=1
                 srno +=1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         productwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
     
@@ -924,14 +924,14 @@ def stockreportspreadsheet(request):
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 row += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         prowb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Content-Type-Options':'nosniff','Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
 
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 
@@ -1101,7 +1101,7 @@ def ProductImport(request):
         statesList=[]
         
         for state in states:
-            for value in state.values():
+            for value in list(state.values()):
                 statesList.append(value)
         proddetails={}
         godowns={}
@@ -1137,7 +1137,7 @@ def ProductImport(request):
 
                 if productrow[0].value != "product name":  
                     newrows.append(rowcount)
-                    print (productrow[0].value)
+                    print((productrow[0].value))
                     #Validations Begin
                     #No product name
                     if productrow[0].value==None:
@@ -1242,7 +1242,7 @@ def ProductImport(request):
                             taxes.append(tax)
                     #godown dictionary generation
                     if productrow[10].value!=None:
-                        print (productrow[10].value)
+                        print((productrow[10].value))
                         flag=0
                         for g in godown:
                             print (g)
@@ -1337,7 +1337,7 @@ def ProductImport(request):
                     if g["productdetails"]["godownflag"] == True:
                         godnames = ""
                         j = 1;
-                        for i in godowns.keys():
+                        for i in list(godowns.keys()):
                             resultgodown = requests.get("http://127.0.0.1:6543/godown?qty=single&goid=%d"%(int(i)), headers=header)
                             godnames += resultgodown.json()["gkresult"]["goname"] + "(" + resultgodown.json()["gkresult"]["goaddr"] + ")"
                             if j != len(godowns):
@@ -1374,7 +1374,7 @@ def ProductImport(request):
                 temp=[]
                 row=openpyxl.utils.cell.coordinate_from_string(i)[1]-1
                 errorlist1.append(openpyxl.utils.cell.coordinate_from_string(i))
-                if openpyxl.utils.cell.coordinate_from_string(i)[1] not in errorrows.keys():
+                if openpyxl.utils.cell.coordinate_from_string(i)[1] not in list(errorrows.keys()):
                     temprow=productList[row]
                     for cell in temprow:        
                         temp.append(cell.value)

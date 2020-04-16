@@ -76,7 +76,7 @@ def saverejectionnote(request):
         if (s == False):
             rndata["rejnarration"] = request.params["rej_narration"]
     stockdata = {"inout":int(request.params["inout"]),"items":json.loads(request.params["products"])}
-    if request.params.has_key("goid"):
+    if "goid" in request.params:
         stockdata["goid"]=int(request.params["goid"])
     rnwholedata = {"rejectionnotedata":rndata,"stockdata":stockdata}
     result=requests.post("http://127.0.0.1:6543/rejectionnote",data=json.dumps(rnwholedata),headers=header)

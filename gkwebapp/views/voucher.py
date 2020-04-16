@@ -34,7 +34,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from PIL import Image
 import base64
-import cStringIO
+import io
 
 
 @view_config(route_name="showvoucher")
@@ -152,7 +152,7 @@ def addvoucher(request):
     rowdetails= json.loads(request.params["transactions"])
     crs={}
     drs={}
-    if vdetails.has_key("vno"):
+    if "vno" in vdetails:
         if vdetails["projectcode"] !="":
             gkdata={"vouchernumber":vdetails["vno"],"voucherdate":vdetails["vdate"],"narration":vdetails["narration"],"drs":drs,"crs":crs,"vouchertype":vdetails["vtype"],"projectcode":int(vdetails["projectcode"])}
         else:
@@ -182,13 +182,13 @@ def addvoucher(request):
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -198,7 +198,7 @@ def addvoucher(request):
             gkdata["attachment"] = files
             gkdata["attachmentcount"] = len(gkdata["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
     for row in rowdetails:
         if row["side"]=="Cr":
             crs[row["accountcode"]]=row["cramount"]
@@ -212,7 +212,7 @@ def addvoucher(request):
         This happens in the case of Receipt/Payment vouchers.
         Voucher code returned by core engine is added to details of adjustments and billwise API is called.
         '''
-        if request.params.has_key('billdetails'):
+        if 'billdetails' in request.params:
             payment = json.loads(request.params["billdetails"])
             payment["vouchercode"] = result.json()["vouchercode"]
             payments = []
@@ -251,13 +251,13 @@ def addvoucherauto(request):
     try:
         files = {}
         count = 0
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
@@ -267,11 +267,11 @@ def addvoucherauto(request):
             data["vdetails"]["attachment"] = files
             data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
     except:
-        print "no attachment found"
+        print("no attachment found")
 
     result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
     if result.json()["gkstatus"] == 0:
-        if request.params.has_key('billdetails'):
+        if 'billdetails' in request.params:
             payment = json.loads(request.params["billdetails"])
             payment["vouchercode"] = result.json()["vouchercode"]
             payments = []
@@ -330,20 +330,20 @@ def updateattachment(request):
     else:
         count = 0
     try:
-        for i in request.POST.keys():
+        for i in list(request.POST.keys()):
             if "file" not in i:
                 continue
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = cStringIO.StringIO()
+                imgbuffer = io.StringIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
                 image.close()
                 docs[count] = img_str
                 count += 1
     except:
-        print "No attachment found"
+        print("No attachment found")
     if len(docs)>0:
         gkdata = {"attachment":docs,"attachmentcount":len(docs),"vouchercode":request.params["vouchercode"]}
     else:

@@ -78,13 +78,13 @@ def savecashmemo(request):
     header={"gktoken":request.headers["gktoken"]}
     cashmemodata = {"invoiceno":request.params["invoiceno"],"invoicetotal":request.params["invoicetotal"],"invoicetotalword":request.params["invoicetotalword"],"icflag":3,"taxstate":request.params["taxstate"],"sourcestate":request.params["sourcestate"],"invoicedate":request.params["invoicedate"],"tax":json.loads(request.params["tax"]), "cess":json.loads(request.params["cess"]), "contents":json.loads(request.params["contents"]),"freeqty":json.loads(request.params["freeqty"]),"taxflag":request.params["taxflag"],"paymentmode":request.params["paymentmode"],"inoutflag":request.params["inoutflag"],"av":json.loads(request.params["av"]),"roundoffflag":request.params["roundoff"], "discflag":request.params["discflag"]}
 
-    if request.params.has_key("orgstategstin"):
+    if "orgstategstin" in request.params:
         cashmemodata["orgstategstin"]=request.params["orgstategstin"]
-    if request.params.has_key("discount"):
+    if "discount" in request.params:
         cashmemodata["discount"]=json.loads(request.params["discount"])
-    if request.params.has_key("bankdetails"):
+    if "bankdetails" in request.params:
         cashmemodata["bankdetails"]=json.loads(request.params["bankdetails"])
-    if request.params.has_key("goid"):
+    if "goid" in request.params:
         cashmemodata["goid"]=json.loads(request.params["goid"])
     stock = json.loads(request.params["stock"])
     invoicewholedata = {"invoice":cashmemodata,"stock":stock}

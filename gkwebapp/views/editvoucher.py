@@ -34,7 +34,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from PIL import Image
 import base64
-import cStringIO
+import io
 
 @view_config(route_name="findeditvoucher", renderer="gkwebapp:templates/findeditvoucher.jinja2")
 def showfindvoucher(request):
@@ -249,13 +249,13 @@ def editvoucher(request):
 		try:
 			files = {}
 			count = 0
-			for i in request.POST.keys():
+			for i in list(request.POST.keys()):
 				if "file" not in i:
 					continue
 				else:
 					img = request.POST[i].file
 					image = Image.open(img)
-					imgbuffer = cStringIO.StringIO()
+					imgbuffer = io.StringIO()
 					image.save(imgbuffer, format="JPEG")
 					img_str = base64.b64encode(imgbuffer.getvalue())
 					image.close()
@@ -265,7 +265,7 @@ def editvoucher(request):
 				gkdata["attachment"] = files
 				gkdata["attachmentcount"] = len(gkdata["attachment"])
 		except:
-			print "no attachment found"
+			print("no attachment found")
 	for row in rowdetails:
 		if row["side"]=="Cr":
 			crs[row["accountcode"]]=row["cramount"]

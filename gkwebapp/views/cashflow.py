@@ -36,7 +36,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 import calendar
 
 @view_config(route_name="showcashflow", renderer="gkwebapp:templates/viewcashflow.jinja2")
@@ -176,14 +176,14 @@ def printcashflowreport(request):
                     sheet['F'+str(row)].number_format = '0.00'
                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         cashwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]' }
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/' }
-        return Response(contents, headerlist=headerList.items())
-        return Response(reportxslx, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
+        return Response(reportxslx, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 

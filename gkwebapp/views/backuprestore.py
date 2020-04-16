@@ -32,7 +32,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import base64
-import cStringIO, shutil
+import io, shutil
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -101,7 +101,7 @@ def tallyImport(request):
                 parentgroup = accRow[0].value.strip()
                 continue
             if accRow[0].font.b == False and accRow[0].font.i == False:
-                if groups.has_key(accRow[0].value):
+                if accRow[0].value in groups:
                     curgrpid = groups[accRow[0].value.strip()]
                 else:
                     newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)
@@ -208,7 +208,7 @@ def tallyImport(request):
                     gNewvch = requests.post("http://127.0.0.1:6543/transaction",data = json.dumps(result),headers=header)
             return {"gkstatus":0}
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
         
                             
@@ -297,15 +297,15 @@ def exportLedger(request):
                 a = Voucher.cell(row=rowCounter,column=2,value=v["narration"])
                 a.font = Font(italic=True , size = 10)
                 rowCounter = rowCounter + 1      
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         gkwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=AllLedger.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=AllLedger.xlsx','Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}
 
 @view_config(route_name="export",renderer="gkwebapp:templates/export.jinja2")

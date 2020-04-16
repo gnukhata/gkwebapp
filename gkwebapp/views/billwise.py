@@ -35,7 +35,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 '''
 This function brings data of unpaid bills and unadjusted amounts.
 This could be either called after a voucher is created or from the Unadjusted Amounts module.
@@ -254,13 +254,13 @@ def unpaidInvoicesSpreadsheet(request):
             sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
             srno = srno + 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         billwisewb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true ;path=/'}
-        return Response(contents, headerlist=headerList.items()) 
+        return Response(contents, headerlist=list(headerList.items())) 
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}

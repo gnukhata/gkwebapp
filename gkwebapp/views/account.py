@@ -39,7 +39,7 @@ import openpyxl
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font, Alignment
-import cStringIO
+import io
 
 '''
 This function returns a spreadsheet form of List of Accounts Report.
@@ -102,13 +102,13 @@ def spreadsheetofaccounts(request):
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)            
             row = row + 1
             srno += 1  
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         accountwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/; HttpOnly'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/;'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 
@@ -274,7 +274,7 @@ def addaccount(request):
         newgkdata["moredata"] = json.loads(request.params["moredata"])
     else:
         newgkdata["moredata"] = {}
-    if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0) :
+    if ("defaultflag" in request.params and int(request.params["defaultflag"]) != 0) :
         gkdata["defaultflag"] = int(request.params["defaultflag"])
     if request.params["subgroupname"]=="New":
         gkdata1={"groupname":request.params["newsubgroup"],"subgroupof":request.params["groupname"]}
@@ -383,7 +383,7 @@ def editaccount(request):
     newgkdata["custsupflag"] = int(request.params["custsupflag"])
     if "custname" in request.params["moredata"]:
         newgkdata["moredata"] = json.loads(request.params["moredata"])
-    if (request.params.has_key("defaultflag") and int(request.params["defaultflag"]) != 0):
+    if ("defaultflag" in request.params and int(request.params["defaultflag"]) != 0):
         gkdata["defaultflag"] = int(request.params["defaultflag"])
 
     '''New Sub-group created, then "New sub-group name" and "group code" under sub-group is created is store in "groupsubgroups" table. 
@@ -452,7 +452,7 @@ def accImpotrt(request):
                 parentgroup = accRow[0].value.strip()
                 continue
             if accRow[0].font.b == False and accRow[0].font.i == False:
-                if groups.has_key(accRow[0].value):
+                if accRow[0].value in groups:
                     curgrpid = groups[accRow[0].value.strip()]
                 else:
                     newsub = requests.post("http://127.0.0.1:6543/groupsubgroups",data = json.dumps({"groupname":accRow[0].value,"subgroupof":parentgroupid}),headers=header)                   
@@ -481,5 +481,5 @@ def accImpotrt(request):
                     newsub = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":accRow[1].value}),headers=header) 
         return {"gkstatus":0} 
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}       

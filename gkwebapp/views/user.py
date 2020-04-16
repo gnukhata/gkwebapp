@@ -38,7 +38,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
-import StringIO
+import io
 
 
 #This function calls User Tab 
@@ -85,11 +85,11 @@ def UserLoginstatus(request):
 def addedituser(request):
     header = {"gktoken":request.headers["gktoken"]}
     gkdata = {"userid":request.params["userid"],"username":request.params["username"],"userquestion":request.params["userquestion"],"useranswer":request.params["useranswer"]}
-    if request.params.has_key("userpassword"):
+    if "userpassword" in request.params:
         gkdata["userpassword"]=request.params["userpassword"]
-    if request.params.has_key("userrole"):
+    if "userrole" in request.params:
         gkdata["userrole"]=int(request.params["userrole"])
-    if request.params.has_key("godowns"):
+    if "godowns" in request.params:
         gkdata["golist"]=json.loads(request.params["godowns"])
     result = requests.put("http://127.0.0.1:6543/users?editdata", headers=header, data=json.dumps(gkdata))
     if result.json()["gkstatus"] == 0:
@@ -296,14 +296,14 @@ def listofusersspreadsheet(request):
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
             srno = srno + 1
-        output = StringIO.StringIO()
+        output = io.StringIO()
         userwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff' ,'Set-Cookie':'fileDownload=true; path=/ ;HttpOnly'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/ ;'}
 
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
         return {"gkstatus":3}
 

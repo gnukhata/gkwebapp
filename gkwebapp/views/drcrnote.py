@@ -5,7 +5,7 @@ from pyramid.renderers import render_to_response
 from pyramid.response import Response
 from PIL import Image
 import base64
-import cStringIO
+import io
 import os
 
 @view_config(route_name="drcrnote",renderer="gkwebapp:templates/drcrnote.jinja2")
@@ -30,9 +30,9 @@ def savedrcrnote(request):
         if (s == False):
             drcrdata["drcrnarration"] = request.params["drcr_narration"]
     drcrdata["roundoffflag"] = int(request.params["roundoffflag"])
-    if request.params.has_key("reference"):
+    if "reference" in request.params:
         drcrdata["reference"]=json.loads(request.params["reference"])
-    if request.params.has_key("usr"):
+    if "usr" in request.params:
         drcrdata["userid"]=request.params["usr"]
 
     wholedataset = {}

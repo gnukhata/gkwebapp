@@ -34,7 +34,7 @@ import requests, json
 from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
-import cStringIO
+import io
 import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
@@ -345,14 +345,14 @@ def printtrialbalance(request):
                 sheet['H'+str(row)].alignment = Alignment(horizontal='center')
                 sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 row = row + 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         trialbalancewb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff' ,'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','Set-Cookie':'fileDownload=true; path=/'}
 
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "file not found"
+        print("file not found")
         return {"gkstatus":3}

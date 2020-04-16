@@ -40,7 +40,7 @@ import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles.colors import RED
-import cStringIO
+import io
 
 '''
 This function returns a spreadsheet form of Monthly Ledger Report.
@@ -147,15 +147,15 @@ def printmonthlyledgerreport(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         mledgerwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true ;path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "File not found"
+        print("File not found")
         return {"gkstatus":3}
 
 '''
@@ -297,7 +297,7 @@ def printLedgerReport(request):
             particulars=""
             length = len(transaction["particulars"])
             for i,k in enumerate(transaction["particulars"]):
-                if k.has_key('amount'):
+                if 'amount' in k:
                     sheet['D'+str(row)] = k["accountname"]+' ('+k["amount"]+')'
                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 else :
@@ -312,15 +312,15 @@ def printLedgerReport(request):
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
                 sheet['D'+str(row)].alignment = Alignment(vertical='center')
             row +=1
-        output = cStringIO.StringIO()
+        output = io.StringIO()
         ledgerwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
-        return Response(contents, headerlist=headerList.items())
+        return Response(contents, headerlist=list(headerList.items()))
     except:
-        print "File not found"
+        print("File not found")
         return {"gkstatus":3}
 
 @view_config(route_name="showviewledger", renderer="gkwebapp:templates/viewledger.jinja2")
@@ -358,7 +358,7 @@ def showledgerreport(request):
         result = requests.get("http://127.0.0.1:6543/report?type=monthlyledger&accountcode=%d"%(accountcode), headers=header)
         return render_to_response("gkwebapp:templates/monthledger.jinja2",{"records":result.json()["gkresult"],"accountcode":result.json()["accountcode"],"accountname":result.json()["accountname"] },request=request)
     else:
-        if request.params.has_key("side"):
+        if "side" in request.params:
             if projectcode=="":
                 if "orderflag" in request.params:
                     result = requests.get("http://127.0.0.1:6543/report?type=crdrledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=&side=%s&orderflag=%d"%(accountcode,calculatefrom,calculateto,financialstart,request.params["side"],int(request.params["orderflag"])), headers=header)
@@ -485,7 +485,7 @@ def printledger(request):
         result = requests.get("http://127.0.0.1:6543/report?type=monthlyledger&accountcode=%d"%(accountcode), headers=header)
         return render_to_response("gkwebapp:templates/monthledger.jinja2",{"records":result.json()["gkresult"],"accountcode":result.json()["accountcode"],"accountname":result.json()["accountname"] },request=request)
     else:
-        if request.params.has_key("side"):
+        if "side" in request.params:
             if projectcode=="":
                 result = requests.get("http://127.0.0.1:6543/report?type=crdrledger&accountcode=%d&calculatefrom=%s&calculateto=%s&financialstart=%s&projectcode=&side=%s"%(accountcode,calculatefrom,calculateto,financialstart,request.params["side"]), headers=header)
             else:
