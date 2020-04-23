@@ -48,8 +48,7 @@ It is decoded and returned along with mime information.
 '''
 @view_config(route_name="printlistofaccounts", renderer="")
 def spreadsheetofaccounts(request):
-   # try:
-    
+    try:
         header={"gktoken":request.headers["gktoken"]}
         result = requests.get("http://127.0.0.1:6543/accounts", headers=header)
         result = result.json()["gkresult"]
@@ -103,37 +102,15 @@ def spreadsheetofaccounts(request):
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)            
             row = row + 1
             srno += 1
-        '''
         output = io.BytesIO()
-        print ("{{{{{{{}}}}}}}")
-        print (output)
-        print(type(output))
-        print ("*********")
-        print(type (accountwb))
-        accountwb.save(output)
-        print ("44444444")
-        print (output.getvalue())
-        contents = (output.getvalue())
-        print(contents)
-        print (type(contents))
-        
-        print ("&&&&&&&&")
-        io.BytesIO(save_virtual_workbook(accountwb))
-        #contents = contents.decode('ascii')
-        #contents = contents.decoded(encoding)
-        '''
-
-        output = BytesIO()
         accountwb.save(output)
         contents = (output.read())
         contents = (output.getvalue())
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff','Accept-Charset':'UTF-8', 'Set-Cookie':'fileDownload=true; path=/[;HttpOnly]'}
-        # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/;'}
-        print ( Response(contents, headerlist=list(headerList.items())))
         return Response(contents, headerlist=list(headerList.items()))
-    #except:
-    ###    return {"gkstatus":3}
+    except:
+        return {"gkstatus":3}
 
 @view_config(route_name="showaccount",renderer="gkwebapp:templates/createeditlistofacc.jinja2")
 def showaddeditaccount(request):
