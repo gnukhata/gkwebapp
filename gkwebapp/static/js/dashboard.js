@@ -48,21 +48,6 @@ $('.drawer').drawer({
   showOverlay: true
 });
 
-  
-
-
-    var canvas = document.getElementById("linechart");
-		var parent = document.getElementById("ds");
-    canvas.width = parent.offsetWidth;
-    canvas.height = parent.offsetHeight;
-    console.log(canvas.offsetHeight);
-
-    var canvasSL = document.getElementById("chart_content_sale");
-		var parent_div = document.getElementById("sl_inv");
-		canvasSL.width = parent_div.offsetWidth;
-    canvasSL.height = parent_div.offsetHeight;
-    
-
     
 $("#dashboard_li").click(function(e){
   location.reload();
