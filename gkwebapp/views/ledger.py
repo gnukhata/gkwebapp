@@ -41,6 +41,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.styles.colors import RED
 import io
+from io import BytesIO
 
 '''
 This function returns a spreadsheet form of Monthly Ledger Report.
@@ -147,7 +148,7 @@ def printmonthlyledgerreport(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center' )
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         mledgerwb.save(output)
         contents = output.getvalue()
         output.close()
@@ -312,12 +313,11 @@ def printLedgerReport(request):
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
                 sheet['D'+str(row)].alignment = Alignment(vertical='center')
             row +=1
-        output = io.StringIO()
+        output = io.BytesIO()
         ledgerwb.save(output)
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
-        # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         return Response(contents, headerlist=list(headerList.items()))
     except:
         print("File not found")

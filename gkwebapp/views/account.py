@@ -104,7 +104,6 @@ def spreadsheetofaccounts(request):
             srno += 1
         output = io.BytesIO()
         accountwb.save(output)
-        contents = (output.read())
         contents = (output.getvalue())
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx','X-Content-Type-Options':'nosniff','Accept-Charset':'UTF-8', 'Set-Cookie':'fileDownload=true; path=/[;HttpOnly]'}

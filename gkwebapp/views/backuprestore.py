@@ -297,8 +297,9 @@ def exportLedger(request):
                 a = Voucher.cell(row=rowCounter,column=2,value=v["narration"])
                 a.font = Font(italic=True , size = 10)
                 rowCounter = rowCounter + 1      
-        output = io.StringIO()
+        output = io.BytesIO()
         gkwb.save(output)
+        contents = (output.read())
         contents = output.getvalue()
         output.close()
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=AllLedger.xlsx','X-Content-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
