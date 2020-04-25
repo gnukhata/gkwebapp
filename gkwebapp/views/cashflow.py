@@ -37,6 +37,7 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 import calendar
 
 @view_config(route_name="showcashflow", renderer="gkwebapp:templates/viewcashflow.jinja2")
@@ -176,7 +177,7 @@ def printcashflowreport(request):
                     sheet['F'+str(row)].number_format = '0.00'
                     sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         cashwb.save(output)
         contents = output.getvalue()
         output.close()
