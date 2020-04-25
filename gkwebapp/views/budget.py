@@ -41,6 +41,7 @@ s = requests.session()
 from PIL import Image
 import base64
 import io
+from io import BytesIO
 
 @view_config(route_name="budget", renderer="gkwebapp:templates/budget.jinja2")
 def budget(request):
@@ -322,7 +323,7 @@ def cashspreadsheet(request):
                 sheet['E'+str(row)] = ob["varinpercent"] +" %"
             row = row +1
 
-        output = io.StringIO()
+        output = io.BytesIO()
         budgetwb.save(output)
         contents = output.getvalue()
         output.close()
@@ -484,7 +485,7 @@ def pnlpreadsheet(request):
             else:
                 sheet['E'+str(row)]='-'
 
-        output = io.StringIO()
+        output = io.BytesIO()
         budgetwb.save(output)
         contents = output.getvalue()
         output.close()
