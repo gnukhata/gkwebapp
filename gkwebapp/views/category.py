@@ -37,6 +37,7 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 
 @view_config(route_name="category",renderer="gkwebapp:templates/category.jinja2")
 def showcategory(request):
@@ -255,7 +256,7 @@ def listofgodownssspreadsheet(request):
             else:
                 row = subrow
             srno += 1  
-        output = io.StringIO()
+        output = io.BytesIO()
         categorywb.save(output)
         contents = output.getvalue()
         output.close()
