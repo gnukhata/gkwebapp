@@ -41,6 +41,7 @@ import openpyxl
 from openpyxl.styles import Font, Alignment
 from openpyxl.utils import get_column_letter
 import base64
+from io import BytesIO
 
 @view_config(route_name="invoice",renderer="gkwebapp:templates/invoice.jinja2")
 def showinvoice(request):
@@ -566,7 +567,7 @@ def listofinvspreadsheet(request):
             sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
-        output = io.StringIO()
+        output = io.BytesgIO()
         invoicewb.save(output)
         contents = output.getvalue()
         output.close()
@@ -890,7 +891,7 @@ def registerspreadsheet(request):
                 sheet.cell(column = colvar, row=rowCount).alignment = Alignment(horizontal='right')
             colvar += 1
             
-        output = io.StringIO()
+        output = io.BytesIO()
         registerwb.save(output)
         contents = output.getvalue()
         output.close()
