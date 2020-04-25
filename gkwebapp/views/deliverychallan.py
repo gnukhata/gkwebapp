@@ -39,6 +39,7 @@ from pyramid.response import Response
 from PIL import Image
 import base64
 import io
+from io import BytesIO
 import openpyxl
 from openpyxl.styles import Font, Alignment
 
@@ -322,7 +323,7 @@ def unbillspreadsheet(request):
                 sheet['F'+str(row)].alignment = Alignment(horizontal='center')
                 sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         unbilldelwb.save(output)
         contents = output.getvalue()
         output.close()
