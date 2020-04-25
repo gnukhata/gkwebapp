@@ -40,6 +40,7 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font
@@ -924,7 +925,7 @@ def stockreportspreadsheet(request):
                      sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                      sheet['I'+str(row)].alignment = Alignment(horizontal='right')
                 row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         prowb.save(output)
         contents = output.getvalue()
         output.close()
