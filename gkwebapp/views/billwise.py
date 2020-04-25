@@ -36,6 +36,7 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 '''
 This function brings data of unpaid bills and unadjusted amounts.
 This could be either called after a voucher is created or from the Unadjusted Amounts module.
@@ -254,7 +255,7 @@ def unpaidInvoicesSpreadsheet(request):
             sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
             srno = srno + 1
-        output = io.StringIO()
+        output = io.BytesIO()
         billwisewb.save(output)
         contents = output.getvalue()
         output.close()

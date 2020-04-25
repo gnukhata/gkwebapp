@@ -25,6 +25,7 @@ Contributors:
 'Prajkta Patkar'<prajakta@dff.org.in>"""
 
 import os, io
+from io import BytesIO
 import requests
 from pyramid.view import view_config
 from pyramid.response import Response
@@ -72,7 +73,7 @@ def gstr1_spreadsheet(request):
 
     wb = gst_r1_template(result)
 
-    output = io.StringIO()
+    output = io.BytesIO()
     wb.save(output)
     contents = output.getvalue()
     output.close()
