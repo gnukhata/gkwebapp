@@ -35,6 +35,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import io
+from io import BytesIO
 import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
@@ -345,7 +346,7 @@ def printtrialbalance(request):
                 sheet['H'+str(row)].alignment = Alignment(horizontal='center')
                 sheet['H'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 row = row + 1
-        output = io.StringIO()
+        output = io.BytesIO()
         trialbalancewb.save(output)
         contents = output.getvalue()
         output.close()
