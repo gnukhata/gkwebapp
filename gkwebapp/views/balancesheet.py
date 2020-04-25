@@ -37,6 +37,7 @@ from datetime import datetime
 from pyramid.renderers import render_to_response
 from pyramid.response import Response
 import io
+from io import BytesIO
 import calendar
 import openpyxl
 from openpyxl.styles import Font, Alignment
@@ -215,7 +216,7 @@ def printconvbalsheetreport(request):
                             sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
                             sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
                 row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         conventionalwb.save(output)
         contents = output.getvalue()
         output.close()
@@ -390,7 +391,7 @@ def printconsbalsheetreport(request):
                         sheet['H'+str(row)].alignment = Alignment(horizontal = 'right')
                         sheet['H'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
                 row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         consolidationwb.save(output)
         contents = output.getvalue()
         output.close()
@@ -543,7 +544,7 @@ def printsourcesandappfundreport(request):
                     sheet['D'+str(row)].font = Font(name='Liberation Serif',size='12',bold=True)
             row += 1
 
-        output = io.StringIO()
+        output = io.BytesIO()
         srcandappfundwb.save(output)
         contents = output.getvalue()
         output.close()
