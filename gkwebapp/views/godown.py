@@ -41,6 +41,7 @@ from openpyxl import load_workbook
 from openpyxl import Workbook 
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 
 @view_config(route_name="godown",renderer="gkwebapp:templates/godown.jinja2")
 def godown(request):
@@ -273,7 +274,7 @@ def listofgodownssspreadsheet(request):
 
             row = row + 1
             srno += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         godownwb.save(output)
         contents = output.getvalue()
         output.close()
