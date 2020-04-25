@@ -39,6 +39,7 @@ from pyramid.response import Response
 import openpyxl
 from openpyxl.styles import Font, Alignment
 import io
+from io import BytesIO
 
 
 #This function calls User Tab 
@@ -296,7 +297,7 @@ def listofusersspreadsheet(request):
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
             srno = srno + 1
-        output = io.StringIO()
+        output = io.BytesIO()
         userwb.save(output)
         contents = output.getvalue()
         output.close()
