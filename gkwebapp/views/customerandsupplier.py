@@ -90,7 +90,6 @@ def savecustomersupplier(request):
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
     if "gstin" in request.params:
         dataset["gstin"]=json.loads(request.params["gstin"])
-    print (dataset)
     result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
         if dataset["csflag"] == 3:
@@ -165,7 +164,6 @@ def getcustsupforacc(request):
 def cussupimport(request):
     try:
         header={"gktoken":request.headers["gktoken"]}
-        print (header)
         xlsxfile = request.POST['xlsxfile'].file
         wb=load_workbook(xlsxfile)
         ws=wb.sheetnames
@@ -297,7 +295,6 @@ def cussupimport(request):
                 else:
                     bank_dict={"ifsc":sheetRow[12].value,"bankname":sheetRow[10].value,"accountno":sheetRow[9].value,"branchname":sheetRow[11].value}
                     cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag, "bankdetails":bank_dict}
-                print (cussupDict)
                 result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cussupDict),headers=header)
                 
                 if result.json()["gkstatus"]==1:

@@ -288,7 +288,7 @@ $(document).ready(function(){
         else{
             for(let j=1 ; j <= $("#inflowaccount").val(); j++){
                 if($("#cash_latable tbody tr:eq("+j+") input").val() == "" || isNaN($("#cash_latable tbody tr:eq("+j+") input").val())){
-                    $("#cash_latable tbody tr:eq("+j+") input").val(0.00)
+                    $("#cash_latable tbody tr:eq("+j+") input").val(0.00);
                 }
                 else{
                     inflowtotal = inflowtotal + parseFloat($("#cash_latable tbody tr:eq("+j+") input").val());
@@ -311,14 +311,15 @@ $(document).ready(function(){
         }
     });
 // ------------------ date validations --------------
-    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-    $("#c_budget_fromday").val(fromdatearray[2])
-    $("#c_budget_frommonth").val(fromdatearray[1])
-    $("#c_budget_fromyear").val(fromdatearray[0])
-    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-    $("#c_budget_today").val(todatearray[2])
-    $("#c_budget_tomonth").val(todatearray[1])
-    $("#c_budget_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    console.log(fromdatearray[2]);
+    $("#c_budget_fromday").val(fromdatearray[2]);
+    $("#c_budget_frommonth").val(fromdatearray[1]);
+    $("#c_budget_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#c_budget_today").val(todatearray[2]);
+    $("#c_budget_tomonth").val(todatearray[1]);
+    $("#c_budget_toyear").val(todatearray[0]);
 
     function pad (str, max) { //to add leading zeros in date
         str = str.toString();
@@ -326,7 +327,7 @@ $(document).ready(function(){
           return str.length < max ? pad("0" + str, max) : str;
         }
         else{
-          return str
+            return str;
         }
       }
     function yearpad (str, max) { //to add leading 20 or 200 to year
