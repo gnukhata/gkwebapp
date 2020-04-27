@@ -90,6 +90,7 @@ def savecustomersupplier(request):
         dataset["bankdetails"]=json.loads(request.params["bankdetails"])
     if "gstin" in request.params:
         dataset["gstin"]=json.loads(request.params["gstin"])
+    print (dataset)
     result=requests.post("http://127.0.0.1:6543/customersupplier",data=json.dumps(dataset),headers=header)
     if result.json()["gkstatus"] == 0:
         if dataset["csflag"] == 3:
@@ -162,8 +163,9 @@ def getcustsupforacc(request):
 
 @view_config(route_name='import',request_param='action=cussupimport',renderer='json')
 def cussupimport(request):
-    try:
+    #try:
         header={"gktoken":request.headers["gktoken"]}
+        print (header)
         xlsxfile = request.POST['xlsxfile'].file
         wb=load_workbook(xlsxfile)
         ws=wb.sheetnames
@@ -274,7 +276,7 @@ def cussupimport(request):
                 gstin_dict={}
                 if sheetList[row_no][8].value!=None:
                     while(True):
-                        gst_str=sheetList[row_no][8].value.encode('ascii','ignore')
+                        gst_str=sheetList[row_no][8].value
                         state_str=gst_str[:2]
                         gstin_dict[state_str]=gst_str
                         row_no+=1
@@ -295,6 +297,7 @@ def cussupimport(request):
                 else:
                     bank_dict={"ifsc":sheetRow[12].value,"bankname":sheetRow[10].value,"accountno":sheetRow[9].value,"branchname":sheetRow[11].value}
                     cussupDict= {"custname":sheetRow[0].value,"custphone":sheetRow[1].value, "custemail":sheetRow[2].value, "custaddr":sheetRow[3].value, "pincode":sheetRow[4].value, "state":sheetRow[5].value, "custfax":sheetRow[6].value, "custpan":sheetRow[7].value, "gstin":gstin_dict, "csflag":csflag, "bankdetails":bank_dict}
+                print (cussupDict)
                 result = requests.post("http://127.0.0.1:6543/customersupplier",data = json.dumps(cussupDict),headers=header)
                 
                 if result.json()["gkstatus"]==1:
@@ -316,5 +319,5 @@ def cussupimport(request):
         if dupFlag==True:
             return {"gkstatus":6,"errorTuples":errorTuples,"errorRows":errorRows,"dupFlag":dupFlag}
         return {"gkstatus":0}
-    except:
-        return {"gkstatus":3}
+    #except:
+    #    return {"gkstatus":3}
