@@ -163,7 +163,7 @@ def getcustsupforacc(request):
 
 @view_config(route_name='import',request_param='action=cussupimport',renderer='json')
 def cussupimport(request):
-    #try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         print (header)
         xlsxfile = request.POST['xlsxfile'].file
@@ -319,5 +319,5 @@ def cussupimport(request):
         if dupFlag==True:
             return {"gkstatus":6,"errorTuples":errorTuples,"errorRows":errorRows,"dupFlag":dupFlag}
         return {"gkstatus":0}
-    #except:
-    #    return {"gkstatus":3}
+    except:
+        return {"gkstatus":3}
