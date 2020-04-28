@@ -56,7 +56,7 @@ def spreadsheetofaccounts(request):
         fyend = str(request.params["fyend"]);
         orgname = str(request.params["orgname"])
         # A workbook is opened.
-        accountwb = Workbook()
+        accountwb = openpyxl.Workbook()
         # The new sheet is the active sheet as no other sheet exists. It is set as value of variable - sheet.
         sheet = accountwb.active
         # Title of the sheet and width of columns are set.
