@@ -117,12 +117,12 @@ def orglogin(request):
 
             img=request.POST['logo'].file
             image=Image.open(img)
-            imgbuffer = io.StringIO()
+            imgbuffer = io.BytesIO()
             image.save(imgbuffer, format="JPEG")
             img_str = base64.b64encode(imgbuffer.getvalue())
+            img_str = img_str.decode("ascii")
             image.close()
             filelogo=img_str
-
             gkdata["orgdetails"]["logo"]=filelogo
     except:
         print("no file found ")

@@ -179,26 +179,27 @@ def addvoucher(request):
         gkdata["branchname"]=vdetails["branchname"]
         gkdata["instrumentdate"] = vdetails["instrumentdate"]
 
-    try:
-        files = {}
-        count = 0
-        for i in list(request.POST.keys()):
-            if "file" not in i:
-                continue
-            else:
-                img = request.POST[i].file
-                image = Image.open(img)
-                imgbuffer = io.StringIO()
-                image.save(imgbuffer, format="JPEG")
-                img_str = base64.b64encode(imgbuffer.getvalue())
-                image.close()
-                files[count] = img_str
-                count += 1
-        if len(files)>0:
-            gkdata["attachment"] = files
-            gkdata["attachmentcount"] = len(gkdata["attachment"])
-    except:
-        print("no attachment found")
+    #try:
+    files = {}
+    count = 0
+    for i in list(request.POST.keys()):
+        if "file" not in i:
+            continue
+        else:
+            img = request.POST[i].file
+            image = Image.open(img)
+            imgbuffer = io.BytesIO()
+            image.save(imgbuffer, format="JPEG")
+            img_str = base64.b64encode(imgbuffer.getvalue())
+            img_str = img_str.decode("ascii")
+            image.close()
+            files[count] = img_str
+            count += 1
+    if len(files)>0:
+        gkdata["attachment"] = files
+        gkdata["attachmentcount"] = len(gkdata["attachment"])
+   # except:
+      #  print("no attachment found")
     for row in rowdetails:
         if row["side"]=="Cr":
             crs[row["accountcode"]]=row["cramount"]
@@ -247,27 +248,28 @@ def addvoucherauto(request):
         data["transactions"]["camount"] = request.params["camount"]
     if "invid" in request.params:
         data["vdetails"]["invid"] = request.params["invid"]
-
-    try:
-        files = {}
-        count = 0
-        for i in list(request.POST.keys()):
-            if "file" not in i:
-                continue
-            else:
-                img = request.POST[i].file
-                image = Image.open(img)
-                imgbuffer = io.StringIO()
-                image.save(imgbuffer, format="JPEG")
-                img_str = base64.b64encode(imgbuffer.getvalue())
-                image.close()
-                files[count] = img_str
-                count += 1
-        if len(files) > 0:
-            data["vdetails"]["attachment"] = files
-            data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
-    except:
-        print("no attachment found")
+    
+   # try:
+    files = {}
+    count = 0
+    for i in list(request.POST.keys()):
+        if "file" not in i:
+            continue
+        else:
+            img = request.POST[i].file
+            image = Image.open(img)
+            imgbuffer = io.BytesIO()
+            image.save(imgbuffer, format="JPEG")
+            img_str = base64.b64encode(imgbuffer.getvalue())
+            img_str = img_str.decode("ascii")
+            image.close()
+            files[count] = img_str
+            count += 1
+    if len(files) > 0:
+        data["vdetails"]["attachment"] = files
+        data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
+   # except:
+   #     print("no attachment found")
 
     result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
     if result.json()["gkstatus"] == 0:
@@ -336,9 +338,10 @@ def updateattachment(request):
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = io.StringIO()
+                imgbuffer = io.BytesIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
+                img_str = img_str.decode("ascii")
                 image.close()
                 docs[count] = img_str
                 count += 1
