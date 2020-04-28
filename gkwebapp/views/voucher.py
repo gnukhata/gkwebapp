@@ -179,27 +179,27 @@ def addvoucher(request):
         gkdata["branchname"]=vdetails["branchname"]
         gkdata["instrumentdate"] = vdetails["instrumentdate"]
 
-    #try:
-    files = {}
-    count = 0
-    for i in list(request.POST.keys()):
-        if "file" not in i:
-            continue
-        else:
-            img = request.POST[i].file
-            image = Image.open(img)
-            imgbuffer = io.BytesIO()
-            image.save(imgbuffer, format="JPEG")
-            img_str = base64.b64encode(imgbuffer.getvalue())
-            img_str = img_str.decode("ascii")
-            image.close()
-            files[count] = img_str
-            count += 1
-    if len(files)>0:
-        gkdata["attachment"] = files
-        gkdata["attachmentcount"] = len(gkdata["attachment"])
-   # except:
-      #  print("no attachment found")
+    try:
+        files = {}
+        count = 0
+        for i in list(request.POST.keys()):
+            if "file" not in i:
+                continue
+            else:
+                img = request.POST[i].file
+                image = Image.open(img)
+                imgbuffer = io.BytesIO()
+                image.save(imgbuffer, format="JPEG")
+                img_str = base64.b64encode(imgbuffer.getvalue())
+                img_str = img_str.decode("ascii")
+                image.close()
+                files[count] = img_str
+                count += 1
+        if len(files)>0:
+            gkdata["attachment"] = files
+            gkdata["attachmentcount"] = len(gkdata["attachment"])
+    except:
+        print("no attachment found")
     for row in rowdetails:
         if row["side"]=="Cr":
             crs[row["accountcode"]]=row["cramount"]
