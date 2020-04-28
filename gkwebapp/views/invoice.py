@@ -176,9 +176,10 @@ def updateinvoice(request):
             else:
                 img = request.POST[i].file
                 image = Image.open(img)
-                imgbuffer = io.StringIO()
+                imgbuffer = io.BytesIO()
                 image.save(imgbuffer, format="JPEG")
                 img_str = base64.b64encode(imgbuffer.getvalue())
+                img_str = img_str.decode("ascii")
                 image.close()
                 files[count] = img_str
                 count += 1
