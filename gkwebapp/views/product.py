@@ -149,6 +149,7 @@ def getgodownproduct(request):
 def getprodtax(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/tax?pscflag=p&productcode=%d"%(int(request.params["productcode"])), headers=header)
+    print (result.json()["gkresult"])
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=uom", renderer="json")
@@ -259,7 +260,10 @@ def editproduct(request):
     godowns={}
     goid=0
     goopeningstock=0.00
+    print(request.params)
     for prd in request.params:
+        print("i am prod")
+        print (prd)
         if prd=="type":
             continue
         elif prd=="godownflag":
@@ -307,13 +311,13 @@ def editproduct(request):
         for tax in taxids:
             taxdata["taxid"] = tax["taxid"]
             taxresult = requests.delete("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-
-        for tax in taxes:
-            if len(tax)!=0:
-                taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
-                if tax["state"]!='':
-                    taxdata["state"]=tax["state"]
-                taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
+        if taxes != 0:
+            for tax in taxes:
+                if len(tax)!=0:
+                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":proddetails["productcode"]}
+                    if tax["state"]!='':
+                        taxdata["state"]=tax["state"]
+                    taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header) 
     return {"gkstatus": result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=delete", renderer="json")

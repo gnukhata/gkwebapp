@@ -505,6 +505,7 @@ $(document).ready(function() {
       })
       .done(function(resp) {
           console.log("success");
+          console.log(resp["gkresult"].length);
           if (resp["gkresult"].length > 0) {
 	      var gstRate = ["5.00","12.00","18.00","28.00"];
             taxhtml = $('#product_edit_tax_table tbody tr:first').html();
@@ -955,7 +956,7 @@ $(document).ready(function() {
       $("#gscode").focus().select();
     }
   });
-
+    
   $(document).off("change",".tax_name").on("change",".tax_name",function(event)
   {
       var curindex = $(this).closest('tr').index();
@@ -1660,13 +1661,17 @@ $(document).ready(function() {
         }
       }
     });
+
+      
+      if (taxflag !=1){
+          console.log("i am not 1 taxflag");
     var taxes = [];
     $("#product_edit_tax_table tbody tr").each(function(){
       var obj = {};
 	let curindex = $(this).index();
       if ($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val()!="") {
         obj.taxrowid = $("#product_edit_tax_table tbody tr:eq("+curindex+")").attr('value');
-        obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
+          obj.taxname = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select option:selected").val();
           obj.state = $("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(1) select option:selected").val();
 	  //If the 'taxname' will be GST, it takes the value from select box otherwise input field.
 	  if($("#product_edit_tax_table tbody tr:eq("+curindex+") td:eq(0) select").val() == "IGST"){
@@ -1676,7 +1681,7 @@ $(document).ready(function() {
 	  }
           taxes.push(obj);
       }
-    });
+    });}
     
     var obj = {};
     $("#editgodown_ob_table tbody tr").each(function(){
@@ -1687,8 +1692,9 @@ $(document).ready(function() {
       }
     });
     var editformdata = $("#editprodform").serializeArray();
-    editformdata.push({name: 'productcode', value: $("#prodselect").data('value')});
-      editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});
+      editformdata.push({name: 'productcode', value: $("#prodselect").data('value')});
+      if (taxflag !=1){
+          editformdata.push({name: 'taxes', value: JSON.stringify(taxes)});}
     editformdata.push({name: 'specs', value: JSON.stringify(specs)});
     if ($("#editgodownflag").val() == 1) {
       editformdata.push({name: 'godowns', value: JSON.stringify(obj)});
