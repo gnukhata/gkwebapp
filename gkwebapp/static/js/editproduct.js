@@ -492,7 +492,11 @@ $(document).ready(function() {
       .always(function() {
         console.log("complete");
       });
-      $.ajax({
+
+        taxhtml = $('#product_edit_tax_table tbody tr:first').html();
+        stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
+        
+        $.ajax({
         url: '/product?type=prodtax',
         type: 'POST',
         dataType: 'json',
@@ -508,8 +512,7 @@ $(document).ready(function() {
           console.log(resp["gkresult"].length);
           if (resp["gkresult"].length > 0) {
 	      var gstRate = ["5.00","12.00","18.00","28.00"];
-            taxhtml = $('#product_edit_tax_table tbody tr:first').html();
-	    stateshtml = $('#product_edit_tax_table tbody tr:first td:eq(1) select').html();
+            
             $('#product_edit_tax_table tbody tr:first').remove();
             for (tax of resp["gkresult"]) {
 	    $('#product_edit_tax_table tbody').append('<tr value="'+tax["taxid"]+'">'+ taxhtml + '</tr>');
@@ -540,10 +543,7 @@ $(document).ready(function() {
 		$('#product_edit_tax_table tbody tr:last td:eq(2) input').val(tax["taxrate"]);
 	    }
         }
-	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
-	    $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
-	    $('.addbtn').prop('disabled',true);
-      $('.goaddbtn').prop('disabled',true);
+	    
       var gstselected = 0;
       var rowcount = $("#product_edit_tax_table tbody tr").length;
       for (i = 0; i < rowcount; i++) {
@@ -558,7 +558,11 @@ $(document).ready(function() {
       else{
       $("#gscodes").text("");
       }
-      }
+          }
+          $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
+	  $('#editgodown_ob_table tbody tr:last td:eq(2)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span></div>');
+	  $('.addbtn').prop('disabled',true);
+          $('.goaddbtn').prop('disabled',true);
           existingnonetax = resp["gkresult"];
       })
       .fail(function() {
@@ -1036,7 +1040,7 @@ $(document).ready(function() {
       $('#product_edit_tax_table tbody tr:eq('+curindex+') td:eq(2) input').focus().select();
     }
   });
-
+    // Add button clicks 
     $(document).off("click",".addbtn").on("click",".addbtn",function(event){
 	var curindex_addbtn = $(this).closest('tr').index();
 	var nextindex_addbtn = curindex_addbtn+1;
@@ -1068,7 +1072,8 @@ $(document).ready(function() {
             });
             $('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(2) input').focus();
             return false;
-          }
+            }
+            console.log(taxhtml);
 	    $('#product_edit_tax_table tbody').append('<tr value="new">'+ taxhtml + '</tr>');
 	    $('#product_edit_tax_table tbody tr:eq('+curindex_addbtn+') td:eq(3) span').hide('.glyphicon-plus');
 	    $('#product_edit_tax_table tbody tr:last td:eq(3)').append('<div style="text-align: center;"><span class="glyphicon glyphicon glyphicon-plus addbtn"></span></div>');
