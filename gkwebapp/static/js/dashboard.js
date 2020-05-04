@@ -261,10 +261,10 @@ $.ajax(
         data: data,
         options: options
     });
-  myBarChart.canvas.style.height = '250px';
-  myBarChart.canvas.style.width = '500px';
-  myBarChart.canvas.parentNode.style.height = '250px';
-  myBarChart.canvas.parentNode.style.width = '500px';
+  myBarChart.canvas.style.height = '300px';
+  myBarChart.canvas.style.width = '600px';
+  myBarChart.canvas.parentNode.style.height = '300px';
+  myBarChart.canvas.parentNode.style.width = '600px';
   myBarChart.canvas.parentNode.style.margin = 'auto';
   }
 });
@@ -301,10 +301,10 @@ $.ajax(
           }
       });
       
-          myChart.canvas.style.height = '250px';
-	  myChart.canvas.style.width = '500px';
-	  myChart.canvas.parentNode.style.height = '250px';
-	  myChart.canvas.parentNode.style.width = '500px';
+          myChart.canvas.style.height = '300px';
+	  myChart.canvas.style.width = '600px';
+	  myChart.canvas.parentNode.style.height = '300px';
+	  myChart.canvas.parentNode.style.width = '600px';
 	  myChart.canvas.parentNode.style.margin = 'auto';
       }
       else{ let myChart = new Chart(document.getElementById("doughnut-chart"), {
@@ -324,10 +324,10 @@ $.ajax(
           maintainAspectRatio: true
         }
       });
-            myChart.canvas.style.height = '250px';
-	  myChart.canvas.style.width = '500px';
-	  myChart.canvas.parentNode.style.height = '250px';
-	  myChart.canvas.parentNode.style.width = '500px';
+            myChart.canvas.style.height = '300px';
+	  myChart.canvas.style.width = '600px';
+	  myChart.canvas.parentNode.style.height = '300px';
+	  myChart.canvas.parentNode.style.width = '600px';
 	  myChart.canvas.parentNode.style.margin = 'auto';
 
   }
@@ -670,9 +670,9 @@ var chart = new Chart(ctx, {
 });
 
   chart.canvas.style.height = '250px';
-  chart.canvas.style.width = '560px';
+  chart.canvas.style.width = '540px';
   chart.canvas.parentNode.style.height = '250px';
-  chart.canvas.parentNode.style.width = '500px';
+  chart.canvas.parentNode.style.width = '540px';
   chart.canvas.parentNode.style.margin = 'auto';
 
 }
