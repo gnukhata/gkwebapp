@@ -599,7 +599,6 @@ $(document).ready(function() {
               goid=goopeningstock[i].goid;
               $(".editgodown_ob").eq(i).val(editgoopeningstock);
                 $(".editgodown_name").eq(i).val(goid);
-                $(".editgodown_del").prop('disabled',true);
             }
           }
         }
