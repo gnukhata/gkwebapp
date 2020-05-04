@@ -142,16 +142,16 @@
             </td>
             {% endif %}
             <td class="width20">
-              {{vc["drs"].keys()[0]}}
+              {{vc["drs"].keys() | first}}
             </td>
             <td class="width20">
-              {{vc["crs"].keys()[0]}}
+              {{vc["crs"].keys() | first}}
             </td>
             <td class=" ralign width10">
-              {{vc["drs"][vc["drs"].keys()[0]]}}
+              {{vc["drs"][vc["drs"].keys()|first]}}
             </td>
             <td class="ralign width10">
-              {{vc["crs"][vc["crs"].keys()[0]]}}
+              {{vc["crs"][vc["crs"].keys()|first]}}
             </td>
               {% if vc['narration']=="" %}
               <td class="width14">&nbsp</td>
