@@ -11,44 +11,50 @@
     <link href="{{request.static_url('gkwebapp:static/css/drawer.min.css')}}" rel="stylesheet" type="text/css">
 
     <style>
-    .percentage:after {
-      content: "";
-      display: block;
-      background-color: #3d9970;
-    }
-    .percentage-20:after {
-      width: 20%;
-    }
-    .percentage-30:after {
-      width: 30%;
-    }
-    .bgcolor{
-      background-color:#1b2631;
-    }
-    #rss-feeddiv {
-      height: 60vh;
-      overflow-y: scroll;
-    }
-    .card-view .title {
-      font-weight: bold;
-      display: inline-block;
-      min-width: 30%;
-      text-align: left !important;
-    }
+     .percentage:after {
+	 content: "";
+	 display: block;
+	 background-color: #3d9970;
+     }
+     .percentage-20:after {
+	 width: 20%;
+     }
+     .percentage-30:after {
+	 width: 30%;
+     }
+     .bgcolor{
+	 background-color:#1b2631;
+     }
+     #rss-feeddiv {
+	 height: 60vh;
+	 overflow-y: scroll;
+     }
+     .card-view .title {
+	 font-weight: bold;
+	 display: inline-block;
+	 min-width: 30%;
+	 text-align: left !important;
+     }
 
-    .dashtable tbody {
-      display:block;
-      height: 180px;
-      overflow-y:scroll;
-    }
-    .dashtable thead,.dashtable tbody tr {
-      display:table;
-      width:100%;
-      table-layout:fixed;
-    }
-    .dashtable thead {
-      width: calc( 97.6% );
-    }
+     .dashtable tbody {
+	 display:block;
+	 height: 180px;
+	 overflow-y:scroll;
+     }
+     .dashtable thead,.dashtable tbody tr {
+	 display:table;
+	 width:100%;
+	 table-layout:fixed;
+     }
+     .dashtable thead {
+	 width: calc( 97.6% );
+     }
+     .chartscroll{
+	 overflow:auto;
+	 height: 300px;
+	 margin-bottom:0px;
+	 padding-bottom: 0px;
+     }
     </style>
 
     <style id="antiClickjack">body{display:none !important;}</style>
@@ -299,15 +305,19 @@
               </div>
             <div class="col-sm-6 dashboardouterdiv">
               <div style="position:relative;">
-                <div class="dashboarddiv shadow dash">
+                <div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
                     <div class="pull-left"style="margin-top:-15px"> 
                     <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
-                  </div>
-                  <div>
-                  <canvas id="linechart" style="height:260px !important; width:100%;margin-top:-30px"></canvas>
-                  </div>
-                 <div> 
-                   <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;margin-top:-35px">View Account wise Balance</button>
+                    </div>
+		  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="linechart" style="height:379px !important; width:100%;"></canvas>
+                    </div>
+		  </div>
+                 <div class="row col-sm-12" style="margin-top:-15px;"> 
+                   <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;">View Account wise Balance</button>
                 </div>
                 </div>
               </div>
@@ -379,354 +389,399 @@
               <div class="col-sm-6 dashboardouterdiv">
               <div style="position:relative;">
                 <div class="dashboarddiv shadow">
-                    <div class="pull-left"style="margin-top:-15px"> 
-                    <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px">
+                      <h5 style="color:#333;font-weight: bold; ">Bank and Cash Balance</h5 >
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="linechart" style="height:600px !important; width:100%;"></canvas>
+                    </div>
+                  </div>
+                  <div class="row col-sm-12" style="margin-top:-20px;"> 
+                    <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;">View Account wise Balance</button>
+                  </div>
+                </div>
+              </div>
+              </div>              
+          </div>
+
+          <div class="row internalaud accountinghide godownhide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div> 
+                    <div class="pull-left" style="margin-top:-10px">
+                      <h5 style="color:#333; font-weight: bold;">Make Payment</h5>
+                    </div>
+                    <div class="pull-right dropdown">
+                      <a class="dropdown-toggle" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+			<li class="active" id="pur_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
+			<li id="pur_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
+                      </ul>
+                    </div> 
                   </div>
                   <div>
-                  <canvas id="linechart" style="height:260px !important; width:100%;margin-top:-30px"></canvas>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Invoice</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Pending Amount</td>
+			</tr>
+                      </thead>
+                      <tbody id="fivepurchaseinvoicelist">
+                      </tbody>
+                    </table>
                   </div>
-                 <div> 
-                   <button id="accountsbal" class="btn btn-danger btn-sm" style="float:right;margin-top:-35px">View Account wise Balance</button>
-                </div>
-                </div>
+                  <div class="text-center"style="margin-top:-10px">
+                    <button id="make_payment" style="width:45%" class="btn btn-danger btn-sm">Make Payment</button>
+                    <button id="Adjustable_purchase_bill" style="width:45%" class="btn btn-danger btn-sm" >Adjustable Bill</button>
+                  </div>
+		</div>
               </div>
-            </div>              
             </div>
-
-        <div class="row internalaud accountinghide godownhide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div> 
-                  <div class="pull-left" style="margin-top:-10px">
-                    <h5 style="color:#333; font-weight: bold;">Make Payment</h5>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div> 
+                    <div class="pull-left" style="margin-top:-10px">
+                      <h5 style="color:#333;font-weight: bold;">Receive Payment</h5>
+                    </div>
+                    <div class="pull-right dropdown">
+                      <a class="" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
+                      <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
+			<li class="active" id="sale_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
+			<li id="sale_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
+                      </ul>
+                    </div> 
                   </div>
-                  <div class="pull-right dropdown">
-                    <a class="dropdown-toggle" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                      <li class="active" id="pur_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
-                      <li id="pur_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
-                    </ul>
+                  <div>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Invoice</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Pending Amount</td>
+			</tr>
+                      </thead>
+                      <tbody id="fivesaleinvoicelist">
+
+                      </tbody>
+                    </table>
+                  </div>
+                  <div class="text-center" style="margin-top:-10px">
+                    <button id="receipt_payment" style="width:45%" class="btn btn-danger btn-sm">Receive Payment</button>
+                    <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger btn-sm" >Adjustable Bill</button>
                   </div> 
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Invoice</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Pending Amount</td>
-                      </tr>
-                    </thead>
-                    <tbody id="fivepurchaseinvoicelist">
-                    </tbody>
-                  </table>
-                </div>
-                <div class="text-center"style="margin-top:-10px">
-                  <button id="make_payment" style="width:45%" class="btn btn-danger btn-sm">Make Payment</button>
-                  <button id="Adjustable_purchase_bill" style="width:45%" class="btn btn-danger btn-sm" >Adjustable Bill</button>
-                </div>
+		</div>
               </div>
             </div>
           </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div> 
-                  <div class="pull-left" style="margin-top:-10px">
-                    <h5 style="color:#333;font-weight: bold;">Receive Payment</h5>
+          <div class="row godownhide adminhide operatorhide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"style="margin-top:-10px"> 
+                    <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
                   </div>
-                  <div class="pull-right dropdown">
-                    <a class="" style="padding: 10px" id="menu1" data-toggle="dropdown"><i class="fa fa-ellipsis-v"></i></a>
-                    <ul class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                      <li class="active" id="sale_amount_wise"role="presentation"><a role="menuitem" href="#">Amount Wise</a></li>
-                      <li id="sale_date_wise" role="presentation"><a role="menuitem" href="#">Date Wise</a></li>
-                    </ul>
-                  </div> 
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Invoice</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Pending Amount</td>
-                      </tr>
-                    </thead>
-                    <tbody id="fivesaleinvoicelist">
-
-                    </tbody>
-                  </table>
-                </div>
-                <div class="text-center" style="margin-top:-10px">
-                  <button id="receipt_payment" style="width:45%" class="btn btn-danger btn-sm">Receive Payment</button>
-                  <button id="Adjustable_sale_bill" style="width:45%" class="btn btn-danger btn-sm" >Adjustable Bill</button>
-                </div> 
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row godownhide adminhide operatorhide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"style="margin-top:-10px"> 
-                  <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
-                </div>
-                <br>
-                <div style="margin-top:-30px">
-                  <canvas id="doughnut-chart"></canvas>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm" id="balance_sheet" style="float:right;margin-top:-25px">View details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"style="margin-top:-10px"> 
-                  <h5 style="color:#333;font-weight: bold; ">Income and Expense</h5>
-                </div>
-                <br>
-                <div style="margin-top:-30px">
-                  <canvas id="pieChart"></canvas>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm" id="profit_loss" style="float:right;margin-top:-25px">View details</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row godownhide accountinghide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <h5 style="color:#333;font-weight: bold; ">Purchase Invoice</h5 >
-                <canvas id="chart_content_purchase" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div>
-                  <h5 style="color:#333;font-weight: bold;">Sale Invoice</h5 >
-                  <canvas id="chart_content_sale" style="height:280px !important; width:100%;margin-top: -10px"></canvas>  
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <div class="row accountinghide adminhide delchalhide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <h5 style="color:#333;font-weight: bold;">Delivery In</h5 >
-                <canvas id="deliveryin_id" style="height:280px !important; width:100%;"></canvas>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <h5 style="color:#333;font-weight: bold;">Delivery Out</h5 >
-                <canvas id="deliveryout_id" style="height:280px !important; width:100%;"></canvas>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="row internalaud accountinghide adminhide operatorhide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div>
-                  <div class="pull-left">
-                    <h5 style="color:#333;font-weight: bold;">Transfer Note</h5 >
+                  <br>
+                  <div style="margin-top:-30px">
+                    <canvas id="doughnut-chart"></canvas>
                   </div>
-                  <div class="pull-rigth" style="float:right">
-                    <select id="godownwise"></select> 
+                  <div>
+                    <button class="btn btn-danger btn-sm" id="balance_sheet" style="float:right;margin-top:-25px">View details</button>
                   </div>
-                </div>
-                <div id="transfernotediv">
-                  <canvas id="transfer_note" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
-                </div></div>
+		</div>
+              </div>
             </div>
-          </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div>
-                  <div class="pull-left">
-                    <h5 style="color:#333;font-weight: bold;">Stock on Hand</h5 >
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"style="margin-top:-10px"> 
+                    <h5 style="color:#333;font-weight: bold; ">Income and Expense</h5>
                   </div>
-                  <div class="pull-right" >
-                    <select id="godownwisestock"></select> 
+                  <br>
+                  <div style="margin-top:-30px">
+                    <canvas id="pieChart"></canvas>
                   </div>
-                </div>
-                <div id="showstock">
-                  <table class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead >
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Stock</td>
-                      </tr>
-                    </thead>
-                    <tbody id="stock_on_hand">
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-danger add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
-                </div>
+                  <div>
+                    <button class="btn btn-danger btn-sm" id="profit_loss" style="float:right;margin-top:-25px">View details</button>
+                  </div>
+		</div>
               </div>
             </div>
           </div>
-        </div>
-        <div class="row internalaud godownhide accountinghide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"> 
-                  <h5 style="color:#333;font-weight: bold;">Most Valued Customer</h5>
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Customer Name</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Amount</td>
-                      </tr>
-                    </thead>
-                    <tbody id="topfivecust">
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm add_custsup" style="float:right;margin-top:-15px">Add Customer</button>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"> 
-                  <h5 style="color:#333;font-weight: bold;">Most Valued Supplier</h5>
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Supplier Name</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Invoice Count</td>
-                      </tr>
-                    </thead>
-                    <tbody id="topfivesup">
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm add_sup" style="float:right;margin-top:-15px">Add Supplier</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row internalaud godownhide accountinghide hidebillwisecompany">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"> 
-                  <h5 style="color:#333;font-weight: bold;">Most Sold Product and Service</h5>
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Stock on Hand</td>
-                      </tr>
-                    </thead>
-                    <tbody id="topfivesoldprod">
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
-                </div>
+          <div class="row godownhide accountinghide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px"> 
+                      <h5 style="color:#333;font-weight: bold; ">Purchase Invoice</h5 >
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="chart_content_purchase" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+                    </div>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px"> 
+                      <h5 style="color:#333;font-weight: bold;">Sale Invoice</h5 >
+                    </div>
+                  </div>
+                  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="chart_content_sale" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+                    </div>
+                  </div>    
+		</div>
               </div>
             </div>
           </div>
-          <br class="hidden-mg hidden-lg"> 
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"> 
-                  <h5 style="color:#333;font-weight: bold;">Most Purchased Product and Service</h5>
-                </div>
-                <div>
-                  <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
-                    <thead>
-                      <tr>
-                        <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
-                        <td class="col-xs-4" style="font-weight:150;text-align:right;">Invoice Count</td>
-                      </tr>
-                    </thead>
-                    <tbody id="topfiveboughtprod">
-                      
-                    </tbody>
-                  </table>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm add_prod" style="float:right;margin-top:-15px">Add Product/ Service</button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
 
-        <div class="row godownhide internalaud operatorhide">
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"style="margin-top:-10px"> 
-                  <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
-                </div>
-                <br>
-                <div style="margin-top:-30px">
-                  <canvas id="doughnut-chart"></canvas>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm" id="balance_sheet" style="float:right;margin-top:-35px">View details</button>
-                </div>
+          <div class="row accountinghide adminhide delchalhide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px">
+                      <h5 style="color:#333;font-weight: bold;">Delivery In</h5 >
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="deliveryin_id" style="height:280px !important; width:100%;"></canvas>
+                    </div>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px">
+                      <h5 style="color:#333;font-weight: bold;">Delivery Out</h5 >
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="deliveryout_id" style="height:280px !important; width:100%;"></canvas>
+                    </div>
+                  </div>
+		</div>
               </div>
             </div>
           </div>
-          <div class="col-sm-6 dashboardouterdiv">
-            <div style="position:relative;">
-              <div class="dashboarddiv shadow">
-                <div class="pull-left"style="margin-top:-10px"> 
-                  <h5 style="color:#333;font-weight: bold;">Income and Expense</h5>
-                </div>
-                <br>
-                <div style="margin-top:-30px">
-                  <canvas id="pieChart"></canvas>
-                </div>
-                <div>
-                  <button class="btn btn-danger btn-sm" id="profit_loss" style="float:right;margin-top:-35px">View details</button>
-                </div>
+          <div class="row internalaud accountinghide adminhide operatorhide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div>
+		    <div class="row col-sm-12">
+                      <div class="pull-left" style="margin-top:-15px">
+			<h5 style="color:#333;font-weight: bold;">Transfer Note</h5 >
+                      </div>
+		      <div class="pull-rigth" style="float:right;">
+			<select id="godownwise"></select> 
+                      </div>
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div id="transfernotediv">
+                    <canvas id="transfer_note" style="height:280px !important; width:100%;margin-top: -10px"></canvas>
+                    </div>
+		  </div>
+		</div>
+              </div>
+            </div>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div>
+                    <div class="pull-left">
+                      <h5 style="color:#333;font-weight: bold;">Stock on Hand</h5 >
+                    </div>
+                    <div class="pull-right" >
+                      <select id="godownwisestock"></select> 
+                    </div>
+                  </div>
+                  <div id="showstock">
+                    <table class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead >
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Stock</td>
+			</tr>
+                      </thead>
+                      <tbody id="stock_on_hand">
+			
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <button class="btn btn-danger add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
+                  </div>
+		</div>
               </div>
             </div>
           </div>
-        </div>
+          <div class="row internalaud godownhide accountinghide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"> 
+                    <h5 style="color:#333;font-weight: bold;">Most Valued Customer</h5>
+                  </div>
+                  <div>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Customer Name</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Amount</td>
+			</tr>
+                      </thead>
+                      <tbody id="topfivecust">
+			
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <button class="btn btn-danger btn-sm add_custsup" style="float:right;margin-top:-15px">Add Customer</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"> 
+                    <h5 style="color:#333;font-weight: bold;">Most Valued Supplier</h5>
+                  </div>
+                  <div>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Supplier Name</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Invoice Count</td>
+			</tr>
+                      </thead>
+                      <tbody id="topfivesup">
+			
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <button class="btn btn-danger btn-sm add_sup" style="float:right;margin-top:-15px">Add Supplier</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row internalaud godownhide accountinghide hidebillwisecompany">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"> 
+                    <h5 style="color:#333;font-weight: bold;">Most Sold Product and Service</h5>
+                  </div>
+                  <div>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Stock on Hand</td>
+			</tr>
+                      </thead>
+                      <tbody id="topfivesoldprod">
+			
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <button class="btn btn-danger btn-sm add_prod" style="float:right;margin-top:-17px">Add Product/ Service</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <br class="hidden-mg hidden-lg"> 
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+                  <div class="pull-left"> 
+                    <h5 style="color:#333;font-weight: bold;">Most Purchased Product and Service</h5>
+                  </div>
+                  <div>
+                    <table id="" class="table table-responsive table-bordered table-striped invoiceslist dashtable">
+                      <thead>
+			<tr>
+                          <td class="col-xs-8" style="font-weight:150;">Product and Service</td>
+                          <td class="col-xs-4" style="font-weight:150;text-align:right;">Invoice Count</td>
+			</tr>
+                      </thead>
+                      <tbody id="topfiveboughtprod">
+			
+                      </tbody>
+                    </table>
+                  </div>
+                  <div>
+                    <button class="btn btn-danger btn-sm add_prod" style="float:right;margin-top:-15px">Add Product/ Service</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row godownhide internalaud operatorhide">
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px">
+                      <h5 style="color:#333;font-weight: bold;">Assets and Liabilities</h5>
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="doughnut-chart"></canvas>
+                    </div>
+                  </div>
+                  <div class="row col-sm-12" style="margin-top:-20px;">
+                    <button class="btn btn-danger btn-sm" id="balance_sheet" style="float:right;margin-top:-35px">View details</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+            <div class="col-sm-6 dashboardouterdiv">
+              <div style="position:relative;">
+		<div class="dashboarddiv shadow">
+		  <div class="row col-sm-12">
+                    <div class="pull-left"style="margin-top:-15px">
+                      <h5 style="color:#333;font-weight: bold;">Income and Expense</h5>
+                    </div>
+                  </div>
+		  <div class="row col-sm-12 chartscroll">
+                    <div>
+                      <canvas id="pieChart"></canvas>
+                    </div>
+                  </div>
+		  <div class="row col-sm-12" style="margin-top:-20px;">
+		    <button class="btn btn-danger btn-sm" id="profit_loss" style="float:right;margin-top:-35px">View details</button>
+                  </div>
+		</div>
+              </div>
+            </div>
+          </div>
       </div>
 
       <div class="modal fade modal-sm col-xs-offset-4 " id="inventorymodal" tabindex="-1" role="dialog" aria-labelledby="" aria-hidden="true">

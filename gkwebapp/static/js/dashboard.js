@@ -231,7 +231,7 @@ $.ajax(
             {
                 fill: true,
                 backgroundColor: ["#cccccc","#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                data: ["1","0.00","0.00","0.00","0.00",],
+                data: ["1","0.00","0.00","0.00","0.00",]
             }
         ]
     };
@@ -243,7 +243,7 @@ $.ajax(
             {
                 fill: true,
                 backgroundColor: ["#3e95cd", "#8e5ea2","#3cba9f","#e8c3b9"],
-                data: [resp["DirectIncome"],resp["InDirectIncome"],resp["DirectExpense"],resp["InDirectExpense"]],
+                data: [resp["DirectIncome"],resp["InDirectIncome"],resp["DirectExpense"],resp["InDirectExpense"]]
             }
         ]
     };
@@ -261,7 +261,11 @@ $.ajax(
         data: data,
         options: options
     });
-
+  myBarChart.canvas.style.height = '250px';
+  myBarChart.canvas.style.width = '500px';
+  myBarChart.canvas.parentNode.style.height = '250px';
+  myBarChart.canvas.parentNode.style.width = '500px';
+  myBarChart.canvas.parentNode.style.margin = 'auto';
   }
 });
 
@@ -279,7 +283,7 @@ $.ajax(
       },
       success: function(resp){  
       if (resp["data"][0] == "0.00" && resp["data"][1] == "0.00"){
-        new Chart(document.getElementById("doughnut-chart"), {
+         let myChart = new Chart(document.getElementById("doughnut-chart"), {
           type: 'doughnut',
           data: {
             labels: ["No Data Found","Capital and Liabilities","Property and Assets"],
@@ -287,17 +291,23 @@ $.ajax(
               {
                 fill: true,
                 backgroundColor: ["#cccccc","#3e95cd","#8e5ea2"],
-                data: ["1","0.00","0.00"],
+                data: ["1","0.00","0.00"]
               }
             ]
           },
           options: {
             responsive: true,
-            maintainAspectRatio: true,
+              maintainAspectRatio: true
           }
       });
+      
+          myChart.canvas.style.height = '250px';
+	  myChart.canvas.style.width = '500px';
+	  myChart.canvas.parentNode.style.height = '250px';
+	  myChart.canvas.parentNode.style.width = '500px';
+	  myChart.canvas.parentNode.style.margin = 'auto';
       }
-      else{ new Chart(document.getElementById("doughnut-chart"), {
+      else{ let myChart = new Chart(document.getElementById("doughnut-chart"), {
         type: 'doughnut',
         data: {
           labels: ["Capital and Liabilities","Property and Assets"],
@@ -305,21 +315,27 @@ $.ajax(
             {
               fill: true,
               backgroundColor: ["#3e95cd","#8e5ea2"],
-              data: [resp["data"][0],resp["data"][1]],
+              data: [resp["data"][0],resp["data"][1]]
             }
           ]
         },
         options: {
           responsive: true,
-          maintainAspectRatio: true,
+          maintainAspectRatio: true
         }
-    });
+      });
+            myChart.canvas.style.height = '250px';
+	  myChart.canvas.style.width = '500px';
+	  myChart.canvas.parentNode.style.height = '250px';
+	  myChart.canvas.parentNode.style.width = '500px';
+	  myChart.canvas.parentNode.style.margin = 'auto';
+
   }
       }
-    })
+  })
   
       $("#godownwisestock").change(function(e){
-        goid=$("#godownwisestock option:selected").val()
+          goid=$("#godownwisestock option:selected").val();
         $.ajax({
           type: "POST",
           url: "/dashboard?action=stockonhandforgodownincharge",
@@ -408,7 +424,7 @@ $.ajax(
     });
     }
       $("#godownwise").change(function(e){
-        goid=$("#godownwise option:selected").val()
+      goid = $("#godownwise option:selected").val();
         $.ajax(
         {
         type: "POST",
@@ -423,8 +439,8 @@ $.ajax(
           },
         success: function(resp)
         {
-          indata=resp["innotecount"];
-          outdata=resp["outnotecount"]
+          let indata=resp["innotecount"];
+          let  outdata=resp["outnotecount"];
           transfernotechart(indata,outdata);
       }
       });
@@ -443,8 +459,8 @@ $.ajax(
         success: function(resp)
         {
         for(let i in resp["goname"]){
-          $('#godownwise').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>')
-          $('#godownwisestock').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>')
+            $('#godownwise').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>');
+            $('#godownwisestock').append('<option value="'+resp["goname"][i]["goid"]+'">'+resp["goname"][i]["goname"]+'</option>');
     
       }
       $("#godownwise").change();
@@ -498,7 +514,7 @@ function monthlyinvoice(inoutflag,invoicedata){
                   'rgba(51, 51, 51)',
                   'rgba(51, 51, 51)',
                   'rgba(51, 51, 51)', 
-                  'rgba(51, 51, 51)', 
+                'rgba(51, 51, 51)',
                 ],
                 
           }]
@@ -515,9 +531,14 @@ function monthlyinvoice(inoutflag,invoicedata){
                 }]
               },
               responsive: true,
-              maintainAspectRatio: true,
+              maintainAspectRatio: true
             }
-        });
+    });
+    myChart.canvas.style.height = '250px';
+  myChart.canvas.style.width = '500px';
+  myChart.canvas.parentNode.style.height = '250px';
+  myChart.canvas.parentNode.style.width = '500px';
+  myChart.canvas.parentNode.style.margin = 'auto';
         }
         
 function topfivecustsup(inoutflag, custsupdata){
@@ -599,19 +620,24 @@ function monthlydelchal(inoutflag,delchaldata){
             }]
         },
         responsive: true,
-        maintainAspectRatio: true,
+        maintainAspectRatio: true
     }
-});
+  });
+    myChart.canvas.style.height = '250px';
+  myChart.canvas.style.width = '500px';
+  myChart.canvas.parentNode.style.height = '250px';
+  myChart.canvas.parentNode.style.width = '500px';
+  myChart.canvas.parentNode.style.margin = 'auto';
 }
 
 function stockonhand(stockonhanddata){
     for (let item in stockonhanddata["stockresultlist"]){
-      list =stockonhanddata["stockresultlist"][item].gkstatus
+        list =stockonhanddata["stockresultlist"][item].gkstatus;
       if (list == 3){
       $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+stockonhanddata["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">--</td> </tr>');                  
       }
       else{
-           list =stockonhanddata["stockresultlist"][item].gkresult
+          list =stockonhanddata["stockresultlist"][item].gkresult;
             for (let index in list) {
             $('#topfivesoldprod').append('<tr> <td  style="font-weight:normal;" class="col-sm-8">'+stockonhanddata["productname"][item].prodname+'</td> <td  style="font-weight:normal;text-align:right;" class="col-sm-4">'+list[index].balance+' </td> </tr>');                  
         }}
@@ -643,6 +669,12 @@ var chart = new Chart(ctx, {
     options: {}
 });
 
+  chart.canvas.style.height = '250px';
+  chart.canvas.style.width = '560px';
+  chart.canvas.parentNode.style.height = '250px';
+  chart.canvas.parentNode.style.width = '560px';
+  chart.canvas.parentNode.style.margin = 'auto';
+
 }
 
 function dashboard(){
@@ -658,7 +690,7 @@ function dashboard(){
       },
       success: function(resp)
       {
-      respdata=resp["gkresult"]
+          respdata=resp["gkresult"];
 
 
     if(resp["userrole"] == -1 || resp["userrole"] == 0 || resp["userrole"] == 1){
