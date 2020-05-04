@@ -149,7 +149,6 @@ def getgodownproduct(request):
 def getprodtax(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/tax?pscflag=p&productcode=%d"%(int(request.params["productcode"])), headers=header)
-    print (result.json()["gkresult"])
     return{"gkresult":result.json()["gkresult"],"gkstatus":result.json()["gkstatus"]}
 
 @view_config(route_name="product",request_param="type=uom", renderer="json")
@@ -260,10 +259,7 @@ def editproduct(request):
     godowns={}
     goid=0
     goopeningstock=0.00
-    print(request.params)
     for prd in request.params:
-        print("i am prod")
-        print (prd)
         if prd=="type":
             continue
         elif prd=="godownflag":

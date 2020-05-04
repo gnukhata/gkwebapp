@@ -598,7 +598,8 @@ $(document).ready(function() {
               editgoopeningstock=goopeningstock[i].goopeningstock;
               goid=goopeningstock[i].goid;
               $(".editgodown_ob").eq(i).val(editgoopeningstock);
-              $(".editgodown_name").eq(i).val(goid);
+                $(".editgodown_name").eq(i).val(goid);
+                $(".editgodown_del").prop('disabled',true);
             }
           }
         }
@@ -758,7 +759,8 @@ $(document).ready(function() {
     $(".product_tax_disable").prop('disabled',false);
     $(".tax_del").prop('disabled',false);
     $('.addbtn').prop('disabled',false);
-    $('.goaddbtn').prop('disabled',false);  
+    $('.goaddbtn').prop('disabled',false); 
+
     $("#product_edit_tax_table tbody tr").each(function() {
       if($('td:eq(0) select option:selected', this).val() == 'CVAT' || $('td:eq(0) select option:selected', this).val() =='IGST' || $('td:eq(0) select option:selected', this).val() =='CESS' ){
         $('td:eq(1) select', this).prop('disabled', true);
@@ -1295,6 +1297,7 @@ $(document).ready(function() {
     }
   });
 
+    // godown table add button click 
     $(document).off("click",".goaddbtn").on("click",".goaddbtn",function(event){
 	var curindex_goaddbtn = $(this).closest('tr').index();
 	var nextindex_goaddbtn = curindex_goaddbtn+1;
@@ -1376,7 +1379,8 @@ $(document).ready(function() {
 	      selectedgodown = $('#editgodown_ob_table tbody tr:eq('+j+') td:eq(0) select option:selected').val();
 	      $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select option[value='+selectedgodown+']').prop('hidden', true).prop('disabled', true);
 	  }
-	$('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
+	   $('#editgodown_ob_table tbody tr:eq('+nextindex1+') td:eq(0) select').prepend('<option value="" disabled hidden selected>Select Godown</option>');
+           
         if (numberofgodowns > curindex1) {
           $("#editgodown_ob_table tbody tr:last td:last").append('<div style="text-align: center;"><a href="#" class="editgodown_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></div>');
         }
