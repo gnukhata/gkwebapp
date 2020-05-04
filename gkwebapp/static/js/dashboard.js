@@ -534,10 +534,10 @@ function monthlyinvoice(inoutflag,invoicedata){
               maintainAspectRatio: true
             }
     });
-    myChart.canvas.style.height = '250px';
-  myChart.canvas.style.width = '500px';
-  myChart.canvas.parentNode.style.height = '250px';
-  myChart.canvas.parentNode.style.width = '500px';
+    myChart.canvas.style.height = '300px';
+  myChart.canvas.style.width = '600px';
+  myChart.canvas.parentNode.style.height = '300px';
+  myChart.canvas.parentNode.style.width = '600px';
   myChart.canvas.parentNode.style.margin = 'auto';
         }
         
@@ -672,7 +672,7 @@ var chart = new Chart(ctx, {
   chart.canvas.style.height = '250px';
   chart.canvas.style.width = '560px';
   chart.canvas.parentNode.style.height = '250px';
-  chart.canvas.parentNode.style.width = '560px';
+  chart.canvas.parentNode.style.width = '500px';
   chart.canvas.parentNode.style.margin = 'auto';
 
 }
