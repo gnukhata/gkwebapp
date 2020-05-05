@@ -302,6 +302,9 @@ def godownImport(request):
             for st in list(state.values()):
                 stateList.append(st)
         for godownrow in godownList[1 : ]:
+            print (godownrow[0])
+            if (godownrow[0].value == None and godownrow[1].value == None and godownrow[2].value == None and godownrow[3].value == None and godownrow[4].value == None):
+                continue
             if godownrow[2].value not in stateList or godownrow[2].value ==None:
                 errorList.append(godownrow[2].coordinate)
             if godownrow[1].value ==None:
@@ -310,6 +313,8 @@ def godownImport(request):
                 errorList.append(godownrow[0].coordinate)
         if len(errorList)==0:
             for godownrow in godownList[1 : ]:
+                if (godownrow[0].value == None and godownrow[1].value == None and godownrow[2].value == None and godownrow[3].value == None and godownrow[4].value == None):
+                    continue
                 try:
                     godownDict= {"goname":godownrow[0].value,"goaddr":godownrow[1].value, "state":godownrow[2].value, "contactname":godownrow[3].value, "gocontact":godownrow[4].value}
                     result = requests.post("http://127.0.0.1:6543/godown",data = json.dumps(godownDict),headers=header)

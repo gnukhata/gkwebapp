@@ -161,7 +161,7 @@ $(document).ready(function() {
     $("#gostate").keydown(function(e){
       if (e.which == 13) {
         e.preventDefault();
-        $("#goaddress").focus().select();
+        $("#goaddress").focus();
       }
       if (e.which == 38 && ($("#gostate option:selected").index()==1 || $("#gostate option:selected").index()==0)) {
         $("#goname").focus().select();
@@ -197,7 +197,7 @@ $(document).ready(function() {
             $("#gocontact").focus().select();
           }
           if (e.which == 38) {
-            $("#goaddress").focus().select();
+            $("#goaddress").focus();
           }
         });
     $("#gocontact").numeric();
@@ -310,7 +310,7 @@ $(document).ready(function() {
             $("#addressblank-alert").fadeTo(2250, 500).slideUp(500, function() {
                 $("#addressblank-alert").hide();
             });
-            $("#goaddress").focus().select();
+            $("#goaddress").focus();
             return false;
         };
         if ($.trim($("#gostate").val()) == "") {
