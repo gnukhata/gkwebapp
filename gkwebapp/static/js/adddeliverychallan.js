@@ -42,16 +42,16 @@ $(document).ready(function() {
     $("#deliverychallan_month").numeric();
     $("#deliverychallan_year").numeric();
     $('.deliverychallan_product_quantity').numeric({ negative: false});
-	$('#deliverychallan_noofpackages').numeric({ negative: false});
+    $('#deliverychallan_noofpackages').numeric({ negative: false});
     $(".borderdiv").height($("#maindivdc").height());
     $(".discaddon").hide();
     $(".discaddon").siblings().width("100%");
     var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
     var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
     var selectedproduct = "";
-	var gstins = {};
+    var gstins = {};
 	// for round of feature
-	let roundoffflag = 0;  
+    let roundoffflag = 0;  
 
     //Initialising some variables.
     var issuername = "";
@@ -1149,9 +1149,8 @@ $("#invoice_date").keydown(function(event) {
 			},
 		success: function(resp) {
 		    let custsupdata=resp["customers"];
-                    let n = (Object.keys(custsupdata).length);
-			var optionsdiv = $("#deliverychallan_customer").closest("div");
-			$('#deliverychallan_customer').empty();
+		    var optionsdiv = $("#deliverychallan_customer").closest("div");
+		    $('#deliverychallan_customer').empty();
 
 		    optionsdiv.find('select[style*="display: none"]').empty();
                     	for (let i in custsupdata ) {
@@ -1162,35 +1161,31 @@ $("#invoice_date").keydown(function(event) {
 			}
 		    if($("#status").val()==15){
 
-                             $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Customer</option>');
+                            $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Customer</option>');
 			    $("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
 
                             optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>&#xf067 Add Customer </option>");
                             optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
-
 			}
 		    else{
-                        $('<option value="6">Java Script</option>').appendTo("#ddlList");
+                       
+			$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+                        $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Supplier</option>');
 
-				$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
-                             $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Supplier</option>');
-
-				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
-				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
-			}
-			
-		
+			optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>&#xf067 Add Supplier </option>");
+			optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+			}	
 		}
 		});
 		}
 
 		if($("#status").val() == 15){
-			$('#custchange.custsupchange').click();
+		$('#custchange.custsupchange').click();
 		}
 		else{
-			$("#supchange.custsupchange").click();
-	
+		$("#supchange.custsupchange").click();
 		}
+    
 	$(document).off("change",".custsupchange").on("change",".custsupchange",function(event) {
 		//Checking which radio button is selected.
 			if ($("#custchange").is(":checked")) {
@@ -1198,10 +1193,8 @@ $("#invoice_date").keydown(function(event) {
 			
 			} else {
 				custSupData("/customersuppliers?action=getallsups");
-
 				}
 			});
-
 
     $("#deliverychallan_customer").change(function(event) {
     if($("#deliverychallan_customer option:selected").val() != ""){
@@ -1220,15 +1213,15 @@ $("#invoice_date").keydown(function(event) {
     .done(function(resp) {
 	console.log("success");
 	if (resp["gkstatus"]==0) {
-		$("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
+	        $("#accountno").val(resp["gkresult"]["bankdetails"]["accountno"]); //Account Number of supplier loaded
 		$("#branchname").val(resp["gkresult"]["bankdetails"]["branchname"]);   //branchname of supplier is loaded
 		$("#ifsc").val(resp["gkresult"]["bankdetails"]["ifsc"]);           //ifsc code of supplier is loaded
 		$("#bankname").val(resp["gkresult"]["bankdetails"]["bankname"]);   //branchname of supplier is loaded
-	    $("#deliverychallan_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
-	    $("#deliverychallan_customerstate").change();
+	        $("#deliverychallan_customerstate").val(resp["gkresult"]["state"]);  //State of Customer is selected automatically.
+	        $("#deliverychallan_customerstate").change();
 		$("#deliverychallan_customeraddr").text(resp["gkresult"]["custaddr"]);  //Adress of Customer is loaded.
-	    $("#deliverychallan_customerpincode").text(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.		
-	    $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
+	        $("#deliverychallan_customerpincode").text(resp["gkresult"]["pincode"]);  //pincode of Customer is loaded.		
+	        $("#tin").text(resp["gkresult"]["custtan"]);  //Customer TIN is loaded.
 	    //All GSTINs of this customer are
 	    gstins = resp["gkresult"]["gstin"];
             if (gstins != null && $("#deliverychallan_customerstate option:selected").attr("stateid") in gstins) {
@@ -1237,10 +1230,8 @@ $("#invoice_date").keydown(function(event) {
       	    else {
       		$("#gstin").text('');  //If GSTIN is not available it is set as blank.
       	    }
-
 	    //State Code of Customer State is loaded.
-	    $("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));
-	    
+	    $("#statecodeofcustomer").text(pad($("#deliverychallan_customerstate option:selected").attr("stateid"), 2));  
 	}
     })
     .fail(function() {
@@ -1318,8 +1309,8 @@ $("#invoice_date").keydown(function(event) {
 	    $("#taxapplicabletext").text("GST");
 	    $(".taxapplicable").val("7");
 	    $("#invoice_product_table_vat").hide();  //Hides VAT Product table and fields for TIN.
-		$("#vathelp").hide();
-		$("#smalllink").show();	
+	    $("#vathelp").hide();
+	    $("#smalllink").show();	
 	    $("#smalllinkvat").hide();
 	    $(".tinfield").hide();
 	    $("#gstproducttable").show();  //Shows GST Product table.
@@ -1343,8 +1334,8 @@ $("#invoice_date").keydown(function(event) {
 	    $(".gstinfield").hide();
 	    $("#invoice_product_table_vat").show();
 	    $(".tinfield").show();
-		$("#vathelp").show();
-		$("#smalllink").hide();	
+	    $("#vathelp").show();
+	    $("#smalllink").hide();	
 	    $("#smalllinkvat").show();
 	    $(".gstfield").hide();
 	    $(".vatfield").show();

@@ -1110,34 +1110,35 @@ $(document).ready(function() {
 			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 			},
 		success: function(resp) {
-			let custsupdata=resp["customers"]
+		    let custsupdata=resp["customers"];
 			var optionsdiv = $("#invoice_customer").closest("div");
 			$('#invoice_customer').empty();
 
-			optionsdiv.find('select[style*="display: none"]').empty();
-			if($("#status").val()==15){
-				$("#invoice_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
-				$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+		    optionsdiv.find('select[style*="display: none"]').empty();
+                    for (let i in custsupdata ) {
+				$('#invoice_customer').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
+				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
 
-				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
-				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
+		    }
+                    
+			if($("#status").val()==15){
+			    $("#invoice_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+                            $("#invoice_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Customer</option>');
+			    optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+			    optionsdiv.find('select[style*="display: none"]').append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Customer</option>');
 
 			}
 			else{
-				$("#invoice_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
-				$('#invoice_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+			    $("#invoice_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+                            $("#invoice_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Supplier</option>');
 
 				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
 				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
 			}
 			
-			for (let i in custsupdata ) {
-				$('#invoice_customer').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
-				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
-
-			}
+			
 		}
-		})
+		});
 		}
 
 
@@ -3334,11 +3335,11 @@ if (event.which == 13) {
              .done(function(resp) {
                var custs = resp["customers"];
                $("#invoice_customer").empty();
-               $("#invoice_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
-               $("#invoice_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
+                 $("#invoice_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
                for (i in custs) {
                  $("#invoice_customer").append('<option value="' + custs[i].custid + '" >' + custs[i].custname + '</option>');
                }
+               $("#invoice_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
 		 $("#invoice_customer option").filter(function() {
                      return this.text == text1;
                  }).attr('selected', true).trigger('change'); //Selects the latest added customer/supplier.

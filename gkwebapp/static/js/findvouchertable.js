@@ -114,7 +114,7 @@ $(document).ready(function() {
           },
           success: function(jsonObj)
           {
-            gkstatus=jsonObj["gkstatus"]
+              gkstatus=jsonObj["gkstatus"];
             if(gkstatus)
             {
               if(stat=="***")

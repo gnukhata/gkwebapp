@@ -148,7 +148,6 @@ def cjaccounts(request):
 
 @view_config(route_name="addvoucher", renderer="json")
 def addvoucher(request):
-    print (" i am here")
     vdetails = json.loads(request.params["vdetails"])
     rowdetails= json.loads(request.params["transactions"])
     crs={}
@@ -232,11 +231,9 @@ def addvoucher(request):
 @view_config(route_name="addvoucherauto", renderer="json")
 def addvoucherauto(request):
     header = {"gktoken": request.headers["gktoken"]}
-
     data = dict()
     data["vdetails"] = dict()
     data["transactions"] = dict()
-
     data["vdetails"]["vouchertype"] = request.params["vtype"]
     data["vdetails"]["voucherdate"] = request.params["date"]
     data["vdetails"]["narration"] = request.params["narration"]
