@@ -269,15 +269,11 @@ $("#invoice_date").keydown(function(event) {
 //Initialising some variables.
 	var taxtype;
 	let roundoffvalue;
-    var issuername = "";
-    var designation = "";
     var address = "";
-    var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
-    var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
-    var invoicedatestring = "";
-    var invoicedate = "";
+     financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");  //Start of financial year is saved in a variable.
+     financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");  //End of financial year is saved in a variable.
+     invoicedatestring = "";
     var numbertowords="";
-    var gstdate = Date.parseExact('01072017', "ddMMyyyy");
     //A dictionary to store GSTINs of a customer.
     var gstins = {};
     var tottaxable;
@@ -1152,36 +1148,40 @@ $("#invoice_date").keydown(function(event) {
 			xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
 			},
 		success: function(resp) {
-			let custsupdata=resp["customers"]
+		    let custsupdata=resp["customers"];
+                    let n = (Object.keys(custsupdata).length);
 			var optionsdiv = $("#deliverychallan_customer").closest("div");
 			$('#deliverychallan_customer').empty();
 
-			optionsdiv.find('select[style*="display: none"]').empty();
-			if($("#status").val()==15){
-			$("#deliverychallan_customer").append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
-			$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
-
-            optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Customer </option>");
-            optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
-
-			}
-			else{
-
-				$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
-				$('#deliverychallan_customer').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
-
-				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
-				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
-			}
-			
-			for (let i in custsupdata ) {
+		    optionsdiv.find('select[style*="display: none"]').empty();
+                    	for (let i in custsupdata ) {
 
 				$('#deliverychallan_customer').append('<option value="' + custsupdata[i].custid + '" name="'+ custsupdata[i].custname +'">' + custsupdata[i].custname + '</option>');
 				optionsdiv.find('select[style*="display: none"]').append('<option value="' + custsupdata[i].custid + '">' + custsupdata[i].custname + '</option>');
 
 			}
+		    if($("#status").val()==15){
+
+                             $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Customer</option>');
+			    $("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Customer </option>');
+
+                            optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>&#xf067 Add Customer </option>");
+                            optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Customer </option>');
+
+			}
+		    else{
+                        $('<option value="6">Java Script</option>').appendTo("#ddlList");
+
+				$("#deliverychallan_customer").append('<option value="" disabled hidden selected> Select Supplier</option>');
+                             $("#deliverychallan_customer").append('<option value="-1" style="font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add Supplier</option>');
+
+				optionsdiv.find('select[style*="display: none"]').append("<option value='-1' style='font-family:'FontAwesome','Helvetica Neue', Helvetica, Arial, sans-serif;'>Add Supplier </option>");
+				optionsdiv.find('select[style*="display: none"]').append('<option value="" disabled hidden selected> Select Supplier </option>');
+			}
+			
+		
 		}
-		})
+		});
 		}
 
 		if($("#status").val() == 15){
@@ -3027,10 +3027,11 @@ $("#roundoff_checkbox").change(function(e){
              var custs = resp["customers"];
             $("#deliverychallan_customer").empty();
             $("#deliverychallan_customer").append('<option value="" disabled hidden selected>Select ' +addoption+ '</option>');
-            $("#deliverychallan_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
+            
              for (i in custs){
                $("#deliverychallan_customer").append('<option value="'+custs[i].custid+'" >'+custs[i].custname+'</option>');
              }
+               $("#deliverychallan_customer").append('<option value="-1" style=\"font-family:\'FontAwesome\',\'Helvetica Neue\', Helvetica, Arial, sans-serif;\">&#xf067 Add ' +addoption+ '</option>');
            });
 
             $("#deliverychallan_customer option").filter(function() {

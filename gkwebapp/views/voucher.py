@@ -148,6 +148,7 @@ def cjaccounts(request):
 
 @view_config(route_name="addvoucher", renderer="json")
 def addvoucher(request):
+    print (" i am here")
     vdetails = json.loads(request.params["vdetails"])
     rowdetails= json.loads(request.params["transactions"])
     crs={}
@@ -249,27 +250,27 @@ def addvoucherauto(request):
     if "invid" in request.params:
         data["vdetails"]["invid"] = request.params["invid"]
     
-   # try:
-    files = {}
-    count = 0
-    for i in list(request.POST.keys()):
-        if "file" not in i:
-            continue
-        else:
-            img = request.POST[i].file
-            image = Image.open(img)
-            imgbuffer = io.BytesIO()
-            image.save(imgbuffer, format="JPEG")
-            img_str = base64.b64encode(imgbuffer.getvalue())
-            img_str = img_str.decode("ascii")
-            image.close()
-            files[count] = img_str
-            count += 1
-    if len(files) > 0:
-        data["vdetails"]["attachment"] = files
-        data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
-   # except:
-   #     print("no attachment found")
+    try:
+        files = {}
+        count = 0
+        for i in list(request.POST.keys()):
+            if "file" not in i:
+                continue
+            else:
+                img = request.POST[i].file
+                image = Image.open(img)
+                imgbuffer = io.BytesIO()
+                image.save(imgbuffer, format="JPEG")
+                img_str = base64.b64encode(imgbuffer.getvalue())
+                img_str = img_str.decode("ascii")
+                image.close()
+                files[count] = img_str
+                count += 1
+        if len(files) > 0:
+            data["vdetails"]["attachment"] = files
+            data["vdetails"]["attachmentcount"] = len(data["vdetails"]["attachment"])
+    except:
+        print("no attachment found")
 
     result = requests.post("http://127.0.0.1:6543/transaction?mode=auto",data=json.dumps(data),headers=header)
     if result.json()["gkstatus"] == 0:
