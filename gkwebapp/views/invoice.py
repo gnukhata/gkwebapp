@@ -1,5 +1,3 @@
-
-
 """
 Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
 Copyright (C) 2017, 2018, 2019, 2020 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
@@ -568,7 +566,7 @@ def listofinvspreadsheet(request):
             sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
-        output = io.BytesgIO()
+        output = io.BytesIO()
         invoicewb.save(output)
         contents = output.getvalue()
         output.close()

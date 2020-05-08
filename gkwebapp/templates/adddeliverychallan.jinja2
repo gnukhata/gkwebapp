@@ -882,7 +882,7 @@
 	</div>
 	  </form>
       </div>
-    </div>
+    
     
     {% if gkstatus=='out' %}
       <input type="hidden"  id="deliverychallan_gkstatus" value="out">
@@ -912,6 +912,7 @@
 	<span class='label label-info' id="upload-file-info"></span>
 	<small class="form-text text-danger text-muted">(JPG/JPEG images only.)</small>
       </div>
+    </div>
     </div>
   </div>
   <div id="confirm_yes" class="modal" style="overflow:none; tabindex="-1" role="dialog">
@@ -1039,7 +1040,7 @@
 				</div>
             		</div>
             	</form>
-							<label class="btn btn-primary btn-sm" for="inv_my-file-selector">
+	<label class="btn btn-primary btn-sm" for="inv_my-file-selector">
 	  <input name="img" accesskey="h" class="input-sm" id="inv_my-file-selector" type="file" accept="image/*" multiple style="display:none;" onchange="$('#inv_upload-file-info').html(this.files.length+' selected');">
 	  <i class="fa fa-paperclip" aria-hidden="true"></i>
 	  {% trans %}Attac<u>h</u>{% endtrans %}
