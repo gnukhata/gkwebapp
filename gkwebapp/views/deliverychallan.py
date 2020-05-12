@@ -337,7 +337,7 @@ def unbillspreadsheet(request):
 #Code for Export To spreadsheet
 @view_config(route_name="deliverychallan",request_param="action=cancellspreadsheet", renderer="")
 def cancelledspreadsheet(request):
-    # try:
+     try:
         header={"gktoken":request.headers["gktoken"]}
         fystart = str(request.params["fystart"]);
         fyend = str(request.params["fyend"]);
@@ -452,8 +452,8 @@ def cancelledspreadsheet(request):
         headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'X-Cotent-Type-Options':'nosniff', 'Set-Cookie':'fileDownload=true; path=/ [;HttpOnly]'}
         # headerList = {'Content-Type':'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' ,'Content-Length': len(contents),'Content-Disposition': 'attachment; filename=report.xlsx', 'Set-Cookie':'fileDownload=true; path=/'}
         return Response(contents, headerlist=list(headerList.items()))
-    # except:
-    #     return {"gkstatus":3}
+     except:
+         return {"gkstatus":3}
 
 @view_config(route_name="deliverychallan",request_param="action=print",renderer="gkwebapp:templates/printdeliverychallan.jinja2")
 def deliveryprint(request):

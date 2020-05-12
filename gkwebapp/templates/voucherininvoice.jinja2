@@ -4,56 +4,58 @@
     <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}List of Categories{% endtrans %}</title>
     <style type="text/css">
 
-     td {
-  	 font-size: 65%;
-  	 color: black;
-     }
+    td {
+  	font-size: 65%;
+  	color: black;
+    }
 
-     th {
-  	 font-size: 70%;
-     }
+    th {
+  	font-size: 70%;
+    }
+    lblec {
+        font-size: large;  
+    }
 
-     @page {
-	 size : 21cm 29.7cm;
-	 margin : 10mm 10mm 20mm 10mm
-     }
-     thead{
-	 display: table-header-group;
-     }
-     tfoot{
-	 display: table-footer-group;
-     }
-     .narwrap{
-	 width :10%;
-     }
-     .lngwrap{
-	 width:50%;
-     }
-     .mdwrap{
-	 width:25%;
-     }
-     .vlngwrap{
-	 width:80%;
-     }
-     .totalwrap {
-	 width:28%;
-     }
-     .rightJustified {
-	 text-align: right;
-     }
+    @page {
+	size : 21cm 29.7cm;
+	margin : 10mm 10mm 20mm 10mm
+    }
+    thead{
+	display: table-header-group;
+    }
+    tfoot{
+	display: table-footer-group;
+    }
+    .narwrap{
+	width : 20%;
+    }
+    .lngwrap{
+	width: 15%;
+    }
+    .mdwrap{
+	width: 10%;
+    }
+    
+    .totalwrap {
+	width:20%;
+    }
+    .rightJustified {
+	text-align: right;
+    }
+
 
     </style>
-  </head>
+    </head>
 
-	<body>
-		<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-      <div class="modal-dialog modal-lg">
+    <body>
+      <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+                <div class="modal-dialog modal-xl">
 				<div class="modal-content">
 				<div class="modal-body">
 					<div align="right">
-						<strong><button type="button" data-dismiss ="modal" style="color:black; opacity:0.8; border:0; background:0; margin-top:-2%; font-size:25px">&times;</button></strong>
+					<strong><button type="button" data-dismiss ="modal" style="color:black; opacity:0.8; border:0; background:0; margin-top:-2%; font-size:25px">&times;</button></strong>
 					</div>
-				{%for data in total%}
+				        {%for data in total%}
 					<div class="row">
 						<div class="col-xs-4 text-left">
 	  					<label for="vno">{% trans %}Voucher No{% endtrans %} : </label><label>&nbsp{{data["voucher"]["vouchernumber"]}}</label>
@@ -82,14 +84,14 @@
 							{% endif %}
 						</div>
 						<div class="col-xs-4 text-right">
-          		<label for="vdate">{% trans %}Date{% endtrans %} :</label><label>&nbsp{{data["voucher"]['voucherdate'][:2]}}&nbsp-{{data["voucher"]['voucherdate'][3:5]}}&nbsp-{{data["voucher"]['voucherdate'][6:]}}</label>
+          		                        <label for="vdate">{% trans %}Date{% endtrans %} :</label><label>&nbsp{{data["voucher"]['voucherdate'][:2]}}&nbsp-{{data["voucher"]['voucherdate'][3:5]}}&nbsp-{{data["voucher"]['voucherdate'][6:]}}</label>
 						</div>
-					</div>
-					<div class="table-responsive printorgdetails">
-      			<table id="latable" class="table table-condensed table-bordered table-striped shadow">
+					        </div>
+				        	<div class="table-responsive printorgdetails">
+      		                         	<table id="latable" class="table table-condensed table-bordered table-striped shadow">
 							<thead>
-          			<tr>
-										<th class="lngwrap">
+          		                           	<tr>
+								<th class="lngwrap">
 								{% trans %}Account Name{% endtrans %}
 										</th>
 										<th class="mdwrap rightJustified">
