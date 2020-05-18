@@ -505,7 +505,7 @@ def listofstockitemsspreadsheet(request):
                 sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
                 row +=1
                 srno +=1
-        output = io.StringIO()
+        output = io.BytesIO()
         productwb.save(output)
         contents = output.getvalue()
         output.close()
