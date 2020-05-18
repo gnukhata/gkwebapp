@@ -384,7 +384,7 @@ $.ajax(
                     'rgba(51, 51, 51)', 
                     'rgba(51, 51, 51)', 
     
-                ],
+                ]
             
             },
             {
@@ -404,14 +404,14 @@ $.ajax(
               'rgba(100, 100, 100)',
               'rgba(100, 100, 100)', 
               'rgba(100, 100, 100)', 
-          ],
+          ]
            },]
         },
         options: {
             scales: {
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true,
+                        beginAtZero:true
                     //     stepSize: 50,
                     //       suggestedMin: 1,
                     //       suggestedMax: 100,
@@ -419,9 +419,14 @@ $.ajax(
                 }]
             },
             responsive: true,
-            maintainAspectRatio: true,
+            maintainAspectRatio: true
         }
-    });
+       });
+          myChart.canvas.style.width = '600px';
+	  myChart.canvas.parentNode.style.height = '300px';
+	  myChart.canvas.parentNode.style.width = '600px';
+	  myChart.canvas.parentNode.style.margin = 'auto';
+
     }
       $("#godownwise").change(function(e){
       goid = $("#godownwise option:selected").val();
@@ -611,7 +616,7 @@ function monthlydelchal(inoutflag,delchaldata){
         scales: {
             yAxes: [{
                 ticks: {
-                    beginAtZero:true,
+                    beginAtZero:true
                     // stepSize: 50,
                     // suggestedMin: 1,
                     // suggestedMax: 100,
@@ -623,10 +628,10 @@ function monthlydelchal(inoutflag,delchaldata){
         maintainAspectRatio: true
     }
   });
-    myChart.canvas.style.height = '250px';
-  myChart.canvas.style.width = '500px';
-  myChart.canvas.parentNode.style.height = '250px';
-  myChart.canvas.parentNode.style.width = '500px';
+    myChart.canvas.style.height = '300px';
+  myChart.canvas.style.width = '600px';
+  myChart.canvas.parentNode.style.height = '300px';
+  myChart.canvas.parentNode.style.width = '600px';
   myChart.canvas.parentNode.style.margin = 'auto';
 }
 
