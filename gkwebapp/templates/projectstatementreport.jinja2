@@ -103,9 +103,10 @@
         <tr>
           <th class="smwrap">{% trans %}Sr. No.{% endtrans %}</th>
           <th class="lngwrap">{% trans %}Account{% endtrans %}</th>
-          <th class="mdwrap">{% trans %}Group{% endtrans %}</th>
-          <th class="smwrap ralign">{% trans %}Outgoings{% endtrans %}</th>
-          <th class="smwrap ralign">{% trans %}Incomings{% endtrans %}</th>
+          <th class="mdwrap">{% trans %}Group Name{% endtrans %}</th>
+          <th class="mdwrap">{% trans %}Sub-Group Name{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Outgoing{% endtrans %}</th>
+          <th class="smwrap ralign">{% trans %}Incoming{% endtrans %}</th>
         </tr>
       </thead>
       <tbody>
@@ -126,10 +127,13 @@
           <td class="mdwrap">
             {{record["groupname"]}}
           </td>
+          <td class="mdwrap">
+            {{record["subgroupname"]}}
+          </td>
           <td class="smwrap ralign">
             {{record["totalout"]}}
           </td>
-          <td class="smwrap ralign">
+          <td class="smwrap ralign" >
             {{record["totalin"]}}
           </td>
         </tr>

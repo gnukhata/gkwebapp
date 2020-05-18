@@ -79,18 +79,21 @@ def printprojectstatementreport(request):
         sheet['A4'] = 'Sr. No. '
         sheet['B4'] = 'Account Name'
         sheet['C4'] = 'Group Name'
-        sheet['D4'] = 'Total Outgoing'
-        sheet['E4'] = 'Total Incoming'
+        sheet['D4'] = 'Sub-Group Name'
+        sheet['E4'] = 'Outgoing'
+        sheet['F4'] = 'Incoming'
         sheet['A4'].alignment = Alignment(horizontal='center')
         sheet['B4'].alignment = Alignment(horizontal='left')
         sheet['C4'].alignment = Alignment(horizontal='left')
-        sheet['D4'].alignment = Alignment(horizontal='right')
+        sheet['D4'].alignment = Alignment(horizontal='left')
         sheet['E4'].alignment = Alignment(horizontal='right')
+        sheet['F4'].alignment = Alignment(horizontal='right')
         sheet['A4'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['B4'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['C4'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['D4'].font = Font(name='Liberation Serif',size=12,bold=True)
         sheet['E4'].font = Font(name='Liberation Serif',size=12,bold=True)
+        sheet['F4'].font = Font(name='Liberation Serif',size=12,bold=True)
         row = 5
         # Looping each dictionaries in list result to store data in cells and apply styles.
         for transaction in result:
@@ -103,16 +106,19 @@ def printprojectstatementreport(request):
             sheet['C'+str(row)] = transaction["groupname"]
             sheet['C'+str(row)].alignment = Alignment(horizontal='left')
             sheet['C'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['D'+str(row)] = float("%.2f"%float(transaction["totalout"]))
-            sheet['D'+str(row)].number_format = "0.00"
-            sheet['D'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['D'+str(row)] = transaction["subgroupname"]
+            sheet['D'+str(row)].alignment = Alignment(horizontal='left')
             sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
-            sheet['E'+str(row)] = float("%.2f"%float(transaction["totalin"]))
+            sheet['E'+str(row)] = float("%.2f"%float(transaction["totalout"]))
             sheet['E'+str(row)].number_format = "0.00"
             sheet['E'+str(row)].alignment = Alignment(horizontal='right')
             sheet['E'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
+            sheet['F'+str(row)] = float("%.2f"%float(transaction["totalin"]))
+            sheet['F'+str(row)].number_format = "0.00"
+            sheet['F'+str(row)].alignment = Alignment(horizontal='right')
+            sheet['F'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row += 1
-        output = io.StringIO()
+        output = io.BytesIO()
         projstmtwb.save(output)
         contents = output.getvalue()
         output.close()
@@ -139,6 +145,7 @@ def showprojectstatementreport(request):
     projectname = request.params["projectname"]
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/report?type=projectstatement&calculateto=%s&financialstart=%s&projectcode=%d"%(calculateto,financialstart,projectcode), headers=header)
+    print (result.json()["gkresult"])
     return render_to_response("gkwebapp:templates/projectstatementreport.jinja2",{"records":result.json()["gkresult"],"projectcode":projectcode,"projectname":projectname,"from":datetime.strftime(datetime.strptime(str(financialstart),"%Y-%m-%d").date(),'%d-%m-%Y'),"to":datetime.strftime(datetime.strptime(str(calculateto),"%Y-%m-%d").date(),'%d-%m-%Y')},request=request)
 
 @view_config(route_name="printprojectstatement")
