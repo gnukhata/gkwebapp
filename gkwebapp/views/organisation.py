@@ -115,7 +115,7 @@ def editOrganisation(request):
         gkdata["gstin"]=json.loads(request.params["gstin"])
     if "orgstate" in request.params:
         gkdata["orgstate"]=request.params["orgstate"]
-# conversion of data into json format for bank details# 
+    # conversion of data into json format for bank details# 
     if "bankdetails" in request.params:
         gkdata["bankdetails"]=json.loads(request.params["bankdetails"])
         
@@ -135,7 +135,7 @@ def editOrganisation(request):
     except:
         print("no file found ")
     result = requests.put("http://127.0.0.1:6543/organisations", headers=header, data=json.dumps(gkdata))
-    if result.json()["gkstatus"]==0 and "bankdetails" in request.params:
+    if (result.json()["gkstatus"]==0 and "bankdetails" in request.params):
             #this is use when bank account details are available it create  bank account of that details  when we editorganization.
         try:
             subgroupcode = requests.get("http://127.0.0.1:6543/groupsubgroups?orgbank", headers=header)
