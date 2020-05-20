@@ -1821,7 +1821,6 @@ $(document).ready(function() {
 				    $('#invoice_product_table_vat tbody tr:last td:eq(4) input').val(parseFloat(delchalContents[key].discount).toFixed(2));
 				}
 			    });
-			    $("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 			    var productcode;
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
@@ -1841,8 +1840,8 @@ $(document).ready(function() {
 				$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
 			    });
-			    $("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
 			    $(".product_name_gst, .product_name_vat, #invoicestate").change();
+			    $(".gst_product_add").hide();
 			}
 		    });
 		}
@@ -3060,26 +3059,31 @@ if (event.which == 13) {
 	  return false;
     }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
-	    $('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
-	    if ($("#discountpercent").val() == 1){
-		$(".discaddon").hide();
-                $(".discaddon").siblings().width("100%");
+	    if($("#invoice_deliverynote option:selected").val() != ''){
+		$('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
+		if ($("#discountpercent").val() == 1){
+		    $(".discaddon").hide();
+                    $(".discaddon").siblings().width("100%");
+		}
+		else {
+		    $(".discaddon").show();
+                    $(".discaddon").siblings().width("80%");
+		}
+		$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
+		$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+		for (let i = 0; i <= curindex1; i++) {
+		    var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").val();
+		    $("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
+		}
+		$('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
+		$("#invoicestate").change();
+		$('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
+		$('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
+		setTimeout( function() { $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
 	    }
 	    else {
-		$(".discaddon").show();
-                $(".discaddon").siblings().width("80%");
+		$("#accountno").focus().select();
 	    }
-	    $("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
-	    $('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
-	    for (let i = 0; i <= curindex1; i++) {
-		var selectedproduct = $("#invoice_product_table_gst tbody tr:eq("+ i +") td:eq(0) select").val();
-		$("#invoice_product_table_gst tbody tr:eq("+ nextindex1 +") td:eq(0) select option[value = " + selectedproduct + "]").prop("disabled", true).prop("hidden", true);
-	    }
-	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select option:visible').first().prop("selected", true);
-	    $("#invoicestate").change();
-	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').change().removeClass("searchifiedselect");
-	    $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').searchify();
-	    setTimeout( function() { $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
 	}
 	else {
 	    $("#accountno").focus().select();
