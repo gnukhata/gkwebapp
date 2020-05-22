@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -152,7 +152,7 @@ $("#grpbtn").click(function(event){
         $("."+grpcode).slideToggle(1);
         $("."+grpcode).removeAttr('style');
         $("."+grpcode).each(function(index) {
-          code = $(this).attr('value')
+            code = $(this).attr('value');
           if ($("."+code).is(":visible")){
             $("."+code).slideToggle(1);
           }
@@ -170,7 +170,7 @@ $("#grpbtn").click(function(event){
     				global: false,
     				async: false,
     				datatype: "text/html",
-    				data: {"backflag":8,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				data: {"backflag":8,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
     				beforeSend: function(xhr)
     				{
     					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

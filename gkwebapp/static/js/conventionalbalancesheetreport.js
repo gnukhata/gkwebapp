@@ -223,7 +223,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     				global: false,
     				async: false,
     				datatype: "text/html",
-    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":false},
     				beforeSend: function(xhr)
     				{
     					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -246,7 +246,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
       else if (grpcode.indexOf("g") != -1) {
         $("."+grpcode).slideToggle(1);
         $("."+grpcode).each(function(index) {
-          code = $(this).attr('value')
+            code = $(this).attr('value');
           if ($("."+code).is(":visible")){
             $("."+code).slideToggle(1);
           }
@@ -262,7 +262,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
     				global: false,
     				async: false,
     				datatype: "text/html",
-    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+    				data: {"backflag":9,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":false},
     				beforeSend: function(xhr)
     				{
     					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -492,7 +492,7 @@ $("#patable").off('keydown','tr').on('keydown','tr',function(event){
       $("#patable tr:last").remove();
     }
     for (var i = $("#"+tl+" tr:visible").length; i < $("#"+tb+" tr:visible").length-1; i++) {
-      $("#"+tl+" tbody").append('<tr><td class="col-xs-6">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td></tr>')
+        $("#"+tl+" tbody").append('<tr><td class="col-xs-6">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td><td class="col-xs-2">&nbsp</td></tr>');
     }
     $("#"+tl+" tbody").append(lastrow);
     $('table a').contents().unwrap();

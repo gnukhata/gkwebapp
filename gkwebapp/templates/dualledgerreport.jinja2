@@ -61,27 +61,28 @@
   <div id="otherdiv">
     <div class="alert alert-danger" id="ua-alert" hidden>
 
-    <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
-  </div>
-  <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
-  <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh2["financialstart"]}}"></input>
-  <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh2["backflag"]}}"></input>
-  <input type="hidden" id="accountcode1" name="accountcode1" value="{{ledgerrefresh1["accountcode"]}}"></input>
-  <input type="hidden" id="calculatefrom1" name="calculatefrom1" value="{{ledgerrefresh1["calculatefrom"]}}"></input>
-  <input type="hidden" id="calculateto1" name="calculateto1" value="{{ledgerrefresh1["calculateto"]}}"></input>
-  <input type="hidden" id="monthlyflag1" name="monthlyflag1" value="{{ledgerrefresh1["monthlyflag"]}}"></input>
-  <input type="hidden" id="projectcode1" name="projectcode1" value="{{ledgerrefresh1["projectcode"]}}"></input>
-  <input type="hidden" id="narrationflag1" name="narrationflag1" value="{{ledgerrefresh1["narrationflag"]}}"></input>
-  <input type="hidden" id="projectname1" name="projectname1" value="{{ledgerrefresh1["projectname"]}}"></input>
+      <strong>{% trans %}Unauthorized to Lock/Unlock Transactions!{% endtrans %}</strong>
+    </div>
+    <input type="hidden" id="urole" name="urole" value="{{userrole}}"></input>
+    <input type="hidden" id="financialstart" name="financialstart" value="{{ledgerrefresh2["financialstart"]}}"></input>
+    <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh2["backflag"]}}"></input>
+    <input type="hidden" id="accountcode1" name="accountcode1" value="{{ledgerrefresh1["accountcode"]}}"></input>
+    <input type="hidden" id="calculatefrom1" name="calculatefrom1" value="{{ledgerrefresh1["calculatefrom"]}}"></input>
+    <input type="hidden" id="calculateto1" name="calculateto1" value="{{ledgerrefresh1["calculateto"]}}"></input>
+    <input type="hidden" id="monthlyflag1" name="monthlyflag1" value="{{ledgerrefresh1["monthlyflag"]}}"></input>
+    <input type="hidden" id="projectcode1" name="projectcode1" value="{{ledgerrefresh1["projectcode"]}}"></input>
+    <input type="hidden" id="narrationflag1" name="narrationflag1" value="{{ledgerrefresh1["narrationflag"]}}"></input>
+    <input type="hidden" id="projectname1" name="projectname1" value="{{ledgerrefresh1["projectname"]}}"></input>
+    <input type="hidden" id="billentryflag1" name="billentryflag1" value="{{ledgerrefresh1["billentryflag"]}}"></input>
+    <input type="hidden" id="accountcode2" name="accountcode2" value="{{ledgerrefresh2["accountcode"]}}"></input>
+    <input type="hidden" id="calculatefrom2" name="calculatefrom2" value="{{ledgerrefresh2["calculatefrom"]}}"></input>
+    <input type="hidden" id="calculateto2" name="calculateto2" value="{{ledgerrefresh2["calculateto"]}}"></input>
+    <input type="hidden" id="monthlyflag2" name="monthlyflag2" value="{{ledgerrefresh2["monthlyflag"]}}"></input>
+    <input type="hidden" id="projectcode2" name="projectcode2" value="{{ledgerrefresh2["projectcode"]}}"></input>
+    <input type="hidden" id="narrationflag2" name="narrationflag2" value="{{ledgerrefresh2["narrationflag"]}}"></input>
+    <input type="hidden" id="projectname2" name="projectname2" value="{{ledgerrefresh2["projectname"]}}"></input>
+    <input type="hidden" id="billentryflag2" name="billentryflag2" value="{{ledgerrefresh2["billentryflag"]}}"></input>
 
-
-  <input type="hidden" id="accountcode2" name="accountcode2" value="{{ledgerrefresh2["accountcode"]}}"></input>
-  <input type="hidden" id="calculatefrom2" name="calculatefrom2" value="{{ledgerrefresh2["calculatefrom"]}}"></input>
-  <input type="hidden" id="calculateto2" name="calculateto2" value="{{ledgerrefresh2["calculateto"]}}"></input>
-  <input type="hidden" id="monthlyflag2" name="monthlyflag2" value="{{ledgerrefresh2["monthlyflag"]}}"></input>
-  <input type="hidden" id="projectcode2" name="projectcode2" value="{{ledgerrefresh2["projectcode"]}}"></input>
-  <input type="hidden" id="narrationflag2" name="narrationflag2" value="{{ledgerrefresh2["narrationflag"]}}"></input>
-  <input type="hidden" id="projectname2" name="projectname2" value="{{ledgerrefresh2["projectname"]}}"></input>
   <div class="row">
     <div class="col-xs-10 nopadding">
     </div>
@@ -144,38 +145,46 @@
             </td>
             {% endif %}
             {% if ledgerheader1["projectname"]=="" %}
-            <td class="col-xs-3">
-              {% for pr in record['particulars'] %}
-              {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-              {% endfor %}
-              {% if record['narration']!="" and narrationflag1==true %}
-              ({{record['narration']}})
-              {% endif %}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["balance"]}}
-            </td>
+              <td class="col-xs-3">
+                {% for pr in record['particulars'] %}
+                  {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+                {% endfor %}
+                {% if record['narration']!="" and narrationflag1==true %}
+                  ({{record['narration']}})
+                {% endif %}
+                {% if 'dcinfo' in record and billentryflag1==true %}
+                  ({{record['dcinfo']}}) 
+                {% endif %}
+
+              </td>
+              <td class="col-xs-2 ralign">
+                {{record["Dr"]}}
+              </td>
+              <td class="col-xs-2 ralign">
+                {{record["Cr"]}}
+              </td>
+              <td class="col-xs-2 ralign">
+                {{record["balance"]}}
+              </td>
             {% else %}
-            <td class="col-xs-5">
-              {% for pr in record['particulars'] %}
-              {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-              {% endfor %}
-              {% if record['narration']!="" and narrationflag1==true %}
-              ({{record['narration']}})
-              {% endif %}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
-            </td>
+              <td class="col-xs-5">
+                {% for pr in record['particulars'] %}
+                  {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+                {% endfor %}
+                {% if record['narration']!="" and narrationflag1==true %}
+                  ({{record['narration']}})
+                {% endif %}
+                {% if 'dcinfo' in record and billentryflag1==true %}
+                  ({{record['dcinfo']}}) 
+                {% endif %}
+
+              </td>
+              <td class="col-xs-2 ralign">
+                {{record["Dr"]}}
+              </td>
+              <td class="col-xs-2 ralign">
+                {{record["Cr"]}}
+              </td>
             {% endif %}
           </tr>
           {% endfor %}
@@ -188,11 +197,11 @@
       <span class="pull-right" style="padding-right:15px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader2["calculatefrom"]}}</strong> <i>{% trans %}to{% endtrans %}</i> <strong>{{ledgerheader2["calculateto"]}}</strong></span>
       <span class="pull-left" style="margin:auto; display:table;"><i>{% trans %}Account{% endtrans %}</i> : <strong>{{ledgerheader2["accountname"]}}</strong></span><br>
       {% if ledgerheader2["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
+        <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>{{ledgerheader2["projectname"]}}</strong></span><br>
       {% elif ledgerheader1["projectname"]!="" %}
-      <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
+        <span class="pull-left" style="margin:auto; display:table;"><i id="prjnamelbl3">{% trans %}Project{% endtrans %}</i> : <strong>None</strong></span><br>
       {% endif %}
-    
+      
       <table id="ledgertable2" class="table shadow table-bordered" >
         <thead class="bg-primary">
           <tr>
@@ -206,58 +215,66 @@
 	    </th>
             <th class="calign mdmwrap">{% trans %}V. No.{% endtrans %}</th>
             {% if ledgerheader2["projectname"]=="" %}
-            <th class="col-xs-3 calign">{% trans %}Particulars{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
+              <th class="col-xs-3 calign">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Balance{% endtrans %}</th>
             {% else %}
-            <th class="col-xs-5 calign">{% trans %}Particulars{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
-            <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
+              <th class="col-xs-5 calign">{% trans %}Particulars{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Debit{% endtrans %}</th>
+              <th class="col-xs-2 ralign">{% trans %}Credit{% endtrans %}</th>
             {% endif %}
           </tr>
         </thead>
         <tbody>
           {% for record in records2 %}
-          <tr  data-value="{{record['vouchercode']}}">
-            <td class="calign mdwrap">
-              {{record['voucherdate']}}
-            </td>
-            {% if record['vouchernumber']=="" %}
-            <td class="calign mdmwrap">
-              <a class="vno2" href="#">&nbsp</a>
-            </td>
-            {% else %}
-            <td class="calign mdmwrap">
-              <a class="vno2" href="#">{{record['vouchernumber']}}</a>
-            </td>
-            {% endif %}
-            {% if ledgerheader2["projectname"]=="" %}
-            <td class="col-xs-3">
-              {% for pr in record['particulars'] %}
-              {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-              {% endfor %}
-              {% if record['narration']!="" and narrationflag2==true %}
-              ({{record['narration']}})
+            <tr  data-value="{{record['vouchercode']}}">
+              <td class="calign mdwrap">
+                {{record['voucherdate']}}
+              </td>
+              {% if record['vouchernumber']=="" %}
+                <td class="calign mdmwrap">
+                  <a class="vno2" href="#">&nbsp</a>
+                </td>
+              {% else %}
+                <td class="calign mdmwrap">
+                  <a class="vno2" href="#">{{record['vouchernumber']}}</a>
+                </td>
               {% endif %}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Dr"]}}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["Cr"]}}
-            </td>
-            <td class="col-xs-2 ralign">
-              {{record["balance"]}}
-            </td>
-            {% else %}
-            <td class="col-xs-5">
-              {% for pr in record['particulars'] %}
-              {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-              {% endfor %}
-              {% if record['narration']!="" and narrationflag2==true %}
-              ({{record['narration']}})
-              {% endif %}
+              {% if ledgerheader2["projectname"]=="" %}
+                <td class="col-xs-3">
+                  {% for pr in record['particulars'] %}
+                    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+                  {% endfor %}
+                  {% if record['narration']!="" and narrationflag2==true %}
+                    ({{record['narration']}})
+                  {% endif %}
+                  {% if 'dcinfo' in record and billentryflag1==true %}
+                    ({{record['dcinfo']}}) 
+                  {% endif %}
+
+                </td>
+                <td class="col-xs-2 ralign">
+                  {{record["Dr"]}}
+                </td>
+                <td class="col-xs-2 ralign">
+                  {{record["Cr"]}}
+                </td>
+                <td class="col-xs-2 ralign">
+                  {{record["balance"]}}
+                </td>
+              {% else %}
+                <td class="col-xs-5">
+                  {% for pr in record['particulars'] %}
+                    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+                  {% endfor %}
+                  {% if record['narration']!="" and narrationflag2==true %}
+                    ({{record['narration']}})
+                  {% endif %}
+                  {% if 'dcinfo' in record and billentryflag1==true %}
+                    ({{record['dcinfo']}}) 
+                  {% endif %}
+
             </td>
             <td class="col-xs-2 ralign">
               {{record["Dr"]}}

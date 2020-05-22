@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -23,6 +23,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Bhavesh Bawadhane" <bbhavesh07@gmail.com>
+'Rupali Badgujar' <rupali.badgujar@accionlabs.com>
 */
 // this script is for monthly ledger report.
 $(document).ready(function() {
@@ -110,7 +111,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":5,"accountcode":$("#accountcode").val(),"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+        data: {"backflag":5,"accountcode":$("#accountcode").val(),"calculatefrom":newfromdate,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

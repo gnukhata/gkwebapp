@@ -141,7 +141,7 @@ $(document).ready(function() {
 				global: false,
 				async: false,
 				datatype: "text/html",
-				data: {"backflag":$("#trialbaltype").val(),"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false},
+			    data: {"backflag":$("#trialbaltype").val(),"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
 				beforeSend: function(xhr)
 				{
 					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
