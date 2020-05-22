@@ -3059,7 +3059,7 @@ if (event.which == 13) {
 	  return false;
     }
 	if ($('#invoice_product_table_gst tbody tr:eq(' + curindex1 + ') td:eq(0) select option:visible').length >= 2){
-	    if($("#invoice_deliverynote option:selected").val() != ''){
+	    if($("#invoice_deliverynote option:selected").val() == ''){
 		$('#invoice_product_table_gst tbody').append('<tr>' + gsthtml + '</tr>');
 		if ($("#discountpercent").val() == 1){
 		    $(".discaddon").hide();
@@ -3082,11 +3082,11 @@ if (event.which == 13) {
 		setTimeout( function() { $('#invoice_product_table_gst tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus(); }, 25 );
 	    }
 	    else {
-		$("#accountno").focus().select();
+		$("#chkpaymentmode").focus().select();
 	    }
 	}
 	else {
-	    $("#accountno").focus().select();
+	    $("#chkpaymentmode").focus().select();
 	}
     }
 }
