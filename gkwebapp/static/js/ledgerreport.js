@@ -44,13 +44,13 @@ $(document).ready(function() {
 	var orderflag = $("#ledgerDate").attr("orderflag");
 	if ( orderflag == 1 ){
 	    $(this).find("#ledgerDate").attr("orderflag",4);
-	    var dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()};
+	    var dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()};
 	    if ($("#side").val()!="") {
 		dataset.side=$("#side").val();
 	    }
 	}else{
 	    $(this).find("#ledgerDate").attr("orderflag",1);
-	    dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val(),"orderflag":4};
+	    dataset = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val(),"orderflag":4,"billentryflag":$("#billentryflag").val()};
 	    if ($("#side").val()!="") {
 		dataset.side=$("#side").val();
 	    }
@@ -266,7 +266,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "text/html",
-                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
                 beforeSend: function(xhr)
                 {
                   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -287,7 +287,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "text/html",
-                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
                 beforeSend: function(xhr)
                 {
                   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -308,7 +308,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "text/html",
-                data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
                 beforeSend: function(xhr)
                 {
                   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -337,7 +337,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "text/html",
-                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
                 beforeSend: function(xhr)
                 {
                   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -358,7 +358,7 @@ $(document).ready(function() {
                 global: false,
                 async: false,
                 datatype: "text/html",
-                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+                data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
                 beforeSend: function(xhr)
                 {
                   xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -449,7 +449,7 @@ $(".search").children(".form-control").keyup(function(event){
 
 $("#printledger").click(function(event) {
   // shows printable version of the report.
-    var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val()};
+    var printdata = {"orgname": sessionStorage.getItem('orgn'), "fystart":sessionStorage.getItem('year1'), "fyend": sessionStorage.getItem('year2'), "backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(), "calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":false,"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()};
   if ($("#side").val()!="") {
     printdata.side=$("#side").val();
   }
@@ -486,7 +486,7 @@ $("#printledger").click(function(event) {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+        data: {"backflag":$("#backflag").val(),"side":"dr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -515,7 +515,7 @@ $("#printledger").click(function(event) {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+        data: {"backflag":$("#backflag").val(),"side":"cr","accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -544,7 +544,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()},
+          data: {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -615,7 +615,7 @@ $("#printledger").click(function(event) {
           global: false,
           async: false,
           datatype: "text/html",
-          data: {"backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":true,"narrationflag":false},
+          data: {"backflag":0,"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"monthlyflag":true,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
           beforeSend: function(xhr)
           {
             xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

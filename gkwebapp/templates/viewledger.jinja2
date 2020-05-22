@@ -1,137 +1,145 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
-  <style media="screen">
-  .shadow {
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-  }
-  label {
-		font-size: 90%;
-	}
-  </style>
-</head>
-<body>
-  <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
-    <div class="panel shadow">
-      <div class="panel-heading">
-        <h3 class="panel-title">{% trans %}View Ledger{% endtrans %}
-        <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#accModal"></i></h3>
-      </div>
-      <div class="panel-body" style="padding-top:5px">
-        <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
-          <label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
+  <head>
+    <meta charset="utf-8">
+    <title>{% trans %}GNUKhata{% endtrans %} | {% trans %}Ledger{% endtrans %}</title>
+    <style media="screen">
+    .shadow {
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+    label {
+	font-size: 90%;
+    }
+    </style>
+  </head>
+  <body>
+    <div style="padding-top:5px" class="container-fluid mainbox col-md-6 col-md-offset-3">
+      <div class="panel shadow">
+        <div class="panel-heading">
+          <h3 class="panel-title">{% trans %}View Ledger{% endtrans %}
+            <i class="fa fa-question-circle pull-right" style="font-size:16px;color:white;"data-toggle="modal" data-target="#accModal"></i></h3>
         </div>
-        <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
-
-          <label for="viewledger_fromdate">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
-
-          <label for="viewledger_todate">{% trans %}From Date should be smaller or equal to To Date !{% endtrans %}</label>
-        </div>
-        <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
-
-          <label for="viewledger_accname">{% trans %}Please select an account!{% endtrans %}</label>
-        </div>
-        <div style="margin-bottom: 5px" class="col-xs-12 from-group">
-          <label for="viewledger_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewledger_accname"" style="color:red;font-size: 120%;">*</label>
-          <div class="dropdown searchabledropdown" data-input-id="viewledger-input" data-button-id="viewledger">
-	    <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewledger_accname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-	      {% trans %}Select Account{% endtrans %}
-	      <span class="caret"></span>
-	    </button>
-	    <ul class="dropdown-menu selectdropdown" aria-labelledby="viewledger-label" id="viewledger-ul">
-	      <li><input id="viewledger-input" class="form-control selectinput" /></li>
-	      {% for accs in gkresult %}
-                <li><a class="viewledger-option selectdropdown" href="#" data-value="{{accs['accountcode']}}">{{accs["accountname"]}}</a></li>
-              {% endfor %}
-	    </ul>
-	  </div>
-          <br>
-          <label> <input type="checkbox" id="viewledger_monthly">{% trans %}Monthly Ledger{% endtrans %}</label>
-          <br>
-
-	  <div class="row">
-	    <div class="col-sm-6">
-          <label for="viewledger_fromdate">{% trans %}From Date{% endtrans %} :</label>
-          <div class="form-inline" >
-
-            <div class="form-group">
-
-              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
-              <input type="text" id="viewledger_frommonth" class="viewledger_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
-              <input type="text" id="viewledger_fromyear" class="viewledger_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
-            </div>
-
+        <div class="panel-body" style="padding-top:5px">
+          <div class="alert alert-danger" id="date-alert" aria-live="rude" role="alert" hidden>
+            <label for="viewledger_fromdate">{% trans %}Please enter date in proper format!{% endtrans %}</label>
           </div>
+          <div class="alert alert-danger" id="between-date-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="viewledger_fromdate">{% trans %}Please enter date from within the financial year!{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="compare-date-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="viewledger_todate">{% trans %}From Date should be smaller or equal to To Date !{% endtrans %}</label>
+          </div>
+          <div class="alert alert-danger" id="account-blank-alert" aria-live="rude" role="alert" hidden>
+
+            <label for="viewledger_accname">{% trans %}Please select an account!{% endtrans %}</label>
+          </div>
+          <div style="margin-bottom: 5px" class="col-xs-12 from-group">
+            <label for="viewledger_accname">{% trans %}Account Name{% endtrans %} :</label><label for="viewledger_accname"" style="color:red;font-size: 120%;">*</label>
+            <div class="dropdown searchabledropdown" data-input-id="viewledger-input" data-button-id="viewledger">
+	      <button class="btn btn-default dropdown-toggle selectdropdown" type="button" id="viewledger_accname" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+	        {% trans %}Select Account{% endtrans %}
+	        <span class="caret"></span>
+	      </button>
+	      <ul class="dropdown-menu selectdropdown" aria-labelledby="viewledger-label" id="viewledger-ul">
+	        <li><input id="viewledger-input" class="form-control selectinput" /></li>
+	        {% for accs in gkresult %}
+                  <li><a class="viewledger-option selectdropdown" href="#" data-value="{{accs['accountcode']}}">{{accs["accountname"]}}</a></li>
+                {% endfor %}
+	      </ul>
 	    </div>
-	  <div class="col-sm-6">
-          <label for="viewledger_todate">{% trans %}To Date{% endtrans %} :</label>
-          <div class="form-inline" >
+            <br>
+            <label> <input type="checkbox" id="viewledger_monthly">{% trans %}Monthly Ledger{% endtrans %}</label>
+            <br>
 
-            <div class="form-group">
+	    <div class="row">
+	      <div class="col-sm-6">
+                <label for="viewledger_fromdate">{% trans %}From Date{% endtrans %} :</label>
+                <div class="form-inline" >
 
-              <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_todate" value="" size="2" maxlength="2" placeholder="DD" >
-              <input type="text" id="viewledger_tomonth" class="viewledger_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" >
-              <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
+                  <div class="form-group">
+
+                    <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_fromdate" value="" size="2" maxlength="2" placeholder="DD" accesskey="d" >
+                    <input type="text" id="viewledger_frommonth" class="viewledger_date dis form-control input-sm" value="" size="2" maxlength="2" placeholder="MM" >
+                    <input type="text" id="viewledger_fromyear" class="viewledger_date dis form-control input-sm" value="" size="4" maxlength="4" placeholder="YYYY" >
+                  </div>
+
+                </div>
+	      </div>
+	      <div class="col-sm-6">
+                <label for="viewledger_todate">{% trans %}To Date{% endtrans %} :</label>
+                <div class="form-inline" >
+
+                  <div class="form-group">
+
+                    <input type="text" class="viewledger_date form-control input-sm dis" id="viewledger_todate" value="" size="2" maxlength="2" placeholder="DD" >
+                    <input type="text" id="viewledger_tomonth" class="viewledger_date form-control input-sm dis" value="" size="2" maxlength="2" placeholder="MM" >
+                    <input type="text" id="viewledger_toyear" class="viewledger_date form-control input-sm dis" value="" size="4" maxlength="4" placeholder="YYYY" >
+                  </div>
+                </div>
+	      </div>
+	    </div>
+            <br>
+	    <div class="row row-no-gutters">
+              <div class="col-sm-6">
+                <label> <input type="checkbox" class="dis" id="viewledger_nar" >{% trans %}Narration{% endtrans %}</label>
+              </div>
+              <div class="col-sm-6">
+                <label> <input type="checkbox" class="dis" id="viewledger_billentry" >{% trans %}Show Billwise Details{% endtrans %}</label>
+              </div>
+            </div>
+            <br>   
+            
+            {% if projects %}
+              <label id="prjnamelbl" for="viewledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
+                <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" >
+                  <option value="" selected>{% trans %}None{% endtrans %}</option>
+                  {% for prj in projects %}
+                    <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
+                  {% endfor %}
+                </select>
+              {% endif %}
             </div>
           </div>
-	  </div>
-	  </div>
-          <br>
-          <label> <input type="checkbox" class="dis" id="viewledger_nar" >{% trans %}Narration{% endtrans %}</label>
-          <br>
-          {% if projects %}
-          <label id="prjnamelbl" for="viewledger_prjname">{% trans %}Project Name{% endtrans %} :</label>
-          <select class = "form-control input-sm dis" id="viewledger_prjname"  name = "viewledger_prjname" >
-            <option value="" selected>{% trans %}None{% endtrans %}</option>
-            {% for prj in projects %}
-            <option value="{{prj['projectcode']}}">{{prj["projectname"]}}</option>
-            {% endfor %}
-          </select>
-          {% endif %}
+          <div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 100px; margin-left:325px;"  aria-hidden="true">
+            <div class="modal-dialog bgcolor " >
+              <div class="modal-content ">
+                <div class="modal-header">
+                  {% trans %}<strong>Help!</strong>{% endtrans %}
+                  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                  </button> </div>
+                <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
+
+                  <p>   <font color=" #566573"> {%trans%}
+                    <b>Single</b></br>
+                    Select name of the account to be viewed. The default option is Monthly Ledger.<br> Press Space Bar to view it or press Enter or Tab key to escape it and view report for any period.</br> The report could be viewed with or without narration. This report gives Date, V. No., Status, Type of Voucher, Name of the corresponding account, Narration, Amount and running balance of account.
+            The locked records are marked by a sign of *** in the Status column.
+            Drill Down facility is available where you can double click or press enter key on any transaction to view it and/or modify it. After any modification the ledger report immediately reflects the chnages.
+            It can be viewed in entirety or for a Project or Cost Center.
+            You can view only Debit transactions or Credit Transactions of a Ledger account.
+            <b>Dual Ledgers</b></br>
+            When a Ledger Account appears on the screen, press Shift + Alt + l to view another Ledger Account simultaneously. Select another Ledger account, choose period and press Enter. You can view the same account side by side but for a different period.
+            Drill Down facility is available for both the accounts.
+            Each Ledger Account of the dual ledgers has a separate Quick Search facility.
+            All users can view this report.
+            This report is unique to GNUKhata.{% endtrans %} </font>
+
+                  </p>
+                </div>
+
+              </div>
+            </div>
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
+            <button id="viewledger_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
+            <button id="report_back" class="btn btn-danger btn-sm" accesskey="k">{% trans %}Bac<u>k</u>{% endtrans %}</button>
+
+
         </div>
       </div>
-        <div id="accModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 100px; margin-left:325px;"  aria-hidden="true">
-  <div class="modal-dialog bgcolor " >
-    <div class="modal-content ">
-    <div class="modal-header">
-      {% trans %}<strong>Help!</strong>{% endtrans %}
-   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button> </div>
-      <div class="modal-body" style="text-align: justify; text-justify: inter-word;">
-
-       <p>   <font color=" #566573"> {%trans%}
-<b>Single</b></br>
-Select name of the account to be viewed. The default option is Monthly Ledger.<br> Press Space Bar to view it or press Enter or Tab key to escape it and view report for any period.</br> The report could be viewed with or without narration. This report gives Date, V. No., Status, Type of Voucher, Name of the corresponding account, Narration, Amount and running balance of account.
-The locked records are marked by a sign of *** in the Status column.
-Drill Down facility is available where you can double click or press enter key on any transaction to view it and/or modify it. After any modification the ledger report immediately reflects the chnages.
-It can be viewed in entirety or for a Project or Cost Center.
-You can view only Debit transactions or Credit Transactions of a Ledger account.
-<b>Dual Ledgers</b></br>
-When a Ledger Account appears on the screen, press Shift + Alt + l to view another Ledger Account simultaneously. Select another Ledger account, choose period and press Enter. You can view the same account side by side but for a different period.
-Drill Down facility is available for both the accounts.
-Each Ledger Account of the dual ledgers has a separate Quick Search facility.
-All users can view this report.
-This report is unique to GNUKhata.{% endtrans %} </font>
-
-        </p>
-      </div>
-
-    </div>
-  </div>
-</div>
-      <div class="panel-footer">
-        <button class="btn btn-primary btn-sm" id="viewledger_submit" name="view" accesskey="v">{% trans %}<i class="fa fa-eye" aria-hidden="true"></i> <u>V</u>iew{% endtrans %}</button>
-        <button id="viewledger_reset" class="btn btn-danger btn-sm" accesskey="e">{% trans %}<i class="fa fa-refresh" aria-hidden="true"></i> R<u>e</u>set{% endtrans %}</button>
-        <button id="report_back" class="btn btn-danger btn-sm" accesskey="k">{% trans %}Bac<u>k</u>{% endtrans %}</button>
-
-
-      </div>
-    </div>
   </div>
   <script type="text/javascript" src="{{request.static_url('gkwebapp:static/js/viewledger.js')}}"></script>
 </body>
