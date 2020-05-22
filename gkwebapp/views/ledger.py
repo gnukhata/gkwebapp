@@ -351,6 +351,7 @@ def showledgerreport(request):
         narrationflag = True
     else:
         narrationflag = False
+    print (request.params["billentryflag"])
     if request.params["billentryflag"]=="true":
         billentryflag = True
     else:

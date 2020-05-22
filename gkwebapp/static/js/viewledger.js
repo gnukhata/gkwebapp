@@ -63,7 +63,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+        return str;
     }
   }
   function yearpad (str, max) { //to add leading 20 or 200 to year
@@ -75,7 +75,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+        return str;
     }
   }
   $("#viewledger_fromdate").blur(function(event) {
