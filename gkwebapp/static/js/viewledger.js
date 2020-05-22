@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -48,14 +48,14 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
   });
 
 	// Setting default date to financialstart and end.
-  var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g)
-  $("#viewledger_fromdate").val(fromdatearray[2])
-  $("#viewledger_frommonth").val(fromdatearray[1])
-  $("#viewledger_fromyear").val(fromdatearray[0])
-  var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g)
-  $("#viewledger_todate").val(todatearray[2])
-  $("#viewledger_tomonth").val(todatearray[1])
-  $("#viewledger_toyear").val(todatearray[0])
+    var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
+    $("#viewledger_fromdate").val(fromdatearray[2]);
+    $("#viewledger_frommonth").val(fromdatearray[1]);
+    $("#viewledger_fromyear").val(fromdatearray[0]);
+    var todatearray = sessionStorage.yyyymmddyear2.split(/\s*\-\s*/g);
+    $("#viewledger_todate").val(todatearray[2]);
+    $("#viewledger_tomonth").val(todatearray[1]);
+    $("#viewledger_toyear").val(todatearray[0]);
 
   function pad (str, max) { //to add leading zeros in date
     str = str.toString();
@@ -149,7 +149,18 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
     }
   });
 
-  $("#viewledger_nar").keydown(function(e){
+    $("#viewledger_nar").keydown(function(e){
+        if(e.which==13){
+      $('#viewledger_billentry').focus();
+      event.preventDefault();
+    }
+    if(e.which==38){
+      $("#viewledger_toyear").focus().select();
+    event.preventDefault();
+    }
+  });
+  $("#viewledger_billentry").keydown(function(e){
+
     if(e.which==13){
       if (  $('#viewledger_prjname').val()== undefined) {
       $('#viewledger_submit').click();
@@ -168,7 +179,7 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
   $("#viewledger_prjname").keydown(function(e){
     var s1 = $("#viewledger_prjname option:selected").index();
     if(e.which==38 && s1==0){
-      $("#viewledger_nar").focus();
+    $("#viewledger_billentry").focus();
     event.preventDefault();
     }
   });
@@ -377,7 +388,8 @@ if (sessionStorage.orgt=="Profit Making") { // changing headings and messages de
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":0,"accountcode":$("#viewledger_accname").data("value"),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":prj,"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked")},
+          data: {"backflag":0,"accountcode":$("#viewledger_accname").data("value"),"calculatefrom":$("#viewledger_fromyear").val()+"-"+$("#viewledger_frommonth").val()+"-"+$("#viewledger_fromdate").val(),"calculateto":$("#viewledger_toyear").val()+"-"+$("#viewledger_tomonth").val()+"-"+$("#viewledger_todate").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":prj,"monthlyflag":$("#viewledger_monthly").is(":checked"),"narrationflag":$("#viewledger_nar").is(":checked"),"billentryflag":$("#viewledger_billentry").is(":checked")},
+
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

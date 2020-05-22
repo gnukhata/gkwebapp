@@ -86,6 +86,7 @@
     <input type="hidden" id="backflag" name="backflag" value="{{ledgerrefresh["backflag"]}}"></input>
     <input type="hidden" id="projectcode" name="projectcode" value="{{ledgerrefresh["projectcode"]}}"></input>
     <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
+    <input type="hidden" id="billentryflag" name="billentryflag" value="{{ledgerrefresh["billentryflag"]}}"></input>
     <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
     <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
     <input type="hidden" id="modalindex" value=""></input>
@@ -104,91 +105,96 @@
 	    <div class="col-md-4">
 	      <span class="text-right" style="margin:auto; display:table; padding-right:5px"><i>{% trans %}Period{% endtrans %}</i> : <strong>{{ledgerheader["calculatefrom"]}}</strong> {% trans %}to{% endtrans %} <strong>{{ledgerheader["calculateto"]}}</strong></span>
 	    </div>
+          </div>
+          <div class="col-md-3 input-group input-group-sm" style="margin-bottom:2px;">
+	    <span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
+	    </span>
+	    <input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
+	    <span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
+            </span>
+          </div>
       </div>
-      <div class="col-md-3 input-group input-group-sm" style="margin-bottom:2px;">
-	<span class="input-group-addon glyphicon glyphicon-search" id="reportsearchspan">
-	</span>
-	<input id="reportsearch" class="form-control" type="text" accesskey="s" placeholder="{% trans %}Quick Search{% endtrans %}"/>
-	<span class="input-group-addon glyphicon glyphicon-arrow-left" id="reportclearsearchspan" style="display:none;">
-    </span>
-  </div>
-  </div>
-    <div class="row" id="ledgertableouterdiv">
-      <table id="ledgertable" class="table shadow table-bordered">
-	<thead class="bg-primary">
-          <tr>
-            <th class="dtwrap calign" >
-	      {% trans %}Date{% endtrans %}
-	      {% if orderflag=="4" %}
-		<span  id="ledgerDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
-	      {% else %}
-		<span  id="ledgerDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
-	      {% endif %}
-	    </th>
-            <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
-            <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
-            <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>
-            {% if ledgerheader["projectname"]=="" %}
-              <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
-              <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
-              <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
-              <th class="dtwrap ralign">{% trans %}Balance{% endtrans %}</th>
-            {% else %}
-              <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
-              <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
-              <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
-            {% endif %}
-          </tr>
-	</thead>
-	<tbody>
-          {% for record in records %}
-            <tr  data-value="{{record['vouchercode']}}">
-              <td class="dtwrap calign">
-		{{record['voucherdate']}}
-              </td>
-              {% if record['vouchernumber']=="" %}
-		<td class="smwrap calign">
-		  <a class="vno" href="">&nbsp</a>
-		</td>
-              {% else %}
-		<td class="smwrap calign">
-		  <a class="vno" href="">{{record['vouchernumber']}}</a>
-		</td>
-              {% endif %}
-              {% if (record['status']) %}
-		<td class="smwrap calign cred">***</td>
-              {% else %}
-		{% if (record['status'])=="" %}
-		  <td class="smwrap calign" value="na"></td>
-		{%else%}
-		  <td class="smwrap calign cred"> </td>
-		{% endif %}
-              {% endif %}
-              {% if record["vouchertype"]=="" %}
-		<td class="mdwrap calign">&nbsp</td>
-              {% elif (record["vouchertype"]=="purchasereturn")%}
-		<td class="mdwrap calign">{% trans %}Purchase Return{% endtrans %}</td>
-              {% elif (record["vouchertype"]=="salesreturn")%}
-		<td class="mdwrap calign">{% trans %}Sale Return{% endtrans %}</td>
-              {% elif (record["vouchertype"]=="creditnote")%}
-		<td class="mdwrap calign">{% trans %}Credit Note{% endtrans %}</td>
-              {% elif (record["vouchertype"]=="debitnote")%}
-		<td class="mdwrap calign">{% trans %}Debit Note{% endtrans %}</td>
-              {% else %}
-		<td class="mdwrap calign" >
-		  {{(record["vouchertype"]).title()}}
-		</td>
-              {% endif %}
-
+      <div class="row" id="ledgertableouterdiv">
+        <table id="ledgertable" class="table shadow table-bordered">
+	  <thead class="bg-primary">
+            <tr>
+              <th class="dtwrap calign" >
+	        {% trans %}Date{% endtrans %}
+	        {% if orderflag=="4" %}
+		  <span  id="ledgerDate" class="glyphicon glyphicon-chevron-down pull-right" orderflag="4"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	        {% else %}
+		  <span  id="ledgerDate" class="glyphicon glyphicon-chevron-up pull-right" orderflag="1"  style="font-size:80%; margin: 5.5 auto; cursor: pointer;"></span>
+	        {% endif %}
+	      </th>
+              <th class="smwrap calign" >{% trans %}V. No.{% endtrans %}</th>
+              <th class="smwrap calign" >{% trans %}Status{% endtrans %}</th>
+              <th class="mdwrap calign">{% trans %}Type{% endtrans %}</th>
               {% if ledgerheader["projectname"]=="" %}
-
-		<td class="lngwrap">
-		  {% for pr in record['particulars'] %}
-		    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-		  {% endfor %}
-		  {% if record['narration']!="" and narrationflag==true %}
-		    <span style="font-size:0.9em">   ({{record['narration']}}) </span>
+                <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+                <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+                <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
+                <th class="dtwrap ralign">{% trans %}Balance{% endtrans %}</th>
+              {% else %}
+                <th class="lngwrap calign">{% trans %}Particulars{% endtrans %}</th>
+                <th class="dtwrap ralign">{% trans %}Debit{% endtrans %}</th>
+                <th class="dtwrap ralign">{% trans %}Credit{% endtrans %}</th>
+              {% endif %}
+            </tr>
+	  </thead>
+	  <tbody>
+            {% for record in records %}
+              <tr  data-value="{{record['vouchercode']}}">
+                <td class="dtwrap calign">
+		  {{record['voucherdate']}}
+                </td>
+                {% if record['vouchernumber']=="" %}
+		  <td class="smwrap calign">
+		    <a class="vno" href="">&nbsp</a>
+		  </td>
+                {% else %}
+		  <td class="smwrap calign">
+		    <a class="vno" href="">{{record['vouchernumber']}}</a>
+		  </td>
+                {% endif %}
+                {% if (record['status']) %}
+		  <td class="smwrap calign cred">***</td>
+                {% else %}
+		  {% if (record['status'])=="" %}
+		    <td class="smwrap calign" value="na"></td>
+		  {%else%}
+		    <td class="smwrap calign cred"> </td>
 		  {% endif %}
+                {% endif %}
+                {% if record["vouchertype"]=="" %}
+		  <td class="mdwrap calign">&nbsp</td>
+                {% elif (record["vouchertype"]=="purchasereturn")%}
+		  <td class="mdwrap calign">{% trans %}Purchase Return{% endtrans %}</td>
+                {% elif (record["vouchertype"]=="salesreturn")%}
+		  <td class="mdwrap calign">{% trans %}Sale Return{% endtrans %}</td>
+                {% elif (record["vouchertype"]=="creditnote")%}
+		  <td class="mdwrap calign">{% trans %}Credit Note{% endtrans %}</td>
+                {% elif (record["vouchertype"]=="debitnote")%}
+		  <td class="mdwrap calign">{% trans %}Debit Note{% endtrans %}</td>
+                {% else %}
+		  <td class="mdwrap calign" >
+		    {{(record["vouchertype"]).title()}}
+		  </td>
+                {% endif %}
+
+                {% if ledgerheader["projectname"]=="" %}
+
+		  <td class="lngwrap">
+		    {% for pr in record['particulars'] %}
+		      {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+		    {% endfor %}
+		    {% if record['narration']!="" and narrationflag==true %}
+		      <span style="font-size:0.9em">   ({{record['narration']}}) </span>
+		    {% endif %}
+                {% endif %}
+                {% if 'dcinfo' in record and billentryflag==true %}
+                  <span style="font-size:0.9em" > ({{record['dcinfo']}}) </span>
+                {% endif %}
+
 		</td>
 		{%if record["advflag"]==1%}
 		  <td class="dtwrap ralign cred">
@@ -216,6 +222,10 @@
 		  {% if record['narration']!="" and narrationflag==true %}
 		    <span style="font-size:0.9em" > ({{record['narration']}}) </span>
 		  {% endif %}
+                  {% if 'dcinfo' in record and billentryflag==true %}
+                    <span style="font-size:0.9em" > ({{record['dcinfo']}}) </span>
+                  {% endif %}
+
 		</td>
 		<td class="dtwrap ralign">
 		  {{record["Dr"]}}
