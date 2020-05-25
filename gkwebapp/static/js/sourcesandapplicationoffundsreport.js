@@ -63,8 +63,8 @@ $(document).ready(function() {
   var visibleaccount = $(".subgroupacc:visible").length;
   var account = $(".subgroupacc").length;
   var subgroup = $(".groupacc").length;
-  var accflag=0
-  var sbgrpflag=0
+    var accflag=0;
+    var sbgrpflag=0;
 
 $("#grpbtn").click(function(event){
 // This function only shows group balances, hides subgroup and accounts balances.
@@ -91,7 +91,7 @@ $("#grpbtn").click(function(event){
       $(this).hide();
       $("#grpbtn").show();
       $("#accbtn").show();
-      sbgrpflag=1
+      sbgrpflag=1;
       $('#satable tbody tr:first-child td:eq(0) a').focus();
   });
 
@@ -170,7 +170,8 @@ $("#grpbtn").click(function(event){
     				global: false,
     				async: false,
     				datatype: "text/html",
-    				data: {"backflag":8,"accountcode":grpcode,"calculatefrom":newfromdate,"calculateto":$("#cto").val(),"financialstart":sessionStorage.yyyymmddyear1,"projectcode":"","monthlyflag":false,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
+    			        data : {"backflag":6,"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val(),"monthlyflag":false,"narrationflag":false,"billentryflag":false},
+
     				beforeSend: function(xhr)
     				{
     					xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

@@ -111,7 +111,8 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"backflag":6,"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val(),"monthlyflag":false,"narrationflag":false,"billentryflag":$("#billentryflag").val()},
+        data: {"backflag":6,"accountcode":acccode,"calculatefrom":sessionStorage.yyyymmddyear1,"calculateto":newtodate,"financialstart":sessionStorage.yyyymmddyear1,"projectcode":$("#projectcode").val(),"projectname":$("#projectname").val(),"monthlyflag":false,"narrationflag":false,"billentryflag":false},
+
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
