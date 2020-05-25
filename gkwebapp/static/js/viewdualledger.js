@@ -5,7 +5,7 @@ Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
   GNUKhata is Free Software; you can redistribute it and/or modify
   it under the terms of the GNU Affero General Public License as
   published by the Free Software Foundation; either version 3 of
-  the License, or (at your option) any later version.and old.stockflag = 's'
+  the License, or (at your option) any later version.
 
   GNUKhata is distributed in the hope that it will be useful, but
   WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -58,7 +58,7 @@ $(document).ready(function() {
       return str.length < max ? pad("0" + str, max) : str;
     }
     else{
-      return str
+        return str;
     }
   }
   function yearpad (str, max) { //to add leading 20 or 200 to year
@@ -70,7 +70,7 @@ $(document).ready(function() {
       return str.length < max ? pad("20" + str, max) : str;
     }
     else{
-      return str
+        return str;
     }
   }
 
@@ -125,6 +125,17 @@ $(document).ready(function() {
         event.preventDefault();
       }
       if(e.which==38){
+$("#viewdualledger_nar").focus();
+      event.preventDefault();
+      }
+    });
+    $("#viewdualledger_billentry").keydown(function(e){
+
+        if(e.which==13){
+        $('#viewdualledger_billentry').focus();
+        event.preventDefault();
+      }
+      if(e.which==38){
         $("#viewdualledger_toyear").focus();
       event.preventDefault();
       }
@@ -160,7 +171,7 @@ $(document).ready(function() {
       $("#account-blank-alert").fadeTo(2250, 500).slideUp(500, function(){
         $("#account-blank-alert").hide();
       });
-      $('#viewdualledger_accname').focus()
+        $('#viewdualledger_accname').focus();
       return false;
     }
     if ($("#viewdualledger_fromyear").val()==0 ||$("#viewdualledger_frommonth").val()==0 ||$("#viewdualledger_fromdate").val()==0 ) {

@@ -187,13 +187,14 @@
 		    {% for pr in record['particulars'] %}
 		      {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
 		    {% endfor %}
-		    {% if record['narration']!="" and narrationflag==true %}
+		    {% if (record['narration']!="" and narrationflag==true) %}
 		      <span style="font-size:0.9em">   ({{record['narration']}}) </span>
+                      <br>
 		    {% endif %}
-                
-                {% if 'dcinfo' in record and billentryflag==true %}
-                  <span style="font-size:0.9em" > ({{record['dcinfo']}}) </span>
-                {% endif %}
+                    
+                    {% if ('dcinfo' in record.keys() and billentryflag=="true") %}
+                      <span style="font-size:0.9em;color:blue"> ({{record['dcinfo']}}) </span>
+                    {% endif %}
 
 		</td>
 		{%if record["advflag"]==1%}

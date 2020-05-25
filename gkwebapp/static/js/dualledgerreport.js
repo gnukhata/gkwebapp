@@ -25,6 +25,7 @@ Contributors:
 "Ishan Masdekar " <imasdekar@dff.org.in>
 "Navin Karkera" <navin@dff.org.in>
 "Reshma Bhatawadekar" <reshma_b@riseup.net>
+"Rupali Badgujar" <rupali.badgujar@accionlabs.com>
 */
 
 $(document).ready(function() {
@@ -34,16 +35,17 @@ $(document).ready(function() {
     $('.glyphicon').click(function () {
 	$(this).toggleClass("glyphicon-chevron-up").toggleClass("glyphicon-chevron-down"); // toggling the up and down
     });
-    
+
+    var dataset;
     //click event for sorting date.
     $('.dateorder1').click(function (e) {
 	var orderflag = $("#dualledgerDate1").attr("orderflag");
 	if ( orderflag == 1 ){
 	    $(this).find("#dualledgerDate1").attr("orderflag",4);
-	    var dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()};
+	     dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()};
 	}else{
 	    $(this).find("#dualledgerDate1").attr("orderflag",1);
-	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"orderflag":4};
+	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val(),"orderflag":4};
 	}
 	$.ajax({
 	    type: "POST",
@@ -73,10 +75,11 @@ $(document).ready(function() {
 	var orderflag = $("#dualledgerDate2").attr("orderflag");
 	if ( orderflag == 1 ){
 	    $(this).find("#dualledgerDate2").attr("orderflag",4);
-	    var dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()};
+	     dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()};
 	}else{
 	    $(this).find("#dualledgerDate2").attr("orderflag",1);
-	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"orderflag":4};
+	    dataset = {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val(),"orderflag":4};
+
 	}
 	$.ajax({
 	    type: "POST",
@@ -184,7 +187,6 @@ $(document).ready(function() {
 
     $.ajax(
       {
-
         type: "POST",
         url: "/viewvoucher",
         global: false,
@@ -221,11 +223,12 @@ $(document).ready(function() {
             global: false,
             async: false,
             datatype: "text/html",
-            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+              data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()
+},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-            },
+            }
           })
             .done(function(resp)
             {
@@ -238,7 +241,6 @@ $(document).ready(function() {
       $('#confirm_del').on('hidden.bs.modal', function (e)
       {
         $("#viewvc").html("");
-
         $.ajax(
           {
             type: "POST",
@@ -246,7 +248,7 @@ $(document).ready(function() {
             global: false,
             async: false,
             datatype: "text/html",
-            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -377,7 +379,7 @@ $(document).ready(function() {
             global: false,
             async: false,
             datatype: "text/html",
-            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()},
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -402,7 +404,8 @@ $(document).ready(function() {
             global: false,
             async: false,
             datatype: "text/html",
-            data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val()},
+             data: {"backflag":$("#backflag").val(),"accountcode2":$("#accountcode2").val(),"calculatefrom2":$("#calculatefrom2").val(),"calculateto2":$("#calculateto2").val(),"projectcode2":$("#projectcode2").val(),"monthlyflag2":"false","narrationflag2":$("#narrationflag2").val(),"billentryflag2":$("#billentryflag2").val(),"accountcode1":$("#accountcode1").val(),"calculatefrom1":$("#calculatefrom1").val(),"calculateto1":$("#calculateto1").val(),"financialstart":$("#financialstart").val(),"projectcode1":$("#projectcode1").val(),"monthlyflag1":"false","narrationflag1":$("#narrationflag1").val(),"billentryflag1":$("#billentryflag1").val()},
+
             beforeSend: function(xhr)
             {
               xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
@@ -427,7 +430,7 @@ $(document).ready(function() {
         global: false,
         async: false,
         datatype: "text/html",
-        data: {"financialstart":$("#financialstart").val(),"backflag":$("#backflag").val(),"accountcode":$("#accountcode2").val(),"calculatefrom":$("#calculatefrom2").val(),"calculateto":$("#calculateto2").val(),"projectcode":$("#projectcode2").val(),"monthlyflag":"false","narrationflag":$("#narrationflag2").val()},
+        data: {"financialstart":$("#financialstart").val(),"backflag":$("#backflag").val(),"accountcode":$("#accountcode2").val(),"calculatefrom":$("#calculatefrom2").val(),"calculateto":$("#calculateto2").val(),"projectcode":$("#projectcode2").val(),"monthlyflag":"false","narrationflag":$("#narrationflag2").val(),"billentryflag":$("#billentryflag2").val()},
         beforeSend: function(xhr)
         {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );

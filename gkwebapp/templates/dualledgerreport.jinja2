@@ -150,10 +150,11 @@
                   {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
                 {% endfor %}
                 {% if record['narration']!="" and narrationflag1==true %}
-                  ({{record['narration']}})
+                  <em> ({{record['narration']}}) </em>
+                  <br>
                 {% endif %}
                 {% if 'dcinfo' in record and billentryflag1==true %}
-                  ({{record['dcinfo']}}) 
+                  <span style="font-size:0.9em;color:blue">({{record['dcinfo']}}) </span>
                 {% endif %}
 
               </td>
@@ -172,10 +173,11 @@
                   {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
                 {% endfor %}
                 {% if record['narration']!="" and narrationflag1==true %}
-                  ({{record['narration']}})
+                  <em> ({{record['narration']}}) </em>
+                  <br>
                 {% endif %}
                 {% if 'dcinfo' in record and billentryflag1==true %}
-                  ({{record['dcinfo']}}) 
+                  <span style="font-size:0.9em;color:blue"> ({{record['dcinfo']}}) </span>
                 {% endif %}
 
               </td>
@@ -247,10 +249,11 @@
                     {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
                   {% endfor %}
                   {% if record['narration']!="" and narrationflag2==true %}
-                    ({{record['narration']}})
+                    <em> ({{record['narration']}}) </em>
                   {% endif %}
-                  {% if 'dcinfo' in record and billentryflag1==true %}
-                    ({{record['dcinfo']}}) 
+                  <br>
+                  {% if 'dcinfo' in record and billentryflag2==true %}
+                    <span style="font-size:0.9em;color:blue"> ({{record['dcinfo']}}) </span>
                   {% endif %}
 
                 </td>
@@ -269,10 +272,11 @@
                     {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
                   {% endfor %}
                   {% if record['narration']!="" and narrationflag2==true %}
-                    ({{record['narration']}})
+                    <em>  ({{record['narration']}})</em>
+                    <br>
                   {% endif %}
                   {% if 'dcinfo' in record and billentryflag1==true %}
-                    ({{record['dcinfo']}}) 
+                    <span style="font-size:0.9em;color:blue"> ({{record['dcinfo']}}) </span>
                   {% endif %}
 
             </td>
