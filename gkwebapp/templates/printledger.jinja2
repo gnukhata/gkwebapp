@@ -37,7 +37,9 @@
 	  <input type="hidden" id="narrationflag" name="narrationflag" value="{{ledgerrefresh["narrationflag"]}}"></input>
 	  <input type="hidden" id="projectname" name="projectname" value="{{ledgerrefresh["projectname"]}}"></input>
 	  <input type="hidden" id="side" name="side" value="{{ledgerrefresh["side"]}}"></input>
-		<div class="printorgdetails hidden-print" style="text-align:center;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
+          <input type="hidden" id="billentryflag" name="billentryflag" value="{{ledgerrefresh["billentryflag"]}}"></input>
+
+	  <div class="printorgdetails hidden-print" style="text-align:center;"><i>{% trans %}Ledger Account{% endtrans %}</i> : <b>{{ledgerheader["accountname"]}}</b>{% if ledgerheader["projectname"]!="" %}
 		<br><i id="prjlbl">{% trans %}Project{% endtrans %}</i> : <b>{{ledgerheader["projectname"]}}</b>
 		{% endif %}<br><i>{% trans %}Period{% endtrans %}</i> : <b>{{ledgerheader["calculatefrom"]}}</b> {% trans %}to{% endtrans %} <b>{{ledgerheader["calculateto"]}}</div></b>
     <br>
@@ -91,38 +93,42 @@
 						{% endif %}
 
 						<td class="col-xs-4">
-							{% for pr in record['particulars'] %}
-							{{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
-							{% endfor %}
-							{% if record.ttlRunDr %}
-								&nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total{% endtrans %} :</i><br>
-							{% endif %}
-							{% if record['narration']!="" and narrationflag==true %}
-							({{record['narration']}})
-							{% endif %}
+						  {% for pr in record['particulars'] %}
+						    {{pr['accountname']}} <span style="float:right;">{{pr['amount']}}</span> <br>
+						  {% endfor %}
+						  {% if record.ttlRunDr %}
+						    &nbsp&nbsp&nbsp&nbsp <i>{% trans %}Running Total{% endtrans %} :</i><br>
+						  {% endif %}
+						  {% if record['narration']!="" and narrationflag==true %}
+						    ({{record['narration']}})
+                                                    <br>
+						  {% endif %}
+                                                  {% if ('dcinfo' in record and billentryflag=="true") %}
+						    ({{record['dcinfo']}})
+						  {% endif %}                                                        
 						</td>
 						{%if record["advflag"]==1%}
-	          <td class="col-xs-2" style="text-align:right; color:red;">
-	            {% if record.Dr %}
-								<b>({{record["Dr"]}})</b>
-	            {% endif %}
-	          </td>
-	          <td class="col-xs-2" style="text-align:right; color:red;">
-							{% if record.Cr %}
-								<b>({{record["Cr"]}})</b>
-	            {% endif %}
-	          </td>
-	          {%else%}
-						<td class="col-xs-2" style="text-align:right">
-							{{record["Dr"]}}{% for pr in record['particulars'] %}
-								<br>
-							{% endfor %}<i><u>{{record["ttlRunDr"]}}</u></i>
-						</td>
-						<td class="col-xs-2" style="text-align:right">
-							{{record["Cr"]}}{% for pr in record['particulars'] %}
-								<br>
-							{% endfor %}<i><u>{{record["ttlRunCr"]}}</u></i>
-						</td>
+	                                          <td class="col-xs-2" style="text-align:right; color:red;">
+	                                            {% if record.Dr %}
+						      <b>({{record["Dr"]}})</b>
+	                                            {% endif %}
+	                                          </td>
+	                                          <td class="col-xs-2" style="text-align:right; color:red;">
+						    {% if record.Cr %}
+						      <b>({{record["Cr"]}})</b>
+	                                            {% endif %}
+	                                          </td>
+	                                        {%else%}
+						  <td class="col-xs-2" style="text-align:right">
+						    {{record["Dr"]}}{% for pr in record['particulars'] %}
+						    <br>
+						    {% endfor %}<i><u>{{record["ttlRunDr"]}}</u></i>
+						  </td>
+						  <td class="col-xs-2" style="text-align:right">
+						    {{record["Cr"]}}{% for pr in record['particulars'] %}
+						    <br>
+						    {% endfor %}<i><u>{{record["ttlRunCr"]}}</u></i>
+						  </td>
 						{% endif %}
 					</tr>
 					{% endfor %}
@@ -130,47 +136,47 @@
 			</table>
 			<span style="margin:auto; display:table;">
 			  <button class="btn btn-sm btn-danger hidden-print" type="button" id="printback" accesskey="k"><i class="fa fa-arrow-left" aria-hidden="true"></i> {% trans %}Bac<u>k</u>{% endtrans %}</button>
-				<button class="btn btn-sm btn-info hidden-print" type="button"	id="realprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
+			  <button class="btn btn-sm btn-info hidden-print" type="button"	id="realprint" accesskey="t"><i class="fa fa-print" aria-hidden="true"></i> {% trans %}Prin<u>t</u>{% endtrans %}</button>
 			</span>
 		</div>
 		<script type="text/javascript">
-			$(document).ready(function() {
-				oninvoice = 0;
-				$("#msspinmodal").modal("hide");
-				$("title").html("GNUKhata");
-				if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
-			    $("#prjlbl").html("Cost Center: ");
-					$("#prjlbl1").html("Cost Center: ");
-			  }
-				$("#printback").click(function(event) {
-					var backdata = {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val()};
-					if ($("#side").val()!="") {
-						backdata.side=$("#side").val();
-					}
-					$.ajax(
-						{
-							type: "POST",
-							url: "/showledgerreport",
-							global: false,
-							async: false,
-							datatype: "text/html",
-							data: backdata,
-							beforeSend: function(xhr)
-							{
-								xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-							}
-						})
-						.done(function(resp)
-						{
-							$("#info").html("");
-							$("#info").html(resp);
-						}
-					);
-				});
-				$("#realprint").click(function(event) {
-					window.print();
-				});
-			});
+		$(document).ready(function() {
+		  oninvoice = 0;
+		  $("#msspinmodal").modal("hide");
+		  $("title").html("GNUKhata");
+		  if (sessionStorage.orgt=="Profit Making") { // changing headings and messages depending on type of organisation.
+		    $("#prjlbl").html("Cost Center: ");
+		    $("#prjlbl1").html("Cost Center: ");
+		  }
+		  $("#printback").click(function(event) {
+		    var backdata = {"backflag":$("#backflag").val(),"accountcode":$("#accountcode").val(),"calculatefrom":$("#calculatefrom").val(),"calculateto":$("#calculateto").val(),"financialstart":$("#financialstart").val(),"projectcode":$("#projectcode").val(),"monthlyflag":$("#monthlyflag").val(),"narrationflag":$("#narrationflag").val(),"billentryflag":$("#billentryflag").val()};
+		    if ($("#side").val()!="") {
+		      backdata.side=$("#side").val();
+		    }
+		    $.ajax(
+		      {
+			type: "POST",
+			url: "/showledgerreport",
+			global: false,
+			async: false,
+			datatype: "text/html",
+			data: backdata,
+			beforeSend: function(xhr)
+			{
+			  xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+			}
+		    })
+		     .done(function(resp)
+		       {
+			 $("#info").html("");
+			 $("#info").html(resp);
+		       }
+		     );
+		  });
+		  $("#realprint").click(function(event) {
+		    window.print();
+		  });
+		});
 		</script>
 	</body>
 </html>

@@ -299,7 +299,7 @@ def printLedgerReport(request):
             length = len(transaction["particulars"])
             for i,k in enumerate(transaction["particulars"]):
                 if 'amount' in k:
-                    sheet['D'+str(row)] = k["accountname"]+' ('+k["amount"]+')'
+                    sheet['D'+str(row)] = k["accountname"]+' ('+str(k["amount"])+')'
                     sheet['D'+str(row)].font = Font(name='Liberation Serif', size='12',  bold=False)
                 else :
                     sheet['D'+str(row)] = k["accountname"]
@@ -310,6 +310,12 @@ def printLedgerReport(request):
             if narration != "":
                 row +=1
                 sheet['D'+str(row)] = "(" + narration + ")"
+                sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
+                sheet['D'+str(row)].alignment = Alignment(vertical='center')
+            if "dcinfo" in transaction:
+                dcin = transaction["dcinfo"]
+                row +=1
+                sheet['D'+str(row)] = "(" + dcin + ")"
                 sheet['D'+str(row)].font = Font(name='Liberation Serif', size='9', italic=True)
                 sheet['D'+str(row)].alignment = Alignment(vertical='center')
             row +=1
@@ -494,10 +500,10 @@ def printledger(request):
         narrationflag = True
     else:
         narrationflag = False
-    if request.params["billentryflag1"]=="true":
-        billentryflag1 = True
+    if request.params["billentryflag"]=="true":
+        billentryflag = True
     else:
-        billentryflag1 = False
+        billentryflag = False
 
     projectcode = request.params["projectcode"]
     ledgerrefresh = {"orgname":orgname,"fyear":fyear,"accountcode":accountcode,"calculatefrom":calculatefrom,"calculateto":calculateto,"financialstart":financialstart,"monthlyflag":monthlyflag,"backflag":int(backflag),"projectcode":projectcode,"narrationflag":request.params["narrationflag"],"billentryflag":request.params["billentryflag"]}
