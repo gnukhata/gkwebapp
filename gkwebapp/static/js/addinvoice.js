@@ -3139,7 +3139,7 @@ if (event.which == 13) {
 		$("#invoice_product_table_vat tbody tr:first td:eq(0) select").focus();
 		calculatevataxamt(curindex);
 	    });
-	    if ($("#invoice_product_table_vat tbody tr").length == 2) {
+	    if ($("#invoice_product_table_vat tbody tr").length == 1) {
 		$("#invoice_product_table_vat tbody tr:first td:eq(9) a.product_del").remove();
 	    }
 	}
@@ -3148,7 +3148,7 @@ if (event.which == 13) {
 	    $("#invoice_product_table_gst tbody tr:eq("+curindex+")").remove();
 	    $("#invoice_product_table_gst tbody tr:first td:eq(0) select").focus();
 	    calculategstaxamt(curindex);
-	    if ($("#invoice_product_table_gst tbody tr").length == 2) {
+	    if ($("#invoice_product_table_gst tbody tr").length == 1) {
 		$("#invoice_product_table_total tbody tr:first td:last a.product_del").remove();
 	    }
 	}
