@@ -3355,7 +3355,7 @@ if (event.which == 13) {
 				$(".discaddon").show();
 			    }
 			    // Disabling all fields again.
-			    $('.editdis').prop("disabled", true);
+			    $('.editdis, .product_del, .product_add').prop("disabled", true);
 			}
 		    }
 		});
@@ -3378,7 +3378,7 @@ if (event.which == 13) {
 	$("#invoice_edit").hide();
 	$("#invoice_editprint").hide();
 	$(".uploadclass").show();
-	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), #invoice_narration, select').prop("disabled", false);
+	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), #invoice_narration, select, .product_del, .product_add').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
 	    $(".custfield, .delchalfield, .supplydate, .custsupchange, #invoice_deliverynote, #invoicestate").prop("disabled", true);
 	}
