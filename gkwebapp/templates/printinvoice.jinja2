@@ -4,50 +4,55 @@
     <meta charset="utf-8">
     <title>GNUKhata</title>
     <style>
-     @page {
-	 size: 21cm 29.7cm;
-	 margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
-     }
-     td {
-	 font-size: 65%;
-	 padding: 2px !important;
-	 margin:  0 !important;
-     }
-     body {
-	 background-image: none;
-     }
-     th {
-	 font-size: 75%;
-	 padding: 3px !important;
-	 margin:  0 !important;
-     }
-     table { page-break-inside:auto }
-     tr    { page-break-inside:avoid; page-break-after:auto }
-     thead { display: table-header-group; }
-     tfoot { display: table-footer-group; }
-     .borderdiv {
-	 border-left-style:solid;
-	 border-width: 1px;
-     }
-     .nopadding {
-	 padding: 0 !important;
-	 margin: 0 !important;
-     }
-     div {
-	 font-size:95%;
-     }
-     .hborderdiv {
-	 border-top-style:solid;
-	 padding-top: 10px;
-	 border-width: 1px;
-     }
+    @page {
+	size: 21cm 29.7cm;
+	margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
+    }
+    td {
+	font-size: 65%;
+	padding: 2px !important;
+	margin:  0 !important;
+    }
+    body {
+	background-image: none;
+    }
+    th {
+	font-size: 75%;
+	padding: 3px !important;
+	margin:  0 !important;
+    }
+
+    ul li{
+        font-size: 13px;
+    }
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    .borderdiv {
+	border-left-style:solid;
+	border-width: 1px;
+    }
+    .nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+    }
+    div {
+	font-size:95%;
+    }
+    .hborderdiv {
+	border-top-style:solid;
+	padding-top: 10px;
+	border-width: 1px;
+    }
+    
     </style>
   </head>
   <body>
 	<input type="hidden" id="invid" value="{{ invid }}">
     <div class="container-fluid">
 		
-			<ul class="nav nav-pills nav-tabs hidden-print" role="tablist">
+	<ul class="nav nav-pills nav-tabs hidden-print" role="tablist">
         <li role="presentation" class="active"><a href="#printinvoice1" aria-controls="printinvoice1" role="tab" data-toggle="tab" accesskey="1">
 
         {% trans %}1{% endtrans %}

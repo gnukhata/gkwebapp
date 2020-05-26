@@ -4,87 +4,97 @@
     <meta charset="utf-8">
     <title>GNUKhata</title>
     <style>
-     @page {
-	 size: 21cm 29.7cm;
-	 margin: 10mm 3mm 15mm 10mm; /* change the margins as you want them to be. */
-     }
-     td {
-	 font-size: 65%;
-	 padding: 2px !important;
-	 margin:  0 !important;
-	 font-weight: normal !important;
-     }
-     body {
-	 background-image: none;
-     }
-     th {
-	 font-size: 75%;
-	 padding: 3px !important;
-	 margin:  0 !important;
-     }
-     table { page-break-inside:auto }
-     tr    { page-break-inside:avoid; page-break-after:auto }
-     thead { display: table-header-group; }
-     tfoot { display: table-footer-group; }
-     .borderdiv {
-	 border-left-style:solid;
-	 border-width: 1px;
-     }
-     .nopadding {
-	 padding: 0 !important;
-	 margin: 0 !important;
-     }
-     div {
-	 font-size:95%;
-     }
-     .hborderdiv {
-	 border-top-style:solid;
-	 padding-top: 10px;
-	 border-width: 1px;
-     }
+    
+
+    @page {
+        size: A4 potrait;
+    }
+
+    ff{
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    
+    
+    td {
+	font-size: 65%;
+	padding: 2px !important;
+	margin:  0 !important;
+	font-weight: normal !important;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    body {
+	background-image: none;
+    }
+    th {
+	font-size: 75%;
+	padding: 3px !important;
+	margin:  0 !important;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    table { page-break-inside:auto }
+    tr    { page-break-inside:avoid; page-break-after:auto }
+    thead { display: table-header-group; }
+    tfoot { display: table-footer-group; }
+    .borderdiv {
+	border-left-style:solid;
+	border-width: 1px;
+    }
+    .nopadding {
+	padding: 0 !important;
+	margin: 0 !important;
+    }
+    div {
+	font-size:95%;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+    .hborderdiv {
+	border-top-style:solid;
+	padding-top: 10px;
+	border-width: 1px;
+    }
     </style>
   </head>
-	<script>
-	$.ajax({
-        url: '/editorganisation?action=getattachment',
-        type: 'POST',
-        datatype: 'json',
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        },
-        data: {},
-    })
-    .done(function(resp) {
-          var imagesrc = "data:image/png;base64,"+resp["logo"];
+  <script>
+  $.ajax({
+    url: '/editorganisation?action=getattachment',
+    type: 'POST',
+    datatype: 'json',
+    beforeSend: function(xhr) {
+      xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+    },
+    data: {},
+  })
+   .done(function(resp) {
+     var imagesrc = "data:image/png;base64,"+resp["logo"];
 
 
-         if(resp["logo"]){
-        $("#imgbox1").attr("src", imagesrc);   
-         }
-         else{
-           $("#logo_div").hide();
-         }
+     if(resp["logo"]){
+       $("#imgbox1").attr("src", imagesrc);   
+     }
+     else{
+       $("#logo_div").hide();
+     }
 
-        console.log("success");
-    })
-    .fail(function() {
-        console.log("error");
-    })
-    .always(function() {
-        console.log("complete");
-    });
-	</script>
-	
+     console.log("success");
+   })
+   .fail(function() {
+     console.log("error");
+   })
+   .always(function() {
+     console.log("complete");
+   });
+  </script>
+  
   <body>
-	<input type="hidden" id="invid" value="{{ invid }}">
+    <input type="hidden" id="invid" value="{{ invid }}">
     <div class="container-fluid">
 
       <div class="hidden-print row text-center text-primary"style="font-size:100%">
 	<b style="font-size:10px">{% trans %}To avoid a URL appearing on your print please set 'Title' option to 'blank' in your browser's print settings. Sample setting for{% endtrans %} <a  href="{{request.static_url('gkwebapp:static/images/print.jpg')}}" target="_blank" class="text-danger"><u>{% trans %}Mozilla Firefox{% endtrans %}</u></a>.</b>
       </div>
-	<div class="row text-center">
-	  <h5><u id="print_heading"> TAX INVOICE - ORIGINAL FOR RECIPIENT</u></h5>
-	</div>
+      <div class="row text-center ff">
+	<h5><u id="print_heading"> TAX INVOICE - ORIGINAL FOR RECIPIENT</u></h5>
+      </div>
       <div class="row">
 	<div class="col-xs-3" id="logo_div">
 
@@ -94,7 +104,7 @@
             </div>
           </div>
 	</div>
-	<div class="col-xs-9 nopaddng"style="word-wrap: break-word;min-width: 50%;max-width: 50%; font-size:120%">
+	<div class="col-xs-9 nopaddng ff"style="word-wrap: break-word;min-width: 50%;max-width: 50%; font-size:100%">
 	  
 	  <h3 style="margin-top:10px !important;">{{org["orgname"]}}</h3>
 	  <span style="font-weight:bold !important ; font-size:small;">
@@ -431,15 +441,15 @@
 	    </tbody>
 	    <tfoot>
 	      <tr>
-		<td colspan="5" class="text-right" style="vertical-align:middle; font-size:75% ;font-weight: bold !important;">Total</td>
-		<td class="text-right">{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</td>
-		<td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
-		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		{% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		<td colspan="2" class="text-right">{{ gkresult["totalcessamt"] }}</td>
-		<td class="text-right">
-		  {{ gkresult["invoicetotal"] }}
+		<td colspan="5" class="text-right" style="vertical-align:middle;font-weight: bold !important;">Total</td>
+		<td class="text-right" style="vertical-align:middle;font-weight: bold !important;"><small>{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</small</td>
+		<td class="text-right" style="vertical-align:middle ;font-weight: bold !important;"><small>{{ gkresult["totaltaxablevalue"] }}</small></td>
+		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right" style="vertical-align:middle ;font-weight: bold !important;"><small>{{ gkresult["totaltaxamt"] }}</small></td>{% endif %}
+		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right" style="vertical-align:middle ;font-weight: bold !important;"><small>{{ gkresult["totaltaxamt"] }}</small></td>{% endif %}
+		{% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right" style="vertical-align:middle;font-weight: bold !important;"><small>{{ gkresult["totaltaxamt"] }}</small></td>{% endif %}
+		<td colspan="2" class="text-right" style="vertical-align:middle;font-weight: bold !important;"><small>{{ gkresult["totalcessamt"] }}</small></td>
+		<td class="text-right" style="vertical-align:middle;font-weight: bold !important;">
+		<small> {{ gkresult["invoicetotal"] }}</small>
 		</td>
 	      </tr>
 	    </tfoot>
@@ -451,7 +461,7 @@
 	<table class="col-sm-12 nopadding" >
 	  <tr>
 	    <td style="width:50%">
-	      <table class="table table-bordered table-condensed" >
+ 	      <table class="table table-bordered table-condensed" >
 		<tbody>
 		  <tr>
 		    <td>
@@ -526,7 +536,7 @@
 	      {% else %}
 		<br>
 		<div class="col-sm-12 nopadding">
-		  {% if gkresult["paymentmode"] | int ==3 %}{% if gkresult["inoutflag"] | int == 15 %}<b style="font-size:130%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>{% endif %}{% endif %}
+		  {% if gkresult["paymentmode"] | int ==3 %}{% if gkresult["inoutflag"] | int == 15 %}<b style="font-size:100%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>{% endif %}{% endif %}
 		  {% if gkresult["paymentmode"] | int ==15 %}{% trans %}ON CREDIT{% endtrans %}{% endif %}
 		</div><br>
 	      {% endif %}
@@ -652,8 +662,8 @@
       </div>
       <div class="text-center">
 	{% if gkresult["invoicetotalword"]!= None %}
-	  <label for="totalValueInWord" style="font-size:200% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-	  <i><label id="totalValueInWord"  style="font-size:200% !important; font-weight: normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+	  <label for="totalValueInWord" style="font-size:150% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
+	  <i><label id="totalValueInWord"  style="font-size:150% !important; font-weight: normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
 	{% endif %}
 	</div>
 	<br>
