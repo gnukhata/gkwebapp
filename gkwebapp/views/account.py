@@ -271,8 +271,6 @@ def addaccount(request):
     gkdata = {"accountname":request.params["accountname"],"openingbal":request.params["openbal"]}
     if "moredata" in request.params and "custname" in request.params["moredata"]:
         newgkdata["moredata"] = json.loads(request.params["moredata"])
-    else:
-        newgkdata["moredata"] = {}
     if ("defaultflag" in request.params and int(request.params["defaultflag"]) != 0) :
         gkdata["defaultflag"] = int(request.params["defaultflag"])
     if request.params["subgroupname"]=="New":
@@ -427,7 +425,7 @@ def subgroup(request):
     else:
         return{"gkstatus":result.json()["gkstatus"]}
 
-@view_config(route_name='import',request_param='action =accountimport',renderer="json")
+@view_config(route_name='import',request_param='action=accountimport',renderer="json")
 def accImpotrt(request):
     try:
         header={"gktoken":request.headers["gktoken"]}
