@@ -1806,6 +1806,7 @@ $(document).ready(function() {
 			console.log("success");
 			if (resp["gkstatus"] == 0) {
 			    // if($("#invoice_product_table_vat").is(":not(:hidden)")){
+			    let curindex = 0;
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_vat tbody').append('<tr>' + vathtml + '</tr>');
 				$('#invoice_product_table_vat tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
@@ -1820,7 +1821,10 @@ $(document).ready(function() {
 					$('#invoice_product_table_vat tbody tr:last td:eq(3) input').val(parseFloat(delchalContents[key].priceperunit).toFixed(2));
 				    $('#invoice_product_table_vat tbody tr:last td:eq(4) input').val(parseFloat(delchalContents[key].discount).toFixed(2));
 				}
+				calculatevataxamt(curindex);
+				curindex += 1;
 			    });
+			    curindex = 0;
 			    var productcode;
 			    $.each(resp.items, function(key, value) {
 				$('#invoice_product_table_gst tbody').append('<tr>'+ gsthtml + '</tr>');
@@ -1839,6 +1843,7 @@ $(document).ready(function() {
 				}
 				$("#invoice_product_table_total tbody").append('<tr>'+ totaltablehtml + '</tr>');
 				$('#invoice_product_table_total tbody tr:last td:last').append('<a href="#" class="product_del"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a>');
+				calculategstaxamt(curindex);
 			    });
 			    $(".product_name_gst, .product_name_vat, #invoicestate").change();
 			    $(".product_add").hide();

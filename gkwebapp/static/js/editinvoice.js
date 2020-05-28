@@ -3380,7 +3380,7 @@ if (event.which == 13) {
 	$(".uploadclass").show();
 	$('input:not(.trate, .tamount, .invoice_product_taxablevalue_vat, .invoice_product_tax_amount_vat, .invoice_product_total, .invoice_product_total_vat, #discounttotal_product_vat, #taxablevaluetotal_product_vat, #totaltax, #total_product_vat, .invoice_product_taxablevalue_gst, .invoice_product_total_gst), #invoice_narration, select, .product_del, .product_add').prop("disabled", false);
 	if($("#invoice_deliverynote option:selected").val() != ""){
-	    $(".custfield, .delchalfield, .supplydate, .custsupchange, #invoice_deliverynote, #invoicestate").prop("disabled", true);
+	    $(".custfield, .delchalfield, .supplydate, .custsupchange, #invoice_deliverynote, #invoicestate, .product_name_gst, .product_name_vat").prop("disabled", true);
 	}
 	$("#originaddress").prop("disabled",true);
 	$("#originpincode").prop("disabled",true);
