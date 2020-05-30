@@ -1089,7 +1089,7 @@ def printablestockonhandreport(request):
 
 @view_config(route_name="product",request_param="type=productimport", renderer="json")
 def ProductImport(request):
-    try:
+    #try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
@@ -1097,6 +1097,8 @@ def ProductImport(request):
         productSheet = wb.active
         productList = tuple(productSheet.rows)
         uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
+        uom_desc = [l["unitname"] for l in uom]
+        print (uom_desc)
         godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
         states = requests.get("http://127.0.0.1:6543/state", headers=header).json()["gkresult"]
         statesList=[]
@@ -1104,6 +1106,7 @@ def ProductImport(request):
         for state in states:
             for value in list(state.values()):
                 statesList.append(value)
+        print (statesList)
         proddetails={}
         godowns={}
         godownflag=False
@@ -1116,12 +1119,15 @@ def ProductImport(request):
         rowcount=0
         newrows=[]
         multipletax = False
+        openingstock = 0.00
         for productrow in productList[1:]:
-            # first row of spreadsheet has column headings. Skipping that row.  
+            # first row of spreadsheet has column headings. Skipping that row.
+            # checking for empty row
             if (productrow[0].value == None and productrow[1].value == None and productrow[2].value == None and productrow[3].value == None and productrow[4].value == None and productrow[5].value == None and productrow[6].value == None and productrow[7].value == None and productrow[8].value == None and productrow[9].value == None and productrow[10].value == None and productrow[11].value == None):
                 continue
             #new entry in name column encountered
-            if productrow[0].value != None: 
+            if productrow[0].value != None:
+                print (proddetails)
                 if len(proddetails)!=0:
                     temp={}
                     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
@@ -1136,7 +1142,7 @@ def ProductImport(request):
                     duplicateFlag=False
                     multipletax = False
 
-                if productrow[0].value != "product name":  
+                if (len(proddetails)== 0):  
                     newrows.append(rowcount)
                     print((productrow[0].value))
                     #Validations Begin
@@ -1146,6 +1152,14 @@ def ProductImport(request):
                     #No HSN code
                     if productrow[1].value==None:
                         errorlist.append(productrow[1].coordinate)
+                    if (productrow[2].value!= None and (str(productrow[2].value) not in uom_desc)):
+                        errorlist.append(productrow[2].coordinate)
+                    #Non float value for MRP.
+                    if productrow[3].value != None and not(is_number(str(productrow[3].value))):
+                        errorlist.append(productrow[3].coordinate)
+                    #Non float value for Sale Price
+                    if productrow[4].value != None and not(is_number(str(productrow[4].value))):
+                        errorlist.append(productrow[4].coordinate)
                     #Non float value for Discount in Amount.
                     if productrow[5].value != None and not(is_number(str(productrow[5].value))):
                         errorlist.append(productrow[5].coordinate)
@@ -1153,33 +1167,45 @@ def ProductImport(request):
                     if productrow[6].value != None and not(is_number(str(productrow[6].value))):
                         errorlist.append(productrow[6].coordinate)
                     #Improper taxname
-                    if productrow[7].value != None and str(productrow[7].value) not in ["GST","VAT", "CVAT"]:
+                    if productrow[7].value != None and (str(productrow[7].value) not in ["GST","VAT","CVAT","CESS"]):
                         errorlist.append(productrow[7].coordinate)
-                    #Null tax rate
-                    if productrow[7].value !=None and productrow[9].value==None:
+                    #Null tax rate and non numeric
+                    if productrow[7].value !=None and (productrow[9].value==None or not(is_number(str(productrow[9].value))) or int(productrow[9].value) == 0):
                         errorlist.append(productrow[9].coordinate)
-                    #Non float tax rate
-                    if productrow[9].value != None and not(is_number(str(productrow[9].value))):
-                        errorlist.append(productrow[9].coordinate)
-                    if productrow[9].value != None and is_number(str(productrow[9].value)) and int(productrow[9].value) == 0:
-                        errorlist.append(productrow[9].coordinate)
-                    #Non float godown openingstock
-                    if productrow[11].value != None and not(is_number(str(productrow[11].value))):
-                        errorlist.append(productrow[11].coordinate)
+
+                    #No or wrong name of state for VAT
+                    if productrow[7].value=="VAT" and (productrow[8].value==None or (str(productrow[8].value) not in statesList)):
+                        errorlist.append(productrow[8].coordinate)
+                        
+                    #Sate not specified for VAT tax.
+                    if (productrow[7].value=="VAT") and productrow[8].value==None: 
+                        errorlist.append(productrow[8].coordinate)
                     #Sate specified for non VAT tax.
                     if productrow[7].value!="VAT" and productrow[8].value!=None: 
                         errorlist.append(productrow[8].coordinate)
-                    #No or wrong name of state for VAT
-                    if productrow[7].value=="VAT" and (productrow[8].value==None or productrow[8].value not in statesList):
-                        errorlist.append(productrow[8].coordinate)
+                        
+                    #Non float tax rate
+                    #if productrow[9].value != None and not(is_number(str(productrow[9].value))):
+                    #    errorlist.append(productrow[9].coordinate)
+                    #if productrow[9].value != None and is_number(str(productrow[9].value)) and int(productrow[9].value) == 0:
+                    #    errorlist.append(productrow[9].coordinate)
+
+                    #Non float godown openingstock
+                    if productrow[11].value != None and not(is_number(str(productrow[11].value))):
+                        errorlist.append(productrow[11].coordinate)   
+                    
                     #Improper GST Rate
-                    if productrow[7].value=="GST" and str(productrow[9].value) not in gstrate:
+                    print ("validations........")
+                    print (str(productrow[9].value))
+                    if productrow[7].value=="GST" and (str(productrow[9].value) not in gstrate):
                         errorlist.append(productrow[9].coordinate)
                     for taxdict in taxes:
+                        print ("************")
+                        print ()
                         taxdicttaxname = taxdict["taxname"]
                         if taxdicttaxname == "IGST":
                             taxdicttaxname = "GST"
-                        if productrow[7].value!=None and productrow[7].value!="VAT" and productrow[7].value == taxdicttaxname:
+                        if productrow[7].value!=None and productrow[7].value!= "VAT" and productrow[7].value == taxdicttaxname:
                             multipletax = True
                             errorlist.append(productrow[7].coordinate)
                     #Validations End.
@@ -1210,26 +1236,26 @@ def ProductImport(request):
                     proddetails["specs"] = {}
                     if productrow[2].value !=None :
                         proddetails["gsflag"]=7
-                        for i in uom:
-                            if i["description"]==productrow[2].value:
-                                uomid=i["uomid"]
-                                break
+                        if productrow[11].value!=None:
+                            proddetails["openingstock"] =productrow[11].value
+                        else:
+                            proddetails["openingstock"] = 0.00
                         try:
-                            proddetails["uomid"] = uomid
+                            u_id = list(filter(lambda m: m['unitname'] == str(productrow[2].value), uom))
+                            print (u_id[0]["uomid"])
+                            proddetails["uomid"] = u_id[0]["uomid"]
                         except:
+                            print ("dangerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrruuuuuuuuuuuu")
                             errorlist.append(productrow[2].coordinate)  
                     else:        
                         proddetails["gsflag"] = 19
-                    #proddetails["openingstock"]=0.00
-                    if productrow[11].value!=None:
-                        proddetails["openingstock"] =productrow[11].value
-                    else:
                         proddetails["openingstock"] = 0.00
-
+                    
                     if productrow[7].value!=None and productrow[9].value != None and productrow[9].value != 0 and not multipletax:
                         #tax dictionary generation
                         tax={}
-                        if productrow[7].value=="GST": #if GST then no state should be mentioned
+                        
+                        if productrow[7].value=="GST": 
                             tax["state"]=None
                             tax["taxname"]="IGST"
                         if productrow[7].value=="VAT":                                            
@@ -1238,9 +1264,13 @@ def ProductImport(request):
                         if productrow[7].value == "CVAT":
                             tax["taxname"] = "CVAT"
                             tax["state"]= None
-                        tax["taxrate"]= productrow[9].value
+                        if productrow[7].value == "CESS":
+                            tax["taxname"] = "CESS"
+                            tax["state"]= None
+                        tax["taxrate"]= float(productrow[9].value)
                         if len(tax) > 0:
                             taxes.append(tax)
+                            
                     #godown dictionary generation
                     if productrow[10].value!=None:
                         print((productrow[10].value))
@@ -1261,7 +1291,7 @@ def ProductImport(request):
                 # if multiple tax or godowns exist
                 #Validations Begin
                 #Improper taxname
-                if productrow[7].value != None and str(productrow[7].value) not in ["GST","VAT", "CVAT"]:
+                if productrow[7].value != None and str(productrow[7].value) not in ["GST","VAT", "CVAT","CESS"]:
                     errorlist.append(productrow[7].coordinate)
                 #Null tax rate
                 if productrow[7].value !=None and productrow[9].value==None:
@@ -1287,14 +1317,16 @@ def ProductImport(request):
                     taxdicttaxname = taxdict["taxname"]
                     if taxdicttaxname == "IGST":
                         taxdicttaxname = "GST"
-                    if productrow[7].value!=None and productrow[7].value!="VAT" and productrow[7].value == taxdicttaxname:
+                    if productrow[7].value!=None and productrow[7].value != "VAT" and productrow[7].value == taxdicttaxname:
                         multipletax = True
                         errorlist.append(productrow[7].coordinate)
                 #Validations End.
                 if productrow[7].value!=None and productrow[9].value != None and productrow[9].value != 0 and not multipletax:
                     #tax dictionary generation
                     tax={}
-                    if productrow[7].value=="GST": #if GST then no state should be mentioned
+                    #if GST , CVAT , CESS then no state should be mentioned
+                    print (productrow[7].value)
+                    if productrow[7].value=="GST": 
                         tax["state"]=None
                         tax["taxname"]="IGST"
                     if productrow[7].value=="VAT":
@@ -1303,8 +1335,11 @@ def ProductImport(request):
                     if productrow[7].value == "CVAT":
                         tax["taxname"] = "CVAT"
                         tax["state"]= None
+                    if productrow[7].value == "CESS":
+                        tax["taxname"] = "CESS"
+                        tax["state"]= None
                     tax["taxrate"] = productrow[9].value
-
+                    print (tax)
                     if len(tax) > 0:
                         taxes.append(tax)     
                             #godown dictionary generation               
@@ -1383,8 +1418,8 @@ def ProductImport(request):
             return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
         else:
             return {"gkstatus":0}
-    except Exception as e:
-        try:
-            return {"gkstatus":result.json()["gkstatus"]}
-        except:
-            return {"gkstatus":3}
+   # except Exception as e:
+   #     try:
+   #         return {"gkstatus":result.json()["gkstatus"]}
+   #     except:
+   #         return {"gkstatus":3}
