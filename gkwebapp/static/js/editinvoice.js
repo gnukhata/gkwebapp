@@ -1322,11 +1322,6 @@ $(document).ready(function() {
 	$(".numtype").numeric({ negative: false });
     });
 
-    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $("#accountno").numeric({ negative: false });
-    });
 
     //When an element of numtype looses focus and is blank it is set to 0.00.
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
