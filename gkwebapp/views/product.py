@@ -1089,7 +1089,7 @@ def printablestockonhandreport(request):
 
 @view_config(route_name="product",request_param="type=productimport", renderer="json")
 def ProductImport(request):
-    #try:
+    try:
         header={"gktoken":request.headers["gktoken"]}
         xlsxfile = request.POST['xlsxfile'].file
         wb= load_workbook(xlsxfile)
@@ -1098,7 +1098,6 @@ def ProductImport(request):
         productList = tuple(productSheet.rows)
         uom = requests.get("http://127.0.0.1:6543/unitofmeasurement?qty=all", headers=header).json()["gkresult"]
         uom_desc = [l["unitname"] for l in uom]
-        print (uom_desc)
         godown = requests.get("http://127.0.0.1:6543/godown", headers=header).json()["gkresult"]
         states = requests.get("http://127.0.0.1:6543/state", headers=header).json()["gkresult"]
         statesList=[]
@@ -1106,7 +1105,7 @@ def ProductImport(request):
         for state in states:
             for value in list(state.values()):
                 statesList.append(value)
-        print (statesList)
+        flag = 0
         proddetails={}
         godowns={}
         godownflag=False
@@ -1127,7 +1126,6 @@ def ProductImport(request):
                 continue
             #new entry in name column encountered
             if productrow[0].value != None:
-                print (proddetails)
                 if len(proddetails)!=0:
                     temp={}
                     productdetails = {"productdetails":proddetails, "godetails":godowns, "godownflag":godownflag}
@@ -1144,14 +1142,10 @@ def ProductImport(request):
 
                 if (len(proddetails)== 0):  
                     newrows.append(rowcount)
-                    print((productrow[0].value))
                     #Validations Begin
                     #No product name
-                    if productrow[0].value==None:
-                        errorlist.append(productrow[0].coordinate)
-                    #No HSN code
-                    if productrow[1].value==None:
-                        errorlist.append(productrow[1].coordinate)
+                    if productrow[1].value!=None and ((str(productrow[1].value)).isnumeric()) == False:
+                            errorlist.append(productrow[1].coordinate)
                     if (productrow[2].value!= None and (str(productrow[2].value) not in uom_desc)):
                         errorlist.append(productrow[2].coordinate)
                     #Non float value for MRP.
@@ -1194,14 +1188,13 @@ def ProductImport(request):
                     if productrow[11].value != None and not(is_number(str(productrow[11].value))):
                         errorlist.append(productrow[11].coordinate)   
                     
-                    #Improper GST Rate
-                    print ("validations........")
-                    print (str(productrow[9].value))
-                    if productrow[7].value=="GST" and (str(productrow[9].value) not in gstrate):
-                        errorlist.append(productrow[9].coordinate)
+                    #Improper GST Rate 
+                    if productrow[7].value=="GST":
+                        if (str(productrow[9].value) not in gstrate)  :
+                            errorlist.append(productrow[9].coordinate)
+                        if productrow[1].value== None:
+                            errorlist.append(productrow[1].coordinate)
                     for taxdict in taxes:
-                        print ("************")
-                        print ()
                         taxdicttaxname = taxdict["taxname"]
                         if taxdicttaxname == "IGST":
                             taxdicttaxname = "GST"
@@ -1242,10 +1235,8 @@ def ProductImport(request):
                             proddetails["openingstock"] = 0.00
                         try:
                             u_id = list(filter(lambda m: m['unitname'] == str(productrow[2].value), uom))
-                            print (u_id[0]["uomid"])
                             proddetails["uomid"] = u_id[0]["uomid"]
                         except:
-                            print ("dangerrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrruuuuuuuuuuuu")
                             errorlist.append(productrow[2].coordinate)  
                     else:        
                         proddetails["gsflag"] = 19
@@ -1273,10 +1264,8 @@ def ProductImport(request):
                             
                     #godown dictionary generation
                     if productrow[10].value!=None:
-                        print((productrow[10].value))
                         flag=0
                         for g in godown:
-                            print (g)
                             if g["goname"]==productrow[10].value:
                                 godownflag=True
                                 flag=1
@@ -1325,7 +1314,6 @@ def ProductImport(request):
                     #tax dictionary generation
                     tax={}
                     #if GST , CVAT , CESS then no state should be mentioned
-                    print (productrow[7].value)
                     if productrow[7].value=="GST": 
                         tax["state"]=None
                         tax["taxname"]="IGST"
@@ -1339,13 +1327,11 @@ def ProductImport(request):
                         tax["taxname"] = "CESS"
                         tax["state"]= None
                     tax["taxrate"] = productrow[9].value
-                    print (tax)
                     if len(tax) > 0:
                         taxes.append(tax)     
                             #godown dictionary generation               
                 if productrow[10].value!=None:
                     for g in godown:
-                        print (g)
                         if g["goname"]==productrow[10].value:
                             godownflag=True
                             flag=1
@@ -1418,8 +1404,8 @@ def ProductImport(request):
             return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
         else:
             return {"gkstatus":0}
-   # except Exception as e:
-   #     try:
-   #         return {"gkstatus":result.json()["gkstatus"]}
-   #     except:
-   #         return {"gkstatus":3}
+    except Exception as e:
+        try:
+            return {"gkstatus":result.json()["gkstatus"]}
+        except:
+            return {"gkstatus":3}

@@ -621,9 +621,11 @@
 	    <b>Taxes:</b><br>
 	    Please keep the following in mind while giving taxes.
 	    <ul>
-	      <li>Tax Name must be one among these - GST, VAT, CVAT</li>
+	      <li>Tax Name must be one among these - GST, VAT, CVAT, CESS</li>
 	      <li>If Tax Name is GST, then Rate must be one among these - 5, 12 , 18 , 28.</li>
-	      <li>Only one entry per product is allowed for GST and CVAT.</li>
+              <li>If Tax Name is VAT, then specify state name.</li>
+	      <li>Only one entry per product is allowed for GST, CVAT and CESS.</li>
+              <li>HSN/SAC is compulsory for GST.</li>
 	      <li><b>Please do not enter "0" as tax rate. If your product is tax free then do not give anything under Tax Name, State and Rate.</b></li>
 	    </ul>
             {% trans %}
