@@ -102,6 +102,22 @@ $(document).ready(function() {
 	}
     }
 
+    	$.ajax({
+	    url: '/invoice?type=getstatess',
+                    type: 'POST',
+					async: false,
+					beforeSend: function(xhr) {
+                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+                    }
+	})
+	.done(function(resp){
+            console.log (resp["gkresult"]);
+		if(resp["gkresult"] != 'null'){
+		$("#invoice_state").val(resp["gkresult"]);    //State of organisation is selected automatically.
+		$("#invoice_state").change();}
+	});
+
+
     function saveCashMemo(invid,inoutflag){
 	                   $.ajax({
 			   url: '/cashmemos?action=showcashmemo',
@@ -684,11 +700,7 @@ $(document).ready(function() {
         //being a dynamic generated field the numeric property is added on their focus
         $(".numtype").numeric();
     });
-    $(document).off('focus', '#accountno').on('focus', '#accountno', function(event) {
-        event.preventDefault();
-        /* Act on the event */
-        $("#accountno").numeric({ negative: false });
-    });
+  
     $(document).off('blur', '.numtype').on('blur', '.numtype', function(event) {
         event.preventDefault();
         /* Act on the event */
@@ -1891,7 +1903,7 @@ $(document).off("keyup").on("keyup", function(event) {
        }
 	
 	var form_data = new FormData();
-		form_data.append("roundoff",roundoffvalue);
+	form_data.append("roundoff",roundoffvalue);
         form_data.append("invoiceno", $("#invoice_challanno").val());
         form_data.append("invoicedate", $("#invoice_year").val() + '-' + $("#invoice_month").val() + '-' + $("#invoice_date").val());
         form_data.append("contents", JSON.stringify(contents));
