@@ -79,7 +79,6 @@ def showeditcustomersupplier(request):
 def getcustomersupplier(request):
     header={"gktoken":request.headers["gktoken"]}
     result = requests.get("http://127.0.0.1:6543/customersupplier?qty=single&custid=%d"%int(request.params["custid"]),headers=header)
-    print (result.json()["gkresult"])
     return {"gkstatus": result.json()["gkstatus"], "gkresult": result.json()["gkresult"]}
 
 @view_config(route_name="customersuppliers",request_param="action=save",renderer="json")
@@ -224,8 +223,6 @@ def cussupimport(request):
                             sheetErrors.append(sheetRow[7].coordinate)
                     # GST
                     if sheetRow[8].value!=None:
-                        print (sheetRow[8].value)
-                        print (statecodeList)
                         if str(sheetRow[8].value)[0] != '0':
                             if str(sheetRow[8].value)[:2] not in statecodeList or not re.match(r"^[a-zA-z]{5}\d{4}[a-zA-z]{1}[0-9a-zA-Z]{1}[zZ]{1}[0-9]{1}$",str(sheetRow[8].value)[2:]):
                                 sheetErrors.append(sheetRow[8].coordinate)
