@@ -1119,6 +1119,9 @@ def ProductImport(request):
         newrows=[]
         multipletax = False
         openingstock = 0.00
+        # godown flag to check godown entries only when entry id for product. It is determined on the basis of UOM.
+        # when UOM is present then goflag = 1
+        goflag = 0
         for productrow in productList[1:]:
             # first row of spreadsheet has column headings. Skipping that row.
             # checking for empty row
@@ -1140,7 +1143,8 @@ def ProductImport(request):
                     duplicateFlag=False
                     multipletax = False
 
-                if (len(proddetails)== 0):  
+                if productrow[0].value != "product name":
+                    goflag = 0
                     newrows.append(rowcount)
                     #Validations Begin
                     #No product name
@@ -1177,12 +1181,6 @@ def ProductImport(request):
                     #Sate specified for non VAT tax.
                     if productrow[7].value!="VAT" and productrow[8].value!=None: 
                         errorlist.append(productrow[8].coordinate)
-                        
-                    #Non float tax rate
-                    #if productrow[9].value != None and not(is_number(str(productrow[9].value))):
-                    #    errorlist.append(productrow[9].coordinate)
-                    #if productrow[9].value != None and is_number(str(productrow[9].value)) and int(productrow[9].value) == 0:
-                    #    errorlist.append(productrow[9].coordinate)
 
                     #Non float godown openingstock
                     if productrow[11].value != None and not(is_number(str(productrow[11].value))):
@@ -1192,12 +1190,13 @@ def ProductImport(request):
                     if productrow[7].value=="GST":
                         if (str(productrow[9].value) not in gstrate)  :
                             errorlist.append(productrow[9].coordinate)
-                        if productrow[1].value== None:
-                            errorlist.append(productrow[1].coordinate)
+                            
                     for taxdict in taxes:
                         taxdicttaxname = taxdict["taxname"]
                         if taxdicttaxname == "IGST":
                             taxdicttaxname = "GST"
+                            if productrow[1].value== None:
+                                errorlist.append(productrow[1].coordinate)
                         if productrow[7].value!=None and productrow[7].value!= "VAT" and productrow[7].value == taxdicttaxname:
                             multipletax = True
                             errorlist.append(productrow[7].coordinate)
@@ -1236,6 +1235,7 @@ def ProductImport(request):
                         try:
                             u_id = list(filter(lambda m: m['unitname'] == str(productrow[2].value), uom))
                             proddetails["uomid"] = u_id[0]["uomid"]
+                            goflag = 1
                         except:
                             errorlist.append(productrow[2].coordinate)  
                     else:        
@@ -1261,21 +1261,22 @@ def ProductImport(request):
                         tax["taxrate"]= float(productrow[9].value)
                         if len(tax) > 0:
                             taxes.append(tax)
-                            
-                    #godown dictionary generation
-                    if productrow[10].value!=None:
-                        flag=0
-                        for g in godown:
-                            if g["goname"]==productrow[10].value:
-                                godownflag=True
-                                flag=1
-                                godowns[g["goid"]]=productrow[11].value
-                                break 
-                        if flag==0:
-                            errorlist.append(productrow[10].coordinate)                  
+                    # if entry is for Product
+                    if goflag == 1:    
+                        #godown dictionary generation
+                        if productrow[10].value!=None:
+                            flag=0
+                            for g in godown:
+                                if g["goname"]==productrow[10].value:
+                                    godownflag=True
+                                    flag=1
+                                    godowns[g["goid"]]=productrow[11].value
+                                    break 
+                            if flag==0:
+                                errorlist.append(productrow[10].coordinate)                  
 
 
-            elif productrow[7].value!=None or productrow[10].value!=None:
+            elif ((productrow[7].value!=None or productrow[10].value!=None) and productrow[0].value == None):
                 multipletax = False
                 # if multiple tax or godowns exist
                 #Validations Begin
@@ -1381,7 +1382,8 @@ def ProductImport(request):
                             if tax["state"]!='':
                                 taxdata["state"]=tax["state"]
                             taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-                            
+                    return {"gkstatus":0}
+        
                 #if duplicate entries exist then an error is generated while entering tax 
                 except Exception as e:           
                     if result.json()["gkstatus"]==1:
