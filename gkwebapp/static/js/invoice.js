@@ -42,14 +42,6 @@ $(document).ready(function() {
     sessionStorage.wholedate = wholedate;
 
   $("#invoice_record").click(function() { // calls record invoice page i.e purchase invoice.
-    if($("#invload123").length > 0){
-      $("#invload123").attr("id", "invload");
-      $("#printload123").attr("id", "printload");
-      $("#listdiv123").attr("id", "listdiv");
-      $("#viewinvdiv123").attr("id", "viewinvdiv");
-      $("#buttondiv123").attr("id", "buttondiv");
-
-    }
     $.ajax(
     {
 
@@ -67,80 +59,71 @@ $(document).ready(function() {
     {
       $("#invoice_div").html(resp);
       $(".tab-content").show();
+      $("#backbutton").show();
+      $("#list_backbutton").hide();
+      $("#invload, #printload").empty();
+      $("#viewinvdiv").hide();
+      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
     }
     }
-  );
+    );
   });
   $("#invoice_create").click(function() {// calls create invoice page i.e sales invoice.
-    if($("#invload123").length > 0){
-      $("#invload123").attr("id", "invload");
-      $("#printload123").attr("id", "printload");
-      $("#listdiv123").attr("id", "listdiv");
-      $("#viewinvdiv123").attr("id", "viewinvdiv");
-      $("#buttondiv123").attr("id", "buttondiv");
-    }  
     $.ajax(
-    {
-
-    type: "POST",
-    url: "/invoice?action=showadd&status=out",
-    global: false,
-    async: false,
-    data: {"inputdate": wholedate},
-    datatype: "text/html",
-    beforeSend: function(xhr)
       {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-    {
-      $("#invoice_div").html(resp);
-      $(".tab-content").show();
-    }
-    }
-  );
-  });
-    $("#invoice_view_sale").click(function(event) {// calls view invoice page.
-        sessionStorage.salepurchase = 15;
-    if($("#invload123").length > 0){
-      $("#invload123").attr("id", "invload");
-      $("#printload123").attr("id", "printload");
-      $("#listdiv123").attr("id", "listdiv");
-      $("#viewinvdiv123").attr("id", "viewinvdiv");
-      $("#buttondiv123").attr("id", "buttondiv");
-    }
-    $.ajax(
+
+	type: "POST",
+	url: "/invoice?action=showadd&status=out",
+	global: false,
+	async: false,
+	data: {"inputdate": wholedate},
+	datatype: "text/html",
+	beforeSend: function(xhr)
 	{
-	    type: "POST",
-	    url: "/invoice?action=showeditinv&status=out", 
-	    global: false,
-	    async: false,
-	    data: {"inputdate": wholedate},
-	    datatype: "text/html",
-	    beforeSend: function(xhr)
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	},
+	success: function(resp)
+	{
+	  $("#invoice_div").html(resp);
+	  $(".tab-content").show();
+	  $("#invload, #printload").empty();
+	  $("#viewinvdiv").hide();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	}
+      }
+    );
+  });
+  $("#invoice_view_sale").click(function(event) {// calls view invoice page.
+    sessionStorage.salepurchase = 15;
+    $.ajax(
       {
-        xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
-      },
-    success: function(resp)
-    {
-  $("#invoice_div").html(resp);
-  $(".tab-content").show();
+	type: "POST",
+	url: "/invoice?action=showeditinv&status=out", 
+	global: false,
+	async: false,
+	data: {"inputdate": wholedate},
+	datatype: "text/html",
+	beforeSend: function(xhr)
+	{
+          xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
+	},
+	success: function(resp)
+	{
+	  $("#invoice_div").html(resp);
+	  $(".tab-content").show();
 
-
-	return false;
+	  $("#backbutton").show();
+	  $("#list_backbutton").hide();
+	  $("#invload, #printload").empty();
+	  $("#viewinvdiv").hide();
+	  $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+	  return false;
     }
     }
     );
   });
     $("#invoice_view_purchase").click(function(event) {// calls view invoice page.
         sessionStorage.salepurchase = 9;
-    if($("#invload123").length > 0){
-      $("#invload123").attr("id", "invload");
-      $("#printload123").attr("id", "printload");
-      $("#listdiv123").attr("id", "listdiv");
-      $("#viewinvdiv123").attr("id", "viewinvdiv");
-      $("#buttondiv123").attr("id", "buttondiv");
-    }
     $.ajax(
 	{
 	    type: "POST",
@@ -156,18 +139,18 @@ $(document).ready(function() {
     success: function(resp)
     {
   $("#invoice_div").html(resp);
-  $(".tab-content").show();
-	return false;
+      $(".tab-content").show();
+      $("#backbutton").show();
+      $("#list_backbutton").hide();
+      $("#invload, #printload").empty();
+      $("#viewinvdiv").hide();
+      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      return false;
     }
     }
     );
     });
   $("#invoice_view_list").click(function(event) {// calls view invoice page.
-    $("#invload").attr("id", "invload123");
-  $("#printload").attr("id", "printload123");
-  $("#listdiv").attr("id", "listdiv123");
-  $("#viewinvdiv").attr("id", "viewinvdiv123");
-  $("#buttondiv").attr("id", "buttondiv123");
   sessionStorage.onview=1;
     $.ajax({
       type: "POST",
@@ -183,8 +166,13 @@ $(document).ready(function() {
     success: function(resp){
   $("#invoice_div").html(resp);
   $(".tab-content").show();
-  $("#viewanotherlist").hide();
-  return false;
+      $("#viewanotherlist").hide();
+      $("#backbutton").hide();
+      $("#list_backbutton").show();
+      $("#invload, #printload").empty();
+      $("#viewinvdiv").hide();
+      $('html,body').animate({scrollTop: ($("#orgdata").offset().top)},'fast');
+      return false;
   }
     });
   });

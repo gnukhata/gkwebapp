@@ -266,7 +266,9 @@ $(document).ready(function() {
                 },
             })
             .done(function(resp) {
-                $("#info").html(resp);
+              $("#info").html(resp);
+	      $("#backbutton").hide();
+	      $("#list_backbutton").show();
             });
     });
 
@@ -384,7 +386,9 @@ $(document).ready(function() {
                 },
             })
             .done(function(resp) {
-                $("#info").html(resp);
+              $("#info").html(resp);
+	      $("#backbutton").hide();
+	      $("#list_backbutton").show();
             });
     });
 

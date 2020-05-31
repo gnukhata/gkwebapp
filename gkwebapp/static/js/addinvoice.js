@@ -1,8 +1,8 @@
 /*
-  Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
-  Copyright (C) 2017, 2018, 2019, 2020,2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
+   Copyright (C) 2013, 2014, 2015, 2016 Digital Freedom Foundation
+   Copyright (C) 2017, 2018, 2019, 2020,2019 Digital Freedom Foundation & Accion Labs Pvt. Ltd.
 
-  This file is part of GNUKhata:A modular,robust and Free Accounting System.
+   This file is part of GNUKhata:A modular,robust and Free Accounting System.
 
    GNUKhata is Free Software; you can redistribute it and/or modify
    it under the terms of the GNU Affero General Public License as
@@ -39,19 +39,19 @@
 // This script is for the addinvoice.jinja2
 
 $(document).ready(function() {
-	$.ajax({
-	    url: '/invoice?type=getstatess',
-                    type: 'POST',
-					async: false,
-					beforeSend: function(xhr) {
-                        xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-                    }
-	})
-	.done(function(resp){
-		if(resp["gkresult"] != 'null'){
-		$("#invoicestate").val(resp["gkresult"]);    //State of organisation is selected automatically.
-		$("#invoicestate").change();}
-	});
+  $.ajax({
+      url: '/invoice?type=getstatess',
+      type: 'POST',
+      async: false,
+      beforeSend: function(xhr) {
+          xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+      }
+  }).done(function(resp){
+      if(resp["gkresult"] != 'null'){
+	  $("#invoicestate").val(resp["gkresult"]);    //State of organisation is selected automatically.
+	  $("#invoicestate").change();
+      }
+  });
 
     //Events that are triggered when the page for creating an invoice is loaded.
     $('.modal-backdrop').remove();  //Removed backdrop of modal that contains loading spinner.
@@ -4053,9 +4053,9 @@ if (event.which == 13) {
       $("#invoice_create").click();
     }
   });
-    $("#backbutton").click(function(event){
-	$("#invoice").click();
-	return false;
+  $("#backbutton").click(function(event){
+    $("#info").load("/invoice");
+    return false;
     });
     $("#printbutton").click(function(event) {
         $.ajax({
