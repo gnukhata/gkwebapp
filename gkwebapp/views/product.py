@@ -1392,8 +1392,8 @@ def ProductImport(request):
                     duplicateFlag=True                        
                     errorlist.append("A"+str(newrows[count]))
                     continue 
-                        
-        if len(errorlist)!=0:
+                   
+        if len(errorlist)!= 0:
             errorlist1=[]
             errorrows={}
             for i in errorlist:
