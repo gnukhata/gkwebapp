@@ -45,7 +45,7 @@ from openpyxl import load_workbook
 from openpyxl import Workbook
 from openpyxl.styles import Font
 from openpyxl.drawing.graphic import GroupShape
-
+from openpyxl.utils.cell import coordinate_from_string
 def is_number(stringwithhfloat):
     try:
         float(stringwithhfloat)
@@ -1123,6 +1123,7 @@ def ProductImport(request):
         # when UOM is present then goflag = 1
         goflag = 0
         for productrow in productList[1:]:
+            rowcount+=1
             # first row of spreadsheet has column headings. Skipping that row.
             # checking for empty row
             if (productrow[0].value == None and productrow[1].value == None and productrow[2].value == None and productrow[3].value == None and productrow[4].value == None and productrow[5].value == None and productrow[6].value == None and productrow[7].value == None and productrow[8].value == None and productrow[9].value == None and productrow[10].value == None and productrow[11].value == None):
@@ -1366,31 +1367,33 @@ def ProductImport(request):
                             if j != len(godowns):
                                 godnames += ", "
                             j += 1
-                    result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)                    
+                    
+                    result = requests.post("http://127.0.0.1:6543/products",data=json.dumps(productdetails),headers=header)
+                    if result.json()["gkstatus"]==1:
+                        duplicateFlag=True                        
+                        errorlist.append("A"+str(newrows[count]))
+                        continue 
 
                     if result.json()["gkstatus"] == 0:
                         savedproductcode = result.json()["gkresult"]
+                        if len(taxes)!=0:
+                            for tax in taxes:
+                                if len(tax)!=0:
+                                    taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
+                                    if tax["state"]!='':
+                                        taxdata["state"]=tax["state"]
+                                    taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
                         if godownflag == True:
                             godata = {"activity":proddetails["productdesc"] + " product created in " + godnames + " godowns"}
                         else:
                             godata = {"activity":proddetails["productdesc"] + " product created"}
                         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(godata),headers=header)
-
-                    for tax in taxes:
-                        if len(tax)!=0:
-                            taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"productcode":result.json()["gkresult"]}
-                            if tax["state"]!='':
-                                taxdata["state"]=tax["state"]
-                            taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-        
-                #if duplicate entries exist then an error is generated while entering tax 
                 except Exception as e:           
-                    if result.json()["gkstatus"]==1:
-                        duplicateFlag=True                        
-                        errorlist.append("A"+str(newrows[count]))
-                        continue
-            return {"gkstatus":0}            
-        if len(errorlist)!=0:            
+                    duplicateFlag=True                        
+                    errorlist.append("A"+str(newrows[count]))
+                    continue 
+                        
+        if len(errorlist)!=0:
             errorlist1=[]
             errorrows={}
             for i in errorlist:
@@ -1401,7 +1404,7 @@ def ProductImport(request):
                     temprow=productList[row]
                     for cell in temprow:        
                         temp.append(cell.value)
-                    errorrows[row+1]=(temp)                                  
+                    errorrows[row+1]=(temp)
             return  {"gkstatus":6,"errorlist":errorlist1,"rows":errorrows,"duplicateFlag":duplicateFlag}    
         else:
             return {"gkstatus":0}
