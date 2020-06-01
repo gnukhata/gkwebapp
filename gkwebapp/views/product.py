@@ -1382,7 +1382,6 @@ def ProductImport(request):
                             if tax["state"]!='':
                                 taxdata["state"]=tax["state"]
                             taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-                    return {"gkstatus":0}
         
                 #if duplicate entries exist then an error is generated while entering tax 
                 except Exception as e:           
@@ -1390,7 +1389,7 @@ def ProductImport(request):
                         duplicateFlag=True                        
                         errorlist.append("A"+str(newrows[count]))
                         continue
-                        
+            return {"gkstatus":0}            
         if len(errorlist)!=0:            
             errorlist1=[]
             errorrows={}
