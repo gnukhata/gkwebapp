@@ -363,7 +363,7 @@
 		<small>{{ gkresult["invcontents"][product]["taxamount"] }}</small>
 	      </td>
 	      <td class="text-right">
-		{{ gkresult["invcontents"][product]["totalAmount"] }}
+		<small>{{ gkresult["invcontents"][product]["totalAmount"] }} </small>
 	      </td>
 		</tr>
 	      {% endfor %}
@@ -464,7 +464,7 @@
 		  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"]}} </small></td>{% endif %}
 		  <td class="text-right"><small>{{ gkresult["invcontents"][product]["cessrate"] }}</small></td>
                   <td class="text-right"><small>{{ gkresult["invcontents"][product]["cess"] }}</small></td>
-                  <td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
+                  <td class="text-right"><small>{{ gkresult["invcontents"][product]["totalAmount"] }}</small></td>
 		</tr>
 	      {% endfor %}
 	    </tbody>
