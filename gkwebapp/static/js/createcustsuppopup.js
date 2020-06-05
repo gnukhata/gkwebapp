@@ -349,7 +349,6 @@ $(document).off("keydown",".gstin").on("keydown",".gstin",function(event)
     });
 
     // Keydown events for bank details
-    $("#cust_accountno").numeric();
     $("#cust_accountno").keydown(function(event) {
 	if (event.which==13) {
 	    event.preventDefault();
