@@ -76,6 +76,11 @@ $(document).ready(function(){
             $(this).next().css({"margin-bottom":"20px", "max-height":"60vh"});
 	}
     });
+    function hideinvdiv(){
+	$("#viewinvdiv").hide();
+	$("#invload").empty();
+	$("#printload").empty();
+    }
     //   show pop up
   $('#salesprefdiv').tooltip({
     title : "Accounting entries will be generated automatically on creation of Invoice, Cash Memo and Debit & Credit Notes.",
@@ -339,7 +344,7 @@ $(document).ready(function(){
     }
   });
 
-  $("#themes").click(function(){
+    $("#themes").click(function(){
     // Same as toolbar.
     var windowheight = window.innerHeight;
     var scrollerheight = windowheight - 40;
@@ -530,7 +535,8 @@ $(document).ready(function(){
   $("title").append(orname);
   $("#printorgname").append(orname);
   $("#printyears").append(styear + " to " + enyear);
-  $("#showedituser").click(function(e){
+    $("#showedituser").click(function(e){
+	hideinvdiv();
     // calls edit user form.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -550,7 +556,8 @@ $(document).ready(function(){
     });
   });
 
-  $('#showbillwiseaccounting').click(function (e) {
+    $('#showbillwiseaccounting').click(function (e) {
+	hideinvdiv();
     // Loads customerlist page in the main div.
     $.ajax({
       url: '/billwise?action=showcustomersupplierlist',
@@ -569,7 +576,8 @@ $(document).ready(function(){
      });
   });
 
-  $('#godown').click(function (e) {
+    $('#godown').click(function (e) {
+	hideinvdiv();
     // Loads godown page in the main div.
     $.ajax({
       url: '/godown',
@@ -589,7 +597,8 @@ $(document).ready(function(){
   });
 
   $('#budget').click(function (e) {
-    // Loads budget page in the main div.
+      // Loads budget page in the main div.
+      hideinvdiv();
     $.ajax({
       url: '/budget',
       type: 'POST',
@@ -608,7 +617,8 @@ $(document).ready(function(){
 
   });
 
-  $(document).off("click", '#showviewbudget').on("click", '#showviewbudget', function(event) {
+    $(document).off("click", '#showviewbudget').on("click", '#showviewbudget', function(event) {
+	hideinvdiv();
     // Loads list of all budget to view budget report.
     $.ajax({
       url: '/budget?type=viewbudgetreportpage',
@@ -628,7 +638,8 @@ $(document).ready(function(){
      });
   });
 
-  $("#exportbutton").click(function(e){
+    $("#exportbutton").click(function(e){
+	hideinvdiv();
     // This function serves the client with a spreadsheet file having ledgers.
     var xhr = new XMLHttpRequest();
     var url = '/exportledger?yearstart='+sessionStorage.yyyymmddyear1+'&yearend='+sessionStorage.yyyymmddyear2;
@@ -926,7 +937,7 @@ $(document).ready(function(){
     });
 
     $('#shortcuts').click(function (e) {
-      // calls add account page.
+      // calls add ac2123count page.
       $("#msspinmodal").modal("show");
       $.ajax(
         {
@@ -1099,7 +1110,8 @@ $(document).ready(function(){
        console.log("complete");
      });
   });
-  $("#productinmaster").click(function (e){
+    $("#productinmaster").click(function (e){
+	hideinvdiv();
     e.preventDefault();
     // calls product page.
     $.ajax({
@@ -1124,8 +1136,8 @@ $(document).ready(function(){
      });
   });
 
-  $('#purchaseorder').click(function (e) {
-
+    $('#purchaseorder').click(function (e) {
+	hideinvdiv();
     $.ajax({
       url: '/purchaseorder?type=tab',
       type: 'POST',
@@ -1144,7 +1156,8 @@ $(document).ready(function(){
      });
   });
 
-  $("#showeditorg").click(function (e){
+    $("#showeditorg").click(function (e){
+	hideinvdiv();
     // calls edit organisation page.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1168,7 +1181,8 @@ $(document).ready(function(){
 
 
 
-  $('#REMOVEuser').click(function (e) {
+    $('#REMOVEuser').click(function (e) {
+	hideinvdiv();
     // calls remove user page.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1191,7 +1205,8 @@ $(document).ready(function(){
     );
   });
 
-  $('#changeorg').click(function (e) {
+    $('#changeorg').click(function (e) {
+	hideinvdiv();
     // clears sessionstorage and logs the user out to show select organisation page.
     sessionStorage.clear();
     $("#msspinmodal").modal();
@@ -1199,7 +1214,8 @@ $(document).ready(function(){
       sessionStorage.changeorg = 1;
   });
 
-  $("#logout").click(function(event) {
+    $("#logout").click(function(event) {
+	hideinvdiv();
     // clears token in  sessionstorage and logs the user out to show login page.
     flag = 1;
     $("#msspinmodal").modal();
@@ -1247,7 +1263,8 @@ $(document).ready(function(){
     else{
       $("#report_back").show();}
   });
-  $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
+    $(document).off("click", '#listofaccounts').on("click", '#listofaccounts', function(event) {
+	hideinvdiv();
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1271,7 +1288,8 @@ $(document).ready(function(){
   });
 
    
-  $('#gstsummary').click(function (e) {
+    $('#gstsummary').click(function (e) {
+	hideinvdiv();
     $.ajax(
       {
         type: "POST",
@@ -1310,7 +1328,8 @@ $(document).ready(function(){
       });
   });
 
-  $('#listofaccounts').click(function (e) {
+    $('#listofaccounts').click(function (e) {
+	hideinvdiv();
     // calls list of accounts report.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1333,7 +1352,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#listofgodowns').on("click", '#listofgodowns', function(event) {
+    $(document).off("click", '#listofgodowns').on("click", '#listofgodowns', function(event) {
+	hideinvdiv();
     //calls list of godowns report.
     $.ajax(
       {
@@ -1355,7 +1375,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#listofcategories').on("click", '#listofcategories', function(event) {
+    $(document).off("click", '#listofcategories').on("click", '#listofcategories', function(event) {
+	hideinvdiv();
     // calls list of categories report.
     $.ajax(
       {
@@ -1377,7 +1398,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#listofstockitems').on("click", '#listofstockitems', function(event) {
+    $(document).off("click", '#listofstockitems').on("click", '#listofstockitems', function(event) {
+	hideinvdiv();
     // calls list of stock items report.
     $.ajax(
       {
@@ -1399,7 +1421,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#showstockreport').on("click", '#showstockreport', function(event) {
+    $(document).off("click", '#showstockreport').on("click", '#showstockreport', function(event) {
+	hideinvdiv();
     // calls view page for stock report.
     $.ajax(
       {
@@ -1421,7 +1444,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#stockonhandreport').on("click", '#stockonhandreport', function(event) {
+    $(document).off("click", '#stockonhandreport').on("click", '#stockonhandreport', function(event) {
+	hideinvdiv();
     // calls view page for stock on hand report.
     $.ajax(
       {
@@ -1443,7 +1467,8 @@ $(document).ready(function(){
     );
   });
     
-  $(document).off("click", '#consolidatedbalancesheet').on("click", '#consolidatedbalancesheet', function(event) {
+    $(document).off("click", '#consolidatedbalancesheet').on("click", '#consolidatedbalancesheet', function(event) {
+	hideinvdiv();
     // calls view page for consolidate balance sheet report.
     $.ajax(
       {
@@ -1464,7 +1489,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#categorywisestockonhandreport').on("click", '#categorywisestockonhandreport', function(event) {
+    $(document).off("click", '#categorywisestockonhandreport').on("click", '#categorywisestockonhandreport', function(event) {
+	hideinvdiv();
       // calls view page for stock report.
         $.ajax(
           {
@@ -1486,7 +1512,8 @@ $(document).ready(function(){
         );
       });
 
-  $('#fevoucher').click(function (e) {
+    $('#fevoucher').click(function (e) {
+	hideinvdiv();
     // calls find and edit voucher page.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1516,7 +1543,8 @@ $(document).ready(function(){
       $("#yeardata, #yeardata_sm").html(yeardata);
       $("#userdata").html(userdata); 
     }
-  $('#addaccount').click(function (e) {
+    $('#addaccount').click(function (e) {
+	hideinvdiv();
     // calls add account page.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1542,7 +1570,8 @@ $(document).ready(function(){
     return false;
   });
 
-  $('#report_li').click(function (e) {
+    $('#report_li').click(function (e) {
+	hideinvdiv();
     sessionStorage.rtflag = 1;     // flag fot print invoice list back  button
     sessionStorage.accMenuFlag = 1;   // flag for print account list back button
     $("#msspinmodal").modal("show");
@@ -1603,7 +1632,8 @@ $(document).ready(function(){
      }*/
 
 
-  $('#user').click(function (e) { // This calls user page.
+    $('#user').click(function (e) { // This calls user page.
+	hideinvdiv();
     $("#msspinmodal").modal("show");
       $.ajax({
       type: 'POST',
@@ -1623,6 +1653,7 @@ $(document).ready(function(){
     });
 
     $(document).off("click", '#showdeletedvoucher').on("click", '#showdeletedvoucher', function(event) {
+	hideinvdiv();
     // shows deleted vouchers report.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1642,7 +1673,8 @@ $(document).ready(function(){
     });
   });
 
-  $(document).off("click", '#listofusers').on("click", '#listofusers', function(event) {
+    $(document).off("click", '#listofusers').on("click", '#listofusers', function(event) {
+	hideinvdiv();
     // shows deleted vouchers report.
     $("#msspinmodal").modal("show");
     $.ajax({
@@ -1662,7 +1694,8 @@ $(document).ready(function(){
     });
   });
 
-  $(document).off("click", '#showviewledger').on("click", '#showviewledger', function(event) {
+    $(document).off("click", '#showviewledger').on("click", '#showviewledger', function(event) {
+	hideinvdiv();
      // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
@@ -1686,7 +1719,8 @@ $(document).ready(function(){
   });
 
 
-  $(document).off("click", '#showviewlog').on("click", '#showviewlog', function(event) {
+    $(document).off("click", '#showviewlog').on("click", '#showviewlog', function(event) {
+	hideinvdiv();
     // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
@@ -1709,7 +1743,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#showviewregister').on("click", '#showviewregister', function(event) {
+    $(document).off("click", '#showviewregister').on("click", '#showviewregister', function(event) {
+	hideinvdiv();
     // calls view page for ledger report.
     $("#msspinmodal").modal();
     $.ajax(
@@ -1731,7 +1766,8 @@ $(document).ready(function(){
     );
   });
 
-  $('#BRS').click(function (e) {
+    $('#BRS').click(function (e) {
+	hideinvdiv();
     // calls view page for bank reconcialation.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1752,7 +1788,8 @@ $(document).ready(function(){
      });
   });
 
-  $(document).off("click", '#showprjstate').on("click", '#showprjstate', function(event) {
+    $(document).off("click", '#showprjstate').on("click", '#showprjstate', function(event) {
+	hideinvdiv();
     // calls view page for project statement report.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1775,7 +1812,8 @@ $(document).ready(function(){
     );
   });
 
-  $('#showproject').click(function (e) {
+    $('#showproject').click(function (e) {
+	hideinvdiv();
     // calls add project page.
     $("#msspinmodal").modal("show");
     $.ajax(
@@ -1798,7 +1836,8 @@ $(document).ready(function(){
     );
   });
 
-  $('.addcategory').click(function (e) {// calls base category page.
+    $('.addcategory').click(function (e) {// calls base category page.
+	hideinvdiv();
     $.ajax(
       {
 	type: "POST",
@@ -1818,7 +1857,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#listofinvoices').on("click", '#listofinvoices', function(event) {
+    $(document).off("click", '#listofinvoices').on("click", '#listofinvoices', function(event) {
+	hideinvdiv();
     // calls list of invoices report
     sessionStorage.onview=0;
     $.ajax(
@@ -1842,6 +1882,7 @@ $(document).ready(function(){
     });
 
     $(document).off("click", '#listofdeletedinvoices').on("click", '#listofdeletedinvoices', function(event) {
+	hideinvdiv();
       // calls list of invoices report
       sessionStorage.onview=0;
       $.ajax(
@@ -1859,14 +1900,15 @@ $(document).ready(function(){
           success: function(resp)
           {
             $("#info").html(resp);
-
+	    $("#printbutton, #inv_rec, #inv_pay").hide();
           }
         }
       );
       });
 
 
-      $(document).off("click", '#show_cancelled_deliveries').on("click", '#show_cancelled_deliveries', function(event) {
+    $(document).off("click", '#show_cancelled_deliveries').on("click", '#show_cancelled_deliveries', function(event) {
+	hideinvdiv();
         $.ajax(
           {
             type: "POST",
@@ -1887,7 +1929,8 @@ $(document).ready(function(){
         });
     
 
-  $(document).off("click", '#listofunpaidinvoices').on("click", '#listofunpaidinvoices', function(event) {
+    $(document).off("click", '#listofunpaidinvoices').on("click", '#listofunpaidinvoices', function(event) {
+	hideinvdiv();
     // calls list of invoices report
     sessionStorage.onview=0;
     $.ajax(
@@ -1910,7 +1953,8 @@ $(document).ready(function(){
     );
   });
 
-  $(document).off("click", '#listoftransfernotes').on("click", '#listoftransfernotes', function(event) {
+    $(document).off("click", '#listoftransfernotes').on("click", '#listoftransfernotes', function(event) {
+	hideinvdiv();
     // calls list of stock items report.
     $.ajax(
       {
@@ -1936,21 +1980,25 @@ $(document).ready(function(){
   sessionStorage.salepurchase = 1;
   sessionStorage.inv_type = 0;
   $('#invoice').click(function (e) {// calls base invoice page.
-    
+    hideinvdiv();
       $("#info").load("/invoice");
       // return false;
   });
-  $('#customersupplier').click(function (e) {// calls base customersupplier page.
+    $('#customersupplier').click(function (e) {// calls base customersupplier page.
+	hideinvdiv();
     sessionStorage.cussup=1;
     $("#info").load("/customersuppliers");
   });
-  $('#addunit').click(function (e) {// calls base unitofmeasurements page.
+    $('#addunit').click(function (e) {// calls base unitofmeasurements page.
+	hideinvdiv();
     $("#info").load("/unitofmeasurements");
   });
-  $('#uominmaster').click(function (e) {// calls base unitofmeasurements page.
+    $('#uominmaster').click(function (e) {// calls base unitofmeasurements page.
+	hideinvdiv();
     $("#info").load("/unitofmeasurements");
   });
-  $('#addcashmemo').click(function (e) {// calls base cash memo page.
+    $('#addcashmemo').click(function (e) {// calls base cash memo page.
+	hideinvdiv();
       $("#info").load("/cashmemos");
       // return false;
   });
@@ -1959,6 +2007,7 @@ $(document).ready(function(){
   });
 
     $('#rejectionnote').click(function (e) {// calls route rejectionnote and loads show page.
+	hideinvdiv();
     $.ajax(
       {
       type: "POST",
@@ -1978,8 +2027,8 @@ $(document).ready(function(){
     );
   });
 
-  $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
-
+    $('#deliverychallan').click(function (e) {// calls base deliverychallan page.
+	hideinvdiv();
     $.ajax(
       {
     	type: "POST",
@@ -1998,19 +2047,22 @@ $(document).ready(function(){
       }
     );
   });
-  $(document).off("click", '#showtrialbalance').on("click", '#showtrialbalance', function(event) {
+    $(document).off("click", '#showtrialbalance').on("click", '#showtrialbalance', function(event) {
+	hideinvdiv();
 // calls view page for trial balance report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showtrialbalance");
   });
 
-  $(document).off("click", '#showcashflow').on("click", '#showcashflow', function(event) {
+    $(document).off("click", '#showcashflow').on("click", '#showcashflow', function(event) {
+	hideinvdiv();
   // calls cashflow report.
     $("#msspinmodal").modal("show");
     $("#info").load("/showcashflow");
   });
 
-  $(document).off("click", '#showprofitloss').on("click", '#showprofitloss', function(event) {
+    $(document).off("click", '#showprofitloss').on("click", '#showprofitloss', function(event) {
+	hideinvdiv();
     // calls profit and loss report.
     var orgtype = sessionStorage.orgt.replace(/\s/g, "+");
     sessionStorage.pnlbackflag = 1;
@@ -2033,7 +2085,8 @@ $(document).ready(function(){
     });
   });
 
-  $(document).off("click", '#showbalancesheet').on("click", '#showbalancesheet', function(event) {
+    $(document).off("click", '#showbalancesheet').on("click", '#showbalancesheet', function(event) {
+	hideinvdiv();
 // calls view page for balance sheet report.
     sessionStorage.balbackflag = 1;
     $("#msspinmodal").modal("show");
@@ -2054,7 +2107,8 @@ $(document).ready(function(){
     });
   });
 
-  $("#showclosebooks").click(function(event){// calls close books and rollover page.
+    $("#showclosebooks").click(function(event){// calls close books and rollover page.
+	hideinvdiv();
     $("#msspinmodal").modal("show");
     console.log("kkakakakakak")
     $("#info").load("/showclosebooks");
@@ -2176,11 +2230,13 @@ $(document).ready(function(){
        }
      });
   });
-  $('#tallyimport').click(function (e) {// calls tally import page.
+    $('#tallyimport').click(function (e) {// calls tally import page.
+	hideinvdiv();
     $("#info").load("/import?action=show");
   });
 
-  $(document).off("click", '#show_unbilled_deliveries').on("click", '#show_unbilled_deliveries', function(event) {
+    $(document).off("click", '#show_unbilled_deliveries').on("click", '#show_unbilled_deliveries', function(event) {
+	hideinvdiv();
   $.ajax(
     {
       type: "POST",
@@ -2217,7 +2273,8 @@ $(document).ready(function(){
 
 //debit credit note tab
 
-$('#drcrnote').click(function (e) {// calls base drcrnote page.
+    $('#drcrnote').click(function (e) {// calls base drcrnote page.
+	hideinvdiv();
     $("#info").load("/drcrnote");
     $("#drcrnote_div").show();
 });
