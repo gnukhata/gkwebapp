@@ -178,36 +178,34 @@
 	    </div>
           </td>
           <td style="width:40%">
-	  <div style="float:left;padding-left:2%;">
-	    <h5 style=" font-weight:normal;font-size:150%"><b>DETAILS OF INVOICE</b></h5>
-	    {% if gkresult["dcno"] %}
-	      <span style="font-weight:bold !important; font-size:small;">{% trans %}Deli. Note No.{% endtrans %} : </span
-	      <span style=" font-weight:normal;font-size:130%">{{gkresult["dcno"]}}</span><br/>
-	    {% endif %}
-	    <span style="font-weight:bold !important; font-size:small;">{% trans %}<b>Invoice No.</b>{% endtrans %} :</span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["invoiceno"] }}</span><br>
-	    {% if gkresult["inoutflag"] == 15 %}
-	      <span style="font-weight:bold !important; font-size:small;">   {% trans %}<b>Eway Bill No.{% endtrans %} :</b></span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["ewaybillno"] }}</span><br>
-	    {% endif %}
-	    <span style=" font-weight:normal;font-size:120%"> {% trans %}<b>Invoice Date</b>{% endtrans %} :</span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["invoicedate"] }}</span> <br>
+	    <div style="float:left;padding-left:2%;">
+	      <h5 style=" font-weight:normal;font-size:150%"><b>DETAILS OF INVOICE</b></h5>
+	      {% if gkresult["dcno"] %}
+	        <span style="font-weight:bold !important; font-size:small;">{% trans %}Deli. Note No.{% endtrans %} : </span
+	        <span style=" font-weight:normal;font-size:130%">{{gkresult["dcno"]}}</span><br/>
+	      {% endif %}
+	      <span style="font-weight:bold !important; font-size:small;">{% trans %}<b>Invoice No.</b>{% endtrans %} :</span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["invoiceno"] }}</span><br>
+	      {% if gkresult["inoutflag"] == 15 %}
+	        <span style="font-weight:bold !important; font-size:small;">   {% trans %}<b>Eway Bill No.{% endtrans %} :</b></span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["ewaybillno"] }}</span><br>
+	      {% endif %}
+	      <span style=" font-weight:normal;font-size:120%"> {% trans %}<b>Invoice Date</b>{% endtrans %} :</span> <span style=" font-weight:normal;font-size:130%">{{ gkresult["invoicedate"] }}</span> <br>
 
-	    {% if gkresult["inoutflag"] == 9 %}
-	      <span style="font-weight:bold !important; font-size:small;">  {% trans %}<b>State of Destination</b>{% endtrans %} : </span>
-	    {% else %}
-	      <span style="font-weight:bold !important; font-size:small;">  {% trans %}<b>State of Origin</b>{% endtrans %} :</span>
-	    {% endif %}
-	    <span style=" font-weight:normal;font-size:120%">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}</span><br>
-	    <span style="font-weight:bold !important; font-size:small;">{% trans %}<b>State Code</b>{% endtrans %} : </span> 
-	    {% if gkresult["inoutflag"] == 15 %}<span style=" font-weight:normal;font-size:120%">{{ '%02d' | format(gkresult["sourcestatecode"] | int) }}</span>{% endif %}{% if gkresult["inoutflag"] == 9 %}<span style=" font-weight:normal;font-size:120%">{{ '%02d' | format(gkresult["taxstatecode"] | int) }}</span>{% endif %}
+	      {% if gkresult["inoutflag"] == 9 %}
+	        <span style="font-weight:bold !important; font-size:small;">  {% trans %}<b>State of Destination</b>{% endtrans %} : </span>
+	      {% else %}
+	        <span style="font-weight:bold !important; font-size:small;">  {% trans %}<b>State of Origin</b>{% endtrans %} :</span>
+	      {% endif %}
+	      <span style=" font-weight:normal;font-size:120%">{% if gkresult["inoutflag"] == 15 %}{{ gkresult["sourcestate"] }}{% endif %}{% if gkresult["inoutflag"] == 9 %}{{ gkresult["destinationstate"] }}{% endif %}</span><br>
+	      <span style="font-weight:bold !important; font-size:small;">{% trans %}<b>State Code</b>{% endtrans %} : </span> 
+	      {% if gkresult["inoutflag"] == 15 %}<span style=" font-weight:normal;font-size:120%">{{ '%02d' | format(gkresult["sourcestatecode"] | int) }}</span>{% endif %}{% if gkresult["inoutflag"] == 9 %}<span style=" font-weight:normal;font-size:120%">{{ '%02d' | format(gkresult["taxstatecode"] | int) }}</span>{% endif %}
 
-	  </div>
-        </td>
+	    </div>
+          </td>
 
       </tr>
       <tr>
-        <td>
-          
-	  
-	  <div style="word-wrap: break-word; font-size:120%;float:left;padding-left:5%; min-width: 50%;max-width: 50%;">
+        <td style="width:50%">  
+	  <div style="word-wrap: break-word; font-size:120%;float:left;padding-left:5%; min-width:100%;max-width:100%;">
 	    <h5><b>DETAILS OF RECEIVER | BILLED TO</b></h5>  
 	    {% if gkresult["inoutflag"] == 9 %}
 	      {% trans %}<b>Supplier</b>{% endtrans %} :
@@ -251,7 +249,7 @@
 
 	  </div>
         </td>
-        <td>
+        <td style="width:50%">
 	  <div style="word-wrap: break-word;float:left;font-size:120%;padding-left: 5%;display: block;min-width:100%;max-width: 100%;">
 	    <h5><b>DETAILS OF CONSIGNEE | SHIPPED TO</b></h5>
 	    {% trans %}<b>Name</b>{% endtrans %} : 
