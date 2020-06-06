@@ -308,7 +308,7 @@
 	      {% for product in gkresult["invcontents"] %}
 		<tr>
 		  <td>
-		    <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		    <small ><b>{{ gkresult["invcontents"][product]["proddesc"] }}</b></small>
 		  </td>
 		  <td class="text-right">
 		    <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
@@ -403,7 +403,7 @@
 	      {% for product in gkresult["invcontents"] %}
 		<tr>
 		  <td>
-		    <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		    <small style="font-weight:bold !important; font-size:small;">{{ gkresult["invcontents"][product]["proddesc"] }}</small>
 		  </td>
 		  <td class="text-center">
 		    <small>{{ gkresult["invcontents"][product]["gscode"] }}</small>
@@ -425,14 +425,14 @@
 		    <small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
 		  </td>
 
-		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>{% endif %}
-		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>
+		  <td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
 
-		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</td></small>{% endif %}
-		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+		  {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</td></small>
+		  <td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
 
-		  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>{% endif %}
-		  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
+		  {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>
+		  <td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
 		  <td class="text-right"><small>{{ gkresult["invcontents"][product]["cessrate"] }}</small></td>
                   <td class="text-right"><small>{{ gkresult["invcontents"][product]["cess"] }}</small></td>
                   <td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
@@ -444,12 +444,12 @@
 		<td colspan="5" class="text-right" style="vertical-align:middle; font-size:75% ;font-weight: bold !important;">Total</td>
 		<td class="text-right">{{ gkresult["totaldiscount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</td>
 		<td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
-		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		{% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-		<td colspan="2" class="text-right">{{ gkresult["totalcessamt"] }}</td>
+		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right"><b>{{ gkresult["totaltaxamt"] }}</b></td>{% endif %}
+		{% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right"><b>{{ gkresult["totaltaxamt"] }}</b></td>{% endif %}
+		{% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right"><b>{{ gkresult["totaltaxamt"] }}</b></td>/{% endif %}
+		<td colspan="2" class="text-right"><b>{{ gkresult["totalcessamt"] }}</b></td>
 		<td class="text-right">
-		  {{ gkresult["invoicetotal"] }}
+		 <b> {{ gkresult["invoicetotal"] }}</b>
 		</td>
 	      </tr>
 	    </tfoot>
