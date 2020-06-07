@@ -936,9 +936,10 @@ $(document).ready(function(){
                   });
     });
 
-    $('#shortcuts').click(function (e) {
-      // calls add ac2123count page.
-      $("#msspinmodal").modal("show");
+  $('#shortcuts').click(function (e) {
+    hideinvdiv();
+    // calls add ac2123count page.
+    $("#msspinmodal").modal("show");
       $.ajax(
         {
   
@@ -966,9 +967,10 @@ $(document).ready(function(){
 });
 
   
-    $('#authors').click(function (e) {
-      // calls add account page.
-      $("#msspinmodal").modal("show");
+  $('#authors').click(function (e) {
+    hideinvdiv();
+    // calls add account page.
+    $("#msspinmodal").modal("show");
       $.ajax(
         {
   
@@ -995,9 +997,10 @@ $(document).ready(function(){
   });
 });
 
-    $('#license').click(function (e) {
-      // calls add account page.
-      $("#msspinmodal").modal("show");
+  $('#license').click(function (e) {
+    hideinvdiv();
+    // calls add account page.
+    $("#msspinmodal").modal("show");
       $.ajax(
         {
   
@@ -1024,9 +1027,10 @@ $(document).ready(function(){
     });
   });
 
-    $('#about').click(function (e) {
-      // calls add account page.
-      $("#msspinmodal").modal("show");
+  $('#about').click(function (e) {
+    hideinvdiv();
+    // calls add account page.
+    $("#msspinmodal").modal("show");
       $.ajax(
         {
   
@@ -1053,9 +1057,10 @@ $(document).ready(function(){
     });
   });
 
-    $('#deletecompany').click(function (e) {
-      // calls add account page.
-      $("#msspinmodal").modal("show");
+  $('#deletecompany').click(function (e) {
+    hideinvdiv();
+    // calls add account page.
+    $("#msspinmodal").modal("show");
       $.ajax(
         {
   
@@ -1082,11 +1087,13 @@ $(document).ready(function(){
     });
   });
 
-  $("#exportdata").on('shown.bs.modal', function(event) {
-    $("#exportbutton").focus();
+  $("#exportdata").click(function() {
+    hideinvdiv();
+    $("#info").load("/export");
   });
 
   $("#product").click(function (e){
+    hideinvdiv();
     e.preventDefault();
     // calls product page.
     $.ajax({
@@ -1309,7 +1316,7 @@ $(document).ready(function(){
   });
 
   $("#r1").click(function (e) {
-    console.log("r1");
+    hideinvdiv();
     $.ajax(
       {
         type: "GET",
@@ -2003,6 +2010,7 @@ $(document).ready(function(){
       // return false;
   });
   $('#createtransfernote').click(function (e) {// calls base transfer note page.
+    hideinvdiv();
     $("#info").load("/transfernotes");
   });
 

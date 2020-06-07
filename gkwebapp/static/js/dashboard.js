@@ -95,9 +95,6 @@ $(document).off('keydown' ,'.kmd').on('keydown' ,'.kmd',function(event) {
 }
 });
 
-  $("#exportdata").click(function(){
-  $("#info").load("/export");
-});
 
 $("#shownews").click(function(){
   $("#newsmodal").modal("show");
