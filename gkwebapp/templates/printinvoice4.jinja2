@@ -329,20 +329,20 @@
 	      {% for product in gkresult["invcontents"] %}
 		<tr>
 		  <td>
-		    <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		    <b>{{ gkresult["invcontents"][product]["proddesc"] }}</b>
 		  </td>
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		    {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		  </td>
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+		    {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		  </td>
 
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
+		    {{ gkresult["invcontents"][product]["priceperunit"] }}
 		  </td>
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</small>
+		    {{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 		  </td>
 		  <td class="text-right">
 		    {{ gkresult["invcontents"][product]["taxableamount"] }}

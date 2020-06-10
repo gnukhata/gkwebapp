@@ -334,30 +334,30 @@
 		  {% for product in gkresult["invcontents"] %}
 		    <tr>
 		      <td>
-			<small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+		<b>	{{ gkresult["invcontents"][product]["proddesc"] }}</b>
 		      </td>
 		      <td class="text-right">
-			<small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+			{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		      </td>
 		      <td class="text-right">
-			<small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+			{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
 		      </td>
 
 		      <td class="text-right">
-			<small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
+			{{ gkresult["invcontents"][product]["priceperunit"] }}
 		      </td>
 		      <td class="text-right">
-			<small>{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}</small>
+			{{ gkresult["invcontents"][product]["discount"] }}{% if gkresult["discflag"]|int == 16 %} %{% endif %}
 		      </td>
 		      <td class="text-right">
-			<small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
+			{{ gkresult["invcontents"][product]["taxableamount"] }}
 		      </td>
 		  </td>
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["taxrate"] }}</small>
+		    {{ gkresult["invcontents"][product]["taxrate"] }}
 		  </td>
 		  <td class="text-right">
-		    <small>{{ gkresult["invcontents"][product]["taxamount"] }}</small>
+		    {{ gkresult["invcontents"][product]["taxamount"] }}
 		  </td>
 		  <td class="text-right">
 		    {{ gkresult["invcontents"][product]["totalAmount"] }}
@@ -456,6 +456,8 @@
 	      </table>
 	    </div>
 	    {# ////////////////////////////////////////////////////////////////////////////////////////////////// #}
+            {% if gkresult["taxflag"] == 7 %}
+
 	    <div class="row">
 	      <table class="col-sm-12 nopadding">
 		<tbody>
@@ -594,16 +596,16 @@
 			  </table>
 			</div>
 		      {% else %}
-			<div class="col-sm-12 nopadding">
-			  {% if gkresult["paymentmode"] | int ==3 %}{% if gkresult["inoutflag"] | int == 15 %}<b style="font-size:125%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>{% endif %}{% endif %}
-			  {% if gkresult["paymentmode"] | int ==15 %}{% trans %}ON CREDIT{% endtrans %}{% endif %}
+			<div class="col-sm-6 nopadding">
+			  {% if gkresult["paymentmode"] | int ==3 %}{% if gkresult["inoutflag"] | int == 15 %}<b style="font-size:130%">{% trans %}CASH RECEIVED{% endtrans %}{% else %}{% trans %}CASH PAID{% endtrans %}</b>{% endif %}{% endif %}
+			  {% if gkresult["paymentmode"] | int ==15 %}<b style="font-size:130%">{% trans %}ON CREDIT{% endtrans %}{% endif %}
 			</div><br>
 		      {% endif %}
 		    </td>
 
 		    <td ></td>
 
-		    <td style="width:10% ;">
+		    <td style="width:10%">
 		      <div class="row hborderdiv gstfield sgstfield">
 			<div class="col-sm-6">
 			  <label for="taxableamount" style="font-size:110% !important;font-weight:bold !important;">{% trans %}Taxable Amount{% endtrans %} :</label>
@@ -719,6 +721,8 @@
 		</tbody>
 	      </table>
 	    </div>
+          {% endif %}
+
 	    <div class="text-center">
 	      {% if gkresult["invoicetotalword"]!= None %}
 		<label for="totalValueInWord" style="font-size:170% !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
