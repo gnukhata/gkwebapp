@@ -555,8 +555,9 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 		if (inoutflag == '9') {
 		    $("#printbutton").hide();
                 }
-                else {
-                    $("#inv_rec").css("margin-right", "0px");
+              else {
+		$("#printbutton").show();
+                $("#inv_rec").css("margin-right", "0px");
                 }
         $("#viewinvdiv").show();
         $(".borderdiv").height($("#maindivviewinv").height());	
@@ -687,7 +688,8 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         $('#latabledel tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
     }
         if($('#invoiceviewlistdiv').length>0){
-            $(".tab-content").show();
+          $(".tab-content").show();
+	  $("#invoice_div").children().first().css({"border":"solid black 1px"})
         }
     });
 

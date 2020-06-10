@@ -63,9 +63,10 @@ $(document).ready(function() {
           xhr.setRequestHeader('gktoken',sessionStorage.gktoken );
         },
       })
-        .done(function(resp)
-        {
-          $("#invload").html(resp).show();
+     .done(function(resp)
+       {
+	 $(".printnopadding").css({"padding":"10px","margin":"10px"});
+         $("#invload").html(resp).show();
           $('#listdiv').hide();
           $("#printload").html("");
           $("#buttondiv").show();
