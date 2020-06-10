@@ -396,7 +396,6 @@ def InvoiceCancel(request):
 def Invoiceprint(request):
     header={"gktoken":request.headers["gktoken"]}
     invoicedata = requests.get("http://127.0.0.1:6543/invoice?inv=single&invid=%d"%(int(request.params["invid"])), headers=header)
-    print (invoicedata.json()["gkresult"])
     if  (invoicedata.json()["gkresult"]['custSupDetails']['custgstin']) == None:
         invoicedata.json()["gkresult"]['custSupDetails']['custgstin'] = ''
     statecode = invoicedata.json()["gkresult"]["sourcestatecode"]
