@@ -16,8 +16,8 @@
         font-family: Arial, Helvetica, sans-serif;
     }
     .page {
-        width: 25cm;
-        min-height: 29.7cm;
+        width: 24cm;
+        min-height: 25cm;
         padding: 1.5cm;
         margin: 1cm auto;
         border: 1px #D3D3D3 solid;
@@ -176,26 +176,26 @@
 	    </div>
           </div>
             <div class="col-md-4 nopadding" style="word-wrap: break-word; font-size:100%;float:right;padding-right:6%">
-              <table id="invoice_details_table_top" class=" table table-condensed table-bordered" style="top: 0;">
+              <table id="invoice_details_table_top" class=" table table-condensed table-bordered" style="width:100%">
                 <tbody>
                   <tr>
-                    <td><b>{% trans %}Invoice No.{% endtrans %}</b></td>
+                    <td style="width :40%"><b>{% trans %}Invoice No.{% endtrans %}</b></td>
                     <td>{{ gkresult["invoiceno"] }}</td>
                   </tr>
                   <tr>
-                    <td><b>{% trans %}Invoice Date{% endtrans %}</b></td>
+                    <td style="width :40%"><b>{% trans %}Invoice Date{% endtrans %}</b></td>
                     <td>{{ gkresult["invoicedate"] }}</td>
                   </tr>
                   <tr>
                     {% if gkresult["inoutflag"] == 9 %}
-                      <td> <b>{% trans %}Supplier{% endtrans %}</b></td>
+                      <td style="width :40%"> <b>{% trans %}Supplier{% endtrans %}</b></td>
                     {% else %}
-                      <td> <b>{% trans %}Customer{% endtrans %}</b> </td>
+                      <td style="width :40%"> <b>{% trans %}Customer{% endtrans %}</b> </td>
                     {% endif %}
                     <td>{{ gkresult["custSupDetails"]["custname"] }}</td>
                   </tr>
                   <tr>
-                    <td><b>{% trans %}Contact No.{% endtrans %}</b></td>
+                    <td style="width :40%"><b>{% trans %}Contact No.{% endtrans %}</b></td>
                     <td>{{ gkresult["custSupDetails"]["custphone"] }}</td>
                   </tr>
 
@@ -232,7 +232,7 @@
                   {% for product in gkresult["invcontents"] %}
                     <tr>
                       <td>
-                                      <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+                        <small><b>{{ gkresult["invcontents"][product]["proddesc"] }}</b></small>
                       </td>
                       <td class="text-right">
                         <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
@@ -327,38 +327,41 @@
                   {% for product in gkresult["invcontents"] %}
                     <tr>
                       <td>
-                        <small>{{ gkresult["invcontents"][product]["proddesc"] }}</small>
+                        <b>{{ gkresult["invcontents"][product]["proddesc"] }}</b>
                       </td>
                       <td class="text-center">
-                        <small>{{ gkresult["invcontents"][product]["gscode"] }}</small>
+                        {{ gkresult["invcontents"][product]["gscode"] }}
                       </td>
                       <td class="text-right">
-                        <small>{{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+                        {{ gkresult["invcontents"][product]["qty"] }} {{ gkresult["invcontents"][product]["uom"] }}
                       </td>
                       <td class="text-right">
-                        <small>{{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}</small>
+                        {{ gkresult["invcontents"][product]["freeqty"] }} {{ gkresult["invcontents"][product]["uom"] }}
                       </td>
                       
                       <td class="text-right">
-                        <small>{{ gkresult["invcontents"][product]["priceperunit"] }}</small>
+                        {{ gkresult["invcontents"][product]["priceperunit"] }}
                       </td>
                       <td class="text-right">
-                        <small>{{ gkresult["invcontents"][product]["discount"] }}</small>
+                        {{ gkresult["invcontents"][product]["discount"] }}
                       </td>
                       <td class="text-right">
-                        <small>{{ gkresult["invcontents"][product]["taxableamount"] }}</small>
+                        {{ gkresult["invcontents"][product]["taxableamount"] }}
                       </td>
                       
-                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>{% endif %}
-                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}
+                        <td class="text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>
+                      <td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
                       
-                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</td></small>{% endif %}
-                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxamount"] }}</small></td>{% endif %}
+                      {% if gkresult["invcontents"][product]["taxname"]=='SGST' %}
+                        <td class="text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>
+                      <td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
                       
-                      {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right"><small>{{ gkresult["invcontents"][product]["taxrate"] }}</small></td>{% endif %}
-                      {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}<td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
-                      <td class="text-right"><small>{{ gkresult["invcontents"][product]["cessrate"] }}</small></td>
-                      <td class="text-right"><small>{{ gkresult["invcontents"][product]["cess"] }}</small></td>
+                      {% if gkresult["invcontents"][product]["taxname"]=='IGST' %}
+                        <td class="text-right">{{ gkresult["invcontents"][product]["taxrate"] }}</td>
+                      <td class="text-right">{{ gkresult["invcontents"][product]["taxamount"] }}</td>{% endif %}
+                      <td class="text-right">{{ gkresult["invcontents"][product]["cessrate"] }}</td>
+                      <td class="text-right">{{ gkresult["invcontents"][product]["cess"] }}</td>
                       <td class="text-right">{{ gkresult["invcontents"][product]["totalAmount"] }}</td>
                     </tr>
                   {% endfor %}
@@ -368,8 +371,8 @@
                     <td colspan="5" class="text-right" style="vertical-align:middle; font-size:75% ;font-weight: bold !important;">Total</td>
                     <td class="text-right">{{ gkresult["totaldiscount"] }}</td>
                     <td class="text-right">{{ gkresult["totaltaxablevalue"] }}</td>
-                    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
-                    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
+                    {% if gkresult["taxname"]=='SGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>
+                    <td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
                     {% if gkresult["taxname"]=='IGST' %}<td colspan="2" class="text-right">{{ gkresult["totaltaxamt"] }}</td>{% endif %}
                     <td colspan="2" class="text-right">{{ gkresult["totalcessamt"] }}</td>
                     <td class="text-right">
@@ -395,15 +398,17 @@
                 <b style="font-size:12px">{% trans %}BANK TRANSACTION{% endtrans %}</b>
               {% endif %}
               <br>
+              <br>
+              
               <label for="totalinvoicevalue" style="font-size:12px !important ;font-weight:bold!important;">{% trans %}You Saved{% endtrans %} : {{ gkresult["totaldiscount"] }} </label>
               <br>
               <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Served By{% endtrans %} : {{ gkresult["issuername"] }}</label>
               
             </div>
-
-            <div class="col-sm-3 pull-right" style="padding-right: 0px;">
+            <br>
+            <div class="col-sm-3 pull-right" style="padding-left:1px;">
               {% if gkresult["roundoff"] == 1 %}
-                <div class="row form-group form-inline">
+                <div class="row">
                   <div class="col-sm-8 text-right">
                     <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
                   </div>
@@ -411,7 +416,7 @@
                     <label id="totalinvoicevalue" style="font-size:12px !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
                   </div>
                 </div>
-                <div class="row form-group form-inline">
+                <div class="row">
                   <div class="col-sm-8 text-right">
                     <label for="totalinvoicevalueroundoff"  style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value :<br>(<i> Rounded Off </i>){% endtrans %} </label>
                   </div>
@@ -420,28 +425,30 @@
                   </div>
                 </div>
               {% else %}
-                <div class="row form-group form-inline">
-                  <div class="col-sm-8 text-right">
+                <div class="row">
+                  <div class= "text-left col-sm-9">
                     <label for="totalinvoicevalue" style="font-size:12px !important;font-weight:bold!important;">{% trans %}Total Invoice Value{% endtrans %} :</label>
                   </div>
-                  <div class="col-sm-4 text-left">
+                  <div class="text-left col-sm-3">
                     <label id="totalinvoicevalue" style="font-size:12px !important; font-weight:normal !important"> {{ gkresult["invoicetotal"] }} </label>
                   </div>
                 </div>
               {% endif %}
             </div>
           </div>
+          <br>
+          <br>
           <div class="text-center">
             {% if gkresult["invoicetotalword"]!= None %}
-              <label for="totalValueInWord" style="font-size:12px !important;">{% trans %}Total Invoice Value In Words {% endtrans %} :</label>
-              <i><label id="totalValueInWord"  style="font-size:12px !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}}</label></i>
+              <label for="totalValueInWord" style="font-size:13px !important;">{% trans %}Total Invoice Value In Words {% endtrans %}:</label>
+              <i><label id="totalValueInWord"  style="font-size:13px !important;font-weight:normal !important;">{{gkresult["invoicetotalword"]}} only</label></i>
             {% endif %}
           </div>
           
           <div class="row">
             <div class="col-xs-6"  style="padding-left:0px !important;">
               <label for="notes" style="font-size: 10px !important;"class="hidden-print">Notes :</label>
-              <textarea style="width:50% !important" name="name" row='3' id="notes" class="form-control hidden-print" id="notes"></textarea>
+              <textarea style="width:50% !important" name="name" row='5' id="notes" class="form-control hidden-print" id="notes"></textarea>
               <p class="visible-print" id = "notespara">
               </p>
             </div>
