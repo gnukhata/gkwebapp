@@ -358,7 +358,9 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
     .done(function(resp) {
       $("#listdiv").html(resp);
       $("#latable tbody tr:first td:eq(1) a").focus();
-      $("#latable tbody tr:first").addClass("selected");
+	$("#latable tbody tr:first").addClass("selected");
+	$("#listdiv").show();
+	$("#viewinvdiv").html("").hide();
     })
     .fail(function() {
         $("#failure-alert1").alert();
@@ -548,7 +550,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 $("#invload").html("");
                 $("#invload").html(resp).show();
                 $("#printload").hide();
-                $('#listdiv').hide();
+                $('#pillsdiv, #listdiv').hide();
                 $("#invoiceviewlistdiv").hide();
 
 
@@ -586,11 +588,11 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         }
             });
             $(document).off('click', '#inv_rec').on('click', '#inv_rec', function(e) {
-                vouchercall("receipt",invoice_id)
+                vouchercall("receipt",invoice_id);
               });
             
             $(document).off('click', '#inv_pay').on('click', '#inv_pay', function(e) {
-                vouchercall("payment",invoice_id)
+                vouchercall("payment",invoice_id);
               });  
             
     });
@@ -625,11 +627,8 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 $("#invload").html("");
                 $("#invload").html(resp).show();
                 $("#printload").hide();
-                $('#listdiv').hide();
+                $('#pillsdiv, #listdiv').hide();
                 $("#invoiceviewlistdiv").hide();
-
-
-
 		if (inoutflag == '9') {
 		    $("#printbutton").hide();
 		}
@@ -677,7 +676,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
     $("#list_backbutton").click(function(event){
     $("#invload").html("");
 	$("#viewinvdiv").hide();
-    $('#listdiv').show();
+    $('#pillsdiv, #listdiv').show();
   $("#invoiceviewlistdiv").show();    
   if($("#latable").length){
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
@@ -688,8 +687,9 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         $('#latabledel tbody tr:eq(' + currentrow + ') td:eq(1) a').closest('tr').addClass('selected');
     }
         if($('#invoiceviewlistdiv').length>0){
+	    $("#viewanotherlist").hide();
           $(".tab-content").show();
-	  $("#invoice_div").children().first().css({"border":"solid black 1px"})
+	    $("#invoice_div").children().first().css({"border":"solid black 1px"});
         }
     });
 

@@ -941,7 +941,20 @@
             </div>
 	  </div>
         </div>
+    </div>
+    <div id="voucher_modal" class="modal fade"  tabindex="-1" role="dialog" data-keyboard="false" >
+      <div class="vertical-alignment-helper">
+	<div class="modal-dialog modal-lg vertical-align-center" id="mod_dialog">
+          <div class="modal-content">  
+            <div class="row">
+              <button id="close_button" type="button" class="close" style="color: black; margin-right:25px" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>  </div>
+            <div class="modal-body classstyle"  id="show_voucher"></div>
+          </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
       </div>
+    </div>
     </main>
     <script src="{{request.static_url('gkwebapp:static/js/jquery-2.2.0.min.js')}}"></script>
     <script src="{{request.static_url('gkwebapp:static/js/bootstrap.min.js')}}"></script>
