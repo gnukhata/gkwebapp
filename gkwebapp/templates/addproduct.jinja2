@@ -142,7 +142,8 @@
               {% trans %}Tax rate must not be empty or zero!{% endtrans %}<br>
             </div>
             {% endif %}
-          </div>
+        </div>
+	<div class="row col-md-12">
         <form id="addprodform">
           <div class="col-sm-6" >
 	    {% if userrole|int != 3 %}
@@ -415,7 +416,7 @@
                       </td>
                       <td class="col-xs-1">
 				                <div style="text-align: center;">
-				                  <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+				                  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
 				                </div>
                       </td>
 			                <td class="col-xs-1">
@@ -438,6 +439,7 @@
               </div>
 		        </div>
 		      </div>
+	</div>
 		    {% else %}
 		      {% if userrole|int != 3 %}
 		      <div class="form-group col-sm-12">
@@ -486,7 +488,7 @@
 			              </td>
 			              <td class="col-xs-1">
 			                <div style="text-align: center;">
-			                    <span class="glyphicon glyphicon glyphicon-plus goaddbtn">
+			                  <span class="glyphicon glyphicon glyphicon-plus goaddbtn"></span>
 			                </div>
 			              </td>
 			              <td class="col-xs-1">
@@ -499,13 +501,14 @@
               </table>
 		        </div>
 		      </div>
+		    </div>
 		    {% endif %}
-        </div>
-      </div>
-      </div>
-    
+	</div>
+	</div>
   </div>
 	</form>
+	</div>
+						  </div>
 <div class="btn-group-sm panel-footer">
 	  <div class="container-fluid">
             {% if extrabuttons %}
@@ -650,7 +653,6 @@
 	  </div> 
 	  
         </div>
-      </div>
     </div> 
     <div id="addgodownpopup">
     </div>
