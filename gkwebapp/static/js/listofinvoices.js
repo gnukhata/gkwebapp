@@ -356,11 +356,14 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         },
     })
     .done(function(resp) {
-      $("#listdiv").html(resp);
-      $("#latable tbody tr:first td:eq(1) a").focus();
-	$("#latable tbody tr:first").addClass("selected");
-	$("#listdiv").show();
-	$("#viewinvdiv").html("").hide();
+	if ($("#slectedlist").length > 0){
+	    $("#slectedlist").html(resp);
+	    $("#invoiceviewlist input:radio:checked").focus();
+            $("#viewanotherlist").hide();
+	}
+	else {
+	    $("#info").html(resp);
+	}
     })
     .fail(function() {
         $("#failure-alert1").alert();
@@ -550,7 +553,12 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 $("#invload").html("");
                 $("#invload").html(resp).show();
                 $("#printload").hide();
-                $('#pillsdiv, #listdiv').hide();
+		if ($("#pillsdiv").length > 0){
+		    $("#pillsdiv").hide();
+		}
+		if ($("#listdiv").length > 0){
+		    $("#listdiv").hide();
+		}
                 $("#invoiceviewlistdiv").hide();
 
 
@@ -627,7 +635,12 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
                 $("#invload").html("");
                 $("#invload").html(resp).show();
                 $("#printload").hide();
-                $('#pillsdiv, #listdiv').hide();
+		if ($("#pillsdiv").length > 0){
+		    $("#pillsdiv").hide();
+		}
+		if ($("#listdiv").length > 0){
+		    $("#listdiv").hide();
+		}
                 $("#invoiceviewlistdiv").hide();
 		if (inoutflag == '9') {
 		    $("#printbutton").hide();
@@ -676,7 +689,12 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
     $("#list_backbutton").click(function(event){
     $("#invload").html("");
 	$("#viewinvdiv").hide();
-    $('#pillsdiv, #listdiv').show();
+	if ($("#pillsdiv").length > 0){
+	    $("#pillsdiv").show();
+	}
+	if ($("#listdiv").length > 0){
+	    $("#listdiv").show();
+	}
   $("#invoiceviewlistdiv").show();    
   if($("#latable").length){
 	$('#latable tbody tr:eq(' + currentrow + ') td:eq(1) a').focus();
