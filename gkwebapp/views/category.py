@@ -91,19 +91,21 @@ def savespecs(request):
         categorydata={"categoryname":request.params["categoryname"]}
     result = requests.post("http://127.0.0.1:6543/categories",data=json.dumps(categorydata) ,headers=header)
     if result.json()["gkstatus"]==0:
+        specs = json.loads(request.params["specs"])
+        if len(specs) > 0:
+            for spec in specs:
+                specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
+                specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
+        taxes = json.loads(request.params["taxes"])
+        if len(taxes) > 0 :
+            for tax in taxes:
+                taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":result.json()["gkresult"]}
+                if tax["state"]!='':
+                    taxdata["state"]=tax["state"]
+                taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
         gkdata = {"activity":request.params["categoryname"] + " category created"}
         resultlog = requests.post("http://127.0.0.1:6543/log", data =json.dumps(gkdata),headers=header)
-        specs = json.loads(request.params["specs"])
-        for spec in specs:
-            specdata= {"attrname":spec["attrname"],"attrtype":int(spec["attrtype"]),"categorycode":result.json()["gkresult"]}
-            specresult = requests.post("http://127.0.0.1:6543/categoryspecs",data=json.dumps(specdata) ,headers=header)
-        taxes = json.loads(request.params["taxes"])
-        for tax in taxes:
-            taxdata= {"taxname":tax["taxname"],"taxrate":float(tax["taxrate"]),"categorycode":result.json()["gkresult"]}
-            if tax["state"]!='':
-                taxdata["state"]=tax["state"]
-            taxresult = requests.post("http://127.0.0.1:6543/tax",data=json.dumps(taxdata) ,headers=header)
-        return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]}
+        return {"gkstatus": result.json()["gkstatus"], "gkresult":result.json()["gkresult"]} 
     else:
         return {"gkstatus": result.json()["gkstatus"]}
 

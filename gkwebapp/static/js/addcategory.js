@@ -130,13 +130,17 @@ $(document).ready(function() {
 	    let curindex = $(this).index();
 	    let nextindex = curindex + 1;
 	    for (let j = 0; j < curindex + 1; j++) {
-	      var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+	        var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+                console.log(selectedtax);
+                console.log("nnnnn");
+                if (selectedtax != ""){
 	      if(selectedtax != "VAT"){
 		  for(let i=j+1; i <= nextindex;i++){
 		      $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
 		  }
 	      }
-	  }
+	        }
+            }
 	});
 	}
 	$("#category_tax_table tbody tr:last td:eq(0) select").focus();
@@ -476,6 +480,8 @@ $(document).ready(function() {
                 $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
 		for (let j = 0; j < curindex1 + 1; j++) {
 		    var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+                    console.log(selectedtax);
+                    console.log("mmmmmm");
 		    if(selectedtax != "VAT"){
 			for(let i=j+1; i <= nextindex1;i++){
 			    $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
@@ -538,6 +544,8 @@ $(document).ready(function() {
                 $('#category_tax_table tbody tr:eq(' + nextindex1 + ') td:eq(0) select').focus().select();
 		for (let j = 0; j < curindex1 + 1; j++) {
 		    var selectedtax = $("#category_tax_table tbody tr:eq("+j+") td:eq(0) select option:selected").val();
+                    console.log(selectedtax);
+                    console.log("yuuuu");
 		    if(selectedtax != "VAT"){
 			for(let i=j+1; i <= nextindex1;i++){
 			    $('#category_tax_table tbody tr:eq('+i+') td:eq(0) select option[value='+selectedtax+']').prop('hidden', true).prop('disabled', true);
