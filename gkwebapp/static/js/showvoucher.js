@@ -61,6 +61,8 @@ $(document).ready(function(){
           success: function(resp)
           {
             $("#info").html(resp);
+	    $("#msspinmodal").modal("hide");
+	    $('.modal-backdrop').remove();
           }
           }
         );

@@ -360,11 +360,13 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
 	    $("#slectedlist").html(resp);
 	    $("#invoiceviewlist input:radio:checked").focus();
             $("#viewanotherlist").hide();
-	    $("#viewinvdiv").html("").hide();
+	    $("#viewinvdiv").hide();
+	    $("#invload").html("");
 	}
 	else {
 	    $("#info").html(resp);
-	    $("#viewinvdiv").html("").hide();
+	    $("#viewinvdiv").hide();
+	    $("#invload").html("");
 	}
     })
     .fail(function() {

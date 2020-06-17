@@ -417,28 +417,40 @@ $(document).ready(function() {
 	    }
 	}).done(function(resp) {
 	    $("#invload").html("");
-	    $("#invload").html(resp);
+            $("#invload").html(resp).show();
+	    $("#buttondiv").show();
 	    $("#backbutton").attr("inoutflag", inoutflag);
-	    $("#editbutton").hide();
+            $("#editbutton").hide();
+            $("#printload").hide();
+	    if ($("#pillsdiv").length > 0){
+		$("#pillsdiv").hide();
+	    }
+	    if ($("#listdiv").length > 0){
+		$("#listdiv").hide();
+	    }
+            $("#invoiceviewlistdiv").hide();
 	    if (inoutflag == '9') {
-		$("#printbutton").hide();
 		sessionStorage.salepurchase = 9;
-	    }
-	    else {
-		$("#printbutton").show();
-		$("#printbutton").attr("invid",invid);
+		$("#printbutton").hide();
+            }
+            else {
+		$("#printbutton").attr("invid", invid);
 		sessionStorage.salepurchase = 15;
-	    }
-	    $("#listdiv").html("");
-	    $("#viewinvdiv").show();
+		$("#printbutton").show();
+                $("#inv_rec").css("margin-right", "0px");
+            }
+            $("#viewinvdiv").show();
+            $(".borderdiv").height($("#maindivviewinv").height());	
+	    
 	    if ($("#attachmentcount").val() > 0) {
 		$("#viewattachment").show();
-		$("#viewattachment").attr("invid",invid);
+		$("#viewattachment").attr("invid", invid);
 	    }
 	    else {
 		$("#viewattachment").hide();
-	    }
-
+            }
+            $("#inv_pay").hide();
+            $("#inv_rec").hide();
 	});
 	return false;
     }
@@ -4054,7 +4066,9 @@ if (event.which == 13) {
     }
   });
   $("#backbutton").click(function(event){
-    $("#info").load("/invoice");
+      $("#info").load("/invoice");
+      $("#invload").html("");
+      $("#buttondiv").hide();
     return false;
     });
     $("#printbutton").click(function(event) {

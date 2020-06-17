@@ -54,7 +54,7 @@ $(document).ready(function() {
 	  $("#voucherno").hide();
 	  if ($("#invsel").length > 0)
 	  {
-      if($("#voucher_modal").length == 0){
+      if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
 
         $("#invsel").focus();
       }
@@ -71,7 +71,7 @@ $(document).ready(function() {
 	$("#voucherno").show();
 	$("#vno").focus().select();
     }
-    if($("#voucher_modal").length == 0){
+    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
     $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
     $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
     }
@@ -456,7 +456,7 @@ $(document).ready(function() {
 	$("#voucherno").hide();
        if ($("#invsel").length > 0)
        {
-        if($("#voucher_modal").length == 0){
+        if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
   
           $("#invsel").focus();
         }
@@ -725,7 +725,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
     if(event.which==13 && $('#vno').val()!=""){
 	navflag =1;
   event.preventDefault();
-    if($("#voucher_modal").length>0){
+    if(($("#voucher_modal").data('bs.modal') || {}).isShown){
       {
         $('#vdate').focus().select();
       }
@@ -2150,7 +2150,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
         $("#success-alert").hide();
     $("#reset").click();  
-    if($("#voucher_modal").length>0){
+    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
       $('#voucher_modal').modal('hide');
     }
             //Modal asking the user if he wants to do bill wise accounting or not?
@@ -2210,7 +2210,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   });
   // to close alerts
   $('.close').click(function() {
-    if($("#voucher_modal").length==0){
+    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
     
     $(this).parent().hide();
     }
@@ -2366,7 +2366,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
   });
 
   $('#reset').click(function(event) {
-    if($("#voucher_modal").length==0){
+    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
 $("#show"+$("#vtype").val()).click();}
 else{
   
