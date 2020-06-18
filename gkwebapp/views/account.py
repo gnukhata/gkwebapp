@@ -461,7 +461,7 @@ def accImpotrt(request):
                     # checking if opening Balance is not in Debit column. i.e. column no. 2 (B).
                     #It means value is in credit column 
                     if accRow[1].value==None and accRow[2].value!=None:
-                        openingBl = accRow[2].value
+                        openingBl = float(accRow[2].value)
                         #Check parent group so that opening balance type (cr/dr) can be determined.
                         if parentgroup == 'Current Assets' or parentgroup == 'Fixed Assets' or parentgroup == 'Investments' or parentgroup == 'Loans(Asset)' or parentgroup == 'Miscellaneous Expenses(Asset)':
                             openingBl = float(-openingBl)
@@ -469,7 +469,7 @@ def accImpotrt(request):
                         continue
                     #It means value is in debit column 
                     if accRow[2].value==None and accRow[1].value!=None:
-                        openingBl = accRow[1].value
+                        openingBl = float(accRow[1].value)
                         if parentgroup == 'Corpus' or parentgroup == 'Capital' or parentgroup == 'Current Liabilities' or parentgroup == 'Loans(Liabilities)' or parentgroup == "Reserves":
                             openingBl = float(-openingBl)
                         newacc = requests.post("http://127.0.0.1:6543/accounts",data = json.dumps({"accountname":accRow[0].value,"groupcode":curgrpid,"openingbal":openingBl}),headers=header)
