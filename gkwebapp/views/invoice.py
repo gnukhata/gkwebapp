@@ -697,7 +697,7 @@ def listofcanceledinvspreadsheet(request):
             sheet['I'+str(row)].alignment = Alignment(horizontal='center')
             sheet['I'+str(row)].font = Font(name='Liberation Serif', size='12', bold=False)
             row = row + 1
-        output = io.StringIO()
+        output = io.BytesIO()
         invoicewb.save(output)
         contents = output.getvalue()
         output.close()

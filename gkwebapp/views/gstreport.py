@@ -273,7 +273,7 @@ def gstsummspreadsheet(request):
                 n = n+1
                 r = r +1
         
-        output = io.StringIO()
+        output = io.BytesIO()
         gstsmwb.save(output)
         contents = output.getvalue()
         output.close()
