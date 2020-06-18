@@ -315,7 +315,9 @@ outline: none;
 							<label for="openbal" id="obal" hidden>{% trans %}Open<u>i</u>ng Balance{% endtrans %} : </label>
 							<input id="openbal" name="openbal" value="0.00" style="text-align:right" class=" form-control input-sm" type="text" placeholder="0.00" accesskey="i" hidden/>
 							<br/>
-							<button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
+                                                        <div class="btn-group-sm panel-footer">
+
+							  <button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
 							<button id="reset" class="btn btn-danger btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 							<label class="btn btn-primary btn-sm" for="my-file-selector">
 							<input name="spreadsheet" accesskey="o" class="input-sm" id="my-file-selector" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" style="display:none;" type="file">
@@ -323,7 +325,8 @@ outline: none;
                 			</label>
 							<i class="fa fa-question-circle" style="font-size:16px;color:black;"data-toggle="modal" data-target="#ImportHelpModal"></i>
 								
-						</div>
+						        </div>
+                                                </div>
 					</form>
 					<div id="confirm_yes_print" class="modal" tabindex="-1" role="dialog" style="width:650px; margin-top: 150px; margin-left:300px">
             			<div class="vertical-alignment-helper">
