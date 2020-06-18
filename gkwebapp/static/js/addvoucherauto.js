@@ -27,7 +27,7 @@ Contributors:
 // This script is for user friendly voucher page for payment and receipt
 
 $(document).ready(function() {
-  if($("#voucher_modal").length==0){
+  if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
   $("#msspinmodal").modal("hide");  //Hides a spinner used to indicate that the page is getting loaded.
   $(".modal-backdrop").remove();  //Removes any backdrop of the spinner.
   }
@@ -63,7 +63,7 @@ $(document).ready(function() {
   $("#msspinmodal").modal("hide");
   if(id=="#success-alert"){
     $("#reset").click();
-  if($('#voucher_modal').length>0)  {
+    if(($("#voucher_modal").data('bs.modal') || {}).isShown)  {
   $('#voucher_modal').modal('hide');}
 
   }
@@ -112,7 +112,7 @@ $(document).ready(function() {
 
   $("#reset").click(function(event) {
     event.preventDefault();
-    if($("#voucher_modal").length==0){
+    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
     $("#show"+$("#vtype").val()).click();
     }
     else{
