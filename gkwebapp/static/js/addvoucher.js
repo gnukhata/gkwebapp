@@ -50,6 +50,9 @@ $(document).ready(function() {
     if($("#invsel").length > 0){
         $("#invsel").searchify();
     }
+    if(($("#voucher_modal").data('bs.modal') || {}).isShown){
+	$("#bankdetails,#banklabel").hide();
+    }
     if(sessionStorage.avnoflag==1){
 	  $("#voucherno").hide();
 	  if ($("#invsel").length > 0)
@@ -483,11 +486,11 @@ $(document).ready(function() {
   var curfocusrow = -1;
   var accpopupindex = -1;
   var curselectlength = -1;
-  var percentwid = 100*(($("table").width()-12)/$("table").width());
-  $('.table-fixedheader thead').width(percentwid+"%");
-  $('.table-fixedheader tfoot').width(percentwid+"%");
+  var percentwid = 100*(($("#vtable").width()-12)/$("#vtable").width());
+  $('#vtable thead').width(percentwid+"%");
+  $('#vtable tfoot').width(percentwid+"%");
   var percentheigth = 100*(($("body").height()-$(".navbar").height()-300)/$("body").height());
-  $('.table-fixedheader tbody').height(percentheigth+"%");
+  $('#vtable tbody').height(percentheigth+"%");
     var fromdatearray = sessionStorage.yyyymmddyear1.split(/\s*\-\s*/g);
   var financialstart = Date.parseExact(sessionStorage.yyyymmddyear1, "yyyy-MM-dd");
   var financialend = Date.parseExact(sessionStorage.yyyymmddyear2, "yyyy-MM-dd");
@@ -2150,7 +2153,7 @@ $(document).off("change","#invsel").on('change', '#invsel', function(event) {
 		$("#success-alert").fadeTo(2250, 1000).slideUp(1000, function(){		    
         $("#success-alert").hide();
     $("#reset").click();  
-    if(!($("#voucher_modal").data('bs.modal') || {}).isShown){
+    if(($("#voucher_modal").data('bs.modal') || {}).isShown){
       $('#voucher_modal').modal('hide');
     }
             //Modal asking the user if he wants to do bill wise accounting or not?
