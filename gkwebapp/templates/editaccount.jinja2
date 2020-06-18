@@ -169,16 +169,20 @@ th {
 							</br>
 							<label for="openingbal" id="openbal">{% trans %}Open<u>i</u>ng Balance{% endtrans %} :</label>
 							<input type="text" id="openingbal" class="form-control input-sm" name="openingbal" style="text-align:right" accesskey="i"></input>
-							</br>
-							<input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
+					</br>
+                                        <div class="btn-group-sm panel-footer">
+
+					  <input type="hidden" id="accountcode" class="form-control" name="accountcode" ></input>
 
 							<button type="submit" class="btn btn-success btn-sm" id="submit" name="submit" accesskey="s"><i class="fa fa-floppy-o" aria-hidden="true"></i> {% trans %}<u>S</u>ave{% endtrans %}</button>
 							<button id="reset" class="btn btn-warning btn-sm" accesskey="e"><i class="fa fa-refresh" aria-hidden="true"></i> {% trans %}R<u>e</u>set{% endtrans %}</button>
 							<button id="delete" class="btn btn-danger btn-sm" accesskey="d"><i class="fa fa-trash-o" aria-hidden="true"></i> {% trans %}<u>D</u>elete{% endtrans %}</button>
 							<button id="edit" class="btn btn-primary btn-sm" accesskey="t"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> {% trans %}Edi<u>t</u>{% endtrans %}</button>
 
-						</div>
+					</div>
+                                                 </div>
 					</form>
+                                        
 					<input type="hidden" id="status" value="">
 					<div id="EditaccModal"  tabindex="-1" class="modal fade" role="dialog"style="width:650px; margin-top: 150px; margin-left:325px;;"  aria-hidden="true">
   <div class="modal-dialog bgcolor " >
