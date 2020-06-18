@@ -66,7 +66,7 @@ function vouchercall(vtype,inv_id){
             }
             $('#voucher_modal').modal('show');
             $('#voucher_modal').on('shown.bs.modal', function (e)
-            {
+              {
                 $("#show_voucher").html(resp);
                 if(sessionStorage.modeflag != 0){
                     $("#forinvoice").removeClass("col-md-6");
@@ -336,49 +336,7 @@ $(document).off('click', '.inv_payment').on('click', '.inv_payment', function(e)
         }
             });
 
-    $('#voucher_modal').on('hidden.bs.modal', function (e){
-        var allow = 1;
-        if(allow == 1){
-        var dataset = {
-            "flag": $("#invoicetypeselect").val(),
-            "fromdate": $("#fromdate").data("fromdate"),
-            "todate": $("#todate").data("todate")
-        };
-    $.ajax({
-        type: "POST",
-        url: "/invoice?action=showlist",
-        global: false,
-        async: false,
-        datatype: "text/html",
-        data: dataset,
-        beforeSend: function(xhr) {
-            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
-        },
-    })
-    .done(function(resp) {
-	if ($("#slectedlist").length > 0){
-	    $("#slectedlist").html(resp);
-	    $("#invoiceviewlist input:radio:checked").focus();
-            $("#viewanotherlist").hide();
-	    $("#viewinvdiv").hide();
-	    $("#invload").html("");
-	}
-	else {
-	    $("#info").html(resp);
-	    $("#viewinvdiv").hide();
-	    $("#invload").html("");
-	}
-    })
-    .fail(function() {
-        $("#failure-alert1").alert();
-        $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
-          $("#failure-alert1").hide();
-        });
-    });
-    } allow =0;
-    });
-        
-
+ 
     $('#viewprintableversion').click(function(e) {
         var dataset = {
             "flag": $("#invoicetypeselect").val(),

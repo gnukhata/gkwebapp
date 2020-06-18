@@ -2367,6 +2367,53 @@ $(document).ready(function(){
 		$("tbody tr:visible").first().find('a').focus();
 	    }
     });
+    $('#voucher_modal').on('hidden.bs.modal', function (e){
+        var allow = 1;
+        if(allow == 1){
+        var dataset = {
+            "flag": $("#invoicetypeselect").val(),
+            "fromdate": $("#fromdate").data("fromdate"),
+            "todate": $("#todate").data("todate")
+        };
+    $.ajax({
+        type: "POST",
+        url: "/invoice?action=showlist",
+        global: false,
+        async: false,
+        datatype: "text/html",
+        data: dataset,
+        beforeSend: function(xhr) {
+            xhr.setRequestHeader('gktoken', sessionStorage.gktoken);
+        },
+    })
+    .done(function(resp) {
+	if ($("#slectedlist").length > 0){
+	    $("#slectedlist").html(resp);
+	    $("#invoiceviewlist input:radio:checked").focus();
+            $("#viewanotherlist").hide();
+	    $("#viewinvdiv").hide();
+	    $("#invload").html("");
+	}
+	else {
+	    $("#info").html(resp);
+	    $("#viewinvdiv").hide();
+	    $("#invload").html("");
+	}
+	if ($("#pillsdiv").length > 0){
+	    $("#pillsdiv").show();
+	}
+	if ($("#listdiv").length > 0){
+	    $("#listdiv").show();
+	}
+    })
+    .fail(function() {
+        $("#failure-alert1").alert();
+        $("#failure-alert1").fadeTo(2250, 500).slideUp(500, function(){
+          $("#failure-alert1").hide();
+        });
+    });
+    } allow =0;
+    });
     $(document).off('click' ,'#reportclearsearchspan').on('click' ,'#reportclearsearchspan',function(e) {
 	$("#reportsearch").val("");
 	$("table tbody tr").show();
