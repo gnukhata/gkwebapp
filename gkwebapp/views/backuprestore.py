@@ -235,7 +235,8 @@ def exportLedger(request):
             for acc in accList:
                 a = accountList.cell(row=cellCounter,column=1,value=(acc["accountname"]))
                 a.font = Font(name=g.font.name,italic=True)
-                ob = accountList.cell(row=cellCounter,column=2,value=acc["openingbal"])
+                ob = accountList.cell(row=cellCounter,column=2,value=float("%.2f"%float(acc["openingbal"])))
+                accountList.cell(row=cellCounter,column=2).number_format = '0.00'
                 cellCounter = cellCounter + 1
             sgResult = requests.get("http://127.0.0.1:6543/groupDetails/%s"%(group["groupcode"]),headers=header)
             subgrpList = sgResult.json()["gkresult"]
@@ -247,7 +248,9 @@ def exportLedger(request):
                 for accsg in accListsg:
                     a = accountList.cell(row=cellCounter,column=1,value=(accsg["accountname"]))
                     a.font = Font(name=g.font.name,italic=True)
-                    ob = accountList.cell(row=cellCounter,column=2,value=accsg["openingbal"])
+                    ob = accountList.cell(row=cellCounter,column=2,value=float("%.2f"%float(accsg["openingbal"])))
+                    accountList.cell(row=cellCounter,column=2).number_format = '0.00'
+
                     cellCounter = cellCounter + 1
 
         Voucher = gkwb.create_sheet()
