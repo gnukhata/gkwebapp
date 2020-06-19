@@ -1,3 +1,15 @@
+[19 June 2020 Release 7.0]
+Upgraded the entire code base to Python 3 (Python3.8).
+New searchable select box.
+Narration box in Delivery note and Rejection note documents.
+Documents details in ledger.
+Modified print of invoices.
+Total amount in words in deliverynote.
+Security enhancements.
+Performance enhancements.
+Minor enhancements and bug fixes.
+
+
 [16 December 2019 Release 6.50]
 * More screens are responsive.
 * Resolved bug that prevented Company Logo from being displayed.
