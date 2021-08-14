@@ -38,10 +38,12 @@ from PIL import Image
 import base64
 import io
 
+gk_version = "7.0"
+
 @view_config(route_name="index", renderer="gkwebapp:templates/index.jinja2")
 def index(request):
     request.response.headerlist = [('Content-Type','text/html'),('X-Content-Type-Options','nosniff'),('X-Frame-Options','DENY')]
-    return {"a":1}
+    return {"a":1, "gk_version": gk_version}
 
 
 @view_config(route_name="existingorg", renderer="gkwebapp:templates/existingorg.jinja2")
@@ -169,7 +171,7 @@ def orgdata(request):
 @view_config(route_name="showmainshell",renderer="gkwebapp:templates/mainshell.jinja2")
 def mainshell(request):
     request.response.headerlist = [('Content-Type','text/html'),('X-Content-Type-Options','nosniff'),('X-Frame-Options','DENY')]
-    return {"status":"ok"}
+    return {"status":"ok", "gk_version": gk_version}
 
 @view_config(route_name="theme",renderer="json")
 def theme(request):
