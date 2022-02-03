@@ -33,7 +33,7 @@ requires = [
     "openpyxl",
     "pyramid_jinja2",
     "WebOb",
-    "gunicorn20.1.0",
+    "gunicorn",
     #'waitress == 1.4.4',
     "wsgicors",
     "requests",
